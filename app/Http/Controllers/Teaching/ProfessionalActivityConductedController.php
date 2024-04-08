@@ -139,6 +139,7 @@ class ProfessionalActivityConductedController extends Controller
             $professional_activity_conducted->sponsoring_agency_name_address=$request->e_sponsoring_agency_name_address;
         }
          $professional_activity_conducted->from_date=$request->e_from_date;
+         $professional_activity_conducted->egov_id=$this->gen_egov_id($request->e_from_date);
          $professional_activity_conducted->to_date=$request->e_to_date;
          $professional_activity_conducted->place=$request->e_place;
          $professional_activity_conducted->no_of_days=$request->e_no_of_days;
@@ -226,42 +227,20 @@ class ProfessionalActivityConductedController extends Controller
         $year = date('Y', strtotime($conducted_date));
         $month = date('M',strtotime($conducted_date));
         $no="";
-        $professional_activity_conducted=professional_activity_conducted::where('from_date','<=',$year.'-12-31')->orderBy('id','desc')->first();
+        $professional_activity_conducted=professional_activity_conducted::whereYear('from_date',$year)->orderBy('id','desc')->first();
         if($professional_activity_conducted==null){
             $no="00001";
         }
         else
         {
-            $oldyear=date('Y', strtotime($professional_activity_conducted->from_date));
 
-            if($oldyear<$year){
-                $no="00001";
-            }
-            else
-            {
                 $oldegov_id=$professional_activity_conducted->egov_id;
                 //dd(substr($oldegov_id,9,10));
                 $oldno=intval(substr($oldegov_id,9,10));
 
                 $no=$oldno+1;
 
-                if($no<10)
-                {
-                    $no='0000'.$no;
-                }
-                if($no<100 && $no>=10)
-                {
-                    $no='000'.$no;
-                }
-                if($no<1000 && $no>100)
-                {
-                    $no='00'.$no;
-                }
-                if($no<10000 & $no>1000)
-                {
-                    $no='0'.$no;
-                }
-            }
+                $no = str_pad($no, 5, '0', STR_PAD_LEFT);
 
         }
         return ($year.$month."PC".$no);
