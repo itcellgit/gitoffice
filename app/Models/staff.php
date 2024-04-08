@@ -142,7 +142,7 @@ class staff extends Model
     //fetch the staff castecateory details
     public function castecateory():BelongsTo
     {
-        return $this->belongsTo(castecateory::class);
+        return $this->belongsTo(castecategory::class);
     }
 
     //fetch the staff user details
@@ -246,7 +246,7 @@ class staff extends Model
      //active leave staff entitlement
      public function active_leave_staff_entitlements():BelongsToMany
      {
-         return $this->belongsToMany(leave::class)->wherePivot('status','active')->withPivot('id','year','entitled_curr_year','accumulated','consumed_curr_year','encashed_curr_year','total_encashed');
+         return $this->belongsToMany(leave::class,'leave_staff_entitlements')->wherePivot('status','active')->withPivot('id','year','entitled_curr_year','accumulated','consumed_curr_year','encashed_curr_year','total_encashed','wef');
      }
 
 

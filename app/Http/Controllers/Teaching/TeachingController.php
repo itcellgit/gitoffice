@@ -21,6 +21,8 @@ use App\Models\ntcpayscales;
 use App\Models\users;
 use App\Models\event;
 use App\Models\notice;
+use App\Http\Requests\UpdatestaffRequest;
+
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -67,9 +69,9 @@ class TeachingController extends Controller
         $deptcount=staff::with('departments')->where('user_id','=',$user->id)->first();
         $dept = $deptcount->departments->count();
 
-        //Event information for if staff type is All 
+        //Event information for if staff type is All
         $departmentevent = DB::table('events')
-        ->join('department_event', 'department_event.event_id', '=', 'events.id') 
+        ->join('department_event', 'department_event.event_id', '=', 'events.id')
         ->join('department_staff', 'department_staff.department_id', '=', 'department_event.department_id')
         ->whereIn('department_event.department_id', $dept_id)
         ->where(function ($query) use ($user) {
@@ -83,7 +85,7 @@ class TeachingController extends Controller
 
      //notice
      $departmentnotice = DB::table('notices')
-     ->join('department_notice', 'department_notice.notice_id', '=', 'notices.id') 
+     ->join('department_notice', 'department_notice.notice_id', '=', 'notices.id')
      ->join('department_staff', 'department_staff.department_id', '=', 'department_notice.department_id')
      ->whereIn('department_notice.department_id', $dept_id)
      ->where(function ($query) use ($user) {
@@ -94,40 +96,109 @@ class TeachingController extends Controller
      ->get();
 
     return view('Staff.Teaching.dashboard',compact(['staff','departmentevent','departmentnotice','attendedActivitiesCount','conductedActivitiesCount','conferenceattendedcount','conferenceconductedcount','publicationcount','book_publicationcount','funded_projectcount','consultancycount','patentcount','copyrightcount','general_achievementscount','dept']));
-           
-       
-       
+
+
+
     }
 
     public function departments(Request $request){
         $user = Auth::user();
-       
+
         $staff=staff::with('departments')->where('user_id','=',$user->id)->get();
-      
+
         return view('Staff.Teaching.departments',compact('staff'));
-    
+
     }
     public function associations(Request $request){
 
         $user = Auth::user();
-        
+
         $staff=staff::with('associations')->where('user_id','=',$user->id)->get();
-        
-       
-       
+
+
+
         return view('Staff.Teaching.associations',compact('staff'));
-    
+
     }
 
     public function designations(){
-        
+
        $user = Auth::user();
-        
+
        $staff=staff::with('designations')->with('teaching_payscale')->with('consolidated_teaching_pay')->with('fixed_nt_pay')->with('ntpayscale') ->with('ntcpayscale')->where('user_id','=',$user->id)->first();
-      
+
         return view('Staff.Teaching.designations',compact('staff'));
-    
+
     }
 
-   
+
+    //public function update_staff_information(UpdatestaffRequest $request, staff $staff)
+    public function update_staff_information()
+    {
+
+        return view('Staff.Teaching.updateprofile');
+
+
+    }
+
+
+    public function update(UpdatestaffRequest $request, staff $staff)
+    {
+
+        $staff->fname=$request->fname;
+        $staff->mname=$request->mname;
+        $staff->lname=$request->lname;
+        //$staff->email = $request->email;
+        $staff->local_address=$request->local_address;
+        $staff->permanent_address=$request->permanent_address;
+        $staff->religion_id=$request->religion_id;
+        $staff->castecategory_id=$request->castecategory_id;
+        $staff->gender=$request->gender;
+        $staff->dob=$request->dob;
+        $staff->doj=$request->doj;
+        $staff->date_of_increment=$request->date_of_increment;
+        $staff->date_of_superanuation=$request->date_of_superanuation;
+        $staff->bloodgroup=$request->bloodgroup;
+        $staff->pan_card=$request->pan_card;
+        $staff->adhar_card=$request->adhar_card;
+        $staff->contactno=$request->contactno;
+        $staff->emergency_no=$request->emergency_no;
+        $staff->emergency_name=$request->emergency_name;
+        $staff->vtu_id=$request->vtu_id;
+        $staff->aicte_id=$request->aicte_id;
+        $staff->date_of_confirmation=$request->date_of_confirmation;
+
+        $sresult=$staff->update();
+        $staff->latest_employee_type()->first();
+        $emp_type=$staff->latest_employee_type()->first();
+        if($emp_type->employee_type!=$request->employee_type)
+        {
+            //make the current employee_type inactive and add a new row in the employee type
+             $employee_type=$staff->latest_employee_type()->update([
+                'status'=>'inactive',
+            ]);
+            $new_fixed_nt_pay=$staff->latest_employee_type()->createMany(
+                [  //create many function takes an array of rows to be inserted in the sub table.
+                    [
+                        'staff_id'=>$staff->id,
+                        'employee_type'=>$request->employee_type,
+                    ]
+                ]
+            );
+        }
+
+        if($sresult){
+            $status = 1;
+        }else{
+            $status = 0;
+        }
+        //check if designation has changed
+      return redirect('/Staff/Teaching/update/'.$staff->id)->with('status',$status);
+
+    }
+
+
+
+
+
 }

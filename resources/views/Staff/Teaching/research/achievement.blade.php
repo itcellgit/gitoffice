@@ -7,7 +7,7 @@
 
         <!-- FLATPICKR CSS -->
         <link rel="stylesheet" href="{{asset('build/assets/libs/flatpickr/flatpickr.min.css')}}">
-        
+
 @endsection
 
 @section('content')
@@ -17,21 +17,21 @@
                     <!-- Start::main-content -->
                     <div class="main-content">
 
-                       
+
                         <!-- Page Header -->
                             <div class="block justify-between page-header sm:flex">
                                 <div>
                                     {{-- <h1>Welcome, {{ $staff->fname }}</h1> --}}
                                     <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium">Welcome<span class="text-primary"> {{ $staff->fname.' '.$staff->mname.' '.$staff->lname }}</span></h3>
-                                </div>    
-                                <ol class="flex items-center whitespace-nowrap min-w-0"> 
+                                </div>
+                                <ol class="flex items-center whitespace-nowrap min-w-0">
                                     <li class="text-sm">
                                         <a class="flex items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="javascript:void(0);">
                                             Research Activities
                                             <i class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
                                         </a>
                                     </li>
-                                        
+
                                 </ol>
                             </div>
                         <!-- Page Header Close -->
@@ -56,11 +56,11 @@
                                             </div>
                                         @endif
                                     @endif
-                                    @php 
-                                        Illuminate\Support\Facades\Session::forget('return_data'); 
-                                        header("refresh: 2"); 
+                                    @php
+                                        Illuminate\Support\Facades\Session::forget('return_data');
+                                        header("refresh: 2");
                                     @endphp
-                                @endif   
+                                @endif
 
                             </div>
                         </div>
@@ -70,23 +70,40 @@
                                 <div class="box-header">
                                     {{-- <h4>Research Activities</h4> --}}
                                 </div>
-       
-                                <div class="box-body pt-0">
-                                    <nav class="-mb-0.5 flex justify-center space-x-6 rtl:space-x-reverse md:h-full md:w-48" aria-label="Tabs">
-                                        {{-- <button type="button" class="hs-tab-active:bg-primary hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-sm hover:text-primary  dark:text-white/70 dark:hover:text-white" id="pills-with-brand-color-item-4" data-hs-tab="#pills-with-brand-color-6" aria-controls="pills-with-brand-color-4">
-                                           Achivements
-                                        </button> --}}
-                                        
-                                    </nav>
 
+                                <div class="box-body pt-0">
                                     <div class="mt-3">
-                                        {{-- <div id="pills-with-brand-color-6" class="hidden" role="tabpanel" aria-labelledby="pills-with-brand-color-item-4"> --}}
-                                          
+
                                           <!--Start of Achievements -->
                                             <div class="box border-0 shadow-none mb-0">
                                                 <div class="box-header">
-                                                    <h5 class="box-title leading-none flex"><i class="ri ri-global-line ltr:mr-2 rtl:ml-2"></i>General Achivements</h5>
+                                                    <h5 class="box-title leading-none flex">
+                                                        <i class="ri ri-global-line ltr:mr-2 rtl:ml-2"></i>General Achievements
+                                                    </h5>
+                                                    <div class="avatar-container flex py-4">
+                                                        <div class="avatar-wrapper flex items-center">
+                                                            <div class="avatar rounded-sm p-1 bg-green-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-bold ml-2 ">Valid</div>
+                                                        </div>
+
+                                                        <div class="avatar-wrapper flex items-center mx-2">
+                                                            <div class="avatar rounded-sm p-1 bg-red-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-bold ml-2">Invalid</div>
+                                                        </div>
+
+                                                        <div class="avatar-wrapper flex items-center mx-2">
+                                                            <div class="avatar rounded-sm p-1 bg-yellow-400 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-bold ml-2">Updated</div>
+                                                        </div>
+
+                                                        <div class="avatar-wrapper flex items-center">
+                                                            <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-semibold ml-2">New</div>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
+
                                                 <div class="box-body">
                                                     <button id="general_achievements_btn" data-hs-overlay="#add_general_achievements" class="hs-dropdown-toggle ti-btn ti-btn-primary">
                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M17 19H19V11H13V19H15V13H17V19ZM3 19V4C3 3.44772 3.44772 3 4 3H18C18.5523 3 19 3.44772 19 4V9H21V19H22V21H2V19H3ZM7 11V13H9V11H7ZM7 15V17H9V15H7ZM7 7V9H9V7H7Z" fill="rgba(255,255,255,1)"></path></svg>
@@ -116,7 +133,7 @@
                                                                             $(window).on('load', function() {
                                                                                 //if($('#horizontal-alignment-item-1').parent().find('.active')){
                                                                                     //alert('attended');
-                                                                                    
+
                                                                                     // $('#horizontal-alignment-item-1').trigger('click')
                                                                                     $('#general_achievements_btn').trigger("click");
 
@@ -126,14 +143,14 @@
                                                                                 //     $('#activity_attended_btn').trigger("click");
                                                                                 // }
                                                                                 //$('#activity_attended_btn').trigger( "click" );
-                                                                                    
-                                                                            });      
+
+                                                                            });
                                                                         </script>
                                                                     @endif
                                                                 </div>
                                                                 <form  action="{{route('Teaching.research.achievement.store')}}" method="post" enctype="multipart/form-data">
                                                                     @csrf
-                                                                            
+
                                                                     <div class="ti-modal-body">
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
@@ -150,8 +167,8 @@
                                                                                  @if($errors->has('ga_year'))
                                                                                     <div class="text-red-700">{{ $errors->first('ga_year')}}</div>
                                                                                 @endif
-                                                                                <div id="rga_yearError" class="error text-red-700"></div>    
-                                                                            </div>      
+                                                                                <div id="rga_yearError" class="error text-red-700"></div>
+                                                                            </div>
                                                                         </div>
 
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
@@ -186,7 +203,7 @@
                                                                                         @endif
                                                                                         <div id="general_documentError" class="error text-red-700"></div>
                                                                                 </div>
-                                                                            </div>                                                                     
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="ti-modal-footer">
@@ -195,11 +212,11 @@
                                                                             data-hs-overlay="#add_general_achievements">
                                                                             Close
                                                                         </button>
-                                                                                        
+
                                                                         <input type="submit" id="achievments_store_add_btn" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Add"/>
-                                                                                    
+
                                                                     </div>
-                                                                </form>  
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -225,9 +242,9 @@
                                                                 $i=1;
                                                             @endphp
                                                             <tbody class="">
-                                                            
+
                                                                 @if($staff->general_achievements!=null)
-                                                               
+
                                                                     @forelse($staff->general_achievements as $achivement)
                                                                             <tr style="@if($achivement->validation_status =='invalid') background-color: #ffcccc; @elseif($achivement->validation_status =='updated') background-color: #fff2cc; @elseif($achivement->validation_status =='valid') background-color: #ccffcc; @endif">
                                                                             <td><span>{{$i++}}</span></td>
@@ -276,7 +293,7 @@
                                                                                 <?php endif; ?>
                                                                                 <!--reason modal ends-->
 
-                                                                                
+
                                                                                 <div class="hs-tooltip ti-main-tooltip">
                                                                                     <a  href="{{ Storage::url('Uploads/Research/Achievement/' . $achivement->document) }}" class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-primary" target="_blank" {{$achivement->document}}>
                                                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3ZM12.0003 19C16.2359 19 19.8603 16.052 20.7777 12C19.8603 7.94803 16.2359 5 12.0003 5C7.7646 5 4.14022 7.94803 3.22278 12C4.14022 16.052 7.7646 19 12.0003 19ZM12.0003 16.5C9.51498 16.5 7.50026 14.4853 7.50026 12C7.50026 9.51472 9.51498 7.5 12.0003 7.5C14.4855 7.5 16.5003 9.51472 16.5003 12C16.5003 14.4853 14.4855 16.5 12.0003 16.5ZM12.0003 14.5C13.381 14.5 14.5003 13.3807 14.5003 12C14.5003 10.6193 13.381 9.5 12.0003 9.5C10.6196 9.5 9.50026 10.6193 9.50026 12C9.50026 13.3807 10.6196 14.5 12.0003 14.5Z"></path></svg>
@@ -286,7 +303,7 @@
                                                                                     </a>
                                                                                 </div>
                                                                                 <div class="hs-tooltip ti-main-tooltip">
-                                                                                    <button data-hs-overlay="#general_achievements_edit_modal{{$i}}" id="btn{{$i}}" btn-val={{$i}} 
+                                                                                    <button data-hs-overlay="#general_achievements_edit_modal{{$i}}" id="btn{{$i}}" btn-val={{$i}}
                                                                                         class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary general_achievements_edit_modal_click">
                                                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M16.7574 2.99666L14.7574 4.99666H5V18.9967H19V9.2393L21 7.2393V19.9967C21 20.5489 20.5523 20.9967 20 20.9967H4C3.44772 20.9967 3 20.5489 3 19.9967V3.99666C3 3.44438 3.44772 2.99666 4 2.99666H16.7574ZM20.4853 2.09717L21.8995 3.51138L12.7071 12.7038L11.2954 12.7062L11.2929 11.2896L20.4853 2.09717Z"></path></svg>
                                                                                         <span
@@ -321,8 +338,8 @@
                                                                                                                 //alert("Validation errors");
 
                                                                                                             // document.getElementById('btn'+{{old('modal_no')}}).click();
-                                                                                                            };   
-                                                                                                        
+                                                                                                            };
+
                                                                                                             </script>
                                                                                                             @endif
                                                                                                 </div>
@@ -338,7 +355,7 @@
                                                                                                                     @if($errors->has('gae_award'))
                                                                                                                         <div class="text-red-700">{{ $errors->first('gae_award') }}</div>
                                                                                                                     @endif
-                                                                                                                        
+
                                                                                                             </div>
                                                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                                                 <label for="" class="ti-form-label font-bold">Year:</label>
@@ -346,10 +363,10 @@
                                                                                                                     @if($errors->has('gae_year'))
                                                                                                                         <div class="text-red-700">{{ $errors->first('gae_year') }}</div>
                                                                                                                     @endif
-                                                                                                                
 
-                                                                                                                        
-                                                                                                            </div>      
+
+
+                                                                                                            </div>
                                                                                                         </div>
 
                                                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
@@ -383,10 +400,10 @@
                                                                                                                         @endif
                                                                                                                         <div id="rgeneral_documentError" class="error text-red-700"></div>
                                                                                                                 </div>
-                                                                                                            </div> 
+                                                                                                            </div>
                                                                                                             <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                                                                <input type="hidden" name="validation_status" value="updated">
-                                                                                                            </div>                                                                    
+                                                                                                            </div>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                     <div class="ti-modal-footer">
@@ -395,18 +412,18 @@
                                                                                                             data-hs-overlay="#general_achievements_edit_modal{{$i}}">
                                                                                                             Close
                                                                                                         </button>
-                                                                                                                        
+
                                                                                                         <input type="submit" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Update"/>
-                                                                                                                    
+
                                                                                                     </div>
-                                                                                                </form>  
+                                                                                                </form>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="hs-tooltip ti-main-tooltip">
                                                                                     <form action="{{ route('Teaching.research.achievement.destroy',$achivement->id) }}" method="post">
-                                                                                    
+
                                                                                         <button onclick="return confirm('Are you Sure')"
                                                                                         class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
                                                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>
@@ -421,8 +438,8 @@
                                                                                     </form>
                                                                                 </div>
                                                                             </td>
-                                                                            @endif  
-                                                                        </tr> 
+                                                                            @endif
+                                                                        </tr>
                                                                         @empty
                                                                         {{-- <tr>
                                                                         <td>no records</td>
@@ -430,25 +447,24 @@
                                                                     @endforelse
                                                                 @endif
                                                             </tbody>
-                                                            
-                                                        </table>  
-                                                    </div>   
+
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
                                           <!--End of Achievements -->
-                                        {{-- </div> --}}
-                                    </div>                                                                      
+                                    </div>
                                 </div>
                             </div>
                         </div>
                              <!-- End::row-1 -->
-                    </div>    
+                    </div>
                     <!-- End::main-content -->
 
                 </div>
-               
 
-            
+
+
 
 @endsection
 
@@ -476,21 +492,21 @@
         <script>
             $(document).ready(function(){
 
-                
+
                     //Validation for general achievements
-               
+
                     //alert('Hello from jquery');
                     new DataTable('#general_achievements_table');
-                    
+
                     $(document).on('click','.general_achievements_edit_modal_click',function(){
-                        //var 
+                        //var
                         var modal_no = $(this).attr("btn-val");
-                        
+
                         //alert($(this).find('.caste_edit_modal_no').val());
-                        $('.modal_no').val(modal_no); 
+                        $('.modal_no').val(modal_no);
                     });
 
-                   
+
                     // Validation for General Achivements
                    $(document).on('click', '#achievments_store_add_btn', function (e) {
                     var rga_award = $('#rga_award').val();
@@ -580,8 +596,8 @@
         </script>
 
 
-        
-    
-        
+
+
+
 
 @endsection

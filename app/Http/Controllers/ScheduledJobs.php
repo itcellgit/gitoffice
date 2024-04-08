@@ -54,6 +54,7 @@ class ScheduledJobs extends Controller
                 }
                 else
                 {
+                    $pre_year_entltm=$pre_year_entltm[0];
                     if($l->leave_rules[0]->carry_forwardable=='Yes')
                     {
                         $accumulated=$pre_year_entltm->accumulated+$pre_year_entltm->entitled_curr_year-$pre_year_entltm->consumed_curr_year;
@@ -108,6 +109,7 @@ class ScheduledJobs extends Controller
                     }
                     else
                     {
+                        $pre_year_entltm=$pre_year_entltm[0];
                         if($l->leave_rules[0]->carry_forwardable=='Yes')
                         {
                             $accumulated=$pre_year_entltm->accumulated+$pre_year_entltm->entitled_curr_year-$pre_year_entltm->consumed_curr_year;
@@ -167,6 +169,7 @@ class ScheduledJobs extends Controller
                         }
                         else
                         {
+                            $pre_year_entltm=$pre_year_entltm[0];
                             if($l->leave_rules[0]->carry_forwardable=='Yes')
                             {
                                 $accumulated=$pre_year_entltm->accumulated+$pre_year_entltm->entitled_curr_year-$pre_year_entltm->consumed_curr_year;
@@ -223,16 +226,18 @@ class ScheduledJobs extends Controller
 
             //fetch the leave that has to be given entitlements like cl, rh, el etc
             $leaves=leave::with('general_leaves')->whereHas('general_leaves')->whereNotNull('max_entitlement')->where('vacation_type','Non-Vacational')->where('status','active')->get();
-            if($leave_entitlement>$leaves->max_entitlement)
-            {
-                //applying correction factor if leave_entitlements computed is going to 16
-                $leave_entitlement=$leaves->max_entitlement;
-            }
+
+
            //check if the month for which the entitlement has to be given is Jan.
             if($month==1)
             {
                 foreach($leaves as $l)
                 {
+                    if($leave_entitlement>$l->max_entitlement)
+                    {
+                        //applying correction factor if leave_entitlements computed is going to 16
+                        $leave_entitlement=$l->max_entitlement;
+                    }
 
                     //get the staff entitlements for previous year. As this staff is on non-confirmed assocation
                     //we need to continute the entitlements with the previous year
