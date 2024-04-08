@@ -21,7 +21,7 @@
         <!-- APP SCSS -->
         <?php echo app('Illuminate\Foundation\Vite')(['resources/sass/app.scss']); ?>
 
-        
+
         <!-- SIMPLEBAR CSS -->
         <link rel="stylesheet" href="<?php echo e(asset('build/assets/libs/simplebar/simplebar.min.css')); ?>">
 
@@ -32,7 +32,7 @@
         <script src="<?php echo e(asset('build/assets/main.js')); ?>"></script>
 
         <!--CDN for datatables-->
-        <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet"> 
+        <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
 
         <?php echo $__env->yieldContent('styles'); ?>
 
@@ -83,19 +83,19 @@
         <!-- END PAGE-->
 
         <!-- SCRIPTS -->
-        
+
         <?php echo $__env->make('layouts.components.scripts', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
         <!-- STICKY JS -->
 		<script src="<?php echo e(asset('build/assets/sticky.js')); ?>"></script>
-        
+
         <!-- SWITCH JS -->
         <?php echo app('Illuminate\Foundation\Vite')('resources/assets/js/switch.js'); ?>
 
 
         <!-- APP JS -->
 		<?php echo app('Illuminate\Foundation\Vite')('resources/js/app.js'); ?>
-        
+
         <!-- CDN for Data tables Script-->
         <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -126,7 +126,7 @@
                             } else {
                                // if($('#current_password_status').hasClass('text-red-400'))
                                    $('#current_password_status').removeClass('text-red-400');
-                                
+
                                  $('#current_password_status').text('The current password is matching with our records').addClass('text-green-400');
                             }
                         },
@@ -136,13 +136,13 @@
                     });
                 });
 
-                //to check the new password ma confirm password 
+                //to check the new password ma confirm password
                 $(document).on('keyup', '#confirm_password', function () {
                     //alert('Out of confirm password field');
                     var new_password = $('#new_password').val();
                     var confirm_password = $('#confirm_password').val();
                     if(new_password != "" || confirm_password != ""){
-                          
+
                         if(new_password == confirm_password){
                             $('.password_error_msg').removeClass('text-red-600');
                             $('.password_error_msg').text('Passwords are matching').addClass('text-green-600');
@@ -156,12 +156,12 @@
                             // $('#new_password').addClass('border-red-500');
                             // $('#confirm_password').addClass('border-red-500');
                         }
-                        
+
                     }else{
                         if(new_password == "")
                             $('#new_password_status').text('New Password is empty !! Please Fill.').addClass('text-red-600');
-                        
-                        if(confirm_password == "")  
+
+                        if(confirm_password == "")
                             $('#confirm_password_status').text('Confirm Password is empty !! Please Fill.').addClass('text-red-600');
 
                         $('.password_error_msg').text('Both the passwords must be entered').addClass('text-red-600');
@@ -199,8 +199,8 @@ $message = $__bag->first($__errorArgs[0]); ?>
                 // <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?> 
-                
+unset($__errorArgs, $__bag); ?>
+
             });
         </script>
 
