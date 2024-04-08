@@ -513,7 +513,7 @@ class LeaveStaffApplicationsController extends Controller
 
     public function fetchmyleaveevents(Request $request){
         $date = $request->input('date');
-
+        //dd($date);
         $user = Auth::user();
         $staff = staff::where('user_id','=',$user->id)->first();
         // Process the date as needed (e.g., save to database, perform calculations)
@@ -523,7 +523,15 @@ class LeaveStaffApplicationsController extends Controller
         ->leftJoin('staff AS s3','s3.id','=','leave_staff_applications.additional_alternate')
         ->where('leave_staff_applications.staff_id',$staff->id)
         ->where('leave_staff_applications.start',$date)
-        ->select(DB::raw("CONCAT(s1.fname,' ',s1.mname,' ',s1.lname) AS staff_name"),DB::raw("CONCAT(s2.fname,' ',s2.mname,' ',s2.lname) AS alternate_staff"),DB::raw("CONCAT(s3.fname,' ',s3.mname,' ',s3.lname) AS additional_alternate_staff"),'leaves.shortname AS title','leave_staff_applications.start AS start', 'leave_staff_applications.end AS end', 'leave_staff_applications.leave_id AS leave_id','leave_staff_applications.appl_status AS appl_status','leave_staff_applications.id AS Application_id', 'leave_staff_applications.reason AS reason')->get();
+        ->select(DB::raw("CONCAT(s1.fname,' ',s1.mname,' ',s1.lname) AS staff_name"),
+                DB::raw("CONCAT(s2.fname,' ',s2.mname,' ',s2.lname) AS alternate_staff"),
+                DB::raw("CONCAT(s3.fname,' ',s3.mname,' ',s3.lname) AS additional_alternate_staff"),
+                'leaves.shortname AS title',
+                'leave_staff_applications.start AS start',
+                'leave_staff_applications.end AS end', 'leave_staff_applications.leave_id AS leave_id',
+                'leave_staff_applications.appl_status AS appl_status',
+                'leave_staff_applications.id AS Application_id', 
+                'leave_staff_applications.reason AS reason')->get();
         // Return a response (optional)
           return response()->json($leave_events);
         //return response()->json(['message' => 'Date clicked: ' . $date]);
