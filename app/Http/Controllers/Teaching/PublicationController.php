@@ -36,30 +36,30 @@ class PublicationController extends Controller
     {
        // dd($request);
          $user = Auth::user();
-         
+
         $staff=staff::where('user_id','=',$user->id)->first();
         $publication = new publication();
         $publication->staff_id=$staff->id;
         if($request->level =="Other")
         {
             $publication->level = $request->level;
-            $publication->other_level=$request->other_level; 
-                   
+            $publication->other_level=$request->other_level;
+
         }
         else
         {
-            $publication->level=$request->level;      
+            $publication->level=$request->level;
         }
-      
-        $publication->title=$request->title; 
+
+        $publication->title=$request->title;
         $publication->date=$request->date;
-        $publication->egov_id=$this->gen_egov_id($request->date); 
+        $publication->egov_id=$this->gen_egov_id($request->date);
         $publication->journal=$request->journal;
         $publication->publication_type=$request->publication_type;
         $publication->doi_number=$request->doi_number;
         $publication->link=$request->link;
         $publication->role=$request->role;
-        
+
         //file upload
             $file=$request->file("document");
             // $final_file_upload_name = $this->gen_egov_id($request->date).'.'.$file->getClientOriginalExtension();
@@ -81,7 +81,7 @@ class PublicationController extends Controller
                 $file_upload_status = 1;
                 $publication->document= $file->hashName();
                $publicationinsertedId =  $publication->save(); // insert the row and upload the file only when all the conditions are met.
-            
+
             }
                 else
                 {
@@ -98,18 +98,18 @@ class PublicationController extends Controller
                     $status = 0;
                 }
             //dd($publicationinsertedId.'-'.$file_upload_status.'-'.$file_size_status.'-'.$result);
-            $return_data = 
+            $return_data =
             [
                 'status' => $status,
                 'file_size_status' => $file_size_status
             ];
 
            return redirect('/Teaching/research/publications')->with('return_data', $return_data);
-       
+
     }
-    
-   
-  
+
+
+
 
     /**
      * Display the specified resource.
@@ -132,21 +132,22 @@ class PublicationController extends Controller
      */
     public function update(UpdatepublicationRequest $request, publication $publication)
     {
-        
+
         //dd($request);
-       
+
         if($request->level =="Other")
         {
             $publication->level = $request->e_level;
-            $publication->other_level=$request->e_other_level; 
-                   
+            $publication->other_level=$request->e_other_level;
+
         }
         else
         {
-            $publication->level=$request->e_level;      
+            $publication->level=$request->e_level;
         }
-        $publication->title=$request->e_title; 
-        $publication->date=$request->e_date; 
+        $publication->title=$request->e_title;
+        $publication->date=$request->e_date;
+        $publication->egov_id=$this->gen_egov_id($request->e_date);
         $publication->journal=$request->e_journal;
         $publication->publication_type=$request->e_publication_type;
         $publication->journal=$request->e_doi_number;
@@ -157,7 +158,7 @@ class PublicationController extends Controller
         //dd($request->validation_status);
         $publication->validation_status = ($request->validation_status == "invalid") ? "updated" : $request->validation_status;
 
-        
+
         //File Upload
         $file=$request->file("document");
        // $final_file_upload_name = $publication->egov_id.'.'.$file->getClientOriginalExtension();
@@ -184,14 +185,14 @@ class PublicationController extends Controller
                 $file_upload_status = 1;
                 $publication->document= $file->hashName();
                $result=  $publication->update(); // insert the row and upload the file only when all the conditions are met.
-            
-            } 
+
+            }
                 else
                 {
                     //dd( "Failed to upload file");
                     $file_upload_status = 0;
                 }
-        }  
+        }
         else{
             $file_size_status = 0;
         }
@@ -221,7 +222,7 @@ class PublicationController extends Controller
     {
         //
       // dd($publication);
-    
+
         $result =$publication->delete();
         if($result)
         {
@@ -237,15 +238,15 @@ class PublicationController extends Controller
 {
     $year = date('Y', strtotime($publication_date));
     $month = date('m', strtotime($publication_date));
-    $no = "";        
+    $no = "";
 
-    $publication = publication::where('date', '<=', $year.'-12-31')->orderBy('id', 'desc')->first();
+    $publication = publication::whereYear('date', $year)->orderBy('id', 'desc')->first();
 
     if ($publication == null || date('Y', strtotime($publication->date)) < $year) {
         $no = "00001";
     } else {
         $oldegov_id = $publication->egov_id;
-        $oldno = intval(substr($oldegov_id, 9)); 
+        $oldno = intval(substr($oldegov_id, 9));
         $no = str_pad($oldno + 1, 5, '0', STR_PAD_LEFT);
     }
 

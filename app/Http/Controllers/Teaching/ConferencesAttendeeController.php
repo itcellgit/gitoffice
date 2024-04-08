@@ -10,7 +10,7 @@ use Auth;
 use App\Models\staff;
 use App\Models\conferences_conducted;
 
-use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class ConferencesAttendeeController extends Controller
@@ -20,7 +20,7 @@ class ConferencesAttendeeController extends Controller
      */
     public function index()
     {
-        
+
     }
 
     /**
@@ -49,13 +49,13 @@ class ConferencesAttendeeController extends Controller
         $attended->sponsored=$request->sponsored;
         if($request->sponsored_by=="KLS GIT")
         {
-            
-            $attended->sponsored_by=$request->sponsored_by;       
+
+            $attended->sponsored_by=$request->sponsored_by;
         }
         else{
-            $attended->sponsored_by=$request->other_sponsored;       
+            $attended->sponsored_by=$request->other_sponsored;
         }
-        
+
         $attended->amount=$request->amount;
         $attended->weblink=$request->weblink;
         $attended->type_of_level = $request->type_of_level;
@@ -83,7 +83,7 @@ class ConferencesAttendeeController extends Controller
                 //dd("File upload Sucess");
                 $file_upload_status = 1;
                 $attended->document= $file->hashName();
-               $conferenceId =  $attended->save(); 
+               $conferenceId =  $attended->save();
 
                 $user = Auth::user();
                 // dd($user);
@@ -97,8 +97,8 @@ class ConferencesAttendeeController extends Controller
                     //dd( "Failed to upload file");
                     $file_upload_status = 0;
                 }
-            }  
-        
+            }
+
         if($conferenceId && $file_upload_status && $file_size_status){
             $status = 1;
         }else{
@@ -135,7 +135,7 @@ class ConferencesAttendeeController extends Controller
      */
     public function update(Updateconferences_attendeeRequest $request, conferences_attendee $conferences_attendee)
     {
-        
+
      //dd($request->conference_name);
         $conferences_attendee->conference_name=$request->edit_conference_name;
         $conferences_attendee->attended_as=$request->edit_attended_as;
@@ -144,12 +144,13 @@ class ConferencesAttendeeController extends Controller
         $conferences_attendee->no_of_days=$request->edit_no_of_days;
         $conferences_attendee->title=$request->edit_title;
         $conferences_attendee->place=$request->edit_place;
+        $conferences_attendee->egov_id=$this->gen_egov_id($request->edit_from_date);
         $conferences_attendee->sponsored=$request->edit_sponsored;
         if($request->sponsored_by)
         {
-            $conferences_attendee->sponsored_by=$request->edit_sponsored_by;         
+            $conferences_attendee->sponsored_by=$request->edit_sponsored_by;
         }
-        
+
         $conferences_attendee->amount=$request->edit_amount;
         $conferences_attendee->weblink=$request->edit_weblink;
         $conferences_attendee->type_of_level=$request->edit_type_of_level;
@@ -184,8 +185,8 @@ class ConferencesAttendeeController extends Controller
                     $file_upload_status = 1;
                     $conferences_attendee->document= $file->hashName();
                    $result =  $conferences_attendee->update(); // insert the row and upload the file only when all the conditions are met.
-                
-                }  
+
+                }
                 else{
                     //dd( "Failed to upload file");
                     $file_upload_status = 0;
@@ -231,7 +232,7 @@ class ConferencesAttendeeController extends Controller
             $status = 0;
         }
 
-        
+
         //return redirect('/Teaching/research')->with('status', $status);
         return redirect('/Teaching/research/conferenceactivities')->with('status', $status);
     }
@@ -240,44 +241,23 @@ class ConferencesAttendeeController extends Controller
     {
         $year = date('Y', strtotime($attendee_date));
         $month = date('M',strtotime($attendee_date));
-        $no="";        
-        $conferences_attendee=conferences_attendee::where('from_date','<=',$year.'-12-31')->orderBy('id','desc')->first();
+        $no="";
+        $conferences_attendee=conferences_attendee::whereYear('from_date',$year)->orderBy('id','desc')->first();
         if($conferences_attendee==null){
             $no="00001";
         }
         else
         {
-            $oldyear=date('Y', strtotime($conferences_attendee->from_date));
-           
-            if($oldyear<$year){
-                $no="00001";
-            }
-            else
-            {
+
                 $oldegov_id=$conferences_attendee->egov_id;
                 //dd(substr($oldegov_id,9,10));
-                $oldno=intval(substr($oldegov_id,9,10)); 
-               
+                $oldno=intval(substr($oldegov_id,9,10));
+
                 $no=$oldno+1;
-            
-                if($no<10)
-                {
-                    $no='0000'.$no;
-                }
-                if($no<100 && $no>=10)
-                {
-                    $no='000'.$no;
-                }
-                if($no<1000 && $no>100)
-                {
-                    $no='00'.$no;
-                }
-                if($no<10000 & $no>1000)
-                {
-                    $no='0'.$no;
-                }
-            }
-           
+
+                $no = str_pad($no, 5, '0', STR_PAD_LEFT);
+
+
         }
         return ($year.$month."".$no);
     }
