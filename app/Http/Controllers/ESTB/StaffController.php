@@ -273,7 +273,8 @@ class StaffController extends Controller
 
     /**
      * Update the specified resource in storage.
-     */
+    */
+
     public function update(UpdatestaffRequest $request, staff $staff)
     {
 
@@ -306,7 +307,7 @@ class StaffController extends Controller
         if($emp_type->employee_type!=$request->employee_type)
         {
             //make the current employee_type inactive and add a new row in the employee type
-             $employee_type=$staff->latest_employee_type()->update([
+            $employee_type=$staff->latest_employee_type()->update([
                 'status'=>'inactive',
             ]);
             $new_fixed_nt_pay=$staff->latest_employee_type()->createMany(
