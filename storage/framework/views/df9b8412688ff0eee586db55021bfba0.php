@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('styles'); ?>
 
         <!-- CHOICES CSS -->
@@ -8,7 +6,7 @@
         <!-- FLATPICKR CSS -->
         <link rel="stylesheet" href="<?php echo e(asset('build/assets/libs/flatpickr/flatpickr.min.css')); ?>">
 
-        
+
 
 <?php $__env->stopSection(); ?>
 
@@ -17,14 +15,14 @@
     <div class="content">
         <!-- Start::main-content -->
         <div class="main-content">
-                    
+
 
             <!-- Page Header -->
                 <div class="block justify-between page-header sm:flex">
                     <div>
                         
                         <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium">Welcome<span class="text-primary"> <?php echo e($staff->fname.' '.$staff->mname.' '.$staff->lname); ?></span></h3>
-                    </div>       
+                    </div>
                     <ol class="flex items-center whitespace-nowrap min-w-0">
                         <li class="text-sm">
                             <a class="flex items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="javascript:void(0);">
@@ -32,14 +30,14 @@
                                 <i class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
                             </a>
                         </li>
-                               
+
                     </ol>
                 </div>
             <!-- Page Header Close -->
                     <div class="grid grid-cols-12 gap-x-6">
                         <div class="col-span-6">
                              <!-- For Checking whether status is set or no-->
-                                
+
                                  <?php if(session('return_data')): ?>
                                     <?php if(Session::get('return_data')['status'] == 1): ?>
                                         <div class='bg-white dark:bg-bgdark border border-success alert text-success' role='alert'>
@@ -57,18 +55,18 @@
                                             </div>
                                         <?php endif; ?>
                                     <?php endif; ?>
-                                    <?php 
-                                        Illuminate\Support\Facades\Session::forget('return_data'); 
-                                        header("refresh: 2"); 
+                                    <?php
+                                        Illuminate\Support\Facades\Session::forget('return_data');
+                                        header("refresh: 2");
                                     ?>
-                                <?php endif; ?>   
+                                <?php endif; ?>
 
                         </div>
                     </div>
 
                         <!-- Start::row-1 -->
                         <div class="grid grid-cols-12 gap-x-6">
-                            
+
                             <div class="col-span-12 xl:col-span-12">
                                     <div class="box">
 
@@ -82,16 +80,16 @@
                                                             <!--Professional Activity Attended-->
                                                             <div class="flex">
                                                                 <h5 class="box-title my-auto">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"><path d="M22 21H2V19H3V4C3 3.44772 3.44772 3 4 3H18C18.5523 3 19 3.44772 19 4V9H21V19H22V21ZM17 19H19V11H13V19H15V13H17V19ZM17 9V5H5V19H11V9H17ZM7 11H9V13H7V11ZM7 15H9V17H7V15ZM7 7H9V9H7V7Z"></path></svg> 
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"><path d="M22 21H2V19H3V4C3 3.44772 3.44772 3 4 3H18C18.5523 3 19 3.44772 19 4V9H21V19H22V21ZM17 19H19V11H13V19H15V13H17V19ZM17 9V5H5V19H11V9H17ZM7 11H9V13H7V11ZM7 15H9V17H7V15ZM7 7H9V9H7V7Z"></path></svg>
                                                                     Professional Activity Attended Details
                                                                 </h5>
-                                                            </div> 
+                                                            </div>
                                                             <div class="flex">
                                                                 <button type="button" id="activity_attended_btn" class="hs-dropdown-toggle ti-btn ti-btn-primary float-right" data-hs-overlay="#add_professional_activity_attended">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M4 3H20C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM5 5V19H19V5H5ZM11 11V7H13V11H17V13H13V17H11V13H7V11H11Z" fill="rgba(255,255,255,1)"></path></svg>
                                                                         Add Professional Activity Attended
                                                                 </button>
-                                                                    
+
                                                                 <div id="add_professional_activity_attended" class="hs-overlay hidden ti-modal">
                                                                     <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out lg:!max-w-4xl lg:w-full m-3 md:mx-auto">
                                                                         <div class="ti-modal-content">
@@ -100,7 +98,7 @@
                                                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M4 3H20C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM5 5V19H19V5H5ZM11 11V7H13V11H17V13H13V17H11V13H7V11H11Z"></path></svg>
                                                                                     Add New Professional Activities attended details
                                                                                 </h3>
-                                                                                <button type="button" class="hs-dropdown-toggle ti-modal-close-btn" 
+                                                                                <button type="button" class="hs-dropdown-toggle ti-modal-close-btn"
                                                                                     data-hs-overlay="#add_professional_activity_attended">
                                                                                     <span class="sr-only">Close</span>
                                                                                     <svg class="w-3.5 h-3.5" width="8" height="8" viewBox="0 0 8 8" fill="none"
@@ -116,11 +114,11 @@
                                                                                         $(window).on('load', function() {
                                                                                             //if($('#horizontal-alignment-item-1').parent().find('.active')){
                                                                                                 //alert('attended');
-                                                                                                
+
                                                                                                 $('#horizontal-alignment-item-1').trigger('click')
                                                                                                 $('#activity_attended_btn').trigger("click");
 
-                                                                                        });      
+                                                                                        });
                                                                                     </script>
                                                                                 <?php endif; ?>
                                                                             </div>
@@ -147,7 +145,7 @@
                                                                                     </div>
                                                                                     <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                                         <div class="max-w-sm space-y-3 pb-6">
-                                                                                            <label for="" class="ti-form-label mb-0 font-bold">Role<span class="text-red-500">*</span></label> 
+                                                                                            <label for="" class="ti-form-label mb-0 font-bold">Role<span class="text-red-500">*</span></label>
                                                                                                 <select class="ti-form-select" id="pro_att_role" name="role" required>
                                                                                                     <option value="#">Choose Role</option>
                                                                                                     <option value="Participant">Participant</option>
@@ -158,7 +156,7 @@
                                                                                                 <?php endif; ?>
                                                                                             <div id="pro_att_roleError" class="error text-red-700"></div>
                                                                                         </div>
-                                                        
+
                                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                                             <label for="" class="ti-form-label mb-0 font-bold">Level <span class="text-red-500">*</span></label>
                                                                                             <select class="ti-form-select" id="pro_att_level" name="level"  required>
@@ -171,7 +169,7 @@
                                                                                                 <div class="text-red-700"><?php echo e($errors->first('level')); ?></div>
                                                                                             <?php endif; ?>
                                                                                             <div id="pro_att_levelError" class="error text-red-700"></div>
-                                                                                        </div>   
+                                                                                        </div>
                                                                                     </div>
                                                                                     <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                                         <div class="max-w-sm space-y-3 pb-6">
@@ -196,7 +194,7 @@
                                                                                             <select class="ti-form-select sponsored_type sponsored" id="pro_att_sponsored" name="sponsored" required>
                                                                                                 <option value="#">Choose One</option>
                                                                                                 <option value="Yes">Yes</option>
-                                                                                                <option value="No">No</option>                       
+                                                                                                <option value="No">No</option>
                                                                                             </select>
                                                                                             <?php if($errors->has('sponsored')): ?>
                                                                                                 <div class="text-red-700"><?php echo e($errors->first('sponsored')); ?></div>
@@ -226,15 +224,15 @@
                                                                                             <?php endif; ?>
                                                                                             <div id="othersponsoredError" class="error text-red-700"></div>
                                                                                         </div>
-                                                                                    </div> 
-                                                                                    <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">  
+                                                                                    </div>
+                                                                                    <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                                         <div class="flex max-w-sm space-y-3 pb-6">
                                                                                             <label for="" class="ti-form-label font-bold">From Date: <span class="text-red-500">*</span></label>
                                                                                             <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
                                                                                                 <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                                                         class="ri ri-calendar-line"></i></span>
                                                                                             </div>
-                                                        
+
                                                                                             <input type="date" name="from_date"
                                                                                                 class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date attended_from_date"
                                                                                                 id="pro_att_from_date" required placeholder="Choose date" >
@@ -250,7 +248,7 @@
                                                                                                 <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                                                         class="ri ri-calendar-line"></i></span>
                                                                                             </div>
-                                                        
+
                                                                                             <input type="date" name="to_date"
                                                                                                 class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date attended_to_date border "
                                                                                                     id="pro_att_to_date" required placeholder="Choose date">
@@ -261,8 +259,8 @@
                                                                                             <div id="pr_att_todateError" class="error text-red-700"></div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    
-                                                                                    <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">   
+
+                                                                                    <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                                             <label for="" class="ti-form-label pt-4 font-bold">No Of Days :<span class="text-red-500">*</span></label>
                                                                                             <input type="text" name="no_of_days" id="pro_att_no_of_days" class="ti-form-input no_of_days_attended " placeholder="No of Days" readonly >
@@ -293,16 +291,16 @@
                                                                                     data-hs-overlay="#add_professional_activity_attended">
                                                                                     Close
                                                                                     </button>
-                                                                                    
+
                                                                                     <input type="submit" id="professional_activity_attended_add_btn" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Add"/>
-                                                                                    
+
                                                                                 </div>
-                                                                            </form>  
+                                                                            </form>
                                                                         </div>
                                                                     </div>
-                                                                </div>   
-                                                                <!-- modal Ending--> 
-                                                            </div> 
+                                                                </div>
+                                                                <!-- modal Ending-->
+                                                            </div>
                                                             <!-- tabel content-->
                                                             <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto">
                                                                 <div class="flex justify-end mt-4">
@@ -338,7 +336,7 @@
                                                                                 
                                                                                 
                                                                                 <tr style="<?php if($act->validation_status =='invalid'): ?> background-color: #ffcccc; <?php elseif($act->validation_status =='updated'): ?> background-color: #fff2cc; <?php elseif($act->validation_status =='valid'): ?> background-color: #ccffcc; <?php endif; ?>">
-                                                                                   
+
                                                                                     <td><span><?php echo e($i++); ?></span></td>
                                                                                     <td><span><?php echo e($act->egov_id); ?></span></td>
                                                                                     <td><span><?php echo e($act->title); ?></span></td>
@@ -353,11 +351,11 @@
                                                                                     <td><span><?php echo e($act->no_of_days); ?></span></td>
                                                                                     
                                                                                     
-                                                                                    
+
                                                                                     <?php if(!isset($export) || !$export): ?>
                                                                                     <td class="font-medium space-x-2 rtl:space-x-reverse">
                                                                                          <!--modal Start Here-->
-                                                                                        <?php if ($act->validation_status === 'invalid'): ?>
+                                                                                        <?php if($act->validation_status === 'invalid'): ?>: 
                                                                                             <div class="hs-tooltip ti-main-tooltip text-center">
                                                                                                 <button data-hs-overlay="#reason_view_modal<?php echo e($i); ?>"
                                                                                                         class="hs-dropdown-toggle m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary">
@@ -436,8 +434,8 @@
                                                                                                                         //alert("Validation errors");
 
                                                                                                                     // document.getElementById('btn'+<?php echo e(old('modal_no')); ?>).click();
-                                                                                                                    };   
-                                                                                                                
+                                                                                                                    };
+
                                                                                                                 </script>
                                                                                                             <?php endif; ?>
                                                                                                         </div>
@@ -468,7 +466,7 @@
                                                                                                                             <option value="#">Choose Role</option>
                                                                                                                             <option value="Participant" <?php echo e(($act->role=='Participant'? 'selected':'')); ?>>Participant</option>
                                                                                                                             <option value="Resource Person" <?php echo e(($act->role=='Resource Person'? 'selected':'')); ?>>Resource Person</option>
-                                                                                                                            
+
                                                                                                                         </select>
                                                                                                                             <?php if($errors->has('edit_role')): ?>
                                                                                                                             <div class="text-red-700"><?php echo e($errors->first('edit_title')); ?></div>
@@ -507,7 +505,7 @@
                                                                                                                         <?php endif; ?>
                                                                                                                         <div id="categoryError" class="error text-red-700"></div>
                                                                                                                     </div>
-                                    
+
                                                                                                                     <div class="max-w-sm space-y-3 pb-6">
                                                                                                                         <label for="" class="ti-form-label">Sponsored:<span class="text-red-500">*</span></label>
                                                                                                                         <select class="ti-form-select sponsored_type sponsored" name="edit_sponsored"  required>
@@ -520,7 +518,7 @@
                                                                                                                         <?php endif; ?>
                                                                                                                         <div id="sponsoredError" class="error text-red-700"></div>
                                                                                                                     </div>
-                                                                                                                    
+
                                                                                                                 </div>
                                                                                                                 <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                                                                     
@@ -550,12 +548,12 @@
 
                                                                                                                     <div class="flex max-w-sm space-y-3 pb-6">
                                                                                                                         <label for="" class="ti-form-label">From Date :<span class="text-red-500">*</span></label>
-                                                                                                                                                                    
+
                                                                                                                         <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
                                                                                                                             <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                                                                                     class="ri ri-calendar-line"></i></span>
                                                                                                                         </div>
-                                                                        
+
                                                                                                                         <input type="date" name="edit_from_date"
                                                                                                                             class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date attended_from_date_edit"
                                                                                                                             required placeholder="Choose date" value="<?php echo e($act->from_date); ?>">
@@ -570,7 +568,7 @@
                                                                                                                                 <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                                                                                         class="ri ri-calendar-line"></i></span>
                                                                                                                             </div>
-                                                                            
+
                                                                                                                             <input type="date" name="edit_to_date"
                                                                                                                                 class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date attended_to_date_edit"
                                                                                                                                 required placeholder="Choose date" value="<?php echo e($act->to_date); ?>">
@@ -581,7 +579,7 @@
                                                                                                                     </div>
                                                                                                                 </div>
                                                                                                                 <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
-                                                                                                                    
+
                                                                                                                     <div class="max-w-sm space-y-3 pb-6">
                                                                                                                         <label for="" class="ti-form-label">No Of Days :</label>
                                                                                                                         <input type="text" name="edit_no_of_days" class="ti-form-input no_of_days_attended_edit" value="<?php echo e($act->no_of_days); ?>" readonly placeholder="enter number of days">
@@ -605,11 +603,11 @@
                                                                                                                             <div id="docEditError" class="error text-red-700"></div>
                                                                                                                         </div>
                                                                                                                     </div>
-                                                                                                                </div>    
+                                                                                                                </div>
                                                                                                                 <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                                                                     <input type="hidden" name="validation_status" value="updated">
 
-                                                                                                                </div>        
+                                                                                                                </div>
                                                                                                             </div>
                                                                                                             <div class="ti-modal-footer">
                                                                                                                 <button type="button"
@@ -617,19 +615,19 @@
                                                                                                                     data-hs-overlay="#professional_activity_edit_modal<?php echo e($i); ?>">
                                                                                                                     Close
                                                                                                                 </button>
-                                                                                                                    
+
                                                                                                                 <input type="submit" class="ti-btn  bg-warning text-white hover:bg-warning  focus:ring-primary  dark:focus:ring-offset-white/10" value="Update"/>
-                                                                                                                    
+
                                                                                                             </div>
-                                                                                                            
-                                                                                                        </form>  
+
+                                                                                                        </form>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="hs-tooltip ti-main-tooltip">
                                                                                             <form action="<?php echo e(route('Teaching.professionalactivities.attended.destroy',$act->id)); ?>" method="post">
-                                                                                            
+
                                                                                                 <button onclick="return confirm('Are you Sure')"
                                                                                                     class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
                                                                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>
@@ -645,16 +643,14 @@
                                                                                         </div>
                                                                                     </td>
                                                                                     <?php endif; ?>
-                                                                            </tr>
-                                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                                                                                <tr>
-                                                                                    <td>no records</td>
                                                                                 </tr>
-                                                                                <?php endif; ?>
-                                                                        
+                                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                                                                
+                                                                            <?php endif; ?>
+
                                                                         <?php endif; ?>
-                                                                
-                                                                
+
+
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -666,10 +662,10 @@
                                                             <!--Professional Activity Conducted-->
                                                             <div class="flex">
                                                                 <h5 class="box-title my-auto">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"><path d="M22 21H2V19H3V4C3 3.44772 3.44772 3 4 3H18C18.5523 3 19 3.44772 19 4V9H21V19H22V21ZM17 19H19V11H13V19H15V13H17V19ZM17 9V5H5V19H11V9H17ZM7 11H9V13H7V11ZM7 15H9V17H7V15ZM7 7H9V9H7V7Z"></path></svg> 
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"><path d="M22 21H2V19H3V4C3 3.44772 3.44772 3 4 3H18C18.5523 3 19 3.44772 19 4V9H21V19H22V21ZM17 19H19V11H13V19H15V13H17V19ZM17 9V5H5V19H11V9H17ZM7 11H9V13H7V11ZM7 15H9V17H7V15ZM7 7H9V9H7V7Z"></path></svg>
                                                                     Professional Activity Conducted Details
                                                                 </h5>
-                                                            </div> 
+                                                            </div>
                                                             <div class="flex">
                                                                 <button type="button" id="conducted_btn" class="hs-dropdown-toggle ti-btn ti-btn-primary float-right" data-hs-overlay="#professional_activity_conducted">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M4 3H20C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM5 5V19H19V5H5ZM11 11V7H13V11H17V13H13V17H11V13H7V11H11Z" fill="rgba(255,255,255,1)"></path></svg>
@@ -704,11 +700,11 @@
                                                                                                 //alert('conducted clicked');
                                                                                                 $('#conducted_btn').trigger("click");
 
-                                                                                        }); 
+                                                                                        });
                                                                                     </script>
                                                                                 <?php endif; ?>
                                                                             </div>
-                                                                            <form action="<?php echo e(route('Teaching.professionalactivities.conducted.store')); ?>" method="post" enctype="multipart/form-data"> 
+                                                                            <form action="<?php echo e(route('Teaching.professionalactivities.conducted.store')); ?>" method="post" enctype="multipart/form-data">
                                                                                 <?php echo csrf_field(); ?>
                                                                                 <div class="ti-modal-body">
                                                                                     <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
@@ -745,7 +741,7 @@
                                                                                             <div id="pro_con_organizerNameError" class="error text-red-700"></div>
                                                                                         </div>
                                                                                         <div class="max-w-sm space-y-3 pb-6">
-                                                                                            <label for="" class="ti-form-label font-bold">Co Organizer :</label>
+                                                                                            <label for="" class="ti-form-label font-bold">Co Organizer : <span class="text-red-500">*</span></label>
                                                                                             <input type="text" name="con_co_organizer" class="ti-form-input" placeholder="Co Organizer" id="pro_cond_co_organizer">
                                                                                             <?php if($errors->has('con_co_organizer')): ?>
                                                                                                 <div class="text-red-700"><?php echo e($errors->first('con_co_organizer')); ?></div>
@@ -783,9 +779,9 @@
                                                                                             <?php endif; ?>
                                                                                             <div id="pro_con_sponsoredNameError" class="error text-red-700"></div>
                                                                                         </div>
-                                                                                        
+
                                                                                     </div>
-                                                    
+
                                                                                     <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                                         <div class="max-w-sm space-y-3 pb-6 sponsoring_agency_name_address">
                                                                                             <label for="" class="ti-form-label  font-bold">Sponsoring Agency Name Address:</label>
@@ -802,7 +798,7 @@
                                                                                                 <option value="Coordinator">Coordinator</option>
                                                                                                 <option value="Convenor">Convenor</option>
                                                                                                 <option value="Member">Member</option>
-                                                                                                
+
                                                                                             </select>
                                                                                             <?php if($errors->has('con_role')): ?>
                                                                                                 <div class="text-red-700"><?php echo e($errors->first('con_role')); ?></div>
@@ -813,12 +809,12 @@
                                                                                     <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                                         <div class="flex max-w-sm space-y-3 pb-6">
                                                                                             <label for="" class="ti-form-label font-bold">From Date:<span class="text-red-500">*</span></label>
-                                                                                            
+
                                                                                             <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
                                                                                                 <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                                                         class="ri ri-calendar-line"></i></span>
                                                                                             </div>
-                                            
+
                                                                                             <input type="text" name="con_from_date" id="pro_cond_from_date"
                                                                                                 class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date conducted_from_date"
                                                                                                     required placeholder="Choose date" >
@@ -830,7 +826,7 @@
 
                                                                                         <div class="flex max-w-sm space-y-3 pb-6">
                                                                                             <label for="" class="ti-form-label font-bold">To Date:<span class="text-red-500">*</span></label>
-                                                                                            
+
                                                                                             <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
                                                                                                 <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                                                         class="ri ri-calendar-line"></i></span>
@@ -842,10 +838,10 @@
                                                                                                 <div class="text-red-700"><?php echo e($errors->first('con_to_date')); ?></div>
                                                                                             <?php endif; ?>
                                                                                             <div id="pro_con_todateError" class="error text-red-700"></div>
-                                                                                    
+
                                                                                         </div>
                                                                                     </div>
-                                                    
+
                                                                                     <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                                             <label for="" class="ti-form-label pt-4 font-bold">Place : <span class="text-red-500">*</span></label>
@@ -854,9 +850,9 @@
                                                                                                 <div class="text-red-700"><?php echo e($errors->first('con_place')); ?></div>
                                                                                             <?php endif; ?>
                                                                                             <div id="pro_con_placeNameError" class="error text-red-700"></div>
-                                                                                            
+
                                                                                         </div>
-                                                                                        
+
                                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                                             <label for="" class="ti-form-label pt-4 font-bold">No Of Days:<span class="text-red-500">*</span></label>
                                                                                             <input type="text" name="con_no_of_days" class="ti-form-input no_of_days_conducted" required readonly placeholder="No of Days" id="pro_cond_no_of_days">
@@ -889,19 +885,19 @@
                                                                                     data-hs-overlay="#professional_activity_conducted">
                                                                                     Close
                                                                                     </button>
-                                                                                    
+
                                                                                     <input type="submit" id="profssional_activity_conducted_add_btn" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Add"/>
-                                                                                    
+
                                                                                 </div>
-                                                                            </form>  
+                                                                            </form>
                                                                         </div>
                                                                     </div>
-                                                                </div> 
-                                                        
-                                                                <!-- modal Ending--> 
-                                                            
+                                                                </div>
+
+                                                                <!-- modal Ending-->
+
                                                             </div>
-                                                            
+
                                                             <!-- tabel content-->
                                                             <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto">
                                                                 <div class="flex justify-end mt-4">
@@ -934,13 +930,13 @@
                                                                         $i = 1;
                                                                     ?>
                                                                     <tbody class="">
-                                                                        
+
                                                                         <?php if($staff->professional_activity_conducted !=null): ?>
                                                                             <?php $__empty_1 = true; $__currentLoopData = $staff->professional_activity_conducted; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $conduct): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                                                        
+
                                                                                 
                                                                                 <tr style="<?php if($conduct->validation_status =='invalid'): ?> background-color: #ffcccc; <?php elseif($conduct->validation_status =='updated'): ?> background-color: #fff2cc; <?php elseif($conduct->validation_status =='valid'): ?> background-color: #ccffcc; <?php endif; ?>">
-                                                                                    
+
                                                                                     <td><span><?php echo e($i++); ?></span></td>
                                                                                     <td><span><?php echo e($conduct->egov_id); ?></span></td>
                                                                                     <td><span><?php echo e($conduct->title); ?></span></td>
@@ -957,7 +953,7 @@
                                                                                     <td><span><?php echo e($conduct->no_of_days); ?></span></td>
                                                                                     <td><span><?php echo e($conduct->role); ?></span></td>
                                                                                     
-                                                                                    
+
                                                                                     <?php if(!isset($export) || !$export): ?>
                                                                                     <td class="font-medium space-x-2 rtl:space-x-reverse">
                                                                                          <!--modal Start Here-->
@@ -968,7 +964,7 @@
                                                                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                                                                                                     
                                                                                                     <path d="M14 14.252V16.3414C13.3744 16.1203 12.7013 16 12 16C8.68629 16 6 18.6863 6 22H4C4 17.5817 7.58172 14 12 14C12.6906 14 13.3608 14.0875 14 14.252ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11ZM19 17.5858L21.1213 15.4645L22.5355 16.8787L20.4142 19L22.5355 21.1213L21.1213 22.5355L19 20.4142L16.8787 22.5355L15.4645 21.1213L17.5858 19L15.4645 16.8787L16.8787 15.4645L19 17.5858Z"></path></svg>
-                                                                                                    
+
                                                                                                     <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700" role="tooltip">reason</span>
                                                                                                 </button>
                                                                                                 <div id="reason_view_modal<?php echo e($i); ?>" class="hs-overlay hidden ti-modal">
@@ -1043,10 +1039,10 @@
                                                                                                                     //alert(899);
                                                                                                                     // document.getElementById('btn'+<?php echo e(old('modal_no')); ?>).click();
 
-                                                                                                                    };   
-                                                                                                                
+                                                                                                                    };
+
                                                                                                                 </script>
-                                                                                                            <?php endif; ?>   
+                                                                                                            <?php endif; ?>
                                                                                                         </div>
                                                                                                         <form  action="<?php echo e(route('Teaching.professionalactivities.conducted.update',$conduct->id)); ?>" enctype="multipart/form-data" method="post">
                                                                                                             <?php echo csrf_field(); ?>
@@ -1073,7 +1069,7 @@
                                                                                                                             <div class="text-red-700"><?php echo e($errors->first('e_level')); ?></div>
                                                                                                                         <?php endif; ?>
                                                                                                                     </div>
-                                                                                                                    
+
                                                                                                                 </div>
                                                                                                                 <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                                                                     <div class="max-w-sm space-y-3 pb-6">
@@ -1094,7 +1090,7 @@
                                                                                                                         <label for="" class="ti-form-label">Category : <span class="text-red-500">*</span></label>
                                                                                                                         <select class="ti-form-select" name="e_category">
                                                                                                                             <option value="#">Choose Category</option>
-                                
+
                                                                                                                             <option value="Workshop" <?php echo e(($conduct->category=='Workshop'? 'selected':'')); ?>>Workshop</option>
                                                                                                                             <option value="FDP" <?php echo e(($conduct->category=='FDP'? 'selected':'')); ?>>FDP</option>
                                                                                                                             <option value="Seminar" <?php echo e(($conduct->category=='Seminar'? 'selected':'')); ?>>Seminar</option>
@@ -1147,7 +1143,7 @@
                                                                                                                             <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                                                                                 class="ri ri-calendar-line"></i></span>
                                                                                                                         </div>
-                                                                        
+
                                                                                                                         <input type="date" name="e_from_date"
                                                                                                                             class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date conducted_from_date_edit"
                                                                                                                             required placeholder="Choose date" value="<?php echo e($conduct->from_date); ?>">
@@ -1177,7 +1173,7 @@
                                                                                                                             <div class="text-red-700"><?php echo e($errors->first('e_place')); ?></div>
                                                                                                                         <?php endif; ?>
                                                                                                                     </div>
-                                    
+
                                                                                                                     <div class="max-w-sm space-y-3 pb-6">
                                                                                                                         <label for="" class="ti-form-label">No Of Days : </label>
                                                                                                                         <input type="text" name="e_no_of_days" class="ti-form-input no_of_days_conducted_edit" value="<?php echo e($conduct->no_of_days); ?>" required readonly placeholder="enter number of days">
@@ -1205,9 +1201,9 @@
                                                                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                                                                         <input type="hidden" name="validation_status" value="updated">
 
-                                                                                                                    </div>     
+                                                                                                                    </div>
                                                                                                                 </div>
-                                                                                                            
+
                                                                                                             </div>
                                                                                                             <div class="ti-modal-footer">
                                                                                                                 <button type="button"
@@ -1216,16 +1212,16 @@
                                                                                                                     Close
                                                                                                                 </button>
                                                                                                                 <input type="submit" class="ti-btn  bg-warning text-white hover:bg-warning  focus:ring-primary  dark:focus:ring-offset-white/10" value="Update"/>
-                                                                                                                    
+
                                                                                                             </div>
-                                                                                                        </form>  
+                                                                                                        </form>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
-                                                                                    
+
                                                                                             <div class="hs-tooltip ti-main-tooltip">
                                                                                                 <form action="<?php echo e(route('Teaching.professionalactivities.conducted.destroy',$conduct->id)); ?>" method="post">
-                                                                                                
+
                                                                                                     <button onclick="return confirm('Are you Sure')"
                                                                                                         class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
                                                                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>
@@ -1244,14 +1240,12 @@
                                                                                     <?php endif; ?>
                                                                                 </tr>
                                                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                                                                                <tr>
-                                                                                <td>no records</td>
-                                                                                </tr>
-                                                                                <?php endif; ?>
-                                                                        
+
+                                                                            <?php endif; ?>
+
                                                                         <?php endif; ?>
-                                                                
-                                                                
+
+
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -1259,25 +1253,25 @@
                                                         
                                                     </div>    
                                             </div>
-                                    
+
                                         </div>
-                                    
+
                                     </div>
 
                             </div><!-- end of div colspan 9-->
                         </div>
                         <!-- End::row-1 -->
-                    </div>       
+                    </div>
 
         </div>
-                    
-        <!-- Ends::main-content -->
-                    
 
-                    
+        <!-- Ends::main-content -->
+
+
+
 
     </div>
-                
+
 
 <?php $__env->stopSection(); ?>
 
@@ -1291,16 +1285,16 @@
 
         <!-- FORM-LAYOUT JS -->
         <?php echo app('Illuminate\Foundation\Vite')('resources/assets/js/profile-settings.js'); ?>
-        
+
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"
         ></script>
         <!-- pro activity other sponsored code start-->
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-        
+
         <!-- pro activity other sponsored code Ends-->
-        
+
         <script>
             $(document).ready(function(){
 
@@ -1323,26 +1317,26 @@
                     if(attended_to_date != ""){
                         if(attended_from_date == attended_to_date){
                             $('.no_of_days_attended').removeClass('border border-red-500 focus:border-blue-500');
-                            
+
                             $('.no_of_days_attended').val(1); // when both from date and to date are same, it means the no of days should be 1.
-                            
+
                         }else if(attended_from_date > attended_to_date){
                             $('.no_of_days_attended').val(0);
                             $('.no_of_days_attended').addClass('border border-red-500 focus:border-blue-500');
                             $('.attended_to_date').val();
                             $('.attended_to_date').focus();
-                        
+
                         }else{
                             $('.no_of_days_attended').removeClass('border border-red-500 focus:border-blue-500');
-                            var startDay = new Date(attended_from_date);  
-                            var endDay = new Date(attended_to_date);  
+                            var startDay = new Date(attended_from_date);
+                            var endDay = new Date(attended_to_date);
 
-                        
-                            // Determine the time difference between two dates     
-                            var millisBetween = endDay.getTime() - startDay.getTime();  
-                            
-                            // Determine the number of days between two dates  
-                            var days = millisBetween / (1000 * 3600 * 24);  
+
+                            // Determine the time difference between two dates
+                            var millisBetween = endDay.getTime() - startDay.getTime();
+
+                            // Determine the number of days between two dates
+                            var days = millisBetween / (1000 * 3600 * 24);
                             var days=days+1; //for acurate no calculation.
 
                             $('.no_of_days_attended').val(days);
@@ -1351,8 +1345,8 @@
                             $('.attended_from_date').focus();
                             alert('Please fill the from date');
                     }
-                    
-                    
+
+
 
                 });
 
@@ -1372,7 +1366,7 @@
                         if(attended_from_date_edit == attended_to_date_edit){
                             //when both dates are same , then no of days would be 1.
                             $('.no_of_days_attended_edit').removeClass('border border-red-500 focus:border-blue-500');
-                            
+
                             $('.no_of_days_attended_edit').val(1);
                         }else if(attended_from_date_edit > attended_to_date_edit){
                             //alert('not correct')
@@ -1383,34 +1377,34 @@
                             //$('.no_of_days_attended_edit').val(days);
                         }else{
                             $('.no_of_days_attended_edit').removeClass('border border-red-500 focus:border-blue-500');
-                            
-                            var startDay = new Date(attended_from_date_edit);  
-                            var endDay = new Date(attended_to_date_edit);  
+
+                            var startDay = new Date(attended_from_date_edit);
+                            var endDay = new Date(attended_to_date_edit);
 
                             //alert(startDay+'-'+endDay);
 
-                            // Determine the time difference between two dates     
-                            var millisBetween = endDay.getTime() - startDay.getTime();  
-                            
-                            // Determine the number of days between two dates  
+                            // Determine the time difference between two dates
+                            var millisBetween = endDay.getTime() - startDay.getTime();
+
+                            // Determine the number of days between two dates
                             var days = millisBetween / (1000 * 3600 * 24);
-                            days =  days+1;  
+                            days =  days+1;
                             $('.no_of_days_attended_edit').val(days);
                         }
 
-                        
+
                     }else{
                         $('.attended_from_date_edit').focus();
                         alert('Please fill the from date');
                     }
-                    
+
                     //alert(millisBetween);
-                    
+
 
 
                 });
 
-                
+
 
                 //for calculating the no of days for professional activities conducted (Adding)
                 $(document).on('change', '.conducted_to_date',function(){
@@ -1422,7 +1416,7 @@
                     if(conducted_from_date != ""){
                         if(conducted_from_date == conducted_to_date){
                             $('.no_of_days_conducted').removeClass('border border-red-500 focus:border-blue-500');
-                            
+
                             $('.no_of_days_conducted').val(1);
                         }else if(conducted_from_date > conducted_to_date){
                             $('.no_of_days_conducted').val(0);
@@ -1431,26 +1425,26 @@
                             $('.conducted_to_date').focus();
                         }else{
                             $('.no_of_days_conducted').removeClass('border border-red-500 focus:border-blue-500');
-                            
-                            var startDay = new Date(conducted_from_date);  
-                            var endDay = new Date(conducted_to_date);  
+
+                            var startDay = new Date(conducted_from_date);
+                            var endDay = new Date(conducted_to_date);
 
                             //alert(startDay+'-'+endDay);
 
-                            // Determine the time difference between two dates     
-                            var millisBetween = endDay.getTime() - startDay.getTime();  
-                            
-                            // Determine the number of days between two dates  
-                            var days = millisBetween / (1000 * 3600 * 24); 
-                            days=days+1; 
+                            // Determine the time difference between two dates
+                            var millisBetween = endDay.getTime() - startDay.getTime();
+
+                            // Determine the number of days between two dates
+                            var days = millisBetween / (1000 * 3600 * 24);
+                            days=days+1;
                             $('.no_of_days_conducted').val(days);
                         }
-                        
+
                     }else{
                         $('.conducted_from_date').focus();
                         alert('Please fill the from date');
                     }
-                    
+
                     //alert(millisBetween);
                     });
 
@@ -1465,7 +1459,7 @@
 
                                 if(conducted_from_date_edit == conducted_to_date_edit){
                                     $('.no_of_days_conducted_edit').removeClass('border border-red-500 focus:border-blue-500');
-                                    
+
                                     $('.no_of_days_conducted_edit').val(1);
                                 }else if(conducted_from_date_edit > conducted_to_date_edit){
                                     $('.no_of_days_conducted_edit').val(0);
@@ -1474,26 +1468,26 @@
                                     $('.conducted_to_date_edit').focus();
                                 }else{
                                     $('.no_of_days_conducted_edit').removeClass('border border-red-500 focus:border-blue-500');
-                                    
-                                    var startDay = new Date(conducted_from_date_edit);  
-                                    var endDay = new Date(conducted_to_date_edit);  
+
+                                    var startDay = new Date(conducted_from_date_edit);
+                                    var endDay = new Date(conducted_to_date_edit);
 
                                     //alert(startDay+'-'+endDay);
 
-                                    // Determine the time difference between two dates     
-                                    var millisBetween = endDay.getTime() - startDay.getTime();  
-                                    
-                                    // Determine the number of days between two dates  
+                                    // Determine the time difference between two dates
+                                    var millisBetween = endDay.getTime() - startDay.getTime();
+
+                                    // Determine the number of days between two dates
                                     var days = millisBetween / (1000 * 3600 * 24);
-                                    days=days+1;  
+                                    days=days+1;
                                     $('.no_of_days_conducted_edit').val(days);
                                 }
-                                
+
                             }else{
                                 $('.conducted_from_date').focus();
                                 alert('Please fill the from date');
                             }
-                            
+
                             //alert(millisBetween);
                     });
 
@@ -1502,60 +1496,60 @@
                     $(document).on('change','.sponsored_type',function(){
                     //   alert('changed');
                         if($(this).val() == "Yes"){
-                            //if yes 
+                            //if yes
                             $('.sponsored_by').show();
-                            
+
 
                         }else{
                             //if no
                             $('.sponsored_by').hide();
                             $('.otherSponsor').hide();
-                            
+
                         }
                     });
 
 
-                
+
                     //professional activity conducted
                     $(document).on('change','.sponsored_type_conducted',function(){
                         //   alert('changed');
                         if($(this).val() == "Yes"){
-                            //if yes 
+                            //if yes
                             $('.sponsoring_agency_name_address').show();
-                            
+
 
                         }else{
                             //if no
                             $('.sponsoring_agency_name_address').hide();
-                            
+
                         }
                     });
 
                     //Validation for Pro Activity Attended
-               
+
                     //alert('Hello from jquery');
                     new DataTable('#activity_attended_table');
-                    
+
                     $(document).on('click','.professional_activity_edit_modal_click',function(){
-                        //var 
+                        //var
                         var attended_modal_no = $(this).attr("btn-val");
-                        
+
                         //alert($(this).find('.caste_edit_modal_no').val());
-                        $('.attended_modal_no').val(attended_modal_no); 
+                        $('.attended_modal_no').val(attended_modal_no);
                     });
 
 
                     //Validation for Pro Activity Conducted
-                
+
                     //alert('Hello from jquery');
                     new DataTable('#activity_conducted_table');
-                    
+
                     $(document).on('click','._edit_modal_click',function(){
-                        //var 
+                        //var
                         var conducted_modal_no = $(this).attr("btn-val");
-                        
+
                         //alert($(this).find('.caste_edit_modal_no').val());
-                        $('.conducted_modal_no').val(conducted_modal_no); 
+                        $('.conducted_modal_no').val(conducted_modal_no);
                     });
 
                   //  $(document).on('submit','#proattended_form',function(){
@@ -1566,7 +1560,7 @@
                     $(document).on('click','#professional_activity_attended_add_btn',function(e){
                         //alert('clicked');
                         //e.preventDefault();
-                        
+
                         var pro_att_title = $('#pro_att_title').val();
                         var pro_att_organizer = $('#pro_att_organizer').val();
                         var pro_att_role =  $('#pro_att_role').val();
@@ -1583,9 +1577,9 @@
                         var pro_att_doc = $('#pro_att_doc').val();
 
                         var flag = false;
-                        
+
                         //alert(pro_att_title+'-'+pro_att_organizer+'-'+pro_att_role+'-'+pro_att_level+'-'+pro_att_category+'-'+pro_att_sponsored+'-'+pro_att_sponsoredby+'-'+pro_att_otherSponsor+'-'+pro_att_from_date+'-'+pro_att_to_date+'-'+pro_att_no_of_days);
-                        
+
                         if(pro_att_title == ''){
                             $('#pr_att_titleNameError').text('Title is missing');
                             flag = true;
@@ -1601,7 +1595,7 @@
                             $('#pr_att_organizerError').text('Please fill the correct value');
                             flag = true;
                         }
-                        
+
                         if(pro_att_role == '#'){
                             //alert('# choosen');
                             $('#pro_att_roleError').text('Please Choose a correct option');
@@ -1764,7 +1758,7 @@
         </script>
 
         <!--Export to Excel professional activity attended-->
-        
+
     <script>
         $(document).ready(function () {
             $('#exportToExcel').on('click', function () {
@@ -1839,6 +1833,7 @@
                 });
             });
         </script>
-        
+
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.components.staff.master-teaching', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\laravel Apps\gitoffice\resources\views/Staff/Teaching/professional_activity.blade.php ENDPATH**/ ?>

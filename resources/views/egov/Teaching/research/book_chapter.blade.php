@@ -7,7 +7,7 @@
 
         <!-- FLATPICKR CSS -->
         <link rel="stylesheet" href="{{asset('build/assets/libs/flatpickr/flatpickr.min.css')}}">
-        
+
 @endsection
 
 @section('content')
@@ -48,7 +48,7 @@
                                             Welcome E-Governance Admin, Mathematics
                                             @elseif(session('deptid')==14)
                                             Welcome E-Governance Admin, Chemistry
-                                        @endif 
+                                        @endif
                                     </span>
                                 </h3>
                             </div>
@@ -59,12 +59,12 @@
                                     <i class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
                                 </a>
                                 </li>
-                                
-                                
+
+
                             </ol>
                         </div>
                         <!-- Page Header Close -->
-                        
+
                     </div>
                     <!-- Start::main-content -->
                     <div class="grid grid-cols-12 gap-x-6">
@@ -75,7 +75,7 @@
                                 <div class="box-body">
                                     <div class="flex">
                                         <div class="ltr:mr-2 rtl:ml-2">
-                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20 
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
                                                 @if($books_chapters_count->national_count == 0) text-red-500 @endif">
                                                 <i class="ti ti-users text-2xl leading-none"></i>
                                             </div>
@@ -84,7 +84,7 @@
                                             <p class="text-sm font-bold">National</p>
                                             <div class="flex justify-between items-center">
                                                 <div class="flex flex-col">
-                                                    <h5 class="mb-0 text-2xl font-semibold 
+                                                    <h5 class="mb-0 text-2xl font-semibold
                                                         @if($books_chapters_count->national_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
                                                         {{ $books_chapters_count->national_count }}
                                                     </h5>
@@ -103,7 +103,7 @@
                                 <div class="box-body">
                                     <div class="flex">
                                         <div class="ltr:mr-2 rtl:ml-2">
-                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20 
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
                                                 @if($books_chapters_count->international_count == 0) text-red-500 @endif">
                                                 <i class="ti ti-users text-2xl leading-none"></i>
                                             </div>
@@ -112,7 +112,7 @@
                                             <p class="text-sm font-bold">International</p>
                                             <div class="flex justify-between items-center">
                                                 <div class="flex flex-col">
-                                                    <h5 class="mb-0 text-2xl font-semibold 
+                                                    <h5 class="mb-0 text-2xl font-semibold
                                                         @if($books_chapters_count->international_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
                                                         {{ $books_chapters_count->international_count }}
                                                     </h5>
@@ -130,7 +130,7 @@
                                 <div class="box-body">
                                     <div class="flex">
                                         <div class="ltr:mr-2 rtl:ml-2">
-                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20 
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
                                                 @if($books_chapters_count->book_count == 0) text-red-500 @endif">
                                                 <i class="ti ti-users text-2xl leading-none"></i>
                                             </div>
@@ -139,7 +139,7 @@
                                             <p class="text-sm font-bold">Book</p>
                                             <div class="flex justify-between items-center">
                                                 <div class="flex flex-col">
-                                                    <h5 class="mb-0 text-2xl font-semibold 
+                                                    <h5 class="mb-0 text-2xl font-semibold
                                                         @if($books_chapters_count->book_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
                                                         {{ $books_chapters_count->book_count }}
                                                     </h5>
@@ -157,7 +157,7 @@
                                 <div class="box-body">
                                     <div class="flex">
                                         <div class="ltr:mr-2 rtl:ml-2">
-                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20 
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
                                                 @if($books_chapters_count->chapter_count == 0) text-red-500 @endif">
                                                 <i class="ti ti-users text-2xl leading-none"></i>
                                             </div>
@@ -166,7 +166,7 @@
                                             <p class="text-sm font-bold">Chapter</p>
                                             <div class="flex justify-between items-center">
                                                 <div class="flex flex-col">
-                                                    <h5 class="mb-0 text-2xl font-semibold 
+                                                    <h5 class="mb-0 text-2xl font-semibold
                                                         @if($books_chapters_count->chapter_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
                                                         {{ $books_chapters_count->chapter_count }}
                                                     </h5>
@@ -179,8 +179,29 @@
                         </div>
                         <div class="col-span-12 xl:col-span-12">
                             <div class="box">
-                                <div class="box-body">                
+                                <div class="box-body">
                                     <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
+                                        <div class="avatar-container flex py-4">
+                                            <div class="avatar-wrapper flex items-center">
+                                                <div class="avatar rounded-sm p-1 bg-green-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2 ">Valid</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                <div class="avatar rounded-sm p-1 bg-red-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2">Invalid</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                <div class="avatar rounded-sm p-1 bg-yellow-400 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2">Updated</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center">
+                                                <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-semibold ml-2">New</div>
+                                            </div>
+                                        </div>
                                         <div style="display: flex; align-items: center;">
                                             <div style="display: flex; flex-direction: column;">
                                                 <label for="fromDate" class="ti-form-label font-bold mx-3 mt-3">From Date:<span class="text-red-500">*</span></label>
@@ -312,11 +333,11 @@
                                                                                             class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
                                                                                             data-hs-overlay="#validate_edit_modal{{$i}}">
                                                                                             Close
-                                                                                        </button>      
+                                                                                        </button>
                                                                                         <input type="submit" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Update"/>
-                                                                                                    
+
                                                                                     </div>
-                                                                                </form>  
+                                                                                </form>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -325,14 +346,14 @@
                                                             </td>
                                                         @endif
 
-                                                        
-                                                    </tr> 
-                                                        
+
+                                                    </tr>
+
                                                 @endforeach
                                             </tbody>
-                                            
-                                        </table>  
-                                    </div>  
+
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -354,14 +375,14 @@
 
         <!-- FORM-LAYOUT JS -->
         @vite('resources/assets/js/profile-settings.js')
-        
+
         <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/dataTables.tailwindcss.min.js"></script>
         <script href="https://cdn.tailwindcss.com/3.3.5"></script>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-        
+
 
         <script>
             $(document).ready(function () {
@@ -373,12 +394,12 @@
                     var dateIndex = $('#book_chapter_table th:contains("Date")').index();
 
                     dataTable.search('').draw();
-                    
+
                     var allData = dataTable.rows().data().toArray();
 
                     var filteredData = allData.filter(function (row) {
                         var rowDate = moment(row[dateIndex], 'D-MMM-YYYY');
-                        
+
                         return (
                             (!fromDate || rowDate.isSameOrAfter(moment(fromDate, 'YYYY-MM-DD'))) &&
                             (!toDate || rowDate.isSameOrBefore(moment(toDate, 'YYYY-MM-DD')))
@@ -395,7 +416,7 @@
                     table.find('td:last-child').remove();
                     table.find('thead tr th:last-child').remove();
                     table.find('td').removeAttr('colspan');
-                  
+
                     table.find('td').css({
                         'border': '1px solid #000',
                         'padding': '5px'
@@ -424,17 +445,17 @@
                     if($(this).val() == 'invalid')
                     {
                         $('.reason_div').show();
-                    } else 
+                    } else
                     {
                         $('.reason_div').hide();
                     }
-                
+
                 });
             });
         </script>
-        
+
         <!--Get Selected--->
-      
+
 
 
 

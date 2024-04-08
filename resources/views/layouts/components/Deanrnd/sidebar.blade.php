@@ -84,6 +84,8 @@
                                    <li class="slide"><a href="{{url('/Deanrnd/Teaching/research/patents')}}" class="side-menu__item">Patents</a></li>
                                    <li class="slide"><a href="{{url('/Deanrnd/Teaching/research/copyrights')}}" class="side-menu__item">Copyrights</a></li>
                                    <li class="slide"><a href="{{url('/Deanrnd/Teaching/research/achivements')}}" class="side-menu__item">Achivements</a></li>
+                                   <li class="slide"><a href="{{url('/Deanrnd/Teaching/research/reviewer_editor')}}" class="side-menu__item">Reviewer/editor</a></li>
+
 
                                    
                                 </ul>

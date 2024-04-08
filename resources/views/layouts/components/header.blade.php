@@ -7,7 +7,7 @@
                     <div class="">
                         <button type="button" class="sidebar-toggle !w-100 !h-100">
                             <span class="sr-only">Toggle Navigation</span>
-                            
+
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M8 4H21V6H8V4ZM3 3.5H6V6.5H3V3.5ZM3 10.5H6V13.5H3V10.5ZM3 17.5H6V20.5H3V17.5ZM8 11H21V13H8V11ZM8 18H21V20H8V18Z"></path></svg>
                         </button>
                     </div>
@@ -15,7 +15,7 @@
                     </div>
 
                     <div class="responsive-logo">
-                        
+
                     {{-- <a class="responsive-logo-dark" href="{{url('index')}}" aria-label="Brand"><img
                         src="{{asset('build/assets/img/brand-logos/git_logo.jpg')}}" alt="logo" class="mx-auto"></a>
                     <a class="responsive-logo-light" href="{{url('index')}}" aria-label="Brand"><img
@@ -25,8 +25,8 @@
                     <div class="header-right">
                     <div class="responsive-headernav">
                         <div class="header-nav-right">
-                        
-                        
+
+
                         <div class="header-theme-mode hidden sm:block">
                             <a aria-label="anchor" class="hs-dark-mode-active:hidden flex hs-dark-mode group flex-shrink-0 justify-center items-center gap-2 h-[2.375rem] w-[2.375rem] rounded-full font-medium bg-gray-100 hover:bg-gray-200 text-gray-500 align-middle focus:outline-none focus:ring-0 focus:ring-gray-400 focus:ring-offset-0 focus:ring-offset-white transition-all text-xs dark:bg-bgdark dark:hover:bg-black/20 dark:text-white/70 dark:hover:text-white dark:focus:ring-white/10 dark:focus:ring-offset-white/10"
                             href="javascript:;" data-hs-theme-click-value="dark">
@@ -48,7 +48,7 @@
                              <svg xmlns="http://www.w3.org/2000/svg" class="hidden" viewBox="0 0 24 24" width="16" height="16"><path d="M18 7H22V9H16V3H18V7ZM8 9H2V7H6V3H8V9ZM18 17V21H16V15H22V17H18ZM8 15V21H6V17H2V15H8Z"></path></svg>
                             </a>
                         </div>
-                        
+
 
                         <div class="header-notification hs-dropdown ti-dropdown hidden sm:block"
                             data-hs-dropdown-placement="bottom-right">
@@ -138,7 +138,7 @@
                                 </div>-->
                             </div>
                         </div>
-                    
+
                         <div class="header-profile hs-dropdown ti-dropdown" data-hs-dropdown-placement="bottom-right">
                             <button id="dropdown-profile" type="button"
                                 class="hs-dropdown-toggle ti-dropdown-toggle gap-2 p-0 flex-shrink-0 h-8 w-8 rounded-full shadow-none focus:ring-gray-400 text-xs dark:focus:ring-white/10">
@@ -158,28 +158,13 @@
                                 </div>
                             </div>
                             <div class="mt-2 ti-dropdown-divider">
+                                {{-- <a href="{{url('Staff/Teaching/updateprofile')}}" class="ti-dropdown-item"> --}}
                                 <a href="{{url('#')}}" class="ti-dropdown-item">
                                     <!-- pofile logo-->
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM6 15V17H18V15H6ZM6 7V13H12V7H6ZM14 7V9H18V7H14ZM14 11V13H18V11H14ZM8 9H10V11H8V9Z"></path></svg>
                                     Profile
                                 </a>
-                                <!--<a href="{{url('mail-inbox')}}" class="ti-dropdown-item">
-                                    <i class="ti ti-inbox text-lg"></i>
-                                    Inbox
-                                </a>
-                                <a href="{{url('tasks')}}" class="ti-dropdown-item">
-                                    <i class="ti ti-clipboard-check text-lg"></i>
-                                    Task Manager
-                                </a>
-                                <a href="{{url('profile-settings')}}" class="ti-dropdown-item">
-                                    <i class="ti ti-adjustments-horizontal text-lg"></i>
-                                    Settings
-                                </a>
-                                <a href="{{url('index3')}}" class="ti-dropdown-item">
-                                    <i class="ti ti-wallet text-lg"></i>
-                                    Bal: $7,12,950
-                                </a>-->
-                                
+
                                 <a id="change_pwd_btn" data-hs-overlay="#change_password_btn" class="ti-dropdown-item">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
                                     <path d="M12 4C9.4095 4 7.10606 5.23053 5.64274 7.14274L8 9.5H2V3.5L4.21863 5.71863C6.05061 3.452 8.85558 2 12 2 17.5228 2 22 6.47715 22 12H20C20 7.58172 16.4183 4 12 4ZM4 12C4 16.4183 7.58172 20 12 20 14.5905 20 16.894 18.7695 18.3573 16.8573L16 14.5 22 14.5V20.5L19.7814 18.2814C17.9494 20.548 15.1444 22 12 22 6.47715 22 2 17.5228 2 12H4Z" fill="currentColor"></path>
@@ -190,12 +175,7 @@
 
                                 <!--code for seperate page change password-->
 
-                                {{--<a href="{{route('change_password')}}" class="ti-dropdown-item">
-                                    <!-- logout logo-->
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="rgba(0,0,0,1)"><path d="M3 18H21V6H3V18ZM1 5C1 4.44772 1.44772 4 2 4H22C22.5523 4 23 4.44772 23 5V19C23 19.5523 22.5523 20 22 20H2C1.44772 20 1 19.5523 1 19V5ZM9 10C9 9.44772 8.55228 9 8 9C7.44772 9 7 9.44772 7 10C7 10.5523 7.44772 11 8 11C8.55228 11 9 10.5523 9 10ZM11 10C11 11.6569 9.65685 13 8 13C6.34315 13 5 11.6569 5 10C5 8.34315 6.34315 7 8 7C9.65685 7 11 8.34315 11 10ZM8.0018 16C7.03503 16 6.1614 16.3907 5.52693 17.0251L4.11272 15.6109C5.10693 14.6167 6.4833 14 8.0018 14C9.52031 14 10.8967 14.6167 11.8909 15.6109L10.4767 17.0251C9.84221 16.3907 8.96858 16 8.0018 16ZM16.2071 14.7071L20.2071 10.7071L18.7929 9.29289L15.5 12.5858L13.7071 10.7929L12.2929 12.2071L14.7929 14.7071L15.5 15.4142L16.2071 14.7071Z"></path></svg>
-                                Change Password
-                                </a>--}}
-                                
+
                                 <!--code for seperate page change password-->
                                 <a href="{{route('logout')}}" class="ti-dropdown-item">
                                     <!-- logout logo-->
@@ -219,4 +199,3 @@
                 </nav>
             </header>
 
-             

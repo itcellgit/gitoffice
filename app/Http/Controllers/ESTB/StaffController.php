@@ -38,12 +38,12 @@ class StaffController extends Controller
        ->with('departments' )
        ->with('teaching_payscale')
        ->with('ntpayscale')
-       ->with('ntcpayscale')    
+       ->with('ntcpayscale')
        ->with('consolidated_teaching_pay')
        ->with('fixed_nt_pay')
        ->with('latest_employee_type')
        ->orderBy('fname')->get();
-     
+
        //        $staff = DB::table('staff')->with('designations')->with('associations')->orderBy('id')->paginate(15);
        // $designations=designation::where('status','active')->get();
        // $caste_categories = castecategory::where('status','active')->get();
@@ -51,7 +51,7 @@ class StaffController extends Controller
         $associations = association::where('status','active')->get();
         $departments = DB::table('departments')->where('status','active')->get();
         $qualifications =DB::table('qualifications')->where('status','active')->get();
-    
+
         //$payscales = teaching::
         return view('ESTB.staff.index',compact(['staff','religions','associations','departments','qualifications','filter']));
     }
@@ -69,10 +69,10 @@ class StaffController extends Controller
      */
     public function store(StorestaffRequest $request)
     {
-     
+
         //dd('Hello and welcome to store function');
         //dd($request);
-        //users table entry 
+        //users table entry
         $user_details=new User();
         $user_details->email=$request->email."@git.edu";
         $user_details->password=Hash::make('password');
@@ -108,14 +108,14 @@ class StaffController extends Controller
         $sdresult=$staff_details->save();
         $new_fixed_nt_pay=$staff_details->latest_employee_type()->createMany(
             [  //create many function takes an array of rows to be inserted in the sub table.
-                [ 
+                [
                     'staff_id'=>$staff_details->id,
                     'employee_type'=>$request->employee_type,
                 ]
             ]
         );
 
-        //insert the staff department, designation, 
+        //insert the staff department, designation,
         $sddresult=$staff_details->departments()->attach($request->departments_id,['start_date'=>$request->doj,'gcr'=>$request->gcr]);
         $sddesigresult=$staff_details->designations()->attach($request->designations_id,['start_date'=>$request->doj,'gcr'=>$request->gcr]);
         if($request->duration){
@@ -125,14 +125,14 @@ class StaffController extends Controller
         {
             $sdaresult= $staff_details->associations()->attach($request->associations_id,['start_date'=>$request->doj,'gcr'=>$request->gcr]);
         }
-      
-        
-        
+
+
+
         if($request->employee_type == "Teaching"){//Teaching payscale
-          
+
            if($request->pay_type=="Payscale")
            {
-            $sdpresult=$staff_details->teaching_payscale()->attach($request->payscale_id,['start_date'=>$request->doj,'gcr'=>$request->gcr]); 
+            $sdpresult=$staff_details->teaching_payscale()->attach($request->payscale_id,['start_date'=>$request->doj,'gcr'=>$request->gcr]);
            }
            else
             {
@@ -146,7 +146,7 @@ class StaffController extends Controller
                 $consolidatedpay->save();
             }
         }
-           
+
         else if($request->employee_type == "Non-Teaching"){
             if($request->pay_type == "Payscale"){ // for KLS pay scale
                 //dd(123);
@@ -164,9 +164,9 @@ class StaffController extends Controller
                 $fixed_nt_pay->save();
             }
         }
-       
+
         //dd(1);
-      
+
         if($uresult && $sdresult && $sddresult && $sddesigresult && $sdaresult && $sdpresult){
             $status=1;
         }
@@ -184,10 +184,10 @@ class StaffController extends Controller
     public function show( staff $staff)
     {
         //
-       
+
         $user=user::where('id',$staff->user_id)->get();
             $user=$user[0];
-       
+
         $staff=staff::where('staff.id',$staff->id)
         ->with(
             ['departments' => function ($q){
@@ -212,10 +212,10 @@ class StaffController extends Controller
         ->with('ntpayscale')
         ->with('ntcpayscale')
         ->with('latestassociation')
-            
+
             ->with(
                 ['qualifications'])
-        
+
                ->with(['consolidated_teaching_pay'=>function($q){
                 $q->latest();
                }])
@@ -225,7 +225,7 @@ class StaffController extends Controller
                 ->with('latest_employee_type')
                 ->with('latestfixedntpay','latest_consolidated_teaching_pay','latestteaching_payscale','latestntpayscale','latestntcpayscale')
                 ->first();
-      
+
        $confirmation=$staff->confirmationAssociation()->first();
        $confirmationdate=null;
        if($confirmation!=null)
@@ -240,25 +240,25 @@ class StaffController extends Controller
        $emp_type=$staff->latest_employee_type()->first();
 
        $designations = DB::table('designations')->where('status','active')->where('emp_type',$emp_type->employee_type)->where('isadditional','=',0)->get();
-    
+
        $add_designations = DB::table('designations')->where('status','active')->where('emp_type',$emp_type->employee_type)->where('isadditional','=',1)->get();
-      
+
        $payscales="";
        if($emp_type->employee_type==='Teaching')
        {
-            $payscales=DB::table('teaching_payscales')->where('status','active')->get();   
+            $payscales=DB::table('teaching_payscales')->where('status','active')->get();
        }
        else if($emp_type->employee_type==="Non-Teaching" && $staff->associations[0]->asso_name=='Confirmed'){
-           // $payscales=DB::table('ntpayscales')->where('status','active')->get(); 
+           // $payscales=DB::table('ntpayscales')->where('status','active')->get();
             $payscales=designation::with('ntpayscales')->where('status','active')->where('isadditional',0)->where('emp_type','Non-Teaching')->orderby('designations.id')->get();
        }
        else
        {
        // $payscales=DB::table('ntcpayscales')->where('status','active')->get();
        $payscales=designation::with('ntcpayscales')->where('status','active')->where('isadditional',0)->where('emp_type','Non-Teaching')->orderby('designations.id')->get();
-       
+
        }
-        
+
         $qualifications =DB::table('qualifications')->where('status','active')->get();
         return view('/ESTB/staff/view', compact(['staff','user','payscales','castecategories','religions','associations','qualifications','departments','designations','add_designations','confirmationdate']));
     }
@@ -276,7 +276,7 @@ class StaffController extends Controller
      */
     public function update(UpdatestaffRequest $request, staff $staff)
     {
-        
+
         $staff->fname=$request->fname;
         $staff->mname=$request->mname;
         $staff->lname=$request->lname;
@@ -299,7 +299,7 @@ class StaffController extends Controller
         $staff->vtu_id=$request->vtu_id;
         $staff->aicte_id=$request->aicte_id;
         $staff->date_of_confirmation=$request->date_of_confirmation;
-    
+
         $sresult=$staff->update();
         $staff->latest_employee_type()->first();
         $emp_type=$staff->latest_employee_type()->first();
@@ -311,14 +311,14 @@ class StaffController extends Controller
             ]);
             $new_fixed_nt_pay=$staff->latest_employee_type()->createMany(
                 [  //create many function takes an array of rows to be inserted in the sub table.
-                    [ 
+                    [
                         'staff_id'=>$staff->id,
                         'employee_type'=>$request->employee_type,
                     ]
                 ]
             );
         }
-       
+
         if($sresult){
             $status = 1;
         }else{
@@ -337,6 +337,59 @@ class StaffController extends Controller
         //
     }
 
-    
-   
+
+
+    //Code for filter the data from table
+    public function filterstaff_information(Request $request)
+    {
+        //dd($request);
+        $department_id = $request->input('departments_id');
+        $association_id = $request->input('associations_id');
+        $religion_id = $request->input('religion_id');
+        $designation_id = $request->input('designations_id');
+        $gender = $request->input('gender');
+
+        // dd($dept_name);
+
+        // Query staff based on filters
+        $query = staff::query()->with(['departments','staff', 'associations', 'religions', 'casteCategory']);
+
+        if ($department_id != '#') {
+            $query->whereHas('departments', function ($q) use ($department_id) {
+                $q->where('departments.id', $department_id);
+            });
+        }
+
+        if ($association_id != '#') {
+            $query->whereHas('associations', function ($q) use ($association_id) {
+                $q->where('associations.id', $association_id);
+            });
+        }
+
+        if ($religion_id != '#') {
+            $query->where('religion_id', $religion_id);
+        }
+
+        if ($designation_id != '#') {
+            $query->where('designations_id', $designation_id);
+        }
+
+        if ($gender) {
+            $query->where('gender', $gender);
+        }
+
+        // Get filtered staff data
+        $staff = $query->get();
+
+        //dd($staff);
+
+        // Fetch necessary dropdown data
+        $religions = religion::where('status', 'active')->get();
+        $associations = association::where('status', 'active')->get();
+        $departments = department::where('status', 'active')->get();
+        //$designations = designation::where('status', 'active')->get();
+
+        return view('ESTB.staff.staffinformation', compact('staff', 'religions', 'associations', 'departments'));
+    }
+
 }

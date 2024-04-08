@@ -571,4 +571,4 @@
             });
         </script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.components.staff.master-teaching', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\laravel Apps\gitoffice\resources\views/Staff/Non-Teaching/designations.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.components.staff.master-nonteaching', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\laravel Apps\gitoffice\resources\views/Staff/Non-Teaching/designations.blade.php ENDPATH**/ ?>

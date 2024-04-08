@@ -193,8 +193,28 @@ class DeanrndResearchController extends Controller
                                 ->get();
         // dd($fundedproject);
     
-        return view('/Deanrnd/Teaching/research/consultancy',compact(['consultancy']));
+        return view('/Deanrnd/Teaching/research/dean_consultancy',compact(['consultancy']));
     }
+
+    public function reviewer_editor(Request $request)
+    {
+        
+        
+        $reviewer_editor=DB::table('reviewer_editors')
+                                           
+                            ->join('staff','staff.id','=','reviewer_editors.staff_id')
+                            ->join('department_staff','department_staff.staff_id','=','staff.id')
+                            ->join('departments','departments.id','=','department_staff.department_id')
+                            ->join('employee_types','employee_types.staff_id','=','staff.id')
+                            ->where('employee_types.employee_type','=','Teaching')
+                            //->where('staff.employee_type','=','Teaching')
+                            ->select('reviewer_editors.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
+                            ->get();
+                        
+    
+        return view('/Deanrnd/Teaching/research/reviewer_editor',compact(['reviewer_editor']));
+    }
+
 
 
 
