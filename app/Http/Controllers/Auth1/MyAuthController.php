@@ -334,7 +334,7 @@ class MyAuthController extends Controller
     public function resetPassword($token)
     {
         
-       return view('auth\reset_password',(['token'=>$token]));
+       return view('auth/reset_password',(['token'=>$token]));
     }
     public function resetPasswordupdate(Request $request)
     {

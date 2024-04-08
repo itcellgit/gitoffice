@@ -7,7 +7,7 @@
 
         <!-- FLATPICKR CSS -->
         <link rel="stylesheet" href="{{asset('build/assets/libs/flatpickr/flatpickr.min.css')}}">
-        
+
 @endsection
 
 @section('content')
@@ -48,7 +48,7 @@
                                             Welcome E-Governance Admin, Mathematics
                                             @elseif(session('deptid')==14)
                                             Welcome E-Governance Admin, Chemistry
-                                        @endif 
+                                        @endif
                                     </span>
                                 </h3>
                             </div>
@@ -59,12 +59,12 @@
                                     <i class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
                                 </a>
                                 </li>
-                                
-                                
+
+
                             </ol>
                         </div>
                         <!-- Page Header Close -->
-                        
+
                     </div>
                     <!-- Start::main-content -->
                     <div class="grid grid-cols-12 gap-x-6">
@@ -76,7 +76,7 @@
                                 <div class="box-body">
                                     <div class="flex">
                                         <div class="ltr:mr-2 rtl:ml-2">
-                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20 
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
                                                 @if($teaching_publication->Q1_count == 0) text-red-500 @endif">
                                                 <i class="ti ti-users text-2xl leading-none"></i>
                                             </div>
@@ -85,7 +85,7 @@
                                             <p class="text-sm font-bold">Q1</p>
                                             <div class="flex justify-between items-center">
                                                 <div class="flex flex-col">
-                                                    <h5 class="mb-0 text-2xl font-semibold 
+                                                    <h5 class="mb-0 text-2xl font-semibold
                                                         @if($teaching_publication->Q1_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
                                                         {{ $teaching_publication->Q1_count }}
                                                     </h5>
@@ -104,7 +104,7 @@
                                 <div class="box-body">
                                     <div class="flex">
                                         <div class="ltr:mr-2 rtl:ml-2">
-                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20 
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
                                                 @if($teaching_publication->Q2_count == 0) text-red-500 @endif">
                                                 <i class="ti ti-users text-2xl leading-none"></i>
                                             </div>
@@ -113,7 +113,7 @@
                                             <p class="text-sm font-bold">Q2</p>
                                             <div class="flex justify-between items-center">
                                                 <div class="flex flex-col">
-                                                    <h5 class="mb-0 text-2xl font-semibold 
+                                                    <h5 class="mb-0 text-2xl font-semibold
                                                         @if($teaching_publication->Q2_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
                                                         {{ $teaching_publication->Q2_count }}
                                                     </h5>
@@ -132,7 +132,7 @@
                                 <div class="box-body">
                                     <div class="flex">
                                         <div class="ltr:mr-2 rtl:ml-2">
-                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20 
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
                                                 @if($teaching_publication->Q3_count == 0) text-red-500 @endif">
                                                 <i class="ti ti-users text-2xl leading-none"></i>
                                             </div>
@@ -141,7 +141,7 @@
                                             <p class="text-sm font-bold">Q3</p>
                                             <div class="flex justify-between items-center">
                                                 <div class="flex flex-col">
-                                                    <h5 class="mb-0 text-2xl font-semibold 
+                                                    <h5 class="mb-0 text-2xl font-semibold
                                                         @if($teaching_publication->Q3_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
                                                         {{ $teaching_publication->Q3_count }}
                                                     </h5>
@@ -159,7 +159,7 @@
                                 <div class="box-body">
                                     <div class="flex">
                                         <div class="ltr:mr-2 rtl:ml-2">
-                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20 
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
                                                 @if($teaching_publication->Q4_count == 0) text-red-500 @endif">
                                                 <i class="ti ti-users text-2xl leading-none"></i>
                                             </div>
@@ -168,7 +168,7 @@
                                             <p class="text-sm font-bold">Q4</p>
                                             <div class="flex justify-between items-center">
                                                 <div class="flex flex-col">
-                                                    <h5 class="mb-0 text-2xl font-semibold 
+                                                    <h5 class="mb-0 text-2xl font-semibold
                                                         @if($teaching_publication->Q4_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
                                                         {{ $teaching_publication->Q4_count }}
                                                     </h5>
@@ -186,7 +186,7 @@
                                 <div class="box-body">
                                     <div class="flex">
                                         <div class="ltr:mr-2 rtl:ml-2">
-                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20 
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
                                                 @if($teaching_publication->web_of_science_count == 0) text-red-500 @endif">
                                                 <i class="ti ti-users text-2xl leading-none"></i>
                                             </div>
@@ -195,7 +195,7 @@
                                             <p class="text-sm font-bold">Web-Science</p>
                                             <div class="flex justify-between items-center">
                                                 <div class="flex flex-col">
-                                                    <h5 class="mb-0 text-2xl font-semibold 
+                                                    <h5 class="mb-0 text-2xl font-semibold
                                                         @if($teaching_publication->web_of_science_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
                                                         {{ $teaching_publication->web_of_science_count }}
                                                     </h5>
@@ -213,7 +213,7 @@
                                 <div class="box-body">
                                     <div class="flex">
                                         <div class="ltr:mr-2 rtl:ml-2">
-                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20 
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
                                                 @if($teaching_publication->scopus_indexed_count == 0) text-red-500 @endif">
                                                 <i class="ti ti-users text-2xl leading-none"></i>
                                             </div>
@@ -222,7 +222,7 @@
                                             <p class="text-sm font-bold">ScopusIndexed</p>
                                             <div class="flex justify-between items-center">
                                                 <div class="flex flex-col">
-                                                    <h5 class="mb-0 text-2xl font-semibold 
+                                                    <h5 class="mb-0 text-2xl font-semibold
                                                         @if($teaching_publication->scopus_indexed_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
                                                         {{ $teaching_publication->scopus_indexed_count }}
                                                     </h5>
@@ -235,8 +235,29 @@
                         </div>
                         <div class="col-span-12 xl:col-span-12">
                             <div class="box">
-                                <div class="box-body">                
+                                <div class="box-body">
                                     <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
+                                        <div class="avatar-container flex py-4">
+                                            <div class="avatar-wrapper flex items-center">
+                                                <div class="avatar rounded-sm p-1 bg-green-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2 ">Valid</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                <div class="avatar rounded-sm p-1 bg-red-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2">Invalid</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                <div class="avatar rounded-sm p-1 bg-yellow-400 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2">Updated</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center">
+                                                <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-semibold ml-2">New</div>
+                                            </div>
+                                        </div>
                                         <div style="display: flex; align-items: center;">
                                             <div style="display: flex; flex-direction: column;">
                                                 <label for="fromDate" class="ti-form-label font-bold mx-3 mt-3">Date Of Publication:<span class="text-red-500">*</span></label>
@@ -279,7 +300,7 @@
                                                 @foreach ($publication as $pub)
                                                     {{-- <tr class="" @if($pub->validation_status == 'valid') style="background-color: #ccffcc; color: #006400;" @elseif($pub->validation_status =='invalid') style="background-color: #ffe6e6; color: #b30000;" @endif> --}}
                                                     <tr style="@if($pub->validation_status =='invalid') background-color: #ffcccc; @elseif($pub->validation_status =='updated') background-color: #fff2cc; @elseif($pub->validation_status =='valid') background-color: #ccffcc; @endif">
-                                                    
+
                                                         <td><span>{{ $i++ }}</span></td>
                                                         <td><span>{{ $pub->fname . ' ' . $pub->mname . ' ' . $pub->lname }}</span></td>
                                                         <td><span>{{ $pub->dept_shortname }}</span></td>
@@ -302,7 +323,7 @@
                                                         <td><span>{{ $pub->doi_number }}</span></td>
                                                         <td>
                                                             <span>
-                                                                <a href="{{ $pub->link }}" 
+                                                                <a href="{{ $pub->link }}"
                                                                 class='font-medium text-blue-600 dark:text-blue-500 hover:underline' target="_blank">
                                                                     {{ $pub->link }}
                                                                 </a>
@@ -356,7 +377,7 @@
                                                                                         </svg>
                                                                                     </button>
                                                                                 </div>
-                                                                                     <form action="{{ route('egov.Teaching.research.publication.update', $pub->id) }}" method="post"> 
+                                                                                     <form action="{{ route('egov.Teaching.research.publication.update', $pub->id) }}" method="post">
                                                                                     @csrf
                                                                                     @method('patch')
                                                                                     <div class="ti-modal-body">
@@ -380,22 +401,22 @@
                                                                                             class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
                                                                                             data-hs-overlay="#validate_edit_modal{{$i}}">
                                                                                             Close
-                                                                                        </button>      
+                                                                                        </button>
                                                                                         <input type="submit" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Update"/>
-                                                                                                    
+
                                                                                     </div>
-                                                                                </form>  
+                                                                                </form>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </td>
-                                                        @endif 
+                                                        @endif
                                                     </tr>
                                                 @endforeach
                                             </tbody>
-                                        </table>  
-                                    </div>  
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -417,7 +438,7 @@
 
         <!-- FORM-LAYOUT JS -->
         @vite('resources/assets/js/profile-settings.js')
-        
+
         <script
         src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
@@ -429,7 +450,7 @@
         <script href="https://cdn.tailwindcss.com/3.3.5"></script>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-        
+
 
 
         <!--not filering second page data-->
@@ -499,32 +520,32 @@
                 });
             });
         </script> --}}
-        
+
 
         <!-- filering Daterange  data as per requirement-->
         <script>
             $(document).ready(function () {
                 var dataTable = new DataTable('#publication');
-                
+
                 // Function to handle the filter Date Range
                 $('#filterBtn').click(function () {
                     var fromDate = $('#fromDate').val();
                     var toDate = $('#toDate').val();
                     var dateIndex = $('#publication th:contains("Date Of Publication")').index();
-                    
+
                     dataTable.search('').draw();
-                    
+
                     var allData = dataTable.rows().data().toArray();
-                    
+
                     var filteredData = allData.filter(function (row) {
                         var rowDate = moment(row[dateIndex], 'D-MMM-YYYY');
-                        
+
                         return (
                             (!fromDate || rowDate.isSameOrAfter(moment(fromDate, 'YYYY-MM-DD'))) &&
                             (!toDate || rowDate.isSameOrBefore(moment(toDate, 'YYYY-MM-DD')))
                         );
                     });
-                    
+
                     // Clear and redraw the DataTable with the filtered data
                     dataTable.clear().rows.add(filteredData).draw();
                 });
@@ -535,7 +556,7 @@
                     table.find('td:last-child').remove();
                     table.find('thead tr th:last-child').remove();
                     table.find('td').removeAttr('colspan');
-                
+
                     table.find('td').css({
                         'border': '1px solid #000',
                         'padding': '5px'
@@ -564,15 +585,15 @@
                     if($(this).val() == 'Invalid')
                     {
                         $('.reason_div').show();
-                    } else 
+                    } else
                     {
                         $('.reason_div').hide();
                     }
-                
+
                 });
             });
         </script>
 
-       
+
 
 @endsection
