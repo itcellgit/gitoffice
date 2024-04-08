@@ -18,16 +18,15 @@ class LeaveStaffEntitlementController extends Controller
      */
     public function index()
     {
-       $s=new ScheduledJobs();
-       $s->yearly_leave_entitlements();
+
          $year=Carbon::now()->year;
 
         $leave_types=leave::select('shortname')->distinct('shortname')->where('max_entitlement','>',0)->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();
-        
+
         $leave_types_taken = leave::select('shortname')->distinct('shortname')->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();// $query="select * from staff s, leaves l, leave_staff_entitlements lse where s.id=lse.staff_id and l.id=lse.leave_id and lse.status='active' and year=$year";
         // $staff=DB::select($query);
         // $leave_types_balance = leave::select('shortname')->distinct('shortname')->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();// $query="select * from staff s, leaves l, leave_staff_entitlements lse where s.id=lse.staff_id and l.id=lse.leave_id and lse.status='active' and year=$year";
-         
+
         $staff=staff::with('leave_staff_entitlements')->with('teaching_employee')->get();
 
         return view('ESTB.leaves.leave_entitlement.index',compact(['staff','leave_types','leave_types_taken','year'])); //,compact(['Leave_rules','filter']
@@ -47,7 +46,7 @@ class LeaveStaffEntitlementController extends Controller
      */
     public function store(Storeleave_staff_entitlementRequest $request)
     {
-        
+
     }
 
     /**
