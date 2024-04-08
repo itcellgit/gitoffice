@@ -7,7 +7,7 @@
 
         <!-- FLATPICKR CSS -->
         <link rel="stylesheet" href="{{asset('build/assets/libs/flatpickr/flatpickr.min.css')}}">
-        
+
 @endsection
 
 @section('content')
@@ -48,7 +48,7 @@
                                             Welcome E-Governance Admin, Mathematics
                                             @elseif(session('deptid')==14)
                                             Welcome E-Governance Admin, Chemistry
-                                        @endif 
+                                        @endif
                                     </span>
                                 </h3>
                             </div>
@@ -59,19 +59,40 @@
                                     <i class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
                                 </a>
                                 </li>
-                                
-                                
+
+
                             </ol>
                         </div>
                         <!-- Page Header Close -->
-                        
+
                     </div>
                     <!-- Start::main-content -->
                     <div class="grid grid-cols-12 gap-x-6">
                         <div class="col-span-12 xl:col-span-12">
                             <div class="box">
-                                <div class="box-body">                
+                                <div class="box-body">
                                     <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
+                                        <div class="avatar-container flex py-4">
+                                            <div class="avatar-wrapper flex items-center">
+                                                <div class="avatar rounded-sm p-1 bg-green-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2 ">Valid</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                <div class="avatar rounded-sm p-1 bg-red-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2">Invalid</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                <div class="avatar rounded-sm p-1 bg-yellow-400 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2">Updated</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center">
+                                                <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-semibold ml-2">New</div>
+                                            </div>
+                                        </div>
                                         <!-- Add the export button here -->
                                         <div class="flex justify-end mt-4">
                                             <button id="exportToExcel" class="bg-green-500 text-white px-4 py-2 rounded-md focus:outline-none">Export to Excel</button>
@@ -178,23 +199,23 @@
                                                                                             class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
                                                                                             data-hs-overlay="#validate_edit_modal{{$i}}">
                                                                                             Close
-                                                                                        </button>      
+                                                                                        </button>
                                                                                         <input type="submit" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Update"/>
-                                                                                                    
+
                                                                                     </div>
-                                                                                </form>  
+                                                                                </form>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <!--Modal Ends Here-->
                                                             </td>
-                                                        @endif  
+                                                        @endif
                                                     </tr>
                                                 @endforeach
                                             </tbody>
-                                        </table>  
-                                    </div>  
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -216,7 +237,7 @@
 
         <!-- FORM-LAYOUT JS -->
         @vite('resources/assets/js/profile-settings.js')
-        
+
         <script
         src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
@@ -237,17 +258,17 @@
                     if($(this).val() == 'invalid')
                     {
                         $('.reason_div').show();
-                    } else 
+                    } else
                     {
                         $('.reason_div').hide();
                     }
-                
+
                 });
-               
+
             });
         </script>
         <!--Export to Excel code-->
-        
+
         <script>
             $(document).ready(function () {
                 $('#exportToExcel').on('click', function () {
@@ -284,10 +305,10 @@
                 });
             });
         </script>
-       
+
         <!--Export to Excel code-->
 
-       
+
 
 
 

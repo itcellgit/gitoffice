@@ -72,20 +72,34 @@
                                 </div>
 
                                 <div class="box-body pt-0">
-                                    {{-- <nav class="-mb-0.5 flex justify-center space-x-6 rtl:space-x-reverse md:h-full md:w-48" aria-label="Tabs">
-                                        <button type="button" class="hs-tab-active:bg-primary hs-tab-active:text-white py-3 px-4 inline-flex items-center gap-2 bg-transparent text-sm font-medium text-center text-gray-500 rounded-sm hover:text-primary  dark:text-white/70 dark:hover:text-white" id="pills-with-brand-color-item-2" data-hs-tab="#pills-with-brand-color-2" aria-controls="pills-with-brand-color-2">
-                                            Publications
-                                        </button>
-                                    </nav> --}}
+
 
                                     <div class="mt-3">
                                         <!--Start of publications details-->
-
-                                        {{-- <div id="pills-with-brand-color-2" class="hidden" role="tabpanel" aria-labelledby="pills-with-brand-color-item-2"> --}}
-
                                             <div class="box border-0 shadow-none mb-0">
                                                 <div class="box-header">
                                                     <h5 class="box-title leading-none flex"><i class="ri ri-global-line ltr:mr-2 rtl:ml-2"></i>Journal Publications</h5>
+                                                    <div class="avatar-container flex py-4">
+                                                        <div class="avatar-wrapper flex items-center">
+                                                            <div class="avatar rounded-sm p-1 bg-green-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-bold ml-2 ">Valid</div>
+                                                        </div>
+
+                                                        <div class="avatar-wrapper flex items-center mx-2">
+                                                            <div class="avatar rounded-sm p-1 bg-red-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-bold ml-2">Invalid</div>
+                                                        </div>
+
+                                                        <div class="avatar-wrapper flex items-center mx-2">
+                                                            <div class="avatar rounded-sm p-1 bg-yellow-400 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-bold ml-2">Updated</div>
+                                                        </div>
+
+                                                        <div class="avatar-wrapper flex items-center">
+                                                            <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-semibold ml-2">New</div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="box-body">
                                                     <button id="publication_btn" data-hs-overlay="#add_publicaitons" class="hs-dropdown-toggle ti-btn ti-btn-primary">
@@ -602,9 +616,6 @@
                                                 </div>
 
                                             </div>
-
-                                        {{-- </div> --}}
-
                                         <!--end of publications-->
                                     </div>
                                 </div>

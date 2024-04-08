@@ -106,7 +106,7 @@ use App\Http\Controllers\Teaching\ReviewerEditorController;
 use App\Http\Controllers\NonTeaching\NT_ProfessionalActivityAttendeeController;
 use App\Http\Controllers\NonTeaching\NT_ProfessionalActivityConductedController;
 
-//Deanrnd 
+//Deanrnd
 use App\Http\Controllers\Deanrnd\DeanRndController;
 use App\Http\Controllers\Deanrnd\DeanrndResearchController;
 
@@ -167,14 +167,18 @@ Route::middleware(['cors','auth','role:'.UserRoles::SU->value,'middleware' => 'p
 //Teaching staff related routes (teaching staff Logins)
 Route::middleware(['cors','auth','role:'.UserRoles::TEACHING->value, 'prevent-back-history'])->group(function(){
 
-  
-  
+
+
   Route::get('/Teaching/dashboard',[TeachingController::class,'dashboard'])->name('Teaching.dashboard');
   Route::get('/Teaching/departments',[TeachingController::class,'departments'])->name('Teaching.departments');
   Route::get('/Teaching/associations',[TeachingController::class,'associations'])->name('Teaching.associations');
   Route::get('/Teaching/designations',[TeachingController::class,'designations'])->name('Teaching.designations');
 
   Route::get('/Teaching/construction',[TeachingController::class,'index'])->name('construction');
+
+  //Route for Update the staff personal information
+  Route::get('/Staff/Teaching/updateprofile',[TeachingController::class,'update_staff_information'])->name('Staff.Teaching.updateprofile');
+  Route::patch('/Staff/Teaching/update/{staff}',[TeachingController::class,'update'])->name('Staff.Teaching.update');
 
 
 //professional Activity  attended ssm
@@ -194,7 +198,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::TEACHING->value, 'prevent-ba
 
 
 
-  //conferences attended related NEW 
+  //conferences attended related NEW
   Route::get('/Teaching/research/conferenceactivities',[ResearchController::class,'conferenceactivity'])->name('Teaching.research.conferenceactivities');
   Route::post('/Teaching/research/conferenceactivities/attended/create',[ConferencesAttendeeController::class,'store'])->name('Teaching.research.conferenceactivities.attended.store');
   Route::patch('/Teaching/research/conferenceactivities/attended/update/{conferences_attendee}',[ConferencesAttendeeController::class,'update'])->name('Teaching.research.conferenceactivities.attended.update');
@@ -285,7 +289,7 @@ Route::post('/fetchmyleaveevents',[LeaveStaffApplicationsController::class,'fetc
 Route::post('/Teaching/{staff}/leave/create',[LeaveStaffApplicationsController::class,'store'])->name('Teaching.leaves.apply');
 Route::patch('/Teaching/{staff}/leave/{leave}/application/{leave_staff_applications}/update',[LeaveStaffApplicationsController::class,'update'])->name('Teaching.leave.leave_application.update');
 Route::post('/Teaching/{staff}/validate_leave_appln',[LeaveStaffApplicationsController::class,'validateleave']);
-}); 
+});
 
 
 //Non-Teaching staff related routes (Non-teaching staff Logins)
@@ -323,25 +327,25 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::post('/ESTB/departments/create',[DepartmentController::class,'store'])->name('ESTB.departments.store');
     Route::patch('/ESTB/departments/update/{department}',[DepartmentController::class,'update'])->name('ESTB.departments.update');
     Route::delete('/ESTB/departments/destory/{department}', [DepartmentController::class, 'destroy'])->name('ESTB.departments.destroy');
-    
+
     //search sort and filter routes for department
     Route::get('/ESTB/departments/indexfiltering', [DepartmentFilteringController::class,'indexFiltering'])->name('ESTB.departments.indexfiltering');
-  
+
     //Religion Controllers
     Route::get('/ESTB/religion',[ReligionController::class,'index'])->name('ESTB.religion');
     Route::post('/ESTB/religion/create',[ReligionController::class,'store'])->name('ESTB.religion.store');
     Route::patch('/ESTB/religion/update/{religion}',[ReligionController::class,'update'])->name('ESTB.religion.update');
     Route::delete('/ESTB/religion/destory/{religion}', [ReligionController::class, 'destroy'])->name('ESTB.religion.destroy');
-    
+
     //CasteCategory Controllers
     Route::get('/ESTB/religion/{religion}/castecategory',[ReligionController::class,'show'])->name('ESTB.religion.castecategory');
     Route::post('/ESTB/religion/{religion}/castecategory/create',[CastecategoryController::class,'store'])->name('ESTB.religion.castecategory.store');
     Route::patch('/ESTB/religion/{religion}/castecategory/update/{castecategory}',[CastecategoryController::class,'update'])->name('ESTB.religion.castecategory.update');
     Route::delete('/ESTB/religion/{religion}/castecategory/destory/{castecategory}', [CastecategoryController::class, 'destroy'])->name('ESTB.religion.castecategory.destroy');
-    
+
     //search route for caste categories.
     Route::get('/ESTB/castecategories/indexfiltering', [CasteCategoryFilteringController::class,'indexFiltering'])->name('ESTB.castecategories.indexfiltering');
-  
+
     //Designations Controllers
     Route::get('/ESTB/designations',[DesignationController::class,'index'])->name('ESTB.designations');
     Route::post('/ESTB/designations/create',[DesignationController::class,'store'])->name('ESTB.designations.store');
@@ -350,9 +354,9 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
 
     Route::get('/ESTB/designations/indexfiltering', [DesignationFilteringController::class,'indexFiltering'])->name('ESTB.designations.indexfiltering');
     //Route::get('/ESTB/designation-filtering',[DesignationController::class,'designationsDataSource']);
-  
-  
-    
+
+
+
     //Assocations Controllers
 
     Route::get('/ESTB/associations',[AssociationController::class,'index'])->name('ESTB.associations');
@@ -363,7 +367,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
 
     //Pay Scale Controllers (Non Teaching - KLS PAY Scale)
     Route::get('/ESTB/payscales/non_teaching',[NTpayscaleController::class,'index'])->name('ESTB.payscales.non_teaching');
-    Route::post('/ESTB/payscales/non_teaching/create',[NTpayscaleController::class,'store'])->name('ESTB.payscales.non_teaching.store'); 
+    Route::post('/ESTB/payscales/non_teaching/create',[NTpayscaleController::class,'store'])->name('ESTB.payscales.non_teaching.store');
     Route::patch('/ESTB/payscales/non_teaching/update/{ntpayscale}',[NTpayscaleController::class,'update'])->name('ESTB.payscales.non_teaching.update');
     Route::delete('/ESTB/payscales/non_teaching/destory/{ntpayscale}', [NTpayscaleController::class, 'destroy'])->name('ESTB.payscales.non_teaching.destroy');
     Route::get('/ESTB/payscales/non_teaching/edit/{ntpayscale}',[NTpayscaleController::class,'edit'])->name('ESTB.payscales.non_teaching.edit');
@@ -371,33 +375,36 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     //Pay Scale Controllers (Non Teaching - Consolidated)
     //ESTB/payscales/non_teaching/update/8
     //Route::get('/ESTB/payscales/non_teaching_consolidated',[NTConsolidatedPayscaleController::class,'index'])->name('ESTB.payscales.non_teaching_consolidated');
-    Route::post('/ESTB/payscales/non_teaching_consolidated/create',[NtcpayscaleController::class,'store'])->name('ESTB.payscales.non_teaching_consolidated.store'); 
+    Route::post('/ESTB/payscales/non_teaching_consolidated/create',[NtcpayscaleController::class,'store'])->name('ESTB.payscales.non_teaching_consolidated.store');
     Route::patch('/ESTB/payscales/non_teaching_consolidated/update/{ntcpayscale}',[NtcpayscaleController::class,'update'])->name('ESTB.payscales.non_teaching_consolidated.update');
     Route::delete('/ESTB/payscales/non_teaching_consolidated/destory/{ntcpayscale}', [NtcpayscaleController::class, 'destroy'])->name('ESTB.payscales.non_teaching_consolidated.destroy');
 
 
     //Pay Scale Controllers (Teaching)
     Route::get('/ESTB/payscales/teaching',[TeachingPayscaleController::class,'index'])->name('ESTB.payscales.teaching');
-    Route::post('/ESTB/payscales/teaching/create',[TeachingPayscaleController::class,'store'])->name('ESTB.payscales.teaching.store'); 
+    Route::post('/ESTB/payscales/teaching/create',[TeachingPayscaleController::class,'store'])->name('ESTB.payscales.teaching.store');
     Route::patch('/ESTB/payscales/teaching/update/{teaching_payscale}',[TeachingPayscaleController::class,'update'])->name('ESTB.payscales.teaching.update');
     Route::delete('/ESTB/payscales/teaching/destory/{teaching_payscale}',[TeachingPayscaleController::class,'destroy'])->name('ESTB.payscales.teaching.destory');
-     
+
 
     //Additional allowance (teaching and non teaching)
     Route::get('/ESTB/payscales/allowances',[AllowancesController::class,'index'])->name('ESTB.payscales.allowances');
-    Route::post('/ESTB/payscales/allowances/create',[AllowancesController::class,'store'])->name('ESTB.payscales.allowances.store'); 
+    Route::post('/ESTB/payscales/allowances/create',[AllowancesController::class,'store'])->name('ESTB.payscales.allowances.store');
     Route::patch('/ESTB/payscales/allowances/update/{allowances}',[AllowancesController::class,'update'])->name('ESTB.payscales.allowances.update');
     Route::delete('/ESTB/payscales/allowances/destory/{allowances}',[AllowancesController::class,'destroy'])->name('ESTB.payscales.allowances.destory');
-     
-    //Staff Routes 
+
+    //Staff Routes
     Route::get('/ESTB/staff',[StaffController::class,'index'])->name('ESTB.staff');
     Route::post('/ESTB/staff/create',[StaffController::class,'store'])->name('ESTB.staff.store');
     Route::get('/ESTB/staff/show/{staff}',[StaffController::class,'show'])->name('ESTB.staff.show');
     Route::patch('/ESTB/staff/update/{staff}',[StaffController::class,'update'])->name('ESTB.staff.update');
-    
+
+    //Route to fetch data from Filter
+    Route::get('/ESTB/staff/staffinformation',[StaffController::class,'filterstaff_information'])->name('ESTB.staff.staffinformation');
+
     //route for staff searching , sorting and filtering
     Route::get('/ESTB/staff/indexfiltering', [StaffFilteringController::class,'indexFiltering'])->name('ESTB.staff.indexfiltering');
-    
+
     /**************** */
     Route::get('/ESTB/staff/{staff}/qualifications',[urlcontroller::class,'qualifications'])->name('ESTB.staff.qualifications');
     Route::get('/ESTB/staff/{staff}/associations',[urlcontroller::class,'assocaitons'])->name('ESTB.staff.associations');
@@ -410,7 +417,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::patch('/ESTB/staff/designationpayscale/update/{staff}',[StaffDesignationsController::class,'update'])->name('ESTB.staff.designationpayscale.update');
     //updating association of the staff.
     Route::patch('ESTB/staff/association/update/{staff}',[StaffAssociationsController::class,'update'])->name('ESTB.staff.association.update');
-    
+
     //Routes for additional designations
     Route::post('/ESTB/staff/{staff}/additionaldesignation/create',[StaffDesignationsController::class,'createadditionaldesign'])->name('ESTB.staff.additional_designation.create');
     Route::patch('/ESTB/staff/{staff}/additionaldesignation/update/{data}',[StaffDesignationsController::class,'update_additional_desig'])->name('ESTB.staff.additional_designation.update');
@@ -420,24 +427,24 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::patch('/ESTB/staff/department/update/{staff}',[StaffDepartmentController::class,'update'])->name('ESTB.staff.department.update');
     //Upating the correcting the department information of the staff
     Route::patch('/ESTB/staff/{staff}/department/corrections/{department}',[StaffDepartmentController::class,'updatecurrent'])->name('ESTB.staff.department.correction');
-   //for deleting the staff department details when want to change the department with the condition being duration of the staff in that perticular department is within 1 month 
+   //for deleting the staff department details when want to change the department with the condition being duration of the staff in that perticular department is within 1 month
     Route::delete('/ESTB/staff/{staff}/department/destroy/{department}',[StaffDepartmentController::class,'destroy'])->name('ESTB.staff.departments.destroy');
-    
+
     //Upating the correcting the Association information of the staff
     Route::patch('/ESTB/staff/{staff}/association/corrections/{association}',[StaffAssociationsController::class,'updatecurrent'])->name('ESTB.staff.association.correction');
-   //for deleting the staff association details when want to change the association with the condition being duration of the staff with that perticular association is within 1 month 
+   //for deleting the staff association details when want to change the association with the condition being duration of the staff with that perticular association is within 1 month
    Route::delete('/ESTB/staff/{staff}/association/destroy/{association}',[StaffAssociationsController::class,'destroy'])->name('ESTB.staff.associations.destroy');
-   
+
 
    //editing the currect designation of the staff
    Route::patch('/ESTB/staff/{staff}/designation/{designation}/update',[StaffDesignationsController::class,'editdesignation'])->name('ESTB.staff.designation.currentupdate');
-   //for deleting the staff designation details 
+   //for deleting the staff designation details
    Route::delete('ESTB/staff/{staff}/designation/{designation}/destroy',[StaffDesignationsController::class,'destorydesignation'])->name('ESTB.staff.designation.currentdestroy');
    //editing the current payscale of the staff
    Route::patch('/ESTB/staff/{staff}/payscale/{payscale}/update',[StaffDesignationsController::class,'editpayscale'])->name('ESTB.staff.payscale.update');
    //for deleting the staff payscale
    Route::delete('/ESTB/staff/{staff}/payscale/{payscale}/destory',[StaffDesignationsController::class,'destrorypayscale'])->name('ESTB.staff.payscale.destroy');
-    // consolidated teaching pay staff 
+    // consolidated teaching pay staff
     Route::patch('/ESTB/staff/{staff}/consolidated_teaching_pay/{consolidated_teaching_pay}',[StaffDesignationsController::class,'update_teaching_consolidate_pay'])->name('ESTB.staff.consolidated_teaching_pay.update');
     Route::patch('/ESTB/staff/{staff}/fixed_nt_pay/{fixed_nt_pay}/update',[StaffDesignationsController::class,'fixed_nt_pay_edit'])->name('ESTB.staff.fixed_nt_pay.update');
     //ajax controlllers
@@ -456,7 +463,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::post('/ESTB/leaves/create',[LeaveController::class,'store'])->name('ESTB.leaves.store');
     Route::patch('/ESTB/leaves/{leave}',[LeaveController::class,'update'])->name('ESTB.leaves.update');
     Route::delete('/ESTB/leaves/{leave}',[LeaveController::class,'destroy'])->name('ESTB.leaves.destroy');
-    //Rules for each 
+    //Rules for each
     Route::get('/ESTB/leave/{leave}/leave_rules',[LeaveController::class,'show'])->name('ESTB.leave.leave_rules');
     Route::post('/ESTB/leave/{leave}/leave_rules/create',[LeaveRulesController::class,'store'])->name('ESTB.leave.leave_rules.store');
     Route::patch('/ESTB/leave/{leave}/leave_rules/{leave_rules}/update',[LeaveRulesController::class,'update'])->name('ESTB.leave.leave_rules.update');
@@ -468,15 +475,15 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::get('/ESTB/leaves/holiday_rhlist',[HolidayrhController::class,'index'])->name('ESTB.leaves.holiday_rhlist.index');
     Route::post('/ESTB/leaves/holiday_rhlist/create',[HolidayrhController::class,'store'])->name('ESTB.leaves.holiday_rhlist.store');
     Route::patch('/ESTB/leaves/holiday_rhlist/{holidayrh}',[HolidayrhController::class,'update'])->name('ESTB.leaves.holiday_rhlist.update');
-    Route::delete('/ESTB/leaves/holiday_rhlist/{holidayrh}',[HolidayrhController::class,'destroy'])->name('ESTB.leaves.holiday_rhlist.destroy'); 
-    
+    Route::delete('/ESTB/leaves/holiday_rhlist/{holidayrh}',[HolidayrhController::class,'destroy'])->name('ESTB.leaves.holiday_rhlist.destroy');
+
   //leave calender
-    Route::get('/ESTB/leaves_calender/',[LeaveController::class,'calender_view'])->name('ESTB.leaves.calender_view'); 
+    Route::get('/ESTB/leaves_calender/',[LeaveController::class,'calender_view'])->name('ESTB.leaves.calender_view');
     Route::get('/ESTB/leaves_calender/hollidayrh_events',[LeaveController::class,'hollidayrh_events'])->name('ESTB.leaves.hollidayrh_events');
     Route::get('/ESTB/leaves_calender/fetchAllleaveevents',[LeaveController::class,'fetchAllleaveevents'])->name('ESTB.leaves.fetchAllleaveevents');
 
     // End of leave management related routes.
-    
+
     //REnumerations Controllers
      Route::get('/ESTB/renumerations',[RenumerationheadsController::class,'index'])->name('ESTB.renumerations');
      Route::post('/ESTB/renumerations/create',[RenumerationheadsController::class,'store'])->name('ESTB.renumerations.store');
@@ -491,7 +498,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
 
     //under construction
     Route::get('/ESTB/construction',[TdsheadsController::class,'index'])->name('construction');
-    
+
 
      //qualifications controllers
     Route::get('/ESTB/qualifications',[QualificationController::class,'index'])->name('ESTB.qualification.index');
@@ -500,27 +507,27 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::delete('/ESTB/qualifications/destory/{qualification}', [QualificationController::class, 'destroy'])->name('ESTB.qualification.destroy');
     Route::get('/ESTB/qualifications/indexfiltering', [QualificationController::class,'indexFiltering'])->name('ESTB.qualification.indexfiltering');
 
-    
+
     //updating qualification of the staff.
     Route::post('/ESTB/staff/{staff}/qualifications/create',[QualificationStaffController::class,'store'])->name('ESTB.staff.qualification.store');
     Route::patch('/ESTB/staff/{staff}/qualifications/update/{qualification}',[QualificationStaffController::class,'update'])->name('ESTB.staff.qualification.update');
-   //for deleting the staff qualification details when want to change the qualification with the condition being duration of the staff in that perticular department is within 1 month 
+   //for deleting the staff qualification details when want to change the qualification with the condition being duration of the staff in that perticular department is within 1 month
     Route::delete('/ESTB/staff/{staff}/qualification/destroy/{qualification}',[QualificationStaffController::class,'destroy'])->name('ESTB.staff.qualification.destroy');
 
-   
+
 
     });
 
      //Dean rnd related all routes
      Route::middleware(['cors','auth','role:'.UserRoles::DEANRND->value])->group(function(){
-      
+
       Route::get('/Deanrnd/dashboard',[DeanRndController::class,'dashboard'])->name('Deanrnd.dashboard');
-      
-     //Deanrnd Teaching professional activity 
+
+     //Deanrnd Teaching professional activity
       Route::get('/Deanrnd/Teaching/activityattended',[DeanRndController::class,'professional_activity_attended_teaching'])->name('Deanrnd.Teaching.activityattended');
       Route::get('/Deanrnd/Teaching/activityconducted',[DeanRndController::class,'professional_activity_conducted_teaching'])->name('Deanrnd.Teaching.activityconducted');
 
-     //Deanrndn Teaching Research Conference activity 
+     //Deanrndn Teaching Research Conference activity
       Route::get('/Deanrnd/Teaching/research/conferenceattended',[DeanrndResearchController::class,'conferences_attendee'])->name('Deanrnd.Teaching.research.conferenceattended');
       Route::get('/Deanrnd/Teaching/research/conferenceconducted',[DeanrndResearchController::class,'conferences_conducted'])->name('Deanrnd.Teaching.research.conferenceconducted');
       Route::get('/Deanrnd/Teaching/research/publication',[DeanrndResearchController::class,'publication'])->name('Deanrnd.Teaching.research.publication');
@@ -529,7 +536,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
       Route::get('/Deanrnd/Teaching/research/copyrights',[DeanrndResearchController::class,'copyrights'])->name('Deanrnd.Teaching.research.copyrights');
       Route::get('/Deanrnd/Teaching/research/achivements',[DeanrndResearchController::class,'general_achievement'])->name('Deanrnd.Teaching.research.achivements');
 
-      //Deanrndn Non-Teaching professional activity 
+      //Deanrndn Non-Teaching professional activity
       Route::get('/Deanrnd/NonTeaching',[DeanRndController::class,'professional_activity_attendee_nt'])->name('Deanrnd.NonTeaching');
       Route::get('/Deanrnd/NonTeaching/conducted',[DeanRndController::class,'professional_activity_conducted_nt'])->name('Deanrnd.NonTeaching.conducted');
 
@@ -537,27 +544,27 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
 
     //egov admin related all routes
     Route::middleware(['cors','auth','role:'.UserRoles::EGOV_ADMIN->value])->group(function(){
-      
+
       Route::get('/egov/dashboard',[EgovAdminController::class,'dashboard'])->name('egov.dashboard');
 
       //egov admin teaching professional activity
       Route::get('/egov/Teaching/activityattended',[EgovAdminController::class,'egov_professional_activity_attended_teaching'])->name('egov.Teaching.activityattended');
 
 
-    
-    
 
-      
+
+
+
       //datefiltering
       Route::post('/egov/Teaching/filter-data', [EgovAdminController::class, 'filterTeachingActivityData'])->name('egov.Teaching.filter-data');
 
       Route::get('/egov/Teaching/activityconducted',[EgovAdminController::class,'egov_professional_activity_conducted_teaching'])->name('egov.Teaching.activityconducted');
 
-      //egov admin Non-Teaching professional activity 
+      //egov admin Non-Teaching professional activity
       Route::get('/egov/NonTeaching/attended',[EgovAdminController::class,'egov_professional_activity_attendee_nt'])->name('egov.NonTeaching.attended');
       Route::get('/egov/NonTeaching/conducted',[EgovAdminController::class,'egov_professional_activity_conducted_nt'])->name('egov.NonTeaching.conducted');
 
-      //egov admin Teaching Research Conference activity 
+      //egov admin Teaching Research Conference activity
        Route::get('/egov/Teaching/research/conferenceattended',[EgovResearchController::class,'egov_conferences_attendee'])->name('egov.Teaching.research.conferenceattended');
        Route::get('/egov/Teaching/research/conferenceconducted',[EgovResearchController::class,'egov_conferences_conducted'])->name('egov.Teaching.research.conferenceconducted');
        Route::get('/egov/Teaching/research/publication',[EgovResearchController::class,'egov_publication'])->name('egov.Teaching.research.publication');
@@ -597,16 +604,16 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::get('/HOD/staff/stafflist',[HodController::class,'staff_details'])->name('HOD.staff.stafflist');
 
     Route::get('/HOD/staff/{staff}/view',[HodController::class,'staff_view'])->name('HOD.staff.view');
-   
+
     //HOD teaching professional activity
     Route::get('/HOD/Teaching/hodactivityattended',[HodController::class,'hod_professional_activity_attended_teaching'])->name('HOD.Teaching.hodactivityattended');
     Route::get('/HOD/Teaching/hodactivityconducted',[HodController::class,'hod_professional_activity_conducted_teaching'])->name('HOD.Teaching.hodactivityconducted');
 
-     //HOD  Non-Teaching professional activity 
+     //HOD  Non-Teaching professional activity
      Route::get('/HOD/NonTeaching/hodattended',[HodController::class,'hod_professional_activity_attendee_nt'])->name('HOD.NonTeaching.hodattended');
      Route::get('/HOD/NonTeaching/hodconducted',[HodController::class,'hod_professional_activity_conducted_nt'])->name('HOD.NonTeaching.hodconducted');
 
-     //HOD Teaching Research Conference activity 
+     //HOD Teaching Research Conference activity
      Route::get('/HOD/Teaching/research/hodconferenceattended',[HodResearchController::class,'hod_conferences_attendee'])->name('HOD.Teaching.research.hodconferenceattended');
      Route::get('/HOD/Teaching/research/hodconferenceconducted',[HodResearchController::class,'hod_conferences_conducted'])->name('HOD.Teaching.research.hodconferenceconducted');
      Route::get('/HOD/Teaching/research/hodpublication',[HodResearchController::class,'hod_publication'])->name('HOD.Teaching.research.hodpublication');
@@ -624,10 +631,10 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
      Route::get('/HOD/leaves_management/hollidayrh_events',[HODLeaveController::class,'hollidayrh_events'])->name('HOD.leaves.hollidayrh_events');
      Route::get('/HOD/leaves_management/fetchDeptleaveevents',[HODLeaveController::class,'fetchDeptleaveevents'])->name('ESTB.leaves.fetchDeptleaveevents');
      Route::get('/HOD/leaves_management/fetchclikdayevents',[HODLeaveController::class,'fetchclikdayevents'])->name('ESTB.leaves.fetchclikdayevents');
-    
-    
 
-     
+
+
+
      //Hod events
      Route::get('/HOD/event',[HodEventController::class,'index'])->name('HOD.event.index');
      Route::post('/HOD/event/create',[HodEventController::class,'store'])->name('HOD.event.store');
@@ -664,7 +671,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::post('/Principaloffice/ponotice/create',[NoticeController::class,'store'])->name('Principaloffice.ponotice.store');
     Route::patch('/Principaloffice/ponotice/update/{notice}',[NoticeController::class,'update'])->name('Principaloffice.ponotice.update');
     Route::delete('/Principaloffice/ponotice/destory/{notice}', [NoticeController::class, 'destroy'])->name('Principaloffice.ponotice.destroy');
-   
+
   });
 
   //Examoffice
@@ -674,21 +681,21 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
   //   Route::post('/Examoffice/grievancecategory/create',[GrievienceCategoryController::class,'store'])->name('Examoffice.grievancecategory.store');
   //   Route::patch('/Examoffice/grievancecategory/update/{grievience_category}',[GrievienceCategoryController::class,'update'])->name('Examoffice.grievancecategory.update');
   //   Route::delete('/Examoffice/grievancecategory/destory/{grievience_category}', [GrievienceCategoryController::class, 'destroy'])->name('Examoffice.grievancecategory.destroy');
-    
+
   //   });
-  
-Route::get('dashboard', [MyAuthController::class, 'dashboard']); 
+
+Route::get('dashboard', [MyAuthController::class, 'dashboard']);
 Route::get('login', [MyAuthController::class, 'index'])->name('login');
 Route::get('/', [MyAuthController::class, 'index'])->name('login');
-Route::post('validate', [MyAuthController::class, 'customLogin'])->name('login.custom'); 
+Route::post('validate', [MyAuthController::class, 'customLogin'])->name('login.custom');
 Route::get('registration', [MyAuthController::class, 'registration'])->name('register-user');
-Route::post('custom-registration', [MyAuthController::class, 'customRegistration'])->name('register.custom'); 
+Route::post('custom-registration', [MyAuthController::class, 'customRegistration'])->name('register.custom');
 Route::get('/logout',[MyAuthController::Class,'signOut'])->name('logout');
 //Route::get('signout', [MyAuthController::class, 'signOut'])->name('signout');
 
 
 
-// change password 
+// change password
 //Route::get('/change_password', [MyAuthController::class, 'changePassword'])->name('change_password');
 Route::post('/change_password', [MyAuthController::class, 'updatepassword'])->name('password.change');
 Route::get('/checkcurrentpassword', [MyAuthController::class, 'checkcurrentpassword'])->name('checkcurrentpassword');
@@ -703,11 +710,11 @@ Route::post('reset/password', [MyAuthController::class, 'resetPasswordupdate'])-
 //Routes for ticketing system
 
 Route::get('ticket/dashboard', [TicketController::class, 'index'])->name('ticket.dashboard');
-Route::post('ticket/store', [TicketController::class, 'store'])->name('ticket.store'); 
-Route::post('ticket/store', [TicketController::class, 'store'])->name('ticket.store'); 
-Route::patch('ticket/update/{ticket}', [TicketController::class, 'update'])->name('ticket.update'); 
-Route::delete('ticket/destroy/{ticket}',[TicketController::class, 'destroy'])->name('ticket.destroy'); 
-Route::patch('ticket/update/avatar/{ticket}', [TicketController::class, 'update'])->name('ticket.update.avatar'); 
+Route::post('ticket/store', [TicketController::class, 'store'])->name('ticket.store');
+Route::post('ticket/store', [TicketController::class, 'store'])->name('ticket.store');
+Route::patch('ticket/update/{ticket}', [TicketController::class, 'update'])->name('ticket.update');
+Route::delete('ticket/destroy/{ticket}',[TicketController::class, 'destroy'])->name('ticket.destroy');
+Route::patch('ticket/update/avatar/{ticket}', [TicketController::class, 'update'])->name('ticket.update.avatar');
 Route::get('ticket/show/{ticket}', [TicketController::class, 'show'])->name('ticket.show');
 Route::post('ticket/{ticket}/reply/store', [ReplyController::class, 'store'])->name('ticket.reply.store');
 
@@ -720,7 +727,7 @@ Route::post('ticket/{ticket}/reply/store', [ReplyController::class, 'store'])->n
 
 //Routes for ticketing admin system
 // Route::middleware(['cors','auth','role:'.UserRoles::SU->value])->group(function(){
-//   
+//
 // //Route::get('Admin/show/{ticket}', [AdminTicketController::class, 'show'])->name('ticket.show');
 // //for redirecting to the super admin Dashboard.
 //   Route::get('/Admin/dashboard',[AdminController::class,'dashboard'])->name('Admin.dashboard');

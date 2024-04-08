@@ -7,7 +7,7 @@
 
         <!-- FLATPICKR CSS -->
         <link rel="stylesheet" href="{{asset('build/assets/libs/flatpickr/flatpickr.min.css')}}">
-        
+
 @endsection
 
 @section('content')
@@ -17,21 +17,21 @@
                     <!-- Start::main-content -->
                     <div class="main-content">
 
-                       
+
                         <!-- Page Header -->
                             <div class="block justify-between page-header sm:flex">
                                 <div>
                                     {{-- <h1>Welcome, {{ $staff->fname }}</h1> --}}
                                     <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium">Welcome<span class="text-primary"> {{ $staff->fname.' '.$staff->mname.' '.$staff->lname }}</span></h3>
-                                </div>    
-                                <ol class="flex items-center whitespace-nowrap min-w-0"> 
+                                </div>
+                                <ol class="flex items-center whitespace-nowrap min-w-0">
                                     <li class="text-sm">
                                         <a class="flex items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="javascript:void(0);">
                                             Research Activities
                                             <i class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
                                         </a>
                                     </li>
-                                        
+
                                 </ol>
                             </div>
                         <!-- Page Header Close -->
@@ -56,11 +56,11 @@
                                             </div>
                                         @endif
                                     @endif
-                                    @php 
-                                        Illuminate\Support\Facades\Session::forget('return_data'); 
-                                        header("refresh: 2"); 
+                                    @php
+                                        Illuminate\Support\Facades\Session::forget('return_data');
+                                        header("refresh: 2");
                                     @endphp
-                                @endif   
+                                @endif
 
                             </div>
                         </div>
@@ -70,18 +70,39 @@
                                 <div class="box-header">
                                     {{-- <h4>Research Activities</h4> --}}
                                 </div>
-       
+
                                 <div class="box-body pt-0">
-                                    
+
 
                                     <div class="mt-3">
                                         <!--Start of patent copyright details-->
                                         {{-- <div id="pills-with-brand-color-5" class="hidden" role="tabpanel" aria-labelledby="pills-with-brand-color-item-4"> --}}
-                                          
+
                                            <!--Start of Patents -->
                                             <div class="box border-0 shadow-none mb-0">
                                                 <div class="box-header">
                                                     <h5 class="box-title leading-none flex"><i class="ri ri-global-line ltr:mr-2 rtl:ml-2"></i>Patents History</h5>
+                                                    <div class="avatar-container flex py-4">
+                                                        <div class="avatar-wrapper flex items-center">
+                                                            <div class="avatar rounded-sm p-1 bg-green-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-bold ml-2 ">Valid</div>
+                                                        </div>
+
+                                                        <div class="avatar-wrapper flex items-center mx-2">
+                                                            <div class="avatar rounded-sm p-1 bg-red-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-bold ml-2">Invalid</div>
+                                                        </div>
+
+                                                        <div class="avatar-wrapper flex items-center mx-2">
+                                                            <div class="avatar rounded-sm p-1 bg-yellow-400 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-bold ml-2">Updated</div>
+                                                        </div>
+
+                                                        <div class="avatar-wrapper flex items-center">
+                                                            <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-semibold ml-2">New</div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="box-body">
                                                     <button id="patents_btn"data-hs-overlay="#add_patents" class="hs-dropdown-toggle ti-btn ti-btn-primary">
@@ -112,7 +133,7 @@
                                                                             $(window).on('load', function() {
                                                                                 //if($('#horizontal-alignment-item-1').parent().find('.active')){
                                                                                     //alert('attended');
-                                                                                    
+
                                                                                     // $('#horizontal-alignment-item-1').trigger('click')
                                                                                     $('#patents_btn').trigger("click");
 
@@ -122,13 +143,13 @@
                                                                                 //     $('#activity_attended_btn').trigger("click");
                                                                                 // }
                                                                                 //$('#activity_attended_btn').trigger( "click" );
-                                                                                    
-                                                                            });      
+
+                                                                            });
                                                                         </script>
                                                                     @endif
                                                                 </div>
                                                                 <form  action="{{route('Teaching.research.patent.store')}}" method="post" enctype="multipart/form-data">
-                                                                    @csrf 
+                                                                    @csrf
                                                                     <div class="ti-modal-body">
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
 
@@ -146,7 +167,7 @@
                                                                                     <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                                         class="ri ri-calendar-line"></i></span>
                                                                                 </div>
-                                                    
+
                                                                                 <input type="text" name="p_appl_date" id="pt_appl_date"
                                                                                 class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
                                                                                     required placeholder="Choose date">
@@ -154,7 +175,7 @@
                                                                                         <div class="text-red-700">{{ $errors->first('p_appl_date')}}</div>
                                                                                 @endif
                                                                                 <div id="pt_appl_dateError" class="error text-red-700"></div>
-                                                                            </div>   
+                                                                            </div>
                                                                         </div>
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
@@ -179,10 +200,10 @@
                                                                                     @endif
                                                                                     <div id="pt_statusError" class="error text-red-700"></div>
                                                                             </div>
-                                                                                                                                                                    
+
                                                                         </div>
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
-                                                                            
+
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Patent No:<span class="text-red-500">*</span></label>
                                                                                 <input type="number" min="0" step="1" name="p_patent_no" class="ti-form-input" required placeholder="Patent No" id="pt_patent_no">
@@ -207,7 +228,7 @@
                                                                                     <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                                     class="ri ri-calendar-line"></i></span>
                                                                                 </div>
-                                                                                            
+
                                                                                 <input type="date" name="p_publication_date" id="pt_publication_date"
                                                                                     class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
                                                                                     required placeholder="Choose date">
@@ -224,7 +245,7 @@
                                                                                 @endif
                                                                                 <div id="pt_stream_domainError" class="error text-red-700"></div>
                                                                             </div>
-                                                                       
+
                                                                         </div>
                                                                         <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
@@ -244,7 +265,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        
+
                                                                     </div>
                                                                     <div class="ti-modal-footer">
                                                                         <button type="button"
@@ -252,11 +273,11 @@
                                                                             data-hs-overlay="#add_patents">
                                                                             Close
                                                                         </button>
-                                                                                        
+
                                                                         <input type="submit" id="patents_store_add_btn" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Add"/>
-                                                                                    
+
                                                                     </div>
-                                                                </form>  
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -291,7 +312,7 @@
                                                                         @forelse($staff->patent as $pate)
                                                                             {{-- <tr class="" @if($pate->validation_status == 'valid') style="background-color: #ccffcc; color: #006400;" @elseif($pate->validation_status =='invalid') style="background-color: #ffe6e6; color: #b30000;" @endif> --}}
                                                                             <tr style="@if($pate->validation_status =='invalid') background-color: #ffcccc; @elseif($pate->validation_status =='updated') background-color: #fff2cc; @elseif($pate->validation_status =='valid') background-color: #ccffcc; @endif">
-    
+
                                                                                 <td><span>{{$i++}}</span></td>
                                                                                 <td><span>{{$pate->egov_id}}</span></td>
                                                                                 <td><span>{{$pate->appl_no}}</span></td>
@@ -314,7 +335,7 @@
                                                                                                     class="hs-dropdown-toggle m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary">
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                                                                                                     <path d="M14 14.252V16.3414C13.3744 16.1203 12.7013 16 12 16C8.68629 16 6 18.6863 6 22H4C4 17.5817 7.58172 14 12 14C12.6906 14 13.3608 14.0875 14 14.252ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11ZM19 17.5858L21.1213 15.4645L22.5355 16.8787L20.4142 19L22.5355 21.1213L21.1213 22.5355L19 20.4142L16.8787 22.5355L15.4645 21.1213L17.5858 19L15.4645 16.8787L16.8787 15.4645L19 17.5858Z"></path></svg>
-                                                                                                
+
                                                                                                 <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700" role="tooltip">reason</span>
                                                                                             </button>
                                                                                             <div id="reason_view_modal{{$i}}" class="hs-overlay hidden ti-modal">
@@ -364,8 +385,8 @@
                                                                                                     Edit
                                                                                                 </span>
                                                                                         </button>
-                                                        
-                                                    
+
+
                                                                                         <div id="patents_edit_modal{{$i}}" class="hs-overlay hidden ti-modal">
                                                                                             <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out lg:!max-w-4xl lg:w-full m-3 md:mx-auto">
                                                                                                 <div class="ti-modal-content">
@@ -392,8 +413,8 @@
                                                                                                                     //alert("Validation errors");
 
                                                                                                                 // document.getElementById('btn'+{{old('modal_no')}}).click();
-                                                                                                                };   
-                                                                                                            
+                                                                                                                };
+
                                                                                                                 </script>
                                                                                                             @endif
 
@@ -418,15 +439,15 @@
                                                                                                                         <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                                                                             class="ri ri-calendar-line"></i></span>
                                                                                                                     </div>
-                                                                                        
+
                                                                                                                     <input type="text" name="pe_appl_date"
                                                                                                                     class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
                                                                                                                         required placeholder="Choose date" value="{{$pate->appl_date}}">
                                                                                                                             @if($errors->has('pe_appl_date'))
                                                                                                                             <div class="text-red-700">{{ $errors->first('pe_appl_date') }}</div>
                                                                                                                         @endif
-                                                                                                                            
-                                                                                                                </div>   
+
+                                                                                                                </div>
                                                                                                             </div>
                                                                                                             <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                                                                 <div class="max-w-sm space-y-3 pb-6">
@@ -449,10 +470,10 @@
                                                                                                                                 @endif
                                                                                                                         </select>
                                                                                                                 </div>
-                                                                                                                                                                                                        
+
                                                                                                             </div>
                                                                                                             <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
-                                                                                                                
+
                                                                                                                 <div class="max-w-sm space-y-3 pb-6">
                                                                                                                     <label for="" class="ti-form-label font-bold">Patent No:<span class="text-red-500">*</span></label>
                                                                                                                     <input type="number" min="0" step="1" name="pe_patent_no" class="ti-form-input" required placeholder="Patent No" value="{{$pate->patent_no}}">
@@ -475,7 +496,7 @@
                                                                                                                         <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                                                                             class="ri ri-calendar-line"></i></span>
                                                                                                                     </div>
-                                                                                        
+
                                                                                                                     <input type="date" name="pe_publication_date"
                                                                                                                             class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
                                                                                                                             required placeholder="Choose date" value="{{$pate->publication_date}}">
@@ -521,18 +542,18 @@
                                                                                                                 data-hs-overlay="#patents_edit_modal{{$i}}">
                                                                                                                 Close
                                                                                                             </button>
-                                                                                                                        
+
                                                                                                             <input type="submit" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Update"/>
-                                                                                                                    
+
                                                                                                         </div>
-                                                                                                    </form>  
+                                                                                                    </form>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="hs-tooltip ti-main-tooltip">
                                                                                         <form action="{{ route('Teaching.research.patent.destroy',$pate->id) }}" method="post">
-                                                                                        
+
                                                                                             <button onclick="return confirm('Are you Sure')"
                                                                                                 class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>
@@ -548,7 +569,7 @@
                                                                                     </div>
                                                                                 </td>
                                                                                  @endif
-                                                                            </tr> 
+                                                                            </tr>
                                                                                 @empty
                                                                                 {{-- <tr>
                                                                                     <td>no records</td>
@@ -556,8 +577,8 @@
                                                                         @endforelse
                                                                     @endif
                                                                 </tbody>
-                                                            </table>  
-                                                        </div>   
+                                                            </table>
+                                                        </div>
                                                 </div>
 
                                             </div>
@@ -596,23 +617,23 @@
                                                                             <script>
                                                                                 //alert(1);
                                                                                 $(window).on('load', function() {
-                                                                                    
+
                                                                                     //alert('539');
                                                                                     $('#copyright_btn').trigger("click");
-                                                                                        
-                                                                                });      
+
+                                                                                });
                                                                             </script>
                                                                         @endif
                                                                 </div>
                                                                 <form  action="{{route('Teaching.research.copyright.store')}}" method="post" enctype="multipart/form-data">
-                                                                    @csrf 
+                                                                    @csrf
                                                                     <div class="ti-modal-body">
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
 
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold">Copyright Title : <span class="text-red-500">*</span></label>
                                                                                 <input type="text" name="c_copyright_title" class="ti-form-input" required placeholder="Copyright Title" id="rc_copyright_title">
-                                                                                  
+
                                                                                     @if($errors->has('c_copyright_title'))
                                                                                             <div class="text-red-700">{{ $errors->first('c_copyright_title')}}</div>
                                                                                     @endif
@@ -624,7 +645,7 @@
                                                                                         <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                                             class="ri ri-calendar-line"></i></span>
                                                                                     </div>
-                                                        
+
                                                                                     <input type="date" name="c_copyright_date" id="rc_copyright_date"
                                                                                     class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
                                                                                      required placeholder="Choose date">
@@ -632,8 +653,8 @@
                                                                                             <div class="text-red-700">{{ $errors->first('c_copyright_date')}}</div>
                                                                                     @endif
                                                                                     <div id="rc_copyrightdateError" class="error text-red-700"></div>
-                                                                                        
-                                                                            </div>   
+
+                                                                            </div>
                                                                         </div>
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
@@ -656,10 +677,10 @@
                                                                                     @endif
                                                                                 <div id="rc_statusError" class="error text-red-700"></div>
                                                                             </div>
-                                                                                                                                                                    
+
                                                                         </div>
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
-                                                                            
+
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Description:<span class="text-red-500">*</span></label>
                                                                                 <input type="text" name="c_description" class="ti-form-input" required placeholder="Description" id="rc_description">
@@ -668,7 +689,7 @@
                                                                                     @endif
                                                                                 <div id="rc_descriptionError" class="error text-red-700"></div>
                                                                             </div>
-                                                                            
+
                                                                         </div>
                                                                         <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
@@ -688,7 +709,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        
+
                                                                     </div>
                                                                     <div class="ti-modal-footer">
                                                                         <button type="button"
@@ -696,11 +717,11 @@
                                                                             data-hs-overlay="#add_copyright">
                                                                             Close
                                                                         </button>
-                                                                                        
+
                                                                         <input type="submit" id="copyright_store_add_btn" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Add"/>
-                                                                                    
+
                                                                     </div>
-                                                                </form>  
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -744,7 +765,7 @@
 
                                                                                 @if(!isset($export) || !$export)
                                                                                 <td class="font-medium space-x-2 rtl:space-x-reverse">
-                                                                                    
+
                                                                                     <!--modal Start Here-->
                                                                                     <?php if ($copy->validation_status === 'invalid'): ?>
                                                                                         <div class="hs-tooltip ti-main-tooltip text-center">
@@ -752,7 +773,7 @@
                                                                                                     class="hs-dropdown-toggle m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary">
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                                                                                                     <path d="M14 14.252V16.3414C13.3744 16.1203 12.7013 16 12 16C8.68629 16 6 18.6863 6 22H4C4 17.5817 7.58172 14 12 14C12.6906 14 13.3608 14.0875 14 14.252ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11ZM19 17.5858L21.1213 15.4645L22.5355 16.8787L20.4142 19L22.5355 21.1213L21.1213 22.5355L19 20.4142L16.8787 22.5355L15.4645 21.1213L17.5858 19L15.4645 16.8787L16.8787 15.4645L19 17.5858Z"></path></svg>
-                                                                                                
+
                                                                                                 <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700" role="tooltip">reason</span>
                                                                                             </button>
                                                                                             <div id="reason_view_modal{{$i}}" class="hs-overlay hidden ti-modal">
@@ -828,9 +849,9 @@
                                                                                                                     //alert('123');
                                                                                                                     //alert("Validation errors");
 
-                                                                                                                
-                                                                                                                };   
-                                                                                                            
+
+                                                                                                                };
+
                                                                                                                     </script>
                                                                                                             @endif
                                                                                                     </div>
@@ -844,7 +865,7 @@
                                                                                                                 <div class="max-w-sm space-y-3 pb-6">
                                                                                                                     <label for="with-corner-hint" class="ti-form-label font-bold">Copyright Title : <span class="text-red-500">*</span></label>
                                                                                                                     <input type="text" name="ce_copyright_title" class="ti-form-input" required placeholder="Copyright Title" value="{{$copy->copyright_title}}">
-                                                                                                                    
+
                                                                                                                         @if($errors->has('ce_copyright_title'))
                                                                                                                             <div class="text-red-700">{{ $errors->first('ce_copyright_title') }}</div>
                                                                                                                         @endif
@@ -855,15 +876,15 @@
                                                                                                                             <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                                                                                 class="ri ri-calendar-line"></i></span>
                                                                                                                         </div>
-                                                                                            
+
                                                                                                                         <input type="date" name="ce_copyright_date"
                                                                                                                         class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
                                                                                                                             required placeholder="Choose date" value="{{$copy->copyright_date}}">
                                                                                                                             @if($errors->has('ce_copyright_date'))
                                                                                                                             <div class="text-red-700">{{ $errors->first('ce_copyright_date') }}</div>
                                                                                                                         @endif
-                                                                                                                            
-                                                                                                                </div>   
+
+                                                                                                                </div>
                                                                                                             </div>
                                                                                                             <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                                                                 <div class="max-w-sm space-y-3 pb-6">
@@ -884,10 +905,10 @@
                                                                                                                             <div class="text-red-700">{{ $errors->first('ce_status') }}</div>
                                                                                                                         @endif
                                                                                                                 </div>
-                                                                                                                                                                                                        
+
                                                                                                             </div>
                                                                                                             <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
-                                                                                                                
+
                                                                                                                 <div class="max-w-sm space-y-3 pb-6">
                                                                                                                     <label for="" class="ti-form-label font-bold">Description:<span class="text-red-500">*</span></label>
                                                                                                                     <input type="text" name="ce_description" class="ti-form-input" required placeholder="Description" value="{{$copy->description}}">
@@ -895,7 +916,7 @@
                                                                                                                             <div class="text-red-700">{{ $errors->first('ce_description') }}</div>
                                                                                                                         @endif
                                                                                                                 </div>
-                                                                                                                
+
                                                                                                             </div>
                                                                                                             <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                                                                 <div class="max-w-sm space-y-3 pb-6">
@@ -925,18 +946,18 @@
                                                                                                                 class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
                                                                                                                 data-hs-overlay="#copyright_edit_modal{{$i}}">
                                                                                                                 Close
-                                                                                                            </button>  
+                                                                                                            </button>
                                                                                                             <input type="submit" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Update"/>
-                                                                                                                    
+
                                                                                                         </div>
-                                                                                                    </form>  
+                                                                                                    </form>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="hs-tooltip ti-main-tooltip">
                                                                                         <form action="{{ route('Teaching.research.copyright.destroy',$copy->id) }}" method="post">
-                                                                                        
+
                                                                                             <button onclick="return confirm('Are you Sure')"
                                                                                                 class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>
@@ -952,7 +973,7 @@
                                                                                     </div>
                                                                                 </td>
                                                                                 @endif
-                                                                            </tr> 
+                                                                            </tr>
                                                                                 @empty
                                                                                 {{-- <tr>
                                                                                     <td>no records</td>
@@ -960,30 +981,30 @@
                                                                         @endforelse
                                                                     @endif
                                                                 </tbody>
-                                                            </table>  
-                                                        </div>   
+                                                            </table>
+                                                        </div>
                                                 </div>
 
                                             </div>
 
                                            <!--Ends Of Copyrights -->
-                                    
+
                                         {{-- </div> --}}
-                                       
+
 
                                         <!--end of patent/copyright-->
-                                    </div>                                                                      
+                                    </div>
                                 </div>
                             </div>
                         </div>
                              <!-- End::row-1 -->
-                    </div>    
+                    </div>
                     <!-- End::main-content -->
 
                 </div>
-               
 
-            
+
+
 
 @endsection
 
@@ -1016,27 +1037,27 @@
             $(document).ready(function(){
                 //Validation for patents
                 //alert('Hello from jquery');
-                
+
                 new DataTable('#patent_table');
                 $(document).on('click','.patents_edit_modal_click',function(){
-                    //var 
+                    //var
                     var modal_no = $(this).attr("btn-val");
-                    
+
                     //alert($(this).find('.caste_edit_modal_no').val());
-                    $('.modal_no').val(modal_no); 
+                    $('.modal_no').val(modal_no);
                 });
 
                 //Validation for copyright
-            
+
                 //alert('Hello from jquery');
                 new DataTable('#copyright_table');
-                
+
                 $(document).on('click','.copyright_edit_modal_click',function(){
-                    //var 
+                    //var
                     var modal_no = $(this).attr("btn-val");
-                    
+
                     //alert($(this).find('.caste_edit_modal_no').val());
-                    $('.modal_no').val(modal_no); 
+                    $('.modal_no').val(modal_no);
                 });
 
 
@@ -1053,7 +1074,7 @@
                     var pt_publication_date = $('#pt_publication_date').val();
                     var stream_domain = $('#stream_domain').val();
                     var pt_document = $('#pt_document')[0].files[0];
-                        
+
 
                     var flag = false;
 
@@ -1115,19 +1136,19 @@
                     if(flag == true){
                         e.preventDefault();
                     }
-                    
+
                 });
 
                 //Validaton for Copyrights
                 $(document).on('click','#copyright_store_add_btn',function(e){
-                    
+
                     var rc_copyright_title = $('#rc_copyright_title').val();
                     var rc_copyright_date = $('#rc_copyright_date').val();
                     var rc_author_name = $('#rc_author_name').val();
                     var rc_status = $('#rc_status').val();
                     var rc_description = $('#rc_description').val();
                     var copy_document = $('#copy_document')[0].files[0];
-                        
+
 
                     var flag = false;
 
@@ -1240,7 +1261,7 @@
                         link[0].click();
                     }
                 });
-        
+
             });
         </script>
 

@@ -7,7 +7,7 @@
 
         <!-- FLATPICKR CSS -->
         <link rel="stylesheet" href="{{asset('build/assets/libs/flatpickr/flatpickr.min.css')}}">
-        
+
 @endsection
 
 @section('content')
@@ -48,7 +48,7 @@
                                             Welcome E-Governance Admin, Mathematics
                                             @elseif(session('deptid')==14)
                                             Welcome E-Governance Admin, Chemistry
-                                        @endif 
+                                        @endif
                                     </span>
                                 </h3>
                             </div>
@@ -59,19 +59,40 @@
                                     <i class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
                                 </a>
                                 </li>
-                                
-                                
+
+
                             </ol>
                         </div>
                         <!-- Page Header Close -->
-                        
+
                     </div>
                     <!-- Start::main-content -->
                     <div class="grid grid-cols-12 gap-x-6">
                         <div class="col-span-12 xl:col-span-12">
                             <div class="box">
-                                <div class="box-body">                
+                                <div class="box-body">
                                     <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
+                                        <div class="avatar-container flex py-4">
+                                            <div class="avatar-wrapper flex items-center">
+                                                <div class="avatar rounded-sm p-1 bg-green-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2 ">Valid</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                <div class="avatar rounded-sm p-1 bg-red-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2">Invalid</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                <div class="avatar rounded-sm p-1 bg-yellow-400 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2">Updated</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center">
+                                                <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-semibold ml-2">New</div>
+                                            </div>
+                                        </div>
                                         <div style="display: flex; align-items: center;">
                                             <div style="display: flex; flex-direction: column;">
                                                 <label for="from_date" class="ti-form-label font-bold mx-3 mt-3">From Date:<span class="text-red-500">*</span></label>
@@ -102,14 +123,14 @@
                                                     @if(!isset($export) || !$export)
                                                         <th scope="col" class="dark:text-white/80 font-bold ">Document</th>
                                                     @endif
-                                                
+
                                                 </tr>
                                             </thead>
                                             @php
                                                 $i=1;
                                             @endphp
                                             <tbody class="">
-                                               
+
                                                 @foreach($consultancy as $consult)
 
                                                     {{-- <tr class="" @if($consult->validation_status == 'valid') style="background-color: #ccffcc; color: #006400;" @elseif($consult->validation_status =='invalid') style="background-color: #ffe6e6; color: #b30000;" @endif> --}}
@@ -128,7 +149,7 @@
                                                         {{-- @if(!isset($export) || !$export)
                                                             <td><span><a href={{asset('Uploads/Research/Consultancy/'.$consult->document)}} class='font-medium text-blue-600 dark:text-blue-500 hover:underline' target="_blank">{{$consult->document}}</a></span></td>
                                                         @endif  --}}
-                                                        
+
                                                         @if(!isset($export) || !$export)
                                                             <td>
                                                                 <div class="hs-tooltip ti-main-tooltip">
@@ -193,22 +214,22 @@
                                                                                             class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
                                                                                             data-hs-overlay="#validate_edit_modal{{$i}}">
                                                                                             Close
-                                                                                        </button>      
+                                                                                        </button>
                                                                                         <input type="submit" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Update"/>
-                                                                                                    
+
                                                                                     </div>
-                                                                                </form>  
+                                                                                </form>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <!--Modal Ends Here-->
                                                             </td>
-                                                        @endif  
+                                                        @endif
                                                     </tr>
                                                 @endforeach
                                             </tbody>
-                                        </table>  
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -231,7 +252,7 @@
 
         <!-- FORM-LAYOUT JS -->
         @vite('resources/assets/js/profile-settings.js')
-        
+
         <script
         src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
@@ -243,7 +264,7 @@
         <script href="https://cdn.tailwindcss.com/3.3.5"></script>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-        
+
         <script>
             $(document).ready(function () {
                 // alert('Hello from jquery');
@@ -254,11 +275,11 @@
                 $('#filterBtn').click(function () {
                     var fromDate = $('#from_date').val();
                     var toDate = $('#to_date').val();
-                    
+
                     // Determine the column indices dynamically based on table headers
                     var fromColumnIndex = $('#consultancy_table th:contains("From Date")').index();
                     var toColumnIndex = $('#consultancy_table th:contains("To Date")').index();
-                    
+
                     $('#consultancy_table tbody tr').each(function () {
                         var rowFromDate = $(this).find('td:eq(' + fromColumnIndex + ') span').text();
                         var rowToDate = $(this).find('td:eq(' + toColumnIndex + ') span').text();
@@ -283,11 +304,11 @@
                     if($(this).val() == 'invalid')
                     {
                         $('.reason_div').show();
-                    } else 
+                    } else
                     {
                         $('.reason_div').hide();
                     }
-                
+
                 });
             });
         </script>
@@ -330,5 +351,5 @@
                 });
             });
         </script>
-        
+
 @endsection
