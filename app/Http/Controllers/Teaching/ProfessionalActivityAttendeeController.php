@@ -10,7 +10,6 @@ use App\Http\Requests\Updateprofessional_activity_attendeeRequest;
 use Auth;
 use App\Models\staff;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class ProfessionalActivityAttendeeController extends Controller
@@ -278,7 +277,7 @@ class ProfessionalActivityAttendeeController extends Controller
 
           }
           return ($year.$month."PA".$no);
-      }
+        }
 
 
 
