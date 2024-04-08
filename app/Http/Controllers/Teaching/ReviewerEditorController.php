@@ -130,6 +130,7 @@ class ReviewerEditorController extends Controller
         $reviewer_editor->journal_name=$request->journal_name;
         $reviewer_editor->publisher_name=$request->publisher_name;
         $reviewer_editor->reviewed_date=$request->reviewed_date;
+        $reviewer_editor->egov_id=$this->gen_egov_id($request->reviewed_date);
         $reviewer_editor->level=$request->level;
         $reviewer_editor->other_level=$request->other_level;
         $reviewer_editor->category=$request->category;
@@ -230,42 +231,22 @@ class ReviewerEditorController extends Controller
         $year = date('Y', strtotime($editors_date));
         $month = date('M',strtotime($editors_date));
         $no="";
-        $reviewer_editor=reviewer_editor::where('reviewed_date','<=',$year.'-12-31')->orderBy('id','desc')->first();
+        $reviewer_editor=reviewer_editor::whereYear('reviewed_date',$year)->orderBy('id','desc')->first();
         if($reviewer_editor==null){
             $no="00001";
         }
         else
         {
-            $oldyear=date('Y', strtotime($reviewer_editor->reviewed_date));
 
-            if($oldyear<$year){
-                $no="00001";
-            }
-            else
-            {
+
                 $oldegov_id=$reviewer_editor->egov_id;
                 //dd(substr($oldegov_id,9,10));
                 $oldno=intval(substr($oldegov_id,9,10));
 
                 $no=$oldno+1;
 
-                if($no<10)
-                {
-                    $no='0000'.$no;
-                }
-                if($no<100 && $no>10)
-                {
-                    $no='000'.$no;
-                }
-                if($no<1000 && $no>100)
-                {
-                    $no='00'.$no;
-                }
-                if($no<10000 & $no>1000)
-                {
-                    $no='0'.$no;
-                }
-            }
+                $no = str_pad($oldno + 1, 5, '0', STR_PAD_LEFT);
+
 
         }
         return ($year.$month."RE".$no);

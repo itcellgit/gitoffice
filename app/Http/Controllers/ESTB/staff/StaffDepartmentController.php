@@ -5,10 +5,11 @@ namespace App\Http\Controllers\ESTB\staff;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\staff;
+use Illuminate\Support\Facades\DB;
 use App\Models\department;
 class StaffDepartmentController extends Controller
 {
-   
+
 
     /**
      * Update the specified resource in storage.
@@ -29,7 +30,7 @@ class StaffDepartmentController extends Controller
         {
             // dd($staff_departments);
             //fetch all the departments the staff is assigned in the UI.
-         
+
             //check if there are changes in currently working and the assigned in the UI
             foreach($staff_departments as $sdept)
             {
@@ -58,7 +59,7 @@ class StaffDepartmentController extends Controller
                     }
                 }
             }
-       
+
         }
 
         //check if any new department is assigned to the staff
@@ -108,10 +109,10 @@ class StaffDepartmentController extends Controller
         {
             // $updateresult= $staff->departments()->updateExistingPivot($sdept,['department_id'=>$request->departments_id,'start_date'=>$request->start_date,'reason'=>$request->reason,'gcr'=>$request->gcr]);
              $staff_latest_depts=$staff->activedepartments()->get();
-             
+
                     foreach($staff_latest_depts as $staff_dept)
                     {
-                        
+
                         if($staff_dept->pivot->department_id==$sdept)
                         {
                             $staff_dept->pivot->department_id=$request->departments_id;
@@ -120,10 +121,10 @@ class StaffDepartmentController extends Controller
                             $staff_dept->pivot->gcr=$request->gcr;
                             $updateresult=$staff_dept->pivot->update();
                         }
-                    }      
-            
+                    }
+
         }
-       
+
         if($updateresult)
         {
             $status=1;
@@ -140,7 +141,9 @@ class StaffDepartmentController extends Controller
      */
     public function destroy(staff $staff,$dept)
     {
-        $delete=$staff->departments()->detach($dept);
+
+        $delete=DB::table('department_staff')->where('id',$dept)->where('status','active')->delete();
+
         if($delete){
             $status=1;
         }

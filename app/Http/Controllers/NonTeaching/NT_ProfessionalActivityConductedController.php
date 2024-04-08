@@ -7,7 +7,7 @@ use App\Models\professional_activity_conducted;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\staff;
-use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\File;
 
 use App\Http\Requests\Storeprofessional_activity_conductedRequest;
 use App\Http\Requests\Updateprofessional_activity_conductedRequest;
@@ -22,7 +22,7 @@ class NT_ProfessionalActivityConductedController extends Controller
      */
     public function index()
     {
-   
+
     }
 
     /**
@@ -40,7 +40,7 @@ class NT_ProfessionalActivityConductedController extends Controller
     {
         //
         //dd($request);
-       
+
          $conduct= new professional_activity_conducted();
          $conduct->title=$request->con_title;
          $conduct->level=$request->con_level;
@@ -64,7 +64,7 @@ class NT_ProfessionalActivityConductedController extends Controller
         //  $final_file_upload_name = $this->gen_egov_id($request->con_from_date).'.'.$file->getClientOriginalExtension();
         //  $conduct->document= $final_file_upload_name;
         //  $destination ='Uploads/Professional_Activity_Conducted/';
- 
+
         //to get the file size
         $file_size = $file->getSize();
         $file_upload_status = 0;
@@ -80,12 +80,12 @@ class NT_ProfessionalActivityConductedController extends Controller
                $conduct->document= $file->hashName();
                $activityinsertedId =  $conduct->save();
              $user = Auth::user();
-    
+
              $staff=staff::with('professional_activity_conducted')->where('user_id','=',$user->id)->first();
                //$staff=staff::with('departments')->where('user_id',$user->id)->get();
                    //dd($staff[0]);
              $result=$staff->professional_activity_conducted()->attach($conduct->id);
-                   
+
            }else {
              //dd( "Failed to upload file");
              $file_upload_status = 0;
@@ -93,8 +93,8 @@ class NT_ProfessionalActivityConductedController extends Controller
        }else{
            $file_size_status = 0;
        }
-       
-    
+
+
      if($activityinsertedId && $file_upload_status && $file_size_status){
          $status = 1;
      }else{
@@ -110,9 +110,9 @@ class NT_ProfessionalActivityConductedController extends Controller
 
 
     }
-   
-   
-   
+
+
+
     public function update(Updateprofessional_activity_conductedRequest $request, professional_activity_conducted $professional_activity_conducted)
     {
 
@@ -125,12 +125,13 @@ class NT_ProfessionalActivityConductedController extends Controller
         $professional_activity_conducted->sponsored=$request->e_sponsored;
         if($request->sponsoring_agency_name_address)
         {
-            
+
             $professional_activity_conducted->sponsoring_agency_name_address=$request->e_sponsoring_agency_name_address;
 
         }
-       
+
          $professional_activity_conducted->from_date=$request->e_from_date;
+         $professional_activity_conducted->egov_id=$this->gen_egov_id($request->e_from_date);
          $professional_activity_conducted->to_date=$request->e_to_date;
          $professional_activity_conducted->place=$request->e_place;
          $professional_activity_conducted->no_of_days=$request->e_no_of_days;
@@ -141,26 +142,26 @@ class NT_ProfessionalActivityConductedController extends Controller
         $professional_activity_conducted->validation_status = ($request->validation_status == "invalid") ? "updated" : $request->validation_status;
 
 
-         
+
            //file upload
            $file=$request->file("document");
            //dd($file);
         //    $final_file_upload_name = $professional_activity_conducted->egov_id.'.'.$file->getClientOriginalExtension();
         //    $professional_activity_conducted->document= $final_file_upload_name;
         //    $destination = 'Uploads/Professional_Activity_Conducted/';
-   
+
            //to get the file size
            $file_size = $file->getSize();
            $file_upload_status = 0;
            $file_size_status = 0;
-          // $result = 0;   
-   
+          // $result = 0;
+
            if($file_size <= 500000)
            {
                $file_size_status = 1;
                    //for deleting the existing file and replacing it with the new one.
                    File::delete('public/Uploads/Professional_Activity_Conducted/'.$professional_activity_conducted->document);
-   
+
                    if($file->store('public/Uploads/Professional_Activity_Conducted/'))
                    {
                        //dd("File upload Sucess");
@@ -174,13 +175,13 @@ class NT_ProfessionalActivityConductedController extends Controller
                        //dd( "Failed to upload file");
                        $file_upload_status = 0;
                    }
-   
+
            }
            else
            {
                $file_size_status = 0;
            }
-   
+
             if($result && $file_size_status == 1 && $file_upload_status == 1)
             {
                $status = 1;
@@ -189,19 +190,19 @@ class NT_ProfessionalActivityConductedController extends Controller
            {
                $status = 0;
            }
-   
+
            $return_data = [
                'status' => $status,
                'file_size_status' => $file_size_status
            ];
-   
+
            return redirect('/Non-Teaching/professionalactivities')->with('return_data', $return_data);
     }
 
 
     public function destroy(professional_activity_conducted $professional_activity_conducted)
     {
-    
+
         $user = Auth::user();
         $staff=staff::with('professional_activity_conducted')->where('user_id','=',$user->id)->first();
         $delete=$staff->professional_activity_conducted()->detach($professional_activity_conducted->id);
@@ -215,49 +216,29 @@ class NT_ProfessionalActivityConductedController extends Controller
         }
         return redirect('/Non-Teaching/professionalactivities')->with('status', $status);
     }
-    
+
     public function gen_egov_id($conducted_date)
     {
         $year = date('Y', strtotime($conducted_date));
         $month = date('M',strtotime($conducted_date));
-        $no="";        
-        $professional_activity_conducted=professional_activity_conducted::where('from_date','<=',$year.'-12-31')->orderBy('id','desc')->first();
+        $no="";
+        $professional_activity_conducted=professional_activity_conducted::whereYear('from_date',$year)->orderBy('id','desc')->first();
         if($professional_activity_conducted==null){
             $no="00001";
         }
         else
         {
-            $oldyear=date('Y', strtotime($professional_activity_conducted->from_date));
-           
-            if($oldyear<$year){
-                $no="00001";
-            }
-            else
-            {
+
+
                 $oldegov_id=$professional_activity_conducted->egov_id;
                 //dd(substr($oldegov_id,9,10));
-                $oldno=intval(substr($oldegov_id,9,10)); 
-               
+                $oldno=intval(substr($oldegov_id,9,10));
+
                 $no=$oldno+1;
-            
-                if($no<10)
-                {
-                    $no='0000'.$no;
-                }
-                if($no<100 && $no>10)
-                {
-                    $no='000'.$no;
-                }
-                if($no<1000 && $no>100)
-                {
-                    $no='00'.$no;
-                }
-                if($no<10000 & $no>1000)
-                {
-                    $no='0'.$no;
-                }
-            }
-           
+
+                $no = str_pad($oldno + 1, 5, '0', STR_PAD_LEFT);
+
+
         }
         return ($year.$month."PC".$no);
     }

@@ -279,8 +279,8 @@ Route::get('/myleaveevents',[LeaveStaffApplicationsController::class,'myleaveeve
 Route::get('/checkhasleaveEvent',[LeaveStaffApplicationsController::class,'checkhasleaveEvent'])->name('checkhasleaveEvent');
 
 //for fetching events of specific date (clicked) using AJAX
-Route::post('/fetchholidayrhevents',[LeaveStaffApplicationsController::class,'fetchholidayrhevents'])->name('fetchholidayrhevents');
-Route::post('/fetchmyleaveevents',[LeaveStaffApplicationsController::class,'fetchmyleaveevents'])->name('fetchmyleaveevents');
+Route::get('/fetchholidayrhevents',[LeaveStaffApplicationsController::class,'fetchholidayrhevents'])->name('fetchholidayrhevents');
+Route::get('/fetchmyleaveevents',[LeaveStaffApplicationsController::class,'fetchmyleaveevents'])->name('fetchmyleaveevents');
 //Route::get('/Teaching/leavesentitlements',[TeachingLeaveController::class,'holidayrh'])->name('Teaching.leavesentitlements');
 // Route::patch('/ESTB/leaves/leaves_rules/{leave_rules}',[LeaveRulesController::class,'update'])->name('ESTB.leaves.leave_rules.update');
 // Route::delete('/ESTB/leaves/leaves_rules/{leave_rules}',[LeaveRulesController::class,'destroy'])->name('ESTB.leaves.leave_rules.destroy');
