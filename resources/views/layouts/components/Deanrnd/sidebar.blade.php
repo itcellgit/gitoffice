@@ -79,9 +79,13 @@
                                     </li>
                                    <li class="slide"><a href="{{url('/Deanrnd/Teaching/research/publication')}}" class="side-menu__item">Publication</a></li>
                                    <li class="slide"><a href="{{url('/Deanrnd/Teaching/research/fundedproject')}}" class="side-menu__item">Funded Project</a></li>
+                                   <li class="slide"><a href="{{url('/Deanrnd/Teaching/research/dean_consultancy')}}" class="side-menu__item">Consultancy</a></li>
+                                   <li class="slide"><a href="{{url('/Deanrnd/Teaching/research/book_chapter')}}" class="side-menu__item">Books Chapter</a></li>
                                    <li class="slide"><a href="{{url('/Deanrnd/Teaching/research/patents')}}" class="side-menu__item">Patents</a></li>
                                    <li class="slide"><a href="{{url('/Deanrnd/Teaching/research/copyrights')}}" class="side-menu__item">Copyrights</a></li>
                                    <li class="slide"><a href="{{url('/Deanrnd/Teaching/research/achivements')}}" class="side-menu__item">Achivements</a></li>
+                                   <li class="slide"><a href="{{url('/Deanrnd/Teaching/research/reviewer_editor')}}" class="side-menu__item">Reviewer/editor</a></li>
+
 
                                    
                                 </ul>
