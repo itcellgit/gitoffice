@@ -9,7 +9,7 @@ use App\Http\Requests\Storeprofessional_activity_attendeeRequest;
 use App\Http\Requests\Updateprofessional_activity_attendeeRequest;
 use Auth;
 use App\Models\staff;
-use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class ProfessionalActivityAttendeeController extends Controller
@@ -48,18 +48,18 @@ class ProfessionalActivityAttendeeController extends Controller
         $activity->sponsored=$request->sponsored;
         if($request->sponsored_by=="KLS GIT")
         {
-            
-            $activity->sponsored_by=$request->sponsored_by;       
+
+            $activity->sponsored_by=$request->sponsored_by;
         }
         else{
-            $activity->sponsored_by=$request->other_sponsored;       
+            $activity->sponsored_by=$request->other_sponsored;
         }
         $activity->egov_id=$this->gen_egov_id($request->from_date);
         $activity->from_date=$request->from_date;
         $activity->to_date=$request->to_date;
         $activity->no_of_days=$request->no_of_days;
-        
-       
+
+
 
         //file upload
         $file=$request->file("document");
@@ -83,11 +83,11 @@ class ProfessionalActivityAttendeeController extends Controller
                 $file_upload_status = 1;
                 $activity->document= $file->hashName();
                 $activityinsertedId =  $activity->save(); // insert the row and upload the file only when all the conditions are met.
-            
+
                 $user = Auth::user();
                 // dd($user);
                 $staff=staff::with('professional_activity_attendee')->where('user_id','=',$user->id)->first();
-                
+
                 $result=$staff->professional_activity_attendee()->attach($activity->id);
                 //dd($result);
             }
@@ -98,8 +98,8 @@ class ProfessionalActivityAttendeeController extends Controller
             }
         }
 
-       
-        
+
+
         if($activityinsertedId && $file_upload_status && $file_size_status){
             $status = 1;
         }else{
@@ -137,20 +137,21 @@ class ProfessionalActivityAttendeeController extends Controller
     public function update(Updateprofessional_activity_attendeeRequest $request, professional_activity_attendee $professional_activity_attendee)
     {
      // dd($request);
-        
+
         $professional_activity_attendee->title=$request->edit_title;
         $professional_activity_attendee->organizer=$request->edit_organizer;
         $professional_activity_attendee->role=$request->edit_role;
         $professional_activity_attendee->level=$request->edit_level;
+        $professional_activity_attendee->egov_id=$this->gen_egov_id($request->edit_from_date);
         $professional_activity_attendee->category=$request->edit_category;
         $professional_activity_attendee->sponsored=$request->edit_sponsored;
         if($request->sponsored_by=="KLS GIT")
         {
-            
-            $professional_activity_attendee->sponsored_by=$request->edit_sponsored_by;       
+
+            $professional_activity_attendee->sponsored_by=$request->edit_sponsored_by;
         }
         else{
-            $professional_activity_attendee->sponsored_by=$request->edit_other_sponsored;       
+            $professional_activity_attendee->sponsored_by=$request->edit_other_sponsored;
         }
        // $professional_activity_attendee->sponsored_by=$request->sponsored_by;
         $professional_activity_attendee->from_date=$request->edit_from_date;
@@ -209,7 +210,7 @@ class ProfessionalActivityAttendeeController extends Controller
 
         return redirect('/Teaching/professionalactivities')->with('return_data', $return_data);
 
-        
+
     }
 
     /**
@@ -217,7 +218,7 @@ class ProfessionalActivityAttendeeController extends Controller
      */
     public function destroy(professional_activity_attendee $professional_activity_attendee)
     {
-        
+
         $user = Auth::user();
         $staff=staff::with('professional_activity_attendee')->where('user_id','=',$user->id)->first();
         $delete=$staff->professional_activity_attendee()->detach($professional_activity_attendee->id);
@@ -236,7 +237,7 @@ class ProfessionalActivityAttendeeController extends Controller
       {
           $year = date('Y', strtotime($activity_date));
           $month = date('M',strtotime($activity_date));
-          $no="";        
+          $no="";
           $professional_activity_attendee=professional_activity_attendee::where('from_date','<=',$year.'-12-31')->orderBy('id','desc')->first();
           if($professional_activity_attendee==null){
               $no="00001";
@@ -244,7 +245,7 @@ class ProfessionalActivityAttendeeController extends Controller
           else
           {
               $oldyear=date('Y', strtotime($professional_activity_attendee->from_date));
-             
+
               if($oldyear<$year){
                   $no="00001";
               }
@@ -252,10 +253,10 @@ class ProfessionalActivityAttendeeController extends Controller
               {
                   $oldegov_id=$professional_activity_attendee->egov_id;
                   //dd(substr($oldegov_id,9,10));
-                  $oldno=intval(substr($oldegov_id,9,10)); 
-                 
+                  $oldno=intval(substr($oldegov_id,9,10));
+
                   $no=$oldno+1;
-              
+
                   if($no<10)
                   {
                       $no='0000'.$no;
@@ -273,15 +274,11 @@ class ProfessionalActivityAttendeeController extends Controller
                       $no='0'.$no;
                   }
               }
-             
+
           }
           return ($year.$month."PA".$no);
       }
 
-    
-      
+
+
       }
-
-
-    
-
