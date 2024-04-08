@@ -1465,10 +1465,11 @@ public function create_vacational_leaves(request $request,staff $staff,$design_i
                     //if el entitlement is given for this year then update it for the no. of days the staff
                     //was non_vacational and create fractional vacational EL entitlement for the number of days remaining in the current year.
                     //else only create fractional vacational EL entitlement for the number of days remaining in the current year
+                    //additional designation end date
+                    $end_date=Carbon::parse($request->end_date);
                     if($snvl->pivot->entitled_curr_year>0 && $snvl->shortname=="EL")
                     {
-                        //additional designation end date
-                        $end_date=Carbon::parse($request->end_date);
+
                         //date at which the non-vacational EL entitlement was given
                         $entitlment_given_date=Carbon::parse($snvl->pivot->wef);
                         $diffdays=$entitlment_given_date->diffInDays($end_date);
@@ -1476,12 +1477,11 @@ public function create_vacational_leaves(request $request,staff $staff,$design_i
                         $snvl->pivot->status='inactive';
                         $snvl->pivot->update();
                     }
-                    if($snvl->shortname=='EL')
+                    else if($snvl->shortname=='CL')
                     {
-
+                        $diffdays=$end_date->diffInDays(Carbon::now()->year.'01-01');
+                        dd($diffdays);
                     }
-
-
                 }
             }
 
