@@ -145,10 +145,17 @@ class TeachingController extends Controller
     public function update(UpdatestaffRequest $request, staff $staff)
     {
 
+        $user = Auth::user();
+        //dd($user);
+        $staff=staff::where('staff.id',$staff->id);
+
+        //dd($staff);
         $staff->fname=$request->fname;
         $staff->mname=$request->mname;
         $staff->lname=$request->lname;
+
         //$staff->email = $request->email;
+
         $staff->local_address=$request->local_address;
         $staff->permanent_address=$request->permanent_address;
         $staff->religion_id=$request->religion_id;
@@ -167,6 +174,7 @@ class TeachingController extends Controller
         $staff->vtu_id=$request->vtu_id;
         $staff->aicte_id=$request->aicte_id;
         $staff->date_of_confirmation=$request->date_of_confirmation;
+
 
         $sresult=$staff->update();
         $staff->latest_employee_type()->first();
@@ -194,6 +202,7 @@ class TeachingController extends Controller
         }
         //check if designation has changed
       return redirect('/Staff/Teaching/update/'.$staff->id)->with('status',$status);
+
 
     }
 

@@ -178,7 +178,9 @@ Route::middleware(['cors','auth','role:'.UserRoles::TEACHING->value, 'prevent-ba
 
   //Route for Update the staff personal information
   Route::get('/Staff/Teaching/updateprofile',[TeachingController::class,'update_staff_information'])->name('Staff.Teaching.updateprofile');
-  Route::patch('/Staff/Teaching/update/{staff}',[TeachingController::class,'update'])->name('Staff.Teaching.update');
+   Route::patch('/Staff/Teaching/update/{staff}',[TeachingController::class,'update'])->name('Staff.Teaching.update');
+  //Route::patch('/Teaching/staff/{staff}',[TeachingController::class,'update'])->name('Staff.Teaching.update');
+
 
 
 //professional Activity  attended ssm
