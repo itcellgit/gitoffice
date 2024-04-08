@@ -44,8 +44,12 @@
                             <div class="box">
                                 <div class="box-body">                
                                     <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
-                                        <table id="conducted" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
-                                            <thead class="bg-gray-50 dark:bg-black/20">
+                                        <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto">
+                                            <div class="flex justify-end mt-4">
+                                                <button id="exportToExcel" class="bg-green-500 text-white px-4 py-2 rounded-md focus:outline-none hover:bg-green-600">Export to Excel</button>
+                                            </div>
+                                                <table id="conducted" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
+                                                    <thead class="bg-gray-50 dark:bg-black/20">
                                             <tr class="">
                                                 <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
@@ -61,6 +65,11 @@
                                                 <th scope="col" class="dark:text-white/80 font-bold ">No Of Days</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Sponsored</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Sponsoring Agency Name And Address</th>
+
+                                                 {{-- Exclude the "Document" column when exporting --}}
+                                                      @if(!isset($export) || !$export)
+                                                      <th scope="col" class="dark:text-white/80 font-bold ">Document</th>
+                                                  @endif
                                                
                                                 
 
@@ -87,6 +96,11 @@
                                                         <td><span>{{ $con->no_of_days }}</span></td>
                                                         <td><span>{{ $con->sponsored }}</span></td>
                                                         <td><span>{{ $con->sponsoring_agency_name_address }}</span></td>
+                                                        {{-- <td><span>{{ $act->sponsored_by }}</span></td> --}}
+                                                         @if(!isset($export) || !$export)
+                                                            <td><span><a href={{asset('Uploads/Professional_Activity_Conducted/'.$con->document)}} class='font-medium text-blue-600 dark:text-blue-500 hover:underline' target="_blank">{{$con->document}}</a></span></td>
+                
+                                                        @endif
                                
                                                         
                                                     </tr>
@@ -138,6 +152,44 @@
                //alert('Hello from jquery');
 
                new DataTable('#conducted');
+            });
+        </script>
+
+        {{-- Export to Excel professional activity conducted --}}
+        <script>
+            $(document).ready(function () {
+                $('#exportToExcel').on('click', function () {
+                    var table = $('#conducted').clone();
+    
+                    table.find('td:last-child').remove();
+    
+                    table.find('thead tr th:last-child').remove();
+    
+                    // Remove any colspan attributes from table cells
+                    table.find('td').removeAttr('colspan');
+    
+                    // Ensure each cell has proper formatting
+                    table.find('td').css({
+                        'border': '1px solid #000',
+                        'padding': '5px'
+                    });
+    
+                    // Create a Blob containing the modified table data
+                    var blob = new Blob([table[0].outerHTML], { type: 'application/vnd.ms-excel;charset=utf-8' });
+    
+                    // Check for Internet Explorer and Edge
+                    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                        window.navigator.msSaveOrOpenBlob(blob, 'proactivityconducted_data.xls');
+                    } else {
+                        var link = $('<a>', {
+                            href: URL.createObjectURL(blob),
+                            download: 'proactivityconducted_data.xls'
+                        });
+    
+                        // Trigger the click to download
+                        link[0].click();
+                    }
+                });
             });
         </script>
         

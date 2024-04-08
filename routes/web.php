@@ -528,6 +528,10 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
       Route::get('/Deanrnd/Teaching/research/patents',[DeanrndResearchController::class,'patents'])->name('Deanrnd.Teaching.research.patents');
       Route::get('/Deanrnd/Teaching/research/copyrights',[DeanrndResearchController::class,'copyrights'])->name('Deanrnd.Teaching.research.copyrights');
       Route::get('/Deanrnd/Teaching/research/achivements',[DeanrndResearchController::class,'general_achievement'])->name('Deanrnd.Teaching.research.achivements');
+      Route::get('/Deanrnd/Teaching/research/book_chapter',[DeanrndResearchController::class,'book_chapter'])->name('Deanrnd.Teaching.research.book_chapter');
+      Route::get('/Deanrnd/Teaching/research/dean_consultancy',[DeanrndResearchController::class,'consultancy'])->name('Deanrnd.Teaching.research.dean_consultancy');
+
+
 
       //Deanrndn Non-Teaching professional activity 
       Route::get('/Deanrnd/NonTeaching',[DeanRndController::class,'professional_activity_attendee_nt'])->name('Deanrnd.NonTeaching');

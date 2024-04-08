@@ -1356,9 +1356,9 @@ public function create_non_vacational_leaves(request $request,staff $staff)
             $no_of_days = floatval($startdate->diffInDays($request->startdate));
 
             if ($svl->shortname == 'CL') {
-                $leave_entitlement = round($no_of_days * 15) / 365;
+                $leave_entitlement = round($no_of_days * $svl->max_entitlement) / 365;
             } elseif ($svl->shortname == 'EL') {
-                $leave_entitlement = round($no_of_days * 10) / 365;
+                $leave_entitlement = round($no_of_days * $svl->max_entitlement) / 365;
             }
 
             $svl->pivot->entitled_curr_year = $leave_entitlement;
@@ -1375,41 +1375,15 @@ public function update_additional_desig(Request $request, staff $staff, $design_
 {
     $additional_design=$staff->designations->where('pivot.id','=',$design_id);
     foreach($additional_design as $design){
-<<<<<<< HEAD
     //dd($design->pivot);
     if($request->end_date!=null){
       
-      $check_staff_additional_designation=staff::with(['designations'=>function($q){
-           $q->where('isvacational','Non-vacational')
-           ->where('isadditional',1)
-           ->where('designation_staff.status','active');
-           }])->where('id',$staff->id)->first();
-           if(count($check_staff_additional_designation->designations)==1)
-           {
+ 
              
                 $this->create_vacational_leaves($request,$staff,$design_id);
-           }
+           
           // $dstatus='inactive';
      
-=======
-        //dd($design->pivot);
-        $dstatus = '';
-        if($request->end_date!=null){
-
-        $year=Carbon::now()->year;
-        $check_staff_additional_designation=staff::with(['designations'=>function($q){
-            $q->where('isvacational','Non-vacational')
-            ->where('isadditional',1)
-            ->where('designation_staff.status','active');
-            }])->where('id',$staff->id)->first();
-            if(count($check_staff_additional_designation->designations)==1)
-            {
-
-                    $this->create_vacational_leaves($request,$staff,$design_id);
-            }
-            // $dstatus='inactive';
-
->>>>>>> af0a8594636be76858f4f317af11d7b26559ee05
 
         }
         else
@@ -1436,59 +1410,49 @@ public function update_additional_desig(Request $request, staff $staff, $design_
 
 public function create_vacational_leaves(request $request,staff $staff,$design_id)
 {
+   
     $year=Carbon::now()->year;
-<<<<<<< HEAD
+    $check_staff_additional_designation=staff::with(['designations'=>function($q){
+        $q->where('isvacational','Non-vacational')
+        ->where('isadditional',1)
+        ->where('designation_staff.status','active');
+        }])->where('id',$staff->id)->first();
+        if(count($check_staff_additional_designation->designations)==1)
+        {
     
-     //if staff has only one additional designation then update the non-vacational leaves entitlements 
-=======
+            //if staff has only one additional designation then update the non-vacational leaves entitlements 
+            //and create vactional leave entitlements
+            //if the count is more than one then the staff has two or more non-vacational designations hence
+            //no change is leaves. So dont do any thing
+            $staff_non_vacational_leaves=$staff->active_leave_staff_entitlements()->get();
+           // dd($staff_non_vacational_leaves);
+            $additional_designation=$check_staff_additional_designation->designations()->first();
+            //dd($additional_designation->pivot->start_date);
+            //dd($staff_non_vacational_leaves);
+            $vacational_leaves=leave::where('vacation_type','Vacational')->where('max_entitlement','>',0)->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();
+            // $non_vacational_leaves=leave::where('vacation_type','Non-Vacational')->where('max_entitlement','>',0)->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();
 
+            foreach($vacational_leaves as $vl1)
+            {
 
-    $flag=true;
-    //if staff has only one additional designation then update the non-vacational leaves entitlements
->>>>>>> af0a8594636be76858f4f317af11d7b26559ee05
-    //and create vactional leave entitlements
-    //if the count is more than one then the staff has two or more non-vacational designations hence
-    //no change is leaves. So dont do any thing
-       $staff_non_vacational_leaves=$staff->active_leave_staff_entitlements()->where('status','active')->get();
-
-
-      dd($staff_non_vacational_leaves);
-       $vacational_leaves=leave::where('vacation_type','Vacational')->where('max_entitlement','>',0)->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();
-      // $non_vacational_leaves=leave::where('vacation_type','Non-Vacational')->where('max_entitlement','>',0)->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();
-
-       foreach($vacational_leaves as $vl1)
-       {
-
-        $current=Carbon::now()->toDateString();
-
-        $startdate = Carbon::createFromFormat('Y-m-d', $year . "-01-01");
-
-        $no_of_days = floatval($startdate->diffInDays($request->startdate));
-<<<<<<< HEAD
-         if ($vl1->shortname == 'EL') 
-=======
-         if ($vl->shortname == 'EL')
->>>>>>> af0a8594636be76858f4f317af11d7b26559ee05
-         {
-            $leave_entitlement = round($no_of_days * $vl1->max_entitlement) / 365;
-        }elseif ($vl1->shortname == 'CL'){
-            $leave_entitlement = round($no_of_days * $vl1->$max_entitlement) / 365;
+                $current=Carbon::now()->toDateString();
+                $startdate=Carbon::createFromFormat('y-m-d');
+                $enddate=Carbon::createFromFormat('y-m-d');            
+                $no_of_days = floatval($enddate->diffInDays($request->enddate));
+                if ($vl->shortname == 'EL')
+                {
+                    $leave_entitlement = round($no_of_days * $vl1->max_entitlement) / 365;
+                }elseif ($vl1->shortname == 'CL'){
+                    $leave_entitlement = round($no_of_days * $vl1->$max_entitlement) / 365;
+                }
+                $vl1->pivot->entitled_curr_year = $leave_entitlement;
+                $vl1->pivot->status = 'inactive';
+                $vl1->pivot->update();        
+                
+                
+            }
         }
-<<<<<<< HEAD
-        $vl1->pivot->entitled_curr_year = $leave_entitlement;
-        $vl1->pivot->status = 'inactive';
-        $vl1->pivot->update();        
-         
-        
-       }
     
-=======
-        $vl->pivot->entitled_curr_year = $leave_entitlement;
-        $vl->pivot->status = 'inactive';
-        $svl->pivot->update();
-
-
->>>>>>> af0a8594636be76858f4f317af11d7b26559ee05
 
 }
 

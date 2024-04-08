@@ -28,7 +28,7 @@
                             <ol class="flex items-center whitespace-nowrap min-w-0">
                                 <li class="text-sm">
                                 <a class="flex items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="#">
-                                   Professional Activity Conducted
+                                    Book Chapters
                                     <i class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
                                 </a>
                                 </li>
@@ -49,7 +49,7 @@
                                             <div class="flex justify-end mt-4">
                                                 <button id="exportToExcel" class="bg-green-500 text-white px-4 py-2 rounded-md focus:outline-none hover:bg-green-600">Export to Excel</button>
                                             </div>
-                                        <table id="proconduct" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
+                                        <table id="book_chapter_table" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                             <thead class="bg-gray-50 dark:bg-black/20">
                                             <tr class="">
                                                 <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
@@ -57,49 +57,51 @@
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">E-Gov ID</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Title</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Role</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Level</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Category</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">From_date</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">to_date</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">No Of Days</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Oragnizer</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Sponsored</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Sponsoring Agency Name And Address</th>
+                                                <th scope="col" class="dark:text-white/80 font-bold ">Book Level</th>
+                                                <th scope="col" class="dark:text-white/80 font-bold ">Publisher Name</th>
+                                                <th scope="col" class="dark:text-white/80 font-bold ">Edition</th>
+                                                <th scope="col" class="dark:text-white/80 font-bold ">DOI Number</th>
+                                                <th scope="col" class="dark:text-white/80 font-bold ">Date </th>
+                                                <th scope="col" class="dark:text-white/80 font-bold ">Issue</th>
+                                                <th scope="col" class="dark:text-white/80 font-bold ">Type</th>
+                                                <th scope="col" class="dark:text-white/80 font-bold ">Chapter Title</th>
+                                                <th scope="col" class="dark:text-white/80 font-bold ">Start Page No</th>
+                                                <th scope="col" class="dark:text-white/80 font-bold ">End Page No</th>
                                                 {{-- Exclude the "Document" column when exporting --}}
-                                                @if(!isset($export) || !$export)
-                                                   <th scope="col" class="dark:text-white/80 font-bold ">Document</th>
+                                                    @if(!isset($export) || !$export)
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">Document</th>
                                                 @endif
-                                                
-
                                             </tr>
                                             </thead>
                                             <tbody>
-                                                 @php
+                                                @php
                                                     $i=1;
                                                 @endphp
-                                                @foreach ($professional_activity_conducteds as $con)
+                                                 @foreach($book_chapter as $book)
                                                     <tr class="">
 
-                                                        <td><span>{{ $i++ }}</span></td>
-                                                        <td><span>{{ $con->fname . ' ' . $con->mname . ' ' . $con->lname }}</span></td>
-                                                        <td><span>{{ $con->dept_shortname }}</span></td>
-                                                        <td><span>{{ $con->egov_id }}</span></td>
-                                                        <td><span>{{ $con->title }}</span></td>
-                                                        <td><span>{{ $con->role }}</span></td>
-                                                        <td><span>{{ $con->level }}</span></td>
-                                                        <td><span>{{ $con->category }}</span></td>
-                                                        <td><span>{{\Carbon\Carbon::parse($con->from_date)->format('d-M-Y') }}</span></td>
-                                                        <td><span>{{\Carbon\Carbon::parse($con->to_date)->format('d-M-Y') }}</span></td>
-                                                        <td><span>{{ $con->no_of_days }}</span></td>
-                                                        <td><span>{{ $con->organizer }}</span></td>
-                                                        <td><span>{{ $con->sponsored }}</span></td>
-                                                        <td><span>{{ $con->sponsoring_agency_name_address }}</span></td>
+                                                      
+                                                        <td><span>{{$i++}}</span></td>
+                                                        <td><span>{{ $book->fname . ' ' . $book->mname . ' ' . $book->lname }}</span></td>
+                                                        <td><span>{{ $book->dept_shortname }}</span></td>
+                                                        <td><span>{{$book->egov_id}}</span></td>
+                                                        <td><span>{{$book->title}}</span></td>
+                                                        <td><span>{{$book->book_level}}</span></td>
+                                                        <td><span>{{$book->publisher_name}}</span></td>
+                                                        <td><span>{{$book->edition}}</span></td>
+                                                        <td><span>{{$book->doi}}</span></td>
+                                                        <td><span>{{\Carbon\Carbon::parse($book->date)->format('d-M-Y') }}</span></td>
+                                                        <td><span>{{$book->issue}}</span></td>
+                                                        <td><span>{{$book->type}}</span></td>
+                                                        <td><span>{{ $book->type == 'Book' ? '--NA--' : $book->chapter_title }}</span></td>
+                                                        <td><span>{{ $book->type == 'Book' ? '--NA--' : $book->start_page_no }}</span></td>
+                                                        <td><span>{{ $book->type == 'Book' ? '--NA--' : $book->end_page_no }}</span></td>
                                                         @if(!isset($export) || !$export)
-                                                        <td><span><a href={{asset('Uploads/Professional_Activity_Attended/'.$con->document)}} class='font-medium text-blue-600 dark:text-blue-500 hover:underline' target="_blank">{{$con->document}}</a></span></td>
+                                                        <td><span><a href={{asset('Uploads/Research/Book_Chapters/'.$book->document)}} class='font-medium text-blue-600 dark:text-blue-500 hover:underline' target="_blank">{{$book->document}}</a></span></td>
+
+                                                    
 
                                                     @endif
-                                                        
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -133,12 +135,7 @@
         crossorigin="anonymous"></script>
 
 
-        <script
-        src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-        crossorigin="anonymous"></script>
-
-         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"
+        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"
         ></script>
 
         <script src="https://cdn.datatables.net/1.13.6/js/dataTables.tailwindcss.min.js"></script>
@@ -149,45 +146,47 @@
             $(document).ready(function(){
                //alert('Hello from jquery');
 
-               new DataTable('#proconduct');
+               new DataTable('#book_chapter_table');
             });
         </script>
+         {{-- Export to excel achivement --}}
 
-         <!--Export to Excel professional activity attended-->
-         <script>
-            $(document).ready(function () {
-                $('#exportToExcel').on('click', function () {
-                    var table = $('#proconduct').clone();
-    
-                    table.find('td:last-child').remove();
-    
-                    table.find('thead tr th:last-child').remove();
-    
-                    // Remove any colspan attributes from table cells
-                    table.find('td').removeAttr('colspan');
-    
-                    // Ensure each cell has proper formatting
-                    table.find('td').css({
-                        'border': '1px solid #000',
-                        'padding': '5px'
-                    });
-    
-                    // Create a Blob containing the modified table data
-                    var blob = new Blob([table[0].outerHTML], { type: 'application/vnd.ms-excel;charset=utf-8' });
-    
-                    // Check for Internet Explorer and Edge
-                    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                        window.navigator.msSaveOrOpenBlob(blob, 'proactivityconducted_data.xls');
-                    } else {
-                        var link = $('<a>', {
-                            href: URL.createObjectURL(blob),
-                            download: 'proactivityconducted_data.xls'
-                        });
-    
-                        // Trigger the click to download
-                        link[0].click();
-                    }
-                });
+ <script>
+    $(document).ready(function () {
+        $('#exportToExcel').on('click', function () {
+            var table = $('#book_chapter_table').clone();
+
+            table.find('td:last-child').remove();
+
+            table.find('thead tr th:last-child').remove();
+
+            // Remove any colspan attributes from table cells
+            table.find('td').removeAttr('colspan');
+
+            // Ensure each cell has proper formatting
+            table.find('td').css({
+                'border': '1px solid #000',
+                'padding': '5px'
             });
-        </script>
+
+            // Create a Blob containing the modified table data
+            var blob = new Blob([table[0].outerHTML], { type: 'application/vnd.ms-excel;charset=utf-8' });
+
+            // Check for Internet Explorer and Edge
+            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                window.navigator.msSaveOrOpenBlob(blob, 'book_chapter_table_data.xls');
+            } else {
+                var link = $('<a>', {
+                    href: URL.createObjectURL(blob),
+                    download: 'book_chapter_table_data.xls'
+                });
+
+                // Trigger the click to download
+                link[0].click();
+            }
+        });
+    });
+</script>
+
+        
 @endsection

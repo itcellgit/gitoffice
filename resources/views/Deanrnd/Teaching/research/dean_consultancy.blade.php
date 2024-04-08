@@ -28,7 +28,7 @@
                             <ol class="flex items-center whitespace-nowrap min-w-0">
                                 <li class="text-sm">
                                 <a class="flex items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="#">
-                                    Achivements
+                                    Consultancy
                                     <i class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
                                 </a>
                                 </li>
@@ -49,36 +49,44 @@
                                             <div class="flex justify-end mt-4">
                                                 <button id="exportToExcel" class="bg-green-500 text-white px-4 py-2 rounded-md focus:outline-none hover:bg-green-600">Export to Excel</button>
                                             </div>
-                                        <table id="achivement" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
+                                        <table id="consultancy_table" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                             <thead class="bg-gray-50 dark:bg-black/20">
                                             <tr class="">
-                                                <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Award</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Year</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Details</th>
-                                                   {{-- Exclude the "Document" column when exporting --}}
-                                                   @if(!isset($export) || !$export)
-                                                   <th scope="col" class="dark:text-white/80 font-bold ">Document</th>
-                                               @endif
-                                            </tr>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold">Staff Name</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold">Dept Short Name</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">E-Gov ID</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">Consultancy Title</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold">Agency</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold">From Date</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold">To Date</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold">Amount</th>
+                                                    {{-- Exclude the "Document" column when exporting --}}
+                                                    @if(!isset($export) || !$export)
+                                                        <th scope="col" class="dark:text-white/80 font-bold ">Document</th>
+                                                    @endif
+                                                
+                                                </tr>
                                             </thead>
                                             <tbody>
                                                 @php
                                                     $i=1;
                                                 @endphp
-                                                @foreach ($general_achievements as $achive)
+                                               @foreach($consultancy as $consult)
                                                     <tr class="">
-
-                                                        <td><span>{{ $i++ }}</span></td>
-                                                        <td><span>{{ $achive->fname . ' ' . $achive->mname . ' ' . $achive->lname }}</span></td>
-                                                        <td><span>{{ $achive->dept_shortname }}</span></td>
-                                                        <td><span>{{ $achive->award }}</span></td>
-                                                        <td><span>{{ $achive->year }}</span></td>
-                                                        <td><span>{{ $achive->details }}</span></td>
+                                                         <td><span>{{$i++}}</span></td>
+                                                        <td><span>{{ $consult->fname . ' ' . $consult->mname . ' ' . $consult->lname }}</span></td>
+                                                        <td><span>{{ $consult->dept_shortname }}</span></td>
+                                                        <td><span>{{$consult->egov_id}}</span></td>
+                                                        <td><span>{{$consult->consultancy_title}}</span></td>
+                                                        <td><span>{{$consult->agency}}</span></td>
+                                                        <td><span>{{\Carbon\Carbon::parse($consult->from_date)->format('d-M-Y') }}</span></td>
+                                                        <td><span>{{\Carbon\Carbon::parse($consult->from_date)->format('d-M-Y') }}</span></td>
+                                                        <td><span>{{$consult->amount}}</span></td>
                                                         @if(!isset($export) || !$export)
-                                                        <td><span><a href={{asset('Uploads/Research/Achievement/'.$achive->document)}} class='font-medium text-blue-600 dark:text-blue-500 hover:underline' target="_blank">{{$achive->document}}</a></span></td>
+                                                        <td><span><a href={{asset('Uploads/Research/Consultancy/'.$consult->document)}} class='font-medium text-blue-600 dark:text-blue-500 hover:underline' target="_blank">{{$consult->document}}</a></span></td>
+
+                                                    @endif
 
                                                     @endif
                                                     </tr>
@@ -125,45 +133,47 @@
             $(document).ready(function(){
                //alert('Hello from jquery');
 
-               new DataTable('#achivement');
+               new DataTable('#consultancy_table');
             });
         </script>
-        {{-- //Export to excel achivement --}}
-        <script>
-            $(document).ready(function () {
-                $('#exportToExcel').on('click', function () {
-                    var table = $('#achivement').clone();
-    
-                    table.find('td:last-child').remove();
-    
-                    table.find('thead tr th:last-child').remove();
-    
-                    // Remove any colspan attributes from table cells
-                    table.find('td').removeAttr('colspan');
-    
-                    // Ensure each cell has proper formatting
-                    table.find('td').css({
-                        'border': '1px solid #000',
-                        'padding': '5px'
-                    });
-    
-                    // Create a Blob containing the modified table data
-                    var blob = new Blob([table[0].outerHTML], { type: 'application/vnd.ms-excel;charset=utf-8' });
-    
-                    // Check for Internet Explorer and Edge
-                    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                        window.navigator.msSaveOrOpenBlob(blob, 'achivement_data.xls');
-                    } else {
-                        var link = $('<a>', {
-                            href: URL.createObjectURL(blob),
-                            download: 'achivement_data.xls'
-                        });
-    
-                        // Trigger the click to download
-                        link[0].click();
-                    }
+         {{-- Export to excel achivement --}}
+
+ <script>
+    $(document).ready(function () {
+        $('#exportToExcel').on('click', function () {
+            var table = $('#consultancy_table').clone();
+
+            table.find('td:last-child').remove();
+
+            table.find('thead tr th:last-child').remove();
+
+            // Remove any colspan attributes from table cells
+            table.find('td').removeAttr('colspan');
+
+            // Ensure each cell has proper formatting
+            table.find('td').css({
+                'border': '1px solid #000',
+                'padding': '5px'
+            });
+
+            // Create a Blob containing the modified table data
+            var blob = new Blob([table[0].outerHTML], { type: 'application/vnd.ms-excel;charset=utf-8' });
+
+            // Check for Internet Explorer and Edge
+            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                window.navigator.msSaveOrOpenBlob(blob, 'consultancy_table_data.xls');
+            } else {
+                var link = $('<a>', {
+                    href: URL.createObjectURL(blob),
+                    download: 'consultancy_table_data.xls'
                 });
-            });
-        </script>
+
+                // Trigger the click to download
+                link[0].click();
+            }
+        });
+    });
+</script>
+
         
 @endsection
