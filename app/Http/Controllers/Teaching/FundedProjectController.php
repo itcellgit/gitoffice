@@ -33,7 +33,7 @@ class FundedProjectController extends Controller
      */
     public function store(Storefunded_projectRequest $request)
     {
-        
+
         //dd($request);
         $user = Auth::user();
 
@@ -42,18 +42,18 @@ class FundedProjectController extends Controller
         $funds->egov_id=$this->gen_egov_id($request->f_application_date);
         $funds->staff_id=$staff->id;
         $funds->proposal_title=$request->f_proposal_title;
-        $funds->role=$request->f_role; 
+        $funds->role=$request->f_role;
         $funds->type=$request->f_type;
-        $funds->amount=$request->f_amount; 
+        $funds->amount=$request->f_amount;
         $funds->proposal_status=$request->f_proposal_status;
         $funds->application_date=$request->f_application_date;
         $funds->fund_received=$request->f_fund_received;
         $funds->project_status=$request->f_project_status;
 
-        
+
         $funds->completion_year=$request->f_completion_year;
         //  $fundsId = $funds->save();
-        
+
         //file upload
         $file=$request->file("document");
         // $final_file_upload_name = $this->gen_egov_id($request->f_application_date).'.'.$file->getClientOriginalExtension();
@@ -75,7 +75,7 @@ class FundedProjectController extends Controller
                 $file_upload_status = 1;
                 $funds->document= $file->hashName();
                $fundsId =  $funds->save(); // insert the row and upload the file only when all the conditions are met.
-            
+
             }
             else
             {
@@ -84,8 +84,8 @@ class FundedProjectController extends Controller
             }
         }
 
-       
-        
+
+
         if($fundsId && $file_upload_status && $file_size_status){
             $status = 1;
         }else{
@@ -125,13 +125,14 @@ class FundedProjectController extends Controller
     public function update(Updatefunded_projectRequest $request, funded_project $funded_project)
     {
         //
-      
+
         $funded_project->proposal_title=$request->fe_proposal_title;
-        $funded_project->role=$request->fe_role; 
-        $funded_project->type=$request->fe_type; 
-        $funded_project->amount=$request->fe_amount; 
+        $funded_project->role=$request->fe_role;
+        $funded_project->type=$request->fe_type;
+        $funded_project->amount=$request->fe_amount;
         $funded_project->proposal_status=$request->fe_proposal_status;
         $funded_project->application_date=$request->fe_application_date;
+        $funded_project->egov_id=$this->gen_egov_id($request->fe_application_date);
         $funded_project->fund_received=$request->fe_fund_received;
         $funded_project->project_status=$request->fe_project_status;
         $funded_project->completion_year=$request->fe_completion_year;
@@ -147,7 +148,7 @@ class FundedProjectController extends Controller
         //  $final_file_upload_name = $funded_project->egov_id.'.'.$file->getClientOriginalExtension();
         //  $funded_project->document= $final_file_upload_name;
         //  $destination = 'Uploads/Research/fundedproject/';
- 
+
          //to get the file size
          $file_size = $file->getSize();
          $file_upload_status = 0;
@@ -157,23 +158,23 @@ class FundedProjectController extends Controller
              $file_size_status = 1;
                  //for deleting the existing file and replacing it with the new one.
                  File::delete('public/Uploads/Research/fundedproject/'.$funded_project->document);
- 
+
                  if($file->store('public/Uploads/Research/fundedproject/'))
                  {
                      //dd("File upload Sucess");
                      $file_upload_status = 1;
                      $funded_project->document= $file->hashName();
                     $result =  $funded_project->update(); // insert the row and upload the file only when all the conditions are met.
-                 
-                 }  
+
+                 }
                     else{
                         //dd( "Failed to upload file");
                         $file_upload_status = 0;
                     }
-    
+
             }else{
                 $file_size_status = 0;
-            } 
+            }
 
             if($result && $file_upload_status == 1 &&  $file_size_status == 1){
                 $status = 1;
@@ -220,46 +221,23 @@ class FundedProjectController extends Controller
     {
         $year = date('Y', strtotime($application_date));
         $month = date('M',strtotime($application_date));
-        $no="";        
-        $funded_project=funded_project::where('application_date','<=',$year.'-12-31')->orderBy('id','desc')->first();
+        $no="";
+        $funded_project=funded_project::whereYear('application_date',$year)->orderBy('id','desc')->first();
         if($funded_project==null){
             $no="00001";
         }
         else
         {
-            $oldyear=date('Y', strtotime($funded_project->application_date));
-           
-            if($oldyear<$year){
-                $no="00001";
-            }
-            else
-            {
-                $oldegov_id=$funded_project->egov_id;
-                //dd(substr($oldegov_id,9,10));
-                $oldno=intval(substr($oldegov_id,9,10)); 
-               
-                $no=$oldno+1;
-            
-                if($no<10)
-                {
-                    $no='0000'.$no;
-                }
-                if($no<100 && $no>10)
-                {
-                    $no='000'.$no;
-                }
-                if($no<1000 && $no>100)
-                {
-                    $no='00'.$no;
-                }
-                if($no<10000 & $no>1000)
-                {
-                    $no='0'.$no;
-                }
-            }
-           
+
+            $oldegov_id=$funded_project->egov_id;
+            //dd(substr($oldegov_id,9,10));
+            $oldno=intval(substr($oldegov_id,9,10));
+
+            $no=$oldno+1;
+            $no = str_pad($no, 5, '0', STR_PAD_LEFT);
+
         }
         return ($year.$month."FP".$no);
     }
-   
+
 }

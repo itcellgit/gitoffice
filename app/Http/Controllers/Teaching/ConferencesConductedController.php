@@ -9,7 +9,7 @@ use App\Http\Requests\Updateconferences_conductedRequest;
 use Auth;
 use App\Models\staff;
 
-use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class ConferencesConductedController extends Controller
@@ -45,14 +45,14 @@ class ConferencesConductedController extends Controller
         $conducted->sponsored=$request->cc_sponsored;
         if($request->sponsoring_agency=="KLS GIT")
         {
-            $conducted->sponsoring_agency=$request->cc_sponsoring_agency;       
+            $conducted->sponsoring_agency=$request->cc_sponsoring_agency;
         }
          else
         {
-            $conducted->sponsoring_agency=$request->cc_sponsoring_agency;   
+            $conducted->sponsoring_agency=$request->cc_sponsoring_agency;
 
         }
-        
+
         $conducted->from_date=$request->cc_from_date;
         $conducted->to_date=$request->cc_to_date;
         $conducted->no_of_days=$request->cc_no_of_days;
@@ -88,9 +88,9 @@ class ConferencesConductedController extends Controller
                     $conductedId = $conducted->save();
 
                     $user = Auth::user();
-                        
+
                     $staff=staff::with('conferences_conducted')->where('user_id','=',$user->id)->first();
-                    
+
                     $result=$staff->conferences_conducted()->attach($conducted->id);
                 }
                 else
@@ -98,7 +98,7 @@ class ConferencesConductedController extends Controller
                     //dd( "Failed to upload file");
                     $file_upload_status = 0;
                 }
-        }  
+        }
 
          if($conductedId && $file_upload_status && $file_size_status){
              $status = 1;
@@ -120,7 +120,7 @@ class ConferencesConductedController extends Controller
     public function show(conferences_conducted $conferences_conducted)
     {
         //
-       
+
     }
 
     /**
@@ -143,11 +143,12 @@ class ConferencesConductedController extends Controller
         $conferences_conducted->sponsored=$request->ce_sponsored;
         if($request->sponsoring_agency)
         {
-            $conferences_conducted->sponsoring_agency=$request->ce_sponsoring_agency;      
+            $conferences_conducted->sponsoring_agency=$request->ce_sponsoring_agency;
          }
-        
+
         $conferences_conducted->from_date=$request->ce_from_date;
         $conferences_conducted->to_date=$request->ce_to_date;
+        $conferences_conducted->egov_id=$this->gen_egov_id($request->ce_from_date);
         $conferences_conducted->no_of_days=$request->ce_no_of_days;
         $conferences_conducted->place=$request->ce_place;
         $conferences_conducted->publisher=$request->ce_publisher;
@@ -156,7 +157,7 @@ class ConferencesConductedController extends Controller
         $conferences_conducted->type_of_level=$request->ce_type_of_level;
         $conferences_conducted->ISSN_NO=$request->ce_ISSN_NO;
 
-        
+
 
         // Update validation status
         //dd($request->validation_status);
@@ -169,7 +170,7 @@ class ConferencesConductedController extends Controller
         //  $final_file_upload_name = $conferences_conducted->egov_id.'.'.$file->getClientOriginalExtension();
         //  $conferences_conducted->document= $final_file_upload_name;
         //  $destination = 'Uploads/Research/Conference_Conducted/';
- 
+
          //to get the file size
          $file_size = $file->getSize();
          $file_upload_status = 0;
@@ -179,23 +180,23 @@ class ConferencesConductedController extends Controller
              $file_size_status = 1;
                  //for deleting the existing file and replacing it with the new one.
                  File::delete('public/Uploads/Research/Conference_Conducted/'.$conferences_conducted->document);
- 
+
                  if($file->store('public/Uploads/Research/Conference_Conducted/'))
                  {
                      //dd("File upload Sucess");
                      $file_upload_status = 1;
                      $conferences_conducted->document= $file->hashName();
                     $result=  $conferences_conducted->update(); // insert the row and upload the file only when all the conditions are met.
-                 
-                 }  
+
+                 }
                     else{
                         //dd( "Failed to upload file");
                         $file_upload_status = 0;
                     }
-    
+
             }else{
                 $file_size_status = 0;
-            } 
+            }
 
             if($result && $file_upload_status == 1 &&  $file_size_status == 1){
                 $status = 1;
@@ -206,7 +207,7 @@ class ConferencesConductedController extends Controller
                 'status' => $status,
                 'file_size_status' => $file_size_status
             ];
-           
+
         return redirect('/Teaching/research/conferenceactivities')->with('return_data', $return_data);
 
     }
@@ -235,44 +236,23 @@ class ConferencesConductedController extends Controller
     {
         $year = date('Y', strtotime($conducted_date));
         $month = date('M',strtotime($conducted_date));
-        $no="";        
-        $conferences_conducted=conferences_conducted::where('from_date','<=',$year.'-12-31')->orderBy('id','desc')->first();
+        $no="";
+        $conferences_conducted=conferences_conducted::whereYear('from_date',$year)->orderBy('id','desc')->first();
         if($conferences_conducted==null){
             $no="00001";
         }
         else
         {
-            $oldyear=date('Y', strtotime($conferences_conducted->from_date));
-           
-            if($oldyear<$year){
-                $no="00001";
-            }
-            else
-            {
-                $oldegov_id=$conferences_conducted->egov_id;
-                //dd(substr($oldegov_id,9,10));
-                $oldno=intval(substr($oldegov_id,9,10)); 
-               
-                $no=$oldno+1;
-            
-                if($no<10)
-                {
-                    $no='0000'.$no;
-                }
-                if($no<100 && $no>=10)
-                {
-                    $no='000'.$no;
-                }
-                if($no<1000 && $no>100)
-                {
-                    $no='00'.$no;
-                }
-                if($no<10000 & $no>1000)
-                {
-                    $no='0'.$no;
-                }
-            }
-           
+
+            $oldegov_id=$conferences_conducted->egov_id;
+            //dd(substr($oldegov_id,9,10));
+            $oldno=intval(substr($oldegov_id,9,10));
+
+            $no=$oldno+1;
+
+            $no = str_pad($no, 5, '0', STR_PAD_LEFT);
+
+
         }
         return ($year.$month."CC".$no);
     }

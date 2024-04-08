@@ -10,6 +10,7 @@ use App\Http\Requests\Updateprofessional_activity_attendeeRequest;
 use Auth;
 use App\Models\staff;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class ProfessionalActivityAttendeeController extends Controller
@@ -136,11 +137,13 @@ class ProfessionalActivityAttendeeController extends Controller
      */
     public function update(Updateprofessional_activity_attendeeRequest $request, professional_activity_attendee $professional_activity_attendee)
     {
-        //dd($request);
+     // dd($request);
+
         $professional_activity_attendee->title=$request->edit_title;
         $professional_activity_attendee->organizer=$request->edit_organizer;
         $professional_activity_attendee->role=$request->edit_role;
         $professional_activity_attendee->level=$request->edit_level;
+        $professional_activity_attendee->egov_id=$this->gen_egov_id($request->edit_from_date);
         $professional_activity_attendee->category=$request->edit_category;
         $professional_activity_attendee->sponsored=$request->edit_sponsored;
         if($request->sponsored_by=="KLS GIT")

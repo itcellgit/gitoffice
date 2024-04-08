@@ -1449,7 +1449,9 @@ public function create_vacational_leaves(request $request,staff $staff,$design_i
         //no change is leaves. So dont do any thing
         $staff_non_vacational_leaves=$staff->active_leave_staff_entitlements()->get();
 
-        $vacational_leaves=leave::where('vacation_type','Vacational')
+        $vacational_leaves=leave::with(['leave_rules'=>function($q){
+                                        $q->where('status','active');
+                                }])->where('vacation_type','Vacational')
                                 ->where('max_entitlement','>',0)
                                 ->where('shortname','not like','SML%')
                                 ->where('shortname','not like','ML')
@@ -1465,23 +1467,43 @@ public function create_vacational_leaves(request $request,staff $staff,$design_i
                     //if el entitlement is given for this year then update it for the no. of days the staff
                     //was non_vacational and create fractional vacational EL entitlement for the number of days remaining in the current year.
                     //else only create fractional vacational EL entitlement for the number of days remaining in the current year
+                    //additional designation end date
+                    $end_date=Carbon::parse($request->end_date);
                     if($snvl->pivot->entitled_curr_year>0 && $snvl->shortname=="EL")
                     {
-                        //additional designation end date
-                        $end_date=Carbon::parse($request->end_date);
                         //date at which the non-vacational EL entitlement was given
                         $entitlment_given_date=Carbon::parse($snvl->pivot->wef);
                         $diffdays=$entitlment_given_date->diffInDays($end_date);
                         $snvl->pivot->entitled_curr_year=ceil(($diffdays*$snvl->max_entitlement)/365);
                         $snvl->pivot->status='inactive';
                         $snvl->pivot->update();
+                        foreach($vacational_leaves as $vl)
+                        {
+                            if($vl->shortname=='EL')
+                            {
+                                $vacational_EL_entitlement=$vl->max_entitlement-floor(($diffdays*$vl->max_entitlement)/365);
+                                if($vl->leave_rule->carry_forwardable=='Yes')
+                                {
+
+                                }
+
+                            }
+                        }
+
                     }
-                    if($snvl->shortname=='EL')
+                    else if($snvl->shortname=='CL')
                     {
 
+                        $diffdays=$end_date->diffInDays(Carbon::now()->year.'-01-01');
+                        $snvl->pivot->entitled_curr_year=ceil(($diffdays*$snvl->max_entitlement)/365);
+                        $snvl->pivot->status='inactive';
+                        $snvl->pivot->update();
                     }
-
-
+                    else
+                    {
+                        $snvl->pivot->status='inactive';
+                        $snvl->pivot->update();
+                    }
                 }
             }
 

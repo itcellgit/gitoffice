@@ -42,8 +42,8 @@ class CopyrightController extends Controller
          $copyright->staff_id=$staff->id;
          $copyright->copyright_title=$request->c_copyright_title;
          $copyright->egov_id=$this->gen_egov_id($request->c_copyright_date);
-         $copyright->copyright_date=$request->c_copyright_date; 
-         $copyright->author_name=$request->c_author_name; 
+         $copyright->copyright_date=$request->c_copyright_date;
+         $copyright->author_name=$request->c_author_name;
          $copyright->status=$request->c_status;
          $copyright->description=$request->c_description;
 
@@ -68,14 +68,14 @@ class CopyrightController extends Controller
                 $file_upload_status = 1;
                 $copyright->document= $file->hashName();
                $copyrightId =  $copyright->save(); // insert the row and upload the file only when all the conditions are met.
-            
+
             }
                 else
                 {
                     //dd( "Failed to upload file");
                     $file_upload_status = 0;
                 }
-            } 
+            }
 
 
          //$copyrightId = $copyright->save();
@@ -114,10 +114,11 @@ class CopyrightController extends Controller
     public function update(UpdatecopyrightRequest $request, copyright $copyright)
     {
         //
-     
+
         $copyright->copyright_title=$request->ce_copyright_title;
-        $copyright->copyright_date=$request->ce_copyright_date; 
-        $copyright->author_name=$request->ce_author_name; 
+        $copyright->copyright_date=$request->ce_copyright_date;
+        $copyright->egov_id=$this->gen_egov_id($request->ce_copyright_date);
+        $copyright->author_name=$request->ce_author_name;
         $copyright->status=$request->ce_status;
         $copyright->description=$request->ce_description;
 
@@ -149,8 +150,8 @@ class CopyrightController extends Controller
                     $file_upload_status = 1;
                     $copyright->document= $file->hashName();
                    $result =  $copyright->update(); // insert the row and upload the file only when all the conditions are met.
-                
-                } 
+
+                }
                  else{
                     //dd( "Failed to upload file");
                     $file_upload_status = 0;
@@ -159,7 +160,7 @@ class CopyrightController extends Controller
         }else{
             $file_size_status = 0;
         }
-        
+
         if($result && $file_upload_status == 1 &&  $file_size_status == 1){
             $status = 1;
         }else{
@@ -193,11 +194,11 @@ class CopyrightController extends Controller
 {
     $year = date('Y', strtotime($copyright_date));
     $month = date('m', strtotime($copyright_date)); // Changed 'M' to 'm' for numeric month
-    $no = "";        
-    
+    $no = "";
+
     // Retrieve the latest copyright record for the given year
-    $latest_copyright = copyright::where('copyright_date', '<=', $year.'-12-31')->orderBy('id', 'desc')->first();
-    
+    $latest_copyright = copyright::whereYear('copyright_date',  $year)->orderBy('id', 'desc')->first();
+
     if ($latest_copyright == null) {
         // If no copyright record exists for the given year, start the sequence from 00001
         $no = "00001";
@@ -206,26 +207,26 @@ class CopyrightController extends Controller
         $oldegov_id = $latest_copyright->egov_id;
         // Extract the sequence number from the eGov ID
         $oldno = intval(substr($oldegov_id, -5)); // Changed 10 to -5 to extract the last 5 characters
-        
+
         // Increment the sequence number by 1
         $no = $oldno + 1;
-        
+
         // Pad the sequence number with leading zeros to ensure it's 5 digits long
         $no = str_pad($no, 5, '0', STR_PAD_LEFT);
     }
-   
+
     // Construct and return the eGov ID
     return ($year . $month . "copy" . $no);
 }
 
 
-   
-    
 
-    
 
-   
 
-    
- 
+
+
+
+
+
+
 }
