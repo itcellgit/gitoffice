@@ -132,30 +132,40 @@ class TeachingController extends Controller
     }
 
 
-    //public function update_staff_information(UpdatestaffRequest $request, staff $staff)
-    public function update_staff_information()
+
+    public function update_staff_information(  $staff)
     {
 
-        return view('Staff.Teaching.updateprofile');
+        //dd($staff);
+        $user = Auth::user();
+        $staff=staff::where('staff.id',$staff)->first();
+        $religions =religion::where('status','active')->get();
+        $castecategories=DB::table('castecategories')->where('status','active')->get();
+
+        $confirmation=$staff->confirmationAssociation()->first();
+        $confirmationdate=null;
+        if($confirmation!=null)
+        {
+                $confirmationdate=$confirmation->pivot->start_date;
+        }
+
+        //dd($staff);
+        return view('Staff.Teaching.updateprofile',compact(['staff','user','religions','castecategories','confirmationdate']));
 
 
     }
 
 
-    public function update(UpdatestaffRequest $request, staff $staff)
+    //code for update the staff personal information
+    public function update(Request $request, staff $staff)
     {
 
-        $user = Auth::user();
-        //dd($user);
-        $staff=staff::where('staff.id',$staff->id);
+        //dd($request);
 
-        //dd($staff);
         $staff->fname=$request->fname;
         $staff->mname=$request->mname;
         $staff->lname=$request->lname;
-
         //$staff->email = $request->email;
-
         $staff->local_address=$request->local_address;
         $staff->permanent_address=$request->permanent_address;
         $staff->religion_id=$request->religion_id;
@@ -164,7 +174,7 @@ class TeachingController extends Controller
         $staff->dob=$request->dob;
         $staff->doj=$request->doj;
         $staff->date_of_increment=$request->date_of_increment;
-        $staff->date_of_superanuation=$request->date_of_superanuation;
+        //$staff->date_of_superanuation=$request->date_of_superanuation;
         $staff->bloodgroup=$request->bloodgroup;
         $staff->pan_card=$request->pan_card;
         $staff->adhar_card=$request->adhar_card;
@@ -175,39 +185,23 @@ class TeachingController extends Controller
         $staff->aicte_id=$request->aicte_id;
         $staff->date_of_confirmation=$request->date_of_confirmation;
 
-
         $sresult=$staff->update();
         $staff->latest_employee_type()->first();
-        $emp_type=$staff->latest_employee_type()->first();
-        if($emp_type->employee_type!=$request->employee_type)
-        {
-            //make the current employee_type inactive and add a new row in the employee type
-             $employee_type=$staff->latest_employee_type()->update([
-                'status'=>'inactive',
-            ]);
-            $new_fixed_nt_pay=$staff->latest_employee_type()->createMany(
-                [  //create many function takes an array of rows to be inserted in the sub table.
-                    [
-                        'staff_id'=>$staff->id,
-                        'employee_type'=>$request->employee_type,
-                    ]
-                ]
-            );
-        }
+
 
         if($sresult){
             $status = 1;
         }else{
             $status = 0;
         }
+
+
         //check if designation has changed
-      return redirect('/Staff/Teaching/update/'.$staff->id)->with('status',$status);
+        return redirect('/Staff/Teaching/updateprofile/'.$staff->id)->with('status',$status);
+
+        //return redirect('Staff.Teaching.updateprofile'.$staff->id)->with('status',$status);
 
 
     }
-
-
-
-
 
 }

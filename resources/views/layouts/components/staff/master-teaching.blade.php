@@ -64,7 +64,7 @@
             <!-- END SIDEBAR -->
 
             <!-- HEADER -->
-            @include('layouts.components.staff.staff_header')
+            @include('layouts.components.staff.teaching_staff_header')
 
             <!-- END HEADER -->
 
