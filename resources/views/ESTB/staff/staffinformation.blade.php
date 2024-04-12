@@ -42,7 +42,6 @@
                                         header("refresh: 1");
                                     @endphp
                                 @endif
-
                             </div>
                         </div>
                         <!-- Start::row-1 -->

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\consolidated_teaching_pay;
 use App\Models\fixed_nt_pay;
 use Illuminate\Support\Carbon;
+
 use App\Models\leave; //needed to add and remove non-vacational leaves based on additional designation updation
 
 
@@ -1289,6 +1290,7 @@ public function create_non_vacational_leaves(request $request,staff $staff)
      //get the details of the additioanl designation the staff is already assigned.
     $check_staff_additioanl_designation=$staff->latest_additional_designation()->get();
     $flag=true;
+    //if staff is holding an additional designation currently
     if($check_staff_additioanl_designation!=null)
     {
         foreach($check_staff_additioanl_designation as $check_staff_ad)
@@ -1300,6 +1302,8 @@ public function create_non_vacational_leaves(request $request,staff $staff)
             }
         }
     }
+    //if staff is not holding any non-vacational additional desigantions then add non-vacational leaves
+    //make the vacational leaves inactive
     if($flag==true)
     {
         //currently the staff is not having any additional designation.
@@ -1376,6 +1380,7 @@ public function create_non_vacational_leaves(request $request,staff $staff)
             }
 
        }
+       //this block will make the staff vacational leaves as inactive.
        foreach ($staff_vacational_leaves as $svl)
        {
             $leave_entitlement = 0;
@@ -1400,10 +1405,10 @@ public function update_additional_desig(Request $request, staff $staff, $design_
     $additional_design=$staff->designations->where('pivot.id','=',$design_id);
     foreach($additional_design as $design){
     //dd($design->pivot);
+    //section to close additional desigantion
     if($request->end_date!=null){
-
-
-
+        //when closing an additional designation the non-vacational leaves must be made inactive
+        // and vacational leaves must be added.
                 $this->create_vacational_leaves($request,$staff,$design_id);
 
           // $dstatus='inactive';
@@ -1416,8 +1421,6 @@ public function update_additional_desig(Request $request, staff $staff, $design_
         }
         $design->pivot->designation_id=$request->designation_id;
         $design->pivot->start_date=$request->start_date;
-        $design->pivot->status=$dstatus;
-        $design->pivot->end_date=$request->end_date;
         $design->pivot->dept_id=$request->dept_id;
         $design->pivot->gcr=$request->gcr;
         $design->pivot->gcr_close=$request->gcr_close;
@@ -1431,14 +1434,25 @@ public function update_additional_desig(Request $request, staff $staff, $design_
         return redirect('/ESTB/staff/show/'.$staff->id)->with('status',$status);
     }
 }
-
+//This function is used to create the vactional leaves when an employee's additional designation  is closed.
+//The process is to compute the fractional ELs for non-vacational and make all non-vacational leaves as inactive.
+//Then create vacational leaves.  Which also requires computing of fracational vacational EL's.
 public function create_vacational_leaves(request $request,staff $staff,$design_id)
 {
+    $staff_vacational_leaves=$staff->with(['leave_staff_entitlements'=>function($q){
+        $q->where('leave_staff_entitlement.status','active')
+        ->where('leave_staff_entitlement.year','2024');
+    }])->get();
+    dd($staff_vacational_leaves);
     $check_staff_additional_designation=staff::with(['designations'=>function($q){
         $q->where('isvacational','Non-vacational')
         ->where('isadditional',1)
         ->where('designation_staff.status','active');
         }])->where('id',$staff->id)->first();
+
+    //if the count of the above query == 1 => that the staff has only one additional designation
+    //and we are closing that additional designation.
+    //closing additional designation requires closing non-vacational leaves are creating vacational leaves.
     if(count($check_staff_additional_designation->designations)==1)
     {
         $year=Carbon::now()->year;
@@ -1469,7 +1483,7 @@ public function create_vacational_leaves(request $request,staff $staff,$design_i
                     //else only create fractional vacational EL entitlement for the number of days remaining in the current year
                     //additional designation end date
                     $end_date=Carbon::parse($request->end_date);
-                    if($snvl->pivot->entitled_curr_year>0 && $snvl->shortname=="EL")
+                    if($snvl->entitled_curr_year>0 && $snvl->shortname=="EL")
                     {
                         //date at which the non-vacational EL entitlement was given
                         $entitlment_given_date=Carbon::parse($snvl->pivot->wef);
@@ -1482,6 +1496,7 @@ public function create_vacational_leaves(request $request,staff $staff,$design_i
                             if($vl->shortname=='EL')
                             {
                                 $vacational_EL_entitlement=$vl->max_entitlement-floor(($diffdays*$vl->max_entitlement)/365);
+                                dd($vl);
                                 if($vl->leave_rule->carry_forwardable=='Yes')
                                 {
                                     $add_staff_vacational_leave=$staff->leave_staff_entitlement()->attach($vl->id);

@@ -15,6 +15,9 @@ use App\Models\funded_project;
 use App\Models\patent;
 use App\Models\copyright;
 use App\Models\general_achievements;
+use App\Models\book_publication;
+use App\Models\consultancy;
+
 use Session;
 use Hash;
 use Auth;
@@ -154,6 +157,64 @@ class DeanrndResearchController extends Controller
     
         return view('/Deanrnd/Teaching/research/achivements',compact(['general_achievements']));
     }
+
+    public function book_chapter(Request $request)
+    {
+        
+        
+        $book_chapter=DB::table('book_publications')
+                                           
+                                ->join('staff','staff.id','=','book_publications.staff_id')
+                                ->join('department_staff','department_staff.staff_id','=','staff.id')
+                                ->join('departments','departments.id','=','department_staff.department_id')
+                                ->join('employee_types','employee_types.staff_id','=','staff.id')
+                                ->where('employee_types.employee_type','=','Teaching')
+                                //->where('staff.employee_type','=','Teaching')
+                                ->select('book_publications.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
+                                ->get();
+        // dd($fundedproject);
+    
+        return view('/Deanrnd/Teaching/research/book_chapter',compact(['book_chapter']));
+    }
+
+    public function consultancy(Request $request)
+    {
+        
+        
+        $consultancy=DB::table('consultancies')
+                                           
+                                ->join('staff','staff.id','=','consultancies.staff_id')
+                                ->join('department_staff','department_staff.staff_id','=','staff.id')
+                                ->join('departments','departments.id','=','department_staff.department_id')
+                                ->join('employee_types','employee_types.staff_id','=','staff.id')
+                                ->where('employee_types.employee_type','=','Teaching')
+                                //->where('staff.employee_type','=','Teaching')
+                                ->select('consultancies.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
+                                ->get();
+        // dd($fundedproject);
+    
+        return view('/Deanrnd/Teaching/research/dean_consultancy',compact(['consultancy']));
+    }
+
+    public function reviewer_editor(Request $request)
+    {
+        
+        
+        $reviewer_editor=DB::table('reviewer_editors')
+                                           
+                            ->join('staff','staff.id','=','reviewer_editors.staff_id')
+                            ->join('department_staff','department_staff.staff_id','=','staff.id')
+                            ->join('departments','departments.id','=','department_staff.department_id')
+                            ->join('employee_types','employee_types.staff_id','=','staff.id')
+                            ->where('employee_types.employee_type','=','Teaching')
+                            //->where('staff.employee_type','=','Teaching')
+                            ->select('reviewer_editors.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
+                            ->get();
+                        
+    
+        return view('/Deanrnd/Teaching/research/reviewer_editor',compact(['reviewer_editor']));
+    }
+
 
 
 

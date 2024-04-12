@@ -177,11 +177,11 @@ Route::middleware(['cors','auth','role:'.UserRoles::TEACHING->value, 'prevent-ba
   Route::get('/Teaching/construction',[TeachingController::class,'index'])->name('construction');
 
   //Route for Update the staff personal information
-  Route::get('/Staff/Teaching/updateprofile',[TeachingController::class,'update_staff_information'])->name('Staff.Teaching.updateprofile');
-  Route::patch('/Staff/Teaching/update/{staff}',[TeachingController::class,'update'])->name('Staff.Teaching.update');
+    Route::get('/Staff/Teaching/updateprofile/{staff}',[TeachingController::class,'update_staff_information'])->name('Staff.Teaching.updateprofile');
+    Route::patch('/Staff/Teaching/updateprofile/{staff}',[TeachingController::class,'update'])->name('Staff.Teaching.update');
 
 
-//professional Activity  attended ssm
+    //professional Activity  attended ssm
   Route::get('/Teaching/professionalactivities',[ProfessionalActivityAttendeeController::class,'index'])->name('Teaching.professionalactivities');
   Route::post('/Teaching/professionalactivities/attended/create',[ProfessionalActivityAttendeeController::class,'store'])->name('Teaching.professionalactivities.attended.store');
   Route::patch('/Teaching/professionalactivities/attended/update/{professional_activity_attendee}',[ProfessionalActivityAttendeeController::class,'update'])->name('Teaching.professionalactivities.attended.update');
@@ -279,8 +279,8 @@ Route::get('/myleaveevents',[LeaveStaffApplicationsController::class,'myleaveeve
 Route::get('/checkhasleaveEvent',[LeaveStaffApplicationsController::class,'checkhasleaveEvent'])->name('checkhasleaveEvent');
 
 //for fetching events of specific date (clicked) using AJAX
-Route::post('/fetchholidayrhevents',[LeaveStaffApplicationsController::class,'fetchholidayrhevents'])->name('fetchholidayrhevents');
-Route::post('/fetchmyleaveevents',[LeaveStaffApplicationsController::class,'fetchmyleaveevents'])->name('fetchmyleaveevents');
+Route::get('/fetchholidayrhevents',[LeaveStaffApplicationsController::class,'fetchholidayrhevents'])->name('fetchholidayrhevents');
+Route::get('/fetchmyleaveevents',[LeaveStaffApplicationsController::class,'fetchmyleaveevents'])->name('fetchmyleaveevents');
 //Route::get('/Teaching/leavesentitlements',[TeachingLeaveController::class,'holidayrh'])->name('Teaching.leavesentitlements');
 // Route::patch('/ESTB/leaves/leaves_rules/{leave_rules}',[LeaveRulesController::class,'update'])->name('ESTB.leaves.leave_rules.update');
 // Route::delete('/ESTB/leaves/leaves_rules/{leave_rules}',[LeaveRulesController::class,'destroy'])->name('ESTB.leaves.leave_rules.destroy');
@@ -298,6 +298,14 @@ Route::middleware(['cors','auth','role:'.UserRoles::NONTEACHING->value, 'prevent
   Route::get('/Non-Teaching/departments',[NonTeachingController::class,'departments'])->name('Non-Teaching.departments');
   Route::get('/Non-Teaching/designations',[NonTeachingController::class,'designations'])->name('Non-Teaching.designations');
   Route::get('/Non-Teaching/associations',[NonTeachingController::class,'associations'])->name('Non-Teaching.associations');
+
+
+  //Route for Update the staff personal information
+  Route::get('/Staff/Non-Teaching/ntupdateprofile/{staff}',[NonTeachingController::class,'update_staff_information'])->name('Staff.Non-Teaching.ntupdateprofile');
+  Route::patch('/Staff/Non-Teaching/ntupdateprofile/{staff}',[NonTeachingController::class,'update'])->name('Staff.Non-Teaching.update');
+
+
+
 
   //change password
  // Route::get('/change_password', [NonTeachingController::class, 'changePassword'])->name('change_password');
@@ -399,8 +407,10 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::get('/ESTB/staff/show/{staff}',[StaffController::class,'show'])->name('ESTB.staff.show');
     Route::patch('/ESTB/staff/update/{staff}',[StaffController::class,'update'])->name('ESTB.staff.update');
 
-    //Route to fetch data from Filter
+    //Route to fetch staff data using Filter
     Route::get('/ESTB/staff/staffinformation',[StaffController::class,'filterstaff_information'])->name('ESTB.staff.staffinformation');
+
+
 
     //route for staff searching , sorting and filtering
     Route::get('/ESTB/staff/indexfiltering', [StaffFilteringController::class,'indexFiltering'])->name('ESTB.staff.indexfiltering');
@@ -535,6 +545,12 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
       Route::get('/Deanrnd/Teaching/research/patents',[DeanrndResearchController::class,'patents'])->name('Deanrnd.Teaching.research.patents');
       Route::get('/Deanrnd/Teaching/research/copyrights',[DeanrndResearchController::class,'copyrights'])->name('Deanrnd.Teaching.research.copyrights');
       Route::get('/Deanrnd/Teaching/research/achivements',[DeanrndResearchController::class,'general_achievement'])->name('Deanrnd.Teaching.research.achivements');
+      Route::get('/Deanrnd/Teaching/research/book_chapter',[DeanrndResearchController::class,'book_chapter'])->name('Deanrnd.Teaching.research.book_chapter');
+      Route::get('/Deanrnd/Teaching/research/dean_consultancy',[DeanrndResearchController::class,'consultancy'])->name('Deanrnd.Teaching.research.dean_consultancy');
+      Route::get('/Deanrnd/Teaching/research/reviewer_editor',[DeanrndResearchController::class,'reviewer_editor'])->name('Deanrnd.Teaching.research.reviewer_editor');
+
+
+
 
       //Deanrndn Non-Teaching professional activity
       Route::get('/Deanrnd/NonTeaching',[DeanRndController::class,'professional_activity_attendee_nt'])->name('Deanrnd.NonTeaching');

@@ -58,7 +58,7 @@
             <!-- END SIDEBAR -->
 
             <!-- HEADER -->
-            @include('layouts.components.header')
+            @include('layouts.components.staff.nt_teaching_staff_header')
 
             <!-- END HEADER -->
 
