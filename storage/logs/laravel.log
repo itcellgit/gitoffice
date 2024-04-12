@@ -1,4 +1,0 @@
-[2024-04-08 12:07:39] local.ERROR: syntax error, unexpected token "<<" {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): syntax error, unexpected token \"<<\" at C:\\Users\\User\\gitoffice\\app\\Models\\staff.php:249)
-[stacktrace]
-#0 {main}
-"} 

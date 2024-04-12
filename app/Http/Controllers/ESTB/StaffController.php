@@ -340,7 +340,7 @@ class StaffController extends Controller
 
 
 
-    //Code for filter the data from table
+    //Code for filter the staff data from table
     public function filterstaff_information(Request $request)
     {
         //dd($request);
