@@ -1484,7 +1484,7 @@ public function create_vacational_leaves(request $request,staff $staff,$design_i
                                 $vacational_EL_entitlement=$vl->max_entitlement-floor(($diffdays*$vl->max_entitlement)/365);
                                 if($vl->leave_rule->carry_forwardable=='Yes')
                                 {
-
+                                    $add_staff_vacational_leave=$staff->leave_staff_entitlement()->attach($vl->id);
                                 }
 
                             }
