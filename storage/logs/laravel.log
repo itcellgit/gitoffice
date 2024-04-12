@@ -19839,3 +19839,11 @@ Stack trace:
 #55 F:\\laravel Apps\\gitoffice\\server.php(30): require_once('F:\\\\laravel Apps...')
 #56 {main}
 "} 
+[2024-04-12 04:54:41] local.ERROR: syntax error, unexpected token "<<", expecting "function" or "const" {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): syntax error, unexpected token \"<<\", expecting \"function\" or \"const\" at F:\\laravel Apps\\gitoffice\\app\\Models\\staff.php:248)
+[stacktrace]
+#0 {main}
+"} 
+[2024-04-12 04:54:48] local.ERROR: syntax error, unexpected token "<<", expecting "function" or "const" {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): syntax error, unexpected token \"<<\", expecting \"function\" or \"const\" at F:\\laravel Apps\\gitoffice\\app\\Models\\staff.php:248)
+[stacktrace]
+#0 {main}
+"} 
