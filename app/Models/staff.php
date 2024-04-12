@@ -245,7 +245,11 @@ class staff extends Model
          return $this->belongsToMany(event::class)->withPivot('department_id');
      }
 
-     
+     //active leave staff entitlement
+     public function active_leave_staff_entitlements():BelongsToMany
+     {
+         return $this->belongsToMany(leave::class,'leave_staff_entitlements')->where('leave_staff_entitlements.status','active')->withPivot('id','year','entitled_curr_year','accumulated','consumed_curr_year','encashed_curr_year','total_encashed');
+     }
 
 
 }
