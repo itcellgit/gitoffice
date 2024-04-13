@@ -601,7 +601,6 @@
                                      }else{
                                         //$('#leave_list_div').show();
                                         $('#holiday_rh_div').hide();
-                                        $('#holidayrh_list').append('<tr class="text-red-400"><td colspan="2" align="center">No Holiday/RH</td></tr>')
                                     }
                                     
                                 },
@@ -610,7 +609,7 @@
                                     console.error(xhr.responseText);
                                 }
                         });
-                        //ajax call for loading the Holiday and RH Events
+                        //ajax call for checking the leave events
                         $.ajax({
                             
                             url: base_url+'/checkhasleaveEvent',
@@ -623,6 +622,7 @@
                                 // Handle the response from the server
                                 //console.log(response);
                                 //$('#holidayrh_list').empty();
+                                //console.log(response);
                                 if(response ==1 ){
                                     $('#leave_form').hide();
                                  }else{
@@ -702,12 +702,12 @@
                                                                     +'</tr>');
                                         });
 
-                                        $('#leave_form').hide(); //for hiding the leave form div
+                                        //$('#leave_form').hide(); //for hiding the leave form div
                                     }else{
                                         $('#leave_list_div').hide();// for hiding the leave list
                                        // $('#holiday_rh_div').hide();
                                         $('#leave_application_list').append('<tr class="text-red-400"><td colspan="8" align="center">No Leaves Applied</td></tr>')
-                                        $('#leave_form').show(); //for hiding the leave form div
+                                       //  $('#leave_form').show(); //for hiding the leave form div
                                     }
                                     
                                 },
