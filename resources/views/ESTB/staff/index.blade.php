@@ -103,6 +103,7 @@
                                                             @foreach ($religions as $religion)
                                                                 <option value="{{$religion->id}}">{{$religion->religion_name}}</option>
                                                             @endforeach
+                                                            {{-- @foreach ($religions as $religion) --}}
                                                         </select>
                                                     </div>
 
@@ -138,11 +139,11 @@
                                                         </div>
                                                     </div>
                                                     <!-- Add more fields in a similar manner -->
+                                                    <div class="flex justify-center">
+                                                        <button id="filterBtn" class="bg-blue-500 text-white px-4 mt-10 py-2 rounded-md focus:outline-none hover:bg-blue-700">Search</button>
 
-                                                </div>
+                                                    </div>
 
-                                                <div class="flex justify-center">
-                                                    <button id="filterBtn" class="bg-blue-500 text-white px-4 mt-10 py-2 rounded-md focus:outline-none hover:bg-blue-700">Search</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -546,10 +547,11 @@
 
                                                                         </div>
                                                                     </form>
+                                                                </div>
+                                                                <!--newly added-->
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -1229,13 +1231,26 @@
                 $('#filterBtn').click(function() {
                     var formData = $('#searchForm').serialize();
 
+                    //console.log('123');
+                    //alert("Search button clicked!");
+
+                    //console.log("Form Data:", formData);
+
                     // Send AJAX request to server
                     $.ajax({
-                        type: 'POST',
-                        url: 'ESTB.staff.staffinformation',
+                        type: 'get',
+                        url: 'ESTB/staff/staffinformation',
+                        //url: 'staff/staffinformation',
+
+
                         data: formData,
                         success: function(response) {
                             $('#staff_table').html(response);
+                        },
+
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                            //alert("An error occurred. Please try again.");
                         }
                     });
                 });
