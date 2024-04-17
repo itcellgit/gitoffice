@@ -22,23 +22,23 @@ class Storeprofessional_activity_conductedRequest extends FormRequest
      */
     public function rules(): array
     {
-        return 
+        return
         [
             'con_title' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
             'con_level' => ['required', Rule::in(['Local', 'National', 'International'])],
             'con_organizer'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
             'con_co_organizer'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
-            'con_category'=>['required', Rule::in(['Workshop', 'FDP', 'Seminar','Webinar','STTP','Certification Program','MDP/EDP'])],
+            'con_category'=>['required', Rule::in(['Workshop', 'FDP', 'Seminar','Webinar','STTP','Certification Program','MDP/EDP','Hackathon'])],
             'con_sponsored'=>['required', Rule::in(['Yes', 'No'])],
             'con_sponsoring_agency_name_address' => ['sometimes'],
             'con_from_date'=>['required','date'],
             'con_to_date'=>['required','date'],
             'con_place'=>['required','regex:/^[a-zA-Z\s]+$/'],
             'con_no_of_days'=>['required','numeric','min:1','max:255'],
-            'con_role'=>['required', Rule::in(['Coordinator', 'Convenor', 'Member'])],
+            'con_role'=>['required', Rule::in(['Coordinator', 'Convenor', 'Member','Jury'])],
             //'document'=>['required','file','mimes:pdf'],
            // 'conducted'=>'conducted',
-           
+
 
         ];
     }
@@ -46,7 +46,7 @@ class Storeprofessional_activity_conductedRequest extends FormRequest
     {
         return[
             'con_title.required'=>'title is required field',
-            'con_title.regex'=>'The title field should contain only letters and spaces', 
+            'con_title.regex'=>'The title field should contain only letters and spaces',
             'con_level.required'=>'level is required field',
             'con_level.in'=>'Please select a valid option from the provided choices',
             'con_organizer.required'=>'organizer is required filed',
@@ -58,7 +58,7 @@ class Storeprofessional_activity_conductedRequest extends FormRequest
             'con_sponsored.required'=>'sponsored is required field',
             'con_sponsored.in'=>'Please select a valid option from the provided choices',
             //'con_sponsoring_agency_name_address.sometimes'=>'sponsoring agency name address is required field',
-            //'con_sponsoring_agency_name_address.in'=>'The sponsoring agency name address field should contain only letters and spaces', 
+            //'con_sponsoring_agency_name_address.in'=>'The sponsoring agency name address field should contain only letters and spaces',
             'con_from_date.required'=>'from_date is required field',
             'con_to_date.required'=>'to_date is required field',
             'con_place.required'=>'place is required field',
@@ -71,11 +71,11 @@ class Storeprofessional_activity_conductedRequest extends FormRequest
             'con_role.required'=>'role is required field',
             'con_role.in'=>'Please select a valid option from the provided choices',
            // 'document'=>'document is required field',
-            
-            
-            
-            
-          
+
+
+
+
+
 
      ];
     }

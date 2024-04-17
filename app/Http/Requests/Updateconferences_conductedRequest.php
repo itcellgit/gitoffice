@@ -67,8 +67,8 @@ class Updateconferences_conductedRequest extends FormRequest
             'ce_weblink.url'=>'The weblink must be valid url',
             'ce_type_of_level.required'=>'level is required field',
             'ce_type_of_level.in'=>'Please select a valid option from the provided choices',
-            'ce_ISSN_NO'=>'',
-            
+            //'ce_ISSN_NO'=>'',
+
 
 
      ];

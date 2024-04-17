@@ -22,22 +22,22 @@ class Updateprofessional_activity_conductedRequest extends FormRequest
      */
     public function rules(): array
     {
-        return 
+        return
         [
             'e_title' => ['required'],
             'e_level' => ['required', Rule::in(['Local', 'National', 'International'])],
             'e_organizer'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
             'e_co_organizer'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
-            'e_category'=>['required', Rule::in(['Workshop', 'FDP', 'Seminar','Webinar','STTP','Certification Program','MDP/EDP'])],
+            'e_category'=>['required', Rule::in(['Workshop', 'FDP', 'Seminar','Webinar','STTP','Certification Program','MDP/EDP','Hackathon'])],
             'e_sponsored'=>['required', Rule::in(['Yes', 'No'])],
             'e_sponsoring_agency_name_address' => ['sometimes'],
             'e_from_date'=>['required','date'],
             'e_to_date'=>['required','date'],
             'e_place'=>['required','alpha','max:255'],
             'e_no_of_days'=>['required','numeric','min:1','max:255'],
-            'e_role'=>['required', Rule::in(['Coordinator', 'Convenor', 'Member'])],
+            'e_role'=>['required', Rule::in(['Coordinator', 'Convenor', 'Member','Jury'])],
             //'document'=>['required','file','mimes:pdf'],
-    
+
             ];
     }
     public function messages():array
@@ -45,7 +45,7 @@ class Updateprofessional_activity_conductedRequest extends FormRequest
         return
         [
             'e_title.required'=>'title is required field',
-            'e_title.regex'=>'The title field should contain only letters and spaces', 
+            'e_title.regex'=>'The title field should contain only letters and spaces',
             'e_level.required'=>'level is required field',
             'e_level.in'=>'Please select a valid option from the provided choices',
             'e_organizer.required'=>'organizer is required filed',

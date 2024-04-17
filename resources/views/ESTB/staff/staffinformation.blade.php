@@ -46,6 +46,8 @@
                         </div>
                         <!-- Start::row-1 -->
                         <div class="col-span-12 xl:col-span-12">
+
+
                             <div class="box">
                                 <table id="attended" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                     <thead class="bg-gray-50 dark:bg-black/20">
@@ -84,30 +86,31 @@
                                         @endphp
                                             @foreach ($staff as $st)
                                                 <tr class="">
-                                                        <td>{{ $st->fname }}</td>
-                                                        <td>{{ $st->etype }}</td>
-                                                        <td>{{ $st->email }}</td>
-                                                        <td>{{ $st->department->dept_shortname }}</td>
-                                                        <td>{{ $st->designation->desig_name }}</td>
-                                                        <td>{{ $st->association->asso_name }}</td>
-                                                        <td>{{ $st->religion->religion_name }}</td>
-                                                        <td>{{ $st->casteCategory->category_name }}</td>
-                                                        <td>{{ $st->gender }}</td>
-                                                        <td>{{ $st->dob }}</td>
-                                                        <td>{{ $st->doj }}</td>
-                                                        <td>{{ $st->date_of_superanuation }}</td>
-                                                        <td>{{ $st->confirmationdate }}</td>
-                                                        <td>{{ $st->date_of_increment }}</td>
-                                                        <td>{{ $st->bloodgroup }}</td>
-                                                        <td>{{ $st->pan_card }}</td>
-                                                        <td>{{ $st->adhar_card }}</td>
-                                                        <td>{{ $st->contactno }}</td>
-                                                        <td>{{ $st->aicte_id }}</td>
-                                                        <td>{{ $st->vtu_id }}</td>
-                                                        <td>{{ $st->local_address }}</td>
-                                                        <td>{{ $st->permanent_address }}</td>
-                                                        <td>{{ $st->emergency_no }}</td>
-                                                        <td>{{ $st->emergency_name }}</td>
+                                                    <td>{{ $i++ }}</td>
+                                                    <td>{{ $st->fname.' '.$st->mname.' '.$st->lname. ' ' }}</td>
+                                                    <td>{{ $st->employee_type }}</td>
+                                                    <td>{{ $st->email }}</td>
+                                                    <td>{{ $st->dept_shortname }}</td>
+                                                    <td>{{ $st->design_name }}</td>
+                                                    <td>{{ $st->asso_name }}</td>
+                                                    <td>{{ $st->religion_name }}</td>
+                                                    <td>{{ $st->category_name }}</td>
+                                                    <td>{{ $st->gender }}</td>
+                                                    <td>{{ $st->dob }}</td>
+                                                    <td>{{ $st->doj }}</td>
+                                                    <td>{{ $st->date_of_superanuation }}</td>
+                                                    <td>{{ $st->confirmationdate }}</td>
+                                                    <td>{{ $st->date_of_increment }}</td>
+                                                    <td>{{ $st->bloodgroup }}</td>
+                                                    <td>{{ $st->pan_card }}</td>
+                                                    <td>{{ $st->adhar_card }}</td>
+                                                    <td>{{ $st->contactno }}</td>
+                                                    <td>{{ $st->aicte_id }}</td>
+                                                    <td>{{ $st->vtu_id }}</td>
+                                                    <td>{{ $st->local_address }}</td>
+                                                    <td>{{ $st->permanent_address }}</td>
+                                                    <td>{{ $st->emergency_no }}</td>
+                                                    <td>{{ $st->emergency_name }}</td>
                                                 </tr>
                                             @endforeach
                                     </tbody>

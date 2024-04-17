@@ -22,6 +22,7 @@ use App\Models\ntcpayscale;
 use App\Models\consolidated_teaching_pay;
 use App\Models\users;
 use App\Models\fixed_nt_pay;
+use Session;
 
 
 class StaffController extends Controller
@@ -44,7 +45,7 @@ class StaffController extends Controller
        ->with('latest_employee_type')
        ->orderBy('fname')->get();
 
-       //        $staff = DB::table('staff')->with('designations')->with('associations')->orderBy('id')->paginate(15);
+       //$staff = DB::table('staff')->with('designations')->with('associations')->orderBy('id')->paginate(15);
        // $designations=designation::where('status','active')->get();
        // $caste_categories = castecategory::where('status','active')->get();
         $religions =religion::where('status','active')->get();
@@ -341,63 +342,77 @@ class StaffController extends Controller
 
 
     //Code for filter the staff data from table
+
+
+
+    // public function filterstaff_information(StorestaffRequest $request , staff $staff)
+    // {
+
+
+    //     $staff=staff::where('staff.id',$staff)->first();
+
+    //     // $religions =religion::where('status','active')->get();
+    //     // $castecategories=DB::table('castecategories')->where('status','active')->get();
+    //     // $associations = association::where('status','active')->get();
+
+    //     //$staff=staff::with('departments')->with('associations')->get();
+
+    //     //  $query = staff::query();
+    //     //  $staff = $query->get();
+
+
+    //     $department_id = Session::get('deptid');
+
+    //     $staff = DB::table('staff')
+    //             ->join('department_staff', 'department_staff.staff_id', '=', 'staff.id')
+    //             ->join('departments', 'departments.id', '=', 'department_staff.department_id')
+    //             ->where('departments.id', '=', $department_id)
+    //             ->where('department_staff.status', '=', 'active')
+    //             ->select('departments.*', 'staff.id as staff_id', 'department_id', 'dept_shortname')
+    //             ->get();
+
+
+    //         $query = staff::query();
+    //         $staff = $query->get();
+    //         //dd($staff);
+    //         //dd($department_id);
+
+    //     return view('ESTB/staff/staffinformation',compact('staff'));
+
+
+    // }
+
+
     public function filterstaff_information(StorestaffRequest $request , staff $staff)
     {
-        //dd($staff);
-        //dd($request);
-        $department_id = $request->input('departments_id');
-        $association_id = $request->input('associations_id');
-        $religion_id = $request->input('religion_id');
-        //$designation_id = $request->input('designations_id');
-        $gender = $request->input('gender');
 
-        //dd($dept_name);
+        $association_id = $request->input('association_id');
+        $department_id = Session::get('deptid');
 
-        // Query staff based on filters
+        // Query to fetch staff associated with the department
+        $staff = DB::table('staff')
+                        ->join('department_staff', 'department_staff.staff_id', '=', 'staff.id')
+                        ->join('departments', 'departments.id', '=', 'department_staff.department_id')
+                        ->where('departments.id', '=', $department_id)
+                        ->where('department_staff.status', '=', 'active')
+                        ->select('departments.*', 'staff.id as staff_id', 'department_id', 'dept_shortname')
+                        ->get();
 
-        //$query = staff::query()->with(['departments', 'associations', 'religions', 'casteCategory']);
-        $query = staff::query()->with(['department', 'association', 'religion', 'casteCategory']);
+        // Query to fetch staff associated with the association
+        $staff = DB::table('staff')
+                        ->join('association_staff', 'association_staff.staff_id', '=', 'staff.id')
+                        ->join('associations', 'associations.id', '=', 'association_staff.association_id')
+                        ->where('associations.id', '=', $association_id)
+                        ->where('association_staff.status', '=', 'active')
+                        ->select('associations.*', 'staff.id as staff_id', 'association_id', 'asso_name')
+                        ->get();
 
-
-        if ($department_id != '#') {
-            $query->whereHas('departments', function ($q) use ($department_id) {
-                $q->where('departments.id', $department_id);
-            });
-        }
-
-        if ($association_id != '#') {
-            $query->whereHas('associations', function ($q) use ($association_id) {
-                $q->where('associations.id', $association_id);
-            });
-        }
-
-        if ($religion_id != '#') {
-            $query->where('religion_id', $religion_id);
-        }
-
-        // if ($designation_id != '#') {
-        //     $query->where('designations_id', $designation_id);
-        // }
-
-        if ($gender) {
-            $query->where('gender', $gender);
-        }
-
-        // Get filtered staff data
+        $query = staff::query();
         $staff = $query->get();
-
         //dd($staff);
 
-        // Fetch necessary dropdown data
-        $religions =DB::table('religions')->where('status','active')->get();
-        //$designations=DB::table('designations')->where('status','active')->get();
-        $associations = DB::table('associations')->where('status','active')->get();
-        $departments = DB::table('departments')->where('status','active')->get();
-
-          return view('ESTB/staff/staffinformation', compact('staff', 'religions', 'associations', 'departments'));
-        //return view('staff/staffinformation', compact('staff', 'religions', 'associations', 'departments'));
-
-
+        return view('ESTB/staff/staffinformation',compact('staff'));
     }
+
 
 }

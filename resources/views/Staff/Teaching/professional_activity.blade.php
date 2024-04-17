@@ -163,6 +163,7 @@
                                                                                         <option value="#">Choose Role</option>
                                                                                         <option value="Participant">Participant</option>
                                                                                         <option value="Resource Person">Resource Person</option>
+                                                                                        <option value="Jury">Jury</option>
                                                                                     </select>
                                                                                     @if($errors->has('role'))
                                                                                         <div class="text-red-700">{{ $errors->first('role') }}</div>
@@ -196,6 +197,8 @@
                                                                                     <option value="STTP">STTP</option>
                                                                                     <option value="Certification Program">Certification Program</option>
                                                                                     <option value="MDP/EDP">MDP/EDP</option>
+                                                                                    <option value="Hackathon">Hackathon</option>
+
                                                                                 </select>
                                                                                 @if($errors->has('category'))
                                                                                     <div class="text-red-700">{{ $errors->first('category') }}</div>
@@ -466,6 +469,7 @@
                                                                                                                 <option value="#">Choose Role</option>
                                                                                                                 <option value="Participant" {{($act->role=='Participant'? 'selected':'')}}>Participant</option>
                                                                                                                 <option value="Resource Person" {{($act->role=='Resource Person'? 'selected':'')}}>Resource Person</option>
+                                                                                                                <option value="Jury" {{($act->role=='Jury'? 'selected':'')}}>Jury</option>
 
                                                                                                             </select>
                                                                                                                 @if($errors->has('edit_role'))
@@ -499,6 +503,7 @@
                                                                                                                 <option value="STTP" {{($act->category=='STTP'? 'selected':'')}}>STTP</option>
                                                                                                                 <option value="Certification Program" {{($act->category=='Certification Program'? 'selected':'')}}>Certification Program</option>
                                                                                                                 <option value="MDP/EDP" {{($act->category=='MDP/EDP'? 'selected':'')}}>MDP/EDP</option>
+                                                                                                                <option value="Hackathon" {{($act->category=='Hackathon'? 'selected':'')}}>Hackathon</option>
                                                                                                             </select>
                                                                                                             @if($errors->has('edit_category'))
                                                                                                                 <div class="text-red-700">{{ $errors->first('edit_category') }}</div>
@@ -533,7 +538,7 @@
                                                                                                         </div>
                                                                                                         <div class="max-w-sm pb-6 space-y-3 otherSponsor" id="otherSponsor">
                                                                                                             <label for="" class="font-bold ti-form-label">Other Sponsor:</label>
-                                                                                                            <input type="text" name="edit_other_sponsored" class="ti-form-input othersponsored" placeholder="Other Sponsor" value="{{$act->other_sponsored}}">
+                                                                                                            <input type="text" name="edit_other_sponsored" class="ti-form-input othersponsored" placeholder="Other Sponsor" value="{{$act->sponsored_by}}">
                                                                                                                 @if($errors->has('edit_othersponsor'))
                                                                                                                 <div class="text-red-700">{{ $errors->first('edit_othersponsor') }}</div>
                                                                                                             @endif
@@ -767,6 +772,7 @@
                                                                                         <option value="STTP">STTP</option>
                                                                                         <option value="Certification Program">Certification Program</option>
                                                                                         <option value="MDP/EDP">MDP/EDP</option>
+                                                                                        <option value="Hackathon">Hackathon</option>
                                                                                 </select>
                                                                                     @if($errors->has('con_category'))
                                                                                     <div class="text-red-700">{{ $errors->first('con_category') }}</div>
@@ -804,6 +810,7 @@
                                                                                     <option value="Coordinator">Coordinator</option>
                                                                                     <option value="Convenor">Convenor</option>
                                                                                     <option value="Member">Member</option>
+                                                                                    <option value="Jury">Jury</option>
 
                                                                                 </select>
                                                                                 @if($errors->has('con_role'))
@@ -1093,6 +1100,7 @@
                                                                                                                 <option value="STTP" {{($conduct->category=='STTP'? 'selected':'')}}>STTP</option>
                                                                                                                 <option value="Certification Program" {{($conduct->category=='Certification Program'? 'selected':'')}}>Certification Program</option>
                                                                                                                 <option value="MDP/EDP" {{($conduct->category=='MDP/EDP'? 'selected':'')}}>MDP/EDP</option>
+                                                                                                                <option value="Hackathon" {{($conduct->category=='Hackathon'? 'selected':'')}}>Hackathon</option>
                                                                                                             </select>
                                                                                                             @if($errors->has('e_category'))
                                                                                                                 <div class="text-red-700">{{ $errors->first('e_category') }}</div>
@@ -1105,6 +1113,7 @@
                                                                                                                 <option value="Coordinator" {{($conduct->role=='Coordinator'? 'selected':'')}}>Coordinator</option>
                                                                                                                 <option value="Convenor" {{($conduct->role=='Convenor'? 'selected':'')}}>Convenor</option>
                                                                                                                 <option value="Member" {{($conduct->role=='Member'? 'selected':'')}}>Member</option>
+                                                                                                                <option value="Jury" {{($conduct->role=='Jury'? 'selected':'')}}>Jury</option>
                                                                                                             </select>
                                                                                                             @if($errors->has('e_role'))
                                                                                                                 <div class="text-red-700">{{ $errors->first('e_role') }}</div>
