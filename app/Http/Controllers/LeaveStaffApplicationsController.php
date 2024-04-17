@@ -521,6 +521,7 @@ class LeaveStaffApplicationsController extends Controller
         ->join('staff AS s1','s1.id','=','leave_staff_applications.staff_id')
         ->join('staff AS s2','s2.id','=','leave_staff_applications.alternate')
         ->leftJoin('staff AS s3','s3.id','=','leave_staff_applications.additional_alternate')
+        //->leftjoin('daywise__leaves AS daywise', 'leave_staff_applications.id', '=', 'daywise.leave_staff_applications_id')
         ->where('leave_staff_applications.staff_id',$staff->id)
         ->where('leave_staff_applications.start',$date)
         ->select(DB::raw("CONCAT(s1.fname,' ',s1.mname,' ',s1.lname) AS staff_name"),
