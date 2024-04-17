@@ -2,7 +2,7 @@
 
 @section('styles')
 
-    
+
         <!-- FLATPICKR CSS -->
         <link rel="stylesheet" href="{{asset('build/assets/libs/flatpickr/flatpickr.min.css')}}">
         {{-- datatables css --}}
@@ -30,13 +30,13 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12.1717 12.0005L9.34326 9.17203L10.7575 7.75781L15.0001 12.0005L10.7575 16.2431L9.34326 14.8289L12.1717 12.0005Z"></path></svg>
                                     </a>
                                     </li>
-                            
+
                                 </ol>
                             </div>
                             <!-- Page Header Close -->
 
-            
-                          
+
+
 
                             <!-- Start::row-5 -->
                             <div class="grid grid-cols-12 gap-x-6">
@@ -50,18 +50,18 @@
                                         <div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
                                             <span class='font-bold'>Result</span> Error in Database transaction
                                         </div>
-                                    
+
                                         @endif
-                                        @php 
-                                            Illuminate\Support\Facades\Session::forget('status');  
-                                            header("refresh: 3"); 
+                                        @php
+                                            Illuminate\Support\Facades\Session::forget('status');
+                                            header("refresh: 3");
                                         @endphp
                                     @endif
                                     <div class="box">
                                     <div class="box-header">
                                         <div class="flex">
                                             <h5 class="box-title my-auto">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"><path d="M22 21H2V19H3V4C3 3.44772 3.44772 3 4 3H18C18.5523 3 19 3.44772 19 4V9H21V19H22V21ZM17 19H19V11H13V19H15V13H17V19ZM17 9V5H5V19H11V9H17ZM7 11H9V13H7V11ZM7 15H9V17H7V15ZM7 7H9V9H7V7Z"></path></svg> 
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"><path d="M22 21H2V19H3V4C3 3.44772 3.44772 3 4 3H18C18.5523 3 19 3.44772 19 4V9H21V19H22V21ZM17 19H19V11H13V19H15V13H17V19ZM17 9V5H5V19H11V9H17ZM7 11H9V13H7V11ZM7 15H9V17H7V15ZM7 7H9V9H7V7Z"></path></svg>
                                                 Departments Details
                                             </h5>
                                             <div class=" block ltr:ml-auto rtl:mr-auto my-auto">
@@ -69,7 +69,7 @@
                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M4 3H20C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM5 5V19H19V5H5ZM11 11V7H13V11H17V13H13V17H11V13H7V11H11Z" fill="rgba(255,255,255,1)"></path></svg>
                                                         Add Department
                                                     </button>
-                
+
                                                     <div id="hs-medium-modal" class="hs-overlay hidden ti-modal">
                                                         <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out md:!max-w-2xl md:w-full m-3 md:mx-auto">
                                                             <div class="ti-modal-content">
@@ -92,19 +92,19 @@
                                                                     <script>
                                                                         // alert(1);
                                                                         $(window).on('load', function() {
-                                                                        
+
                                                                             //alert(4);
                                                                             //$('#horizontal-alignment-item-2').trigger('click');
                                                                             $('#department_btn').trigger("click");
 
-                                                                        }); 
+                                                                        });
                                                                     </script>
                                                                 @endif
                                                             </div>
                                                             <form action="{{route('ESTB.departments.store')}}" method="post">
                                                                 @csrf
                                                                 <div class="ti-modal-body">
-                                                                
+
                                                                     <div class="max-w-sm space-y-3 pb-6">
                                                                         <label for="with-corner-hint" class="ti-form-label">Department Name : </label>
                                                                         <input type="text" name="dept_name" class="ti-form-input" placeholder="Department name" id="department_name">
@@ -127,7 +127,7 @@
                                                                             <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                                 class="ri ri-calendar-line"></i></span>
                                                                         </div>
-                        
+
                                                                         <input type="date" name="yoe"
                                                                         class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
                                                                             required placeholder="Choose date">
@@ -135,7 +135,7 @@
                                                                             <div class="text-red-700">{{ $errors->first('yoe')}}</div>
                                                                         @endif
                                                                     </div>
-                                                            
+
                                                                 </div>
                                                                 <div class="ti-modal-footer">
                                                                     <button type="button"
@@ -143,17 +143,17 @@
                                                                     data-hs-overlay="#hs-medium-modal">
                                                                     Close
                                                                     </button>
-                                                                    
+
                                                                     <input type="submit" id="department_store_add_btn" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Add"/>
-                                                                    
+
                                                                     </div>
-                                                                </form>  
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
 
 
-                                                
+
                                             </div>
                                         </div>
                                     </div>
@@ -168,16 +168,16 @@
                                                 <th scope="col" class="dark:text-white/80">@sortablelink('yoe','Year of Establishment')</th>
                                                 <th scope="col" class="dark:text-white/80">Status</th>
                                                 <th scope="col" class="dark:text-white/80">Actions</th>
-                                                
+
                                             </tr>
                                             </thead>
                                             <tbody class="">
-                                               
+
                                             @php
                                                 $i = 1;
                                             @endphp
                                             @forelse($department as $dept)
-                            
+
                                             <tr class="">
                                                 <td>{{ $i++ }}</td>
                                                 <td>
@@ -190,7 +190,7 @@
                                                 <td><span>{{$dept->dept_shortname}}</span></td>
                                                 <td><span>{{$dept->yoe}}</span></td>
                                                 <td><span>{{$dept->status}}</span></td>
-                                                
+
                                                 <td class="font-medium space-x-2 rtl:space-x-reverse">
                                                 <div class="hs-tooltip ti-main-tooltip">
                                                     <button data-hs-overlay="#dept_edit_modal{{$i}}" id="btn{{$i}}" btn-val={{$i}}
@@ -202,8 +202,8 @@
                                                             Edit
                                                         </span>
                                                     </button>
-                        
-                    
+
+
                                                         <div id="dept_edit_modal{{$i}}" class="hs-overlay hidden ti-modal">
                                                             <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out md:!max-w-2xl md:w-full m-3 md:mx-auto">
                                                                 <div class="ti-modal-content">
@@ -228,9 +228,9 @@
                                                                             //alert(387);
                                                                                 window.onload=function(){
                                                                                 //alert('123');
-        
-                                                                            };   
-                                                                        
+
+                                                                            };
+
                                                                         </script>
                                                                     @endif
 
@@ -258,12 +258,12 @@
                                                                             </div>
                                                                             <label for="" class="ti-form-label">Year of Establishment :</label>
                                                                             <div class="flex shadow-sm max-w-sm space-y-3 pb-6">
-                                                                                
+
                                                                                 <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
                                                                                     <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                                             class="ri ri-calendar-line"></i></span>
                                                                                 </div>
-                                
+
                                                                                 <input type="date" name="edit_yoe"
                                                                                     class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
                                                                                     required placeholder="Choose date"  value="{{$dept->yoe}}">
@@ -276,7 +276,7 @@
                                                                                     <label for="hs-radio-group-2" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Make it Active</label>
                                                                                 </div>
                                                                             @endif
-                                                                    
+
                                                                         </div>
                                                                         <div class="ti-modal-footer">
                                                                             <button type="button"
@@ -284,18 +284,18 @@
                                                                             data-hs-overlay="#hs-medium-modal">
                                                                             Close
                                                                             </button>
-                                                                            
+
                                                                             <input type="submit" class="ti-btn  bg-warning text-white hover:bg-warning  focus:ring-primary  dark:focus:ring-offset-white/10" value="Update"/>
-                                                                            
+
                                                                         </div>
-                                                                    </form>  
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                 </div>
                                                 <div class="hs-tooltip ti-main-tooltip">
                                                 <form action="{{ route('ESTB.departments.destroy',$dept->id) }}" method="post">
-                                                   
+
                                                    <button onclick="return confirm('Are you Sure')"
                                                     class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>
@@ -319,7 +319,7 @@
                                         </div>
                                     </div>
                                     <div class="box-footer">
-                                            
+
                                         </div>
                                     </div>
                                     </div>
@@ -364,25 +364,25 @@
 
                new DataTable('#department_table');
             });
-        </script> 
+        </script>
         <script>
             $(document).ready(function(){
                 //alert('Hello from jquery');
                 new DataTable('#department_table');
-                
+
                 $(document).on('click','.dept_edit_modal_click',function(){
-                    //var 
+                    //var
                     var modal_no = $(this).attr("btn-val");
-                    
+
                     //alert($(this).find('.caste_edit_modal_no').val());
-                    $('#modal_no').val(modal_no); 
+                    $('#modal_no').val(modal_no);
                 });
 
                 $(document).on('click','#department_store_add_btn',function(e){
 
                     var department_name = $('#department_name').val();
                     var departmentshort_name = $('#departmentshort_name').val();
-                   
+
 
                     if(department_name == ''){
                         $('#departmentNameError').text('Department Name is missing');
@@ -399,21 +399,21 @@
                         $('#deptshortNameError').text('Please fill the correct value');
                         flag = true;
                     }
-                   
+
 
                 });
 
             });
-        </script> 
+        </script>
 
         <!--<script>
             function validateForm() {
                 var deptName = document.forms["department_form"]["dept_name"].value;
                 var deptshortName = document.forms["department_form"]["dept_shortname"].value;
-            
+
                 document.getElementById("departmentNameError").innerHTML = "";
                 document.getElementById("deptshortNameError").innerHTML = "";
-            
+
                 if (deptName.trim() === "") {
                     document.getElementById("departmentNameError").innerHTML = "Department Name is required";
                     return false;
@@ -433,7 +433,7 @@
             }
         </script>-->
 
-       
+
 
 
 @endsection

@@ -146,7 +146,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold"> Level :<span class="text-red-500">*</span> </label>
-                                                                                <select class="ti-form-select level pub_level" name="level" id="pub_level">
+                                                                                <select class="ti-form-select level pub_level" name="level" id="pub_level" multiple>
                                                                                     <option value="#">Choose Level</option>
                                                                                     <option value="Q1">Q1</option>
                                                                                     <option value="Q2">Q2</option>
@@ -163,6 +163,30 @@
                                                                                 @endif
                                                                                 <div id="pub_levelError" class="error text-red-700"></div>
                                                                             </div>
+
+                                                                            {{-- <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0">
+                                                                                <label class="ti-form-label mb-0 font-bold">Department List<span class="text-red-500">*</span></label>
+                                                                                <div class="space-y-2" style="max-height: 100px; overflow-y: auto;">
+                                                                                    @php
+                                                                                        $checked = "";
+                                                                                    @endphp
+
+                                                                                    <div class="flex">
+                                                                                        <input type="checkbox" class="ti-form-checkbox mt-0.5 select-all">
+                                                                                        <label for="select-all" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70 font-bold">Select All</label>
+                                                                                    </div>
+
+                                                                                    @foreach ($departments as $department)
+                                                                                        <div class="flex">
+                                                                                            <input type="checkbox" name="departments[]" value="{{ $department->id }}" {{ $checked }} class="ti-form-checkbox mt-0.5 hs-checkbox-group-{{ $department->id }}">
+                                                                                            <label class="hs-checkbox-group-{{ $department->id }} text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">{{ $department->dept_name }}</label>
+                                                                                        </div>
+                                                                                    @endforeach
+                                                                                </div>
+                                                                                <!--Dropdown multiselect checkbox-->
+                                                                            </div> --}}
+
+
 
                                                                             <div class="max-w-sm space-y-3 pb-6" id="pub_other_level">
                                                                                 <label for="" class="ti-form-label font-bold">Other Level:</label>
@@ -734,6 +758,9 @@
                             flag = true;
                         }
 
+
+
+
                         ///
 
                         if(pub_title == ''){
@@ -817,10 +844,5 @@
 
             });
         </script>
-
-
-
-
-
 
 @endsection
