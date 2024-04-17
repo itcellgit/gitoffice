@@ -200,7 +200,7 @@ class EgovAdminController extends Controller
                                             ->where('employee_types.employee_type','=','Teaching')
                                             // ->where('staff.employee_type','=','Teaching')
                                             ->where('department_id','=',$department_id)
-                                            ->select('professional_activity_attendees.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname','organizer','sponsored','sponsored_by')
+                                            ->select(DB::raw('DISTINCT(professional_activity_attendees.egov_id)'),'professional_activity_attendees.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname','organizer','sponsored','sponsored_by')
                                             ->get();
         // dd($professional_activity_attendee);
 
