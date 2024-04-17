@@ -198,6 +198,8 @@
                                                                                     <option value="Certification Program">Certification Program</option>
                                                                                     <option value="MDP/EDP">MDP/EDP</option>
                                                                                     <option value="Hackathon">Hackathon</option>
+                                                                                    <option value="Space-Talk">Space Talk</option>
+                                                                                    <option value="Site Visit">Site Visit</option>
 
                                                                                 </select>
                                                                                 @if($errors->has('category'))
@@ -504,6 +506,8 @@
                                                                                                                 <option value="Certification Program" {{($act->category=='Certification Program'? 'selected':'')}}>Certification Program</option>
                                                                                                                 <option value="MDP/EDP" {{($act->category=='MDP/EDP'? 'selected':'')}}>MDP/EDP</option>
                                                                                                                 <option value="Hackathon" {{($act->category=='Hackathon'? 'selected':'')}}>Hackathon</option>
+                                                                                                                <option value="Space-Talk" {{($act->category=='Space-Talk'? 'selected':'')}}>Space Talk</option>
+                                                                                                                <option value="Site Visit" {{($act->category=='Site Visit'? 'selected':'')}}>Site Visit</option>
                                                                                                             </select>
                                                                                                             @if($errors->has('edit_category'))
                                                                                                                 <div class="text-red-700">{{ $errors->first('edit_category') }}</div>
@@ -773,6 +777,9 @@
                                                                                         <option value="Certification Program">Certification Program</option>
                                                                                         <option value="MDP/EDP">MDP/EDP</option>
                                                                                         <option value="Hackathon">Hackathon</option>
+                                                                                        <option value="Space-Talk">Space Talk</option>
+                                                                                        <option value="Site Visit">Site Visit</option>
+
                                                                                 </select>
                                                                                     @if($errors->has('con_category'))
                                                                                     <div class="text-red-700">{{ $errors->first('con_category') }}</div>
@@ -1101,6 +1108,8 @@
                                                                                                                 <option value="Certification Program" {{($conduct->category=='Certification Program'? 'selected':'')}}>Certification Program</option>
                                                                                                                 <option value="MDP/EDP" {{($conduct->category=='MDP/EDP'? 'selected':'')}}>MDP/EDP</option>
                                                                                                                 <option value="Hackathon" {{($conduct->category=='Hackathon'? 'selected':'')}}>Hackathon</option>
+                                                                                                                <option value="Space-Talk" {{($conduct->category=='Space-Talk'? 'selected':'')}}>Space Talk</option>
+                                                                                                                <option value="Site Visit" {{($conduct->category=='Sit Visit'? 'selected':'')}}>Site Visit</option>
                                                                                                             </select>
                                                                                                             @if($errors->has('e_category'))
                                                                                                                 <div class="text-red-700">{{ $errors->first('e_category') }}</div>

@@ -33,7 +33,7 @@ class Storeprofessional_activity_attendeeRequest extends FormRequest
             'organizer'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
             'role'=>['required', Rule::in(['Participant', 'Resource Person','Jury'])],
             'level' => ['required', Rule::in([ 'Local', 'National','International'])],
-            'category'=>['required', Rule::in(['Workshop', 'FDP', 'Seminar','Webinar','STTP','Certification Program','MDP/EDP','Hackathon'])],
+            'category'=>['required', Rule::in(['Workshop', 'FDP', 'Seminar','Webinar','STTP','Certification Program','MDP/EDP','Hackathon','Space-Talk','Site Visit'])],
             'sponsored'=>['required', Rule::in(['Yes', 'No'])],
             'sponsored_by'=>['sometimes'],
 

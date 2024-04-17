@@ -28,7 +28,7 @@ class Storeprofessional_activity_conductedRequest extends FormRequest
             'con_level' => ['required', Rule::in(['Local', 'National', 'International'])],
             'con_organizer'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
             'con_co_organizer'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
-            'con_category'=>['required', Rule::in(['Workshop', 'FDP', 'Seminar','Webinar','STTP','Certification Program','MDP/EDP','Hackathon'])],
+            'con_category'=>['required', Rule::in(['Workshop', 'FDP', 'Seminar','Webinar','STTP','Certification Program','MDP/EDP','Hackathon','Space-Talk','Site Visit'])],
             'con_sponsored'=>['required', Rule::in(['Yes', 'No'])],
             'con_sponsoring_agency_name_address' => ['sometimes'],
             'con_from_date'=>['required','date'],

@@ -28,7 +28,7 @@ class Updateprofessional_activity_conductedRequest extends FormRequest
             'e_level' => ['required', Rule::in(['Local', 'National', 'International'])],
             'e_organizer'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
             'e_co_organizer'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
-            'e_category'=>['required', Rule::in(['Workshop', 'FDP', 'Seminar','Webinar','STTP','Certification Program','MDP/EDP','Hackathon'])],
+            'e_category'=>['required', Rule::in(['Workshop', 'FDP', 'Seminar','Webinar','STTP','Certification Program','MDP/EDP','Hackathon','Space-Talk','Site Visit'])],
             'e_sponsored'=>['required', Rule::in(['Yes', 'No'])],
             'e_sponsoring_agency_name_address' => ['sometimes'],
             'e_from_date'=>['required','date'],

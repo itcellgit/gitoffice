@@ -144,9 +144,9 @@
                                                                     @csrf
                                                                     <div class="ti-modal-body">
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
-                                                                            <div class="max-w-sm space-y-3 pb-6">
+                                                                            {{-- <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold"> Level :<span class="text-red-500">*</span> </label>
-                                                                                <select class="ti-form-select level pub_level" name="level" id="pub_level" multiple>
+                                                                                <select class="ti-form-select level pub_level" name="level[]" name="level"  id="pub_level" multiple>
                                                                                     <option value="#">Choose Level</option>
                                                                                     <option value="Q1">Q1</option>
                                                                                     <option value="Q2">Q2</option>
@@ -162,30 +162,145 @@
                                                                                     <div class="text-red-700">{{ $errors->first('level') }}</div>
                                                                                 @endif
                                                                                 <div id="pub_levelError" class="error text-red-700"></div>
-                                                                            </div>
-
-                                                                            {{-- <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0">
-                                                                                <label class="ti-form-label mb-0 font-bold">Department List<span class="text-red-500">*</span></label>
-                                                                                <div class="space-y-2" style="max-height: 100px; overflow-y: auto;">
-                                                                                    @php
-                                                                                        $checked = "";
-                                                                                    @endphp
-
-                                                                                    <div class="flex">
-                                                                                        <input type="checkbox" class="ti-form-checkbox mt-0.5 select-all">
-                                                                                        <label for="select-all" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70 font-bold">Select All</label>
-                                                                                    </div>
-
-                                                                                    @foreach ($departments as $department)
-                                                                                        <div class="flex">
-                                                                                            <input type="checkbox" name="departments[]" value="{{ $department->id }}" {{ $checked }} class="ti-form-checkbox mt-0.5 hs-checkbox-group-{{ $department->id }}">
-                                                                                            <label class="hs-checkbox-group-{{ $department->id }} text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">{{ $department->dept_name }}</label>
-                                                                                        </div>
-                                                                                    @endforeach
-                                                                                </div>
-                                                                                <!--Dropdown multiselect checkbox-->
                                                                             </div> --}}
 
+                                                                            <div class="max-w-sm space-y-3 pb-6">
+                                                                                <label for="with-corner-hint" class="ti-form-label font-bold"> Level :</label>
+                                                                                <div class="border border-gray-300 p-2 max-h-5 overflow-auto" style="max-height: 100px; overflow-y: auto;">
+                                                                                    <div class="">
+                                                                                        <div class="mr-4">
+                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="#"> Choose Level
+                                                                                        </div>
+                                                                                        <div class="mr-4">
+                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q1"> Q1
+                                                                                        </div>
+                                                                                        <div class="mr-4">
+                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q2"> Q2
+                                                                                        </div>
+                                                                                        <div class="mr-4">
+                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q3"> Q3
+                                                                                        </div>
+                                                                                        <div class="mr-4">
+                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q4"> Q4
+                                                                                        </div>
+                                                                                        <div class="mr-4">
+                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="SCI"> SCI
+                                                                                        </div>
+                                                                                        <div class="mr-4">
+                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Web of Science"> Web of Science
+                                                                                        </div>
+
+                                                                                        <div class="mr-4">
+                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Scopus Indexed"> Scopus Indexed
+                                                                                        </div>
+                                                                                        <div class="mr-4">
+                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="UGC General"> UGC General
+                                                                                        </div>
+                                                                                        <div class="mr-4">
+                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Other"> Other
+                                                                                        </div>
+                                                                                        <!-- Add other checkboxes similarly -->
+
+                                                                                    </div>
+
+                                                                                </div>
+                                                                                @if($errors->has('level'))
+                                                                                    <div class="text-red-700">{{ $errors->first('level') }}</div>
+                                                                                @endif
+                                                                                <div id="pub_levelError" class="error text-red-700"></div>
+                                                                            </div>
+
+
+
+                                                                            {{-- <div class="max-w-sm space-y-3 pb-6">
+                                                                                <label for="with-corner-hint" class="ti-form-label font-bold"> Level :</label>
+                                                                                <div class="flex flex-wrap">
+                                                                                    <div class="mr-4">
+                                                                                        <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q1"> Q1
+                                                                                    </div>
+                                                                                    <div class="mr-4">
+                                                                                        <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q2"> Q2
+                                                                                    </div>
+                                                                                    <div class="mr-4">
+                                                                                        <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q3"> Q3
+                                                                                    </div>
+                                                                                    <div class="mr-4">
+                                                                                        <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q4"> Q4
+                                                                                    </div>
+                                                                                    <div class="mr-4">
+                                                                                        <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="SCI"> SCI
+                                                                                    </div>
+                                                                                    <div class="mr-4">
+                                                                                        <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Web of Science"> Web of Science
+                                                                                    </div>
+                                                                                    <div class="mr-4">
+                                                                                        <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Scopus Indexed"> Scopus Indexed
+                                                                                    </div>
+                                                                                    <div class="mr-4">
+                                                                                        <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="UGC General"> UGC General
+                                                                                    </div>
+                                                                                    <div class="mr-4">
+                                                                                        <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Other"> Other
+                                                                                    </div>
+                                                                                </div>
+                                                                                @if($errors->has('level'))
+                                                                                    <div class="text-red-700">{{ $errors->first('level') }}</div>
+                                                                                @endif
+                                                                                <div id="pub_levelError" class="error text-red-700"></div>
+                                                                            </div> --}}
+
+
+
+
+                                                                            {{-- <div class="max-w-sm space-y-3 pb-6">
+                                                                                <label for="with-corner-hint" class="ti-form-label font-bold"> Level :<span class="text-red-500">*</span> </label>
+                                                                                <div class="relative inline-block text-left level pub_level" name="level" id="pub_level">
+                                                                                    <div id="levelButton" class="inline-flex justify-between w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150" aria-haspopup="true" aria-expanded="true" >
+                                                                                        <span>Choose Level</span>
+                                                                                    </div>
+                                                                                    <div id="levelOptions" class="rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="levelButton" tabindex="-1" style="display: none;">
+                                                                                        <div class="py-1 " role="none" >
+                                                                                            <label for="Q1" class="flex items-center">
+                                                                                                <input type="checkbox" id="Q1" value="Q1" class="mr-2">
+                                                                                                Q1
+                                                                                            </label>
+                                                                                            <label for="Q2" class="flex items-center">
+                                                                                                <input type="checkbox" id="Q2" value="Q2" class="mr-2">
+                                                                                                Q2
+                                                                                            </label>
+                                                                                            <label for="Q3" class="flex items-center">
+                                                                                                <input type="checkbox" id="Q3" value="Q3" class="mr-2">
+                                                                                                Q3
+                                                                                            </label>
+                                                                                            <label for="Q4" class="flex items-center">
+                                                                                                <input type="checkbox" id="Q4" value="Q4" class="mr-2">
+                                                                                                Q4
+                                                                                            </label>
+                                                                                            <label for="SCI" class="flex items-center">
+                                                                                                <input type="checkbox" id="SCI" value="SCI" class="mr-2">
+                                                                                                SCI
+                                                                                            </label>
+                                                                                            <label for="Web_of_Science" class="flex items-center">
+                                                                                                <input type="checkbox" id="Web_of_Science" value="Web of Science" class="mr-2">
+                                                                                                Web of Science
+                                                                                            </label>
+                                                                                            <label for="Scopus_Indexed" class="flex items-center">
+                                                                                                <input type="checkbox" id="Scopus_Indexed" value="Scopus Indexed" class="mr-2">
+                                                                                                Scopus Indexed
+                                                                                            </label>
+                                                                                            <label for="UGC_General" class="flex items-center">
+                                                                                                <input type="checkbox" id="UGC_General" value="UGC General" class="mr-2">
+                                                                                                UGC General
+                                                                                            </label>
+                                                                                            <label for="Other" class="flex items-center">
+                                                                                                <input type="checkbox" id="Other" value="Other" class="mr-2">
+                                                                                                Other
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div id="pub_levelError" class="error text-red-700"></div>
+                                                                            </div> --}}
 
 
                                                                             <div class="max-w-sm space-y-3 pb-6" id="pub_other_level">
@@ -843,6 +958,21 @@
 
 
             });
+
+            $(document).ready(function() {
+                $("#levelButton").click(function() {
+                    $("#levelOptions").toggle();
+                });
+
+                $("#levelOptions input[type=checkbox]").change(function() {
+                    var selectedValues = [];
+                    $("#levelOptions input[type=checkbox]:checked").each(function() {
+                        selectedValues.push($(this).val());
+                    });
+                    $("#pub_level").val(selectedValues.join(","));
+                });
+            });
+
         </script>
 
 @endsection

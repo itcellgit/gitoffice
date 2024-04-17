@@ -30,7 +30,7 @@ class Updateprofessional_activity_attendeeRequest extends FormRequest
             'edit_organizer'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
             'edit_role'=>['required', Rule::in(['Participant', 'Resource Person','Jury'])],
             'edit_level' => ['required', Rule::in([ 'Local', 'National','International'])],
-            'edit_category'=>['required', Rule::in(['Workshop', 'FDP', 'Seminar','Webinar','STTP','Certification Program','MDP/EDP','Hackathon'])],
+            'edit_category'=>['required', Rule::in(['Workshop', 'FDP', 'Seminar','Webinar','STTP','Certification Program','MDP/EDP','Hackathon','Space-Talk','Site Visit'])],
             'edit_sponsored'=>['required', Rule::in(['Yes', 'No'])],
             //'edit_sponsored_by'=>['regex:/^[a-zA-Z\s]+$/'],
             'edit_from_date'=>['required','date'],
