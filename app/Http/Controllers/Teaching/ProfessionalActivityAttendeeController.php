@@ -136,7 +136,7 @@ class ProfessionalActivityAttendeeController extends Controller
      */
     public function update(Updateprofessional_activity_attendeeRequest $request, professional_activity_attendee $professional_activity_attendee)
     {
-     // dd($request);
+      //dd($request);
 
         $professional_activity_attendee->title=$request->edit_title;
         $professional_activity_attendee->organizer=$request->edit_organizer;

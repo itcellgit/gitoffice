@@ -154,7 +154,7 @@
                                                             </div>
                                                             <div class="grid lg:grid-cols-3 gap-3 space-y-2 lg:space-y-0 pb-4">
                                                                 <div class="space-y-2">
-                                                                <label class="ti-form-label mb-0 font-bold">Employee Type</label>
+                                                                    <label class="ti-form-label mb-0 font-bold">Employee Type</label>
                                                                     <select class="ti-form-select" name="employee_type" id="employee_type">
                                                                         <option value="null">Choose a Employee Type</option>
                                                                         <option value="Teaching" {{$staff->latest_employee_type[0]->employee_type == "Teaching"?'selected':''}}>Teaching</option>

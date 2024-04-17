@@ -22,9 +22,9 @@ class Storeconferences_attendeeRequest extends FormRequest
      */
     public function rules(): array
     {
-        return 
+        return
         [
-          
+
             'conference_name'=> ['required','regex:/^[a-zA-Z\s]+$/'],
             'attended_as' => ['required', Rule::in(['Resource Person', 'Paper Presenter', 'Participant','Session Chair'])],
             'from_date'=> ['required','date'],

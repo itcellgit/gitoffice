@@ -408,7 +408,10 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::patch('/ESTB/staff/update/{staff}',[StaffController::class,'update'])->name('ESTB.staff.update');
 
     //Route to fetch staff data using Filter
-    Route::get('/ESTB/staff/staffinformation',[StaffController::class,'filterstaff_information'])->name('ESTB.staff.staffinformation');
+    //Route::get('/ESTB/staff/staffinformation',[StaffController::class,'filterstaff_information'])->name('ESTB.staff.staffinformation');
+    Route::get('/ESTB/staff/staffinformation', [StaffController::class, 'filterstaff_information'])->name('ESTB.staff.filter.staff');
+
+
 
 
 

@@ -22,10 +22,10 @@ class Updateconferences_attendeeRequest extends FormRequest
      */
     public function rules(): array
     {
-        return 
+        return
         [
-            
-           
+
+
             'edit_conference_name'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
             'edit_attended_as' => ['required', Rule::in(['Resource Person', 'Paper Presenter', 'Participant','Session Chair'])],
             'edit_from_date'=>['required','date'],
@@ -38,7 +38,7 @@ class Updateconferences_attendeeRequest extends FormRequest
             'edit_amount'=>[],
             'edit_weblink'=>['url'],
             'edit_type_of_level' => [Rule::in(['National', 'International'])],
-            'edit_ISSN_NO' =>[''],
+            'edit_ISSN_NO' =>[],
             'document'=>['required','file','mimes:pdf'],
         ];
     }
@@ -66,7 +66,7 @@ class Updateconferences_attendeeRequest extends FormRequest
             //'edit_sponsored_by.regex' => 'The edit_sponsored by field should contain only letters and spaces.',
             'edit_amount.numeric'=>'amount can be numbers only',
             'edit_weblink.url'=>'The web link must be valid url',
-           
+
 
      ];
     }

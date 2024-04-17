@@ -73,9 +73,10 @@
                                 <div class="col-span-12">
                                     <!--For filtering the data as per requirement-->
                                     <div class="col-span-2 xl:col-span-2">
-                                        <div class="box box-sm">
+                                        {{-- <div class="box box-sm">
                                             <div class="box-body searchForm">
                                                 <div class="grid lg:grid-cols-3 gap-2 space-y-2 lg:space-y-0 pb-4">
+
                                                     <div class="space-y-2">
                                                         <label class="ti-form-label mb-0 font-bold">Department<span class="text-red-500">*</span></label>
                                                         <select class="ti-form-select" name="departments_id">
@@ -112,17 +113,6 @@
                                                             <!-- Add options if applicable -->
                                                         </select>
                                                     </div>
-
-                                                    {{-- <div class="space-y-2">
-                                                        <label class="ti-form-label mb-0 font-bold">Designations<span class="text-red-500">*</span></label>
-                                                        <select class="ti-form-select" name="designations_id" id="designation_id">
-                                                            <option value="#">Choose a Designation</option>
-                                                            @foreach ($designation as $design)
-                                                                <option value="{{$designation_id->id}}">{{$design->design_name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div> --}}
-
                                                     <div class="space-y-2">
                                                         <label class="ti-form-label mb-0">Gender<span class="text-red-500">*</span></label>
                                                         <div class="flex gap-x-6">
@@ -138,14 +128,87 @@
                                                         </div>
                                                     </div>
                                                     <!-- Add more fields in a similar manner -->
+                                                    <div class="flex justify-center">
+                                                        <button id="filterBtn" class="bg-blue-500 text-white px-4 mt-10 py-2 rounded-md focus:outline-none hover:bg-blue-700">Search</button>
 
-                                                </div>
+                                                    </div>
 
-                                                <div class="flex justify-center">
-                                                    <button id="filterBtn" class="bg-blue-500 text-white px-4 mt-10 py-2 rounded-md focus:outline-none hover:bg-blue-700">Search</button>
                                                 </div>
                                             </div>
+                                        </div> --}}
+
+                                        <div class="box box-sm">
+                                            <div class="box-body searchForm">
+                                                    <form action="{{ route('ESTB.staff.filter.staff') }}" method="GET" id="searchForm">
+                                                        <!-- Department select -->
+                                                        <div class="grid gap-1 space-y-2 lg:grid-cols-2 lg:space-y-0">
+                                                            <div class="space-y-2">
+                                                                <label class="ti-form-label mb-0 font-bold">Department<span class="text-red-500">*</span></label>
+                                                                <select class="ti-form-select" name="departments_id">
+                                                                    <option value="#">Choose a Department</option>
+                                                                    @foreach ($departments as $department)
+                                                                    <option value="{{$department->id}}">{{$department->dept_name}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <!-- Association select -->
+                                                            <div class="space-y-2">
+                                                                <label class="ti-form-label mb-0 font-bold">Association<span class="text-red-500">*</span></label>
+                                                                <select class="ti-form-select" name="associations_id" id="associations_id" required>
+                                                                    <option value="#">Choose an Association</option>
+                                                                    @foreach ($associations as $association)
+                                                                    <option value="{{$association->id}}">{{$association->asso_name}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="grid gap-1 space-y-2 lg:grid-cols-2 lg:space-y-0">
+                                                            <!-- Religion select -->
+                                                            <div class="space-y-2">
+                                                                <label class="ti-form-label mb-0 font-bold">Religion<span class="text-red-500">*</span></label>
+                                                                <select class="ti-form-select" name="religion_id" id="religion_id">
+                                                                    <option value="#">Choose a Religion</option>
+                                                                    @foreach ($religions as $religion)
+                                                                    <option value="{{$religion->id}}">{{$religion->religion_name}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <!-- Caste Category select -->
+                                                            <div class="space-y-2">
+                                                                <label class="ti-form-label mb-0 font-bold">Caste Category<span class="text-red-500">*</span></label>
+                                                                <select class="ti-form-select" name="castecategory_id" id="castecategory_list">
+                                                                    <!-- Add options if applicable -->
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="grid gap-1 space-y-2 lg:grid-cols-2 lg:space-y-0">
+                                                            <!-- Gender radio buttons -->
+                                                            <div class="space-y-2">
+                                                                <label class="ti-form-label mb-0">Gender<span class="text-red-500">*</span></label>
+                                                                <div class="flex gap-x-6">
+                                                                    <div class="flex">
+                                                                        <input type="radio" name="gender" value="female" class="ti-form-radio" id="hs-radio-group-1" checked>
+                                                                        <label for="hs-radio-group-1" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Female</label>
+                                                                    </div>
+                                                                    <div class="flex">
+                                                                        <input type="radio" name="gender" value="male" class="ti-form-radio" id="hs-radio-group-2">
+                                                                        <label for="hs-radio-group-2" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Male</label>
+                                                                    </div>
+                                                                    <!-- Add more radio buttons if applicable -->
+                                                                </div>
+                                                            </div>
+                                                            <!-- Search button -->
+                                                            <div class="flex justify-center">
+                                                                <button id="filterBtn" class="bg-blue-500 text-white px-4 mt-10 py-2 rounded-md focus:outline-none hover:bg-blue-700">Search</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                            </div>
                                         </div>
+
+
                                     </div>
                                     <!--Filtering the data Ends-->
                                     <div class="box">
@@ -280,14 +343,6 @@
 
                                                                             </div>
                                                                             <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pb-4">
-                                                                                <!--div class="space-y-2 hidden" id="type_of_payscale">
-                                                                                    <label class="ti-form-label mb-0 font-bold">Type of payscale</label>
-                                                                                    <select class="ti-form-select" name="payscale_type" id="payscale_type">
-                                                                                        <option value="null">Choose a payscale type</option>
-                                                                                        <option value="0">KLS Pay scale</option>
-                                                                                        <option value="1">Consolidated</option>
-                                                                                    </select>
-                                                                                </div-->
 
                                                                                 <div class="space-y-2">
                                                                                     <label class="ti-form-label mb-0 font-bold">Designations<span class="text-red-500">*</span></label>
@@ -546,10 +601,11 @@
 
                                                                         </div>
                                                                     </form>
+                                                                </div>
+                                                                <!--newly added-->
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -1204,43 +1260,37 @@
             });
         </script>
 
-        {{-- <script>
-            $(document).ready(function() {
-                $("#filterBtn").click(function() {
-                    // Get selected values from the dropdowns
-                    var departmentId = $('select[name="departments_id"]').val();
-                    var associationId = $('select[name="associations_id"]').val();
-                    var religionId = $('select[name="religion_id"]').val();
-                    var casteCategoryId = $('select[name="castecategory_id"]').val();
-                    var gender = $('input[name="gender"]:checked').val();
-
-
-                    console.log("Department ID: " + departmentId);
-                    console.log("Association ID: " + associationId);
-                    console.log("Religion ID: " + religionId);
-                    console.log("Caste Category ID: " + casteCategoryId);
-                    console.log("Gender: " + gender);
-                });
-            });
-        </script> --}}
-
         <script>
             $(document).ready(function() {
                 $('#filterBtn').click(function() {
                     var formData = $('#searchForm').serialize();
 
+                    //console.log('123');
+                    alert("Search button clicked!");
+
+                    //console.log("Form Data:", formData);
+
                     // Send AJAX request to server
                     $.ajax({
-                        type: 'POST',
-                        url: 'ESTB.staff.staffinformation',
+                        type: 'get',
+                        url: 'ESTB/staff/staffinformation',
+                        //url: 'staff/staffinformation',
+
                         data: formData,
                         success: function(response) {
                             $('#staff_table').html(response);
+                        },
+
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                            //alert("An error occurred. Please try again.");
                         }
                     });
                 });
             });
         </script>
+
+
 
         <!-- INDEX JS -->
         @vite('resources/assets/js/index-8.js')
