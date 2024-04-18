@@ -3,6 +3,7 @@
 namespace MailerSend\Tests\Endpoints;
 
 use Http\Mock\Client;
+use Illuminate\Support\Arr;
 use MailerSend\Common\HttpLayer;
 use MailerSend\Endpoints\BulkEmail;
 use MailerSend\Exceptions\MailerSendAssertException;
@@ -15,7 +16,6 @@ use MailerSend\Helpers\Builder\Variable;
 use MailerSend\Tests\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use Tightenco\Collect\Support\Arr;
 
 class BulkEmailTest extends TestCase
 {
@@ -40,11 +40,12 @@ class BulkEmailTest extends TestCase
         $this->expectExceptionMessage('Validation Error');
 
         $responseBody = $this->createMock(StreamInterface::class);
-        $responseBody->method('getContents')->willReturn('{"message": "Validation Error"}');
+        $responseBody->method('getContents')->willReturn('{"message": "Validation Error", "errors": []}');
 
         $validationErrorResponse = $this->createMock(ResponseInterface::class);
         $validationErrorResponse->method('getStatusCode')->willReturn(422);
         $validationErrorResponse->method('getBody')->willReturn($responseBody);
+        $validationErrorResponse->method('getHeaders')->willReturn([]);
         $this->client->addResponse($validationErrorResponse);
 
         $bulkEmailParams[] = (new EmailParams())
@@ -92,21 +93,21 @@ class BulkEmailTest extends TestCase
             self::assertCount(count($emailParams->getRecipients()), Arr::get($request_body, "$key.to"));
 
             foreach ($emailParams->getRecipients() as $k => $recipient) {
-                $recipient = ! is_array($recipient) ? $recipient->toArray() : $recipient;
+                $recipient = !is_array($recipient) ? $recipient->toArray() : $recipient;
                 self::assertEquals($recipient['name'], Arr::get($request_body, "$key.to.$k.name"));
                 self::assertEquals($recipient['email'], Arr::get($request_body, "$key.to.$k.email"));
             }
 
             self::assertCount(count($emailParams->getCc()), Arr::get($request_body, "$key.cc") ?? []);
             foreach ($emailParams->getCc() as $k => $cc) {
-                $cc = ! is_array($cc) ? $cc->toArray() : $cc;
+                $cc = !is_array($cc) ? $cc->toArray() : $cc;
                 self::assertEquals($cc['name'], Arr::get($request_body, "$key.cc.$k.name"));
                 self::assertEquals($cc['email'], Arr::get($request_body, "$key.cc.$k.email"));
             }
 
             self::assertCount(count($emailParams->getBcc()), Arr::get($request_body, "$key.bcc") ?? []);
             foreach ($emailParams->getBcc() as $k => $bcc) {
-                $bcc = ! is_array($bcc) ? $bcc->toArray() : $bcc;
+                $bcc = !is_array($bcc) ? $bcc->toArray() : $bcc;
                 self::assertEquals($bcc['name'], Arr::get($request_body, "$key.bcc.$k.name"));
                 self::assertEquals($bcc['email'], Arr::get($request_body, "$key.bcc.$k.email"));
             }
@@ -120,7 +121,7 @@ class BulkEmailTest extends TestCase
             self::assertEquals($emailParams->getTemplateId(), Arr::get($request_body, "$key.template_id"));
             self::assertCount(count($emailParams->getVariables()), Arr::get($request_body, "$key.variables") ?? []);
             foreach ($emailParams->getVariables() as $variableKey => $variable) {
-                $variable = ! is_array($variable) ? $variable->toArray() : $variable;
+                $variable = !is_array($variable) ? $variable->toArray() : $variable;
                 self::assertEquals($variable['email'], Arr::get($request_body, "$key.variables.$variableKey.email"));
                 foreach ($variable['substitutions'] as $substitutionKey => $substitution) {
                     self::assertEquals($substitution['var'], Arr::get($request_body, "$key.variables.$variableKey.substitutions.$substitutionKey.var"));
@@ -129,7 +130,7 @@ class BulkEmailTest extends TestCase
             }
             self::assertCount(count($emailParams->getAttachments()), Arr::get($request_body, "$key.attachments") ?? []);
             foreach ($emailParams->getAttachments() as $k => $attachment) {
-                $attachment = ! is_array($attachment) ? $attachment->toArray() : $attachment;
+                $attachment = !is_array($attachment) ? $attachment->toArray() : $attachment;
                 self::assertEquals($attachment['content'], Arr::get($request_body, "$key.attachments.$k.content"));
                 self::assertEquals($attachment['filename'], Arr::get($request_body, "$key.attachments.$k.filename"));
                 self::assertEquals($attachment['disposition'], Arr::get($request_body, "$key.attachments.$k.disposition"));
@@ -138,7 +139,7 @@ class BulkEmailTest extends TestCase
 
             self::assertCount(count($emailParams->getPersonalization()), Arr::get($request_body, "$key.personalization") ?? []);
             foreach ($emailParams->getPersonalization() as $k => $personalization) {
-                $personalization = ! is_array($personalization) ? $personalization->toArray() : $personalization;
+                $personalization = !is_array($personalization) ? $personalization->toArray() : $personalization;
                 self::assertEquals($personalization['email'], Arr::get($request_body, "$key.personalization.$k.email"));
                 foreach ($personalization['data'] as $variableKey => $variableValue) {
                     self::assertEquals($personalization['data'][$variableKey], Arr::get($request_body, "$key.personalization.$k.data.$variableKey"));
@@ -492,7 +493,7 @@ class BulkEmailTest extends TestCase
                         ->setPrecedenceBulkHeader(true),
                 ],
             ],
-            'with in-reply-to header' => [
+            'with in_reply_to header' => [
                 [
                     (new EmailParams())
                         ->setFrom('test@mailersend.com')
@@ -811,7 +812,6 @@ class BulkEmailTest extends TestCase
                             ]
                         ])
                         ->setSubject('Subject')
-                        ->setHtml('HTML')
                 ]
             ],
         ];

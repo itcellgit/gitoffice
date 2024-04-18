@@ -15,6 +15,213 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.23.0] - 2024 03 26
+
+### Added
+
+### Changed
+
+- Switched deprecated tightenco/collect package to illuminate/collections package
+
+### Fixed
+
+### Removed
+
+
+## [0.22.0] - 2024 03 25
+
+### Added
+
+- Add the manage user endpoints
+- Add the SMTP user endpoints
+- Add the catch_type and match_type paramter to inbound
+
+### Changed
+
+### Fixed
+
+### Removed
+
+## [0.21.0] - 2024 03 20
+
+### Added
+
+### Changed
+
+- Suggest to add token as .env variable instead of explicit declaration
+
+### Fixed
+
+- Fix composer packages cache
+
+### Removed
+
+## [0.20.0] - 2023 12 28
+
+### Added
+
+- Add the inbound_forward.failed as a webhook event 
+
+### Changed
+
+### Fixed
+
+### Removed
+
+## [0.19.0] - 2023 12 19
+
+### Added
+
+### Changed
+
+### Fixed
+
+### Removed
+
+- Remove symfony dependency
+
+## [0.18.0] - 2023 12 13
+
+### Added
+
+- Add an endpoint to fetch a single email activity
+
+### Changed
+
+### Fixed
+
+### Removed
+
+## [0.17.0] - 2023 12 12
+
+### Added
+
+- Allow user to send custom headers
+
+### Changed
+
+### Fixed
+
+### Removed
+
+## [0.16.0] - 2023 11 22
+
+### Added
+
+### Changed
+
+### Fixed
+
+- Fetching analytics and activities with event and tag array does not work
+
+### Removed
+
+## [0.15.0] - 2023 10 03
+
+### Added
+
+### Changed
+
+### Fixed
+
+- Fixed in_reply_to parameter name
+
+### Removed
+
+## [0.14.0] - 2023 09 29
+
+### Added
+
+- Add the On Hold list to the api endpoint
+
+### Changed
+
+- Update to use symfony v6 as a dependency
+
+### Fixed
+
+### Removed
+
+## [0.13.0] - 2023 09 07
+
+### Added
+
+### Changed
+
+### Fixed
+
+- Sending email with only html param should work 
+
+### Removed
+
+## [0.12.0] - 2023 07 28
+
+### Added
+
+- Added new webhook events
+- Added missing domain settings
+
+### Changed
+
+### Fixed
+
+### Removed
+
+## [0.11.0] - 2023 06 07
+
+### Added
+
+- Find Sender Identity by email
+
+### Changed
+
+### Fixed
+
+### Removed
+
+## [0.10.0] - 2023 04 19
+
+### Added
+
+- API Quota endpoint
+
+### Changed
+
+### Fixed
+
+### Removed
+
+- Processed event
+
+## [0.9.1] - 2023 02 07
+
+### Added
+
+### Changed
+
+- Symfony version constraints in `composer.json`
+
+### Fixed
+
+### Removed
+
+## [0.9.0] - 2023 01 11
+
+### Added
+
+- Added manage sender identities endpoints
+
+### Changed
+
+- Upgrade PHPCSFixer to v3
+- Allow overriding tracking domain defaults 
+
+### Fixed
+
+- email->send dont return error content on 422 and 429 errors
+
+### Removed
+
 ## [0.8.0] - 2022 10 07
 
 ### Added
@@ -167,7 +374,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PHPUnit tests
 - Documentation
 
-[Unreleased]: https://github.com/mailersend/mailersend-php/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/mailersend/mailersend-php/compare/v0.10.0...HEAD
+[0.10.0]: https://github.com/mailersend/mailersend-php/releases/tag/v0.10.0
+[0.9.1]: https://github.com/mailersend/mailersend-php/releases/tag/v0.9.1
+[0.9.0]: https://github.com/mailersend/mailersend-php/releases/tag/v0.9.0
 [0.8.0]: https://github.com/mailersend/mailersend-php/releases/tag/v0.8.0
 [0.7.0]: https://github.com/mailersend/mailersend-php/releases/tag/v0.7.0
 [0.6.0]: https://github.com/mailersend/mailersend-php/releases/tag/v0.6.0

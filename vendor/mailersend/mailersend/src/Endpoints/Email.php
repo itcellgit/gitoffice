@@ -54,7 +54,13 @@ class Email extends AbstractEndpoint
                     'personalization' => $personalization_mapped,
                     'send_at' => $params->getSendAt(),
                     'precedence_bulk' => $params->getPrecedenceBulkHeader(),
-                    'in-reply-to' => $params->getInReplyToHeader(),
+                    'in_reply_to' => $params->getInReplyToHeader(),
+                    'settings' => [
+                        'track_clicks' => $params->trackClicks(),
+                        'track_opens' => $params->trackOpens(),
+                        'track_content' => $params->trackContent(),
+                    ],
+                    'headers' => $params->getHeaders(),
                 ],
                 fn ($v) => is_array($v) ? array_filter($v, fn ($v) => $v !== null) : $v !== null
             )
