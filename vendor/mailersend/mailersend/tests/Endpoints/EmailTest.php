@@ -3,9 +3,11 @@
 namespace MailerSend\Tests\Endpoints;
 
 use Http\Mock\Client;
+use Illuminate\Support\Arr;
 use MailerSend\Common\HttpLayer;
 use MailerSend\Endpoints\Email;
 use MailerSend\Exceptions\MailerSendAssertException;
+use MailerSend\Exceptions\MailerSendRateLimitException;
 use MailerSend\Exceptions\MailerSendValidationException;
 use MailerSend\Helpers\Builder\Attachment;
 use MailerSend\Helpers\Builder\EmailParams;
@@ -15,7 +17,6 @@ use MailerSend\Helpers\Builder\Variable;
 use MailerSend\Tests\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use Tightenco\Collect\Support\Arr;
 
 class EmailTest extends TestCase
 {
@@ -40,11 +41,12 @@ class EmailTest extends TestCase
         $this->expectExceptionMessage('Validation Error');
 
         $responseBody = $this->createMock(StreamInterface::class);
-        $responseBody->method('getContents')->willReturn('{"message": "Validation Error"}');
+        $responseBody->method('getContents')->willReturn('{"message": "Validation Error", "errors": []}');
 
         $validationErrorResponse = $this->createMock(ResponseInterface::class);
         $validationErrorResponse->method('getStatusCode')->willReturn(422);
         $validationErrorResponse->method('getBody')->willReturn($responseBody);
+        $validationErrorResponse->method('getHeaders')->willReturn([]);
         $this->client->addResponse($validationErrorResponse);
 
         $emailParams = (new EmailParams())
@@ -77,7 +79,7 @@ class EmailTest extends TestCase
                 'to' => [
                     $recipients[0]->toArray()
                 ],
-                'template_id' => 'templateId'
+                'template_id' => 'templateId',
             ])
             ->willReturn([]);
 
@@ -116,19 +118,19 @@ class EmailTest extends TestCase
         self::assertEquals($emailParams->getReplyToName(), Arr::get($request_body, 'reply_to.name'));
         self::assertCount(count($emailParams->getRecipients()), Arr::get($request_body, 'to'));
         foreach ($emailParams->getRecipients() as $key => $recipient) {
-            $recipient = ! is_array($recipient) ? $recipient->toArray() : $recipient;
+            $recipient = !is_array($recipient) ? $recipient->toArray() : $recipient;
             self::assertEquals($recipient['name'], Arr::get($request_body, "to.$key.name"));
             self::assertEquals($recipient['email'], Arr::get($request_body, "to.$key.email"));
         }
         self::assertCount(count($emailParams->getCc()), Arr::get($request_body, 'cc') ?? []);
         foreach ($emailParams->getCc() as $key => $cc) {
-            $cc = ! is_array($cc) ? $cc->toArray() : $cc;
+            $cc = !is_array($cc) ? $cc->toArray() : $cc;
             self::assertEquals($cc['name'], Arr::get($request_body, "cc.$key.name"));
             self::assertEquals($cc['email'], Arr::get($request_body, "cc.$key.email"));
         }
         self::assertCount(count($emailParams->getBcc()), Arr::get($request_body, 'bcc') ?? []);
         foreach ($emailParams->getBcc() as $key => $bcc) {
-            $bcc = ! is_array($bcc) ? $bcc->toArray() : $bcc;
+            $bcc = !is_array($bcc) ? $bcc->toArray() : $bcc;
             self::assertEquals($bcc['name'], Arr::get($request_body, "bcc.$key.name"));
             self::assertEquals($bcc['email'], Arr::get($request_body, "bcc.$key.email"));
         }
@@ -142,7 +144,7 @@ class EmailTest extends TestCase
         self::assertEquals($emailParams->getTemplateId(), Arr::get($request_body, 'template_id'));
         self::assertCount(count($emailParams->getVariables()), Arr::get($request_body, 'variables') ?? []);
         foreach ($emailParams->getVariables() as $variableKey => $variable) {
-            $variable = ! is_array($variable) ? $variable->toArray() : $variable;
+            $variable = !is_array($variable) ? $variable->toArray() : $variable;
             self::assertEquals($variable['email'], Arr::get($request_body, "variables.$variableKey.email"));
             foreach ($variable['substitutions'] as $substitutionKey => $substitution) {
                 self::assertEquals($substitution['var'], Arr::get($request_body, "variables.$variableKey.substitutions.$substitutionKey.var"));
@@ -151,7 +153,7 @@ class EmailTest extends TestCase
         }
         self::assertCount(count($emailParams->getAttachments()), Arr::get($request_body, 'attachments') ?? []);
         foreach ($emailParams->getAttachments() as $key => $attachment) {
-            $attachment = ! is_array($attachment) ? $attachment->toArray() : $attachment;
+            $attachment = !is_array($attachment) ? $attachment->toArray() : $attachment;
             self::assertEquals($attachment['content'], Arr::get($request_body, "attachments.$key.content"));
             self::assertEquals($attachment['filename'], Arr::get($request_body, "attachments.$key.filename"));
             self::assertEquals($attachment['disposition'], Arr::get($request_body, "attachments.$key.disposition"));
@@ -160,15 +162,24 @@ class EmailTest extends TestCase
 
         self::assertCount(count($emailParams->getPersonalization()), Arr::get($request_body, 'personalization') ?? []);
         foreach ($emailParams->getPersonalization() as $key => $personalization) {
-            $personalization = ! is_array($personalization) ? $personalization->toArray() : $personalization;
+            $personalization = !is_array($personalization) ? $personalization->toArray() : $personalization;
             self::assertEquals($personalization['email'], Arr::get($request_body, "personalization.$key.email"));
             foreach ($personalization['data'] as $variableKey => $variableValue) {
                 self::assertEquals($personalization['data'][$variableKey], Arr::get($request_body, "personalization.$key.data.$variableKey"));
             }
         }
+        self::assertCount(count($emailParams->getHeaders()), Arr::get($request_body, 'headers') ?? []);
+        foreach ($emailParams->getHeaders() as $key => $header) {
+            $header = !is_array($header) ? $header->toArray() : $header;
+            self::assertEquals($header['name'], Arr::get($request_body, "headers.$key.name"));
+            self::assertEquals($header['value'], Arr::get($request_body, "headers.$key.value"));
+        }
         self::assertEquals($emailParams->getSendAt(), Arr::get($request_body, 'send_at'));
         self::assertEquals($emailParams->getPrecedenceBulkHeader(), Arr::get($request_body, 'precedence_bulk'));
-        self::assertEquals($emailParams->getInReplyToHeader(), Arr::get($request_body, 'in-reply-to'));
+        self::assertEquals($emailParams->getInReplyToHeader(), Arr::get($request_body, 'in_reply_to'));
+        self::assertEquals($emailParams->trackClicks(), Arr::get($request_body, 'settings.track_clicks'));
+        self::assertEquals($emailParams->trackOpens(), Arr::get($request_body, 'settings.track_opens'));
+        self::assertEquals($emailParams->trackContent(), Arr::get($request_body, 'settings.track_content'));
     }
 
     /**
@@ -372,7 +383,7 @@ class EmailTest extends TestCase
                     ])
                     ->setPrecedenceBulkHeader(true),
             ],
-            'with in-reply-to header' => [
+            'with in_reply_to header' => [
                 (new EmailParams())
                     ->setFrom('test@mailersend.com')
                     ->setFromName('Sender')
@@ -391,6 +402,47 @@ class EmailTest extends TestCase
                         'tag'
                     ])
                     ->setInReplyToHeader('test@mailersend.com'),
+            ],
+            'with tracking' => [
+                (new EmailParams())
+                    ->setFrom('test@mailersend.com')
+                    ->setFromName('Sender')
+                    ->setReplyTo('reply-to@mailersend.com')
+                    ->setReplyToName('Reply To')
+                    ->setRecipients([
+                        [
+                            'name' => 'Recipient',
+                            'email' => 'recipient@mailersend.com',
+                        ]
+                    ])
+                    ->setSubject('Subject')
+                    ->setHtml('HTML')
+                    ->setText('Text')
+                    ->setTrackClicks(true)
+                    ->setTrackOpens(true)
+                    ->setTrackContent(true)
+            ],
+            'with custom headers' => [
+                (new EmailParams())
+                    ->setFrom('test@mailersend.com')
+                    ->setFromName('Sender')
+                    ->setReplyTo('reply-to@mailersend.com')
+                    ->setReplyToName('Reply To')
+                    ->setRecipients([
+                        [
+                            'name' => 'Recipient',
+                            'email' => 'recipient@mailersend.com',
+                        ]
+                    ])
+                    ->setSubject('Subject')
+                    ->setHtml('HTML')
+                    ->setText('Text')
+                    ->setHeaders([
+                        [
+                          'name' => 'Custom-Header-1',
+                          'value' => 'Value 1',
+                        ]
+                    ])
             ],
         ];
     }
@@ -628,8 +680,33 @@ class EmailTest extends TestCase
                         ]
                     ])
                     ->setSubject('Subject')
-                    ->setHtml('HTML')
             ],
         ];
+    }
+
+    public function test_should_throw_exception_on_rate_limit(): void
+    {
+        $this->expectException(MailerSendRateLimitException::class);
+
+        $responseBody = $this->createMock(StreamInterface::class);
+        $responseBody->method('getContents')->willReturn('{"message": "Too Many Attempts"}');
+
+        $validationErrorResponse = $this->createMock(ResponseInterface::class);
+        $validationErrorResponse->method('getStatusCode')->willReturn(429);
+        $validationErrorResponse->method('getHeaders')->willReturn([]);
+        $this->client->addResponse($validationErrorResponse);
+
+        $emailParams = (new EmailParams())
+            ->setFrom('test@mailersend.com')
+            ->setFromName('Sender')
+            ->setRecipients([
+                [
+                    'wrong recipient'
+                ]
+            ])
+            ->setSubject('Subject')
+            ->setText('TEXT');
+
+        $this->email->send($emailParams);
     }
 }

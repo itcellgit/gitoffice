@@ -2,6 +2,7 @@
 
 namespace MailerSend\Tests\Endpoints;
 
+use Illuminate\Support\Arr;
 use MailerSend\Common\Constants;
 use MailerSend\Exceptions\MailerSendAssertException;
 use MailerSend\Helpers\Builder\OpensAnalyticsParams;
@@ -11,7 +12,6 @@ use MailerSend\Common\HttpLayer;
 use MailerSend\Endpoints\Analytics;
 use MailerSend\Helpers\Builder\ActivityAnalyticsParams;
 use Psr\Http\Message\ResponseInterface;
-use Tightenco\Collect\Support\Arr;
 
 class AnalyticsTest extends TestCase
 {
@@ -54,8 +54,14 @@ class AnalyticsTest extends TestCase
         self::assertEquals($activityAnalyticsParams->getDateFrom(), Arr::get($query, 'date_from'));
         self::assertEquals($activityAnalyticsParams->getDateTo(), Arr::get($query, 'date_to'));
         self::assertEquals($activityAnalyticsParams->getGroupBy(), Arr::get($query, 'group_by'));
-        self::assertEquals(implode(',', $activityAnalyticsParams->getTags()), Arr::get($query, 'tags'));
-        self::assertEquals(implode(',', $activityAnalyticsParams->getEvent()), Arr::get($query, 'event'));
+        self::assertCount(count($activityAnalyticsParams->getTags()), Arr::get($query, 'tags') ?? []);
+        self::assertCount(count($activityAnalyticsParams->getEvent()), Arr::get($query, 'event') ?? []);
+        foreach ($activityAnalyticsParams->getTags() as $key => $tag) {
+            self::assertEquals($tag, Arr::get($query, "tags.$key"));
+        }
+        foreach ($activityAnalyticsParams->getEvent() as $key => $event) {
+            self::assertEquals($event, Arr::get($query, "event.$key"));
+        }
     }
 
     /**
@@ -78,29 +84,29 @@ class AnalyticsTest extends TestCase
         return [
             'basic request' => [
                 (new ActivityAnalyticsParams(100, 101))
-                    ->setEvent(['processed', 'sent']),
+                    ->setEvent(['queued', 'sent']),
             ],
             'complete request' => [
                 (new ActivityAnalyticsParams(100, 101))
                     ->setDomainId('domain_id')
                     ->setGroupBy(Constants::GROUP_BY_DAYS)
                     ->setTags(['tag'])
-                    ->setEvent(['processed', 'sent']),
+                    ->setEvent(['queued', 'sent']),
             ],
             'with domain id' => [
                 (new ActivityAnalyticsParams(100, 101))
                     ->setDomainId('domain_id')
-                    ->setEvent(['processed', 'sent']),
+                    ->setEvent(['queued', 'sent']),
             ],
             'with group by' => [
                 (new ActivityAnalyticsParams(100, 101))
                     ->setGroupBy('days')
-                    ->setEvent(['processed', 'sent']),
+                    ->setEvent(['queued', 'sent']),
             ],
             'with tag' => [
                 (new ActivityAnalyticsParams(100, 101))
                     ->setTags(['tag'])
-                    ->setEvent(['processed', 'sent']),
+                    ->setEvent(['queued', 'sent']),
             ],
         ];
     }
@@ -137,7 +143,10 @@ class AnalyticsTest extends TestCase
         self::assertEquals($opensAnalyticsParams->getDomainId(), Arr::get($query, 'domain_id'));
         self::assertEquals($opensAnalyticsParams->getDateFrom(), Arr::get($query, 'date_from'));
         self::assertEquals($opensAnalyticsParams->getDateTo(), Arr::get($query, 'date_to'));
-        self::assertEquals(implode(',', $opensAnalyticsParams->getTags()), Arr::get($query, 'tags'));
+        self::assertCount(count($opensAnalyticsParams->getTags()), Arr::get($query, 'tags') ?? []);
+        foreach ($opensAnalyticsParams->getTags() as $key => $tag) {
+            self::assertEquals($tag, Arr::get($query, "tags.$key"));
+        }
     }
 
     /**
@@ -163,7 +172,10 @@ class AnalyticsTest extends TestCase
         self::assertEquals($opensAnalyticsParams->getDomainId(), Arr::get($query, 'domain_id'));
         self::assertEquals($opensAnalyticsParams->getDateFrom(), Arr::get($query, 'date_from'));
         self::assertEquals($opensAnalyticsParams->getDateTo(), Arr::get($query, 'date_to'));
-        self::assertEquals(implode(',', $opensAnalyticsParams->getTags()), Arr::get($query, 'tags'));
+        self::assertCount(count($opensAnalyticsParams->getTags()), Arr::get($query, 'tags') ?? []);
+        foreach ($opensAnalyticsParams->getTags() as $key => $tag) {
+            self::assertEquals($tag, Arr::get($query, "tags.$key"));
+        }
     }
 
     /**
@@ -189,7 +201,10 @@ class AnalyticsTest extends TestCase
         self::assertEquals($opensAnalyticsParams->getDomainId(), Arr::get($query, 'domain_id'));
         self::assertEquals($opensAnalyticsParams->getDateFrom(), Arr::get($query, 'date_from'));
         self::assertEquals($opensAnalyticsParams->getDateTo(), Arr::get($query, 'date_to'));
-        self::assertEquals(implode(',', $opensAnalyticsParams->getTags()), Arr::get($query, 'tags'));
+        self::assertCount(count($opensAnalyticsParams->getTags()), Arr::get($query, 'tags') ?? []);
+        foreach ($opensAnalyticsParams->getTags() as $key => $tag) {
+            self::assertEquals($tag, Arr::get($query, "tags.$key"));
+        }
     }
 
     public function validOpensAnalyticsProvider(): array
