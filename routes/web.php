@@ -738,7 +738,10 @@ Route::get('ticket/show/{ticket}', [TicketController::class, 'show'])->name('tic
 Route::post('ticket/{ticket}/reply/store', [ReplyController::class, 'store'])->name('ticket.reply.store');
 
 
-
+Route::get('mssql',function(){
+  $db=DB::connection('sqlsrv')->table('Employees')->get();
+  dd($db);
+});
 //open new page for modal
 //Route::post('ticket/reply', [Replyontroller::class, 'replyForm'])->name('Ticketing.replyticket');
 
