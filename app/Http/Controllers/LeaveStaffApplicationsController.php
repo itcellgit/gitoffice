@@ -161,7 +161,9 @@ class LeaveStaffApplicationsController extends Controller
         $user = Auth::User();
         $staff=staff::where('user_id','=',$user->id)->first();
         $result=$this->validateleave($request,$staff);
+        // $staff_dept = staff::with('departments')->where('user_id','=',$user->id)->first();
 
+        // dd($staff_dept);
       
        // dd($result);
         $status=false;
@@ -511,6 +513,7 @@ class LeaveStaffApplicationsController extends Controller
         //['message' => 'Date clicked: ' . $date]
     }
 
+        //for fetching the leave events to display on click of the event.
     public function fetchmyleaveevents(Request $request){
         $date = $request->input('date');
         //dd($date);
