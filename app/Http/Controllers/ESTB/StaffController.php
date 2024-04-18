@@ -389,7 +389,7 @@ class StaffController extends Controller
         $association_id = $request->input('association_id');
         $department_id = Session::get('deptid');
 
-        // Query to fetch staff associated with the department
+        //Query to fetch staff associated with the department
         $staff = DB::table('staff')
                         ->join('department_staff', 'department_staff.staff_id', '=', 'staff.id')
                         ->join('departments', 'departments.id', '=', 'department_staff.department_id')
@@ -398,7 +398,7 @@ class StaffController extends Controller
                         ->select('departments.*', 'staff.id as staff_id', 'department_id', 'dept_shortname')
                         ->get();
 
-        // Query to fetch staff associated with the association
+        //Query to fetch staff associated with the association
         $staff = DB::table('staff')
                         ->join('association_staff', 'association_staff.staff_id', '=', 'staff.id')
                         ->join('associations', 'associations.id', '=', 'association_staff.association_id')
