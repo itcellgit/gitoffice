@@ -311,7 +311,7 @@ class EgovAdminController extends Controller
          //dd($professional_activity_attendee);
 
 
-         $category_counts = DB::table('professional_activity_attendees')
+        $category_counts = DB::table('professional_activity_attendees')
             ->join('professional_activity_attendee_staff', 'professional_activity_attendee_id', '=', 'professional_activity_attendees.id')
             ->join('staff', 'staff.id', '=', 'professional_activity_attendee_staff.staff_id')
             ->join('department_staff', 'department_staff.staff_id', '=', 'staff.id')

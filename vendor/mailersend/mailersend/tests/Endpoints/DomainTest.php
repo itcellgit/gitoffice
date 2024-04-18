@@ -3,6 +3,7 @@
 namespace MailerSend\Tests\Endpoints;
 
 use Http\Mock\Client;
+use Illuminate\Support\Arr;
 use MailerSend\Common\HttpLayer;
 use MailerSend\Endpoints\Domain;
 use MailerSend\Exceptions\MailerSendAssertException;
@@ -10,7 +11,6 @@ use MailerSend\Helpers\Builder\DomainParams;
 use MailerSend\Helpers\Builder\DomainSettingsParams;
 use MailerSend\Tests\TestCase;
 use Psr\Http\Message\ResponseInterface;
-use Tightenco\Collect\Support\Arr;
 
 class DomainTest extends TestCase
 {
@@ -194,6 +194,8 @@ class DomainTest extends TestCase
         self::assertEquals($domainSettingsParams->getTrackUnsubscribePlain(), Arr::get($request_body, 'track_unsubscribe_plain'));
         self::assertEquals($domainSettingsParams->getCustomTrackingEnabled(), Arr::get($request_body, 'custom_tracking_enabled'));
         self::assertEquals($domainSettingsParams->getCustomTrackingSubdomain(), Arr::get($request_body, 'custom_tracking_subdomain'));
+        self::assertEquals($domainSettingsParams->getPrecedenceBulk(), Arr::get($request_body, 'precedence_bulk'));
+        self::assertEquals($domainSettingsParams->getIgnoreDuplicatedRecipients(), Arr::get($request_body, 'ignore_duplicated_recipients'));
     }
 
     /**
@@ -377,7 +379,9 @@ class DomainTest extends TestCase
                     ->setTrackUnsubscribeHtml('html')
                     ->setTrackUnsubscribePlain('plain')
                     ->setCustomTrackingEnabled(true)
-                    ->setCustomTrackingSubdomain(false),
+                    ->setCustomTrackingSubdomain(false)
+                    ->setPrecedenceBulk(false)
+                    ->setIgnoreDuplicatedRecipients(false),
             ],
             'with send paused' => [
                 (new DomainSettingsParams())
@@ -414,6 +418,14 @@ class DomainTest extends TestCase
             'with custom tracking subdomain' => [
                 (new DomainSettingsParams())
                     ->setCustomTrackingSubdomain(true),
+            ],
+            'with precedence bulk' => [
+                (new DomainSettingsParams())
+                    ->setCustomTrackingSubdomain(true),
+            ],
+            'with ignore duplicated emails' => [
+                (new DomainSettingsParams())
+                    ->setIgnoreDuplicatedRecipients(true),
             ],
         ];
     }

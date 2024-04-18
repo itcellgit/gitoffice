@@ -140,7 +140,7 @@ class DeanrndResearchController extends Controller
                             //->select('copyrights.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
                             ->select(DB::raw('DISTINCT(copyrights.egov_id)'),'copyrights.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
                             ->get();
-                        //  dd($copyrights);
+                            // dd($copyrights);
 
         return view('/Deanrnd/Teaching/research/copyrights',compact(['copyrights']));
     }
@@ -157,8 +157,8 @@ class DeanrndResearchController extends Controller
                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                             ->where('employee_types.employee_type','=','Teaching')
                             //->where('staff.employee_type','=','Teaching')
-                            //->select('general_achievements.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
-                            ->select(DB::raw('DISTINCT(general_achievements.egov_id)'),'general_achievements.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
+                            ->select('general_achievements.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
+                            //->select(DB::raw('DISTINCT(general_achievements.egov_id)'),'general_achievements.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
                             ->get();
 
 

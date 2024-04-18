@@ -279,8 +279,8 @@ class EgovResearchController extends Controller
                             ->where('employee_types.employee_type','=','Teaching')
                            // ->where('staff.employee_type','=','Teaching')
                             ->where('department_id','=',$department_id)
-                            //->select('general_achievements.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
-                            ->select(DB::raw('DISTINCT(general_achievements.egov_id)'),'general_achievements.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
+                            ->select('general_achievements.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
+                            //->select(DB::raw('DISTINCT(general_achievements.egov_id)'),'general_achievements.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
                             ->get();
 
 
