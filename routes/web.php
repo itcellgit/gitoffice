@@ -142,7 +142,7 @@ use App\Http\Controllers\LeaveStaffApplicationsController;
 use App\Http\Controllers\grievience\ExamOfficeController;
 
 
-
+use App\Http\Controllers\MSSqlController;
 /*
 
 |--------------------------------------------------------------------------
@@ -736,7 +736,6 @@ Route::delete('ticket/destroy/{ticket}',[TicketController::class, 'destroy'])->n
 Route::patch('ticket/update/avatar/{ticket}', [TicketController::class, 'update'])->name('ticket.update.avatar');
 Route::get('ticket/show/{ticket}', [TicketController::class, 'show'])->name('ticket.show');
 Route::post('ticket/{ticket}/reply/store', [ReplyController::class, 'store'])->name('ticket.reply.store');
-
 
 Route::get('mssql',function(){
   $db=DB::connection('sqlsrv')->table('Employees')->get();

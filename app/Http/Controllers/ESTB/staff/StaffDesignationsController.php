@@ -1410,15 +1410,12 @@ public function update_additional_desig(Request $request, staff $staff, $design_
         //when closing an additional designation the non-vacational leaves must be made inactive
         // and vacational leaves must be added.
                 $this->create_vacational_leaves($request,$staff,$design_id);
-
-          // $dstatus='inactive';
-
+                $design->pivot->end_date=$request->end_date;
+                //mark the additional designation status as inactive.
+              //  $design->pivot->status='inactive';
 
         }
-        else
-        {
-            $dstatus='active';
-        }
+
         $design->pivot->designation_id=$request->designation_id;
         $design->pivot->start_date=$request->start_date;
         $design->pivot->dept_id=$request->dept_id;
@@ -1439,11 +1436,6 @@ public function update_additional_desig(Request $request, staff $staff, $design_
 //Then create vacational leaves.  Which also requires computing of fracational vacational EL's.
 public function create_vacational_leaves(request $request,staff $staff,$design_id)
 {
-    $staff_vacational_leaves=$staff->with(['leave_staff_entitlements'=>function($q){
-        $q->where('leave_staff_entitlement.status','active')
-        ->where('leave_staff_entitlement.year','2024');
-    }])->get();
-    dd($staff_vacational_leaves);
     $check_staff_additional_designation=staff::with(['designations'=>function($q){
         $q->where('isvacational','Non-vacational')
         ->where('isadditional',1)
@@ -1455,13 +1447,14 @@ public function create_vacational_leaves(request $request,staff $staff,$design_i
     //closing additional designation requires closing non-vacational leaves are creating vacational leaves.
     if(count($check_staff_additional_designation->designations)==1)
     {
-        $year=Carbon::now()->year;
-
+        $end_year=Carbon::parse($request->end_date)->year;
         //if staff has only one additional designation then update the non-vacational leaves entitlements
         //and create vactional leave entitlements
         //if the count is more than one then the staff has two or more non-vacational designations hence
         //no change is leaves. So dont do any thing
-        $staff_non_vacational_leaves=$staff->active_leave_staff_entitlements()->get();
+        $staff_non_vacational_leaves=leave::join('leave_staff_entitlements','leave_staff_entitlements.leave_id','=','leaves.id')->where('staff_id',$staff->id)
+            ->where('leave_staff_entitlements.status','active')
+            ->where('year',$end_year)->get();
 
         $vacational_leaves=leave::with(['leave_rules'=>function($q){
                                         $q->where('status','active');
@@ -1473,11 +1466,13 @@ public function create_vacational_leaves(request $request,staff $staff,$design_i
 
         foreach($vacational_leaves as $vl)
         {
+
             foreach($staff_non_vacational_leaves as $snvl)
             {
 
                 if($vl->shortname==$snvl->shortname)
                 {
+
                     //if el entitlement is given for this year then update it for the no. of days the staff
                     //was non_vacational and create fractional vacational EL entitlement for the number of days remaining in the current year.
                     //else only create fractional vacational EL entitlement for the number of days remaining in the current year
@@ -1485,7 +1480,16 @@ public function create_vacational_leaves(request $request,staff $staff,$design_i
                     $end_date=Carbon::parse($request->end_date);
                     if($snvl->entitled_curr_year>0 && $snvl->shortname=="EL")
                     {
-                        //date at which the non-vacational EL entitlement was given
+                        //date at which the non-vacational EL entitlement was given.
+                        // non-vacational EL are given on the date of the additional designation start_date
+                        //example if a staff is assigned hod on 16th june 2022, then every year 16th june
+                        //non-vacational EL entitlements is given from 2023 year onwards.
+                        //So if the staff additional designation is getting closed on 25th Aug 2024
+                        //then we need to check how many days the staff is on non-vacational post from
+                        //june 16th 2024 to 25th aug 2024. That is 71 days the staff was on non-vacational
+                        //so non-vacational leaves for 71 days out of 365 days must be given as EL entitlement.
+                        //And the remaining days of 365 days, the staff is going to be vacational staff
+                        //which means 294 days the staff is going to get vacational ELs
                         $entitlment_given_date=Carbon::parse($snvl->pivot->wef);
                         $diffdays=$entitlment_given_date->diffInDays($end_date);
                         $snvl->pivot->entitled_curr_year=ceil(($diffdays*$snvl->max_entitlement)/365);
@@ -1496,10 +1500,30 @@ public function create_vacational_leaves(request $request,staff $staff,$design_i
                             if($vl->shortname=='EL')
                             {
                                 $vacational_EL_entitlement=$vl->max_entitlement-floor(($diffdays*$vl->max_entitlement)/365);
-                                dd($vl);
                                 if($vl->leave_rule->carry_forwardable=='Yes')
                                 {
-                                    $add_staff_vacational_leave=$staff->leave_staff_entitlement()->attach($vl->id);
+                                    //fetch the staff vacational leaves that the staff was entitled after with_effect_from carry_forwardable date
+                                    $previous_vacational_leaves=leave_staff_entitlement::where('staff_id',$staff->id)
+                                                                ->where('wef','>=',$vl->leave_rule->cf_wef)
+                                                                ->where('leave_id',$vl->id)
+                                                                ->orderBy('year','desc')->first();
+                                    //check if the additional designation was closed at the end of the previous year and a new year has began.
+                                    //if new year has began, then leave entitlements for the new year will be generated on the 28th of Dec.
+                                    //hence, we need to delete the current year entitlements and add the vacational entitlements.
+                                    $curr_year=Carbon::now()->year;
+                                    if($curr_year>$end_year)
+                                    {
+                                        //if curr_year is > than end_year ==>that the additional designation was closed in the end days of previous year.
+                                        //so delete the entries for the current year
+
+
+                                    }
+                                    if($previous_vacational_leaves!=null)
+                                    {
+                                       //$curr_year_el_entitlment=
+                                    }
+
+
                                 }
 
                             }

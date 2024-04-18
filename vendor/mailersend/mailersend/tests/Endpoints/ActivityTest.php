@@ -3,13 +3,13 @@
 namespace MailerSend\Tests\Endpoints;
 
 use Http\Mock\Client;
+use Illuminate\Support\Arr;
 use MailerSend\Common\HttpLayer;
 use MailerSend\Endpoints\Activity;
 use MailerSend\Exceptions\MailerSendAssertException;
 use MailerSend\Helpers\Builder\ActivityParams;
 use MailerSend\Tests\TestCase;
 use Psr\Http\Message\ResponseInterface;
-use Tightenco\Collect\Support\Arr;
 
 class ActivityTest extends TestCase
 {
@@ -55,7 +55,7 @@ class ActivityTest extends TestCase
         self::assertEquals($activityParams->getLimit(), Arr::get($query, 'limit'));
         self::assertEquals($activityParams->getDateFrom(), Arr::get($query, 'date_from'));
         self::assertEquals($activityParams->getDateTo(), Arr::get($query, 'date_to'));
-        self::assertEquals(implode(',', $activityParams->getEvent()), Arr::get($query, 'event'));
+        self::assertCount(count($activityParams->getEvent()), Arr::get($query, 'event') ?? []);
     }
 
     /**
@@ -73,6 +73,18 @@ class ActivityTest extends TestCase
             ->willReturn([]);
 
         (new Activity($httpLayer, self::OPTIONS))->getAll($domainId, $activityParams);
+    }
+
+    /**
+     * @throws MailerSendAssertException
+     * @throws \JsonException
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
+    public function test_find_requires_activity_id(): void
+    {
+        $this->expectException(MailerSendAssertException::class);
+
+        $this->activity->find('');
     }
 
     public function validActivityParamsProvider(): array
@@ -96,7 +108,7 @@ class ActivityTest extends TestCase
             ],
             'with events' => [
                 (new ActivityParams())
-                    ->setEvent(['processed', 'sent']),
+                    ->setEvent(['queued', 'sent']),
             ],
             'with all' => [
                 (new ActivityParams())
@@ -104,7 +116,7 @@ class ActivityTest extends TestCase
                     ->setLimit(15)
                     ->setDateFrom(1623073576)
                     ->setDateTo(1623074976)
-                    ->setEvent(['processed', 'sent']),
+                    ->setEvent(['queued', 'sent']),
             ]
         ];
     }
@@ -136,7 +148,7 @@ class ActivityTest extends TestCase
             'event is not a possible type' => [
                 'domainId',
                 (new ActivityParams())
-                    ->setEvent(['invalid_type', 'processed']),
+                    ->setEvent(['invalid_type', 'queued']),
             ],
         ];
     }

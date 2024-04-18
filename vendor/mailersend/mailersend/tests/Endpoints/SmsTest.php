@@ -3,16 +3,14 @@
 namespace MailerSend\Tests\Endpoints;
 
 use Http\Mock\Client;
+use Illuminate\Support\Arr;
 use MailerSend\Common\HttpLayer;
 use MailerSend\Endpoints\Sms;
 use MailerSend\Exceptions\MailerSendAssertException;
-use MailerSend\Exceptions\MailerSendValidationException;
 use MailerSend\Helpers\Builder\SmsParams;
 use MailerSend\Helpers\Builder\SmsPersonalization;
 use MailerSend\Tests\TestCase;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
-use Tightenco\Collect\Support\Arr;
 
 class SmsTest extends TestCase
 {
@@ -60,7 +58,7 @@ class SmsTest extends TestCase
         self::assertCount(count($smsParams->getPersonalization()), Arr::get($request_body, 'personalization') ?? []);
 
         foreach ($smsParams->getPersonalization() as $key => $personalization) {
-            $personalization = ! is_array($personalization) ? $personalization->toArray() : $personalization;
+            $personalization = !is_array($personalization) ? $personalization->toArray() : $personalization;
             self::assertEquals($personalization['phone_number'], Arr::get($request_body, "personalization.$key.phone_number"));
             foreach ($personalization['data'] as $variableKey => $variableValue) {
                 self::assertEquals($personalization['data'][$variableKey], Arr::get($request_body, "personalization.$key.data.$variableKey"));
