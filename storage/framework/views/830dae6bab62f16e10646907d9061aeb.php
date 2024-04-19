@@ -659,7 +659,7 @@
                                     //$('#leave_form').html('<h1>Sorry ! Not Allowed to apply leave</h1>');
                                     $('#leave_form').hide();
                                     $('#leave_apply_btn').hide();
-                                    $('#msg').html('<h1>Sorry ! Not Allowed to apply leave</h1>');
+                                    $('#msg').html('<h1>Sorry ! You have Already applied leave</h1>');
                                     
                                  }else{
                                     $('#leave_form').show();
@@ -681,7 +681,7 @@
                         Clickeddate = info.event.start;
                    
                         $('#view_leave_modal').trigger('click');
-                        alert('view modal active');
+                        //alert('view modal active');
                         var clicked_date = Clickeddate.getFullYear()+"-"+(Clickeddate.getMonth()+1)+"-"+Clickeddate.getDate();
                         //     $('#view_leave').css('z-index', 9999);
                         //      // change the border color just for fun

@@ -659,7 +659,7 @@
                                     //$('#leave_form').html('<h1>Sorry ! Not Allowed to apply leave</h1>');
                                     $('#leave_form').hide();
                                     $('#leave_apply_btn').hide();
-                                    $('#msg').html('<h1>Sorry ! Not Allowed to apply leave</h1>');
+                                    $('#msg').html('<h1>Sorry ! You have Already applied leave</h1>');
                                     
                                  }else{
                                     $('#leave_form').show();
