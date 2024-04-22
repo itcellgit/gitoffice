@@ -1585,7 +1585,7 @@ public function create_vacational_leaves(request $request,staff $staff,$design_i
             // $no_of_days = floatval($startdate->diffInDays($request->startdate));
             // if ($vl->shortname == 'EL')
             // {
-            //     $leave_entitlement = round($no_of_days * $vl->max_entitlement) / 365;
+            //     $leave_ entitlement = round($no_of_days * $vl->max_entitlement) / 365;
             // }elseif ($vl->shortname == 'CL'){
             //     $leave_entitlement = round($no_of_days * $vl->max_entitlement) / 365;
             // }
