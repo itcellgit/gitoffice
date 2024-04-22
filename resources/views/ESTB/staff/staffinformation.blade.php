@@ -21,6 +21,27 @@
                     <div class="main-content">
 
                         <!-- Page Header -->
+                         <!-- Page Header -->
+                         <div class="block justify-between page-header sm:flex">
+                            <div>
+                                <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium"> Establishment Section</h3>
+                            </div>
+                            <ol class="flex items-center whitespace-nowrap min-w-0">
+                                <li class="text-sm">
+                                    <a class="flex items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('ESTB.staff')}}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+                                            <path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H18C18 18.6863 15.3137 16 12 16C8.68629 16 6 18.6863 6 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11Z"></path>
+                                        </svg>
+                                        Staff
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+                                            <path d="M12.1717 12.0005L9.34326 9.17203L10.7575 7.75781L15.0001 12.0005L10.7575 16.2431L9.34326 14.8289L12.1717 12.0005Z"></path>
+                                        </svg>
+                                    </a>
+
+                                </li>
+                            </ol>
+                        </div>
+                        <!-- Page Header Close -->
 
                         <!-- Page Header Close -->
                         <div class="grid grid-cols-12 gap-x-6">
@@ -81,6 +102,8 @@
                                                         <th scope="col" class="dark:text-white/80 font-bold ">Permanant Address</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">Emergency No</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">Emergency Name</th>
+                                                        <th scope="col" class="dark:text-white/80 font-bold ">Action</th>
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -118,6 +141,20 @@
                                                                 <td>{{ $st->permanent_address }}</td>
                                                                 <td>{{ $st->emergency_no }}</td>
                                                                 <td>{{ $st->emergency_name }}</td>
+                                                                <td class="font-medium space-x-2 rtl:space-x-reverse">
+
+                                                                    <a href="{{ route('ESTB.staff.update') }}"
+                                                                        data-hs-overlay="#publication_edit_modal{{$i}}"
+                                                                        class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary">
+                                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M16.7574 2.99666L14.7574 4.99666H5V18.9967H19V9.2393L21 7.2393V19.9967C21 20.5489 20.5523 20.9967 20 20.9967H4C3.44772 20.9967 3 20.5489 3 19.9967V3.99666C3 3.44438 3.44772 2.99666 4 2.99666H16.7574ZM20.4853 2.09717L21.8995 3.51138L12.7071 12.7038L11.2954 12.7062L11.2929 11.2896L20.4853 2.09717Z"></path></svg>
+                                                                         <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700" role="tooltip">
+                                                                             View
+                                                                         </span>
+                                                                     </a>
+
+
+
+                                                                </td>
                                                             </tr>
                                                         @endforeach
                                                 </tbody>
@@ -158,16 +195,12 @@
 
         <script>
 
-            $(document).ready(function () {
+            $(document).ready(function ()
+            {
 
                 new DataTable('#staff_information');
-
                 $('#exportToExcel').on('click', function () {
                     var table = $('#staff_information').clone();
-
-                    // table.find('td:last-child').remove();
-                    // table.find('thead tr th:last-child').remove();
-                    // table.find('td').removeAttr('colspan');
 
                     // Ensure each cell has proper formatting
                     table.find('td').css({

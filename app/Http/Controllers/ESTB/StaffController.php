@@ -343,7 +343,7 @@ class StaffController extends Controller
 
 
 
-    //Code for filter the staff data from table
+    //Code for filter the staff data from table Vc patil
 
     // public function filterstaff_information( Request $request )
     // {
@@ -374,10 +374,14 @@ class StaffController extends Controller
     //                     })
     //                     ->where('association_staff.status','active')
     //                     ->join('religions','religions.id','=','staff.religion_id')
-
     //                     ->where('religions.id',$religions)
+    //                     ->where('gender', $gender)
 
-    //                    ->where('gender', $gender)
+    //                     ->join('departments', 'departments.id', '=', 'department_staff.department_id')
+    //                     ->join('associations', 'associations.id', '=', 'association_staff.association_id')
+    //                     ->join('users', 'users.id', '=', 'staff.user_id')
+
+
     //                     //->select('staff.*',ept_shortname','associations.asso_name','religions.religion_name','castecategories.caste_name','gender')
     //                     ->get();
     //                     //dd($staff);
@@ -386,7 +390,9 @@ class StaffController extends Controller
     //     return view('ESTB/staff/staffinformation',compact('staff'));
     // }
 
-    //code included in side the if statement
+
+
+    //code included in side the if statement RYP
     public function filterstaff_information(Request $request)
     {
         if ($request->has('associations_id') && $request->has('departments_id') && $request->has('castecategory_id') && $request->has('religion_id') && $request->has('gender')) {
@@ -416,25 +422,78 @@ class StaffController extends Controller
                             ->where('religions.id', $religions)
                             ->where('gender', $gender)
 
-                            //To Displayb Department name and association And Religion
+                            //To Display Department name and association And Religion
                             ->join('departments', 'departments.id', '=', 'department_staff.department_id')
                             ->join('associations', 'associations.id', '=', 'association_staff.association_id')
-                            ->join('users', 'users.id', '=', 'staff.user_id')
-                            ->select('staff.*', 'departments.dept_shortname', 'associations.asso_name','religions.religion_name','users.role')
-                            ->distinct()
-                            ->with('departments')
-                            ->get();
+                            ->leftJoin('users', 'users.id', '=', 'staff.user_id')
 
+                            // ->join('employee_types', 'employee_types.staff_id', '=', 'staff.user_id')
+                            // ->where('department_staff.staff_id','employee_types.staff_id')
+                            // ->where('association_staff.staff_id','employee_types.staff_id')
+
+                            // ->select('staff.*', 'departments.dept_shortname', 'associations.asso_name','religions.religion_name','employee_types.employee_type')
+
+                            ->select(DB::raw('DISTINCT(staff.id)'),'staff.*','departments.dept_shortname', 'associations.asso_name','religions.religion_name','users.role',)
+
+                            //->distinct()
+                            //->with('departments')
+                            ->get();
                             //dd($staff);
-                            ///dd($staff->toArray());
+
 
             return view('ESTB/staff/staffinformation', compact('staff'));
         } else {
 
             //return response()->json(['error' => 'Result Not Found'], 404);
-            return redirect('/ESTB/staff/staffinformation');
+            return redirect('/ESTB/staff');
         }
     }
+
+
+
+
+
+    // public function filterstaff_information(Request $request)
+    // {
+    //     if ($request->has('associations_id') && $request->has('departments_id') && $request->has('castecategory_id') && $request->has('religion_id') && $request->has('gender')) {
+    //         $association_id = $request->input('associations_id');
+    //         $department_id = $request->input('departments_id');
+    //         $castecategories = $request->input('castecategory_id');
+    //         $religions = $request->input('religion_id');
+    //         $gender = $request->input('gender');
+
+    //         $staff = staff::join('department_staff', 'department_staff.staff_id', '=', 'staff.id')
+    //             ->whereIn('department_staff.department_id', function ($q) use ($department_id) {
+    //                 $q->select('id')
+    //                     ->from('departments')
+    //                     ->where('id', $department_id);
+    //             })
+    //             ->where('department_staff.status', 'active')
+    //             ->join('association_staff', 'association_staff.staff_id', '=', 'staff.id')
+    //             ->whereIn('association_staff.association_id', function ($q) use ($association_id) {
+    //                 $q->select('id')
+    //                     ->from('associations')
+    //                     ->where('id', $association_id);
+    //             })
+    //             ->where('association_staff.status', 'active')
+    //             ->join('religions', 'religions.id', '=', 'staff.religion_id')
+    //             ->where('religions.id', $religions)
+    //             ->where('gender', $gender)
+    //             ->join('departments', 'departments.id', '=', 'department_staff.department_id')
+    //             ->join('associations', 'associations.id', '=', 'association_staff.association_id')
+    //             ->join('users', 'users.id', '=', 'staff.user_id')
+    //             ->leftJoin('employee_types', 'employee_types.staff_id', '=', 'staff.id')
+    //             ->select(DB::raw('DISTINCT(staff.id)'), 'staff.*', 'departments.dept_shortname', 'associations.asso_name', 'religions.religion_name', 'users.role', 'employee_types.employee_type')
+    //             ->get();
+
+    //         return view('ESTB/staff/staffinformation', compact('staff'));
+    //     } else {
+    //         return redirect('/ESTB/staff');
+    //     }
+    // }
+
+
+
 
 
 }
