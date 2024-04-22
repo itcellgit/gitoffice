@@ -1805,13 +1805,27 @@
                             $('#con_att_noofdaysError').text('Choose a proper from date and to date.');
                             flag = true;
                         }
-                        if(con_att_title == ''){
-                            $('#con_att_titleError').text('title Name is missing');
+
+                        // if(con_att_title == ''){
+                        //     $('#con_att_titleError').text('title Name is missing');
+                        //     flag = true;
+                        // }else if (!/^[a-zA-Z\s]+$/.test(con_att_title.trim())){
+                        //     $('#con_att_titleError').text('Please fill the correct value');
+                        //     flag = true;
+                        // }
+
+                        if (con_att_title === '') {
+                            $('#con_att_titleError').text('Title Name is missing');
                             flag = true;
-                        }else if (!/^[a-zA-Z\s]+$/.test(con_att_title.trim())){
-                            $('#con_att_titleError').text('Please fill the correct value');
+                        } else if (!/^[a-zA-Z\s,./]*$/.test(con_att_title.trim())) {
+                            $('#con_att_titleError').text('Please fill in the correct value');
                             flag = true;
                         }
+
+
+
+
+
                         if(con_att_place == ''){
                             $('#con_att_palceError').text('Place Name is missing');
                             flag = true;

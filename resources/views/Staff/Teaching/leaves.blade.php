@@ -7,8 +7,8 @@
 
         <!-- FLATPICKR CSS -->
         <link rel="stylesheet" href="{{asset('build/assets/libs/flatpickr/flatpickr.min.css')}}">
-       
-        
+
+
     <!-- FULLCALENDAR CSS -->
     <link rel="stylesheet" href="{{asset('build/assets/libs/fullcalendar/main.min.css')}}">
     <script>
@@ -38,26 +38,46 @@
                                     <i class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
                                 </a>
                                 </li>
-                                
-                                
+
+
                             </ol>
                         </div>
                         <!-- Page Header Close -->
-                        @if(session('status'))
-                                @if (session('status') == 1)
-                                <div class='bg-white dark:bg-bgdark border border-success alert text-success' role='alert'>
-                                    <span class='font-bold'>Result</span> Successful
-                                </div>
-                                @elseif(session('status') == 0)
-                                <div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
-                                    <span class='font-bold'>Result</span> Error  transaction
-                                </div>
-                            
+
+
+                        @if(session('return_data'))
+                                @if (session('return_data')['result'] == "success")
+                                    <div class='bg-white dark:bg-bgdark border border-success alert text-success' role='alert'>
+                                        <span class='font-bold'>Result</span> Successful
+                                    </div>
+                                    @php
+                                        Illuminate\Support\Facades\Session::forget('status');
+                                        header("refresh: 3");
+                                    @endphp
+                                @else
+                                    <div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
+                                        <span class='font-bold'>Result</span> {{session('return_data')['result']}}
+                                    </div>
+                                    <input type="hidden" id="start_date" value="{{session('return_data')['start_date']}}"/>
+                                    <input type="hidden" id="leave_type" value="{{session('return_data')['leave_type']}}"/>
+                                    <input type="hidden" id="reason" value="{{session('return_data')['reason']}}"/>
+                                    <input type="hidden" id="alternative" value="{{session('return_data')['alternative']}}"/>
+
+                                    <script>
+                                      $(document).ready(function(){
+                                        $('#leave_apply_modal').trigger('click');//css('disply','block');
+                                        $('#type').val($('#leave_type').val());
+                                        $('#from_date').val($('#start_date').val());
+                                        $('#leave_reason').val($('#reason').val());
+                                        //alert();
+                                        $('#alternate').val($('#alternative').val());
+                                      });
+
+
+                                    </script>
+
                                 @endif
-                                @php 
-                                    Illuminate\Support\Facades\Session::forget('status');  
-                                    header("refresh: 3"); 
-                                @endphp
+
                             @endif
                     </div>
                     <div class="grid grid-cols-12 gap-x-6">
@@ -66,11 +86,11 @@
                                 <div class="box-body">
                                         <h1 class="text-primary font-bold">My Leave Statistics</h1>
                                         <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto pb-6">
-                                            
+
                                             <table class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                                 <thead class="bg-gray-50 dark:bg-black/20">
-                                                    
-                                                   
+
+
                                                     <tr class="">
                                                         <th>Titles</th>
                                                         @foreach ($staff_leave_entitlements as $l_types)
@@ -79,15 +99,15 @@
                                                         <th>DL-GIT</th>
                                                         <th>DL-VTU</th>
                                                     </tr>
-                                                   
+
                                                 </thead>
                                                 <tbody>
                                                     <tr class="">
                                                         <th>Entitled</th>
                                                         @foreach ($staff_leave_entitlements as $staff_leave)
-                                                            
+
                                                                     <td>{{$staff_leave->entitled_curr_year}}</td>
-                                                               
+
                                                         @endforeach
                                                         <td></td>
                                                         <td></td>
@@ -95,29 +115,29 @@
                                                     <tr class="">
                                                         <th>Availed</th>
                                                         @foreach ($staff_leave_entitlements as $staff_leave)
-                                                            
+
                                                                     <td>{{$staff_leave->consumed_curr_year}}</td>
-                                                               
+
                                                         @endforeach
                                                     </tr>
                                                     <tr class="">
                                                         <th>Balance</th>
-                                                        
+
                                                     </tr>
                                                 </tbody>
-                                            </table>    
-                                        </div>       
+                                            </table>
+                                        </div>
                                 </div>
                             </div>
                         </div>
-                    </div>           
+                    </div>
                     <!-- Start::main-content -->
                     <div class="grid grid-cols-12 gap-x-6">
                         <div class="col-span-12 xl:col-span-12">
                             <div class="box">
-                                <div class="box-body">                
+                                <div class="box-body">
                                     <div class="box border-0 shadow-none mb-0">
-                                       
+
                                         <div class="box-body">
                                             <button data-hs-overlay="#add_leaveform" class="hs-dropdown-toggle ti-btn ti-btn-primary hidden" id="leave_apply_modal">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M11 6V14H19C19 18.4183 15.4183 22 11 22C6.58172 22 3 18.4183 3 14C3 9.66509 6.58 6 11 6ZM21 2V4L15.6726 10H21V12H13V10L18.3256 4H13V2H21Z"></path></svg>
@@ -148,17 +168,17 @@
                                                                 <table class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                                                     <thead class="bg-gray-50 dark:bg-black/20">
                                                                         <tr class="">
-                                                                            
+
                                                                             <th scope="col" class="dark:text-white/80 font-bold">Leave Type</th>
                                                                             <th scope="col" class="dark:text-white/80 font-bold">Event</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody id="holidayrh_list">
-                                                                    
+
                                                                     </tbody>
-                                                                </table>  
-                                                            </div> 
-                                                            
+                                                                </table>
+                                                            </div>
+
                                                             {{-- for drawing a horrizontal line to seperate out the leave from and leave list --}}
                                                             <div class="relative flex py-5 items-center">
                                                                 <div class="flex-grow border-t border-blue-400"></div>
@@ -166,29 +186,38 @@
                                                                 <div class="flex-grow border-t border-blue-400"></div>
                                                             </div>
                                                             {{-- Horrizontal row ends --}}
-                                                            <form  action="{{route('Teaching.leaves.apply',$staff->id)}}" method="post"> 
-                                                                @csrf  
-                                                                
+                                                            <div class="" id="result_notification">
+                                                                @if(session('return_data'))
+                                                                    <div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
+                                                                        <span class='font-bold'>Result</span> {{session('return_data')['result']}}
+                                                                    </div>
+
+
+                                                                @endif
+                                                            </div>
+                                                            <form  action="{{route('Teaching.leaves.apply',$staff->id)}}" method="post">
+                                                                @csrf
+
                                                                 <div class="leave_form_div" id="leave_form" >
-                                                                     
+
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pt-6 pb-6">
-                                                                        
+
                                                                         <div class="max-w-sm space-y-2 pb-6 ">
                                                                             <label for="" class="ti-form-label font-bold">Leave Type:<span class="text-red-500">*</span></label>
                                                                             <select class="ti-form-select" name="type" id="type" required>
                                                                                 <option value="#">Choose Leave Type</option>
-                                                                                
+
                                                                                 @foreach ($leaves as $l)
                                                                                     <option value="{{$l->leave_id}}">{{$l->shortname}}</option>
                                                                                 @endforeach
-                                                                                
+
                                                                             </select>
                                                                         </div>
                                                                         <div id="cl_type_block">
-                                                                            
+
                                                                             <label for="cl_morning" class="ti-form-label font-bold">Select CL type</label>
                                                                             <div class="flex">
-    
+
                                                                                 <div class="flex items-center me-4 ">
                                                                                     <input id="cl_morning" type="radio" value="Morning" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type">
                                                                                     <label for="cl_morning" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">CL-Morning</label>
@@ -201,11 +230,11 @@
                                                                                     <input checked id="cl" type="radio" value="Full" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type">
                                                                                     <label for="cl" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Full Day CL</label>
                                                                                 </div>
-    
+
                                                                             </div>
                                                                         </div>
-                                                                    
-                                                                        
+
+
                                                                     </div>
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div date-rangepicker class="flex max-w-sm space-y-3 pb-6">
@@ -214,7 +243,7 @@
                                                                                     <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                                                     class="ri ri-calendar-line"></i></span>
                                                                                 </div>
-                                                    
+
                                                                                 <input type="text" name="from_date"
                                                                                     class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
                                                                                     id="from_date" required placeholder="Choose date" >
@@ -225,7 +254,7 @@
                                                                                 <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                                                 class="ri ri-calendar-line"></i></span>
                                                                             </div>
-                                                
+
                                                                             <input  type="text" name="to_date"
                                                                                 class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
                                                                                     id="to_date" required placeholder="Choose date">
@@ -233,21 +262,21 @@
                                                                     </div>
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-4 lg:space-y-0">
                                                                         <div class="flex max-w-sm space-y-4 pb-6 content-center">
-                                                                            <p class="font-bold">No. of Days :</p> 
+                                                                            <p class="font-bold">No. of Days :</p>
                                                                             <input type="text" class="ti-form-input text-green-500" required name="no_of_days" id="no_of_days_count" readonly value=""/>
                                                                         </div>
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Leave Reason:<span class="text-red-500">*</span></label>
-                                                                            <textarea class="ti-form-input" required name="leave_reason" placeholder="Leave Reason"></textarea>
+                                                                            <textarea class="ti-form-input" required name="leave_reason" id="leave_reason" placeholder="Leave Reason"></textarea>
                                                                         </div>
                                                                     </div>
-                                                                    
+
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Alternate:</label>
                                                                             <select class="ti-form-select" name="alternate" id="alternate" required>
                                                                                 <option value="#">Choose Alternate</option>
-                                                                                
+
                                                                                 @foreach ($dept_staff as $depts)
                                                                                 <optgroup label="{{$depts->dept_name}}">
                                                                                     @foreach ($depts->staff as $dstaff)
@@ -261,7 +290,7 @@
                                                                             <label for="" class="ti-form-label font-bold">Additional Alternate:</label>
                                                                             <select class="ti-form-select" name="additional_alternate" id="add_alternate" required>
                                                                                 <option value="#">Choose an Alternate</option>
-                                                                                
+
                                                                                 @foreach ($dept_staff as $depts)
                                                                                 <optgroup label="{{$depts->dept_name}}">
                                                                                     @foreach ($depts->staff as $dstaff)
@@ -280,21 +309,21 @@
                                                                 data-hs-overlay="#add_leaveform">
                                                                 Cancel
                                                             </button>
-                                                                            
+
                                                             <input type="submit" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" id="leave_apply_btn" value="Apply"/>
-                                                                        
+
                                                         </div>
-                                                    </form> 
-                                                            
+                                                    </form>
+
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            
-                                            <div id="calendar2"></div>
-                                                        
 
-                                        </div> 
+                                            <div id="calendar2"></div>
+
+
+                                        </div>
                                         <!-- Calender for leaves ends here-->
                                         <!--The view Modal starts-->
                                         <button data-hs-overlay="#view_leave" class="hs-dropdown-toggle ti-btn ti-btn-primary hidden" id="view_leave_modal">
@@ -326,7 +355,7 @@
                                                             <table class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                                                 <thead class="bg-gray-50 dark:bg-black/20">
                                                                     <tr class="">
-                                                                        
+
                                                                         <th scope="col" class="dark:text-white/80 font-bold">Application Number</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">Leave Type</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">From Date</th>
@@ -340,16 +369,16 @@
                                                                 <tbody id="leave_application_list">
 
                                                                 </tbody>
-                                                            </table>  
-                                                        </div> 
-                                                    </div>  
+                                                            </table>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div> 
+                                        </div>
 
                                     </div>
 
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -379,7 +408,7 @@
          <script src="{{asset('build/assets/libs/fullcalendar/main.min.js')}}"></script>
          @vite('resources/assets/js/fullcalendar.js')
 
-        
+
         <script
         src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
@@ -392,22 +421,22 @@
                 }
             });
         </script>
-        
+
         <script>
             //import { formatDate } from '@fullcalendar/core'
             $(document).ready(function(){
                //alert('Hello from jquery');
-               
+
                $('#cl_type_block').hide();
                new DataTable('#leaves');
                     //
-               
+
             });
             $("input[name='cl_type']").change(function(e){
                 if($(this).val() == 'Morning' || $(this).val()=='Afternoon') {
                     $('#to_date').val($('#from_date').val());
-                    
-                
+
+
                 }
             });
             $(document).on('change','#type',function(){
@@ -422,7 +451,7 @@
             });
                 //for generating the no of days between the leave dates.
             $(document).on('change', '#to_date',function(){
-                       
+
                  var from_date = $('#from_date').val();
                  var to_date = $('#to_date').val();
                    // alert(from_date+'-'+to_date);
@@ -430,7 +459,7 @@
 
                         if(from_date == to_date){
                             //$('.no_of_days_count').removeClass('border border-red-500 focus:border-blue-500');
-                            
+
                             $('#no_of_days_count').val(1);
                         }else if(from_date > to_date){
                             $('#no_of_days_count').val(0);
@@ -439,29 +468,29 @@
                             $('#to_date').focus();
                         }else{
                             //$('.no_of_days_count').removeClass('border border-red-500 focus:border-blue-500');
-                            
-                            var startDay = new Date(from_date);  
-                            var endDay = new Date(to_date);  
+
+                            var startDay = new Date(from_date);
+                            var endDay = new Date(to_date);
 
                             //alert(startDay+'-'+endDay);
 
-                            // Determine the time difference between two dates     
-                            var millisBetween = endDay.getTime() - startDay.getTime();  
-                            
-                            // Determine the number of days between two dates  
+                            // Determine the time difference between two dates
+                            var millisBetween = endDay.getTime() - startDay.getTime();
+
+                            // Determine the number of days between two dates
                             var days = millisBetween / (1000 * 3600 * 24);
-                            days=days+1;  
+                            days=days+1;
                             $('#no_of_days_count').val(days);
                         }
-                        
+
                     }else{
                         $('#from_date').focus();
                         alert('Please fill the from date');
                     }
-                            
+
             });
 
-            
+
              //Calender javscript Starts here.
             document.addEventListener('DOMContentLoaded', function() {
                 var TileColor = '';
@@ -477,7 +506,7 @@
                         url: base_url+'/holidayrhevents',
                         method: 'GET',
                         success:function(data){
-                           
+
                         },
                         failure: function(data) {
                            // alert(data);
@@ -494,7 +523,7 @@
                         url: base_url+'/myleaveevents',
                         method: 'GET',
                         success:function(data){
-                           
+
                         },
                         failure: function(data) {
                            // alert(data);
@@ -507,13 +536,13 @@
                         selectable: false,
                         // a non-ajax option
                     }
-                    
-                                            
+
+
                     ],
                     eventDidMount: function (info) {
                         info.el.onclick = "disabled";
                        //console.log(info.event.extendedProps.type);
-                       
+
                        //console.log(info.event.end.getFullYear());
 
                        var date = new Date(info.event.end);
@@ -531,9 +560,9 @@
                            info.el.style.background = "#f5ed07";
                            info.el.style.color = "black";
                            info.el.style.fontSize  = "15px";
-                       }   
+                       }
 
-                        
+
                        //for styling the leave events
                        if(info.event.extendedProps.leave_name == 'CL'){ //for CL
                             info.el.style.background = "blue";//info.event.extendedProps.background;
@@ -554,20 +583,20 @@
                            info.el.style.color  = "black";
                            info.el.style.fontSize  = "15px";
                        }
-                       
-                   },  
+
+                   },
                    dateClick: function(info) {
-                    
+
                        //console.log(info);
                      //   alert('Current view: ' + info.view.type);
-                        
+
                         $('#leave_apply_modal').trigger('click');
-                        alert('leave modal active');
+                        //alert('leave modal active');
                         $('#from_date').val(info.dateStr);
                         flatpickr('#from_date', {
                             "minDate": new Date(info.dateStr),
                             "maxDate": new Date(info.dateStr),
-                           
+
                         });
                         $('#type').focus();
                         flatpickr('#to_date', {
@@ -575,14 +604,14 @@
                             "maxDate": new Date(info.dateStr).fp_incr(30)
                         });
 
-                       
-                          
+
+
                         $('#add_leaveform').css('z-index', 3333);
                         $('#leave_date_header').html(info.dateStr);
-                        
+
                         //ajax call for loading the Holiday and RH Events on the modal.
                         $.ajax({
-                            
+
                                 url: base_url+'/fetchholidayrhevents',
                                 method: 'GET',
                                 data: {
@@ -599,13 +628,13 @@
                                         $.each(response, function(key, value) {
 
                                             $('#holidayrh_list').append('<tr class="'+(value['type']=="RH"?"bg-orange-400":"bg-red-400")+'"><td >'+value['type']+ '</td><td>'+value['title']+ '</td></tr>');
-                                        
+
                                         });
                                      }else{
                                         //$('#leave_list_div').show();
                                         $('#holiday_rh_div').hide();
                                     }
-                                    
+
                                 },
                                 error: function(xhr, status, error) {
                                     // Handle errors
@@ -614,7 +643,7 @@
                         });
                         //ajax call for checking the leave events
                         $.ajax({
-                            
+
                             url: base_url+'/checkhasleaveEvent',
                             method: 'GET',
                             data: {
@@ -630,12 +659,13 @@
                                     //$('#leave_form').html('<h1>Sorry ! Not Allowed to apply leave</h1>');
                                     $('#leave_form').hide();
                                     $('#leave_apply_btn').hide();
-                                    $('#msg').html('<h1>Sorry ! Not Allowed to apply leave</h1>');
-                                    
+                                    $('#msg').html('<h1>Sorry ! You have Already applied leave</h1>');
+
                                  }else{
                                     $('#leave_form').show();
+                                    $('#msg').html('<h1>Your Leave Application Form</h1>');
                                 }
-                                
+
                             },
                             error: function(xhr, status, error) {
                                 // Handle errors
@@ -643,22 +673,22 @@
                             }
                         });
 
-                        
-            
+
+
                     },
                     eventClick: function(info) {
                         //alert('Event: ' + info.event.start);
                         Clickeddate = info.event.start;
-                   
+
                         $('#view_leave_modal').trigger('click');
-                        alert('view modal active');
+                        //alert('view modal active');
                         var clicked_date = Clickeddate.getFullYear()+"-"+(Clickeddate.getMonth()+1)+"-"+Clickeddate.getDate();
                         //     $('#view_leave').css('z-index', 9999);
                         //      // change the border color just for fun
 
                         //ajax call for loading the leave events on calender
                         $.ajax({
-                                
+
                                 url: base_url+'/fetchmyleaveevents',
                                 method: 'GET',
                                 data: {
@@ -717,7 +747,7 @@
                                         $('#leave_application_list').append('<tr class="text-red-400"><td colspan="8" align="center">No Leaves Applied</td></tr>')
                                        //  $('#leave_form').show(); //for hiding the leave form div
                                     }
-                                    
+
                                 },
                                 error: function(xhr, status, error) {
                                     // Handle errors
@@ -727,13 +757,13 @@
 
                         info.el.style.borderColor = 'red';
                     }
-                  
-                   
-                //    
+
+
+                //
                 //         selectAllow: function(selectInfo) {
                 //             return moment().diff(selectInfo.start) <= 0
                 //     }
-                                    
+
                 })
                 calendar.render()
             });

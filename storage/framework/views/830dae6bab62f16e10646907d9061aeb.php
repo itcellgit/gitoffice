@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('styles'); ?>
 
         <!-- CHOICES CSS -->
@@ -43,21 +41,42 @@
                             </ol>
                         </div>
                         <!-- Page Header Close -->
-                        <?php if(session('status')): ?>
-                                <?php if(session('status') == 1): ?>
-                                <div class='bg-white dark:bg-bgdark border border-success alert text-success' role='alert'>
-                                    <span class='font-bold'>Result</span> Successful
-                                </div>
-                                <?php elseif(session('status') == 0): ?>
-                                <div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
-                                    <span class='font-bold'>Result</span> Error  transaction
-                                </div>
+                       
+                        
+                        <?php if(session('return_data')): ?>
+                                <?php if(session('return_data')['result'] == "success"): ?>
+                                    <div class='bg-white dark:bg-bgdark border border-success alert text-success' role='alert'>
+                                        <span class='font-bold'>Result</span> Successful
+                                    </div>
+                                    <?php 
+                                        Illuminate\Support\Facades\Session::forget('status');  
+                                        header("refresh: 3"); 
+                                    ?>
+                                <?php else: ?>
+                                    <div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
+                                        <span class='font-bold'>Result</span> <?php echo e(session('return_data')['result']); ?>
+
+                                    </div>
+                                    <input type="hidden" id="start_date" value="<?php echo e(session('return_data')['start_date']); ?>"/>
+                                    <input type="hidden" id="leave_type" value="<?php echo e(session('return_data')['leave_type']); ?>"/>
+                                    <input type="hidden" id="reason" value="<?php echo e(session('return_data')['reason']); ?>"/>
+                                    <input type="hidden" id="alternative" value="<?php echo e(session('return_data')['alternative']); ?>"/>
                             
+                                    <script>
+                                      $(document).ready(function(){
+                                        $('#leave_apply_modal').trigger('click');//css('disply','block');
+                                        $('#type').val($('#leave_type').val());
+                                        $('#from_date').val($('#start_date').val());
+                                        $('#leave_reason').val($('#reason').val());
+                                        //alert();
+                                        $('#alternate').val($('#alternative').val());
+                                      });
+                                        
+                                       
+                                    </script>
+                                    
                                 <?php endif; ?>
-                                <?php 
-                                    Illuminate\Support\Facades\Session::forget('status');  
-                                    header("refresh: 3"); 
-                                ?>
+                                
                             <?php endif; ?>
                     </div>
                     <div class="grid grid-cols-12 gap-x-6">
@@ -166,6 +185,16 @@
                                                                 <div class="flex-grow border-t border-blue-400"></div>
                                                             </div>
                                                             
+                                                            <div class="" id="result_notification">
+                                                                <?php if(session('return_data')): ?>
+                                                                    <div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
+                                                                        <span class='font-bold'>Result</span> <?php echo e(session('return_data')['result']); ?>
+
+                                                                    </div>
+                                                               
+                                    
+                                                                <?php endif; ?>
+                                                            </div>
                                                             <form  action="<?php echo e(route('Teaching.leaves.apply',$staff->id)); ?>" method="post"> 
                                                                 <?php echo csrf_field(); ?>  
                                                                 
@@ -238,7 +267,7 @@
                                                                         </div>
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Leave Reason:<span class="text-red-500">*</span></label>
-                                                                            <textarea class="ti-form-input" required name="leave_reason" placeholder="Leave Reason"></textarea>
+                                                                            <textarea class="ti-form-input" required name="leave_reason" id="leave_reason" placeholder="Leave Reason"></textarea>
                                                                         </div>
                                                                     </div>
                                                                     
@@ -562,7 +591,7 @@
                      //   alert('Current view: ' + info.view.type);
                         
                         $('#leave_apply_modal').trigger('click');
-                        alert('leave modal active');
+                        //alert('leave modal active');
                         $('#from_date').val(info.dateStr);
                         flatpickr('#from_date', {
                             "minDate": new Date(info.dateStr),
@@ -630,10 +659,11 @@
                                     //$('#leave_form').html('<h1>Sorry ! Not Allowed to apply leave</h1>');
                                     $('#leave_form').hide();
                                     $('#leave_apply_btn').hide();
-                                    $('#msg').html('<h1>Sorry ! Not Allowed to apply leave</h1>');
+                                    $('#msg').html('<h1>Sorry ! You have Already applied leave</h1>');
                                     
                                  }else{
                                     $('#leave_form').show();
+                                    $('#msg').html('<h1>Your Leave Application Form</h1>');
                                 }
                                 
                             },
@@ -651,7 +681,7 @@
                         Clickeddate = info.event.start;
                    
                         $('#view_leave_modal').trigger('click');
-                        alert('view modal active');
+                        //alert('view modal active');
                         var clicked_date = Clickeddate.getFullYear()+"-"+(Clickeddate.getMonth()+1)+"-"+Clickeddate.getDate();
                         //     $('#view_leave').css('z-index', 9999);
                         //      // change the border color just for fun

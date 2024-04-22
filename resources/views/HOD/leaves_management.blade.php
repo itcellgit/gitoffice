@@ -473,7 +473,7 @@
                         allDay:true,
                         eventTextColor:'red',
                         titleFormat: 'dd-MM-YYYY',
-                        
+                        display: 'list-item',
                         selectable: false,
                         // a non-ajax option
                     }
@@ -491,7 +491,7 @@
                        var dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
                                             .toISOString()
                                             .split("T")[0];
-                       console.log(date.getDate()+1);
+                       //console.log(date.getDate()+1);
                        //for styling the Holiday and RH events
                        if (info.event.extendedProps.type=="Holiday") {
                            info.el.style.background = "red";//info.event.extendedProps.background;
@@ -522,6 +522,12 @@
                        else if(info.event.extendedProps.leave_name =='DL-GIT'){
                             info.el.style.background = "#8ded07";//info.event.extendedProps.background;
                            info.el.style.color  = "black";
+                          
+                           info.el.style.fontSize  = "15px";
+                       }else if(info.event.extendedProps.leave_name =='LWP'){
+                            info.el.style.background = "#f50505";//info.event.extendedProps.background;
+                           info.el.style.color  = "black";
+                          
                            info.el.style.fontSize  = "15px";
                        }
                    },  dateClick: function(info) {
@@ -529,73 +535,51 @@
                        //console.log(info);
                      //   alert('Current view: ' + info.view.type);
                         
-                       $('#leave_apply_modal').trigger('click');
-                        $('#from_date').val(info.dateStr);
-                        flatpickr('#from_date', {
-                            "minDate": new Date(info.dateStr),
-                            "maxDate": new Date(info.dateStr),
+                    //    $('#leave_apply_modal').trigger('click');
+                    //     $('#from_date').val(info.dateStr);
+                    //     flatpickr('#from_date', {
+                    //         "minDate": new Date(info.dateStr),
+                    //         "maxDate": new Date(info.dateStr),
                            
-                        });
-                        $('#type').focus();
-                        flatpickr('#to_date', {
-                            "minDate": new Date(info.dateStr),
-                            "maxDate": new Date(info.dateStr).fp_incr(30)
-                        });
+                    //     });
+                    //     $('#type').focus();
+                    //     flatpickr('#to_date', {
+                    //         "minDate": new Date(info.dateStr),
+                    //         "maxDate": new Date(info.dateStr).fp_incr(30)
+                    //     });
 
                        
                           
-                        $('#add_leaveform').css('z-index', 3333);
-                        $('#leave_date_header').html(info.dateStr);
+                    //     $('#add_leaveform').css('z-index', 3333);
+                    //     $('#leave_date_header').html(info.dateStr);
                         
-                        //ajax call for loading the Holiday and RH Events
-                        $.ajax({
-                            
-                                url: base_url+'/fetchholidayrhevents',
-                                method: 'POST',
-                                data: {
-                                    date: info.dateStr,
-                                    _token : '{{csrf_token()}}' // Pass the clicked date to the server
-                                },
-                                success: function(response) {
-                                    // Handle the response from the server
-                                    //console.log(response);
-                                    $('#holidayrh_list').empty();
-                                    if(response.length !=0){
-                                        //$('#leave_list_div').hide();
-                                        $('#holiday_rh_div').show();
-                                        $.each(response, function(key, value) {
+                        
+            
+                    },
+                    eventClick: function(info) {
+                        
+                        //$('.event_title').html(info.event.title+' on '+ Clickeddate.getDate()+"/"+Clickeddate.getMonth()+"/"+Clickeddate.getFullYear());
+                        //alert('Event: ' + info.event.start);
+                        Clickeddate = info.event.start;
+                   
+                        $('#view_leave_modal').trigger('click');
+                        //alert('view modal active');
+                        var clicked_date = Clickeddate.getFullYear()+"-"+(Clickeddate.getMonth()+1)+"-"+Clickeddate.getDate();
+                        //     $('#view_leave').css('z-index', 9999);
+                        //      // change the border color just for fun
 
-                                            $('#holidayrh_list').append('<tr class="'+(value['type']=="RH"?"bg-orange-400":"bg-red-400")+'"><td >'+value['type']+ '</td><td>'+value['title']+ '</td></tr>');
-                                        
-                                        });
-                                        
-                                        
-                                      
-                                        
-                                    }else{
-                                        //$('#leave_list_div').show();
-                                        $('#holiday_rh_div').hide();
-                                        $('#holidayrh_list').append('<tr class="text-red-400"><td colspan="2" align="center">No Holiday/RH</td></tr>')
-                                    }
-                                    
-                                },
-                                error: function(xhr, status, error) {
-                                    // Handle errors
-                                    console.error(xhr.responseText);
-                                }
-                        });
                         //ajax call for loading the leave events on calender
-                            $.ajax({
+                        $.ajax({
                                 
                                 url: base_url+'/fetchmyleaveevents',
-                                method: 'POST',
+                                method: 'GET',
                                 data: {
-                                    date: info.dateStr,
+                                    date: clicked_date,
                                     _token : '{{csrf_token()}}' // Pass the clicked date to the server
                                 },
                                 success: function(response) {
                                     // Handle the response from the server
-                                    //console.log(response[0].additional_alternate_staff);
+                                    console.log(response);
                                     $('#leave_application_list').empty();
                                     if(response.length !=0){
                                         $.each(response, function(key, value) {
@@ -638,12 +622,12 @@
                                                                     +'</tr>');
                                         });
 
-                                        $('#leave_form').hide(); //for hiding the leave form div
+                                        //$('#leave_form').hide(); //for hiding the leave form div
                                     }else{
                                         $('#leave_list_div').hide();// for hiding the leave list
                                        // $('#holiday_rh_div').hide();
                                         $('#leave_application_list').append('<tr class="text-red-400"><td colspan="8" align="center">No Leaves Applied</td></tr>')
-                                        $('#leave_form').show(); //for hiding the leave form div
+                                       //  $('#leave_form').show(); //for hiding the leave form div
                                     }
                                     
                                 },
@@ -652,18 +636,10 @@
                                     console.error(xhr.responseText);
                                 }
                         });
-            
+
+                        info.el.style.borderColor = 'red';
+
                     }
-                    // eventClick: function(info) {
-                    //     ///alert('Event: ' + info.event.start);
-                    //     console.log(info.event.start);
-                    //     var Clickeddate = info.event.start;
-                    //     $('#view_leave_modal').trigger('click');
-                    //     $('.event_title').html(info.event.title+' on '+ Clickeddate.getDate()+"/"+Clickeddate.getMonth()+"/"+Clickeddate.getFullYear());
-                    //     $('#view_leave').css('z-index', 9999);
-                    //      // change the border color just for fun
-                    //     info.el.style.borderColor = 'red';
-                    // }
                   
                    
                 //    
