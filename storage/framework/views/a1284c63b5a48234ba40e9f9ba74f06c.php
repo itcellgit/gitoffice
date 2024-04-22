@@ -253,7 +253,57 @@
 
                                             </div> 
                                             <!-- Calender for leaves ends here-->
-                                           
+                                            <!--The view Modal starts-->
+                                                <button data-hs-overlay="#view_leave" class="hs-dropdown-toggle ti-btn ti-btn-primary hidden" id="view_leave_modal">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M11 6V14H19C19 18.4183 15.4183 22 11 22C6.58172 22 3 18.4183 3 14C3 9.66509 6.58 6 11 6ZM21 2V4L15.6726 10H21V12H13V10L18.3256 4H13V2H21Z"></path></svg>
+                                                    View Leave
+                                                </button>
+                                                <div id="view_leave" class="hs-overlay hidden ti-modal">
+                                                    <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out lg:!max-w-4xl lg:w-full m-3 md:mx-auto">
+                                                        <div class="ti-modal-content">
+                                                            <div class="ti-modal-header">
+                                                                <h3 class="ti-modal-title">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M11 6V14H19C19 18.4183 15.4183 22 11 22C6.58172 22 3 18.4183 3 14C3 9.66509 6.58 6 11 6ZM21 2V4L15.6726 10H21V12H13V10L18.3256 4H13V2H21Z"></path></svg>
+                                                                    View leave  on <span id="leave_date_header_view" class="text-primary font-bold"></span>
+                                                                </h3>
+                                                                    <button type="button" class="hs-dropdown-toggle ti-modal-close-btn"
+                                                                        data-hs-overlay="#view_leave">
+                                                                        <span class="sr-only">Close</span>
+                                                                        <svg class="w-3.5 h-3.5" width="8" height="8" viewBox="0 0 8 8" fill="none"
+                                                                            xmlns="http://www.w3.org/2000/svg">
+                                                                            <path
+                                                                            d="M0.258206 1.00652C0.351976 0.912791 0.479126 0.860131 0.611706 0.860131C0.744296 0.860131 0.871447 0.912791 0.965207 1.00652L3.61171 3.65302L6.25822 1.00652C6.30432 0.958771 6.35952 0.920671 6.42052 0.894471C6.48152 0.868271 6.54712 0.854471 6.61352 0.853901C6.67992 0.853321 6.74572 0.865971 6.80722 0.891111C6.86862 0.916251 6.92442 0.953381 6.97142 1.00032C7.01832 1.04727 7.05552 1.1031 7.08062 1.16454C7.10572 1.22599 7.11842 1.29183 7.11782 1.35822C7.11722 1.42461 7.10342 1.49022 7.07722 1.55122C7.05102 1.61222 7.01292 1.6674 6.96522 1.71352L4.31871 4.36002L6.96522 7.00648C7.05632 7.10078 7.10672 7.22708 7.10552 7.35818C7.10442 7.48928 7.05182 7.61468 6.95912 7.70738C6.86642 7.80018 6.74102 7.85268 6.60992 7.85388C6.47882 7.85498 6.35252 7.80458 6.25822 7.71348L3.61171 5.06702L0.965207 7.71348C0.870907 7.80458 0.744606 7.85498 0.613506 7.85388C0.482406 7.85268 0.357007 7.80018 0.264297 7.70738C0.171597 7.61468 0.119017 7.48928 0.117877 7.35818C0.116737 7.22708 0.167126 7.10078 0.258206 7.00648L2.90471 4.36002L0.258206 1.71352C0.164476 1.61976 0.111816 1.4926 0.111816 1.36002C0.111816 1.22744 0.164476 1.10028 0.258206 1.00652Z"
+                                                                            fill="currentColor" />
+                                                                        </svg>
+                                                                    </button>
+                                                            </div>
+                                                            <div class="ti-modal-body">
+                                                                <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto pb-6 hidden" id="leave_datewise_div">
+                                                                    <span class="text-primary font-bold">Leave List</span>
+                                                                    <table class="ti-custom-table ti-custom-table-head whitespace-nowrap">
+                                                                        <thead class="bg-gray-50 dark:bg-black/20">
+                                                                            <tr class="">
+                                                                                
+                                                                                <th scope="col" class="dark:text-white/80 font-bold">Application Number</th>
+                                                                                <th scope="col" class="dark:text-white/80 font-bold">Leave Type</th>
+                                                                                <th scope="col" class="dark:text-white/80 font-bold">From Date</th>
+                                                                                <th scope="col" class="dark:text-white/80 font-bold">To Date</th>
+                                                                                <th scope="col" class="dark:text-white/80 font-bold">Leave Reasons</th>
+                                                                                <th scope="col" class="dark:text-white/80 font-bold">Alternate</th>
+                                                                                <th scope="col" class="dark:text-white/80 font-bold">Additional Alternate</th>
+                                                                                <th scope="col" class="dark:text-white/80 font-bold">Actions</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="Date_wise_leave__list">
+
+                                                                        </tbody>
+                                                                    </table>  
+                                                                </div> 
+                                                            </div>  
+                                                        </div>
+                                                    </div>
+                                                </div> 
+
                                         </div>
 
                                     </div> 
@@ -474,23 +524,7 @@
                         
                     //    $('#leave_apply_modal').trigger('click');
                     //     $('#from_date').val(info.dateStr);
-                    //     flatpickr('#from_date', {
-                    //         "minDate": new Date(info.dateStr),
-                    //         "maxDate": new Date(info.dateStr),
-                           
-                    //     });
-                    //     $('#type').focus();
-                    //     flatpickr('#to_date', {
-                    //         "minDate": new Date(info.dateStr),
-                    //         "maxDate": new Date(info.dateStr).fp_incr(30)
-                    //     });
-
-                       
-                          
-                    //     $('#add_leaveform').css('z-index', 3333);
-                    //     $('#leave_date_header').html(info.dateStr);
-                        
-                        
+                    
             
                     },
                     eventClick: function(info) {
@@ -508,7 +542,7 @@
                         //ajax call for loading the leave events on calender
                         $.ajax({
                                 
-                                url: base_url+'/fetchmyleaveevents',
+                                url: base_url+'/HOD/leaves_management/fetchdatewisedeptleaveevents',
                                 method: 'GET',
                                 data: {
                                     date: clicked_date,
@@ -517,12 +551,12 @@
                                 success: function(response) {
                                     // Handle the response from the server
                                     console.log(response);
-                                    $('#leave_application_list').empty();
+                                    $('#Date_wise_leave__list').empty();
                                     if(response.length !=0){
                                         $.each(response, function(key, value) {
-                                        $('#leave_list_div').show();
+                                        $('#leave_datewise_div').show();
                                        // $('#holiday_rh_div').hide();
-                                        $('#leave_application_list').append('<tr>'
+                                        $('#Date_wise_leave__list').append('<tr>'
                                                                     +'<td >'+value.Application_id+ '</td>'
                                                                     +'<td>'+value.title+ '</td>'
                                                                     +'<td>'+value.start+ '</td>'
@@ -561,9 +595,9 @@
 
                                         //$('#leave_form').hide(); //for hiding the leave form div
                                     }else{
-                                        $('#leave_list_div').hide();// for hiding the leave list
+                                        $('#leave_datewise_div').hide();// for hiding the leave list
                                        // $('#holiday_rh_div').hide();
-                                        $('#leave_application_list').append('<tr class="text-red-400"><td colspan="8" align="center">No Leaves Applied</td></tr>')
+                                        $('#Date_wise_leave__list').append('<tr class="text-red-400"><td colspan="8" align="center">No Leaves Applied</td></tr>')
                                        //  $('#leave_form').show(); //for hiding the leave form div
                                     }
                                     
