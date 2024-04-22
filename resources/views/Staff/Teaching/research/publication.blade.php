@@ -144,9 +144,9 @@
                                                                     @csrf
                                                                     <div class="ti-modal-body">
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
-                                                                            {{-- <div class="max-w-sm space-y-3 pb-6">
+                                                                            <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold"> Level :<span class="text-red-500">*</span> </label>
-                                                                                <select class="ti-form-select level pub_level" name="level[]" name="level"  id="pub_level" multiple>
+                                                                                <select class="ti-form-select level pub_level" name="level"  id="pub_level">
                                                                                     <option value="#">Choose Level</option>
                                                                                     <option value="Q1">Q1</option>
                                                                                     <option value="Q2">Q2</option>
@@ -162,9 +162,9 @@
                                                                                     <div class="text-red-700">{{ $errors->first('level') }}</div>
                                                                                 @endif
                                                                                 <div id="pub_levelError" class="error text-red-700"></div>
-                                                                            </div> --}}
+                                                                            </div>
 
-                                                                            <div class="max-w-sm space-y-3 pb-6">
+                                                                            {{-- <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold"> Level :</label>
                                                                                 <div class="border border-gray-300 p-2 max-h-5 overflow-auto" style="max-height: 100px; overflow-y: auto;">
                                                                                     <div class="">
@@ -208,7 +208,7 @@
                                                                                     <div class="text-red-700">{{ $errors->first('level') }}</div>
                                                                                 @endif
                                                                                 <div id="pub_levelError" class="error text-red-700"></div>
-                                                                            </div>
+                                                                            </div> --}}
 
 
 
