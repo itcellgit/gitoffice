@@ -286,11 +286,12 @@
                                                                                 
                                                                                 <th scope="col" class="dark:text-white/80 font-bold">Application Number</th>
                                                                                 <th scope="col" class="dark:text-white/80 font-bold">Leave Type</th>
+                                                                                <th scope="col" class="dark:text-white/80 font-bold">Faculty on Leave</th>
                                                                                 <th scope="col" class="dark:text-white/80 font-bold">From Date</th>
                                                                                 <th scope="col" class="dark:text-white/80 font-bold">To Date</th>
                                                                                 <th scope="col" class="dark:text-white/80 font-bold">Leave Reasons</th>
                                                                                 <th scope="col" class="dark:text-white/80 font-bold">Alternate</th>
-                                                                                <th scope="col" class="dark:text-white/80 font-bold">Additional Alternate</th>
+                                                                                
                                                                                 <th scope="col" class="dark:text-white/80 font-bold">Actions</th>
                                                                             </tr>
                                                                         </thead>
@@ -559,28 +560,20 @@
                                         $('#Date_wise_leave__list').append('<tr>'
                                                                     +'<td >'+value.Application_id+ '</td>'
                                                                     +'<td>'+value.title+ '</td>'
+                                                                    +'<td>'+value.staff_name+ '</td>'
                                                                     +'<td>'+value.start+ '</td>'
                                                                     +'<td>'+value.end+ '</td>'
                                                                     +'<td>'+value.reason+ '</td>'
                                                                     +'<td>'+value.alternate_staff+ '</td>'
-                                                                    +'<td>'+value.additional_alternate_staff+ '</td>'
+                                                                   
                                                                     +'<td>'
-                                                                        +'<div class="hs-tooltip ti-main-tooltip">'
-                                                                                        +'<button data-hs-overlay="#fund_edit_modal" id="" btn-val='
-                                                                                                +'class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary fund_edit_modal_click">'
-                                                                                                +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M16.7574 2.99666L14.7574 4.99666H5V18.9967H19V9.2393L21 7.2393V19.9967C21 20.5489 20.5523 20.9967 20 20.9967H4C3.44772 20.9967 3 20.5489 3 19.9967V3.99666C3 3.44438 3.44772 2.99666 4 2.99666H16.7574ZM20.4853 2.09717L21.8995 3.51138L12.7071 12.7038L11.2954 12.7062L11.2929 11.2896L20.4853 2.09717Z"></path></svg>'
-                                                                                                +'<span'
-                                                                                                +'class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700"'
-                                                                                                +'role="tooltip">'
-                                                                                                +'</span>'
-                                                                                        +'</button>'
-                                                                        +'</div>'
+                                                                        
                                                                         +'<div class="hs-tooltip ti-main-tooltip">'
                                                                                                 +'<form action="#" method="post">'
                                                                                                     +'<button onclick="return confirm("Are you Sure")'
-                                                                                                    +'  class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">'
-                                                                                                        +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>'
-                                                                                                        +'<?php echo method_field("delete"); ?>'
+                                                                                                    +'  class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-primary">'
+                                                                                                        +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z"></path></svg>'
+                                                                                                        +'<?php echo method_field("update"); ?>'
                                                                                                         +'<?php echo csrf_field(); ?>'
                                                                                                         +'<span'
                                                                                                             +'class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700"'

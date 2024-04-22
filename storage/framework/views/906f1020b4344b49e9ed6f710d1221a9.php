@@ -153,7 +153,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Award:<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="ga_award" class="ti-form-input" required placeholder="Award" id="rga_award">
+                                                                                <input type="text" name="ga_award" class="ti-form-input" required placeholder="Award" id="rga_award" >
                                                                                  <?php if($errors->has('ga_award')): ?>
                                                                                      <div class="text-red-700"><?php echo e($errors->first('ga_award')); ?></div>
                                                                                 <?php endif; ?>
