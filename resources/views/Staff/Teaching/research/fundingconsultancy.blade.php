@@ -613,6 +613,27 @@
                                         <div class="box border-0 shadow-none mb-0">
                                             <div class="box-header">
                                                 <h5 class="box-title leading-none flex"><i class="ri ri-global-line ltr:mr-2 rtl:ml-2"></i> Consultancy History</h5>
+                                                <div class="avatar-container flex py-4">
+                                                    <div class="avatar-wrapper flex items-center">
+                                                        <div class="avatar rounded-sm p-1 bg-green-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                        <div class="avatar-text font-bold ml-2 ">Valid</div>
+                                                    </div>
+
+                                                    <div class="avatar-wrapper flex items-center mx-2">
+                                                        <div class="avatar rounded-sm p-1 bg-red-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                        <div class="avatar-text font-bold ml-2">Invalid</div>
+                                                    </div>
+
+                                                    <div class="avatar-wrapper flex items-center mx-2">
+                                                        <div class="avatar rounded-sm p-1 bg-yellow-400 border-gray-900 border-2 w-6 h-6"></div>
+                                                        <div class="avatar-text font-bold ml-2">Updated</div>
+                                                    </div>
+
+                                                    <div class="avatar-wrapper flex items-center">
+                                                        <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
+                                                        <div class="avatar-text font-semibold ml-2">New</div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="box-body">
                                                 <button  id="consultancy_btn" data-hs-overlay="#add_consultancy" class="hs-dropdown-toggle ti-btn ti-btn-primary">

@@ -77,6 +77,7 @@
                                                 <h5 class="box-title leading-none flex"><i class="ri ri-shield-user-line ltr:mr-2 rtl:ml-2"></i> Personal Information</h5>
                                                 </div>
                                                 <div class="box-body">
+
                                                     <div>
                                                         <form action="{{route('Staff.Teaching.update',$staff->id)}}" method="post">
                                                             @csrf
@@ -84,22 +85,22 @@
                                                             <div class="grid lg:grid-cols-3 gap-3 space-y-2 lg:space-y-0 pb-4">
                                                                 <div class="space-y-2 ">
                                                                     <label class="ti-form-label mb-0 font-bold">First Name</label>
-                                                                    <input type="text" name="fname" id="fname" class="my-auto ti-form-input" placeholder="Firstname" value="">
+                                                                    <input type="text" name="fname" id="fname" class="my-auto ti-form-input" placeholder="Firstname" value="{{$staff->fname}}">
                                                                 </div>
                                                                 <div class="space-y-2">
                                                                     <label class="ti-form-label mb-0 font-bold">Middle Name</label>
-                                                                    <input type="text" name="mname" class="my-auto ti-form-input" placeholder="Middle Name" value="">
+                                                                    <input type="text" name="mname" class="my-auto ti-form-input" placeholder="Middle Name" value="{{$staff->mname}}">
                                                                 </div>
                                                                 <div class="space-y-2">
                                                                     <label class="ti-form-label mb-0 font-bold">Last Name</label>
-                                                                    <input type="text" name="lname" id="lname" class="my-auto ti-form-input" placeholder="Lastname" value="">
+                                                                    <input type="text" name="lname" id="lname" class="my-auto ti-form-input" placeholder="Lastname" value="{{$staff->lname}}">
                                                                 </div>
                                                             </div>
                                                             <!--update the staff personal information-->
                                                             <div class="grid lg:grid-cols-3 gap-3 space-y-2 lg:space-y-0 pb-4">
                                                                 <div class="space-y-2">
-                                                                <label class="ti-form-label mb-0 font-bold">Employee Type</label>
-                                                                    <select class="ti-form-select" name="employee_type" id="employee_type" readonly>
+                                                                    <label class="ti-form-label mb-0 font-bold">Employee Type</label>
+                                                                    <select class="ti-form-select" name="employee_type" id="employee_type" disabled>
                                                                         <option value="null">Choose a Employee Type</option>
                                                                         <option value="Teaching" {{$staff->latest_employee_type[0]->employee_type == "Teaching"?'selected':''}}>Teaching</option>
                                                                         <option value="Non-Teaching" {{$staff->latest_employee_type[0]->employee_type == "Non-Teaching"?'selected':''}}>Non-Teaching</option>
@@ -171,7 +172,7 @@
                                                                     <div class="space-y-2">
                                                                         <label class="ti-form-label mb-0 font-bold">Date Of Superannution</label>
                                                                         <input type="text" name="date_of_superanuation" class="ti-form-input flatpickr-input date" id="dos"
-                                                                        value="{{$staff->date_of_superanuation}}" placeholder="Choose date" readonly>
+                                                                        value="{{$staff->date_of_superanuation}}" placeholder="Choose date" disabled>
                                                                     </div>
 
                                                                     <div class="space-y-2">
@@ -219,12 +220,12 @@
                                                                 <div class="space-y-2" id="AICTE_id">
                                                                     <label class="ti-form-label mb-0 font-bold">AICTE ID:</label>
                                                                     <input type="text" name="aicte_id" class="my-auto ti-form-input" value="{{$staff->aicte_id}}"
-                                                                        placeholder="AICTE ID" readonly>
+                                                                        placeholder="AICTE ID" disabled>
                                                                 </div>
                                                                 <div class="space-y-2" id="VTU_id">
                                                                     <label class="ti-form-label mb-0 font-bold">VTU ID:</label>
                                                                     <input type="text" name="vtu_id" class="my-auto ti-form-input" value="{{$staff->vtu_id}}"
-                                                                        placeholder="VTU ID" readonly>
+                                                                        placeholder="VTU ID" disabled>
                                                                 </div>
                                                                 @if($staff->latest_employee_type()->first()->employee_type=="Non-Teaching")
                                                                 <div class="space-y-2" id="ESI_no">
@@ -263,6 +264,7 @@
 
 
                                                             </div>
+
                                                             <div class="pt-6 pl-48">
                                                                 <button type="submit" class="ti-btn m-0 ti-btn-soft-primary text-right">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M5.46257 4.43262C7.21556 2.91688 9.5007 2 12 2C17.5228 2 22 6.47715 22 12C22 14.1361 21.3302 16.1158 20.1892 17.7406L17 12H20C20 7.58172 16.4183 4 12 4C9.84982 4 7.89777 4.84827 6.46023 6.22842L5.46257 4.43262ZM18.5374 19.5674C16.7844 21.0831 14.4993 22 12 22C6.47715 22 2 17.5228 2 12C2 9.86386 2.66979 7.88416 3.8108 6.25944L7 12H4C4 16.4183 7.58172 20 12 20C14.1502 20 16.1022 19.1517 17.5398 17.7716L18.5374 19.5674Z"></path></svg>

@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('styles'); ?>
 
         <!-- CHOICES CSS -->
@@ -43,21 +41,42 @@
                             </ol>
                         </div>
                         <!-- Page Header Close -->
-                        <?php if(session('status')): ?>
-                                <?php if(session('status') == 1): ?>
-                                <div class='bg-white dark:bg-bgdark border border-success alert text-success' role='alert'>
-                                    <span class='font-bold'>Result</span> Successful
-                                </div>
-                                <?php elseif(session('status') == 0): ?>
-                                <div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
-                                    <span class='font-bold'>Result</span> Error  transaction
-                                </div>
+                       
+                        
+                        <?php if(session('return_data')): ?>
+                                <?php if(session('return_data')['result'] == "success"): ?>
+                                    <div class='bg-white dark:bg-bgdark border border-success alert text-success' role='alert'>
+                                        <span class='font-bold'>Result</span> Successful
+                                    </div>
+                                    <?php 
+                                        Illuminate\Support\Facades\Session::forget('status');  
+                                        header("refresh: 3"); 
+                                    ?>
+                                <?php else: ?>
+                                    <div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
+                                        <span class='font-bold'>Result</span> <?php echo e(session('return_data')['result']); ?>
+
+                                    </div>
+                                    <input type="hidden" id="start_date" value="<?php echo e(session('return_data')['start_date']); ?>"/>
+                                    <input type="hidden" id="leave_type" value="<?php echo e(session('return_data')['leave_type']); ?>"/>
+                                    <input type="hidden" id="reason" value="<?php echo e(session('return_data')['reason']); ?>"/>
+                                    <input type="hidden" id="alternative" value="<?php echo e(session('return_data')['alternative']); ?>"/>
                             
+                                    <script>
+                                      $(document).ready(function(){
+                                        $('#leave_apply_modal').trigger('click');//css('disply','block');
+                                        $('#type').val($('#leave_type').val());
+                                        $('#from_date').val($('#start_date').val());
+                                        $('#leave_reason').val($('#reason').val());
+                                        //alert();
+                                        $('#alternate').val($('#alternative').val());
+                                      });
+                                        
+                                       
+                                    </script>
+                                    
                                 <?php endif; ?>
-                                <?php 
-                                    Illuminate\Support\Facades\Session::forget('status');  
-                                    header("refresh: 3"); 
-                                ?>
+                                
                             <?php endif; ?>
                     </div>
                     <div class="grid grid-cols-12 gap-x-6">
@@ -162,10 +181,20 @@
                                                             
                                                             <div class="relative flex py-5 items-center">
                                                                 <div class="flex-grow border-t border-blue-400"></div>
-                                                                <span class="flex-shrink mx-4 text-primary">Your Leave Application</span>
+                                                                <span class="flex-shrink mx-4 text-primary" id="msg">Your Leave Application</span>
                                                                 <div class="flex-grow border-t border-blue-400"></div>
                                                             </div>
                                                             
+                                                            <div class="" id="result_notification">
+                                                                <?php if(session('return_data')): ?>
+                                                                    <div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
+                                                                        <span class='font-bold'>Result</span> <?php echo e(session('return_data')['result']); ?>
+
+                                                                    </div>
+                                                               
+                                    
+                                                                <?php endif; ?>
+                                                            </div>
                                                             <form  action="<?php echo e(route('Teaching.leaves.apply',$staff->id)); ?>" method="post"> 
                                                                 <?php echo csrf_field(); ?>  
                                                                 
@@ -238,7 +267,7 @@
                                                                         </div>
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Leave Reason:<span class="text-red-500">*</span></label>
-                                                                            <textarea class="ti-form-input" required name="leave_reason" placeholder="Leave Reason"></textarea>
+                                                                            <textarea class="ti-form-input" required name="leave_reason" id="leave_reason" placeholder="Leave Reason"></textarea>
                                                                         </div>
                                                                     </div>
                                                                     
@@ -281,7 +310,7 @@
                                                                 Cancel
                                                             </button>
                                                                             
-                                                            <input type="submit" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Apply"/>
+                                                            <input type="submit" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" id="leave_apply_btn" value="Apply"/>
                                                                         
                                                         </div>
                                                     </form> 
@@ -307,10 +336,10 @@
                                                     <div class="ti-modal-header">
                                                         <h3 class="ti-modal-title">
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M11 6V14H19C19 18.4183 15.4183 22 11 22C6.58172 22 3 18.4183 3 14C3 9.66509 6.58 6 11 6ZM21 2V4L15.6726 10H21V12H13V10L18.3256 4H13V2H21Z"></path></svg>
-                                                             View leave  on <span id="leave_date_header" class="text-primary font-bold"></span>
+                                                             View leave  on <span id="leave_date_header_view" class="text-primary font-bold"></span>
                                                         </h3>
                                                             <button type="button" class="hs-dropdown-toggle ti-modal-close-btn"
-                                                                data-hs-overlay="#add_leaveform">
+                                                                data-hs-overlay="#view_leave">
                                                                 <span class="sr-only">Close</span>
                                                                 <svg class="w-3.5 h-3.5" width="8" height="8" viewBox="0 0 8 8" fill="none"
                                                                     xmlns="http://www.w3.org/2000/svg">
@@ -554,12 +583,15 @@
                            info.el.style.color  = "black";
                            info.el.style.fontSize  = "15px";
                        }
-                   },  dateClick: function(info) {
+                       
+                   },  
+                   dateClick: function(info) {
                     
                        //console.log(info);
                      //   alert('Current view: ' + info.view.type);
                         
-                       $('#leave_apply_modal').trigger('click');
+                        $('#leave_apply_modal').trigger('click');
+                        //alert('leave modal active');
                         $('#from_date').val(info.dateStr);
                         flatpickr('#from_date', {
                             "minDate": new Date(info.dateStr),
@@ -577,7 +609,7 @@
                         $('#add_leaveform').css('z-index', 3333);
                         $('#leave_date_header').html(info.dateStr);
                         
-                        //ajax call for loading the Holiday and RH Events
+                        //ajax call for loading the Holiday and RH Events on the modal.
                         $.ajax({
                             
                                 url: base_url+'/fetchholidayrhevents',
@@ -601,7 +633,6 @@
                                      }else{
                                         //$('#leave_list_div').show();
                                         $('#holiday_rh_div').hide();
-                                        $('#holidayrh_list').append('<tr class="text-red-400"><td colspan="2" align="center">No Holiday/RH</td></tr>')
                                     }
                                     
                                 },
@@ -610,7 +641,7 @@
                                     console.error(xhr.responseText);
                                 }
                         });
-                        //ajax call for loading the Holiday and RH Events
+                        //ajax call for checking the leave events
                         $.ajax({
                             
                             url: base_url+'/checkhasleaveEvent',
@@ -623,10 +654,16 @@
                                 // Handle the response from the server
                                 //console.log(response);
                                 //$('#holidayrh_list').empty();
+                                console.log(response);
                                 if(response ==1 ){
+                                    //$('#leave_form').html('<h1>Sorry ! Not Allowed to apply leave</h1>');
                                     $('#leave_form').hide();
+                                    $('#leave_apply_btn').hide();
+                                    $('#msg').html('<h1>Sorry ! You have Already applied leave</h1>');
+                                    
                                  }else{
                                     $('#leave_form').show();
+                                    $('#msg').html('<h1>Your Leave Application Form</h1>');
                                 }
                                 
                             },
@@ -634,7 +671,7 @@
                                 // Handle errors
                                 console.error(xhr.responseText);
                             }
-                    });
+                        });
 
                         
             
@@ -644,6 +681,7 @@
                         Clickeddate = info.event.start;
                    
                         $('#view_leave_modal').trigger('click');
+                        //alert('view modal active');
                         var clicked_date = Clickeddate.getFullYear()+"-"+(Clickeddate.getMonth()+1)+"-"+Clickeddate.getDate();
                         //     $('#view_leave').css('z-index', 9999);
                         //      // change the border color just for fun
@@ -702,12 +740,12 @@
                                                                     +'</tr>');
                                         });
 
-                                        $('#leave_form').hide(); //for hiding the leave form div
+                                        //$('#leave_form').hide(); //for hiding the leave form div
                                     }else{
                                         $('#leave_list_div').hide();// for hiding the leave list
                                        // $('#holiday_rh_div').hide();
                                         $('#leave_application_list').append('<tr class="text-red-400"><td colspan="8" align="center">No Leaves Applied</td></tr>')
-                                        $('#leave_form').show(); //for hiding the leave form div
+                                       //  $('#leave_form').show(); //for hiding the leave form div
                                     }
                                     
                                 },

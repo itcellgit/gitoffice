@@ -111,5 +111,5 @@ class TicketController extends Controller
         $ticket->delete();
         return redirect(route('ticket.dashboard'));
     }
-   
+
 }

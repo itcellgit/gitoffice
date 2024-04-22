@@ -22,7 +22,7 @@ class StorepublicationRequest extends FormRequest
      */
     public function rules(): array
     {
-        return 
+        return
         [
             'level'=>['required', Rule::in(['Q1', 'Q2', 'Q3','Q4','SCI','Web of Science','Scopus Indexed','UGC General','Other'])],
             'other_level'=>['sometimes'],

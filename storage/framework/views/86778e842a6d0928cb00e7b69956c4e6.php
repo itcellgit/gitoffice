@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('styles'); ?>
 
         <!-- CHOICES CSS -->
@@ -10,7 +8,7 @@
         <script>
             var base_url = "<?php echo e(URL::to('/')); ?>";
         </script>
-        
+
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -35,7 +33,7 @@
                                 <li class="text-sm text-gray-500 hover:text-primary dark:text-white/70 " aria-current="page">
                                     Staff View
                                 </li>
-                                
+
                             </ol>
                         </div>
                         <!-- Page Header Close -->
@@ -51,11 +49,11 @@
                                     <div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
                                         <span class='font-bold'>Result : </span> Error in Database transaction
                                     </div>
-                                
+
                                     <?php endif; ?>
-                                    <?php 
-                                        Illuminate\Support\Facades\Session::forget('status'); 
-                                        header("refresh: 1"); 
+                                    <?php
+                                        Illuminate\Support\Facades\Session::forget('status');
+                                        header("refresh: 1");
                                     ?>
                                 <?php endif; ?>
 
@@ -87,17 +85,17 @@
                                     </div>
                                     <input type="hidden" name="staff" id="staff" value="<?php echo e($staff->id); ?>">
                                     <div class="box-body pt-0">
-                                       
+
                                         <nav class="flex flex-col space-y-2" aria-label="Tabs" role="tablist" data-hs-tabs-vertical="true">
                                         <button type="button" class="hs-tab-active:bg-primary hs-tab-active:border-primary hs-tab-active:text-white dark:hs-tab-active:bg-primary dark:hs-tab-active:border-primary dark:hs-tab-active:text-white -mr-px py-3 px-3 inline-flex items-center gap-2 bg-gray-50 text-sm font-medium text-center border text-gray-500 rounded-sm hover:text-gray-700 dark:bg-black/20 dark:border-white/10 dark:text-white/70 active" id="profile-settings-item-1" data-hs-tab="#profile-settings-1" aria-controls="profile-settings-1" role="tab">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M11 14.0619V20H13V14.0619C16.9463 14.554 20 17.9204 20 22H4C4 17.9204 7.05369 14.554 11 14.0619ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13Z" fill="rgba(255,255,255,1)"></path></svg>
                                              Staff Basic Information
                                         </button>
-                                        
+
                                         <button type="button"  class="hs-tab-active:bg-primary hs-tab-active:border-primary hs-tab-active:text-white dark:hs-tab-active:bg-primary dark:hs-tab-active:border-primary dark:hs-tab-active:text-white -mr-px py-3 px-3 inline-flex items-center gap-2 bg-gray-50 text-sm font-medium text-center border text-gray-500 rounded-sm hover:text-gray-700 dark:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-gray-300" id="qualification" data-hs-tab="#qualification-tab" aria-controls="qualification-tab">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12 14V22H4C4 17.5817 7.58172 14 12 14ZM18 21.5L15.0611 23.0451L15.6224 19.7725L13.2447 17.4549L16.5305 16.9775L18 14L19.4695 16.9775L22.7553 17.4549L20.3776 19.7725L20.9389 23.0451L18 21.5ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13Z" fill="rgba(255,255,255,1)"></path></svg>
                                              Qualification
-                                        
+
                                         </button>
                                         <button type="button" class="hs-tab-active:bg-primary hs-tab-active:border-primary hs-tab-active:text-white dark:hs-tab-active:bg-primary dark:hs-tab-active:border-primary dark:hs-tab-active:text-white -mr-px py-3 px-3 inline-flex items-center gap-2 bg-gray-50 text-sm font-medium text-center border text-gray-500 rounded-sm hover:text-gray-700 dark:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-gray-300" id="profile-settings-item-2" data-hs-tab="#profile-settings-2" aria-controls="profile-settings-2" role="tab">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M17 19H19V11H13V19H15V13H17V19ZM3 19V4C3 3.44772 3.44772 3 4 3H18C18.5523 3 19 3.44772 19 4V9H21V19H22V21H2V19H3ZM7 11V13H9V11H7ZM7 15V17H9V15H7ZM7 7V9H9V7H7Z" fill="rgba(255,255,255,1)"></path></svg>
@@ -124,6 +122,8 @@
                                 </div>
                             </div>
                             <div class="col-span-12 xl:col-span-9">
+
+
                                 <div class="box">
                                     <div class="box-body p-0">
                                         <div id="profile-settings-1" role="tabpanel" aria-labelledby="profile-settings-item-1">
@@ -152,7 +152,7 @@
                                                             </div>
                                                             <div class="grid lg:grid-cols-3 gap-3 space-y-2 lg:space-y-0 pb-4">
                                                                 <div class="space-y-2">
-                                                                <label class="ti-form-label mb-0 font-bold">Employee Type</label>
+                                                                    <label class="ti-form-label mb-0 font-bold">Employee Type</label>
                                                                     <select class="ti-form-select" name="employee_type" id="employee_type">
                                                                         <option value="null">Choose a Employee Type</option>
                                                                         <option value="Teaching" <?php echo e($staff->latest_employee_type[0]->employee_type == "Teaching"?'selected':''); ?>>Teaching</option>
@@ -166,12 +166,12 @@
                                                                         <!--span class="px-4 inline-flex items-center min-w-fit ltr:rounded-r-sm rtl:rounded-l-sm border ltr:border-l-0 rtl:border-r-0 border-gray-200 bg-gray-50 text-sm dark:bg-black/20 dark:border-white/10">
                                                                             <span class="text-sm text-gray-500 dark:text-white/70">@git.edu</span>
                                                                         </span-->
-                                                                    </div>   
+                                                                    </div>
                                                                 </div>
-                                                                
+
                                                             </div>
-                                                            
-                                                            <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pb-4"> 
+
+                                                            <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pb-4">
                                                                 <div class="space-y-2">
                                                                     <label class="ti-form-label mb-0 font-bold">Religion</label>
                                                                     <select class="ti-form-select" name="religion_id" id="religion_id">
@@ -179,19 +179,19 @@
                                                                         <?php $__currentLoopData = $religions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $religion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                         <option value="<?php echo e($religion->id); ?>" <?php echo e($staff->religion_id == $religion->id? 'selected':''); ?>><?php echo e($religion->religion_name); ?></option>
                                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                            
+
                                                                         </select>
                                                                 </div>
                                                                 <div class="space-y-2">
                                                                     <label class="ti-form-label mb-0 font-bold">Caste Category</label>
-                                                                    
+
                                                                     <select class="ti-form-select" name="castecategory_id" id="castecategory_list">
                                                                         <?php $__currentLoopData = $castecategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $caste): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                         <option value="<?php echo e($caste->id); ?>" <?php echo e($staff->castecategory_id == $caste->id? 'selected':''); ?>><?php echo e($caste->caste_name.'-'.$caste->subcastes_name.'-'.$caste->category.'-'.$caste->category_no); ?></option>
                                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                     </select>
-                                                                
-                                                                </div>  
+
+                                                                </div>
                                                                     <div class="space-y-2 pr-4">
                                                                         <label class="ti-form-label mb-0">Gender</label>
                                                                         <div class="flex gap-x-6">
@@ -199,19 +199,19 @@
                                                                                 <input type="radio" name="gender" value="female" <?php echo e($staff->gender == "female"?'checked':''); ?> class="ti-form-radio" id="hs-radio-group-1">
                                                                                 <label for="hs-radio-group-1" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Female</label>
                                                                             </div>
-                                    
+
                                                                             <div class="flex">
                                                                                 <input type="radio" name="gender" value="male" <?php echo e($staff->gender == "male"?'checked':''); ?> class="ti-form-radio" id="hs-radio-group-2">
                                                                                 <label for="hs-radio-group-2" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Male</label>
                                                                             </div>
-                                    
+
                                                                             <div class="flex">
                                                                                 <input type="radio" name="gender" value="others" <?php echo e($staff->gender == "others"?'checked':''); ?> class="ti-form-radio" id="hs-radio-group-3">
                                                                                 <label for="hs-radio-group-3" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Others</label>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    
+
                                                                     <div class="space-y-2">
                                                                         <label class="ti-form-label mb-0 font-bold">Date Of Birth</label>
                                                                         <input type="text" name="dob" value="<?php echo e($staff->dob); ?>" class="ti-form-input flatpickr-input date" id="dob"
@@ -222,16 +222,16 @@
                                                                         <input type="text" name="doj" value="<?php echo e($staff->doj); ?>" class="ti-form-input flatpickr-input date" id="doj"
                                                                             placeholder="Choose date" readonly>
                                                                     </div>
-                                                                
+
                                                                     <div class="space-y-2">
                                                                         <label class="ti-form-label mb-0 font-bold">Date Of Superannution</label>
                                                                         <input type="text" name="date_of_superanuation" class="ti-form-input flatpickr-input date" id="dos"
                                                                         value="<?php echo e($staff->date_of_superanuation); ?>" placeholder="Choose date" readonly>
                                                                     </div>
-                                                                    
+
                                                                     <div class="space-y-2">
                                                                         <label class="ti-form-label mb-0 font-bold">Date Of Confirmation</label>
-                                                                        
+
                                                                          <input type="text" name="date_of_confirmation" class="ti-form-input flatpickr-input" value="<?php echo e(($confirmationdate!=null ? $confirmationdate:"" )); ?>"
                                                                             placeholder="Choose date" readonly>
                                                                     </div>
@@ -270,7 +270,7 @@
                                                                             placeholder="XXXXX-XXXXX">
                                                                     </div>
                                                             </div>
-                                                            <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pb-4"> 
+                                                            <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pb-4">
                                                                 <div class="space-y-2" id="AICTE_id">
                                                                     <label class="ti-form-label mb-0 font-bold">AICTE ID:</label>
                                                                     <input type="text" name="aicte_id" class="my-auto ti-form-input" value="<?php echo e($staff->aicte_id); ?>"
@@ -306,7 +306,7 @@
                                                                     <input type="text" name="permanent_address" class="my-auto ti-form-input" value="<?php echo e($staff->permanent_address); ?>" placeholder="Permenant Address">
                                                                 </div>
                                                             </div>
-                                                            <div class="grid lg:grid-cols-3 gap-3 space-y-2 lg:space-y-0"> 
+                                                            <div class="grid lg:grid-cols-3 gap-3 space-y-2 lg:space-y-0">
                                                                 <div class="space-y-2">
                                                                     <label class="ti-form-label mb-0 font-bold">Emergency No</label>
                                                                     <input type="text" name="emergency_no" class="ti-form-input" value="<?php echo e($staff->emergency_no); ?>" placeholder="emergency no">
@@ -315,8 +315,8 @@
                                                                     <label class="ti-form-label mb-0 font-bold">Emergency Name</label>
                                                                     <input type="text" name="emergency_name" class="ti-form-input" value="<?php echo e($staff->emergency_name); ?>" placeholder="emergency name">
                                                                 </div>
-                                                                
-                                                                    
+
+
                                                             </div>
                                                             <div class="pt-6 pl-48">
                                                                 <button type="submit" class="ti-btn m-0 ti-btn-soft-primary text-right">
@@ -324,32 +324,32 @@
                                                                     Update
                                                                 </button>
                                                                 <!--a href="javascript:void(0);" class="ti-btn m-0 ti-btn-soft-secondary"><i class="ri ri-close-circle-line"></i> Cancel</a-->
-                                                            
+
                                                             </div>
-                                                    </form>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>   
+                                        </div>
 
                                         
 
                                         <div id="qualification-tab" class="hidden" role="tabpanel" aria-labelledby="qualification">
-                                            
+
 
                                         </div>
                                          
 
                                         <div id="profile-settings-2" class="hidden" role="tabpanel" aria-labelledby="profile-settings-item-2">
-                                            
+
                                         </div>
                                         <!-- Association Section starts here -->
                                         <div id="profile-settings-3" class="hidden" role="tabpanel" aria-labelledby="profile-settings-item-3">
-                                            
+
                                         </div>
                                         <!--Desination & Payscale section starts here-->
                                         <div id="profile-settings-4" class="hidden" role="tabpanel" aria-labelledby="profile-settings-item-4">
-                                                  
+
                                         </div>
                                         <div id="profile-settings-5" class="hidden" role="tabpanel" aria-labelledby="profile-settings-item-5">
                                             <div class="box border-0 shadow-none mb-0">
@@ -357,7 +357,7 @@
                                                     <h5 class="box-title leading-none flex"><i class="ri ri-notification-4-line ltr:mr-2 rtl:ml-2"></i> Leaves History</h5>
                                                 </div>
                                                 <div class="box-body">
-                                                
+
                                                 </div>
                                             </div>
                                         </div>
@@ -369,11 +369,11 @@
                                                 <div class="box-body">
                                                     <div class="space-y-2">
                                                         <label class="ti-form-label mb-0 font-bold">Salary</label>
-                                                        
+
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div> 
+                                        </div>
                                     </div>
                                     <div class="box-footer text-end space-x-3 rtl:space-x-reverse">
                                     </div>
@@ -402,14 +402,14 @@
 
         <!-- FORM-LAYOUT JS -->
         <?php echo app('Illuminate\Foundation\Vite')('resources/assets/js/profile-settings.js'); ?>
-        
+
         <script
         src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
         <script>
             $(document).ready(function(){
-                
+
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -434,15 +434,15 @@
                             data.forEach(function(item) {
                                 castecategoriesDropdown.append($('<option>').text(item['caste_name']+"-"+item['subcastes_name']+"-"+item['category']+"-"+item['category_no']).attr('value', item['id']));
                             });
-                                
+
                         },
                         error: function (error) {
                             console.log(error);
                         }
                     });
-                    
+
                });
-               
+
                //for checking whether the employee type is teaching Or non teaching for enabling id's
                var employee_type = $('#employee_type').val();
                     if($(this).val()=='Teaching'){
@@ -451,7 +451,7 @@
 
                         $('#ESI_no').hide();
                         $('#UN_no').hide();
-                       
+
                     }else if($(this).val()=='Non-Teaching'){
                         $('#AICTE_id').hide();
                         $('#VTU_id').hide();
@@ -461,8 +461,8 @@
                     }else{
                         //alert('Please choose appropriate employee type');
                     }
-                   
-                    // on change the ids fields to be changed. 
+
+                    // on change the ids fields to be changed.
                 $(document).on('change','#employee_type',function(){
                         if($(this).val()=='Teaching'){
                             $('#AICTE_id').show();
@@ -470,7 +470,7 @@
 
                             $('#ESI_no').hide();
                             $('#UN_no').hide();
-                        
+
                         }else if($(this).val()=='Non-Teaching'){
                             $('#AICTE_id').hide();
                             $('#VTU_id').hide();
@@ -481,10 +481,10 @@
                             //do nothing.
                             alert('Please choose appropriate employee type');
                         }
-                    
+
                 });
 
-          
+
 
                 $(document).on('change','#designation_id',function(){
                     //alert('changed');
@@ -493,7 +493,7 @@
                     }else{
                         $('#dept_div'). hide();
                     }
-                    
+
                 });
 
                 //while adding the consolidated field if the association choosen is contractual part time.
@@ -503,42 +503,42 @@
                             ///for checking if the association is contractual.
                             $('#consolidated_div').removeClass('hidden');
                         //  $('#payscale_id_div').addClass('hidden');
-                        } 
+                        }
                         else{
                             $('#consolidated_div').addClass('hidden');
                             //$('#payscale_id_div').removeClass('hidden');
                         }
                     });
 
-                    //while editing the consolidated teacching pay field , if choosen as contractual part time 
+                    //while editing the consolidated teacching pay field , if choosen as contractual part time
                     $(document).on('change','#associations_id_edit',function(){
                         alert('Association Changed');
                         if($(this).val() == 4) {//for checking if the association is contractual.
 
                             $('#Edit_association_closing_date').removeClass('hidden');
                            $('.close_forever_div').removeClass('hidden');
-                    
+
 
                         }else{
                             $('#Edit_association_closing_date').addClass('hidden');
                             $('.close_forever_div').addClass('hidden');
-                           
-                           
+
+
                         }
                     });
 
-                
 
-                    //on change of Pay type , get employee type, designation and then populate appropriate pay 
+
+                    //on change of Pay type , get employee type, designation and then populate appropriate pay
                     $(document).on('change','input[type=radio][name=pay_type]',function(){
                           //  alert($(this).val());
                             var pay_type = $(this).val();
                             var emp_type = $('#change_payscale_employee_type').val();
                             var designation_id = $('#change_payscale_designation_id').val();
                             //var staff_id = $('#staff_id').val();
-                            
+
                             alert(pay_type+'-'+emp_type+'-'+designation_id);
-                        
+
                             $.ajax({
                                     url:base_url+'/ESTB/staff/getstaffpay_list',
                                     method:'GET',
@@ -551,11 +551,11 @@
                                         var staffPayDropdown = $('#ajax_data_populate');
                                         staffPayDropdown.empty(); // Clear existing options
                                         if(pay_type == "Consolidated"){
-                                            
+
                                                 console.log(data);
-                                            
+
                                                 $('#nt_fixed_pay_div').hide(); // For displaying the payscale level
-                                                $('#nt_payscale_div').hide(); 
+                                                $('#nt_payscale_div').hide();
                                                 $('#payscalelevel').hide();
 
                                                 // $("#ajax_data_populate").append(data.ntcpayscales);
@@ -569,27 +569,27 @@
                                                 $('#teahing_consolidated_pay_div').hide();
                                                 if($('#t_payscale_div').css('display') == 'none'){
                                                     $('#t_payscale_div').show();
-                                                    
+
                                                 }else{
-                                                    
+
                                                     $('#ajax_data_populate').html(data);
-                                                    
+
                                                 }
 
-                                            
+
                                                 $('#nt_fixed_pay_div').hide();
-                                                
+
                                                 $("#payscale_id").append(data);
                                                 $('#payscalelevel').hide();
                                                 $('#nt_consolidated_pay').hide();
                                             }else{
                                                 console.log(data);
-                                                
+
                                                 $('#nt_fixed_pay_div').hide();
                                                 $('#nt_consolidated_pay').hide();
                                             // $("#ajax_data_populate").append(data.ntpayscales);
                                                 staffPayDropdown.append(data);
-                                                
+
                                             }
                                         }
                                         if(pay_type == "Fixed"){ // for fixed pay .for both (T and NT)
@@ -606,8 +606,8 @@
                                                         $('#teahing_consolidated_pay_div').show();
                                                 }else{
                                                         $('#ajax_data_populate').append('<label for="" class="ti-form-label mb-0 font-bold">Fixed Pay </label><input type="text" name="fixed_pay" class="ti-form-input" value=""/>');
-                                                
-                                                    
+
+
                                                 }
                                             }else{
                                                 //non teaching fixed.
@@ -615,14 +615,14 @@
                                                     $('#nt_fixed_pay_div').show();
                                                 }else{
                                                     $('#ajax_data_populate').append('<label for="" class="ti-form-label mb-0 font-bold">Fixed Pay </label><input type="text" name="fixed_pay" class="ti-form-input" value=""/>');
-                                        
+
                                                 }
                                             }
-                                        
-                                                
+
+
                                             $('#payscalelevel').hide();
                                         }
-                                        
+
                                         //$("#castecategory_list").html(data);
                                     },
                                     error: function (error) {
@@ -630,10 +630,10 @@
                                     }
                                 });
                         });
-                    
-                    //for reseting the radio buttons 
+
+                    //for reseting the radio buttons
                     $(document).on('change','#change_payscale_designation_id ',function(){
-                        //for re-populating the payscales by reseting the radio button of pay_type 
+                        //for re-populating the payscales by reseting the radio button of pay_type
                         //This is connected with (on Change pay type)
                         if($('input[type=radio][name=pay_type]').is(':checked')){
                             //alert('its checked');
@@ -641,8 +641,8 @@
                         }
                     });
 
-                
-                  //on edit of Pay type , get employee type, designation and then populate appropriate pay 
+
+                  //on edit of Pay type , get employee type, designation and then populate appropriate pay
              $(document).on('change','input[type=radio][name=edit_teaching_pay_type]',function(){
                         //alert('Edit teaching payscale');
                         var pay_type = $(this).val();
@@ -675,11 +675,11 @@
                                        console.log(data);
                                                 if($('#edi_teaching_payscale_div').css('display') == 'none'){
                                                     $('#edi_teaching_payscale_div').show();
-                                                    
+
                                                 }else{
-                                                    
+
                                                     $('#edit_teaching_payscale_ajax_update').append('<div class="space-y-2" id="loaded_teaching_payscale_div">'+'<label class="ti-form-label mb-0 font-bold">Payscale</label><select class="ti-form-select" id="edit_teaching_payscale_select">');
-                                                    
+
                                                     data.forEach(function(item) {
 
                                                         $('#edit_teaching_payscale_select').append($('<option>').text(item['payscale_title']+"-"+item['basepay']+"-"+item['maxpay']+"-"+item['agp']).attr('value', item['id']));
@@ -693,9 +693,9 @@
                                     }
                                 });
                             }
-                           
 
-                        
+
+
                 });
 
 
@@ -710,11 +710,11 @@
                             if(pay_type == "Fixed"){
                                 if($('#Edit_consolidated_pay_div').css('display') == 'none'){
                                                     $('#Edit_consolidated_pay_div').show();
-                                                
-                                                    
+
+
                                 }else{
-                                    
-                                            
+
+
                                             var fixed_pay_div_content = "<div class='space-y-2' id='Edit_consolidated_pay_div'>"
                                                                             +"<label for='' class='ti-form-label mb-0 font-bold'>Consolidated Pay </label>"
                                                                                 +"<input type='text' name='pay' class='ti-form-input' value=''/>"
@@ -736,13 +736,13 @@
                                        console.log(data);
                                                 if($('#edi_teaching_payscale_div').css('display') == 'none'){
                                                     $('#edi_teaching_payscale_div').show();
-                                                    
+
                                                 }else{
                                                    $('#edit_cons_teaching_pay_ajax_update').empty();
-                                                    
+
                                                    $('#edit_cons_teaching_pay_ajax_update').html(data);
                                                     // $('#edit_cons_teaching_pay_ajax_update').html('<div class="space-y-2" id="loaded_teaching_payscale_div">'+'<label class="ti-form-label mb-0 font-bold">Payscale</label><select class="ti-form-select" name="payscale_id" id="edit_cons_select">');
-                                                    
+
                                                     // data.forEach(function(item) {
 
                                                     //     $('#edit_cons_select').append($('<option>').text(item['payscale_title']+"-"+item['basepay']+"-"+item['maxpay']+"-"+item['agp']).attr('value', item['id']));
@@ -767,9 +767,9 @@
                     var emp_type = $('#change_payscale_employee_type').val();
                     var designation_id = $('#change_payscale_designation_id').val();
                     //var staff_id = $('#staff_id').val();
-                
+
                     //alert(pay_type+'-'+emp_type+'-'+designation_id);
-                
+
                     $.ajax({
                         url:base_url+'/ESTB/staff/getstaffpay_list',
                         method:'GET',
@@ -779,9 +779,9 @@
                             var staffPayDropdown = $('#edit_ajax_data_populate');
                             staffPayDropdown.empty(); // Clear existing options
                             if(pay_type == "Consolidated"){
-                                
+
                                 console.log(data);
-                                            
+
                                             $('#edit_nt_fixed_pay_div').hide(); // For displaying the payscale level
                                             $('#edit_nt_payscale_div').hide();
                                             $('#edit_payscalelevel').hide();
@@ -793,11 +793,11 @@
                                             staffPayDropdown.append(data);
                                             //$('#nt_consolidated_pay').show();
                                             }
-                                            
+
                                     }
 
                                     if(pay_type == "Payscale"){
-                                        
+
                                         $('#edit_nt_fixed_pay_div').hide();
                                             console.log(data);
                                             $('#edit_nt_consolidated_pay_div').hide();
@@ -806,13 +806,13 @@
                                                 $('#edit_nt_payscale_div').show();
                                             }
                                             else{
-                                                
-                                            
+
+
                                             // $("#ajax_data_populate").append(data.ntpayscales);
                                                 staffPayDropdown.append(data);
                                             }
-                                            
-                                        
+
+
                                     }
                                     if(pay_type == "Fixed"){ // for fixed pay .for both (T and NT)
 
@@ -820,20 +820,20 @@
                                         $('#edit_nt_consolidated_pay_div').hide();
                                         $('#edit_payscalelevel').hide();
                                         //$('#nt_payscale_div').hide();
-                                        
+
                                             //non teaching fixed.
                                             if($('#edit_nt_fixed_pay_div').css('display') == 'none'){
                                                 $('#edit_nt_fixed_pay_div').show();
                                             }else{
                                                 $('#edit_ajax_data_populate').append('<label for="" class="ti-form-label mb-0 font-bold">Fixed Pay </label><input type="text" name="fixed_pay" class="ti-form-input" value=""/>');
-                                    
+
                                             }
-                                        
-                                    
-                                            
-                                        
+
+
+
+
                                     }
-                                    
+
                                     //$("#castecategory_list").html(data);
                                 },
                                 error: function (error) {
@@ -873,7 +873,7 @@
                                 url:url,
                                 method:'GET',
                                 data:{'staff':staff},
-                               
+
                                 success:function(data) {
                                    // console.log(data);
                                     $('#profile-settings-3').html(data).addClass('active');
@@ -884,7 +884,7 @@
                             });
                 });
 
-                
+
                 //Ajax loading of departments.
                 $(document).on('click','#profile-settings-item-2',function(){
                     //alert('Ajax calling');
@@ -924,12 +924,13 @@
                                 }
                             });
                 });
-                
-              
-        }); 
-             
 
-              
+
+        });
+
+
+
         </script>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\laravel Apps\gitoffice\resources\views//ESTB/staff/view.blade.php ENDPATH**/ ?>
