@@ -2,9 +2,11 @@
 
 namespace MailerSend;
 
+use Illuminate\Support\Arr;
 use MailerSend\Common\HttpLayer;
 use MailerSend\Endpoints\Activity;
 use MailerSend\Endpoints\Analytics;
+use MailerSend\Endpoints\ApiQuota;
 use MailerSend\Endpoints\Blocklist;
 use MailerSend\Endpoints\BulkEmail;
 use MailerSend\Endpoints\Domain;
@@ -13,7 +15,9 @@ use MailerSend\Endpoints\EmailVerification;
 use MailerSend\Endpoints\HardBounce;
 use MailerSend\Endpoints\Inbound;
 use MailerSend\Endpoints\Message;
+use MailerSend\Endpoints\OnHoldList;
 use MailerSend\Endpoints\ScheduleMessages;
+use MailerSend\Endpoints\SenderIdentity;
 use MailerSend\Endpoints\Sms;
 use MailerSend\Endpoints\SmsActivity;
 use MailerSend\Endpoints\SmsInbound;
@@ -21,14 +25,15 @@ use MailerSend\Endpoints\SmsMessage;
 use MailerSend\Endpoints\SmsNumber;
 use MailerSend\Endpoints\SmsRecipient;
 use MailerSend\Endpoints\SmsWebhook;
+use MailerSend\Endpoints\SmtpUser;
 use MailerSend\Endpoints\Template;
 use MailerSend\Endpoints\SpamComplaint;
 use MailerSend\Endpoints\Unsubscribe;
+use MailerSend\Endpoints\User;
 use MailerSend\Endpoints\Webhook;
 use MailerSend\Endpoints\Token;
 use MailerSend\Endpoints\Recipient;
 use MailerSend\Exceptions\MailerSendException;
-use Tightenco\Collect\Support\Arr;
 
 /**
  * This is the PHP SDK for MailerSend
@@ -73,6 +78,11 @@ class MailerSend
     public SmsRecipient $smsRecipient;
     public SmsWebhook $smsWebhook;
     public SmsInbound $smsInbound;
+    public SenderIdentity $senderIdentity;
+    public ApiQuota $apiQuota;
+    public OnHoldList $onHoldList;
+    public SmtpUser $smtpUser;
+    public User $user;
 
     /**
      * @param  array  $options  Additional options for the SDK
@@ -112,6 +122,11 @@ class MailerSend
         $this->smsRecipient = new SmsRecipient($this->httpLayer, $this->options);
         $this->smsWebhook = new SmsWebhook($this->httpLayer, $this->options);
         $this->smsInbound = new SmsInbound($this->httpLayer, $this->options);
+        $this->senderIdentity = new SenderIdentity($this->httpLayer, $this->options);
+        $this->apiQuota = new ApiQuota($this->httpLayer, $this->options);
+        $this->onHoldList = new OnHoldList($this->httpLayer, $this->options);
+        $this->smtpUser = new SmtpUser($this->httpLayer, $this->options);
+        $this->user = new User($this->httpLayer, $this->options);
     }
 
     protected function setHttpLayer(?HttpLayer $httpLayer = null): void
@@ -130,6 +145,10 @@ class MailerSend
             if (array_key_exists($option, $this->options)) {
                 $this->options[$option] = $value;
             }
+        }
+
+        if (empty(Arr::get($this->options, 'api_key'))) {
+            Arr::set($this->options, 'api_key', getenv('MAILERSEND_API_KEY'));
         }
 
         if (empty(Arr::get($this->options, 'api_key'))) {

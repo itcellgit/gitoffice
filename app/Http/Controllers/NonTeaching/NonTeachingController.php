@@ -42,6 +42,7 @@ class NonTeachingController extends Controller
         //count of professional activity attended &conducted
         $staff=staff::with('professional_activity_attendee')->with('professional_activity_conducted')->with('activedepartments')->where('user_id','=',$user->id)->first();
         $dept_id=array();
+
         foreach($staff->activedepartments as $depts)
         {
             array_push( $dept_id,$depts->id);
@@ -193,5 +194,3 @@ class NonTeachingController extends Controller
 
 
     }
-
-

@@ -66,8 +66,6 @@
 
                                 <th scope="col" class="dark:text-white/80">@sortablelink('feild details','feild details')</th>
 
-
-
                             </tr>
                             </thead>
 

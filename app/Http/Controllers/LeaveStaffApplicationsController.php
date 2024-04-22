@@ -161,7 +161,9 @@ class LeaveStaffApplicationsController extends Controller
         $user = Auth::User();
         $staff=staff::where('user_id','=',$user->id)->first();
         $result=$this->validateleave($request,$staff);
+        // $staff_dept = staff::with('departments')->where('user_id','=',$user->id)->first();
 
+        // dd($staff_dept);
       
        // dd($result);
         $status=false;
@@ -511,6 +513,7 @@ class LeaveStaffApplicationsController extends Controller
         //['message' => 'Date clicked: ' . $date]
     }
 
+        //for fetching the leave events to display on click of the event.
     public function fetchmyleaveevents(Request $request){
         $date = $request->input('date');
         //dd($date);
@@ -521,8 +524,11 @@ class LeaveStaffApplicationsController extends Controller
         ->join('staff AS s1','s1.id','=','leave_staff_applications.staff_id')
         ->join('staff AS s2','s2.id','=','leave_staff_applications.alternate')
         ->leftJoin('staff AS s3','s3.id','=','leave_staff_applications.additional_alternate')
+        //->leftjoin('daywise__leaves AS daywise', 'leave_staff_applications.id', '=', 'daywise.leave_staff_applications_id')
         ->where('leave_staff_applications.staff_id',$staff->id)
-        ->where('leave_staff_applications.start',$date)
+        
+        ->whereDate('leave_staff_applications.start' , '<=', $date)
+        ->whereDate('leave_staff_applications.end','>=',$date)
         ->select(DB::raw("CONCAT(s1.fname,' ',s1.mname,' ',s1.lname) AS staff_name"),
                 DB::raw("CONCAT(s2.fname,' ',s2.mname,' ',s2.lname) AS alternate_staff"),
                 DB::raw("CONCAT(s3.fname,' ',s3.mname,' ',s3.lname) AS additional_alternate_staff"),
@@ -532,6 +538,7 @@ class LeaveStaffApplicationsController extends Controller
                 'leave_staff_applications.appl_status AS appl_status',
                 'leave_staff_applications.id AS Application_id', 
                 'leave_staff_applications.reason AS reason')->get();
+        //dd($leave_events);
         // Return a response (optional)
           return response()->json($leave_events);
         //return response()->json(['message' => 'Date clicked: ' . $date]);

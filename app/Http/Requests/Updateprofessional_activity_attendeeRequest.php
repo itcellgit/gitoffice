@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class Updateprofessional_activity_attendeeRequest extends FormRequest
@@ -24,20 +24,20 @@ class Updateprofessional_activity_attendeeRequest extends FormRequest
      */
     public function rules(): array
     {
-        return 
+        return
         [
             'edit_title' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
             'edit_organizer'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
-            'edit_role'=>['required', Rule::in(['Participant', 'Resource Person'])],
+            'edit_role'=>['required', Rule::in(['Participant', 'Resource Person','Jury'])],
             'edit_level' => ['required', Rule::in([ 'Local', 'National','International'])],
-            'edit_category'=>['required', Rule::in(['Workshop', 'FDP', 'Seminar','Webinar','STTP','Certification Program','MDP/EDP'])],
+            'edit_category'=>['required', Rule::in(['Workshop', 'FDP', 'Seminar','Webinar','STTP','Certification Program','MDP/EDP','Hackathon','Space-Talk','Site Visit'])],
             'edit_sponsored'=>['required', Rule::in(['Yes', 'No'])],
             //'edit_sponsored_by'=>['regex:/^[a-zA-Z\s]+$/'],
             'edit_from_date'=>['required','date'],
             'edit_to_date'=>['required','date'],
             'edit_no_of_days'=>['required','numeric','min:1','max:365'],
             'document'=>['required','file','mimes:pdf'],
-           
+
         ];
     }
     public function messages():array

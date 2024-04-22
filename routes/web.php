@@ -142,7 +142,7 @@ use App\Http\Controllers\LeaveStaffApplicationsController;
 use App\Http\Controllers\grievience\ExamOfficeController;
 
 
-
+use App\Http\Controllers\MSSqlController;
 /*
 
 |--------------------------------------------------------------------------
@@ -408,7 +408,10 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::patch('/ESTB/staff/update/{staff}',[StaffController::class,'update'])->name('ESTB.staff.update');
 
     //Route to fetch staff data using Filter
-    Route::get('/ESTB/staff/staffinformation',[StaffController::class,'filterstaff_information'])->name('ESTB.staff.staffinformation');
+    //Route::get('/ESTB/staff/staffinformation',[StaffController::class,'filterstaff_information'])->name('ESTB.staff.staffinformation');
+    Route::get('/ESTB/staff/staffinformation', [StaffController::class, 'filterstaff_information'])->name('ESTB.staff.filter.staff');
+
+
 
 
 
@@ -734,8 +737,10 @@ Route::patch('ticket/update/avatar/{ticket}', [TicketController::class, 'update'
 Route::get('ticket/show/{ticket}', [TicketController::class, 'show'])->name('ticket.show');
 Route::post('ticket/{ticket}/reply/store', [ReplyController::class, 'store'])->name('ticket.reply.store');
 
-
-
+Route::get('mssql',function(){
+  $db=DB::connection('sqlsrv')->table('Employees')->get();
+  dd($db);
+});
 //open new page for modal
 //Route::post('ticket/reply', [Replyontroller::class, 'replyForm'])->name('Ticketing.replyticket');
 

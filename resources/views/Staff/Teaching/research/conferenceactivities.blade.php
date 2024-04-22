@@ -416,6 +416,8 @@
                                                                                     </div>
                                                                                 </div>
                                                                             <?php endif; ?>
+
+
                                                                             <!--Modal Ends Here-->
                                                                             <div class="hs-tooltip ti-main-tooltip">
                                                                                 <a  href="{{ Storage::url('Uploads/Research/Conference_Attended/' . $act->document) }}" class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-primary" target="_blank" {{$act->document}}>
@@ -1863,13 +1865,14 @@
                             flag = true;
                         }
 
-                        if (con_att_issn_number !== '') {
-                            if (!/^\d{4}-\d{4}(\d{1}|[Xx]{1})$/.test(con_att_issn_number.trim())) {
+                        //code for make optional issn number
+                        if (con_att_issn_number.trim() !== '') {
+                            if (!/^\d{4}-\d{4}(\d{1}|[Xx]{1})$/.test(con_att_issn_number.trim()))
+                            {
                                 $('#con_att_issnnumberError').text('Please enter a valid ISSN Number');
                                 flag = true;
                             }
                         }
-
 
                         if(flag == true){
                             e.preventDefault();
@@ -1983,17 +1986,22 @@
                         } else {
                             // The field is optional and empty, no validation
                         }
-                         if(cc_typeof_level =='#'){
+
+                        if(cc_typeof_level =='#'){
                             $('#cc_typeoflevelError').text('Please Choose a correct option.');
                             flag = true;
                         }
 
-                        if (cc_issn_no !== '') {
-                            if (!/^\d{4}-\d{4}(\d{1}|[Xx]{1})$/.test(cc_issn_no.trim())) {
+
+                        //code for make optional issn number
+                        if (cc_issn_no.trim() !== '') {
+                            if (!/^\d{4}-\d{4}(\d{1}|[Xx]{1})$/.test(cc_issn_no.trim()))
+                            {
                                 $('#con_issn_noError').text('Please enter a valid ISSN Number');
                                 flag = true;
                             }
                         }
+
 
                         //if(con_cond_document[0].files.length === 0){
                             //alert('file not choosen');

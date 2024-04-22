@@ -3,14 +3,11 @@
 namespace MailerSend\Endpoints;
 
 use Assert\Assertion;
-use MailerSend\Exceptions\MailerSendAssertException;
 use MailerSend\Helpers\Builder\Attachment;
-use MailerSend\Helpers\Builder\EmailParams;
 use MailerSend\Helpers\Builder\Personalization;
 use MailerSend\Helpers\Builder\Recipient;
 use MailerSend\Helpers\Builder\Variable;
 use MailerSend\Helpers\GeneralHelpers;
-use Tightenco\Collect\Support\Collection;
 
 class BulkEmail extends AbstractEndpoint
 {
@@ -60,7 +57,7 @@ class BulkEmail extends AbstractEndpoint
                     'personalization' => $personalization_mapped,
                     'send_at' => $params->getSendAt(),
                     'precedence_bulk' => $params->getPrecedenceBulkHeader(),
-                    'in-reply-to' => $params->getInReplyToHeader(),
+                    'in_reply_to' => $params->getInReplyToHeader(),
                 ],
                 fn ($v) => is_array($v) ? array_filter($v, fn ($v) => $v !== null) : $v !== null
             );
