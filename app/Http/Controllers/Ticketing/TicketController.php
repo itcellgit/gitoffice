@@ -21,7 +21,7 @@ class TicketController extends Controller
     {
         $user=auth()->user();
         $tickets=$user->isAdmin?Ticket::latest()->get():$user->tickets;
-        
+
         return view('Ticketing.dashboard',compact('tickets'));
     }
 
@@ -38,7 +38,7 @@ class TicketController extends Controller
      */
     public function store(StoreticketRequest $request)
     {
-       
+
         $ticket=Ticket::create([
             'title'=>$request->title,
             'description'=>$request->description,
@@ -65,6 +65,8 @@ class TicketController extends Controller
     public function show(ticket $ticket)
     {
         //dd(1);
+
+
         return view('Ticketing.showticket',compact('ticket'));
     }
 
@@ -100,5 +102,5 @@ class TicketController extends Controller
         $ticket->delete();
         return redirect(route('ticket.dashboard'));
     }
-   
+
 }
