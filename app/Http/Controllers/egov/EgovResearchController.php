@@ -272,16 +272,16 @@ class EgovResearchController extends Controller
         $department_id=Session ::get('deptid');
         $general_achievements=DB::table('general_achievements')
 
-                            ->join('staff','staff.id','=','general_achievements.staff_id')
-                            ->join('department_staff','department_staff.staff_id','=','staff.id')
-                            ->join('departments','departments.id','=','department_staff.department_id')
-                            ->join('employee_types','employee_types.staff_id','=','staff.id')
-                            ->where('employee_types.employee_type','=','Teaching')
-                           // ->where('staff.employee_type','=','Teaching')
-                            ->where('department_id','=',$department_id)
-                            //->select('general_achievements.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
-                            ->select(DB::raw('DISTINCT(general_achievements.egov_id)'),'general_achievements.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
-                            ->get();
+                        ->join('staff','staff.id','=','general_achievements.staff_id')
+                        ->join('department_staff','department_staff.staff_id','=','staff.id')
+                        ->join('departments','departments.id','=','department_staff.department_id')
+                        ->join('employee_types','employee_types.staff_id','=','staff.id')
+                        ->where('employee_types.employee_type','=','Teaching')
+                        //->where('staff.employee_type','=','Teaching')
+                        ->where('department_id','=',$department_id)
+                        ->select('general_achievements.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
+                        //->select(DB::raw('DISTINCT(general_achievements.egov_id)'),'general_achievements.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
+                        ->get();
 
 
         return view('/egov/Teaching/research/achivements',compact(['general_achievements']));

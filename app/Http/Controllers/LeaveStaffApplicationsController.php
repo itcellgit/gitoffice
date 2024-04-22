@@ -35,7 +35,7 @@ class LeaveStaffApplicationsController extends Controller
         $leave_types=leave::select('shortname')->distinct('shortname')->where('max_entitlement','>',0)->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();
         // $leave_types_taken = leave::select('id','shortname')->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();// $query="select * from staff s, leaves l, leave_staff_entitlements lse where s.id=lse.staff_id and l.id=lse.leave_id and lse.status='active' and year=$year";
         // $leave_types_distinct = leave::select('shortname')->distinct('shortname')->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();// $query="select * from staff s, leaves l, leave_staff_entitlements lse where s.id=lse.staff_id and l.id=lse.leave_id and lse.status='active' and year=$year";
-        
+
         $staff_leave_entitlements=staff::join('leave_staff_entitlements','staff_id','=','staff.id')
                                         ->join('leaves','leaves.id','=','leave_staff_entitlements.leave_id')
                                         ->where('user_id',$user->id)
@@ -44,7 +44,7 @@ class LeaveStaffApplicationsController extends Controller
                                         ->where('leaves.status','=','active')
                                         ->orderby('leaves.shortname')
                                         ->get();
-               // dd($staff_leave_entitlements);                       
+               // dd($staff_leave_entitlements);
         $staff_active_dept=staff::with('activedepartments')->where('user_id',$user->id)->first();
         $dept_ids=array();
        //dd($staff_leave_entitlements);
@@ -60,27 +60,27 @@ class LeaveStaffApplicationsController extends Controller
         $dept_staff=department::with(['staff'=>function($q) use ( $staff_id_from_user,$staff_emp_type){
             $q->where('staff.id','<>',$staff_id_from_user->id)
             ->where('department_staff.status','active')
-            
+
             ->whereIn('staff.id',function($subquery)use($staff_emp_type){
                 $subquery->select('staff_id')
                 ->from('employee_types')
                 ->where('employee_types.employee_type',$staff_emp_type->employee_type);
-                
+
             })
             ->select('staff.id','staff.fname','staff.mname','staff.lname');
         }])->whereIn('id',$dept_ids)->orderBy('dept_name')->get();
-        
-        
+
+
         //fetch college level staff data for additional alternate arrangement
         $additional_alternate_staff =department::with(['staff'=>function($q) use ( $staff_id_from_user,$staff_emp_type){
             $q->where('staff.id','<>',$staff_id_from_user->id)
             ->where('department_staff.status','active')
-            
+
             ->whereIn('staff.id',function($subquery)use($staff_emp_type){
                 $subquery->select('staff_id')
                 ->from('employee_types')
                 ->where('employee_types.employee_type',$staff_emp_type->employee_type);
-                
+
             })
             ->select('staff.id','staff.fname','staff.mname','staff.lname');
         }])->orderBy('dept_name')->get();
@@ -91,7 +91,7 @@ class LeaveStaffApplicationsController extends Controller
         {
             foreach($staff->latest_additional_designation as $addtnl_design)
             {
-                
+
                 if($addtnl_design->isvacational=="Non-Vacational")
                 {
                     $leaves=DB::table('leaves')->join('leave_rules','leave_rules.leave_id','=','leaves.id')
@@ -100,7 +100,7 @@ class LeaveStaffApplicationsController extends Controller
                                            ->where('leaves.status','active')
                                            ->orderBy('leaves.shortname')
                                             ->get();
-                           
+
                 }
                 else
                 {
@@ -112,7 +112,7 @@ class LeaveStaffApplicationsController extends Controller
                                             ->get();
                 }
             }
-             
+
         }
         else
         {
@@ -157,12 +157,14 @@ class LeaveStaffApplicationsController extends Controller
     {
         //
        //calling the validate leave function to validate the leave
-      
+
         $user = Auth::User();
         $staff=staff::where('user_id','=',$user->id)->first();
         $result=$this->validateleave($request,$staff);
+        // $staff_dept = staff::with('departments')->where('user_id','=',$user->id)->first();
 
-      
+        // dd($staff_dept);
+
        // dd($result);
         $status=false;
         //dd($result);
@@ -178,13 +180,13 @@ class LeaveStaffApplicationsController extends Controller
             $leave_application->recommender = 3; // hard-coded
             $leave_application->approver = 2; //hard-coded
             $leave_application->no_of_days = $request->no_of_days;
-            
+
             if($request->additional_alternate!='#')
             {
                 $leave_application->additional_alternate = $request->additional_alternate;
             }
             $leave_application->alternate = $request->alternate;
-            
+
             $leave_application->appl_status = 'pending';
             $leave_application->leave_status = 'awaiting';
             $leave_application->year = 2024;
@@ -195,8 +197,8 @@ class LeaveStaffApplicationsController extends Controller
             //dd($leave_appn_id);
             $period = CarbonPeriod::create($request->from_date, $request->to_date);
             $daywise_leave_result = false;
-            
-            
+
+
             foreach ($period as $dt) {
 
                 $day_wise_leave = new Daywise_Leave();
@@ -205,15 +207,15 @@ class LeaveStaffApplicationsController extends Controller
                 $day_wise_leave->start = $dt->format('Y-m-d');
                 //dd($dt->format('Y-m-d'));
                 $daywise_leave_result = $day_wise_leave->save();
-                
+
             }
-            
+
 
             //dd($leave_appn_id);
-        
+
            // update the leave_staff_entitlement table consumed value for the perticular leave, perticular staff
             $leave_staff_entitlement=leave_staff_entitlements::where('staff_id',$staff->id)->where('leave_id',$request->type)->where('year',2024)->first();
-        
+
             if($leave_staff_entitlement!=null)
             {
                 $leave_staff_entitlement->consumed_curr_year= $leave_staff_entitlement->consumed_curr_year+$request->no_of_days;
@@ -221,13 +223,13 @@ class LeaveStaffApplicationsController extends Controller
             }
             else
             {
-                //for leaves other than entitled given, check if the entry for this leave is already present. 
+                //for leaves other than entitled given, check if the entry for this leave is already present.
                 //if present, then perform updated query else perform insert query
             }
 
-            
+
         }
-       
+
         if($leave_appn_id && $daywise_leave_result && $result){
             $status = 1;
         }else{
@@ -248,13 +250,13 @@ class LeaveStaffApplicationsController extends Controller
     //method to validate the leaves as per the leave rules and leave combination allowed
     public function validateleave(request $request, staff $staff)
     {
-       
+
         $result="";
         $leave=leave::with('combine_leave')->with('leave_rules')->where('id',$request->type)->first();
-      
+
         //dd($staff_leaves_applications);
         //Rules to check
-        //1. Leave days must not overlap. 
+        //1. Leave days must not overlap.
         //2. Leave can be combined with only a few type of leaves and also they can be take on one side or bothsides -listed in combine_leaves
         //3. no. of days of leave must be more than min_days and less than max_days - listed in leaves table
         //4. the gap between two similar kind of leave is maintained (applicable for special type of leaves) - listed in leave_rules
@@ -263,21 +265,21 @@ class LeaveStaffApplicationsController extends Controller
         //7. The total number of leaves that any staff can take in a year must be less than the total number of leaves entitled for that year - listed as entitled_cur_year in leave_staff_entitlements
 
         //implementation of the above rules
-        
+
         //Code for Rule-1.
         //check for the overlapping leaves
                $staff_leaves=DB::table('daywise__leaves as daywise')
                         ->join('leave_staff_applications','leave_staff_applications.id','=','daywise.leave_staff_applications_id')
                         ->join('leaves','leaves.id','=','daywise.leave_id')
-                       
+
                         ->where('leave_staff_applications.staff_id',$staff->id)
                         ->whereBetween('daywise.start',[$request->from_date,$request->to_date])
-                        ->select('leaves.shortname','leave_staff_applications.*','daywise.start as leaveday')->get(); 
+                        ->select('leaves.shortname','leave_staff_applications.*','daywise.start as leaveday')->get();
         //leave ending on previous day of this leave start day duration variable is initialised to 0.
-        $previous_leave_duration=0;  
+        $previous_leave_duration=0;
         //leave starting on next day of this leave end day duration variable is initialised to 0.
-        $next_leave_duration=0;           
-        //if $staff_leaves count is greater than 0 => the leave dates are clashing            
+        $next_leave_duration=0;
+        //if $staff_leaves count is greater than 0 => the leave dates are clashing
         if(count($staff_leaves)>0)
         {
             $result="Error: The day mentioned in this leave applicaiton is having an overlapping days of another leave application.";
@@ -285,13 +287,13 @@ class LeaveStaffApplicationsController extends Controller
         }
         // else indicates that the leave dates are not clashing hence, check for any leave that is ending on the previous day of this applications start date
         //if there is any leave application before the start date =>
-        // 1. Check if both leave types are same, if both are same check for the total number of days of leave (both together). 
+        // 1. Check if both leave types are same, if both are same check for the total number of days of leave (both together).
         // It should not be more than the max_days allowed for that leave type
         //if the leave types are not same then check they can be availed together or no.
         $previous_date=Carbon::parse($request->from_date)->addDays(-1)->format('Y-m-d');
-       
-        
-        
+
+
+
         $staff_leaves_before_start_day=leave_staff_applications::
             join('leaves','leaves.id','=','leave_staff_applications.leave_id')
             ->where('leave_staff_applications.staff_id',$staff->id)
@@ -306,9 +308,9 @@ class LeaveStaffApplicationsController extends Controller
             ->select('leaves.shortname','leave_staff_applications.*')->first();
             if($staff_leaves_before_start_day!=null )
             {
-                if( $staff_leaves_before_start_day->leave_id==$request->type ) 
+                if( $staff_leaves_before_start_day->leave_id==$request->type )
                 {
-                   
+
                     //the two leave are of same type so check for maximum days allowed
                     $previous_leave_duration=$staff_leaves_before_start_day->no_of_days;
                 }
@@ -320,24 +322,24 @@ class LeaveStaffApplicationsController extends Controller
                     $next_leave_duration=$staff_leave_after_end_date->no_of_days;
                 }
             }
-           
+
             $flag=false;
             if($staff_leaves_before_start_day!=null)
             {
-               
+
                 if($staff_leaves_before_start_day->leave_id!=$request->type)
                 {
                     //the two leave are not same so check if they can be availed together
                     //In combine_leave table for every leave there are a set of leaves that can be combined and applied.
-                    //if the other leave is present in the table check if it can be availed bothsides 
+                    //if the other leave is present in the table check if it can be availed bothsides
                     //if it cannot be availed both sides then check if this application has leave
-                  
+
                     //foreach leave combinations check if these two leaves are allowed to combine
                     //assume that the leave combination is not present
                     $is_leave_combination_before_start_day_present=false;
                     foreach($leave->combine_leave as $leave_combination)
                     {
-                        
+
                         //compare the leave_combination_pivot table leave id(combined_id) with staff previous day leave
                         if($leave_combination->pivot->combined_id==$staff_leaves_before_start_day->leave_id)
                         {
@@ -361,7 +363,7 @@ class LeaveStaffApplicationsController extends Controller
                                     // check if the leave being applied and the leave after to_date are allowed to combined.
                                      //assume that the leave combination is not present
                                     $is_leave_combination_after_end_day_present=false;
-                                    
+
                                     if($staff_leave_after_end_date->leave_id!=$request->type )
                                     {
                                         foreach($leave->combine_leave as $leave_combination_post)
@@ -371,19 +373,19 @@ class LeaveStaffApplicationsController extends Controller
                                                 $is_leave_combination_after_end_day_present=true;
                                                 //This leave combination is allowed as the above condition is true.
                                                 //The leave sandwitchable condition can be oneside or bothsides
-                                                //as this leave is only after the leave to_date hence we do not need to check the 
+                                                //as this leave is only after the leave to_date hence we do not need to check the
                                                 //sandwitchable condition
                                                 //set flag as false to indicate no issue is accepting the leave application
                                                 $flag=false;
                                             }
                                         }
                                     }
-                                  
+
                                 }
                             }
-                        
+
                         }
-                        
+
                     }
                 }
             }
@@ -391,7 +393,7 @@ class LeaveStaffApplicationsController extends Controller
             {
                 $result.="Error:Application rejected as it is combined with a leave that is not allowed. ";
             }
-        
+
         if($request->no_of_days<$leave->min_days)
         {
 
@@ -405,7 +407,7 @@ class LeaveStaffApplicationsController extends Controller
         //code for Rule-2.
         //code for Rule-4
         //Note: Carbon has a function diffInDays that returns no. of days between two dates
-        //but this function return the absolute value of prior date as well as future date. 
+        //but this function return the absolute value of prior date as well as future date.
         //we need to check if the leave start date if a future date so not using diffInDays()
         //application date is today
         if($leave->leave_rules[0]->prior_intimation_days>0)
@@ -420,7 +422,7 @@ class LeaveStaffApplicationsController extends Controller
                 $result=$result."Error:Application is rejected as the application must be done ".$leave->leave_rules[0]->prior_intimation_days." days before";
             }
         }
-        
+
         if($result=="")
         {
                 return "success";
@@ -470,7 +472,7 @@ class LeaveStaffApplicationsController extends Controller
 
     }
 
-     
+
 
     public function myleaveevents(){
 
@@ -487,7 +489,7 @@ class LeaveStaffApplicationsController extends Controller
                 DB::raw("CONCAT(s2.fname,' ',s2.mname,' ',s2.lname) AS alternate_staff"),
                 DB::raw("CONCAT(s3.fname,' ',s3.mname,' ',s3.lname) AS additional_alternate_staff"),
                 'leaves.shortname AS title','daywise.start AS start',
-                 DB::raw("date_add(daywise.start, INTERVAL 1 day)  AS end"), 
+                 DB::raw("date_add(daywise.start, INTERVAL 1 day)  AS end"),
                  'leave_staff_applications.leave_id AS leave_id',
                  'leave_staff_applications.appl_status AS appl_status',
                  'leaves.shortname AS leave_name',
@@ -511,6 +513,7 @@ class LeaveStaffApplicationsController extends Controller
         //['message' => 'Date clicked: ' . $date]
     }
 
+        //for fetching the leave events to display on click of the event.
     public function fetchmyleaveevents(Request $request){
         $date = $request->input('date');
         //dd($date);
@@ -523,7 +526,9 @@ class LeaveStaffApplicationsController extends Controller
         ->leftJoin('staff AS s3','s3.id','=','leave_staff_applications.additional_alternate')
         //->leftjoin('daywise__leaves AS daywise', 'leave_staff_applications.id', '=', 'daywise.leave_staff_applications_id')
         ->where('leave_staff_applications.staff_id',$staff->id)
-        ->where('leave_staff_applications.start',$date)
+
+        ->whereDate('leave_staff_applications.start' , '<=', $date)
+        ->whereDate('leave_staff_applications.end','>=',$date)
         ->select(DB::raw("CONCAT(s1.fname,' ',s1.mname,' ',s1.lname) AS staff_name"),
                 DB::raw("CONCAT(s2.fname,' ',s2.mname,' ',s2.lname) AS alternate_staff"),
                 DB::raw("CONCAT(s3.fname,' ',s3.mname,' ',s3.lname) AS additional_alternate_staff"),
@@ -531,20 +536,21 @@ class LeaveStaffApplicationsController extends Controller
                 'leave_staff_applications.start AS start',
                 'leave_staff_applications.end AS end', 'leave_staff_applications.leave_id AS leave_id',
                 'leave_staff_applications.appl_status AS appl_status',
-                'leave_staff_applications.id AS Application_id', 
+                'leave_staff_applications.id AS Application_id',
                 'leave_staff_applications.reason AS reason')->get();
+        //dd($leave_events);
         // Return a response (optional)
           return response()->json($leave_events);
         //return response()->json(['message' => 'Date clicked: ' . $date]);
     }
 
-       //for checking whether an eventt is there on the clicked date on the calender.  
+       //for checking whether an eventt is there on the clicked date on the calender.
     public function checkhasleaveEvent(Request $request){
         $date = $request->input('date');
-        
+
         $user = Auth::user();
         $staff = staff::where('user_id','=',$user->id)->first();
-        
+
         $check_has_leave = Daywise_Leave::join('leave_staff_applications','leave_staff_applications.id','=','daywise__leaves.leave_staff_applications_id')
             ->where('leave_staff_applications.staff_id',$staff->id)
             ->where('daywise__leaves.start',$date)->get();

@@ -146,7 +146,7 @@ class TeachingController extends Controller
         $confirmationdate=null;
         if($confirmation!=null)
         {
-                $confirmationdate=$confirmation->pivot->start_date;
+            $confirmationdate=$confirmation->pivot->start_date;
         }
 
         //dd($staff);

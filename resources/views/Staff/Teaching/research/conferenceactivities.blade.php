@@ -134,7 +134,7 @@
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="with-corner-hint" class="ti-form-label font-bold"> Conference Name:<span class="text-red-500">*</span></label>
-                                                                            <input type="text" name="conference_name" class="ti-form-input" placeholder=" Conference Name" id="con_att_conference_name">
+                                                                            <input type="text" name="conference_name" class="ti-form-input" placeholder=" Conference Name" id="con_att_conference_name" value="{{ old('conference_name') }}">
                                                                             @if($errors->has('conference_name'))
                                                                                 <div class="text-red-700">{{ $errors->first('conference_name')}}</div>
                                                                             @endif
@@ -142,19 +142,19 @@
                                                                         </div>
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Attended As: <span class="text-red-500">*</span></label>
-                                                                            <select  class="ti-form-input" name="attended_as" id="con_att_attended_as">
+                                                                            <select class="ti-form-input" name="attended_as" id="con_att_attended_as">
                                                                                 <option value="#">Choose an option</option>
-                                                                                <option value="Resource Person">Resource Person</option>
-                                                                                <option value="Paper Presenter">Paper Presenter</option>
-                                                                                <option value="Participant">Participant</option>
-                                                                                <option value="Session Chair">Session Chair</option>
-
+                                                                                <option value="Resource Person" {{ old('attended_as') == 'Resource Person' ? 'selected' : '' }}>Resource Person</option>
+                                                                                <option value="Paper Presenter" {{ old('attended_as') == 'Paper Presenter' ? 'selected' : '' }}>Paper Presenter</option>
+                                                                                <option value="Participant" {{ old('attended_as') == 'Participant' ? 'selected' : '' }}>Participant</option>
+                                                                                <option value="Session Chair" {{ old('attended_as') == 'Session Chair' ? 'selected' : '' }}>Session Chair</option>
                                                                             </select>
                                                                             @if($errors->has('attended_as'))
                                                                                 <div class="text-red-700">{{ $errors->first('attended_as')}}</div>
                                                                             @endif
                                                                             <div id="con_att_attendedasError" class="error text-red-700"></div>
                                                                         </div>
+
                                                                     </div>
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="flex max-w-sm space-y-3 pb-6">
@@ -165,7 +165,7 @@
                                                                             </div>
                                                                             <input type="date" name="from_date" id="con_att_from_date"
                                                                                 class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date conf_attended_from_date"
-                                                                                placeholder="Choose date">
+                                                                                placeholder="Choose date" value="{{ old('from_date') }}">
                                                                             @if($errors->has('from_date'))
                                                                                 <div class="text-red-700">{{ $errors->first('from_date')}}</div>
                                                                             @endif
@@ -179,7 +179,7 @@
                                                                             </div>
                                                                             <input type="date" name="to_date" id="con_att_to_date"
                                                                                     class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date conf_attended_to_date"
-                                                                                        placeholder="Choose date">
+                                                                                        placeholder="Choose date" value="{{ old('to_date') }}">
                                                                             @if($errors->has('to_date'))
                                                                                 <div class="text-red-700">{{ $errors->first('to_date')}}</div>
                                                                             @endif
@@ -189,12 +189,12 @@
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">No Of Days: <span class="text-red-500">*</span></label>
-                                                                            <input type="text" name="no_of_days" id="con_att_no_ofdays" class="ti-form-input conf_attended_no_of_days" placeholder="No Of Days" readonly>
+                                                                            <input type="text" name="no_of_days" id="con_att_no_ofdays" class="ti-form-input conf_attended_no_of_days" placeholder="No Of Days" value="{{ old('no_of_days') }}" readonly>
                                                                             <div id="con_att_noofdaysError" class="error text-red-700"></div>
                                                                         </div>
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Title: <span class="text-red-500">*</span></label>
-                                                                            <input type="text" name="title" class="ti-form-input" placeholder="Paper Title" id="con_att_title">
+                                                                            <input type="text" name="title" class="ti-form-input" placeholder="Paper Title" id="con_att_title" value="{{ old('title') }}">
                                                                             @if($errors->has('title'))
                                                                                 <div class="text-red-700">{{ $errors->first('title')}}</div>
                                                                             @endif
@@ -204,7 +204,7 @@
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Place: <span class="text-red-500">*</span></label>
-                                                                            <input type="text" name="place" class="ti-form-input" placeholder="Place" id="con_att_place">
+                                                                            <input type="text" name="place" class="ti-form-input" placeholder="Place" id="con_att_place" value="{{ old('place') }}">
                                                                             @if($errors->has('place'))
                                                                                 <div class="text-red-700">{{ $errors->first('place')}}</div>
                                                                             @endif
@@ -214,8 +214,8 @@
                                                                             <label for="" class="ti-form-label font-bold">Sponsored: <span class="text-red-500">*</span></label>
                                                                             <select class="ti-form-select sponsor_type_attended sponsored" name="sponsored" id="con_att_sponsored">
                                                                                 <option value="#">Choose One</option>
-                                                                                <option value="Yes">Yes</option>
-                                                                                <option value="No">No</option>
+                                                                                <option value="Yes" {{ old('sponsored') == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                                <option value="No" {{ old('sponsored') == 'No' ? 'selected' : '' }}>No</option>
                                                                             </select>
                                                                             @if($errors->has('sponsored'))
                                                                                 <div class="text-red-700">{{ $errors->first('sponsored')}}</div>
@@ -228,8 +228,8 @@
                                                                             <label for="" class="ti-form-label font-bold">Sponsored By:</label>
                                                                             <select class="ti-form-select sponsoredBy" name="sponsored_by" id="con_att_sponsoredby">
                                                                                 <option value="#">Choose One</option>
-                                                                                <option  value="KLS GIT">KLS GIT</option>
-                                                                                <option value="Other">Other</option>
+                                                                                <option value="KLS GIT" {{ old('sponsored_by') == 'KLS GIT' ? 'selected' : '' }}>KLS GIT</option>
+                                                                                <option value="Other" {{ old('sponsored_by') == 'Other' ? 'selected' : '' }}>Other</option>
                                                                             </select>
                                                                             @if($errors->has('sponsored_by'))
                                                                                 <div class="text-red-700">{{ $errors->first('sponsored_by')}}</div>
@@ -238,20 +238,17 @@
                                                                         </div>
                                                                         <div class="max-w-sm space-y-3 pb-6 otherSponsor" id="otherSponsor">
                                                                             <label for="" class="ti-form-label font-bold">Other Sponsor:</label>
-                                                                            <input type="text" name="other_sponsored" class="ti-form-input" placeholder="Other Sponsor" id="con_att_other_sponsored">
+                                                                            <input type="text" name="other_sponsored" class="ti-form-input" placeholder="Other Sponsor" id="con_att_other_sponsored"  value="{{ old('other_sponsored') }}">
                                                                             @if($errors->has('other_sponsored'))
                                                                                 <div class="text-red-700">{{ $errors->first('other_sponsored')}}</div>
                                                                             @endif
                                                                             <div id="con_att_othersponsoredError" class="error text-red-700"></div>
                                                                         </div>
-
-
-
                                                                     </div>
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6 amount">
                                                                             <label for="" class="ti-form-label font-bold">Amount :</label>
-                                                                            <input type="number" min="0" step="1" name="amount" class="ti-form-input" placeholder="Amount" id="con_att_amount">
+                                                                            <input type="number" min="0" step="1" name="amount" class="ti-form-input" placeholder="Amount" id="con_att_amount" value="{{ old('amount') }}">
                                                                             @if($errors->has('amount'))
                                                                                 <div class="text-red-700">{{ $errors->first('amount')}}</div>
                                                                             @endif
@@ -259,7 +256,7 @@
                                                                         </div>
                                                                         <div class="max-w-sm space-y-6 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Weblink:</label>
-                                                                            <input type="url" name="weblink" id="cont_att_weblink" class="ti-form-input" placeholder=" https://www.">
+                                                                            <input type="url" name="weblink" id="cont_att_weblink" class="ti-form-input" placeholder=" https://www." value="{{ old('weblink') }}">
                                                                             @if($errors->has('weblink'))
                                                                                 <div class="text-red-700">{{ $errors->first('weblink')}}</div>
                                                                             @endif
@@ -271,8 +268,8 @@
                                                                             <label for="" class="ti-form-label font-bold">Type Of Level:<span class="text-red-500">*</span></label>
                                                                             <select class="ti-form-select" name="type_of_level" id="con_att_typeoflevel">
                                                                                 <option value="#">Choose One</option>
-                                                                                <option value="National">National</option>
-                                                                                <option value="International">International</option>
+                                                                                <option value="National" {{ old('type_of_level') == 'National' ? 'selected' : '' }}>National</option>
+                                                                                <option value="International" {{ old('type_of_level') == 'International' ? 'selected' : '' }}>International</option>
                                                                             </select>
                                                                             @if($errors->has('type_of_level'))
                                                                                 <div class="text-red-700">{{ $errors->first('type_of_level') }}</div>
@@ -281,7 +278,7 @@
                                                                         </div>
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">ISSN Number:</label>
-                                                                            <input type="text" name="ISSN_NO" class="ti-form-input" placeholder="ISSN Number" id="con_att_issn_number">
+                                                                            <input type="text" name="ISSN_NO" class="ti-form-input" placeholder="ISSN Number" id="con_att_issn_number" value="{{ old('ISSN_NO') }}">
                                                                             @if($errors->has('ISSN_NO'))
                                                                                 <div class="text-red-700">{{ $errors->first('ISSN_NO')}}</div>
                                                                             @endif
@@ -780,15 +777,16 @@
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="with-corner-hint" class="ti-form-label">CONFERENCE NAME:<span class="text-red-500">*</span></label>
-                                                                            <input type="text" name="cc_conference_name" class="ti-form-input" required placeholder="Title" id="con_cond_conference_name">
+                                                                            <input type="text" name="cc_conference_name" class="ti-form-input" required placeholder="Title" id="con_cond_conference_name" value="{{ old('cc_conference_name') }}">
                                                                             @if($errors->has('cc_conference_name'))
                                                                                 <div class="text-red-700">{{ $errors->first('cc_conference_name')}}</div>
                                                                             @endif
                                                                             <div id="con_cond_conferenceNameError" class="error text-red-700"></div>
                                                                         </div>
+
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label">Co Organizer :</label>
-                                                                            <input type="text" name="cc_co_organizer" class="ti-form-input" required placeholder="Co Organizer" id="con_cond_co_organizer">
+                                                                            <input type="text" name="cc_co_organizer" class="ti-form-input" required placeholder="Co Organizer" id="con_cond_co_organizer" value="{{ old('cc_co_organizer') }}">
                                                                             @if($errors->has('cc_co_organizer'))
                                                                                 <div class="text-red-700">{{ $errors->first('cc_co_organizer')}}</div>
                                                                             @endif
@@ -798,7 +796,7 @@
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label">No of Participants:<span class="text-red-500">*</span></label>
-                                                                            <input type="number" min="0" name="cc_no_of_participants" class="ti-form-input" required placeholder="No of Participants" id="con_cond_no_ofparticipants">
+                                                                            <input type="number" min="0" name="cc_no_of_participants" class="ti-form-input" required placeholder="No of Participants" id="con_cond_no_ofparticipants" value="{{ old('cc_no_of_participants') }}">
                                                                             @if($errors->has('cc_no_of_participants'))
                                                                                 <div class="text-red-700">{{ $errors->first('cc_no_of_participants')}}</div>
                                                                             @endif
@@ -809,8 +807,8 @@
                                                                             <label for="" class="ti-form-label font-bold">Sponsored:<span class="text-red-500">*</span></label>
                                                                             <select class="ti-form-select sponsor_type sponsored" name="cc_sponsored" id="con_cond_sponsored">
                                                                                 <option value="#">Choose One</option>
-                                                                                <option value="Yes">Yes</option>
-                                                                                <option value="No">No</option>
+                                                                                <option value="Yes" {{ old('cc_sponsored') == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                                                <option value="No" {{ old('cc_sponsored') == 'No' ? 'selected' : '' }}>No</option>
                                                                             </select>
                                                                             @if($errors->has('cc_sponsored'))
                                                                                 <div class="text-red-700">{{ $errors->first('cc_sponsored')}}</div>
@@ -821,7 +819,7 @@
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6 sponsoring_agency">
                                                                             <label for="" class="ti-form-label">Sponsoring Agency:</label>
-                                                                            <input type="text" name="cc_sponsoring_agency" class="ti-form-input" placeholder="Sponsoring Agency" id="con_cond_sponsoring_agency">
+                                                                            <input type="text" name="cc_sponsoring_agency" class="ti-form-input" placeholder="Sponsoring Agency" id="con_cond_sponsoring_agency" value="{{ old('cc_sponsoring_agency') }}">
                                                                             @if($errors->has('cc_sponsoring_agency'))
                                                                                 <div class="text-red-700">{{ $errors->first('cc_sponsoring_agency')}}</div>
                                                                             @endif
@@ -829,7 +827,7 @@
                                                                         </div>
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label">ISSN Number:</label>
-                                                                            <input type="text" name="cc_ISSN_NO" class="ti-form-input" placeholder="ISSN Number" id="issn_no">
+                                                                            <input type="text" name="cc_ISSN_NO" class="ti-form-input" placeholder="ISSN Number" id="issn_no" value="{{ old('cc_ISSN_NO') }}">
                                                                             @if($errors->has('cc_ISSN_NO'))
                                                                                 <div class="text-red-700">{{ $errors->first('cc_ISSN_NO')}}</div>
                                                                             @endif
@@ -848,7 +846,7 @@
 
                                                                             <input type="date" name="cc_from_date" id="con_cond_from_date"
                                                                                 class="ti-form-input date rounded-l-none focus:z-10 flatpickr-input conf_conducted_from_date"
-                                                                                required placeholder="Choose date">
+                                                                                required placeholder="Choose date" value="{{ old('cc_from_date') }}">
                                                                                 @if($errors->has('cc_from_date'))
                                                                                     <div class="text-red-700">{{ $errors->first('cc_from_date')}}</div>
                                                                                 @endif
@@ -865,7 +863,7 @@
 
                                                                             <input type="date" name="cc_to_date" id="con_cond_to_date"
                                                                                 class="ti-form-input date rounded-l-none focus:z-10 flatpickr-input conf_conducted_to_date"
-                                                                                    required placeholder="Choose date">
+                                                                                    required placeholder="Choose date" value="{{ old('cc_to_date') }}">
                                                                                 @if($errors->has('cc_to_date'))
                                                                                     <div class="text-red-700">{{ $errors->first('cc_to_date')}}</div>
                                                                                 @endif
@@ -875,7 +873,7 @@
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label">No Of Days:</label>
-                                                                            <input type="text" id="con_cond_no_ofdays" name="cc_no_of_days" class="ti-form-input conf_conducted_no_of_days" required placeholder="No Of Days" readonly>
+                                                                            <input type="text" id="con_cond_no_ofdays" name="cc_no_of_days" class="ti-form-input conf_conducted_no_of_days" required placeholder="No Of Days" value="{{ old('cc_no_of_days') }}" readonly>
                                                                             @if($errors->has('con_cond_no_ofdays'))
                                                                                 <div class="text-red-700">{{ $errors->first('con_cond_no_ofdays')}}</div>
                                                                             @endif
@@ -883,7 +881,7 @@
                                                                         </div>
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label">Place:</label>
-                                                                            <input type="text" name="cc_place" class="ti-form-input" placeholder="Place" id="con_cond_place">
+                                                                            <input type="text" name="cc_place" class="ti-form-input" placeholder="Place" id="con_cond_place" value="{{ old('cc_place') }}">
                                                                             @if($errors->has('cc_place'))
                                                                                 <div class="text-red-700">{{ $errors->first('cc_place')}}</div>
                                                                             @endif
@@ -893,7 +891,7 @@
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label">Publisher:</label>
-                                                                            <input type="text" name="cc_publisher" class="ti-form-input" placeholder="Publisher" id="con_cond_publisher">
+                                                                            <input type="text" name="cc_publisher" class="ti-form-input" placeholder="Publisher" id="con_cond_publisher" value="{{ old('cc_publisher') }}">
                                                                             @if($errors->has('cc_publisher'))
                                                                                 <div class="text-red-700">{{ $errors->first('cc_publisher')}}</div>
                                                                             @endif
@@ -903,21 +901,22 @@
                                                                             <label for="with-corner-hint" class="ti-form-label font-bold"> Role: <span class="text-red-500">*</span></label>
                                                                             <select class="ti-form-select sponsored" name="cc_role" required id="con_cond_role">
                                                                                 <option value="#">Choose the role</option>
-                                                                                <option value="Convener">Convener</option>
-                                                                                <option value="Co-convener">Co-convener</option>
-                                                                                <option value="Team Member">Team Member</option>
-                                                                                <option value="Coordinator">Coordinator</option>
+                                                                                <option value="Convener" {{ old('cc_role') == 'Convener' ? 'selected' : '' }}>Convener</option>
+                                                                                <option value="Co-convener" {{ old('cc_role') == 'Co-convener' ? 'selected' : '' }}>Co-convener</option>
+                                                                                <option value="Team Member" {{ old('cc_role') == 'Team Member' ? 'selected' : '' }}>Team Member</option>
+                                                                                <option value="Coordinator" {{ old('cc_role') == 'Coordinator' ? 'selected' : '' }}>Coordinator</option>
                                                                             </select>
                                                                             @if($errors->has('cc_role'))
                                                                                 <div class="text-red-700">{{ $errors->first('cc_role')}}</div>
                                                                             @endif
                                                                             <div id="con_cond_roleError" class="error text-red-700"></div>
                                                                         </div>
+
                                                                     </div>
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label">Weblink:</label>
-                                                                            <input type="url" id="con_cond_weblink" name="cc_weblink" class="ti-form-input" placeholder="https://wwww.">
+                                                                            <input type="url" id="con_cond_weblink" name="cc_weblink" class="ti-form-input" placeholder="https://wwww." value="{{ old('cc_weblink') }}">
                                                                             @if($errors->has('cc_weblink'))
                                                                                 <div class="text-red-700">{{ $errors->first('cc_weblink')}}</div>
                                                                             @endif
@@ -927,14 +926,15 @@
                                                                             <label for="" class="ti-form-label font-bold">Type Of Level:<span class="text-red-500">*</span></label>
                                                                             <select class="ti-form-select" name="cc_type_of_level" id="cc_typeof_level">
                                                                                 <option value="#">Choose One</option>
-                                                                                <option value="National">National</option>
-                                                                                <option value="International">International</option>
+                                                                                <option value="National" {{ old('cc_type_of_level') == 'National' ? 'selected' : '' }}>National</option>
+                                                                                <option value="International" {{ old('cc_type_of_level') == 'International' ? 'selected' : '' }}>International</option>
                                                                             </select>
                                                                             @if($errors->has('cc_type_of_level'))
                                                                                 <div class="text-red-700">{{ $errors->first('cc_type_of_level') }}</div>
                                                                             @endif
                                                                             <div id="cc_typeoflevelError" class="error text-red-700"></div>
                                                                         </div>
+
 
                                                                     </div>
                                                                     <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
@@ -1805,13 +1805,25 @@
                             $('#con_att_noofdaysError').text('Choose a proper from date and to date.');
                             flag = true;
                         }
-                        if(con_att_title == ''){
-                            $('#con_att_titleError').text('title Name is missing');
+
+
+
+                        // if (con_att_title === '') {
+                        //     $('#con_att_titleError').text('Title Name is missing');
+                        //     flag = true;
+                        // } else if (!/^[a-zA-Z\s,./]*$/.test(con_att_title.trim())) {
+                        //     $('#con_att_titleError').text('Please fill in the correct value');
+                        //     flag = true;
+                        // }
+
+                        if (con_att_title === '') {
+                            $('#con_att_titleError').text('Title Name is missing');
                             flag = true;
-                        }else if (!/^[a-zA-Z\s]+$/.test(con_att_title.trim())){
-                            $('#con_att_titleError').text('Please fill the correct value');
+                        } else if (!/^[a-zA-Z0-9\s,./]*$/.test(con_att_title.trim())) {
+                            $('#con_att_titleError').text('Please fill in the correct value');
                             flag = true;
                         }
+
                         if(con_att_place == ''){
                             $('#con_att_palceError').text('Place Name is missing');
                             flag = true;

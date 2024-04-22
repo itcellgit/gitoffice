@@ -7,6 +7,7 @@ use App\Models\staff;
 use App\Models\user;
 use App\Enums\UserRoles;
 use Hash;
+use Illuminate\Http\Request;
 use App\Http\Requests\StorestaffRequest;
 use App\Http\Requests\UpdatestaffRequest;
 use Illuminate\Support\Carbon;
@@ -23,6 +24,7 @@ use App\Models\consolidated_teaching_pay;
 use App\Models\users;
 use App\Models\fixed_nt_pay;
 use Session;
+
 
 
 class StaffController extends Controller
@@ -341,78 +343,226 @@ class StaffController extends Controller
 
 
 
-    //Code for filter the staff data from table
+    //Code for filter the staff data from table Vc patil
 
-
-
-    // public function filterstaff_information(StorestaffRequest $request , staff $staff)
+    // public function filterstaff_information( Request $request )
     // {
 
+    //     $association_id = $request->input('associations_id');
+    //     $department_id = $request->input('departments_id');
+    //     $castecategories= $request->input('castecategory_id');
+    //     //dd($castecategories);
+    //     $religions =$request->input('religion_id');
+    //     $gender=$request->input('gender');
 
-    //     $staff=staff::where('staff.id',$staff)->first();
-
-    //     // $religions =religion::where('status','active')->get();
-    //     // $castecategories=DB::table('castecategories')->where('status','active')->get();
-    //     // $associations = association::where('status','active')->get();
-
-    //     //$staff=staff::with('departments')->with('associations')->get();
-
-    //     //  $query = staff::query();
-    //     //  $staff = $query->get();
+    //     //dd($request);
 
 
-    //     $department_id = Session::get('deptid');
+    //     //Query to fetch staff associated with the department
+    //     $staff = staff:: join('department_staff', 'department_staff.staff_id', '=', 'staff.id')
+    //                     ->whereIn('department_staff.department_id',function($q)use($department_id){
+    //                         $q->select('id')
+    //                             ->from('departments')
+    //                             ->where('id',$department_id);
+    //                     })
+    //                     ->where('department_staff.status','active')
+    //                     ->join('association_staff', 'association_staff.staff_id', '=', 'staff.id')
+    //                     ->whereIn('association_staff.association_id',function($q)use($association_id){
+    //                         $q->select('id')
+    //                             ->from('associations')
+    //                             ->where('id',$association_id);
+    //                     })
+    //                     ->where('association_staff.status','active')
+    //                     ->join('religions','religions.id','=','staff.religion_id')
+    //                     ->where('religions.id',$religions)
+    //                     ->where('gender', $gender)
 
-    //     $staff = DB::table('staff')
-    //             ->join('department_staff', 'department_staff.staff_id', '=', 'staff.id')
-    //             ->join('departments', 'departments.id', '=', 'department_staff.department_id')
-    //             ->where('departments.id', '=', $department_id)
-    //             ->where('department_staff.status', '=', 'active')
-    //             ->select('departments.*', 'staff.id as staff_id', 'department_id', 'dept_shortname')
-    //             ->get();
+    //                     ->join('departments', 'departments.id', '=', 'department_staff.department_id')
+    //                     ->join('associations', 'associations.id', '=', 'association_staff.association_id')
+    //                     ->join('users', 'users.id', '=', 'staff.user_id')
 
 
-    //         $query = staff::query();
-    //         $staff = $query->get();
-    //         //dd($staff);
-    //         //dd($department_id);
+    //                     //->select('staff.*',ept_shortname','associations.asso_name','religions.religion_name','castecategories.caste_name','gender')
+    //                     ->get();
+    //                     //dd($staff);
+    //                     //dd($request);
 
     //     return view('ESTB/staff/staffinformation',compact('staff'));
-
-
     // }
 
 
-    public function filterstaff_information(StorestaffRequest $request , staff $staff)
+
+    //code included inside the if statement Rohit for Filter staff information
+    public function filterstaff_information(Request $request)
     {
+        // Only department is selected
+        if ($request->has('departments_id') && !$request->has(['associations_id', 'castecategory_id', 'religion_id', 'gender'])) {
+            $department_id = $request->input('departments_id');
 
-        $association_id = $request->input('association_id');
-        $department_id = Session::get('deptid');
+            $staff = staff::join('department_staff', 'department_staff.staff_id', '=', 'staff.id')
+                            ->where('department_staff.department_id', $department_id)
+                            ->where('department_staff.status', 'active')
+                            ->join('departments', 'departments.id', '=', 'department_staff.department_id')
 
-        // Query to fetch staff associated with the department
-        $staff = DB::table('staff')
-                        ->join('department_staff', 'department_staff.staff_id', '=', 'staff.id')
-                        ->join('departments', 'departments.id', '=', 'department_staff.department_id')
-                        ->where('departments.id', '=', $department_id)
-                        ->where('department_staff.status', '=', 'active')
-                        ->select('departments.*', 'staff.id as staff_id', 'department_id', 'dept_shortname')
-                        ->get();
+                            // ->leftJoin('users', 'users.id', '=', 'staff.user_id')
+                            //->select('staff.*', 'departments.dept_shortname', 'users.role')
 
-        // Query to fetch staff associated with the association
-        $staff = DB::table('staff')
-                        ->join('association_staff', 'association_staff.staff_id', '=', 'staff.id')
-                        ->join('associations', 'associations.id', '=', 'association_staff.association_id')
-                        ->where('associations.id', '=', $association_id)
-                        ->where('association_staff.status', '=', 'active')
-                        ->select('associations.*', 'staff.id as staff_id', 'association_id', 'asso_name')
-                        ->get();
+                            ->select('staff.*', 'departments.dept_shortname',)
+                            ->distinct()
+                            ->get();
 
-        $query = staff::query();
-        $staff = $query->get();
-        //dd($staff);
+            //dd($request);
+            //dd($staff);
 
-        return view('ESTB/staff/staffinformation',compact('staff'));
+            return view('ESTB/staff/staffinformation', compact('staff'));
+
+        }
+
+        if ($request->has('gender') && !$request->has(['departments_id', 'associations_id', 'castecategory_id', 'religion_id'])) {
+            // Only gender is selected
+            $gender = $request->input('gender');
+
+            $staff = staff::where('gender', $gender)
+                            ->join('department_staff', 'department_staff.staff_id', '=', 'staff.id')
+                            ->where('department_staff.status', 'active')
+                            ->join('departments', 'departments.id', '=', 'department_staff.department_id')
+                            ->select('staff.*', 'departments.dept_shortname')
+                            ->distinct()
+                            ->get();
+
+                dd($gender);
+
+            return view('ESTB/staff/staffinformation', compact('staff'));
+        }
+
+
+        if ($request->has('associations_id') && !$request->has(['departments_id', 'castecategory_id', 'religion_id', 'gender'])) {
+            // Only association is selected
+            $association_id = $request->input('associations_id');
+
+            $staff = staff::join('association_staff', 'association_staff.staff_id', '=', 'staff.id')
+                            ->where('association_staff.association_id', $association_id)
+                            ->where('association_staff.status', 'active')
+                            ->join('associations', 'associations.id', '=', 'association_staff.association_id')
+                            ->leftJoin('users', 'users.id', '=', 'staff.user_id')
+                            ->select('staff.*', 'associations.asso_name', 'users.role')
+                            ->distinct()
+                            ->get();
+
+            return view('ESTB/staff/staffinformation', compact('staff'));
+        }
+
+        // All filters are selected
+        if ($request->has('associations_id') && $request->has('departments_id') && $request->has('castecategory_id') && $request->has('religion_id') && $request->has('gender')) {
+            $association_id = $request->input('associations_id');
+            $department_id = $request->input('departments_id');
+            $castecategories = $request->input('castecategory_id');
+            $religions = $request->input('religion_id');
+            $gender = $request->input('gender');
+
+            $staff = staff::join('department_staff', 'department_staff.staff_id', '=', 'staff.id')
+                            ->whereIn('department_staff.department_id', function ($q) use ($department_id) {
+                                $q->select('id')
+                                ->from('departments')
+                                ->where('id', $department_id);
+                            })
+                            ->where('department_staff.status', 'active')
+                            ->join('association_staff', 'association_staff.staff_id', '=', 'staff.id')
+                            ->whereIn('association_staff.association_id', function ($q) use ($association_id) {
+                                $q->select('id')
+                                ->from('associations')
+                                ->where('id', $association_id);
+                            })
+                            ->where('association_staff.status', 'active')
+                            ->join('religions', 'religions.id', '=', 'staff.religion_id')
+                            ->where('religions.id', $religions)
+                            ->where('gender', $gender)
+                            ->join('departments', 'departments.id', '=', 'department_staff.department_id')
+                            ->join('associations', 'associations.id', '=', 'association_staff.association_id')
+                             ->leftJoin('users', 'users.id', '=', 'staff.user_id')
+
+                            // ->join('employee_types', 'employee_types.staff_id', '=', 'staff.user_id')
+                            // ->where('department_staff.staff_id','employee_types.staff_id')
+                            // ->where('association_staff.staff_id','employee_types.staff_id')
+
+                            // ->select('staff.*', 'departments.dept_shortname', 'associations.asso_name','religions.religion_name','employee_types.employee_type')
+
+                            ->select(DB::raw('DISTINCT(staff.id)'), 'staff.*', 'departments.dept_shortname', 'associations.asso_name', 'religions.religion_name', 'users.role')
+
+                            ->get();
+
+            return view('ESTB/staff/staffinformation', compact('staff'));
+        } else {
+
+            return redirect('/ESTB/staff');
+        }
     }
+
+
+
+
+
+    //Code for select all values and search
+
+    // public function filterstaff_information(Request $request)
+    // {
+    //     if ($request->has('associations_id') && $request->has('departments_id') && $request->has('castecategory_id') && $request->has('religion_id') && $request->has('gender')) {
+    //         $association_id = $request->input('associations_id');
+    //         $department_id = $request->input('departments_id');
+    //         $castecategories = $request->input('castecategory_id');
+    //         $religions = $request->input('religion_id');
+    //         $gender = $request->input('gender');
+
+    //         $staff = staff::join('department_staff', 'department_staff.staff_id', '=', 'staff.id')
+    //                         ->whereIn('department_staff.department_id', function ($q) use ($department_id) {
+    //                             $q->select('id')
+    //                             ->from('departments')
+    //                             ->where('id', $department_id);
+    //                         })
+
+
+    //                         ->where('department_staff.status', 'active')
+    //                         ->join('association_staff', 'association_staff.staff_id', '=', 'staff.id')
+    //                         ->whereIn('association_staff.association_id', function ($q) use ($association_id) {
+    //                             $q->select('id')
+    //                             ->from('associations')
+    //                             ->where('id', $association_id);
+    //                         })
+    //                         ->where('association_staff.status', 'active')
+    //                         ->join('religions', 'religions.id', '=', 'staff.religion_id')
+    //                         ->where('religions.id', $religions)
+    //                         ->where('gender', $gender)
+
+    //                         //To Display Department name and association And Religion
+    //                         ->join('departments', 'departments.id', '=', 'department_staff.department_id')
+    //                         ->join('associations', 'associations.id', '=', 'association_staff.association_id')
+    //                         ->leftJoin('users', 'users.id', '=', 'staff.user_id')
+
+    //                         // ->join('employee_types', 'employee_types.staff_id', '=', 'staff.user_id')
+    //                         // ->where('department_staff.staff_id','employee_types.staff_id')
+    //                         // ->where('association_staff.staff_id','employee_types.staff_id')
+
+    //                         // ->select('staff.*', 'departments.dept_shortname', 'associations.asso_name','religions.religion_name','employee_types.employee_type')
+
+    //                         ->select(DB::raw('DISTINCT(staff.id)'),'staff.*','departments.dept_shortname', 'associations.asso_name','religions.religion_name','users.role',)
+
+    //                         //->distinct()
+    //                         //->with('departments')
+    //                         ->get();
+    //                         //dd($staff);
+
+
+    //         return view('ESTB/staff/staffinformation', compact('staff'));
+    //     } else {
+
+    //         //return response()->json(['error' => 'Result Not Found'], 404);
+    //         return redirect('/ESTB/staff');
+    //     }
+    // }
+
+
+
+
 
 
 }

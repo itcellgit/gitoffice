@@ -161,6 +161,7 @@
                                                                                         <option value="#">Choose Role</option>
                                                                                         <option value="Participant">Participant</option>
                                                                                         <option value="Resource Person">Resource Person</option>
+                                                                                        <option value="Jury">Jury</option>
                                                                                     </select>
                                                                                     <?php if($errors->has('role')): ?>
                                                                                         <div class="text-red-700"><?php echo e($errors->first('role')); ?></div>
@@ -194,6 +195,10 @@
                                                                                     <option value="STTP">STTP</option>
                                                                                     <option value="Certification Program">Certification Program</option>
                                                                                     <option value="MDP/EDP">MDP/EDP</option>
+                                                                                    <option value="Hackathon">Hackathon</option>
+                                                                                    <option value="Space-Talk">Space Talk</option>
+                                                                                    <option value="Site Visit">Site Visit</option>
+
                                                                                 </select>
                                                                                 <?php if($errors->has('category')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('category')); ?></div>
@@ -465,6 +470,7 @@
                                                                                                                 <option value="#">Choose Role</option>
                                                                                                                 <option value="Participant" <?php echo e(($act->role=='Participant'? 'selected':'')); ?>>Participant</option>
                                                                                                                 <option value="Resource Person" <?php echo e(($act->role=='Resource Person'? 'selected':'')); ?>>Resource Person</option>
+                                                                                                                <option value="Jury" <?php echo e(($act->role=='Jury'? 'selected':'')); ?>>Jury</option>
 
                                                                                                             </select>
                                                                                                                 <?php if($errors->has('edit_role')): ?>
@@ -498,6 +504,9 @@
                                                                                                                 <option value="STTP" <?php echo e(($act->category=='STTP'? 'selected':'')); ?>>STTP</option>
                                                                                                                 <option value="Certification Program" <?php echo e(($act->category=='Certification Program'? 'selected':'')); ?>>Certification Program</option>
                                                                                                                 <option value="MDP/EDP" <?php echo e(($act->category=='MDP/EDP'? 'selected':'')); ?>>MDP/EDP</option>
+                                                                                                                <option value="Hackathon" <?php echo e(($act->category=='Hackathon'? 'selected':'')); ?>>Hackathon</option>
+                                                                                                                <option value="Space-Talk" <?php echo e(($act->category=='Space-Talk'? 'selected':'')); ?>>Space Talk</option>
+                                                                                                                <option value="Site Visit" <?php echo e(($act->category=='Site Visit'? 'selected':'')); ?>>Site Visit</option>
                                                                                                             </select>
                                                                                                             <?php if($errors->has('edit_category')): ?>
                                                                                                                 <div class="text-red-700"><?php echo e($errors->first('edit_category')); ?></div>
@@ -532,7 +541,7 @@
                                                                                                         </div>
                                                                                                         <div class="max-w-sm pb-6 space-y-3 otherSponsor" id="otherSponsor">
                                                                                                             <label for="" class="font-bold ti-form-label">Other Sponsor:</label>
-                                                                                                            <input type="text" name="edit_other_sponsored" class="ti-form-input othersponsored" placeholder="Other Sponsor" value="<?php echo e($act->other_sponsored); ?>">
+                                                                                                            <input type="text" name="edit_other_sponsored" class="ti-form-input othersponsored" placeholder="Other Sponsor" value="<?php echo e($act->sponsored_by); ?>">
                                                                                                                 <?php if($errors->has('edit_othersponsor')): ?>
                                                                                                                 <div class="text-red-700"><?php echo e($errors->first('edit_othersponsor')); ?></div>
                                                                                                             <?php endif; ?>
@@ -764,6 +773,10 @@
                                                                                         <option value="STTP">STTP</option>
                                                                                         <option value="Certification Program">Certification Program</option>
                                                                                         <option value="MDP/EDP">MDP/EDP</option>
+                                                                                        <option value="Hackathon">Hackathon</option>
+                                                                                        <option value="Space-Talk">Space Talk</option>
+                                                                                        <option value="Site Visit">Site Visit</option>
+
                                                                                 </select>
                                                                                     <?php if($errors->has('con_category')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('con_category')); ?></div>
@@ -801,6 +814,7 @@
                                                                                     <option value="Coordinator">Coordinator</option>
                                                                                     <option value="Convenor">Convenor</option>
                                                                                     <option value="Member">Member</option>
+                                                                                    <option value="Jury">Jury</option>
 
                                                                                 </select>
                                                                                 <?php if($errors->has('con_role')): ?>
@@ -1091,6 +1105,9 @@
                                                                                                                 <option value="STTP" <?php echo e(($conduct->category=='STTP'? 'selected':'')); ?>>STTP</option>
                                                                                                                 <option value="Certification Program" <?php echo e(($conduct->category=='Certification Program'? 'selected':'')); ?>>Certification Program</option>
                                                                                                                 <option value="MDP/EDP" <?php echo e(($conduct->category=='MDP/EDP'? 'selected':'')); ?>>MDP/EDP</option>
+                                                                                                                <option value="Hackathon" <?php echo e(($conduct->category=='Hackathon'? 'selected':'')); ?>>Hackathon</option>
+                                                                                                                <option value="Space-Talk" <?php echo e(($conduct->category=='Space-Talk'? 'selected':'')); ?>>Space Talk</option>
+                                                                                                                <option value="Site Visit" <?php echo e(($conduct->category=='Sit Visit'? 'selected':'')); ?>>Site Visit</option>
                                                                                                             </select>
                                                                                                             <?php if($errors->has('e_category')): ?>
                                                                                                                 <div class="text-red-700"><?php echo e($errors->first('e_category')); ?></div>
@@ -1103,6 +1120,7 @@
                                                                                                                 <option value="Coordinator" <?php echo e(($conduct->role=='Coordinator'? 'selected':'')); ?>>Coordinator</option>
                                                                                                                 <option value="Convenor" <?php echo e(($conduct->role=='Convenor'? 'selected':'')); ?>>Convenor</option>
                                                                                                                 <option value="Member" <?php echo e(($conduct->role=='Member'? 'selected':'')); ?>>Member</option>
+                                                                                                                <option value="Jury" <?php echo e(($conduct->role=='Jury'? 'selected':'')); ?>>Jury</option>
                                                                                                             </select>
                                                                                                             <?php if($errors->has('e_role')): ?>
                                                                                                                 <div class="text-red-700"><?php echo e($errors->first('e_role')); ?></div>
