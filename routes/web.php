@@ -648,8 +648,10 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
      //Hod Leaves.
      Route::get('/HOD/leaves_management',[HODLeaveController::class,'index'])->name('HOD.leaves_management.index');
      Route::get('/HOD/leaves_management/hollidayrh_events',[HODLeaveController::class,'hollidayrh_events'])->name('HOD.leaves.hollidayrh_events');
-     Route::get('/HOD/leaves_management/fetchDeptleaveevents',[HODLeaveController::class,'fetchDeptleaveevents'])->name('ESTB.leaves.fetchDeptleaveevents');
-     Route::get('/HOD/leaves_management/fetchclikdayevents',[HODLeaveController::class,'fetchclikdayevents'])->name('ESTB.leaves.fetchclikdayevents');
+     Route::get('/HOD/leaves_management/fetchDeptleaveevents',[HODLeaveController::class,'fetchDeptleaveevents'])->name('HOD.leaves.fetchDeptleaveevents');
+     Route::get('/HOD/leaves_management/fetchclikdayevents',[HODLeaveController::class,'fetchclikdayevents'])->name('HOD.leaves.fetchclikdayevents');
+     Route::get('/HOD/leaves_management/fetchdatewisedeptleaveevents',[HODLeaveController::class,'fetchdatewisedeptleaveevents'])->name('HOD.leaves.fetchdatewisedeptleaveevents');
+     
 
 
 

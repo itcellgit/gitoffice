@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('styles'); ?>
 
         <!-- CHOICES CSS -->
@@ -7,7 +5,7 @@
 
         <!-- FLATPICKR CSS -->
         <link rel="stylesheet" href="<?php echo e(asset('build/assets/libs/flatpickr/flatpickr.min.css')); ?>">
-        
+
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -21,15 +19,15 @@
                                 <div>
                                     
                                     <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium">Welcome<span class="text-primary"> <?php echo e($staff->fname.' '.$staff->mname.' '.$staff->lname); ?></span></h3>
-                                </div>    
-                                <ol class="flex items-center whitespace-nowrap min-w-0"> 
+                                </div>
+                                <ol class="flex items-center whitespace-nowrap min-w-0">
                                     <li class="text-sm">
                                         <a class="flex items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="javascript:void(0);">
                                             Research Activities
                                             <i class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
                                         </a>
                                     </li>
-                                        
+
                                 </ol>
                             </div>
                         <!-- Page Header Close -->
@@ -54,11 +52,11 @@
                                             </div>
                                         <?php endif; ?>
                                     <?php endif; ?>
-                                    <?php 
-                                        Illuminate\Support\Facades\Session::forget('return_data'); 
-                                        header("refresh: 2"); 
+                                    <?php
+                                        Illuminate\Support\Facades\Session::forget('return_data');
+                                        header("refresh: 2");
                                     ?>
-                                <?php endif; ?>   
+                                <?php endif; ?>
 
                             </div>
                         </div>
@@ -71,11 +69,34 @@
                                         <div class="box border-0 shadow-none mb-0">
                                             <div class="box-body">
                                                 <div class="box-header">
-                                                    <h5 class="box-title leading-none flex"><i class="ri ri-global-line ltr:mr-2 rtl:ml-2"></i> Conference Attended Details</h5>
+                                                    <h5 class="box-title leading-none flex"><i class="ri ri-global-line ltr:mr-2 rtl:ml-2"></i> Conference Attended Details
+
+                                                    </h5>
+                                                    <div class="avatar-container flex py-4">
+                                                        <div class="avatar-wrapper flex items-center">
+                                                            <div class="avatar rounded-sm p-1 bg-green-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-bold ml-2 ">Valid</div>
+                                                        </div>
+
+                                                        <div class="avatar-wrapper flex items-center mx-2">
+                                                            <div class="avatar rounded-sm p-1 bg-red-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-bold ml-2">Invalid</div>
+                                                        </div>
+
+                                                        <div class="avatar-wrapper flex items-center mx-2">
+                                                            <div class="avatar rounded-sm p-1 bg-yellow-400 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-bold ml-2">Updated</div>
+                                                        </div>
+
+                                                        <div class="avatar-wrapper flex items-center">
+                                                            <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-semibold ml-2">New</div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <button id="conference_attended_btn" data-hs-overlay="#add_conference_activity_attended" class="hs-dropdown-toggle ti-btn ti-btn-primary">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M17 19H19V11H13V19H15V13H17V19ZM3 19V4C3 3.44772 3.44772 3 4 3H18C18.5523 3 19 3.44772 19 4V9H21V19H22V21H2V19H3ZM7 11V13H9V11H7ZM7 15V17H9V15H7ZM7 7V9H9V7H7Z" fill="rgba(255,255,255,1)"></path></svg>
-                                                    Add Conference Attended 
+                                                    Add Conference Attended
                                                 </button>
                                                 <div id="add_conference_activity_attended" class="hs-overlay hidden ti-modal">
                                                     <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out lg:!max-w-4xl lg:w-full m-3 md:mx-auto">
@@ -101,7 +122,7 @@
                                                                         $(window).on('load', function() {
                                                                             $('#pills-with-brand-color-1').trigger('click')
                                                                             $('#conference_attended_btn').trigger("click");
-                                                                        });      
+                                                                        });
                                                                     </script>
                                                                 <?php endif; ?>
                                                             </div>
@@ -131,7 +152,7 @@
                                                                                 <div class="text-red-700"><?php echo e($errors->first('attended_as')); ?></div>
                                                                             <?php endif; ?>
                                                                             <div id="con_att_attendedasError" class="error text-red-700"></div>
-                                                                        </div>   
+                                                                        </div>
                                                                     </div>
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="flex max-w-sm space-y-3 pb-6">
@@ -161,7 +182,7 @@
                                                                                 <div class="text-red-700"><?php echo e($errors->first('to_date')); ?></div>
                                                                             <?php endif; ?>
                                                                             <div id="con_att_todateError" class="error text-red-700"></div>
-                                                                        </div>                                                                              
+                                                                        </div>
                                                                     </div>
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6">
@@ -200,7 +221,7 @@
                                                                             <div id="con_att_sponsoredError" class="error text-red-700"></div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0"> 
+                                                                    <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6 sponsored_by">
                                                                             <label for="" class="ti-form-label font-bold">Sponsored By:</label>
                                                                             <select class="ti-form-select sponsoredBy" name="sponsored_by" id="con_att_sponsoredby">
@@ -223,7 +244,7 @@
                                                                         </div>
 
 
-                                                                        
+
                                                                     </div>
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6 amount">
@@ -263,8 +284,8 @@
                                                                                 <div class="text-red-700"><?php echo e($errors->first('ISSN_NO')); ?></div>
                                                                             <?php endif; ?>
                                                                             <div id="con_att_issnnumberError" class="error text-red-700"></div>
-                                                                        </div>                   
-                                                                    </div>   
+                                                                        </div>
+                                                                    </div>
                                                                     <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label pt-4 font-bold">Document:<span class="text-red-500">*  Only PDF files up to 500 KB in size are accepted.</span></label>
@@ -280,8 +301,8 @@
                                                                             <?php endif; ?>
                                                                             <div id="pro_att_documentError" class="error text-red-700"></div>
                                                                         </div>
-                                                                    </div>             
-                                                                </div> 
+                                                                    </div>
+                                                                </div>
                                                                 <div class="ti-modal-footer">
                                                                     <button type="button"
                                                                         class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
@@ -289,13 +310,13 @@
                                                                         Close
                                                                     </button>
                                                                     <input type="submit" id="conference_attended_add_btn" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Add"/>
-                                                                
+
                                                                 </div>
-                                                            </form>  
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
-                        
+
                                                 <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
                                                     <div class="flex justify-end mt-4">
                                                         <button id="exportToExcel" class="bg-green-500 text-white px-4 py-2 rounded-md focus:outline-none hover:bg-green-600">Export to Excel</button>
@@ -312,7 +333,7 @@
                                                                 <th scope="col" class="dark:text-white/80 font-bold">No Of Days</th>
                                                                 <th scope="col" class="dark:text-white/80 font-bold">Paper Title</th>
                                                                 <th scope="col" class="dark:text-white/80 font-bold">Place</th>
-                                                                <th scope="col" class="dark:text-white/80 font-bold">Sponsored</th>     
+                                                                <th scope="col" class="dark:text-white/80 font-bold">Sponsored</th>
                                                                 <th scope="col" class="dark:text-white/80 font-bold">Sponsored By</th>
                                                                 <th scope="col" class="dark:text-white/80 font-bold">Amount</th>
                                                                 <th scope="col" class="dark:text-white/80 font-bold">Weblink</th>
@@ -322,7 +343,7 @@
                                                                 <?php if(!isset($export) || !$export): ?>
                                                                     <th scope="col" class="dark:text-white/80 font-bold ">Action</th>
                                                                 <?php endif; ?>
-                            
+
                                                             </tr>
                                                         </thead>
                                                         <?php
@@ -351,7 +372,7 @@
                                                                         <td><span><?php echo e($act->type_of_level); ?></span></td>
                                                                         <td><span><?php echo e($act->ISSN_NO); ?></span></td>
                                                                         
-                                                                        
+
                                                                         <?php if(!isset($export) || !$export): ?>
                                                                         <td class="font-medium space-x-2 rtl:space-x-reverse">
                                                                             <!--modal Start Here-->
@@ -361,7 +382,7 @@
                                                                                             class="hs-dropdown-toggle m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary">
                                                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                                                                                             <path d="M14 14.252V16.3414C13.3744 16.1203 12.7013 16 12 16C8.68629 16 6 18.6863 6 22H4C4 17.5817 7.58172 14 12 14C12.6906 14 13.3608 14.0875 14 14.252ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11ZM19 17.5858L21.1213 15.4645L22.5355 16.8787L20.4142 19L22.5355 21.1213L21.1213 22.5355L19 20.4142L16.8787 22.5355L15.4645 21.1213L17.5858 19L15.4645 16.8787L16.8787 15.4645L19 17.5858Z"></path></svg>
-                                                                                        
+
                                                                                         <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700" role="tooltip">reason</span>
                                                                                     </button>
                                                                                     <div id="reason_view_modal<?php echo e($i); ?>" class="hs-overlay hidden ti-modal">
@@ -380,8 +401,8 @@
                                                                                                         <svg class="w-3.5 h-3.5" width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                                                             
                                                                                                             <path d="M14 14.252V16.3414C13.3744 16.1203 12.7013 16 12 16C8.68629 16 6 18.6863 6 22H4C4 17.5817 7.58172 14 12 14C12.6906 14 13.3608 14.0875 14 14.252ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11ZM19 17.5858L21.1213 15.4645L22.5355 16.8787L20.4142 19L22.5355 21.1213L21.1213 22.5355L19 20.4142L16.8787 22.5355L15.4645 21.1213L17.5858 19L15.4645 16.8787L16.8787 15.4645L19 17.5858Z"></path></svg>
-                                                                                                        
-                                                                                                      
+
+
                                                                                                     </button>
                                                                                                 </div>
                                                                                                 <div class="ti-modal-body">
@@ -393,6 +414,8 @@
                                                                                     </div>
                                                                                 </div>
                                                                             <?php endif; ?>
+
+
                                                                             <!--Modal Ends Here-->
                                                                             <div class="hs-tooltip ti-main-tooltip">
                                                                                 <a  href="<?php echo e(Storage::url('Uploads/Research/Conference_Attended/' . $act->document)); ?>" class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-primary" target="_blank" <?php echo e($act->document); ?>>
@@ -438,9 +461,9 @@
                                                                                                         //alert("Validation errors");
 
                                                                                                         // document.getElementById('btn'+<?php echo e(old('modal_no')); ?>).click();
-                                                                                                    
-                                                                                                        };   
-                                                                                                    
+
+                                                                                                        };
+
                                                                                                     </script>
                                                                                                 <?php endif; ?>
                                                                                             </div>
@@ -472,16 +495,16 @@
                                                                                                                 <div class="text-red-700"><?php echo e($errors->first('edit_attended_as')); ?></div>
                                                                                                             <?php endif; ?>
                                                                                                             <div id="attendedError" class="error text-red-700"></div>
-                                                                                                        </div> 
-                                                                                                    </div>  
-                                                                                                    <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">    
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                                                         <div class="flex max-w-sm space-y-3 pb-6">
                                                                                                             <label for="" class="ti-form-label font-bold">From Date : <span class="text-red-500">*</span></label>
                                                                                                             <div class="px-2 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
                                                                                                                 <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                                                                     class="ri ri-calendar-line"></i></span>
                                                                                                             </div>
-                                                            
+
                                                                                                             <input type="date" name="edit_from_date"
                                                                                                                 class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date conf_attended_from_date_edit"
                                                                                                                 required placeholder="Choose date" value="<?php echo e($act->from_date); ?>">
@@ -496,7 +519,7 @@
                                                                                                                 <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                                                                         class="ri ri-calendar-line"></i></span>
                                                                                                             </div>
-                                                            
+
                                                                                                             <input type="date" name="edit_to_date"
                                                                                                                 class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date conf_attended_to_date_edit"
                                                                                                                 required placeholder="Choose date" value="<?php echo e($act->to_date); ?>">
@@ -507,7 +530,7 @@
                                                                                                         </div>
                                                                                                     </div>
                                                                                                     <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
-                                                                                                    
+
                                                                                                     </div>
                                                                                                     <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                                                         <div class="max-w-sm space-y-3 pb-6">
@@ -517,7 +540,7 @@
                                                                                                                 <div class="text-red-700"><?php echo e($errors->first('edit_no_of_days')); ?></div>
                                                                                                             <?php endif; ?>
                                                                                                             <div id="noofdaysError" class="error text-red-700"></div>
-                                                                                                            
+
                                                                                                         </div>
                                                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                                                             <label for="" class="ti-form-label font-bold">Title:</label>
@@ -548,7 +571,7 @@
                                                                                                                 <div class="text-red-700"><?php echo e($errors->first('edit_sponsored')); ?></div>
                                                                                                             <?php endif; ?>
                                                                                                             <div id="sponsoredError" class="error text-red-700"></div>
-                                                                                                        </div> 
+                                                                                                        </div>
                                                                                                     </div>
                                                                                                     <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                                                         
@@ -571,7 +594,7 @@
                                                                                                         </div>
 
 
-                                                                                                    
+
                                                                                                     </div>
                                                                                                     <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                                                         <div class="max-w-sm space-y-3 pb-6 amount">
@@ -598,12 +621,12 @@
                                                                                                                 <option value="#">Choose One</option>
                                                                                                                 <option value="National" <?php echo e($act->type_of_level=='National'? 'selected':''); ?>>National</option>
                                                                                                                 <option value="International" <?php echo e($act->type_of_level=='International'? 'selected':''); ?>>International</option>
-                                                                                                                
+
                                                                                                             </select>
                                                                                                             <?php if($errors->has('type_of_level')): ?>
                                                                                                                 <div class="text-red-700"><?php echo e($errors->first('type_of_level')); ?></div>
                                                                                                             <?php endif; ?>
-                                                                                                            
+
                                                                                                         </div>
                                                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                                                             <label for="" class="ti-form-label font-bold">ISSN Number:</label>
@@ -634,20 +657,20 @@
                                                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                                                            <input type="hidden" name="validation_status" value="updated">
 
-                                                                                                        </div>                               
-                                                                                                    </div>              
-                                                                                                </div> 
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
                                                                                                 <div class="ti-modal-footer">
                                                                                                     <button type="button"
                                                                                                     class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
                                                                                                     data-hs-overlay="#conference_attended_edit_modal<?php echo e($i); ?>">
                                                                                                     Close
                                                                                                     </button>
-                                                                                                    
+
                                                                                                     <input type="submit" class="ti-btn  bg-warning text-white hover:bg-warning  focus:ring-primary  dark:focus:ring-offset-white/10" value="Update"/>
-                                                                                                    
+
                                                                                                 </div>
-                                                                                            </form>  
+                                                                                            </form>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -675,21 +698,42 @@
                                                                 <?php endif; ?>
                                                             <?php endif; ?>
                                                         </tbody>
-                                                    </table>  
-                                                </div>   
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
-                                        <!-- End of Conferences attended table--> 
+                                        <!-- End of Conferences attended table-->
 
                                         <!-- Start of Conferences COnducted details-->
                                         <div class="box border-0 shadow-none mb-0">
                                             <div class="box-header">
-                                                <h5 class="box-title leading-none flex"><i class="ri ri-global-line ltr:mr-2 rtl:ml-2"></i> Conference Conducted History</h5>
+                                                <h5 class="box-title leading-none flex"><i class="ri ri-global-line ltr:mr-2 rtl:ml-2"></i> Conference Conducted Details</h5>
+                                                <div class="avatar-container flex py-4">
+                                                    <div class="avatar-wrapper flex items-center">
+                                                        <div class="avatar rounded-sm p-1 bg-green-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                        <div class="avatar-text font-bold ml-2 ">Valid</div>
+                                                    </div>
+
+                                                    <div class="avatar-wrapper flex items-center mx-2">
+                                                        <div class="avatar rounded-sm p-1 bg-red-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                        <div class="avatar-text font-bold ml-2">Invalid</div>
+                                                    </div>
+
+                                                    <div class="avatar-wrapper flex items-center mx-2">
+                                                        <div class="avatar rounded-sm p-1 bg-yellow-400 border-gray-900 border-2 w-6 h-6"></div>
+                                                        <div class="avatar-text font-bold ml-2">Updated</div>
+                                                    </div>
+
+                                                    <div class="avatar-wrapper flex items-center">
+                                                        <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
+                                                        <div class="avatar-text font-semibold ml-2">New</div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="box-body">
                                                 <button id="conference_conducted_btn" data-hs-overlay="#add_conference_activity_conducted" class="hs-dropdown-toggle ti-btn ti-btn-primary">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M17 19H19V11H13V19H15V13H17V19ZM3 19V4C3 3.44772 3.44772 3 4 3H18C18.5523 3 19 3.44772 19 4V9H21V19H22V21H2V19H3ZM7 11V13H9V11H7ZM7 15V17H9V15H7ZM7 7V9H9V7H7Z" fill="rgba(255,255,255,1)"></path></svg>
-                                                    Add Conference Conducted 
+                                                    Add Conference Conducted
                                                 </button>
                                                 <div id="add_conference_activity_conducted" class="hs-overlay hidden ti-modal">
                                                     <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out lg:!max-w-4xl lg:w-full m-3 md:mx-auto">
@@ -719,7 +763,7 @@
                                                                             //$('#horizontal-alignment-item-2').trigger('click')
                                                                             $('#conference_conducted_btn').trigger("click");
 
-                                                                            
+
                                                                         });
                                                                     </script>
                                                                 <?php endif; ?>
@@ -784,7 +828,7 @@
                                                                                 <div class="text-red-700"><?php echo e($errors->first('cc_ISSN_NO')); ?></div>
                                                                             <?php endif; ?>
                                                                             <div id="con_issn_noError" class="error text-red-700"></div>
-                                                                        </div> 
+                                                                        </div>
                                                                     </div>
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="flex max-w-sm space-y-3 pb-6">
@@ -792,7 +836,7 @@
                                                                             <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
                                                                                 <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                                     class="ri ri-calendar-line"></i></span>
-                                                                                    
+
 
                                                                             </div>
 
@@ -885,7 +929,7 @@
                                                                             <?php endif; ?>
                                                                             <div id="cc_typeoflevelError" class="error text-red-700"></div>
                                                                         </div>
-                                                                                        
+
                                                                     </div>
                                                                     <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6">
@@ -901,19 +945,19 @@
                                                                                     
                                                                             </div>
                                                                         </div>
-                                                                    </div>  
-                                                                </div>    
+                                                                    </div>
+                                                                </div>
                                                                 <div class="ti-modal-footer">
                                                                     <button type="button"
                                                                     class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
                                                                     data-hs-overlay="#add_conference_activity_conducted">
                                                                     Close
                                                                     </button>
-                                                                    
+
                                                                     <input type="submit" id="conference_conducted_add_btn" class="ti-btn  bg-primary text-white hover:bg-warning  focus:ring-primary  dark:focus:ring-offset-white/10" value="Add"/>
-                                                                
+
                                                                 </div>
-                                                            </form>  
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -945,7 +989,7 @@
                                                                 <?php if(!isset($export) || !$export): ?>
                                                                     <th scope="col" class="dark:text-white/80 font-bold ">Action</th>
                                                                 <?php endif; ?>
-                                                                
+
                                                             </tr>
                                                         </thead>
                                                         <?php
@@ -957,7 +1001,7 @@
 
                                                                 
                                                                 <tr style="<?php if($con->validation_status =='invalid'): ?> background-color: #ffcccc; <?php elseif($con->validation_status =='updated'): ?> background-color: #fff2cc; <?php elseif($con->validation_status =='valid'): ?> background-color: #ccffcc; <?php endif; ?>">
-                                                                
+
                                                                     <td><span><?php echo e($i++); ?></span></td>
                                                                     <td><span><?php echo e($con->egov_id); ?></span></td>
                                                                     <td><span><?php echo e($con->conference_name); ?></span></td>
@@ -1068,7 +1112,7 @@
                                                                                                     });
                                                                                                 </script>
                                                                                             <?php endif; ?>
-                                                                                            
+
                                                                                         </div>
                                                                                         <form  action="<?php echo e(route('Teaching.research.conferenceactivities.conducted.update',$con->id)); ?>" enctype="multipart/form-data" method="post">
                                                                                             <?php echo csrf_field(); ?>
@@ -1117,7 +1161,7 @@
                                                                                                             <div class="text-red-700"><?php echo e($errors->first('cc_ISSN_NO')); ?></div>
                                                                                                         <?php endif; ?>
                                                                                                         <div id="con_cond_placeError" class="error text-red-700"></div>
-                                                                                                    </div>  
+                                                                                                    </div>
                                                                                                 </div>
                                                                                                 <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                                                     <div class="flex max-w-sm space-y-3 pb-6">
@@ -1126,7 +1170,7 @@
                                                                                                             <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                                                                     class="ri ri-calendar-line"></i></span>
                                                                                                         </div>
-                                                        
+
                                                                                                         <input type="date" name="ce_from_date"
                                                                                                             class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date conf_conducted_from_date_edit"
                                                                                                                 required placeholder="Choose date" value="<?php echo e($con->from_date); ?>">
@@ -1166,7 +1210,7 @@
                                                                                                     </div>
                                                                                                     <div class="max-w-sm space-y-3 pb-6">
                                                                                                         <label for="with-corner-hint" class="ti-form-label font-bold"> Role:<span class="text-red-500">*</span> </label>
-                                                                                                        <select class="ti-form-select sponsored" name="ce_role" required> 
+                                                                                                        <select class="ti-form-select sponsored" name="ce_role" required>
                                                                                                                 <option value="#">Choose the role</option>
                                                                                                                 <option value="Convener" <?php echo e($con->role=='Convener'?'selected':''); ?>>convener</option>
                                                                                                                 <option value="Co-convener" <?php echo e($con->role=='Co-convener'?'selected':''); ?>>Co-convener</option>
@@ -1188,7 +1232,7 @@
                                                                                                             <option value="#">Choose One</option>
                                                                                                             <option value="National" <?php echo e($con->type_of_level=='National'? 'selected':''); ?>>National</option>
                                                                                                             <option value="International" <?php echo e($con->type_of_level=='International'? 'selected':''); ?>>International</option>
-                                                                                                            
+
                                                                                                         </select>
                                                                                                         <?php if($errors->has('ce_type_of_level')): ?>
                                                                                                                 <div class="text-red-700"><?php echo e($errors->first('ce_type_of_level')); ?></div>
@@ -1208,24 +1252,24 @@
                                                                                                                 <div class="text-red-700"><?php echo e($errors->first('document')); ?></div>
                                                                                                             <?php endif; ?>
                                                                                                         <div id="docEditError" class="error text-red-700"></div>
-                                                                                                    </div> 
+                                                                                                    </div>
                                                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                                                         <input type="hidden" name="validation_status" value="updated">
 
-                                                                                                    </div>                  
-                                                                                                </div>        
-                                                                                            </div> 
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
                                                                                             <div class="ti-modal-footer">
                                                                                                 <button type="button"
                                                                                                 class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
                                                                                                 data-hs-overlay="#conference_conducted_edit_modal<?php echo e($i); ?>">
                                                                                                 Close
                                                                                                 </button>
-                                                                                                
+
                                                                                                 <input type="submit" class="ti-btn  bg-warning text-white hover:bg-warning  focus:ring-primary  dark:focus:ring-offset-white/10" value="Update"/>
-                                                                                                
+
                                                                                             </div>
-                                                                                        </form>  
+                                                                                        </form>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1248,29 +1292,29 @@
                                                                         </div>
                                                                     </td>
                                                                         <?php endif; ?>
-                                                                </tr> 
+                                                                </tr>
                                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                                                     
                                                                 <?php endif; ?>
                                                             <?php endif; ?>
                                                         </tbody>
-                                                    </table>  
-                                                </div>   
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                         <!-- End of Conference conducted details-->
-                                    </div>                                                                      
+                                    </div>
                                 </div>
                             </div>
                         </div>
                              <!-- End::row-1 -->
-                    </div>    
+                    </div>
                     <!-- End::main-content -->
 
                 </div>
-               
 
-            
+
+
 
 <?php $__env->stopSection(); ?>
 
@@ -1303,15 +1347,15 @@
                     } else {
                         $('.otherSponsor').hide();
                     }
-                   
+
 
                     new DataTable('#conference_attended_table');
                     new DataTable('#conference_conducted_table');
-                   
+
                 });
-                    
-                
-                
+
+
+
                 //      //for calculating the no of days for Conference attended (Adding)
                 //     $(document).on('change', '.conf_attended_to_date',function(){
                 //             //alert('Date altered');
@@ -1320,22 +1364,22 @@
                 //         var conf_attended_to_date = $('.conf_attended_to_date').val();
                 //      // alert(attended_to_date+'-'+attended_from_date);
                 //         if(conf_attended_from_date != ""){
-                //             var startDay = new Date(conf_attended_from_date);  
-                //             var endDay = new Date(conf_attended_to_date);  
+                //             var startDay = new Date(conf_attended_from_date);
+                //             var endDay = new Date(conf_attended_to_date);
 
                 //             //alert(startDay+'-'+endDay);
 
-                //             // Determine the time difference between two dates     
-                //             var millisBetween = endDay.getTime() - startDay.getTime();  
-                            
-                //             // Determine the number of days between two dates  
-                //             var days = millisBetween / (1000 * 3600 * 24);  
+                //             // Determine the time difference between two dates
+                //             var millisBetween = endDay.getTime() - startDay.getTime();
+
+                //             // Determine the number of days between two dates
+                //             var days = millisBetween / (1000 * 3600 * 24);
                 //             $('.conf_attended_no_of_days').val(days);
                 //         }else{
                 //             $('.conf_attended_from_date').focus();
                 //             alert('Please fill the from date');
                 //         }
-                    
+
                 //         //alert(millisBetween);
                 //     });
 
@@ -1348,22 +1392,22 @@
                 //     var conf_attended_to_date_edit = $('.conf_attended_to_date_edit').val();
                 //     // alert(attended_to_date+'-'+attended_from_date);
                 //     if(conf_attended_from_date_edit != ""){
-                //         var startDay = new Date(conf_attended_from_date_edit);  
-                //         var endDay = new Date(conf_attended_to_date_edit);  
+                //         var startDay = new Date(conf_attended_from_date_edit);
+                //         var endDay = new Date(conf_attended_to_date_edit);
 
                 //         //alert(startDay+'-'+endDay);
 
-                //         // Determine the time difference between two dates     
-                //         var millisBetween = endDay.getTime() - startDay.getTime();  
-                        
-                //         // Determine the number of days between two dates  
-                //         var days = millisBetween / (1000 * 3600 * 24);  
+                //         // Determine the time difference between two dates
+                //         var millisBetween = endDay.getTime() - startDay.getTime();
+
+                //         // Determine the number of days between two dates
+                //         var days = millisBetween / (1000 * 3600 * 24);
                 //         $('.conf_attended_no_of_days_edit').val(days);
                 //     }else{
                 //         $('.conf_attended_from_date_edit').focus();
                 //         alert('Please fill the from date');
                 //     }
-                
+
                 //     //alert(millisBetween);
                 // });
 
@@ -1376,22 +1420,22 @@
                 //     var conf_conducted_to_date = $('.conf_conducted_to_date').val();
                 //     // alert(attended_to_date+'-'+attended_from_date);
                 //     if(conf_conducted_from_date != ""){
-                //         var startDay = new Date(conf_conducted_from_date);  
-                //         var endDay = new Date(conf_conducted_to_date);  
+                //         var startDay = new Date(conf_conducted_from_date);
+                //         var endDay = new Date(conf_conducted_to_date);
 
                 //         //alert(startDay+'-'+endDay);
 
-                //         // Determine the time difference between two dates     
-                //         var millisBetween = endDay.getTime() - startDay.getTime();  
-                        
-                //         // Determine the number of days between two dates  
-                //         var days = millisBetween / (1000 * 3600 * 24);  
+                //         // Determine the time difference between two dates
+                //         var millisBetween = endDay.getTime() - startDay.getTime();
+
+                //         // Determine the number of days between two dates
+                //         var days = millisBetween / (1000 * 3600 * 24);
                 //         $('.conf_conducted_no_of_days').val(days);
                 //     }else{
                 //         $('.conf_conducted_from_date').focus();
                 //         alert('Please fill the from date');
                 //     }
-                
+
                 //     //alert(millisBetween);
                 // });
 
@@ -1403,22 +1447,22 @@
                 //     var conf_conducted_to_date_edit = $('.conf_conducted_to_date_edit').val();
                 // // alert(attended_to_date+'-'+attended_from_date);
                 //     if(conf_conducted_from_date != ""){
-                //         var startDay = new Date(conf_conducted_from_date_edit);  
-                //         var endDay = new Date(conf_conducted_to_date_edit);  
+                //         var startDay = new Date(conf_conducted_from_date_edit);
+                //         var endDay = new Date(conf_conducted_to_date_edit);
 
                 //         //alert(startDay+'-'+endDay);
 
-                //         // Determine the time difference between two dates     
-                //         var millisBetween = endDay.getTime() - startDay.getTime();  
-                        
-                //         // Determine the number of days between two dates  
-                //         var days = millisBetween / (1000 * 3600 * 24);  
+                //         // Determine the time difference between two dates
+                //         var millisBetween = endDay.getTime() - startDay.getTime();
+
+                //         // Determine the number of days between two dates
+                //         var days = millisBetween / (1000 * 3600 * 24);
                 //         $('.conf_conducted_no_of_days_edit').val(days);
                 //     }else{
                 //         $('.conf_conducted_from_date_edit').focus();
                 //         alert('Please fill the from date');
                 //     }
-                
+
                 //     //alert(millisBetween);
                 // });
 
@@ -1432,26 +1476,26 @@
                             if(conf_attended_to_date != ""){
                                 if(conf_attended_from_date == conf_attended_to_date){
                                     $('.conf_attended_no_of_days').removeClass('border border-red-500 focus:border-blue-500');
-                                
+
                                     $('.conf_attended_no_of_days').val(1); // when both from date and to date are same, it means the no of days should be 1.
-                                
+
                                 }else if(conf_attended_from_date > conf_attended_to_date){
                                     $('.conf_attended_no_of_days').val(0);
                                     $('.conf_attended_no_of_days').addClass('border border-red-500 focus:border-blue-500');
                                     $('.conf_attended_to_date').val();
                                     $('.conf_attended_to_date').focus();
-                                
+
                                 }else{
                                     $('.conf_attended_no_of_days').removeClass('border border-red-500 focus:border-blue-500');
-                                    var startDay = new Date(conf_attended_from_date);  
-                                    var endDay = new Date(conf_attended_to_date);  
+                                    var startDay = new Date(conf_attended_from_date);
+                                    var endDay = new Date(conf_attended_to_date);
 
-                                
-                                    // Determine the time difference between two dates     
-                                    var millisBetween = endDay.getTime() - startDay.getTime();  
-                                    
-                                    // Determine the number of days between two dates  
-                                    var days = millisBetween / (1000 * 3600 * 24);  
+
+                                    // Determine the time difference between two dates
+                                    var millisBetween = endDay.getTime() - startDay.getTime();
+
+                                    // Determine the number of days between two dates
+                                    var days = millisBetween / (1000 * 3600 * 24);
                                     var days=days+1; //for acurate no calculation.
 
                                     $('.conf_attended_no_of_days').val(days);
@@ -1460,9 +1504,9 @@
                                     $('.conf_attended_from_date').focus();
                                     alert('Please fill the from date');
                             }
-                        
-                            
-        
+
+
+
                         });
 
                         ////////
@@ -1481,7 +1525,7 @@
                                 if(conf_attended_from_date_edit == conf_attended_to_date_edit){
                                     //when both dates are same , then no of days would be 1.
                                     $('.conf_attended_no_of_days_edit').removeClass('border border-red-500 focus:border-blue-500');
-                                
+
                                     $('.conf_attended_no_of_days_edit').val(1);
                                 }else if(conf_attended_from_date_edit > conf_attended_to_date_edit){
                                     $('.conf_attended_no_of_days_edit').val(0);
@@ -1491,31 +1535,31 @@
                                     //$('.no_of_days_attended_edit').val(days);
                                 }else{
                                     $('.conf_attended_no_of_days_edit').removeClass('border border-red-500 focus:border-blue-500');
-                                    
-                                    var startDay = new Date(conf_attended_from_date_edit);  
-                                    var endDay = new Date(conf_attended_to_date_edit);  
+
+                                    var startDay = new Date(conf_attended_from_date_edit);
+                                    var endDay = new Date(conf_attended_to_date_edit);
 
                                     //alert(startDay+'-'+endDay);
 
-                                    // Determine the time difference between two dates     
-                                    var millisBetween = endDay.getTime() - startDay.getTime();  
-                                    
-                                    // Determine the number of days between two dates  
+                                    // Determine the time difference between two dates
+                                    var millisBetween = endDay.getTime() - startDay.getTime();
+
+                                    // Determine the number of days between two dates
                                     var days = millisBetween / (1000 * 3600 * 24);
-                                    days =  days+1;  
+                                    days =  days+1;
                                     $('.conf_attended_no_of_days_edit').val(days);
                                 }
 
-                                
+
                             }else{
                                 $('.conf_attended_from_date_edit').focus();
                                 alert('Please fill the from date');
                             }
-                        
-                            //alert(millisBetween);
-                        
 
-        
+                            //alert(millisBetween);
+
+
+
                         });
 
 
@@ -1529,26 +1573,26 @@
                             if(conf_conducted_to_date != ""){
                                 if(conf_conducted_from_date == conf_conducted_to_date){
                                     $('.conf_conducted_no_of_days').removeClass('border border-red-500 focus:border-blue-500');
-                                
+
                                     $('.conf_conducted_no_of_days').val(1); // when both from date and to date are same, it means the no of days should be 1.
-                                
+
                                 }else if(conf_conducted_from_date > conf_conducted_to_date){
                                     $('.conf_conducted_no_of_days').val(0);
                                     $('.conf_conducted_no_of_days').addClass('border border-red-500 focus:border-blue-500');
                                     $('.conf_conducted_to_date').val();
                                     $('.conf_conducted_to_date').focus();
-                                
+
                                 }else{
                                     $('.conf_conducted_no_of_days').removeClass('border border-red-500 focus:border-blue-500');
-                                    var startDay = new Date(conf_conducted_from_date);  
-                                    var endDay = new Date(conf_conducted_to_date);  
+                                    var startDay = new Date(conf_conducted_from_date);
+                                    var endDay = new Date(conf_conducted_to_date);
 
-                                
-                                    // Determine the time difference between two dates     
-                                    var millisBetween = endDay.getTime() - startDay.getTime();  
-                                    
-                                    // Determine the number of days between two dates  
-                                    var days = millisBetween / (1000 * 3600 * 24);  
+
+                                    // Determine the time difference between two dates
+                                    var millisBetween = endDay.getTime() - startDay.getTime();
+
+                                    // Determine the number of days between two dates
+                                    var days = millisBetween / (1000 * 3600 * 24);
                                     var days=days+1; //for acurate no calculation.
 
                                     $('.conf_conducted_no_of_days').val(days);
@@ -1558,8 +1602,8 @@
                                     $('.conf_conducted_from_date').focus();
                                     alert('Please fill the from date');
                                 }
-                   
-        
+
+
                         });
 
                         ////////
@@ -1578,7 +1622,7 @@
                                 if(conf_conducted_from_date_edit == conf_conducted_to_date_edit){
                                     //when both dates are same , then no of days would be 1.
                                     $('.conf_conducted_no_of_days_edit').removeClass('border border-red-500 focus:border-blue-500');
-                                
+
                                     $('.conf_conducted_no_of_days_edit').val(1);
                                 }else if(conf_conducted_from_date_edit > conf_conducted_to_date_edit){
                                     $('.conf_conducted_no_of_days_edit').val(0);
@@ -1588,31 +1632,31 @@
                                     //$('.no_of_days_attended_edit').val(days);
                                 }else{
                                     $('.conf_conducted_no_of_days_edit').removeClass('border border-red-500 focus:border-blue-500');
-                                    
-                                    var startDay = new Date(conf_conducted_from_date_edit);  
-                                    var endDay = new Date(conf_conducted_to_date_edit);  
+
+                                    var startDay = new Date(conf_conducted_from_date_edit);
+                                    var endDay = new Date(conf_conducted_to_date_edit);
 
                                     //alert(startDay+'-'+endDay);
 
-                                    // Determine the time difference between two dates     
-                                    var millisBetween = endDay.getTime() - startDay.getTime();  
-                                    
-                                    // Determine the number of days between two dates  
+                                    // Determine the time difference between two dates
+                                    var millisBetween = endDay.getTime() - startDay.getTime();
+
+                                    // Determine the number of days between two dates
                                     var days = millisBetween / (1000 * 3600 * 24);
-                                    days =  days+1;  
+                                    days =  days+1;
                                     $('.conf_conducted_no_of_days_edit').val(days);
                                 }
 
-                                
+
                             }else{
                                 $('.conf_conducted_from_date_edit').focus();
                                 alert('Please fill the from date');
                             }
-                        
-                            //alert(millisBetween);
-                        
 
-        
+                            //alert(millisBetween);
+
+
+
                         });
 
 
@@ -1621,7 +1665,7 @@
                     $(document).on('change','.book_chapter_type',function(){
                     //   alert('changed');
                             if($(this).val() == "Book"){
-                                //if books 
+                                //if books
                                 $('.chapter_title').hide();
                                 $('.start_page_no').hide();
                                 $('.end_page_no').hide();
@@ -1641,16 +1685,16 @@
                      $(document).on('change','.sponsor_type_attended',function(){
                     //   alert('changed');
                             if($(this).val() == "Yes"){
-                                //if yes 
+                                //if yes
                                 $('.sponsored_by').show();
-                               
+
 
                             }else{
                                 //if no
                                 $('.sponsored_by').hide();
                                 $('.otherSponsor').hide();
                                 $('.amount').hide();
-                               
+
                             }
                     });
 
@@ -1659,45 +1703,45 @@
                     $(document).on('change','.sponsor_type',function(){
                         //   alert('changed');
                             if($(this).val() == "Yes"){
-                                //if yes 
+                                //if yes
                                 $('.sponsoring_agency').show();
-                               
+
 
                             }else{
                                 //if no
                                 $('.sponsoring_agency').hide();
-                               
+
                             }
                     });
 
                     //Validation for Conference Activity Attended
                     new DataTable('#conference_attended_table');
-                    
+
                     $(document).on('click','.conference_attended_edit_modal_click',function(){
-                        //var 
+                        //var
                         var modal_no = $(this).attr("btn-val");
-                        
+
                         //alert($(this).find('.caste_edit_modal_no').val());
-                        $('.modal_no').val(modal_no); 
+                        $('.modal_no').val(modal_no);
                     });
 
                     //Validation for Conference Activity Conducted
                     new DataTable('#conference_conducted_table');
-                    
+
                     $(document).on('click','.conference_conducted_edit_modal_click',function(){
-                        //var 
+                        //var
                         var modal_no = $(this).attr("btn-val");
-                        
+
                         //alert($(this).find('.caste_edit_modal_no').val());
-                        $('.modal_no').val(modal_no); 
+                        $('.modal_no').val(modal_no);
                     });
 
-                   
-                   
 
-                    
-                    
-                    
+
+
+
+
+
 
                     //Conference Activity Attended Validation
                     function isValidUrl(url) {
@@ -1771,11 +1815,11 @@
                             $('#con_att_sponsoredError').text('Please Choose a correct option');
                             flag = true;
                         }
-                       
-                        
+
+
                         if (con_att_sponsoredby !== '#' && con_att_sponsoredby !== '') {
-                        
-                        } 
+
+                        }
 
                         if (con_att_other_sponsored !== '') {
                             if (!/^[a-zA-Z\s]+$/.test(con_att_other_sponsored.trim())) {
@@ -1783,13 +1827,13 @@
                                 flag = true;
                             }
                         }
-                        
+
                         if (con_att_amount.trim() !== '') {
                             if (!/^\d+$/.test(con_att_amount.trim())) {
                                 $('#con_att_amountError').text('Please fill a valid numeric value');
                                 flag = true;
                             }
-                            
+
                         } else {
                             // The field is optional and empty, no validation needed
                         }
@@ -1799,7 +1843,7 @@
                                 $('#con_att_weblinkError').text('Please enter a valid web link');
                                 flag = true;
                             }
-                           
+
                         } else {
                             // The field is optional and empty, no validation
                         }
@@ -1813,13 +1857,14 @@
                             flag = true;
                         }
 
-                        if (con_att_issn_number !== '') { 
-                            if (!/^\d{4}-\d{4}(\d{1}|[Xx]{1})$/.test(con_att_issn_number.trim())) {
+                        //code for make optional issn number
+                        if (con_att_issn_number.trim() !== '') {
+                            if (!/^\d{4}-\d{4}(\d{1}|[Xx]{1})$/.test(con_att_issn_number.trim()))
+                            {
                                 $('#con_att_issnnumberError').text('Please enter a valid ISSN Number');
                                 flag = true;
                             }
                         }
-                        
 
                         if(flag == true){
                             e.preventDefault();
@@ -1922,28 +1967,33 @@
                             $('#con_cond_roleError').text('Please Choose a correct option.');
                             flag = true;
                         }
-                        
+
 
                         if (con_cond_weblink.trim() !== '') {
                             if (!isValidUrl(con_cond_weblink)) {
                                 $('#con_cond_weblinkError').text('Please enter a valid web link');
                                 flag = true;
                             }
-                           
+
                         } else {
                             // The field is optional and empty, no validation
                         }
-                         if(cc_typeof_level =='#'){
+
+                        if(cc_typeof_level =='#'){
                             $('#cc_typeoflevelError').text('Please Choose a correct option.');
                             flag = true;
                         }
 
-                        if (cc_issn_no !== '') { 
-                            if (!/^\d{4}-\d{4}(\d{1}|[Xx]{1})$/.test(cc_issn_no.trim())) {
+
+                        //code for make optional issn number
+                        if (cc_issn_no.trim() !== '') {
+                            if (!/^\d{4}-\d{4}(\d{1}|[Xx]{1})$/.test(cc_issn_no.trim()))
+                            {
                                 $('#con_issn_noError').text('Please enter a valid ISSN Number');
                                 flag = true;
                             }
                         }
+
 
                         //if(con_cond_document[0].files.length === 0){
                             //alert('file not choosen');
@@ -2026,17 +2076,18 @@
                             }
                         });
             });
-                    
 
-                    
 
-            
+
+
+
         </script>
 
 
-        
-    
-        
+
+
+
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.components.staff.master-teaching', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\laravel Apps\gitoffice\resources\views/Staff/Teaching/research/conferenceactivities.blade.php ENDPATH**/ ?>
