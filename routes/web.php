@@ -537,7 +537,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
       Route::get('/Deanrnd/Teaching/research/achivements',[DeanrndResearchController::class,'general_achievement'])->name('Deanrnd.Teaching.research.achivements');
       Route::get('/Deanrnd/Teaching/research/book_chapter',[DeanrndResearchController::class,'book_chapter'])->name('Deanrnd.Teaching.research.book_chapter');
       Route::get('/Deanrnd/Teaching/research/dean_consultancy',[DeanrndResearchController::class,'consultancy'])->name('Deanrnd.Teaching.research.dean_consultancy');
-      Route::get('/Deanrnd/Teaching/research/reviewer_editor',[DeanrndResearchController::class,'reviewer_editor'])->name('Deanrnd.Teaching.research.reviewer_editor');
+      Route::get('/Deanrnd/Teaching/research/reviewer_editor',[DeanrndResearchController::class,'reviewer_editor'])->name('Deanrnd.Teaching.research.reviewer_editorl');
 
 
 
@@ -717,12 +717,14 @@ Route::post('reset/password', [MyAuthController::class, 'resetPasswordupdate'])-
 
 Route::get('ticket/dashboard', [TicketController::class, 'index'])->name('ticket.dashboard');
 Route::post('ticket/store', [TicketController::class, 'store'])->name('ticket.store');
-Route::post('ticket/store', [TicketController::class, 'store'])->name('ticket.store');
 Route::patch('ticket/update/{ticket}', [TicketController::class, 'update'])->name('ticket.update');
 Route::delete('ticket/destroy/{ticket}',[TicketController::class, 'destroy'])->name('ticket.destroy');
-Route::patch('ticket/update/avatar/{ticket}', [TicketController::class, 'update'])->name('ticket.update.avatar');
 Route::get('ticket/show/{ticket}', [TicketController::class, 'show'])->name('ticket.show');
 Route::post('ticket/{ticket}/reply/store', [ReplyController::class, 'store'])->name('ticket.reply.store');
+//Route::get('Ticketing/showticket/{ticket}', [TicketController::class, 'show'])->name('ticket.show');
+
+
+
 
 
 
