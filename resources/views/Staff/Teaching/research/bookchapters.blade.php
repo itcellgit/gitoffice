@@ -246,7 +246,7 @@
 
 
                                                                         </div>
-                                                                        <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                                                        {{-- <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6 start_page_no">
                                                                                 <label for="" class="ti-form-label font-bold">Start Page No:</label>
                                                                                 <input type="number" min="0" step="1" name="bc_start_page_no" class="ti-form-input"  placeholder="Start Page No" id="bp_start_page_no" value="{{ old('bc_start_page_no') }}">
@@ -263,7 +263,27 @@
                                                                                  @endif
                                                                                  <div id="bp_endpagenoError" class="error text-red-700"></div>
                                                                             </div>
+                                                                        </div> --}}
+
+                                                                        <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                                                            <div class="max-w-sm space-y-3 pb-6 start_page_no">
+                                                                                <label for="" class="ti-form-label font-bold">Start Page No:</label>
+                                                                                <input type="number" min="0" step="1" name="bc_start_page_no" class="ti-form-input"  placeholder="Start Page No" id="bp_start_page_no" value="{{ old('bc_start_page_no') }}">
+                                                                                @if($errors->has('bc_start_page_no'))
+                                                                                    <div class="text-red-700">{{ $errors->first('bc_start_page_no') }}</div>
+                                                                                @endif
+                                                                                <div id="bp_startpagenoError" class="error text-red-700"></div>
+                                                                            </div>
+                                                                            <div class="max-w-sm space-y-3 pb-6 end_page_no">
+                                                                                <label for="" class="ti-form-label font-bold">End Page No:</label>
+                                                                                <input type="number" min="0" step="1" name="bc_end_page_no" class="ti-form-input"  placeholder="End Page No" id="bp_end_page_no" value="{{ old('bc_end_page_no') }}">
+                                                                                @if($errors->has('bc_end_page_no'))
+                                                                                    <div class="text-red-700">{{ $errors->first('bc_end_page_no') }}</div>
+                                                                                @endif
+                                                                                <div id="bp_endpagenoError" class="error text-red-700"></div>
+                                                                            </div>
                                                                         </div>
+
                                                                         <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <div class="max-w-sm space-y-3 pb-6">
@@ -333,7 +353,12 @@
 
 
                                                                             <td><span>{{$i++}}</span></td>
-                                                                            <td><span>{{$book->egov_id}}</span></td>
+                                                                            {{-- <td><span>{{$book->egov_id}}</span></td> --}}
+                                                                            <td>
+                                                                                <a href="https://git.edu/storage/Uploads/Research/Book_Chapters/{{$book->egov_id}}" class="text-blue-500">
+                                                                                    <span>{{$book->egov_id}}</span>
+                                                                                </a>
+                                                                            </td>
                                                                             <td><span>{{$book->title}}</span></td>
                                                                             <td><span>{{$book->book_level}}</span></td>
                                                                             <td><span>{{$book->publisher_name}}</span></td>
@@ -673,6 +698,26 @@
 
         <script>
             $(document).ready(function(){
+
+                $('#bp_start_page_no, #bp_end_page_no').on('input', function(){
+                    var startPageNo = parseInt($('#bp_start_page_no').val());
+                    var endPageNo = parseInt($('#bp_end_page_no').val());
+
+                    // Check if End Page No is less than or equal to Start Page No
+                    if (endPageNo <= startPageNo) {
+
+                        $('#bp_endpagenoError').text('End Page No must be greater than Start Page No');
+
+                        $('#book_chapter_add_btn').prop('disabled', true);
+                    } else {
+
+                        $('#bp_endpagenoError').text('');
+
+                        $('#book_chapter_add_btn').prop('disabled', false);
+                    }
+                });
+
+
 
                 $('.sponsoredBy').change(function () {
                     if ($(this).val() === 'Other') {

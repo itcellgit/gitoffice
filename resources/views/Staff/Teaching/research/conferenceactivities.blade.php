@@ -355,7 +355,12 @@
                                                                     <tr style="@if($act->validation_status =='invalid') background-color: #ffcccc; @elseif($act->validation_status =='updated') background-color: #fff2cc; @elseif($act->validation_status =='valid') background-color: #ccffcc; @endif">
 
                                                                         <td><span>{{$i++}}</span></td>
-                                                                        <td><span>{{$act->egov_id}}</span></td>
+                                                                        {{-- <td><span>{{$act->egov_id}}</span></td> --}}
+                                                                        <td>
+                                                                            <a href="https://git.edu/storage/Uploads/Research/Conference_Attended/{{$act->egov_id}}" class="text-blue-500">
+                                                                                <span>{{$act->egov_id}}</span>
+                                                                            </a>
+                                                                        </td>
                                                                         <td><span>{{$act->conference_name}}</span></td>
                                                                         <td><span>{{$act->attended_as}}</span></td>
                                                                         <td><span>{{\Carbon\Carbon::parse($act->from_date)->format('d-M-Y') }}</span></td>
@@ -1012,7 +1017,12 @@
                                                                 <tr style="@if($con->validation_status =='invalid') background-color: #ffcccc; @elseif($con->validation_status =='updated') background-color: #fff2cc; @elseif($con->validation_status =='valid') background-color: #ccffcc; @endif">
 
                                                                     <td><span>{{$i++}}</span></td>
-                                                                    <td><span>{{$con->egov_id}}</span></td>
+                                                                    {{-- <td><span>{{$con->egov_id}}</span></td> --}}
+                                                                    <td>
+                                                                        <a href="https://git.edu/storage/Uploads/Research/Conference_Conducted/{{$act->egov_id}}" class="text-blue-500">
+                                                                            <span>{{$act->egov_id}}</span>
+                                                                        </a>
+                                                                    </td>
                                                                     <td><span>{{$con->conference_name}}</span></td>
                                                                     <td><span>{{$con->co_organizer}}</span></td>
                                                                     <td><span>{{$con->no_of_participants}}</span></td>

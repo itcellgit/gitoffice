@@ -780,7 +780,12 @@
                                                                             <tr style="@if($copy->validation_status =='invalid') background-color: #ffcccc; @elseif($copy->validation_status =='updated') background-color: #fff2cc; @elseif($copy->validation_status =='valid') background-color: #ccffcc; @endif">
 
                                                                                 <td><span>{{$i++}}</span></td>
-                                                                                <td><span>{{$copy->egov_id}}</span></td>
+                                                                                {{-- <td><span>{{$copy->egov_id}}</span></td> --}}
+                                                                                <td>
+                                                                                    <a href="https://git.edu/storage/Uploads/Research/Copyrights/{{$copy->egov_id}}" class="text-blue-500">
+                                                                                        <span>{{$copy->egov_id}}</span>
+                                                                                    </a>
+                                                                                </td>
                                                                                 <td><span>{{$copy->copyright_title}}</span></td>
                                                                                 <td><span>{{\Carbon\Carbon::parse($copy->copyright_date)->format('d-M-Y') }}</span></td>
                                                                                 <td><span>{{$copy->author_name}}</span></td>

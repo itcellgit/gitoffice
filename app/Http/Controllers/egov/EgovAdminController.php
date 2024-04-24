@@ -230,13 +230,16 @@ class EgovAdminController extends Controller
         ->where('employee_types.employee_type', '=', 'Teaching')
         ->where('department_id', '=', $department_id)
         ->select(
-            DB::raw('COUNT(CASE WHEN category = "Seminar" THEN 1 END) as seminar_count'),
-            DB::raw('COUNT(CASE WHEN category = "Webinar" THEN 1 END) as webinar_count'),
-            DB::raw('COUNT(CASE WHEN category = "Certification Program" THEN 1 END) as certification_count'),
-            DB::raw('COUNT(CASE WHEN category = "Workshop" THEN 1 END) as workshop_count'),
-            DB::raw('COUNT(CASE WHEN category = "FDP" THEN 1 END) as FDP_count'),
-            DB::raw('COUNT(CASE WHEN category = "STTP" THEN 1 END) as STTP_count'),
-            DB::raw('COUNT(CASE WHEN category = "MDP/EDP" THEN 1 END) as MDP_FDP_count'),
+            DB::raw('COUNT( CASE WHEN category = "Seminar" THEN 1 END) as seminar_count'),
+            DB::raw('COUNT( CASE WHEN category = "Webinar" THEN 1 END) as webinar_count'),
+            DB::raw('COUNT( CASE WHEN category = "Certification Program" THEN 1 END) as certification_count'),
+            DB::raw('COUNT( CASE WHEN category = "Workshop" THEN 1 END) as workshop_count'),
+            DB::raw('COUNT( CASE WHEN category = "FDP" THEN 1 END) as FDP_count'),
+            DB::raw('COUNT( CASE WHEN category = "STTP" THEN 1 END) as STTP_count'),
+            DB::raw('COUNT( CASE WHEN category = "MDP/EDP" THEN 1 END) as MDP_FDP_count'),
+            DB::raw('COUNT( CASE WHEN category = "Hackathon" THEN 1 END) as hackathon_count'),
+            DB::raw('COUNT( CASE WHEN category = "Space-Talk" THEN 1 END) as space_talk_count'),
+            DB::raw('COUNT( CASE WHEN category = "Site Visit" THEN 1 END) as site_visit_count'),
             )
         ->first();
 
@@ -278,13 +281,16 @@ class EgovAdminController extends Controller
 
         ->where('department_id','=',$department_id)
         ->select(
-            DB::raw('COUNT(CASE WHEN category = "Seminar" THEN 1 END) as seminar_count'),
-            DB::raw('COUNT(CASE WHEN category = "Webinar" THEN 1 END) as webinar_count'),
-            DB::raw('COUNT(CASE WHEN category = "Certification Program" THEN 1 END) as certification_count'),
-            DB::raw('COUNT(CASE WHEN category = "Workshop" THEN 1 END) as workshop_count'),
-            DB::raw('COUNT(CASE WHEN category = "FDP" THEN 1 END) as FDP_count'),
-            DB::raw('COUNT(CASE WHEN category = "STTP" THEN 1 END) as STTP_count'),
-            DB::raw('COUNT(CASE WHEN category = "MDP/EDP" THEN 1 END) as MDP_FDP_count'),
+            DB::raw('COUNT( CASE WHEN category = "Seminar" THEN 1 END) as seminar_count'),
+            DB::raw('COUNT( CASE WHEN category = "Webinar" THEN 1 END) as webinar_count'),
+            DB::raw('COUNT( CASE WHEN category = "Certification Program" THEN 1 END) as certification_count'),
+            DB::raw('COUNT( CASE WHEN category = "Workshop" THEN 1 END) as workshop_count'),
+            DB::raw('COUNT( CASE WHEN category = "FDP" THEN 1 END) as FDP_count'),
+            DB::raw('COUNT( CASE WHEN category = "STTP" THEN 1 END) as STTP_count'),
+            DB::raw('COUNT( CASE WHEN category = "MDP/EDP" THEN 1 END) as MDP_FDP_count'),
+            DB::raw('COUNT( CASE WHEN category = "Hackathon" THEN 1 END) as hackathon_count'),
+            DB::raw('COUNT( CASE WHEN category = "Space-Talk" THEN 1 END) as space_talk_count'),
+            DB::raw('COUNT( CASE WHEN category = "Site Visit" THEN 1 END) as site_visit_count'),
         )
         ->first();
 
@@ -320,9 +326,11 @@ class EgovAdminController extends Controller
             ->where('employee_types.employee_type', '=', 'Non-Teaching')
             ->where('department_id', '=', $department_id)
             ->select(
-                DB::raw('COUNT(CASE WHEN category = "Seminar" THEN 1 END) as seminar_count'),
-                DB::raw('COUNT(CASE WHEN category = "Webinar" THEN 1 END) as webinar_count'),
-                DB::raw('COUNT(CASE WHEN category = "Certification Program" THEN 1 END) as certification_count')
+                DB::raw('COUNT( CASE WHEN category = "Seminar" THEN 1 END) as seminar_count'),
+                DB::raw('COUNT( CASE WHEN category = "Webinar" THEN 1 END) as webinar_count'),
+                DB::raw('COUNT( CASE WHEN category = "Certification Program" THEN 1 END) as certification_count'),
+                DB::raw('COUNT( CASE WHEN category = "Hackathon" THEN 1 END) as hackathon_count'),
+
             )
             ->first();
 
@@ -360,9 +368,10 @@ class EgovAdminController extends Controller
 
         ->where('department_id','=',$department_id)
         ->select(
-            DB::raw('COUNT(CASE WHEN category = "Seminar" THEN 1 END) as seminar_count'),
-            DB::raw('COUNT(CASE WHEN category = "Webinar" THEN 1 END) as webinar_count'),
-            DB::raw('COUNT(CASE WHEN category = "Certification Program" THEN 1 END) as certification_count')
+            DB::raw('COUNT( CASE WHEN category = "Seminar" THEN 1 END) as seminar_count'),
+            DB::raw('COUNT( CASE WHEN category = "Webinar" THEN 1 END) as webinar_count'),
+            DB::raw('COUNT( CASE WHEN category = "Certification Program" THEN 1 END) as certification_count'),
+            DB::raw('COUNT( CASE WHEN category = "Hackathon" THEN 1 END) as hackathon_count'),
         )
         ->first();
 

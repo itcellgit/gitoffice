@@ -153,11 +153,40 @@
                         </div>
 
                         <div class="col-span-12 xl:col-span-3">
+                            <!-- Count box 3 -->
+                            <div class="box">
+                                <!-- Content for count box 3 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-3 rtl:ml-3">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($category_counts->hackathon_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">Hackathon</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($category_counts->hackathon_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $category_counts->hackathon_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-span-12 xl:col-span-3">
                             <!-- Count box 4 -->
                             <div class="box">
                                 <!-- Content for count box 4 -->
                             </div>
                         </div>
+                        <!--Count Ends Here-->
 
                         <!-- Original table code -->
                         <div class="col-span-12 xl:col-span-12">
@@ -205,7 +234,7 @@
                                             <tr class="">
                                                 <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th>
+                                                {{-- <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th> --}}
                                                 <th scope="col" class="dark:text-white/80 font-bold ">E-Gov ID</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Title</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Role</th>
@@ -233,7 +262,7 @@
 
                                                         <td><span>{{ $i++ }}</span></td>
                                                         <td><span>{{ $act->fname . ' ' . $act->mname . ' ' . $act->lname }}</span></td>
-                                                        <td><span>{{ $act->dept_shortname }}</span></td>
+                                                        {{-- <td><span>{{ $act->dept_shortname }}</span></td> --}}
                                                         <td><span>{{ $act->egov_id }}</span></td>
                                                         <td><span>{{ $act->title }}</span></td>
                                                         <td><span>{{ $act->role }}</span></td>

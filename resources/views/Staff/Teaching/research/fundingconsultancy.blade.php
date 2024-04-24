@@ -189,14 +189,25 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
-                                                                        <div class="max-w-sm space-y-3 pb-6">
+                                                                        {{-- <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="with-corner-hint" class="ti-form-label font-bold">Amount: </label>
                                                                                 <input type="number" min="0" name="f_amount" class="ti-form-input" placeholder="Amount" id="fund_amount" value="{{ old('f_amount') }}">
                                                                                     @if($errors->has('f_amount'))
                                                                                     <div class="text-red-700">{{ $errors->first('f_amount') }}</div>
                                                                                 @endif
                                                                                 <div id="fund_amountError" class="error text-red-700"></div>
+                                                                        </div> --}}
+
+                                                                        <div class="max-w-sm space-y-3 pb-6">
+                                                                            <label for="with-corner-hint" class="ti-form-label font-bold">Amount: </label>
+                                                                            <input type="number" min="0" name="f_amount" class="ti-form-input" placeholder="Amount" id="fund_amount" value="{{ old('f_amount') }}">
+                                                                            @if($errors->has('f_amount'))
+                                                                                <div class="text-red-700">{{ $errors->first('f_amount') }}</div>
+                                                                            @endif
+                                                                            <div id="fund_amountError" class="error text-red-700"></div>
                                                                         </div>
+
+
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="with-corner-hint" class="ti-form-label font-bold">Proposal Status:<span class="text-red-500">*</span> </label>
                                                                             <select class="ti-form-select proposal_status" name="f_proposal_status" required id="fund_proposal_status">
@@ -213,7 +224,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
-                                                                        <div class="flex max-w-sm space-y-3 pb-6">
+                                                                        {{-- <div class="flex max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Application Date :<span class="text-red-500">*</span></label>
                                                                             <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
                                                                                 <span class="text-sm text-gray-500 dark:text-white/70"><i
@@ -226,11 +237,48 @@
                                                                                         <div class="text-red-700">{{ $errors->first('f_application_date') }}</div>
                                                                                 @endif
                                                                                 <div id="fund_application_dateError" class="error text-red-700"></div>
+                                                                        </div> --}}
+
+
+
+                                                                        <div class="flex max-w-sm space-y-3 pb-6">
+                                                                            <label for="" class="ti-form-label font-bold">Application Date :<span class="text-red-500">*</span></label>
+                                                                            <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
+                                                                                <span class="text-sm text-gray-500 dark:text-white/70"><i class="ri ri-calendar-line"></i></span>
+                                                                            </div>
+                                                                            <input type="date" name="f_application_date" id="fund_application_date" class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date" required placeholder="Choose date" value="{{ old('f_application_date') }}">
+                                                                            @if($errors->has('f_application_date'))
+                                                                                <div class="text-red-700">{{ $errors->first('f_application_date') }}</div>
+                                                                            @endif
+                                                                            <div id="fund_application_dateError" class="error text-red-700"></div>
                                                                         </div>
-                                                                        <div class="max-w-sm space-y-3 pb-6">
+
+                                                                        <div class="flex max-w-sm space-y-3 pb-6">
+                                                                            <label for="" class="ti-form-label font-bold">Completion Year :</label>
+                                                                            <input type="number" min="0" step="1" name="f_completion_year" class="ti-form-input" required placeholder="Completion Year" id="fund_completion_year" value="{{ old('f_completion_year') }}">
+                                                                            @if($errors->has('f_completion_year'))
+                                                                                <div class="text-red-700">{{ $errors->first('f_completion_year') }}</div>
+                                                                            @endif
+                                                                            <div id="fund_completion_yearError" class="error text-red-700"></div>
+                                                                        </div>
+
+
+
+
+
+
+                                                                        {{-- <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Fund Received:</label>
                                                                             <input type="number" min="0" name="f_fund_received" class="ti-form-input" placeholder="Fund Received" id="fund_received" value="{{ old('f_fund_received') }}">
                                                                                 @if($errors->has('f_fund_received'))
+                                                                                <div class="text-red-700">{{ $errors->first('f_fund_received') }}</div>
+                                                                            @endif
+                                                                            <div id="f_fundreceivedError" class="error text-red-700"></div>
+                                                                        </div> --}}
+                                                                        <div class="max-w-sm space-y-3 pb-6">
+                                                                            <label for="" class="ti-form-label font-bold">Fund Received:</label>
+                                                                            <input type="number" min="0" name="f_fund_received" class="ti-form-input" placeholder="Fund Received" id="fund_received" value="{{ old('f_fund_received') }}">
+                                                                            @if($errors->has('f_fund_received'))
                                                                                 <div class="text-red-700">{{ $errors->first('f_fund_received') }}</div>
                                                                             @endif
                                                                             <div id="f_fundreceivedError" class="error text-red-700"></div>
@@ -250,14 +298,14 @@
                                                                             @endif
                                                                             <div id="fund_project_statusError" class="error text-red-700"></div>
                                                                         </div>
-                                                                        <div class="flex max-w-sm space-y-3 pb-6">
+                                                                        {{-- <div class="flex max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Completion Year :</label>
                                                                             <input type="number" min="0" step="1" name="f_completion_year" class="ti-form-input" required placeholder="Completion Year" id="fund_completion_year" value="{{ old('f_completion_year') }}">
                                                                             @if($errors->has('f_completion_year'))
                                                                                 <div class="text-red-700">{{ $errors->first('f_completion_year') }}</div>
                                                                             @endif
                                                                             <div id="fund_completion_yearError" class="error text-red-700"></div>
-                                                                        </div>
+                                                                        </div> --}}
                                                                     </div>
                                                                     <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6">
@@ -820,7 +868,12 @@
                                                                     <tr style="@if($consult->validation_status =='invalid') background-color: #ffcccc; @elseif($consult->validation_status =='updated') background-color: #fff2cc; @elseif($consult->validation_status =='valid') background-color: #ccffcc; @endif">
 
                                                                         <td><span>{{$i++}}</span></td>
-                                                                        <td><span>{{$consult->egov_id}}</span></td>
+                                                                        {{-- <td><span>{{$consult->egov_id}}</span></td> --}}
+                                                                        <td>
+                                                                            <a href="https://git.edu/storage/Uploads/Research/Consultancy/{{$consult->egov_id}}" class="text-blue-500">
+                                                                                <span>{{$consult->egov_id}}</span>
+                                                                            </a>
+                                                                        </td>
                                                                         <td><span>{{$consult->consultancy_title}}</span></td>
                                                                         <td><span>{{$consult->agency}}</span></td>
                                                                         <td><span>{{$consult->from_date}}</span></td>
@@ -1102,10 +1155,49 @@
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <!-- Include jQuery library (if not already included) -->
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
         <script>
             $(document).ready(function(){
+                    // Function to get the year from a date string in the format YYYY-MM-DD
+                    function getYearFromDate(dateString) {
+                        return parseInt(dateString.split('-')[0]);
+                    }
 
-                    //Validation for funded project
+                    // Event handler for when either the application date or completion year changes
+                    $('#fund_application_date, #fund_completion_year').change(function() {
+                        var applicationDate = $('#fund_application_date').val();
+                        var completionYear = $('#fund_completion_year').val();
+
+                        // If either field is empty, don't perform the comparison
+                        if (applicationDate === '' || completionYear === '') {
+                            return;
+                        }
+
+                        // Get the years from the date strings
+                        var applicationYear = getYearFromDate(applicationDate);
+                        var completionYearInt = parseInt(completionYear);
+
+                        // Compare the years
+                        if (completionYearInt < applicationYear) {
+                            // Show error message
+                            $('#fund_completion_yearError').text('Completion year must be greater than or equal to application year');
+                            // Clear the completion year field
+                            $('#fund_completion_year').val('');
+                        } else {
+                            // Clear error message
+                            $('#fund_completion_yearError').text('');
+                        }
+                    });
+
+
+
+
+
+                    $('#fund_amount').on('input', function(){
+                        var amount = $(this).val();
+                        $('#fund_received').attr('max', amount);
+                    });
+
 
                     //alert('Hello from jquery');
                     new DataTable('#fund_table');

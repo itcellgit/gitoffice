@@ -320,7 +320,12 @@
                                                                             <tr style="@if($pub->validation_status =='invalid') background-color: #ffcccc; @elseif($pub->validation_status =='updated') background-color: #fff2cc; @elseif($pub->validation_status =='valid') background-color: #ccffcc; @endif">
 
                                                                                 <td><span>{{$i++}}</span></td>
-                                                                                <td><span>{{$pub->egov_id}}</span></td>
+                                                                                {{-- <td><span>{{$pub->egov_id}}</span></td> --}}
+                                                                                <td>
+                                                                                    <a href="https://git.edu/storage/Uploads/Research/Publications/{{$pub->egov_id}}" class="text-blue-500">
+                                                                                        <span>{{$pub->egov_id}}</span>
+                                                                                    </a>
+                                                                                </td>
                                                                                 <td><span>{{$pub->level}}</span></td>
                                                                                 <td>
                                                                                     <span>

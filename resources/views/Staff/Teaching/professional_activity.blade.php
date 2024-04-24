@@ -352,8 +352,12 @@
                                                                     <tr style="@if($act->validation_status =='invalid') background-color: #ffcccc; @elseif($act->validation_status =='updated') background-color: #fff2cc; @elseif($act->validation_status =='valid') background-color: #ccffcc; @endif">
 
                                                                         <td><span>{{$i++}}</span></td>
-                                                                        {{-- <td><span class="text-blue-500">{{ $act->egov_id }}</span></td> --}}
-                                                                        <td>{{ $act->egov_id }}</td>
+                                                                        {{-- <td>{{ $act->egov_id }}</td> --}}
+                                                                        <td>
+                                                                            <a href="https://git.edu/storage/Uploads/Professional_Activity_Attended/{{$act->egov_id}}" class="text-blue-500">
+                                                                                <span>{{$act->egov_id}}</span>
+                                                                            </a>
+                                                                        </td>
                                                                         <td><span>{{$act->title}}</span></td>
                                                                         <td><span>{{$act->organizer}}</span></td>
                                                                         <td><span>{{$act->role}}</span></td>
@@ -955,7 +959,12 @@
                                                                     <tr style="@if($conduct->validation_status =='invalid') background-color: #ffcccc; @elseif($conduct->validation_status =='updated') background-color: #fff2cc; @elseif($conduct->validation_status =='valid') background-color: #ccffcc; @endif">
 
                                                                         <td><span>{{$i++}}</span></td>
-                                                                        <td><span>{{$conduct->egov_id}}</span></td>
+                                                                        {{-- <td><span>{{$conduct->egov_id}}</span></td> --}}
+                                                                        <td>
+                                                                            <a href="https://git.edu/storage/Uploads/Professional_Activity_Conducted/{{$act->egov_id}}" class="text-blue-500">
+                                                                                <span>{{$act->egov_id}}</span>
+                                                                            </a>
+                                                                        </td>
                                                                         <td><span>{{$conduct->title}}</span></td>
                                                                         <td><span>{{$conduct->level}}</span></td>
                                                                         <td><span>{{$conduct->organizer}}</span></td>

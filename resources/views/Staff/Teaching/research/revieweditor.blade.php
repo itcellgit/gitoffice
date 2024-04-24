@@ -283,7 +283,14 @@
                                                                             <tr style="@if($rc->validation_status =='invalid') background-color: #ffcccc; @elseif($rc->validation_status =='updated') background-color: #fff2cc; @elseif($rc->validation_status =='valid') background-color: #ccffcc; @endif">
 
                                                                                 <td><span>{{$i++}}</span></td>
-                                                                                <td><span>{{$rc->egov_id}}</span></td>
+                                                                                {{-- <td><span>{{$rc->egov_id}}</span></td> --}}
+                                                                                <td>
+                                                                                    <a href="https://git.edu/storage/Uploads/Research/Review_Editor/{{$rc->egov_id}}" class="text-blue-500">
+                                                                                        <span>{{$rc->egov_id}}</span>
+                                                                                    </a>
+                                                                                </td>
+
+
                                                                                 <td><span>{{$rc->level}}</span></td>
                                                                                 <td>
                                                                                     <span>
@@ -401,8 +408,8 @@
                                                                                                                         <option value="#">Choose Level</option>
                                                                                                                         <option value="Q1" {{$rc->level=='Q1'? 'selected': ''}}>Q1</option>
                                                                                                                         <option value="Q2" {{$rc->level=='Q2'? 'selected': ''}}>Q2</option>
-                                                                                                                        <option value="Q3" {{$rc->level=='Q3'? 'selected': ''}}>Q1</option>
-                                                                                                                        <option value="Q4" {{$rc->level=='Q4'? 'selected': ''}}>Q1</option>
+                                                                                                                        <option value="Q3" {{$rc->level=='Q3'? 'selected': ''}}>Q3</option>
+                                                                                                                        <option value="Q4" {{$rc->level=='Q4'? 'selected': ''}}>Q4</option>
                                                                                                                         <option value="SCI" {{$rc->level=='SCI'? 'selected': ''}}>SCI</option>
                                                                                                                         <option value="Web of Science" {{$rc->level=='Web of Science'? 'selected': ''}}>Web of Science</option>
                                                                                                                         <option value="Scopus Indexed" {{$rc->level=='Scopus Indexed'? 'selected': ''}}>Scopus Indexed</option>
