@@ -1538,8 +1538,9 @@ public function create_vacational_leaves(request $request,staff $staff,$design_i
                         {
                             //if curr_year is > than end_year ==>that the additional designation was closed in the end days of previous year.
                             //so delete the entries for the current year
-                            $current_year_leaves=staff::with(['leave_staff_entitlements'=>function($q)use($curr_year){
+                            $current_year_leaves=staff::with(['leave_staff_entitlements'=>function($q)use($curr_year,$snvl){
                                 $q->where('leave_staff_entitlements.status','active')
+                                ->where('leave_staff_entitlements.leave_id',$snvl->id)
                                 ->where('year',$curr_year);
                             }])->where('id',$staff->id)->first();
                             foreach($current_year_leaves->leave_staff_entitlements as $curr_year_leave)
@@ -1570,6 +1571,7 @@ public function create_vacational_leaves(request $request,staff $staff,$design_i
                         $snvl->pivot->entitled_curr_year=ceil(($diffdays*$snvl->max_entitlement)/365);
                         $snvl->pivot->status='inactive';
                         $snvl->pivot->update();
+
                     }
                     else
                     {

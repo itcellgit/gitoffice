@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employee_type', function (Blueprint $table) {
+        Schema::create('festival_advance', function (Blueprint $table) {
             $table->id();
             $table->foreignId('staff_id')->constrained();
-            $table->enum('employee_type',['Teaching','Non-Teaching']);
-            $table->enum('status',['active','inactive'])->default('active');
+            $table->date('date_of_application');
+            $table->date('date_of_disbursement');
+            $table->bigInteger('amount');
+            $table->bigInteger('emi');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }
@@ -25,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('employee_type');
+        Schema::dropIfExists('festival_advance');
     }
 };
