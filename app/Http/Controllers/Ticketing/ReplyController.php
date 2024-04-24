@@ -20,7 +20,7 @@ class ReplyController extends Controller
     {
         //dd($ticket);
         $user = Auth::user();
-     
+
         if (!$ticket)
         {
                 // Handle the case where no ticket is found for the user
@@ -34,9 +34,9 @@ class ReplyController extends Controller
         $postticket->ticket_id = $ticket->id;
         $postticket->user_id = $user->id;
         $postticket->description = $request->description;
-        
+
         // Update attachment if provided
-        if ($request->hasFile('attachment')) 
+        if ($request->hasFile('attachment'))
         {
             // Delete old attachment if exists
             // if ($postticket->attachment)
@@ -50,23 +50,16 @@ class ReplyController extends Controller
             // Update attachment field in the postticket
                 $postticket->attachment = $filename;
             }
-        
+
              $postticket->save();
+
+             $postticket = post_ticket::where('ticket_id', $ticket->id)->get();
 
             // return redirect('ticket/show');
             // return view('Ticketing/showticket/reply');
          return view('Ticketing.showticket',compact('ticket','postticket'));
-      
+
     }
-   
+
 
 }
-    
-
-
-
-
-
-
-   
-

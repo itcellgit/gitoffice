@@ -25,7 +25,7 @@ class TicketController extends Controller
     {
         $user=auth()->user();
         $tickets=$user->isAdmin?ticket::latest()->get():$user->tickets;
-        
+
         return view('Ticketing.dashboard',compact('tickets'));
     }
 
@@ -49,7 +49,7 @@ class TicketController extends Controller
             'user_id'=>auth()->id(),
 
         ]);
-           
+
         $ticket->save();
         //dd($request);
         if($request->file('attachment'))
@@ -72,9 +72,8 @@ class TicketController extends Controller
     public function show(ticket $ticket)
     {
         $postticket = post_ticket::where('ticket_id', $ticket->id)->get();
-        
-           
-            //  dd($postticket);
+
+
          return view('Ticketing.showticket',compact('ticket','postticket'));
     }
 
