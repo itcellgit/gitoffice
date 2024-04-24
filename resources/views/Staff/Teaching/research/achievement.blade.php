@@ -155,7 +155,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Award:<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="ga_award" class="ti-form-input" required placeholder="Award" id="rga_award" >
+                                                                                <input type="text" name="ga_award" class="ti-form-input" required placeholder="Award" id="rga_award" value="{{ old('ga_award') }}">
                                                                                  @if($errors->has('ga_award'))
                                                                                      <div class="text-red-700">{{ $errors->first('ga_award')}}</div>
                                                                                 @endif
@@ -163,7 +163,7 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Year:<span class="text-red-500">*</span></label>
-                                                                                <input type="number" min="0" step="1" name="ga_year" class="ti-form-input" required placeholder="Year" id="rga_year">
+                                                                                <input type="number" min="0" step="1" name="ga_year" class="ti-form-input" required placeholder="Year" id="rga_year" value="{{ old('ga_year') }}">
                                                                                  @if($errors->has('ga_year'))
                                                                                     <div class="text-red-700">{{ $errors->first('ga_year')}}</div>
                                                                                 @endif
@@ -174,7 +174,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Details:</label>
-                                                                                <input type="text" name="ga_details" class="ti-form-input" required placeholder="Details" id="rga_details">
+                                                                                <input type="text" name="ga_details" class="ti-form-input" required placeholder="Details" id="rga_details" value="{{ old('ga_details') }}">
                                                                                  @if($errors->has('ga_details'))
                                                                                     <div class="text-red-700">{{ $errors->first('ga_details')}}</div>
                                                                                  @endif
@@ -182,7 +182,7 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Awarding Body:<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="ga_awarding_body" class="ti-form-input" required placeholder="Award" id="awardbody">
+                                                                                <input type="text" name="ga_awarding_body" class="ti-form-input" required placeholder="Award" id="awardbody" value="{{ old('ga_awarding_body') }}">
                                                                                  @if($errors->has('awarding_body'))
                                                                                      <div class="text-red-700">{{ $errors->first('awarding_body')}}</div>
                                                                                 @endif
@@ -531,13 +531,25 @@
                         flag = true;
                     }
 
-                    if (rga_award == '') {
+                    // if(rga_award == ''){
+                    //     $('#rga_awardError').text('Award Name is missing');
+                    //     flag = true;
+                    // } else if (!/^[a-zA-Z\s0-9]*$/.test(rga_award.trim())) {
+                    //     $('#rga_awardError').text('Please fill the correct value');
+                    //     flag = true;
+                    // }
+
+
+                    if (rga_award.trim() === '') {
                         $('#rga_awardError').text('Award Name is missing');
                         flag = true;
-                    } else if (!/^[a-zA-Z\s]+$/.test(rga_award.trim())) {
+                    } else if (!/^[\w\s\/.,]+$/.test(rga_award.trim())) {
                         $('#rga_awardError').text('Please fill the correct value');
                         flag = true;
                     }
+
+
+
                     if (rga_year == '') {
                         $('#rga_yearError').text('Year is missing');
                         flag = true;
@@ -545,10 +557,21 @@
                         $('#rga_yearError').text('Please fill the correct value');
                         flag = true;
                     }
-                    if (rga_details == '') {
+
+
+
+                    // if(rga_details == ''){
+                    //     $('#rga_detailsError').text('Details is missing');
+                    //     flag = true;
+                    // } else if (!/^[a-zA-Z\s0-9]*$/.test(rga_details.trim())) {
+                    //     $('#rga_detailsError').text('Please fill the correct value');
+                    //     flag = true;
+                    // }
+
+                    if (rga_details.trim() === '') {
                         $('#rga_detailsError').text('Details is missing');
                         flag = true;
-                    } else if (!/^[a-zA-Z\s]+$/.test(rga_details.trim())) {
+                    } else if (!/^[\w\s\/.,]+$/.test(rga_details.trim())) {
                         $('#rga_detailsError').text('Please fill the correct value');
                         flag = true;
                     }

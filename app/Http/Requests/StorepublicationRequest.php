@@ -26,7 +26,7 @@ class StorepublicationRequest extends FormRequest
         [
             'level'=>['required', Rule::in(['Q1', 'Q2', 'Q3','Q4','SCI','Web of Science','Scopus Indexed','UGC General','Other'])],
             'other_level'=>['sometimes'],
-            'title' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
+            'title' => ['required', 'regex:/^[a-zA-Z\s0-9]+$/'],
             'date'=>['required','date'],
             'journal'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
             'publication_type'=>['required', Rule::in(['Journal','Conference Proceeding'])],

@@ -206,6 +206,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-span-2 xl:col-span-2">
                             <!-- Count box 3 -->
                             <div class="box box-sm">
@@ -233,6 +234,147 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 3 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 3 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($teaching_publication->UGC_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">UGC Genereal</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($teaching_publication->UGC_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $teaching_publication->UGC_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 3 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 3 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($teaching_publication->SCI_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">SCI</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($teaching_publication->SCI_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $teaching_publication->SCI_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 3 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 3 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($teaching_publication->author_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">Author</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($teaching_publication->author_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $teaching_publication->author_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 3 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 3 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($teaching_publication->co_author_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">Co-Author</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($teaching_publication->co_author_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $teaching_publication->co_author_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 3 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 3 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($teaching_publication->corresponding_author_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">Corresponding-Author</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($teaching_publication->corresponding_author_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $teaching_publication->corresponding_author_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Count End here-->
                         <div class="col-span-12 xl:col-span-12">
                             <div class="box">
                                 <div class="box-body">
@@ -277,7 +419,7 @@
                                             <tr class="">
                                                 <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th>
+                                                {{-- <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th> --}}
                                                 <th scope="col" class="dark:text-white/80 font-bold ">E-Gov ID</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Level</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Other Level</th>
@@ -298,12 +440,11 @@
                                                     $i=1;
                                                 @endphp
                                                 @foreach ($publication as $pub)
-                                                    {{-- <tr class="" @if($pub->validation_status == 'valid') style="background-color: #ccffcc; color: #006400;" @elseif($pub->validation_status =='invalid') style="background-color: #ffe6e6; color: #b30000;" @endif> --}}
                                                     <tr style="@if($pub->validation_status =='invalid') background-color: #ffcccc; @elseif($pub->validation_status =='updated') background-color: #fff2cc; @elseif($pub->validation_status =='valid') background-color: #ccffcc; @endif">
 
                                                         <td><span>{{ $i++ }}</span></td>
                                                         <td><span>{{ $pub->fname . ' ' . $pub->mname . ' ' . $pub->lname }}</span></td>
-                                                        <td><span>{{ $pub->dept_shortname }}</span></td>
+                                                        {{-- <td><span>{{ $pub->dept_shortname }}</span></td> --}}
                                                         <td><span>{{ $pub->egov_id }}</span></td>
                                                         <td><span>{{ $pub->level }}</span></td>
                                                         <td>
@@ -454,74 +595,6 @@
 
 
         <!--not filering second page data-->
-        {{-- <script>
-            $(document).ready(function(){
-                new DataTable('#publication');
-
-                // Function to handle the Filter Date Range
-                $('#filterBtn').click(function () {
-                    var fromDate = $('#fromDate').val();
-                    var toDate = $('#toDate').val();
-
-                    // Determine the column index dynamically based on table headers
-                    var pubDateIndex = $('#publication th:contains("Date Of Publication")').index();
-
-                    $('#publication tbody tr').each(function () {
-                        var rowDate = $(this).find('td:eq(' + pubDateIndex + ') span').text();
-
-                        var rowDateParsed = moment(rowDate, 'DD-MMM-YYYY');
-
-                        if (
-                            (fromDate !== '' && rowDateParsed.isBefore(moment(fromDate, 'YYYY-MM-DD'))) ||
-                            (toDate !== '' && rowDateParsed.isAfter(moment(toDate, 'YYYY-MM-DD')))
-                        ) {
-                            $(this).hide();
-                        } else {
-                            $(this).show();
-                        }
-                    });
-                });
-
-
-                //Export to Excel
-                $(document).ready(function () {
-                    $('#exportToExcel').on('click', function () {
-                        var table = $('#publication').clone();
-
-                        table.find('td:last-child').remove();
-
-                        table.find('thead tr th:last-child').remove();
-
-                        // Remove any colspan attributes from table cells
-                        table.find('td').removeAttr('colspan');
-
-                        // Ensure each cell has proper formatting
-                        table.find('td').css({
-                            'border': '1px solid #000',
-                            'padding': '5px'
-                        });
-
-                        // Create a Blob containing the modified table data
-                        var blob = new Blob([table[0].outerHTML], { type: 'application/vnd.ms-excel;charset=utf-8' });
-
-                        // Check for Internet Explorer and Edge
-                        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                            window.navigator.msSaveOrOpenBlob(blob, 'publication_data.xls');
-                        } else {
-                            var link = $('<a>', {
-                                href: URL.createObjectURL(blob),
-                                download: 'publication_data.xls'
-                            });
-
-                            // Trigger the click to download
-                            link[0].click();
-                        }
-                    });
-                });
-            });
-        </script> --}}
-
-
         <!-- filering Daterange  data as per requirement-->
         <script>
             $(document).ready(function () {
@@ -582,7 +655,7 @@
 
                 $('.validation_type').change(function(){
 
-                    if($(this).val() == 'Invalid')
+                    if($(this).val() == 'invalid')
                     {
                         $('.reason_div').show();
                     } else

@@ -248,12 +248,12 @@
                                             <tr class="">
                                                 <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th>
+                                                {{-- <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th> --}}
                                                 <th scope="col" class="dark:text-white/80 font-bold ">E-Gov ID</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Proposal Title</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Role</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Amount</th>
-                                                 <th scope="col" class="dark:text-white/80 font-bold ">Type</th>
+                                                <th scope="col" class="dark:text-white/80 font-bold ">Type</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Proposal Status</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Application Date</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Fund Received</th>
@@ -271,13 +271,12 @@
                                                     $i=1;
                                                 @endphp
                                                 @foreach ($fundedproject as $fund)
-                                                    {{-- <tr class="" @if($fund->validation_status == 'valid') style="background-color: #ccffcc; color: #006400;" @elseif($fund->validation_status =='invalid') style="background-color: #ffe6e6; color: #b30000;" @endif> --}}
                                                     <tr style="@if($fund->validation_status =='invalid') background-color: #ffcccc; @elseif($fund->validation_status =='updated') background-color: #fff2cc; @elseif($fund->validation_status =='valid') background-color: #ccffcc; @endif">
 
 
                                                         <td><span>{{ $i++ }}</span></td>
                                                         <td><span>{{ $fund->fname . ' ' . $fund->mname . ' ' . $fund->lname }}</span></td>
-                                                        <td><span>{{ $fund->dept_shortname }}</span></td>
+                                                        {{-- <td><span>{{ $fund->dept_shortname }}</span></td> --}}
                                                         <td><span>{{ $fund->egov_id }}</span></td>
                                                         <td><span>{{ $fund->proposal_title }}</span></td>
                                                         <td><span>{{ $fund->role }}</span></td>
@@ -409,71 +408,6 @@
         <script href="https://cdn.tailwindcss.com/3.3.5"></script>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-
-        {{-- <script>
-            $(document).ready(function(){
-                new DataTable('#fund');
-
-                // Function to handle the filter Date Range
-                $('#filterBtn').click(function () {
-                    var fromDate = $('#fromDate').val();
-                    var toDate = $('#toDate').val();
-
-                    // Determine the column index dynamically based on table headers
-                    var appDateIndex = $('#fund th:contains("Application Date")').index();
-
-                    $('#fund tbody tr').each(function () {
-                        var rowDate = $(this).find('td:eq(' + appDateIndex + ') span').text();
-
-                        var rowDateParsed = moment(rowDate, 'DD-MMM-YYYY');
-
-                        if (
-                            (fromDate !== '' && rowDateParsed.isBefore(moment(fromDate, 'YYYY-MM-DD'))) ||
-                            (toDate !== '' && rowDateParsed.isAfter(moment(toDate, 'YYYY-MM-DD')))
-                        ) {
-                            $(this).hide();
-                        } else {
-                            $(this).show();
-                        }
-                    });
-                });
-
-                $(document).ready(function () {
-                    $('#exportToExcel').on('click', function () {
-                        var table = $('#fund').clone();
-
-                        table.find('td:last-child').remove();
-
-                        table.find('thead tr th:last-child').remove();
-
-                        // Remove any colspan attributes from table cells
-                        table.find('td').removeAttr('colspan');
-
-                        // Ensure each cell has proper formatting
-                        table.find('td').css({
-                            'border': '1px solid #000',
-                            'padding': '5px'
-                        });
-
-                        // Create a Blob containing the modified table data
-                        var blob = new Blob([table[0].outerHTML], { type: 'application/vnd.ms-excel;charset=utf-8' });
-
-                        // Check for Internet Explorer and Edge
-                        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                            window.navigator.msSaveOrOpenBlob(blob, 'fund_data.xls');
-                        } else {
-                            var link = $('<a>', {
-                                href: URL.createObjectURL(blob),
-                                download: 'fund_data.xls'
-                            });
-
-                            // Trigger the click to download
-                            link[0].click();
-                        }
-                    });
-                });
-            });
-        </script> --}}
 
         <!-- filering Daterange  data as per requirement-->
         <script>

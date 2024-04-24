@@ -24,7 +24,7 @@ class Storeprofessional_activity_conductedRequest extends FormRequest
     {
         return
         [
-            'con_title' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
+            // 'con_title' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
             'con_level' => ['required', Rule::in(['Local', 'National', 'International'])],
             'con_organizer'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
             'con_co_organizer'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
@@ -45,8 +45,8 @@ class Storeprofessional_activity_conductedRequest extends FormRequest
     public function messages():array
     {
         return[
-            'con_title.required'=>'title is required field',
-            'con_title.regex'=>'The title field should contain only letters and spaces',
+            // 'con_title.required'=>'title is required field',
+            // 'con_title.regex'=>'The title field should contain only letters and spaces',
             'con_level.required'=>'level is required field',
             'con_level.in'=>'Please select a valid option from the provided choices',
             'con_organizer.required'=>'organizer is required filed',

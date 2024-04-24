@@ -24,8 +24,8 @@ class Storebook_publicationsRequest extends FormRequest
     {
         return
          [
-            
-            'bc_title' => ['required'],
+
+            'bc_title' => ['required', 'regex:/^[a-zA-Z\s0-9]+$/'],
             'bc_book_level' => ['required', Rule::in(['National', 'International'])],
             'bc_publisher_name'=>['required'],
             'bc_edition'=>[],
@@ -61,7 +61,7 @@ class Storebook_publicationsRequest extends FormRequest
             //'bc_start_page_no.numeric'=>'Start page no should contain only numbers',
             //'bc_end_page_no.numeric'=>'End page no should contain only numbers',
 
-            
+
         ];
     }
 }
