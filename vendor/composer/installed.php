@@ -4,10 +4,14 @@
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
 <<<<<<< HEAD
+        'reference' => '231f52672ffd9454379a7e6670b82f7fb93f4f15',
+=======
+<<<<<<< HEAD
         'reference' => 'eef5d9887c4510deb782d5017ab37abaab9632bc',
 =======
         'reference' => 'bc0d5de187ef27e68189ffdfc398216357d7c948',
 >>>>>>> c73933ac202484967bfc6c6599f857f28f1d5ee8
+>>>>>>> 110d989bc332faa0e3faaac937c01a59d09d7ad4
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -468,10 +472,14 @@
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
 <<<<<<< HEAD
+            'reference' => '231f52672ffd9454379a7e6670b82f7fb93f4f15',
+=======
+<<<<<<< HEAD
             'reference' => 'eef5d9887c4510deb782d5017ab37abaab9632bc',
 =======
             'reference' => 'bc0d5de187ef27e68189ffdfc398216357d7c948',
 >>>>>>> c73933ac202484967bfc6c6599f857f28f1d5ee8
+>>>>>>> 110d989bc332faa0e3faaac937c01a59d09d7ad4
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -720,8 +728,8 @@
         'php-http/async-client-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '*',
-                1 => '1.0',
+                0 => '1.0',
+                1 => '*',
             ),
         ),
         'php-http/client-common' => array(
@@ -736,8 +744,8 @@
         'php-http/client-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '*',
-                1 => '1.0',
+                0 => '1.0',
+                1 => '*',
             ),
         ),
         'php-http/discovery' => array(

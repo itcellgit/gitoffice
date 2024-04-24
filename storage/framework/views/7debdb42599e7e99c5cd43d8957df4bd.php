@@ -58,7 +58,7 @@
             <!-- END SIDEBAR -->
 
             <!-- HEADER -->
-            <?php echo $__env->make('layouts.components.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            <?php echo $__env->make('layouts.components.staff.nt_teaching_staff_header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
             <!-- END HEADER -->
 

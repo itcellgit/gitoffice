@@ -136,7 +136,7 @@
                                                                         //alert(1);
                                                                         $(window).on('load', function() {
 
-                                                                            alert('attended');
+                                                                            //alert('attended');
 
                                                                             //  $('#horizontal-alignment-item-1').trigger('click')
                                                                             $('#fund_btn').trigger("click");
@@ -153,21 +153,22 @@
 
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="with-corner-hint" class="ti-form-label font-bold">Proposal Title :<span class="text-red-500">*</span> </label>
-                                                                            <input type="text" name="f_proposal_title" class="ti-form-input" required placeholder="Proposal Title" id="f_proposaltitle">
-                                                                                @if($errors->has('f_proposal_title'))
-                                                                                    <div class="text-red-700">{{ $errors->first('f_proposal_title') }}</div>
-                                                                                @endif
-                                                                                <div id="f_proposaltitleError" class="error text-red-700"></div>
+                                                                            <input type="text" name="f_proposal_title" class="ti-form-input" required placeholder="Proposal Title" id="f_proposaltitle" value="{{ old('f_proposal_title') }}">
+                                                                            @if($errors->has('f_proposal_title'))
+                                                                                <div class="text-red-700">{{ $errors->first('f_proposal_title') }}</div>
+                                                                            @endif
+                                                                            <div id="f_proposaltitleError" class="error text-red-700"></div>
                                                                         </div>
+
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="with-corner-hint" class="ti-form-label font-bold">Role: <span class="text-red-500">*</span></label>
                                                                             <select class="ti-form-select role" name="f_role" required id="fund_role">
                                                                                 <option value="#">Choose Role</option>
-                                                                                <option value="Principle Investigator">Principle Investigator</option>
-                                                                                <option value="Co-Investigator">Co-Investigator</option>
-                                                                                <option value="Architect">Architect</option>
-
+                                                                                <option value="Principle Investigator" {{ old('f_role') == 'Principle Investigator' ? 'selected' : '' }}>Principle Investigator</option>
+                                                                                <option value="Co-Investigator" {{ old('f_role') == 'Co-Investigator' ? 'selected' : '' }}>Co-Investigator</option>
+                                                                                <option value="Architect" {{ old('f_role') == 'Architect' ? 'selected' : '' }}>Architect</option>
                                                                             </select>
+
                                                                             @if($errors->has('f_role'))
                                                                                 <div class="text-red-700">{{ $errors->first('f_role') }}</div>
                                                                             @endif
@@ -177,9 +178,10 @@
                                                                             <label for="with-corner-hint" class="ti-form-label font-bold">Type: <span class="text-red-500">*</span></label>
                                                                             <select class="ti-form-select role" name="f_type" required id="f_type">
                                                                                 <option value="#">Choose Type</option>
-                                                                                <option value="Govt-funded">Govt Funded</option>
-                                                                                <option value="Private funded">Private Funded</option>
+                                                                                <option value="Govt-funded" {{ old('f_type') == 'Govt-funded' ? 'selected' : '' }}>Govt Funded</option>
+                                                                                <option value="Private funded" {{ old('f_type') == 'Private funded' ? 'selected' : '' }}>Private Funded</option>
                                                                             </select>
+
                                                                             @if($errors->has('f_type'))
                                                                                 <div class="text-red-700">{{ $errors->first('f_type') }}</div>
                                                                             @endif
@@ -187,10 +189,9 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
-
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="with-corner-hint" class="ti-form-label font-bold">Amount: </label>
-                                                                                <input type="number" min="0" name="f_amount" class="ti-form-input" placeholder="Amount" id="fund_amount">
+                                                                                <input type="number" min="0" name="f_amount" class="ti-form-input" placeholder="Amount" id="fund_amount" value="{{ old('f_amount') }}">
                                                                                     @if($errors->has('f_amount'))
                                                                                     <div class="text-red-700">{{ $errors->first('f_amount') }}</div>
                                                                                 @endif
@@ -199,11 +200,12 @@
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="with-corner-hint" class="ti-form-label font-bold">Proposal Status:<span class="text-red-500">*</span> </label>
                                                                             <select class="ti-form-select proposal_status" name="f_proposal_status" required id="fund_proposal_status">
-                                                                                    <option value="#">Choose Proposal Status</option>
-                                                                                    <option value="Accepted">Accepted</option>
-                                                                                    <option value="Pending">Pending</option>
-                                                                                    <option value="Rejected">Rejected</option>
+                                                                                <option value="#">Choose Proposal Status</option>
+                                                                                <option value="Accepted" {{ old('f_proposal_status') == 'Accepted' ? 'selected' : '' }}>Accepted</option>
+                                                                                <option value="Pending" {{ old('f_proposal_status') == 'Pending' ? 'selected' : '' }}>Pending</option>
+                                                                                <option value="Rejected" {{ old('f_proposal_status') == 'Rejected' ? 'selected' : '' }}>Rejected</option>
                                                                             </select>
+
                                                                             @if($errors->has('f_proposal_status'))
                                                                                 <div class="text-red-700">{{ $errors->first('f_proposal_status') }}</div>
                                                                             @endif
@@ -219,7 +221,7 @@
                                                                             </div>
                                                                             <input type="date" name="f_application_date" id="fund_application_date"
                                                                                 class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
-                                                                                    required placeholder="Choose date" >
+                                                                                    required placeholder="Choose date" value="{{ old('f_application_date') }}">
                                                                                 @if($errors->has('f_application_date'))
                                                                                         <div class="text-red-700">{{ $errors->first('f_application_date') }}</div>
                                                                                 @endif
@@ -227,7 +229,7 @@
                                                                         </div>
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Fund Received:</label>
-                                                                            <input type="number" min="0" name="f_fund_received" class="ti-form-input" placeholder="Fund Received" id="fund_received">
+                                                                            <input type="number" min="0" name="f_fund_received" class="ti-form-input" placeholder="Fund Received" id="fund_received" value="{{ old('f_fund_received') }}">
                                                                                 @if($errors->has('f_fund_received'))
                                                                                 <div class="text-red-700">{{ $errors->first('f_fund_received') }}</div>
                                                                             @endif
@@ -239,9 +241,10 @@
                                                                             <label for="" class="ti-form-label font-bold">Project status:<span class="text-red-500">*</span></label>
                                                                             <select class="ti-form-select project_status" name="f_project_status" required id="fund_project_status">
                                                                                 <option value="#">select Project Status</option>
-                                                                                <option value="On-Going">On Going</option>
-                                                                                <option value="Completed">Completed</option>
+                                                                                <option value="On-Going" {{ old('f_project_status') == 'On-Going' ? 'selected' : '' }}>On Going</option>
+                                                                                <option value="Completed" {{ old('f_project_status') == 'Completed' ? 'selected' : '' }}>Completed</option>
                                                                             </select>
+
                                                                             @if($errors->has('f_project_status'))
                                                                                 <div class="text-red-700">{{ $errors->first('f_project_status') }}</div>
                                                                             @endif
@@ -249,7 +252,7 @@
                                                                         </div>
                                                                         <div class="flex max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Completion Year :</label>
-                                                                            <input type="number" min="0" step="1" name="f_completion_year" class="ti-form-input" required placeholder="Completion Year" id="fund_completion_year">
+                                                                            <input type="number" min="0" step="1" name="f_completion_year" class="ti-form-input" required placeholder="Completion Year" id="fund_completion_year" value="{{ old('f_completion_year') }}">
                                                                             @if($errors->has('f_completion_year'))
                                                                                 <div class="text-red-700">{{ $errors->first('f_completion_year') }}</div>
                                                                             @endif
@@ -679,7 +682,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold">Consultacy/Testing :<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="c_consultancy_title" class="ti-form-input" required placeholder="Consultacy Title" id="consult_consultancy_title">
+                                                                                <input type="text" name="c_consultancy_title" class="ti-form-input" required placeholder="Consultacy Title" id="consult_consultancy_title"  value="{{ old('c_consultancy_title') }}">
                                                                                     @if($errors->has('c_consultancy_title'))
                                                                                         <div class="text-red-700">{{ $errors->first('c_consultancy_title')}}</div>
                                                                                 @endif
@@ -687,7 +690,7 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Agency :</label>
-                                                                                <input type="text" name="c_agency" class="ti-form-input" required placeholder="Agency" id="consult_agency">
+                                                                                <input type="text" name="c_agency" class="ti-form-input" required placeholder="Agency" id="consult_agency" value="{{ old('c_agency') }}">
                                                                                     @if($errors->has('c_agency'))
                                                                                         <div class="text-red-700">{{ $errors->first('c_agency')}}</div>
                                                                                 @endif
@@ -703,7 +706,7 @@
                                                                                     </div>
                                                                                     <input type="date" name="c_from_date" id="consult_from_date"
                                                                                     class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
-                                                                                        required placeholder="Choose date">
+                                                                                        required placeholder="Choose date" value="{{ old('c_from_date') }}">
                                                                                             @if($errors->has('c_from_date'))
                                                                                                 <div class="text-red-700">{{ $errors->first('c_from_date')}}</div>
                                                                                             @endif
@@ -716,7 +719,7 @@
                                                                                     </div>
                                                                                     <input type="date" name="c_to_date" id="consult_to_date"
                                                                                         class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
-                                                                                        required placeholder="Choose date">
+                                                                                        required placeholder="Choose date" value="{{ old('c_to_date') }}">
                                                                                         @if($errors->has('c_to_date'))
                                                                                             <div class="text-red-700">{{ $errors->first('c_to_date')}}</div>
                                                                                         @endif
@@ -729,7 +732,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Amount:</label>
-                                                                                <input type="number" min="0" name="c_amount" class="ti-form-input" placeholder="Amount" id="consult_amount">
+                                                                                <input type="number" min="0" name="c_amount" class="ti-form-input" placeholder="Amount" id="consult_amount" value="{{ old('c_amount') }}">
                                                                                     @if($errors->has('c_amount'))
                                                                                                 <div class="text-red-700">{{ $errors->first('c_amount')}}</div>
                                                                                     @endif
@@ -740,10 +743,10 @@
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold">Consultancy Type:<span class="text-red-500">*</span> </label>
                                                                                 <select class="ti-form-select" name="c_consultancy_type" id="consult_type">
                                                                                     <option value="#">Choose Level</option>
-                                                                                    <option value="consultancy">Consultancy</option>
-                                                                                    <option value="testing">Testing</option>
+                                                                                    <option value="consultancy" {{ old('c_consultancy_type') == 'consultancy' ? 'selected' : '' }}>Consultancy</option>
+                                                                                    <option value="testing" {{ old('c_consultancy_type') == 'testing' ? 'selected' : '' }}>Testing</option>
                                                                                 </select>
-                                                                                    @if($errors->has('consultancy_type'))
+                                                                                @if($errors->has('consultancy_type'))
                                                                                     <div class="text-red-700">{{ $errors->first('consultancy_type') }}</div>
                                                                                 @endif
                                                                                 <div id="consultancy_typeError" class="error text-red-700"></div>

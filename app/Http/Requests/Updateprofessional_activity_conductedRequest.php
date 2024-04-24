@@ -24,7 +24,7 @@ class Updateprofessional_activity_conductedRequest extends FormRequest
     {
         return
         [
-            'e_title' => ['required'],
+            // 'e_title' => ['required'],
             'e_level' => ['required', Rule::in(['Local', 'National', 'International'])],
             'e_organizer'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
             'e_co_organizer'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
@@ -44,8 +44,8 @@ class Updateprofessional_activity_conductedRequest extends FormRequest
     {
         return
         [
-            'e_title.required'=>'title is required field',
-            'e_title.regex'=>'The title field should contain only letters and spaces',
+            // 'e_title.required'=>'title is required field',
+            // 'e_title.regex'=>'The title field should contain only letters and spaces',
             'e_level.required'=>'level is required field',
             'e_level.in'=>'Please select a valid option from the provided choices',
             'e_organizer.required'=>'organizer is required filed',

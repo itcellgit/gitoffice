@@ -148,174 +148,35 @@
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold"> Level :<span class="text-red-500">*</span> </label>
                                                                                 <select class="ti-form-select level pub_level" name="level"  id="pub_level">
                                                                                     <option value="#">Choose Level</option>
-                                                                                    <option value="Q1">Q1</option>
-                                                                                    <option value="Q2">Q2</option>
-                                                                                    <option value="Q3">Q3</option>
-                                                                                    <option value="Q4">Q4</option>
-                                                                                    <option value="SCI">SCI</option>
-                                                                                    <option value="Web of Science">Web of Science</option>
-                                                                                    <option value="Scopus Indexed">Scopus Indexed</option>
-                                                                                    <option value="UGC General">UGC General</option>
-                                                                                    <option value="Other">Other</option>
+                                                                                    <option value="Q1" {{ old('level') == 'Q1' ? 'selected' : '' }}>Q1</option>
+                                                                                    <option value="Q2" {{ old('level') == 'Q2' ? 'selected' : '' }}>Q2</option>
+                                                                                    <option value="Q3" {{ old('level') == 'Q3' ? 'selected' : '' }}>Q3</option>
+                                                                                    <option value="Q4" {{ old('level') == 'Q4' ? 'selected' : '' }}>Q4</option>
+                                                                                    <option value="SCI" {{ old('level') == 'SCI' ? 'selected' : '' }}>SCI</option>
+                                                                                    <option value="Web of Science" {{ old('level') == 'Web of Science' ? 'selected' : '' }}>Web of Science</option>
+                                                                                    <option value="Scopus Indexed" {{ old('level') == 'Scopus Indexed' ? 'selected' : '' }}>Scopus Indexed</option>
+                                                                                    <option value="UGC General" {{ old('level') == 'UGC General' ? 'selected' : '' }}>UGC General</option>
+                                                                                    <option value="Other" {{ old('level') == 'Other' ? 'selected' : '' }}>Other</option>
                                                                                 </select>
                                                                                 @if($errors->has('level'))
                                                                                     <div class="text-red-700">{{ $errors->first('level') }}</div>
                                                                                 @endif
                                                                                 <div id="pub_levelError" class="error text-red-700"></div>
                                                                             </div>
-
-                                                                            {{-- <div class="max-w-sm space-y-3 pb-6">
-                                                                                <label for="with-corner-hint" class="ti-form-label font-bold"> Level :</label>
-                                                                                <div class="border border-gray-300 p-2 max-h-5 overflow-auto" style="max-height: 100px; overflow-y: auto;">
-                                                                                    <div class="">
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="#"> Choose Level
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q1"> Q1
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q2"> Q2
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q3"> Q3
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q4"> Q4
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="SCI"> SCI
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Web of Science"> Web of Science
-                                                                                        </div>
-
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Scopus Indexed"> Scopus Indexed
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="UGC General"> UGC General
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Other"> Other
-                                                                                        </div>
-                                                                                        <!-- Add other checkboxes similarly -->
-
-                                                                                    </div>
-
-                                                                                </div>
-                                                                                @if($errors->has('level'))
-                                                                                    <div class="text-red-700">{{ $errors->first('level') }}</div>
-                                                                                @endif
-                                                                                <div id="pub_levelError" class="error text-red-700"></div>
-                                                                            </div> --}}
-
-
-
-                                                                            {{-- <div class="max-w-sm space-y-3 pb-6">
-                                                                                <label for="with-corner-hint" class="ti-form-label font-bold"> Level :</label>
-                                                                                <div class="flex flex-wrap">
-                                                                                    <div class="mr-4">
-                                                                                        <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q1"> Q1
-                                                                                    </div>
-                                                                                    <div class="mr-4">
-                                                                                        <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q2"> Q2
-                                                                                    </div>
-                                                                                    <div class="mr-4">
-                                                                                        <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q3"> Q3
-                                                                                    </div>
-                                                                                    <div class="mr-4">
-                                                                                        <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q4"> Q4
-                                                                                    </div>
-                                                                                    <div class="mr-4">
-                                                                                        <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="SCI"> SCI
-                                                                                    </div>
-                                                                                    <div class="mr-4">
-                                                                                        <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Web of Science"> Web of Science
-                                                                                    </div>
-                                                                                    <div class="mr-4">
-                                                                                        <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Scopus Indexed"> Scopus Indexed
-                                                                                    </div>
-                                                                                    <div class="mr-4">
-                                                                                        <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="UGC General"> UGC General
-                                                                                    </div>
-                                                                                    <div class="mr-4">
-                                                                                        <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Other"> Other
-                                                                                    </div>
-                                                                                </div>
-                                                                                @if($errors->has('level'))
-                                                                                    <div class="text-red-700">{{ $errors->first('level') }}</div>
-                                                                                @endif
-                                                                                <div id="pub_levelError" class="error text-red-700"></div>
-                                                                            </div> --}}
-
-
-
-
-                                                                            {{-- <div class="max-w-sm space-y-3 pb-6">
-                                                                                <label for="with-corner-hint" class="ti-form-label font-bold"> Level :<span class="text-red-500">*</span> </label>
-                                                                                <div class="relative inline-block text-left level pub_level" name="level" id="pub_level">
-                                                                                    <div id="levelButton" class="inline-flex justify-between w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150" aria-haspopup="true" aria-expanded="true" >
-                                                                                        <span>Choose Level</span>
-                                                                                    </div>
-                                                                                    <div id="levelOptions" class="rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="levelButton" tabindex="-1" style="display: none;">
-                                                                                        <div class="py-1 " role="none" >
-                                                                                            <label for="Q1" class="flex items-center">
-                                                                                                <input type="checkbox" id="Q1" value="Q1" class="mr-2">
-                                                                                                Q1
-                                                                                            </label>
-                                                                                            <label for="Q2" class="flex items-center">
-                                                                                                <input type="checkbox" id="Q2" value="Q2" class="mr-2">
-                                                                                                Q2
-                                                                                            </label>
-                                                                                            <label for="Q3" class="flex items-center">
-                                                                                                <input type="checkbox" id="Q3" value="Q3" class="mr-2">
-                                                                                                Q3
-                                                                                            </label>
-                                                                                            <label for="Q4" class="flex items-center">
-                                                                                                <input type="checkbox" id="Q4" value="Q4" class="mr-2">
-                                                                                                Q4
-                                                                                            </label>
-                                                                                            <label for="SCI" class="flex items-center">
-                                                                                                <input type="checkbox" id="SCI" value="SCI" class="mr-2">
-                                                                                                SCI
-                                                                                            </label>
-                                                                                            <label for="Web_of_Science" class="flex items-center">
-                                                                                                <input type="checkbox" id="Web_of_Science" value="Web of Science" class="mr-2">
-                                                                                                Web of Science
-                                                                                            </label>
-                                                                                            <label for="Scopus_Indexed" class="flex items-center">
-                                                                                                <input type="checkbox" id="Scopus_Indexed" value="Scopus Indexed" class="mr-2">
-                                                                                                Scopus Indexed
-                                                                                            </label>
-                                                                                            <label for="UGC_General" class="flex items-center">
-                                                                                                <input type="checkbox" id="UGC_General" value="UGC General" class="mr-2">
-                                                                                                UGC General
-                                                                                            </label>
-                                                                                            <label for="Other" class="flex items-center">
-                                                                                                <input type="checkbox" id="Other" value="Other" class="mr-2">
-                                                                                                Other
-                                                                                            </label>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div id="pub_levelError" class="error text-red-700"></div>
-                                                                            </div> --}}
-
-
                                                                             <div class="max-w-sm space-y-3 pb-6" id="pub_other_level">
                                                                                 <label for="" class="ti-form-label font-bold">Other Level:</label>
-                                                                                <input type="text" name="other_level" class="ti-form-input" placeholder="Other Level" id="pub_otherlevel">
+                                                                                <input type="text" name="other_level" class="ti-form-input" placeholder="Other Level" id="pub_otherlevel" value="{{ old('other_level') }}">
                                                                                 @if($errors->has('other_level'))
                                                                                     <div class="text-red-700">{{ $errors->first('other_level') }}</div>
                                                                                 @endif
                                                                                 <div id="pub_other_levelError" class="error text-red-700"></div>
                                                                             </div>
+
                                                                         </div>
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Title :<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="title" class="ti-form-input" placeholder="Title" id="pub_title">
+                                                                                <input type="text" name="title" class="ti-form-input" placeholder="Title" id="pub_title" value="{{ old('title') }}">
                                                                                  @if($errors->has('title'))
                                                                                      <div class="text-red-700">{{ $errors->first('title') }}</div>
                                                                                  @endif
@@ -330,7 +191,7 @@
 
                                                                                     <input type="date" name="date" id="pub_dateofpublication"
                                                                                             class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date conf_attended_from_date"
-                                                                                              placeholder="Choose date" >
+                                                                                              placeholder="Choose date" value="{{ old('date') }}">
                                                                                     @if($errors->has('date'))
                                                                                          <div class="text-red-700">{{ $errors->first('date') }}</div>
                                                                                      @endif
@@ -340,7 +201,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Journal:<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="journal" class="ti-form-input"  placeholder="Journal" id="pub_journal">
+                                                                                <input type="text" name="journal" class="ti-form-input"  placeholder="Journal" id="pub_journal" value="{{ old('journal') }}">
                                                                                  @if($errors->has('journal'))
                                                                                     <div class="text-red-700">{{ $errors->first('journal') }}</div>
                                                                                 @endif
@@ -348,13 +209,10 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Publication Type:<span class="text-red-500">*</span></label>
-
                                                                                 <select class="ti-form-select" name="publication_type" id="pubtype">
                                                                                     <option value="#">Choose One</option>
-                                                                                    <option value="Journal">Journal</option>
-                                                                                    <option value="Conference Proceeding">Conference Proceeding</option>
-
-
+                                                                                    <option value="Journal" {{ old('publication_type') == 'Journal' ? 'selected' : '' }}>Journal</option>
+                                                                                    <option value="Conference Proceeding" {{ old('publication_type') == 'Conference Proceeding' ? 'selected' : '' }}>Conference Proceeding</option>
                                                                                 </select>
                                                                                 @if($errors->has('publication_typeError'))
                                                                                         <div class="text-red-700">{{ $errors->first('publication_typeError') }}</div>
@@ -362,7 +220,7 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">DOI Number:<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="doi_number" class="ti-form-input" required placeholder="Doi Number" id="pub_doi_number" >
+                                                                                <input type="text" name="doi_number" class="ti-form-input" required placeholder="Doi Number" id="pub_doi_number" value="{{ old('doi_number') }}">
                                                                                     @if($errors->has('doi_number'))
                                                                                     <div class="text-red-700">{{ $errors->first('doi_number') }}</div>
                                                                                 @endif
@@ -374,7 +232,7 @@
 
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Link:</label>
-                                                                                <input type="url" id="pub_link" name="link" class="ti-form-input" placeholder="Link Should Be http://www.">
+                                                                                <input type="url" id="pub_link" name="link" class="ti-form-input" placeholder="Link Should Be http://www." value="{{ old('link') }}">
                                                                                     @if($errors->has('link'))
                                                                                          <div class="text-red-700">{{ $errors->first('link') }}</div>
                                                                                      @endif
@@ -382,13 +240,11 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Author Role:<span class="text-red-500">*</span></label>
-
                                                                                 <select class="ti-form-select role" name="role" id="pub_authorrole">
                                                                                     <option value="#">Choose One</option>
-                                                                                    <option value="Author">Author</option>
-                                                                                    <option value="Co-Author">Co-Author</option>
-                                                                                    <option value="Corresponding-Author">Corresponding-Author</option>
-
+                                                                                    <option value="Author" {{ old('role') == 'Author' ? 'selected' : '' }}>Author</option>
+                                                                                    <option value="Co-Author" {{ old('role') == 'Co-Author' ? 'selected' : '' }}>Co-Author</option>
+                                                                                    <option value="Corresponding-Author" {{ old('role') == 'Corresponding-Author' ? 'selected' : '' }}>Corresponding-Author</option>
                                                                                 </select>
                                                                                 @if($errors->has('role'))
                                                                                         <div class="text-red-700">{{ $errors->first('role') }}</div>
@@ -398,7 +254,7 @@
                                                                             <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                                 <div class="max-w-sm space-y-3 pb-6">
                                                                                     <div class="max-w-sm space-y-3 pb-6">
-                                                                                        <label for="" class="ti-form-label pt-4 font-bold">Document:<span class="text-red-500">*  Only PDF files up to 500 KB in size are accepted.</span></label>
+                                                                                        <label for="" class="ti-form-label pt-4 font-bold">Document:<span class="text-red-500">*Only PDF files up to 500 KB in size are accepted.</span></label>
                                                                                         <span class="sr-only">Choose Profile photo</span>
                                                                                             <input type="file" accept="application/pdf" name="document" id="pub_document" class="block w-full text-sm text-gray-500 dark:text-white/70 focus:outline-0
                                                                                             ltr:file:mr-4 rtl:file:ml-4 file:py-2 file:px-4
@@ -878,13 +734,24 @@
 
                         ///
 
-                        if(pub_title == ''){
+                        // if(pub_title == ''){
+                        //     $('#pub_titleError').text('Title Name is missing');
+                        //     flag = true;
+                        // } else if (!/^[a-zA-Z\s0-9]*$/.test(pub_title.trim())) {
+                        //     $('#pub_titleError').text('Please fill the correct value');
+                        //     flag = true;
+                        // }
+
+                        if (pub_title.trim() === '') {
                             $('#pub_titleError').text('Title Name is missing');
                             flag = true;
-                        }else if (!/^[a-zA-Z\s]+$/.test(pub_title.trim())){
+                        } else if (!/^[\w\s\/.,]+$/.test(pub_title.trim())) {
                             $('#pub_titleError').text('Please fill the correct value');
                             flag = true;
                         }
+
+
+
                         if(pub_dateofpublication.trim() === ''){
                             $('#pub_dateofpublicatonError').text('Please Select a proper date');
                             flag = true;

@@ -23,9 +23,8 @@ class Updategeneral_achievementsRequest extends FormRequest
     {
         return [
             //
-            'gae_award'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
+
             'gae_year'=>['required','numeric'],
-            'gae_details'=> ['required', 'regex:/^[a-zA-Z\s]+$/'],
             'document'=>['required','file','mimes:pdf'],
             'gae_awarding_body'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
         ];
@@ -33,20 +32,19 @@ class Updategeneral_achievementsRequest extends FormRequest
     public function messages():array
     {
         return[
-            'gae_award.required'=>'awar,d is required field',
-            'gae_award.regex' => 'The award field should contain only letters and spaces.',
+            // 'gae_award.required'=>'awar,d is required field',
+            // 'gae_award.regex' => 'The award field should contain only letters and spaces.',
             'gae_year.required'=>'year is required filed',
             'gae_year.numeric'=>'year can be numbers only',
-            'gae_details.required'=>'details is required field',
-            'gae_details.regex'=>'The details field should contain only letters and spaces.',
+            // 'gae_details.required'=>'details is required field',
+            // 'gae_details.regex'=>'The details field should contain only letters and spaces.',
             'gae_awarding_body.required'=>'award is required field',
             'gae_awarding_body.regex' => 'The award field should contain only letters and spaces.',
             // 'gae_validation_status.required'=>'validation_status is required field',
             // 'gae_valeidation_status.in'=>'Please select a valid option from the provided choices',
-          
+
      ];
     }
 }
 
-           
-         
+

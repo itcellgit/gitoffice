@@ -1806,23 +1806,24 @@
                             flag = true;
                         }
 
-
-
                         // if (con_att_title === '') {
                         //     $('#con_att_titleError').text('Title Name is missing');
                         //     flag = true;
-                        // } else if (!/^[a-zA-Z\s,./]*$/.test(con_att_title.trim())) {
+                        // } else if (!/^[a-zA-Z0-9\s,./]*$/.test(con_att_title.trim())) {
                         //     $('#con_att_titleError').text('Please fill in the correct value');
                         //     flag = true;
                         // }
 
-                        if (con_att_title === '') {
+                        if (con_att_title.trim() === '') {
                             $('#con_att_titleError').text('Title Name is missing');
                             flag = true;
-                        } else if (!/^[a-zA-Z0-9\s,./]*$/.test(con_att_title.trim())) {
+                        } else if (!/^[\w\s\/.,]+$/.test(con_att_title.trim())) {
                             $('#con_att_titleError').text('Please fill in the correct value');
                             flag = true;
                         }
+
+
+
 
                         if(con_att_place == ''){
                             $('#con_att_palceError').text('Place Name is missing');

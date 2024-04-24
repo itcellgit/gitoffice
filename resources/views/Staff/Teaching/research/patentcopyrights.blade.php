@@ -155,7 +155,7 @@
 
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold"> Application No : <span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="p_appl_no" class="ti-form-input" required placeholder=" Application No" id="pt_appl_no">
+                                                                                <input type="text" name="p_appl_no" class="ti-form-input" required placeholder=" Application No" id="pt_appl_no" value="{{ old('p_appl_no') }}">
                                                                                  @if($errors->has('p_appl_no'))
                                                                                         <div class="text-red-700">{{ $errors->first('p_appl_no')}}</div>
                                                                                 @endif
@@ -170,7 +170,7 @@
 
                                                                                 <input type="text" name="p_appl_date" id="pt_appl_date"
                                                                                 class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
-                                                                                    required placeholder="Choose date">
+                                                                                    required placeholder="Choose date" value="{{ old('p_appl_date') }}">
                                                                                     @if($errors->has('p_appl_date'))
                                                                                         <div class="text-red-700">{{ $errors->first('p_appl_date')}}</div>
                                                                                 @endif
@@ -180,7 +180,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold"> Title:<span class="text-red-500">*</span> </label>
-                                                                                <input type="text" name="p_title" class="ti-form-input" required placeholder="Title" id="pt_title">
+                                                                                <input type="text" name="p_title" class="ti-form-input" required placeholder="Title" id="pt_title" value="{{ old('p_title') }}">
                                                                                      @if($errors->has('p_title'))
                                                                                         <div class="text-red-700">{{ $errors->first('p_title')}}</div>
                                                                                     @endif
@@ -188,13 +188,15 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Status:<span class="text-red-500">*</span></label>
-                                                                                    <select class="ti-form-select status" name="p_status" id="pt_status">
-                                                                                        <option value="#">Choose Status</option>
-                                                                                        <option value="Granted">Granted</option>
-                                                                                        <option value="Pending">Pending</option>
-                                                                                        <option value="Awarded">Awarded</option>
-                                                                                        <option value="Rejected">Rejected</option>
-                                                                                    </select>
+                                                                                <select class="ti-form-select status" name="p_status" id="pt_status">
+                                                                                    <option value="#">Choose Status</option>
+                                                                                    <option value="Granted" {{ old('p_status') == 'Granted' ? 'selected' : '' }}>Granted</option>
+                                                                                    <option value="Pending" {{ old('p_status') == 'Pending' ? 'selected' : '' }}>Pending</option>
+                                                                                    <option value="Awarded" {{ old('p_status') == 'Awarded' ? 'selected' : '' }}>Awarded</option>
+                                                                                    <option value="Rejected" {{ old('p_status') == 'Rejected' ? 'selected' : '' }}>Rejected</option>
+                                                                                    <option value="Published" {{ old('p_status') == 'Published' ? 'selected' : '' }}>Published</option>
+                                                                                </select>
+
                                                                                     @if($errors->has('p_status'))
                                                                                         <div class="text-red-700">{{ $errors->first('p_status')}}</div>
                                                                                     @endif
@@ -206,7 +208,7 @@
 
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Patent No:<span class="text-red-500">*</span></label>
-                                                                                <input type="number" min="0" step="1" name="p_patent_no" class="ti-form-input" required placeholder="Patent No" id="pt_patent_no">
+                                                                                <input type="number" min="0" step="1" name="p_patent_no" class="ti-form-input" required placeholder="Patent No" id="pt_patent_no" value="{{ old('p_patent_no') }}">
                                                                                   @if($errors->has('p_patent_no'))
                                                                                         <div class="text-red-700">{{ $errors->first('p_patent_no')}}</div>
                                                                                     @endif
@@ -214,7 +216,7 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Publication No:<span class="text-red-500">*</span></label>
-                                                                                <input type="number" min="0" step="1" name="p_publication_no" class="ti-form-input" required placeholder="Publication No" id="pt_publication_no">
+                                                                                <input type="number" min="0" step="1" name="p_publication_no" class="ti-form-input" required placeholder="Publication No" id="pt_publication_no" value="{{ old('p_publication_no') }}">
                                                                                  @if($errors->has('p_publication_no'))
                                                                                         <div class="text-red-700">{{ $errors->first('p_publication_no')}}</div>
                                                                                     @endif
@@ -231,7 +233,7 @@
 
                                                                                 <input type="date" name="p_publication_date" id="pt_publication_date"
                                                                                     class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
-                                                                                    required placeholder="Choose date">
+                                                                                    required placeholder="Choose date" value="{{ old('p_publication_date') }}">
                                                                                     @if($errors->has('p_publication_date'))
                                                                                         <div class="text-red-700">{{ $errors->first('p_publication_date')}}</div>
                                                                                     @endif
@@ -239,7 +241,7 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold">Stream/Domain : <span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="p_stream_domain" class="ti-form-input" required placeholder="Stream Domain" id="stream_domain">
+                                                                                <input type="text" name="p_stream_domain" class="ti-form-input" required placeholder="Stream Domain" id="stream_domain" value="{{ old('p_stream_domain') }}">
                                                                                  @if($errors->has('p_stream_domain'))
                                                                                         <div class="text-red-700">{{ $errors->first('p_stream_domain')}}</div>
                                                                                 @endif
@@ -465,6 +467,7 @@
                                                                                                                             <option value="Pending" {{$pate->status=='Pending'? 'selected': ''}}>Pending</option>
                                                                                                                             <option value="Awarded" {{$pate->status=='Awarded'? 'selected': ''}}>Awarded</option>
                                                                                                                             <option value="Rejected" {{$pate->status=='Rejected'? 'selected': ''}}>Rejected</option>
+                                                                                                                            <option value="Published" {{$pate->status=='Published'? 'selected': ''}}>Published</option>
                                                                                                                                 @if($errors->has('pe_status'))
                                                                                                                                     <div class="text-red-700">{{ $errors->first('pe_status') }}</div>
                                                                                                                                 @endif
@@ -653,7 +656,7 @@
 
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold">Copyright Title : <span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="c_copyright_title" class="ti-form-input" required placeholder="Copyright Title" id="rc_copyright_title">
+                                                                                <input type="text" name="c_copyright_title" class="ti-form-input" required placeholder="Copyright Title" id="rc_copyright_title" value="{{ old('c_copyright_title') }}">
 
                                                                                     @if($errors->has('c_copyright_title'))
                                                                                             <div class="text-red-700">{{ $errors->first('c_copyright_title')}}</div>
@@ -669,7 +672,7 @@
 
                                                                                     <input type="date" name="c_copyright_date" id="rc_copyright_date"
                                                                                     class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
-                                                                                     required placeholder="Choose date">
+                                                                                     required placeholder="Choose date" value="{{ old('c_copyright_date') }}">
                                                                                      @if($errors->has('c_copyright_date'))
                                                                                             <div class="text-red-700">{{ $errors->first('c_copyright_date')}}</div>
                                                                                     @endif
@@ -680,7 +683,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold">Author Name:<span class="text-red-500">*</span> </label>
-                                                                                <input type="text" name="c_author_name" class="ti-form-input" required placeholder="Author Name" id="rc_author_name">
+                                                                                <input type="text" name="c_author_name" class="ti-form-input" required placeholder="Author Name" id="rc_author_name" value="{{ old('c_author_name') }}">
                                                                                  @if($errors->has('c_author_name'))
                                                                                             <div class="text-red-700">{{ $errors->first('c_author_name')}}</div>
                                                                                     @endif
@@ -690,9 +693,10 @@
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold">Status:<span class="text-red-500">*</span> </label>
                                                                                 <select class="ti-form-select status" name="c_status" required id="rc_status">
                                                                                     <option value="#">Choose Status</option>
-                                                                                    <option value="Applied">Applied</option>
-                                                                                    <option value="Awarded">Awarded</option>
+                                                                                    <option value="Applied" {{ old('c_status') == 'Applied' ? 'selected' : '' }}>Applied</option>
+                                                                                    <option value="Awarded" {{ old('c_status') == 'Awarded' ? 'selected' : '' }}>Awarded</option>
                                                                                 </select>
+
                                                                                   @if($errors->has('c_status'))
                                                                                             <div class="text-red-700">{{ $errors->first('c_status')}}</div>
                                                                                     @endif
@@ -704,7 +708,7 @@
 
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Description:<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="c_description" class="ti-form-input" required placeholder="Description" id="rc_description">
+                                                                                <input type="text" name="c_description" class="ti-form-input" required placeholder="Description" id="rc_description" value="{{ old('c_description') }}">
                                                                                    @if($errors->has('c_description'))
                                                                                             <div class="text-red-700">{{ $errors->first('c_description')}}</div>
                                                                                     @endif
@@ -1116,13 +1120,25 @@
                         $('#pt_appl_dateError').text('Please Select a proper date');
                         flag = true;
                     }
-                    if(pt_title == ''){
+
+                    // if(pt_title == ''){
+                    //     $('#pt_titleError').text('Title Name is missing');
+                    //     flag = true;
+                    // }else if (!/^[a-zA-Z\s]+$/.test(pt_title.trim())){
+                    //     $('#pt_titleError').text('Please fill the correct value');
+                    //     flag = true;
+                    // }
+
+                    if (pt_title.trim() === '') {
                         $('#pt_titleError').text('Title Name is missing');
                         flag = true;
-                    }else if (!/^[a-zA-Z\s]+$/.test(pt_title.trim())){
+                    } else if (!/^[\w\s\/.,]+$/.test(pt_title.trim())) {
                         $('#pt_titleError').text('Please fill the correct value');
                         flag = true;
                     }
+
+
+
                     if(stream_domain == ''){
                         $('#pt_stream_domainError').text('Stream Domain Name is missing');
                         flag = true;
@@ -1179,13 +1195,24 @@
                     }
 
 
+                    // if(rc_copyright_title == ''){
+                    //     $('#rc_copyrighttitleError').text('Copyright Title is missing');
+                    //     flag = true;
+                    // }else if (!/^[a-zA-Z\s]+$/.test(rc_copyright_title.trim())){
+                    //     $('#rc_copyrighttitleError').text('Please fill the correct value');
+                    //     flag = true;
+                    // }
+
                     if(rc_copyright_title == ''){
                         $('#rc_copyrighttitleError').text('Copyright Title is missing');
                         flag = true;
-                    }else if (!/^[a-zA-Z\s]+$/.test(rc_copyright_title.trim())){
+                    } else if (!/^[a-zA-Z\s0-9]*$/.test(rc_copyright_title.trim())) {
                         $('#rc_copyrighttitleError').text('Please fill the correct value');
                         flag = true;
                     }
+
+
+
                     if(rc_copyright_date.trim() === ''){
                         $('#rc_copyrightdateError').text('Please Select a proper date');
                         flag = true;

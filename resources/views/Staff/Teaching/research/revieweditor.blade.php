@@ -135,15 +135,15 @@
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold"> Level :<span class="text-red-500">*</span> </label>
                                                                                 <select class="ti-form-select level reviewerlevel" name="level" id="re_level">
                                                                                     <option value="#">Choose Level</option>
-                                                                                    <option value="Q1">Q1</option>
-                                                                                    <option value="Q2">Q2</option>
-                                                                                    <option value="Q3">Q3</option>
-                                                                                    <option value="Q4">Q4</option>
-                                                                                    <option value="SCI">SCI</option>
-                                                                                    <option value="Web of Science">Web of Science</option>
-                                                                                    <option value="Scopus Indexed">Scopus Indexed</option>
-                                                                                    <option value="UGC General">UGC General</option>
-                                                                                    <option value="Other">Other</option>
+                                                                                    <option value="Q1" {{ old('level') == 'Q1' ? 'selected' : '' }}>Q1</option>
+                                                                                    <option value="Q2" {{ old('level') == 'Q2' ? 'selected' : '' }}>Q2</option>
+                                                                                    <option value="Q3" {{ old('level') == 'Q3' ? 'selected' : '' }}>Q3</option>
+                                                                                    <option value="Q4" {{ old('level') == 'Q4' ? 'selected' : '' }}>Q4</option>
+                                                                                    <option value="SCI" {{ old('level') == 'SCI' ? 'selected' : '' }}>SCI</option>
+                                                                                    <option value="Web of Science" {{ old('level') == 'Web of Science' ? 'selected' : '' }}>Web of Science</option>
+                                                                                    <option value="Scopus Indexed" {{ old('level') == 'Scopus Indexed' ? 'selected' : '' }}>Scopus Indexed</option>
+                                                                                    <option value="UGC General" {{ old('level') == 'UGC General' ? 'selected' : '' }}>UGC General</option>
+                                                                                    <option value="Other" {{ old('level') == 'Other' ? 'selected' : '' }}>Other</option>
                                                                                 </select>
                                                                                 @if($errors->has('level'))
                                                                                     <div class="text-red-700">{{ $errors->first('level') }}</div>
@@ -153,7 +153,7 @@
 
                                                                             <div class="max-w-sm space-y-3 pb-6 re_otherLevel"  style="display: none;">
                                                                                 <label for="" class="ti-form-label font-bold">Other Level:</label>
-                                                                                <input type="text" name="other_level" class="ti-form-input " placeholder="Other Level" id="re_other_level">
+                                                                                <input type="text" name="other_level" class="ti-form-input " placeholder="Other Level" id="re_other_level" value="{{ old('other_level') }}">
                                                                                 @if($errors->has('other_level'))
                                                                                     <div class="text-red-700">{{ $errors->first('other_level') }}</div>
                                                                                 @endif
@@ -163,7 +163,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Title :<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="title" class="ti-form-input"  placeholder="Title" id="re_title">
+                                                                                <input type="text" name="title" class="ti-form-input"  placeholder="Title" id="re_title" value="{{ old('title') }}">
                                                                                 @if($errors->has('title'))
                                                                                     <div class="text-red-700">{{ $errors->first('title') }}</div>
                                                                                 @endif
@@ -171,7 +171,7 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Journal Name:<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="journal_name" class="ti-form-input"  placeholder="Journal Name" id="re_journal_name">
+                                                                                <input type="text" name="journal_name" class="ti-form-input"  placeholder="Journal Name" id="re_journal_name" value="{{ old('journal_name') }}">
                                                                                 @if($errors->has('journal_name'))
                                                                                     <div class="text-red-700">{{ $errors->first('journal_name') }}</div>
                                                                                 @endif
@@ -181,7 +181,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Publisher Name:<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="publisher_name" class="ti-form-input"  placeholder="Publisher Name" id="re_publisher_name">
+                                                                                <input type="text" name="publisher_name" class="ti-form-input"  placeholder="Publisher Name" id="re_publisher_name" value="{{ old('publisher_name') }}">
                                                                                 @if($errors->has('publisher_name'))
                                                                                     <div class="text-red-700">{{ $errors->first('publisher_name') }}</div>
                                                                                 @endif
@@ -195,7 +195,7 @@
 
                                                                                 <input type="date" name="reviewed_date"
                                                                                         class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
-                                                                                        required placeholder="Choose date" id="re_review_date">
+                                                                                        required placeholder="Choose date" id="re_review_date" value="{{ old('reviewed_date') }}">
                                                                                 @if($errors->has('date'))
                                                                                     <div class="text-red-700">{{ $errors->first('date') }}</div>
                                                                                 @endif
@@ -205,11 +205,12 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Category: <span class="text-red-500">*</span></label>
-                                                                                <select  class="ti-form-input" name="category" id="re_view_category">
+                                                                                <select class="ti-form-input" name="category" id="re_view_category">
                                                                                     <option value="#">Choose One</option>
-                                                                                    <option value="Journal">Journal</option>
-                                                                                    <option value="Conference Proceeding">Conference Proceeding</option>
+                                                                                    <option value="journal" {{ old('category') == 'journal' ? 'selected' : '' }}>Journal</option>
+                                                                                    <option value="conference proceeding" {{ old('category') == 'conference proceeding' ? 'selected' : '' }}>Conference Proceeding</option>
                                                                                 </select>
+
                                                                                 @if($errors->has('category'))
                                                                                     <div class="text-red-700">{{ $errors->first('category')}}</div>
                                                                                 @endif
@@ -472,8 +473,8 @@
                                                                                                                     <label for="" class="ti-form-label font-bold">Category: <span class="text-red-500">*</span></label>
                                                                                                                     <select  class="ti-form-input" name="category">
                                                                                                                         <option value="#">Choose One</option>
-                                                                                                                        <option value="Journal" {{$rc->category=='Journal'? 'selected':''}}>Journal</option>
-                                                                                                                        <option value="Conference Proceeding" {{$rc->category=='Conference Proceeding'? 'selected':''}}>Conference Proceeding</option>
+                                                                                                                        <option value="journal" {{$rc->category=='journal'? 'selected':''}}>Journal</option>
+                                                                                                                        <option value="conference proceeding" {{$rc->category=='conference proceeding'? 'selected':''}}>Conference Proceeding</option>
                                                                                                                     </select>
                                                                                                                     @if($errors->has('category'))
                                                                                                                         <div class="text-red-700">{{ $errors->first('category')}}</div>
@@ -638,13 +639,25 @@
                             flag = true;
                         }
                     }
-                    if(re_title == ''){
+
+                    // if(re_title == ''){
+                    //     $('#re_titleError').text('Title is missing');
+                    //     flag = true;
+                    // }else if (!/^[a-zA-Z\s]+$/.test(re_title.trim())){
+                    //     $('#re_titleError').text('Please fill the correct value');
+                    //     flag = true;
+                    // }
+
+
+                    if (re_title.trim() === '') {
                         $('#re_titleError').text('Title is missing');
                         flag = true;
-                    }else if (!/^[a-zA-Z\s]+$/.test(re_title.trim())){
+                    } else if (!/^[\w\s\/.,]+$/.test(re_title.trim())) {
                         $('#re_titleError').text('Please fill the correct value');
                         flag = true;
                     }
+
+
                     if(re_journal_name == ''){
                         $('#re_journalnameError').text('Journal Name is missing');
                         flag = true;

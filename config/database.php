@@ -54,7 +54,7 @@ return [
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
-            'strict' => true,
+            'strict' => true, //changes on 22-4-2024
             'engine' => null,
         ],
         // 'mysql' => [

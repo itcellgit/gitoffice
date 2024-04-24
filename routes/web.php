@@ -550,7 +550,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
       Route::get('/Deanrnd/Teaching/research/achivements',[DeanrndResearchController::class,'general_achievement'])->name('Deanrnd.Teaching.research.achivements');
       Route::get('/Deanrnd/Teaching/research/book_chapter',[DeanrndResearchController::class,'book_chapter'])->name('Deanrnd.Teaching.research.book_chapter');
       Route::get('/Deanrnd/Teaching/research/dean_consultancy',[DeanrndResearchController::class,'consultancy'])->name('Deanrnd.Teaching.research.dean_consultancy');
-      Route::get('/Deanrnd/Teaching/research/reviewer_editor',[DeanrndResearchController::class,'reviewer_editor'])->name('Deanrnd.Teaching.research.reviewer_editor');
+      Route::get('/Deanrnd/Teaching/research/reviewer_editor',[DeanrndResearchController::class,'reviewer_editor'])->name('Deanrnd.Teaching.research.reviewer_editorl');
 
 
 
@@ -648,8 +648,10 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
      //Hod Leaves.
      Route::get('/HOD/leaves_management',[HODLeaveController::class,'index'])->name('HOD.leaves_management.index');
      Route::get('/HOD/leaves_management/hollidayrh_events',[HODLeaveController::class,'hollidayrh_events'])->name('HOD.leaves.hollidayrh_events');
-     Route::get('/HOD/leaves_management/fetchDeptleaveevents',[HODLeaveController::class,'fetchDeptleaveevents'])->name('ESTB.leaves.fetchDeptleaveevents');
-     Route::get('/HOD/leaves_management/fetchclikdayevents',[HODLeaveController::class,'fetchclikdayevents'])->name('ESTB.leaves.fetchclikdayevents');
+     Route::get('/HOD/leaves_management/fetchDeptleaveevents',[HODLeaveController::class,'fetchDeptleaveevents'])->name('HOD.leaves.fetchDeptleaveevents');
+     Route::get('/HOD/leaves_management/fetchclikdayevents',[HODLeaveController::class,'fetchclikdayevents'])->name('HOD.leaves.fetchclikdayevents');
+     Route::get('/HOD/leaves_management/fetchdatewisedeptleaveevents',[HODLeaveController::class,'fetchdatewisedeptleaveevents'])->name('HOD.leaves.fetchdatewisedeptleaveevents');
+     
 
 
 
@@ -730,12 +732,14 @@ Route::post('reset/password', [MyAuthController::class, 'resetPasswordupdate'])-
 
 Route::get('ticket/dashboard', [TicketController::class, 'index'])->name('ticket.dashboard');
 Route::post('ticket/store', [TicketController::class, 'store'])->name('ticket.store');
-Route::post('ticket/store', [TicketController::class, 'store'])->name('ticket.store');
 Route::patch('ticket/update/{ticket}', [TicketController::class, 'update'])->name('ticket.update');
 Route::delete('ticket/destroy/{ticket}',[TicketController::class, 'destroy'])->name('ticket.destroy');
-Route::patch('ticket/update/avatar/{ticket}', [TicketController::class, 'update'])->name('ticket.update.avatar');
 Route::get('ticket/show/{ticket}', [TicketController::class, 'show'])->name('ticket.show');
 Route::post('ticket/{ticket}/reply/store', [ReplyController::class, 'store'])->name('ticket.reply.store');
+//Route::get('Ticketing/showticket/{ticket}', [TicketController::class, 'show'])->name('ticket.show');
+
+
+
 
 Route::get('mssql',function(){
   $db=DB::connection('sqlsrv')->table('Employees')->get();

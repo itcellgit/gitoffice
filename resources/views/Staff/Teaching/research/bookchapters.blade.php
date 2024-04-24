@@ -149,7 +149,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Title :<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="bc_title" class="ti-form-input" required placeholder="Title" id="bp_title">
+                                                                                <input type="text" name="bc_title" class="ti-form-input" required placeholder="Title" id="bp_title" value="{{ old('bc_title') }}">
                                                                                 @if($errors->has('bc_title'))
                                                                                     <div class="text-red-700">{{ $errors->first('bc_title') }}</div>
                                                                                  @endif
@@ -159,8 +159,8 @@
                                                                                 <label for="" class="ti-form-label font-bold">Book Level:<span class="text-red-500">*</span></label>
                                                                                 <select class="ti-form-select" required name="bc_book_level" id="bp_book_level">
                                                                                     <option value="#">Choose One</option>
-                                                                                    <option value="National">National</option>
-                                                                                    <option value="International">International</option>
+                                                                                    <option value="National" {{ old('bc_book_level') == 'National' ? 'selected' : '' }}>National</option>
+                                                                                    <option value="International" {{ old('bc_book_level') == 'International' ? 'selected' : '' }}>International</option>
                                                                                 </select>
                                                                                  @if($errors->has('bc_book_level'))
                                                                                     <div class="text-red-700">{{ $errors->first('bc_book_level') }}</div>
@@ -169,7 +169,7 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Publisher Name :<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="bc_publisher_name" class="ti-form-input" required placeholder="Publisher Name" id="bp_publisher_name">
+                                                                                <input type="text" name="bc_publisher_name" class="ti-form-input" required placeholder="Publisher Name" id="bp_publisher_name" value="{{ old('bc_publisher_name') }}">
                                                                                  @if($errors->has('bc_publisher_name'))
                                                                                     <div class="text-red-700">{{ $errors->first('bc_publisher_name') }}</div>
                                                                                  @endif
@@ -180,7 +180,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Edition:</label>
-                                                                                <input type="text" name="bc_edition" class="ti-form-input" required placeholder="Edition" id="bp_edition">
+                                                                                <input type="text" name="bc_edition" class="ti-form-input" required placeholder="Edition" id="bp_edition" value="{{ old('bc_edition') }}">
                                                                                  @if($errors->has('bc_edition'))
                                                                                     <div class="text-red-700">{{ $errors->first('bc_edition') }}</div>
                                                                                  @endif
@@ -188,7 +188,7 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">DOI Number:</label>
-                                                                                <input type="text" name="bc_doi" class="ti-form-input" placeholder="DOI" id="bp_doi">
+                                                                                <input type="text" name="bc_doi" class="ti-form-input" placeholder="DOI" id="bp_doi" value="{{ old('bc_doi') }}">
                                                                                  @if($errors->has('bc_doi'))
                                                                                     <div class="text-red-700">{{ $errors->first('bc_doi') }}</div>
                                                                                  @endif
@@ -205,7 +205,7 @@
 
                                                                                     <input type="date" name="bc_date" id="bp_date"
                                                                                             class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
-                                                                                             required placeholder="Choose date">
+                                                                                             required placeholder="Choose date" value="{{ old('bc_date') }}">
                                                                                  @if($errors->has('bc_date'))
                                                                                         <div class="text-red-700">{{ $errors->first('bc_date') }}</div>
                                                                                  @endif
@@ -213,7 +213,7 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Issue:</label>
-                                                                                <input type="text" name="bc_issue" class="ti-form-input" required placeholder="Issue" id="bp_issue">
+                                                                                <input type="text" name="bc_issue" class="ti-form-input" required placeholder="Issue" id="bp_issue" value="{{ old('bc_issue') }}">
                                                                                  @if($errors->has('bc_issue'))
                                                                                     <div class="text-red-700">{{ $errors->first('bc_issue') }}</div>
                                                                                  @endif
@@ -227,8 +227,8 @@
                                                                                 <label for="" class="ti-form-label font-bold">Type:<span class="text-red-500">*</span></label>
                                                                                 <select class="ti-form-select book_chapter_type" name="bc_type" required id="bp_type">
                                                                                     <option value="#">Choose One</option>
-                                                                                    <option value="Book">Book</option>
-                                                                                    <option value="Chapter">Chapter</option>
+                                                                                    <option value="Book" {{ old('bc_type') == 'Book' ? 'selected' : '' }}>Book</option>
+                                                                                    <option value="Chapter" {{ old('bc_type') == 'Chapter' ? 'selected' : '' }}>Chapter</option>
                                                                                 </select>
                                                                                  @if($errors->has('bc_type'))
                                                                                     <div class="text-red-700">{{ $errors->first('bc_type') }}</div>
@@ -237,7 +237,7 @@
                                                                             </div>
                                                                              <div class="max-w-sm space-y-3 pb-6 chapter_title">
                                                                                 <label for="" class="ti-form-label font-bold">Chapter Title:</label>
-                                                                                <input type="text" name="bc_chapter_title" class="ti-form-input"  placeholder="Chapter Title" id="bp_chapter_title">
+                                                                                <input type="text" name="bc_chapter_title" class="ti-form-input"  placeholder="Chapter Title" id="bp_chapter_title" value="{{ old('bc_chapter_title') }}">
                                                                                 @if($errors->has('bc_chapter_title'))
                                                                                     <div class="text-red-700">{{ $errors->first('bc_chapter_title') }}</div>
                                                                                 @endif
@@ -249,7 +249,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6 start_page_no">
                                                                                 <label for="" class="ti-form-label font-bold">Start Page No:</label>
-                                                                                <input type="number" min="0" step="1" name="bc_start_page_no" class="ti-form-input"  placeholder="Start Page No" id="bp_start_page_no">
+                                                                                <input type="number" min="0" step="1" name="bc_start_page_no" class="ti-form-input"  placeholder="Start Page No" id="bp_start_page_no" value="{{ old('bc_start_page_no') }}">
                                                                                 @if($errors->has('bc_start_page_no'))
                                                                                     <div class="text-red-700">{{ $errors->first('bc_start_page_no') }}</div>
                                                                                  @endif
@@ -257,7 +257,7 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6 end_page_no">
                                                                                 <label for="" class="ti-form-label font-bold">End Page No:</label>
-                                                                                <input type="number" min="0" step="1" name="bc_end_page_no" class="ti-form-input"  placeholder="End Page No" id="bp_end_page_no">
+                                                                                <input type="number" min="0" step="1" name="bc_end_page_no" class="ti-form-input"  placeholder="End Page No" id="bp_end_page_no" value="{{ old('bc_end_page_no') }}">
                                                                                  @if($errors->has('bc_end_page_no'))
                                                                                     <div class="text-red-700">{{ $errors->first('bc_end_page_no') }}</div>
                                                                                  @endif
@@ -736,14 +736,26 @@
                         flag = true;
                     }
 
+                    // if(bp_title == ''){
+                    //     $('#bp_titleError').text('Title Name is missing');
+                    //     flag = true;
+                    // } else if (!/^[a-zA-Z\s0-9]*$/.test(bp_title.trim())) {
+                    //     $('#bp_titleError').text('Please fill the correct value');
+                    //     flag = true;
+                    // }
 
-                    if(bp_title == ''){
+
+
+                    if (bp_title.trim() === '') {
                         $('#bp_titleError').text('Title Name is missing');
                         flag = true;
-                    }else if (!/^[a-zA-Z\s]+$/.test(bp_title.trim())){
+                    } else if (!/^[\w\s\/.,]+$/.test(bp_title.trim())) {
                         $('#bp_titleError').text('Please fill the correct value');
                         flag = true;
                     }
+
+
+
                     if(bp_book_level =='#'){
                         $('#bp_booklevelError').text('Please Choose a correct option.');
                         flag = true;
@@ -785,8 +797,10 @@
                         $('#bp_typeError').text('Please Choose a correct option.');
                         flag = true;
                     }
+
+
                     if (bp_chapter_title !== '') {
-                        if (!/^[a-zA-Z\s]+$/.test(bp_chapter_title.trim())) {
+                        if (!/^[\w\s\/.,]+$/.test(bp_chapter_title.trim())) {
                             $('#bp_chaptertitleError').text('Please fill the correct value');
                             flag = true;
                         }
