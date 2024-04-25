@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo; 
+
 
 
 class post_ticket extends Model
@@ -13,7 +14,7 @@ class post_ticket extends Model
     protected $fillable =['description','attachment'];
     public function ticket(): BelongsTo
     {
-        return $this->belongsTo(ticket::class, 'ticket_id', 'id');
+        return $this->belongsTo(ticket::class, 'ticket_id','id');
     }
 
 }

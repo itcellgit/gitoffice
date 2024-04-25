@@ -10,15 +10,16 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreticketRequest;
 use App\Http\Requests\UpdateticketRequest;
 use Illuminate\Http\Request;
+use App\Models\post_ticket;
 
 class AdminTicketController extends Controller
 {
-    public function dashboard()
+    public function index()
     {
        
-        $tickets=Ticket::with('user')->latest()->get();
+        $tickets=ticket::with('user')->latest()->get();
         //dd($tickets[0]->user->email);
-        return view('Admin.tickets.dashboard',compact('tickets'));
+        return view('Admin.tickets.adminticket',compact('tickets'));
     }
 
     /**
@@ -35,14 +36,18 @@ class AdminTicketController extends Controller
     public function store(StoreticketRequest $request)
     {
        
-        $ticket=Ticket::create([
+        $ticket=ticket::create
+        ([
             'title'=>$request->title,
             'description'=>$request->description,
             'user_id'=>auth()->id(),
+            //'status'=>$request->status,
+          
 
         ]);
             $ticket->save();
-        if($request->file('attachment')){
+        if($request->file('attachment'))
+        {
             $text=$request->file('attachment')->extension();
             $contents=file_get_contents($request->file('attachment'));
             $filename=Str::random(25);
@@ -52,7 +57,7 @@ class AdminTicketController extends Controller
             $ticket->update(['attachment'=>$filename]);
         }
 
-        return redirect('Admin/tickets/dashboard');
+        return redirect('Admin/tickets/adminticket');
     }
 
     /**
@@ -60,7 +65,9 @@ class AdminTicketController extends Controller
      */
     public function show(ticket $ticket)
     {
-        return view('Admin.adminshowticket',compact('ticket'));
+        $postticket = post_ticket::where('ticket_id', $ticket->id)->get();
+        
+        return view('Admin.tickets.adminshowticket',compact('ticket','postticket'));
     }
 
     /**
@@ -77,13 +84,31 @@ class AdminTicketController extends Controller
     public function update(UpdateticketRequest $request, ticket $ticket)
     {
        // dd($ticket);
-        $ticket->update($request->except('attachment'));
-        if($request->has('status')){
-           // $ticket->user->notify(new TicketUpdateNotification($ticket));
-
+        $ticket->title=$request->title;
+        $ticket->description=$request->description;
+        //$ticket->status=$request->status;
+        if ($request->status == "Pending" || $request->status == "Resolved") {
+            $ticket->status = $request->status;
+        } else {
+            // Default to "updated" if the provided status is neither "pending" nor "resolved"
+            $ticket->status = "Open";
         }
-        $ticket->update($request->validated());
-        return redirect(route('adminticket.dashboard'));
+
+        $ticket->update();
+      
+      if($request->file('attachment'))
+      {
+          $text=$request->file('attachment')->extension();
+          $contents=file_get_contents($request->file('attachment'));
+          $filename=Str::random(25);
+          $path="attachment/$filename.$text";
+          Storage::disk('public')->put($path,$contents);
+          $request->file('attachment')->move(public_path('attachment'), $filename);
+          $ticket->update(['attachment'=>$filename]);
+      }
+    //    return redirect(route('adminticket.dashboard'));
+       return redirect('Admin/tickets/adminticket');
+
     }
 
     /**
@@ -92,7 +117,11 @@ class AdminTicketController extends Controller
     public function destroy(ticket $ticket)
 
     {
+       $ticket->post_ticket()->delete();
+        
+        // Now delete the ticket
         $ticket->delete();
+        
         return redirect(route('adminticket.dashboard'));
     }
    

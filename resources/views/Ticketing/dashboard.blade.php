@@ -66,15 +66,39 @@
                                                         class="ti ti-users-minus text-2xl leading-none"></i></div>
                                                 </div>
                                                 <div class="flex-1">
-                                                    <p class="text-sm font-bold">Total ticket recived</p>
+                                                    <p class="text-sm font-bold">Total Ticket Recived</p>
                                                     <div class="flex justify-between items-center">
                                                     <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">{{10}}</h5>
                                                     <span class="text-success badge bg-success/20 rounded-sm p-1"><i
                                                         class="ti ti-trending-up leading-none"></i> +0.36%</span>
                                                     </div>
                                                     <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="#">
+                                                            view
                                                     </a>
                                                 </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-span-12 md:col-span-6 xxl:col-span-3">
+                                    <div class="box">
+                                        <div class="box-body">
+                                            <div class="flex">
+                                            <div class="ltr:mr-3 rtl:ml-3">
+                                                <div class="avatar rounded-sm text-warning p-2.5 bg-warning/20 "><i
+                                                    class="ti ti-briefcase text-2xl leading-none"></i></div>
+                                            </div>
+                                            <div class="flex-1">
+                                                <p class="text-sm font-bold">Total Ticket Resolved</p>
+                                                <div class="flex justify-between items-center">
+                                                <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">{{10}}</h5>
+                                                <span class="text-success badge bg-success/20 rounded-sm p-1"><i
+                                                    class="ti ti-trending-up leading-none"></i> +1.03%</span>
+                                                </div>
+                                                <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="#">
+                                                        view
+                                                </a>
+                                            </div>
                                             </div>
                                         </div>
                                     </div>
@@ -88,35 +112,15 @@
                                                     class="ti ti-briefcase text-2xl leading-none"></i></div>
                                             </div>
                                             <div class="flex-1">
-                                                <p class="text-sm font-bold">Total ticket resolved</p>
+                                                <p class="text-sm font-bold">Status</p>
                                                 <div class="flex justify-between items-center">
                                                 <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">{{10}}</h5>
-                                                <span class="text-danger badge bg-danger/20 rounded-sm p-1"><i
-                                                    class="ti ti-trending-down leading-none"></i> -1.28%</span>
+                                                <span class="text-success badge bg-success/20 rounded-sm p-1"><i
+                                                    class="ti ti-trending-up leading-none"></i> +1.03%</span>
                                                 </div>
                                                 <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="#">
                                                     view
                                                 </a>
-                                            </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-span-12 md:col-span-6 xxl:col-span-3">
-                                    <div class="box">
-                                        <div class="box-body">
-                                            <div class="flex">
-                                                <div class="ltr:mr-3 rtl:ml-3">
-                                                    <div class="avatar rounded-sm text-success p-2.5 bg-success/20 "><i
-                                                        class="ti ti-chart-bar text-2xl leading-none"></i></div>
-                                                </div>
-                                                <div class="flex-1">
-                                                    <p class="text-sm font-bold">Status</p>
-                                                    <div class="flex justify-between items-center">
-                                                    <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">10</h5>
-                                                    <span class="text-success badge bg-success/20 rounded-sm p-1"><i
-                                                        class="ti ti-trending-down leading-none"></i>+0.25%</span>
-                                                </div>
                                             </div>
                                             </div>
                                         </div>
@@ -203,6 +207,7 @@
                                                         <th scope="col" class="dark:text-white/80">@sortablelink('title','title')</th>
                                                         <th scope="col" class="dark:text-white/80">@sortablelink('description','description')</th>
                                                         <th scope="col" class="dark:text-white/80">@sortablelink('attachment','attachment')</th>
+                                                        <th scope="col" class="dark:text-white/80">Action</th>
                                                         
                                                         
                                                     </tr>
@@ -240,7 +245,7 @@
                                                                             </span>
                                                                         </a>
                                                                     </div>
-                                                                <div class="hs-tooltip ti-main-tooltip">
+                                                                    <div class="hs-tooltip ti-main-tooltip">
                                                                     <button data-hs-overlay="#tickets_edit_modal{{$i}}"
                                                                     class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M16.7574 2.99666L14.7574 4.99666H5V18.9967H19V9.2393L21 7.2393V19.9967C21 20.5489 20.5523 20.9967 20 20.9967H4C3.44772 20.9967 3 20.5489 3 19.9967V3.99666C3 3.44438 3.44772 2.99666 4 2.99666H16.7574ZM20.4853 2.09717L21.8995 3.51138L12.7071 12.7038L11.2954 12.7062L11.2929 11.2896L20.4853 2.09717Z"></path></svg>
@@ -250,9 +255,7 @@
                                                                             Edit
                                                                         </span>
                                                                     </button>
-                                        
-                                    
-                                                                        <div id="tickets_edit_modal{{$i}}" class="hs-overlay hidden ti-modal">
+                                                                            <div id="tickets_edit_modal{{$i}}" class="hs-overlay hidden ti-modal">
                                                                             <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out md:!max-w-2xl md:w-full m-3 md:mx-auto">
                                                                                 <div class="ti-modal-content">
                                                                                 <div class="ti-modal-header">

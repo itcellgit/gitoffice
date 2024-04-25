@@ -347,7 +347,7 @@
                                                                                                     @csrf
                                                                                                     @method('patch')
                                                                                                     <div class="ti-modal-body">
-                                                                                                    <input type='hidden' name='achievements_modal_no' class='achievements_modal_no' value={{old('achievements_modal_no')}}/>
+                                                                                                        <input type='hidden' name='achievements_modal_no' class='achievements_modal_no' value={{old('achievements_modal_no')}}/>
                                                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                                                 <label for="" class="ti-form-label font-bold">Award :<span class="text-red-500">*</span></label>

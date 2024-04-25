@@ -3,10 +3,11 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Validator;
+//use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\File; 
 use Illuminate\Support\Facades\Storage;
+
 
 class UpdateticketRequest extends FormRequest
 {
@@ -31,6 +32,7 @@ class UpdateticketRequest extends FormRequest
             'description'=>['required','regex:/^[a-zA-Z\s]+$/'],
             //'status'=>['string', Rule::in(array_column(Ticketstatus::cases(),'value'))],
             'attachment'=>['sometimes','file','mimes:jpg,jpeg,png,pdf'],
+            'status'=>['required', Rule::in(['Open', 'Pending','Resolved'])],
             
         ];
     }
@@ -42,7 +44,7 @@ class UpdateticketRequest extends FormRequest
             'title.regex' => 'The title field should contain only letters and spaces.',
             'description.required'=>'description is required filed',
             'description.regex'=>'The description field should contain only letters and spaces.',
-            'status.in'=>'Please select a valid option from the provided choices',
+            //'status.in'=>'Please select a valid option from the provided choices',
             
         ];
     }
