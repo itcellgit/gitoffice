@@ -694,10 +694,11 @@
                                 if(response !=0 ){
                                     //console.log(response);
                                   var i=0;
+                                  //for looping through each result from ajax call
                                     $.each(response, function(key, value) {
-                                        console.log(response[i].staff_id);
+                                        //console.log(response[i].staff_id);
                                         if(i < response.length){
-                                            //console.log(response[i].staff_id);
+                                            //for looping through dropdown options ;
                                             $('#alternate option').each(function(){
                                                 var alternate_val = $(this).val(); // Get the value of the current option
                                                 
@@ -709,7 +710,7 @@
                                                             .append('  - <em>On Leave</em>');
                                                 }
                                             });
-                                           i++;
+                                           i++; // to increment the index value.
                                         }
                                       
                                      
@@ -745,9 +746,7 @@
                         $('#view_leave_modal').trigger('click');
                         //alert('view modal active');
                         var clicked_date = Clickeddate.getFullYear()+"-"+(Clickeddate.getMonth()+1)+"-"+Clickeddate.getDate();
-                        //     $('#view_leave').css('z-index', 9999);
-                        //      // change the border color just for fun
-
+                        
                         //ajax call for loading the leave events on calender
                         $.ajax({
 
