@@ -688,7 +688,11 @@
                                 //console.log(response);
                                 //$('#holidayrh_list').empty();
                                 console.log(response);
-                                // if(response ==1 ){
+                                if(response !=0 ){
+                                    alert('some have applied.')
+                                }else{
+                                    alert('No one applied')
+                                }
                                 //     //$('#leave_form').html('<h1>Sorry ! Not Allowed to apply leave</h1>');
                                 //     $('#leave_form').hide();
                                 //     $('#leave_apply_btn').hide();

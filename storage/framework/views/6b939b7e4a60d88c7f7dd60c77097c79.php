@@ -209,6 +209,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-span-2 xl:col-span-2">
                             <!-- Count box 3 -->
                             <div class="box box-sm">
@@ -237,6 +238,152 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 3 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 3 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                <?php if($teaching_publication->UGC_count == 0): ?> text-red-500 <?php endif; ?>">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">UGC Genereal</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        <?php if($teaching_publication->UGC_count == 0): ?> text-red-500 <?php else: ?> text-gray-800 dark:text-white <?php endif; ?>">
+                                                        <?php echo e($teaching_publication->UGC_count); ?>
+
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 3 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 3 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                <?php if($teaching_publication->SCI_count == 0): ?> text-red-500 <?php endif; ?>">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">SCI</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        <?php if($teaching_publication->SCI_count == 0): ?> text-red-500 <?php else: ?> text-gray-800 dark:text-white <?php endif; ?>">
+                                                        <?php echo e($teaching_publication->SCI_count); ?>
+
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 3 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 3 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                <?php if($teaching_publication->author_count == 0): ?> text-red-500 <?php endif; ?>">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">Author</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        <?php if($teaching_publication->author_count == 0): ?> text-red-500 <?php else: ?> text-gray-800 dark:text-white <?php endif; ?>">
+                                                        <?php echo e($teaching_publication->author_count); ?>
+
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 3 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 3 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                <?php if($teaching_publication->co_author_count == 0): ?> text-red-500 <?php endif; ?>">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">Co-Author</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        <?php if($teaching_publication->co_author_count == 0): ?> text-red-500 <?php else: ?> text-gray-800 dark:text-white <?php endif; ?>">
+                                                        <?php echo e($teaching_publication->co_author_count); ?>
+
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 3 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 3 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                <?php if($teaching_publication->corresponding_author_count == 0): ?> text-red-500 <?php endif; ?>">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">Corresponding-Author</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        <?php if($teaching_publication->corresponding_author_count == 0): ?> text-red-500 <?php else: ?> text-gray-800 dark:text-white <?php endif; ?>">
+                                                        <?php echo e($teaching_publication->corresponding_author_count); ?>
+
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Count End here-->
                         <div class="col-span-12 xl:col-span-12">
                             <div class="box">
                                 <div class="box-body">
@@ -281,7 +428,7 @@
                                             <tr class="">
                                                 <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th>
+                                                
                                                 <th scope="col" class="dark:text-white/80 font-bold ">E-Gov ID</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Level</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Other Level</th>
@@ -302,12 +449,11 @@
                                                     $i=1;
                                                 ?>
                                                 <?php $__currentLoopData = $publication; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pub): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    
                                                     <tr style="<?php if($pub->validation_status =='invalid'): ?> background-color: #ffcccc; <?php elseif($pub->validation_status =='updated'): ?> background-color: #fff2cc; <?php elseif($pub->validation_status =='valid'): ?> background-color: #ccffcc; <?php endif; ?>">
 
                                                         <td><span><?php echo e($i++); ?></span></td>
                                                         <td><span><?php echo e($pub->fname . ' ' . $pub->mname . ' ' . $pub->lname); ?></span></td>
-                                                        <td><span><?php echo e($pub->dept_shortname); ?></span></td>
+                                                        
                                                         <td><span><?php echo e($pub->egov_id); ?></span></td>
                                                         <td><span><?php echo e($pub->level); ?></span></td>
                                                         <td>
@@ -457,9 +603,6 @@
 
 
         <!--not filering second page data-->
-        
-
-
         <!-- filering Daterange  data as per requirement-->
         <script>
             $(document).ready(function () {
@@ -520,7 +663,7 @@
 
                 $('.validation_type').change(function(){
 
-                    if($(this).val() == 'Invalid')
+                    if($(this).val() == 'invalid')
                     {
                         $('.reason_div').show();
                     } else
