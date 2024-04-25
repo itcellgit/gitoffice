@@ -664,7 +664,40 @@
                                  }else{
                                     $('#leave_form').show();
                                     $('#msg').html('<h1>Your Leave Application Form</h1>');
+                                    $('#leave_apply_btn').show();
                                 }
+
+                            },
+                            error: function(xhr, status, error) {
+                                // Handle errors
+                                console.error(xhr.responseText);
+                            }
+                        });
+
+                        //ajax call for checking if any other person is on leave on the same day.
+                        $.ajax({
+
+                            url: base_url+'/checkanydeptpersononleave',
+                            method: 'GET',
+                            data: {
+                                date: info.dateStr,
+                                _token : '{{csrf_token()}}' // Pass the clicked date to the server
+                            },
+                            success: function(response) {
+                                // Handle the response from the server
+                                //console.log(response);
+                                //$('#holidayrh_list').empty();
+                                console.log(response);
+                                // if(response ==1 ){
+                                //     //$('#leave_form').html('<h1>Sorry ! Not Allowed to apply leave</h1>');
+                                //     $('#leave_form').hide();
+                                //     $('#leave_apply_btn').hide();
+                                //     $('#msg').html('<h1>Sorry ! You have Already applied leave</h1>');
+
+                                // }else{
+                                //     $('#leave_form').show();
+                                //     $('#msg').html('<h1>Your Leave Application Form</h1>');
+                                // }
 
                             },
                             error: function(xhr, status, error) {

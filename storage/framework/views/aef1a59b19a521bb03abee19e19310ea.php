@@ -142,53 +142,27 @@
                                                                     <?php echo csrf_field(); ?>
                                                                     <div class="ti-modal-body">
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
-                                                                            
-
                                                                             <div class="max-w-sm space-y-3 pb-6">
-                                                                                <label for="with-corner-hint" class="ti-form-label font-bold"> Level :</label>
-                                                                                <div class="border border-gray-300 p-2 max-h-5 overflow-auto" style="max-height: 100px; overflow-y: auto;">
-                                                                                    <div class="">
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="#"> Choose Level
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q1"> Q1
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q2"> Q2
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q3"> Q3
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q4"> Q4
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="SCI"> SCI
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Web of Science"> Web of Science
-                                                                                        </div>
-
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Scopus Indexed"> Scopus Indexed
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="UGC General"> UGC General
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Other"> Other
-                                                                                        </div>
-                                                                                        <!-- Add other checkboxes similarly -->
-
-                                                                                    </div>
-
-                                                                                </div>
+                                                                                <label for="with-corner-hint" class="ti-form-label font-bold"> Level :<span class="text-red-500">*</span> </label>
+                                                                                <select class="ti-form-select level pub_level" name="level"  id="pub_level">
+                                                                                    <option value="#">Choose Level</option>
+                                                                                    <option value="Q1">Q1</option>
+                                                                                    <option value="Q2">Q2</option>
+                                                                                    <option value="Q3">Q3</option>
+                                                                                    <option value="Q4">Q4</option>
+                                                                                    <option value="SCI">SCI</option>
+                                                                                    <option value="Web of Science">Web of Science</option>
+                                                                                    <option value="Scopus Indexed">Scopus Indexed</option>
+                                                                                    <option value="UGC General">UGC General</option>
+                                                                                    <option value="Other">Other</option>
+                                                                                </select>
                                                                                 <?php if($errors->has('level')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('level')); ?></div>
                                                                                 <?php endif; ?>
                                                                                 <div id="pub_levelError" class="error text-red-700"></div>
                                                                             </div>
+
+                                                                            
 
 
 
