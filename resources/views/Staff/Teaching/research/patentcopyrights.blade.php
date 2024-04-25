@@ -316,7 +316,12 @@
                                                                             <tr style="@if($pate->validation_status =='invalid') background-color: #ffcccc; @elseif($pate->validation_status =='updated') background-color: #fff2cc; @elseif($pate->validation_status =='valid') background-color: #ccffcc; @endif">
 
                                                                                 <td><span>{{$i++}}</span></td>
-                                                                                <td><span>{{$pate->egov_id}}</span></td>
+                                                                                {{-- <td><span>{{$pate->egov_id}}</span></td> --}}
+                                                                                <td>
+                                                                                    <a href="https://git.edu/storage/Uploads/Research/patents/{{ $pate->document }}" class="text-blue-500">
+                                                                                        <span>{{$pate->egov_id}}</span>
+                                                                                    </a>
+                                                                                </td>
                                                                                 <td><span>{{$pate->appl_no}}</span></td>
                                                                                 <td><span>{{\Carbon\Carbon::parse($pate->appl_date)->format('d-M-Y') }}</span></td>
                                                                                 <td><span>{{$pate->title}}</span></td>
@@ -782,7 +787,7 @@
                                                                                 <td><span>{{$i++}}</span></td>
                                                                                 {{-- <td><span>{{$copy->egov_id}}</span></td> --}}
                                                                                 <td>
-                                                                                    <a href="https://git.edu/storage/Uploads/Research/Copyrights/{{$copy->egov_id}}" class="text-blue-500">
+                                                                                    <a href="https://git.edu/storage/Uploads/Research/Copyrights/{{$copy->document}}" class="text-blue-500">
                                                                                         <span>{{$copy->egov_id}}</span>
                                                                                     </a>
                                                                                 </td>

@@ -138,7 +138,12 @@
                                                         <td><span>{{$i++}}</span></td>
                                                         <td><span>{{ $consult->fname . ' ' . $consult->mname . ' ' . $consult->lname }}</span></td>
                                                         {{-- <td><span>{{ $consult->dept_shortname }}</span></td> --}}
-                                                        <td><span>{{$consult->egov_id}}</span></td>
+                                                        {{-- <td><span>{{$consult->egov_id}}</span></td> --}}
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Research/Consultancy/{{ $consult->document}}" class="text-blue-500">
+                                                                <span>{{$consult->egov_id}}</span>
+                                                            </a>
+                                                        </td>
                                                         <td><span>{{$consult->consultancy_title}}</span></td>
                                                         <td><span>{{$consult->agency}}</span></td>
                                                         <td><span>{{\Carbon\Carbon::parse($consult->from_date)->format('d-M-Y') }}</span></td>

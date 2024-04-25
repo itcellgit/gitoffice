@@ -251,7 +251,12 @@
                                                         <td><span>{{$i++}}</span></td>
                                                         <td><span>{{ $book->fname . ' ' . $book->mname . ' ' . $book->lname }}</span></td>
                                                         {{-- <td><span>{{ $book->dept_shortname }}</span></td> --}}
-                                                        <td><span>{{$book->egov_id}}</span></td>
+                                                        {{-- <td><span>{{$book->egov_id}}</span></td> --}}
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Research/Book_Chapters/{{ $book->document }}" class="text-blue-500">
+                                                                <span>{{$book->egov_id}}</span>
+                                                            </a>
+                                                        </td>
                                                         <td><span>{{$book->title}}</span></td>
                                                         <td><span>{{$book->book_level}}</span></td>
                                                         <td><span>{{$book->publisher_name}}</span></td>
