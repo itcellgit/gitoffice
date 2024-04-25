@@ -375,7 +375,12 @@
 
 
                                                                             <td><span>{{$i++}}</span></td>
-                                                                            <td><span>{{$fund->egov_id}}</span></td>
+                                                                            {{-- <td><span>{{$fund->egov_id}}</span></td> --}}
+                                                                            <td>
+                                                                                <a href="https://git.edu/storage/Uploads/Research/fundedproject/{{ $fund->document }}" class="text-blue-500">
+                                                                                    <span>{{$fund->egov_id}}</span>
+                                                                                </a>
+                                                                            </td>
                                                                             <td><span>{{$fund->proposal_title}}</span></td>
                                                                             <td><span>{{$fund->role}}</span></td>
                                                                             <td><span>{{$fund->type}}</span></td>
@@ -870,7 +875,7 @@
                                                                         <td><span>{{$i++}}</span></td>
                                                                         {{-- <td><span>{{$consult->egov_id}}</span></td> --}}
                                                                         <td>
-                                                                            <a href="https://git.edu/storage/Uploads/Research/Consultancy/{{$consult->egov_id}}" class="text-blue-500">
+                                                                            <a href="https://git.edu/storage/Uploads/Research/Consultancy/{{$consult->document}}" class="text-blue-500">
                                                                                 <span>{{$consult->egov_id}}</span>
                                                                             </a>
                                                                         </td>

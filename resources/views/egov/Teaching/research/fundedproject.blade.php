@@ -277,7 +277,12 @@
                                                         <td><span>{{ $i++ }}</span></td>
                                                         <td><span>{{ $fund->fname . ' ' . $fund->mname . ' ' . $fund->lname }}</span></td>
                                                         {{-- <td><span>{{ $fund->dept_shortname }}</span></td> --}}
-                                                        <td><span>{{ $fund->egov_id }}</span></td>
+                                                        {{-- <td><span>{{ $fund->egov_id }}</span></td> --}}
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Research/fundedproject/{{ $fund->document}}" class="text-blue-500">
+                                                                <span>{{$fund->egov_id}}</span>
+                                                            </a>
+                                                        </td>
                                                         <td><span>{{ $fund->proposal_title }}</span></td>
                                                         <td><span>{{ $fund->role }}</span></td>
                                                         <td><span>{{ $fund->amount }}</span></td>

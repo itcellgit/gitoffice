@@ -445,7 +445,12 @@
                                                         <td><span>{{ $i++ }}</span></td>
                                                         <td><span>{{ $pub->fname . ' ' . $pub->mname . ' ' . $pub->lname }}</span></td>
                                                         {{-- <td><span>{{ $pub->dept_shortname }}</span></td> --}}
-                                                        <td><span>{{ $pub->egov_id }}</span></td>
+                                                        {{-- <td><span>{{ $pub->egov_id }}</span></td> --}}
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Research/Publications/{{ $pub->document}}" class="text-blue-500">
+                                                                <span>{{$pub->egov_id}}</span>
+                                                            </a>
+                                                        </td>
                                                         <td><span>{{ $pub->level }}</span></td>
                                                         <td>
                                                             <span>

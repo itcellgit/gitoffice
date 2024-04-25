@@ -322,7 +322,7 @@
                                                                                 <td><span>{{$i++}}</span></td>
                                                                                 {{-- <td><span>{{$pub->egov_id}}</span></td> --}}
                                                                                 <td>
-                                                                                    <a href="https://git.edu/storage/Uploads/Research/Publications/{{$pub->egov_id}}" class="text-blue-500">
+                                                                                    <a href="https://git.edu/storage/Uploads/Research/Publications/{{$pub->document}}" class="text-blue-500">
                                                                                         <span>{{$pub->egov_id}}</span>
                                                                                     </a>
                                                                                 </td>

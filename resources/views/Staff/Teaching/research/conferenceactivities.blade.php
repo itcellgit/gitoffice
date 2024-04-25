@@ -357,7 +357,7 @@
                                                                         <td><span>{{$i++}}</span></td>
                                                                         {{-- <td><span>{{$act->egov_id}}</span></td> --}}
                                                                         <td>
-                                                                            <a href="https://git.edu/storage/Uploads/Research/Conference_Attended/{{$act->egov_id}}" class="text-blue-500">
+                                                                            <a href="https://git.edu/storage/Uploads/Research/Conference_Attended/{{ $act->document}}" class="text-blue-500">
                                                                                 <span>{{$act->egov_id}}</span>
                                                                             </a>
                                                                         </td>
@@ -1019,8 +1019,8 @@
                                                                     <td><span>{{$i++}}</span></td>
                                                                     {{-- <td><span>{{$con->egov_id}}</span></td> --}}
                                                                     <td>
-                                                                        <a href="https://git.edu/storage/Uploads/Research/Conference_Conducted/{{$act->egov_id}}" class="text-blue-500">
-                                                                            <span>{{$act->egov_id}}</span>
+                                                                        <a href="https://git.edu/storage/Uploads/Research/Conference_Conducted/{{$con->document}}" class="text-blue-500">
+                                                                            <span>{{$con->egov_id}}</span>
                                                                         </a>
                                                                     </td>
                                                                     <td><span>{{$con->conference_name}}</span></td>

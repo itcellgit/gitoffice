@@ -313,7 +313,12 @@
                                                         <td><span>{{ $i++ }}</span></td>
                                                         <td><span>{{ $conducted->fname . ' ' . $conducted->mname . ' ' . $conducted->lname }}</span></td>
                                                         {{-- <td><span>{{ $conducted->dept_shortname }}</span></td> --}}
-                                                        <td><span>{{ $conducted->egov_id }}</span></td>
+                                                        {{-- <td><span>{{ $conducted->egov_id }}</span></td> --}}
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Research/Conference_Conducted/{{$conducted->document}}" class="text-blue-500">
+                                                                <span>{{$conducted->egov_id}}</span>
+                                                            </a>
+                                                        </td>
                                                         <td><span>{{ $conducted->conference_name }}</span></td>
                                                         <td><span>{{ $conducted->co_organizer }}</span></td>
                                                         <td><span>{{ $conducted->no_of_participants }}</span></td>
