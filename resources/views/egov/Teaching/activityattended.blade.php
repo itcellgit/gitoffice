@@ -69,8 +69,10 @@
                     </div>
                     <!-- Start::main-content -->
                     <div class="grid grid-cols-12 gap-x-6">
-                         <!-- Add count boxes here -->
-                        <div class="col-span-12 xl:col-span-3">
+
+                        <!-- Add count boxes here -->
+
+                        <div class="col-span-2 xl:col-span-2">
                             <!-- Count box 1 -->
                             <div class="box box-sm">
                                 <!-- Content for count box 1 -->
@@ -98,7 +100,7 @@
                             </div>
                         </div>
 
-                        <div class="col-span-12 xl:col-span-3">
+                        <div class="col-span-2 xl:col-span-2">
                             <!-- Count box 2 -->
                             <div class="box box-sm">
                                 <!-- Content for count box 2 -->
@@ -126,7 +128,7 @@
                             </div>
                         </div>
 
-                        <div class="col-span-12 xl:col-span-3">
+                        <div class="col-span-2 xl:col-span-2">
                             <!-- Count box 3 -->
                             <div class="box box-sm">
                                 <!-- Content for count box 3 -->
@@ -139,7 +141,7 @@
                                             </div>
                                         </div>
                                         <div class="flex-1">
-                                            <p class="text-sm font-bold">Certification Program</p>
+                                            <p class="text-sm font-bold">Certification</p>
                                             <div class="flex justify-between items-center">
                                                 <div class="flex flex-col">
                                                     <h5 class="mb-0 text-2xl font-semibold
@@ -154,7 +156,7 @@
                             </div>
                         </div>
 
-                        <div class="col-span-12 xl:col-span-3">
+                        <div class="col-span-2 xl:col-span-2">
                             <!-- Count box 4 -->
                             <div class="box box-sm">
                                 <!-- Content for count box 4 -->
@@ -182,7 +184,7 @@
                             </div>
                         </div>
 
-                        <div class="col-span-12 xl:col-span-3">
+                        <div class="col-span-2 xl:col-span-2">
                             <!-- Count box 5 -->
                             <div class="box box-sm">
                                 <!-- Content for count box 4 -->
@@ -210,7 +212,9 @@
                             </div>
                         </div>
 
-                        <div class="col-span-12 xl:col-span-3">
+
+
+                        <div class="col-span-2 xl:col-span-2">
                             <!-- Count box 6 -->
                             <div class="box box-sm">
                                 <!-- Content for count box 4 -->
@@ -238,7 +242,7 @@
                             </div>
                         </div>
 
-                        <div class="col-span-12 xl:col-span-3">
+                        <div class="col-span-2 xl:col-span-2">
                             <!-- Count box 7 -->
                             <div class="box box-sm">
                                 <!-- Content for count box 4 -->
@@ -265,6 +269,92 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 7 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 4 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-3 rtl:ml-3">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($teaching_category_counts->hackathon_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">Hackathon</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($teaching_category_counts->hackathon_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $teaching_category_counts->hackathon_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 7 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 4 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-3 rtl:ml-3">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($teaching_category_counts->space_talk_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">Space-Talk</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($teaching_category_counts->space_talk_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $teaching_category_counts->space_talk_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 7 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 4 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-3 rtl:ml-3">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($teaching_category_counts->site_visit_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">Site visit</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($teaching_category_counts->site_visit_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $teaching_category_counts->site_visit_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Count End here -->
                         <div class="col-span-12 xl:col-span-12">
                             <div class="box">
                                 <div class="box-body">
@@ -311,7 +401,7 @@
                                                 <tr class="">
                                                     <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
                                                     <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
-                                                    <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th>
+                                                    {{-- <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th> --}}
                                                     <th scope="col" class="dark:text-white/80 font-bold ">E-Gov ID</th>
                                                     <th scope="col" class="dark:text-white/80 font-bold ">Title</th>
                                                     <th scope="col" class="dark:text-white/80 font-bold ">Role</th>
@@ -334,12 +424,11 @@
                                                     $i=1;
                                                 @endphp
                                                 @foreach ($professional_activity_attendee as $act)
-                                                    {{-- <tr class="" @if($act->validation_status == 'valid') style="background-color: #ccffcc; color: #006400;" @elseif($act->validation_status =='invalid') style="background-color: #ffe6e6; color: #b30000;" @endif> --}}
                                                     <tr style="@if($act->validation_status =='invalid') background-color: #ffcccc; @elseif($act->validation_status =='updated') background-color: #fff2cc; @elseif($act->validation_status =='valid') background-color: #ccffcc; @endif">
 
                                                         <td><span>{{ $i++ }}</span></td>
                                                         <td><span>{{ $act->fname . ' ' . $act->mname . ' ' . $act->lname }}</span></td>
-                                                        <td><span>{{ $act->dept_shortname }}</span></td>
+                                                        {{-- <td><span>{{ $act->dept_shortname }}</span></td> --}}
                                                         <td><span>{{ $act->egov_id }}</span></td>
                                                         <td><span>{{ $act->title }}</span></td>
                                                         <td><span>{{ $act->role }}</span></td>

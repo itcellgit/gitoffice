@@ -9,6 +9,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreticketRequest;
 use App\Http\Requests\UpdateticketRequest;
+use App\Models\post_ticket;
+use Illuminate\Support\Facades\DB;
+
+
 
 
 
@@ -20,7 +24,7 @@ class TicketController extends Controller
     public function index()
     {
         $user=auth()->user();
-        $tickets=$user->isAdmin?Ticket::latest()->get():$user->tickets;
+        $tickets=$user->isAdmin?ticket::latest()->get():$user->tickets;
 
         return view('Ticketing.dashboard',compact('tickets'));
     }
@@ -38,15 +42,18 @@ class TicketController extends Controller
      */
     public function store(StoreticketRequest $request)
     {
-
-        $ticket=Ticket::create([
+         $ticket=ticket::create
+        ([
             'title'=>$request->title,
             'description'=>$request->description,
             'user_id'=>auth()->id(),
 
         ]);
-            $ticket->save();
-        if($request->file('attachment')){
+
+        $ticket->save();
+        //dd($request);
+        if($request->file('attachment'))
+        {
             $text=$request->file('attachment')->extension();
             $contents=file_get_contents($request->file('attachment'));
             $filename=Str::random(25);
@@ -56,7 +63,7 @@ class TicketController extends Controller
             $ticket->update(['attachment'=>$filename]);
         }
 
-        return redirect('Ticket/dashboard');
+        return redirect('ticket/dashboard');
     }
 
     /**
@@ -64,10 +71,10 @@ class TicketController extends Controller
      */
     public function show(ticket $ticket)
     {
-        //dd(1);
+        $postticket = post_ticket::where('ticket_id', $ticket->id)->get();
 
 
-        return view('Ticketing.showticket',compact('ticket'));
+         return view('Ticketing.showticket',compact('ticket','postticket'));
     }
 
     /**
@@ -83,10 +90,11 @@ class TicketController extends Controller
      */
     public function update(UpdateticketRequest $request, ticket $ticket)
     {
-       // dd($ticket);
+         //dd($request);
         $ticket->update($request->except('attachment'));
-        if($request->has('status')){
-           // $ticket->user->notify(new TicketUpdateNotification($ticket));
+        if($request->has('status'))
+        {
+            $ticket->user->notify(new TicketUpdateNotification($ticket));
 
         }
         $ticket->update($request->validated());

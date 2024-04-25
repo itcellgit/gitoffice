@@ -23,10 +23,10 @@ class StorecopyrightRequest extends FormRequest
      */
     public function rules(): array
     {
-        return 
+        return
         [
             //
-            'c_copyright_title'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
+            'c_copyright_title'=>['required', 'regex:/^[a-zA-Z\s0-9]+$/'],
             'c_copyright_date'=>['required','date'],
             'c_author_name'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
             'c_status'=>['required', Rule::in(['Applied', 'Awarded'])],
@@ -45,7 +45,7 @@ class StorecopyrightRequest extends FormRequest
             'c_status.in'=>'Please select a valid option from the provided choices',
             'c_description.required'=>'description is required field',
             'c_description.regex'=>'The description field should contain only letters and spaces',
-            
+
 
      ];
     }
