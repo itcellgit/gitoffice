@@ -577,8 +577,12 @@ class LeaveStaffApplicationsController extends Controller
             ->join('department_staff AS dept_staff','dept_staff.staff_id','=','leave_staff_applications.staff_id')
             ->where('dept_staff.department_id', $staff_dept)
             //->where('leave_staff_applications.staff_id',$staff->id)
-            ->where('daywise__leaves.start',$date)->get();
+            ->where('daywise__leaves.start',$date)
+            ->select('leave_staff_applications.staff_id',
+            'leave_staff_applications.leave_id',
+            'leave_staff_applications.alternate')->get();
 
+            //dd($checkpersondata);
             if(count($checkpersondata)>0){
                 return $checkpersondata;
             }else{
