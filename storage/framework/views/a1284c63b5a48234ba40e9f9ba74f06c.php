@@ -461,7 +461,7 @@
                         allDay:true,
                         eventTextColor:'red',
                         titleFormat: 'dd-MM-YYYY',
-                        display: 'list-item',
+                        display: 'block',
                         selectable: false,
                         // a non-ajax option
                     }
@@ -529,11 +529,11 @@
             
                     },
                     eventClick: function(info) {
-                        
+                        //console.log(info.event.extendedProps.leave_id);
                         //$('.event_title').html(info.event.title+' on '+ Clickeddate.getDate()+"/"+Clickeddate.getMonth()+"/"+Clickeddate.getFullYear());
                         //alert('Event: ' + info.event.start);
                         Clickeddate = info.event.start;
-                   
+                        var clicked_leave_leave_type = info.event.extendedProps.leave_id;
                         $('#view_leave_modal').trigger('click');
                         //alert('view modal active');
                         var clicked_date = Clickeddate.getFullYear()+"-"+(Clickeddate.getMonth()+1)+"-"+Clickeddate.getDate();
@@ -547,6 +547,7 @@
                                 method: 'GET',
                                 data: {
                                     date: clicked_date,
+                                    leave_type: clicked_leave_leave_type,
                                     _token : '<?php echo e(csrf_token()); ?>' // Pass the clicked date to the server
                                 },
                                 success: function(response) {

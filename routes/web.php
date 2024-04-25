@@ -272,11 +272,13 @@ Route::delete('/Teaching/research/revieweditor/destory/{reviewer_editor}', [Revi
 
 
 
-//Teaching Leave Rules Routes
+//Teaching Leave  Routes
 Route::get('/Teaching/leaves',[LeaveStaffApplicationsController::class,'index'])->name('Teaching.leaves');
 Route::get('/holidayrhevents',[LeaveStaffApplicationsController::class,'hollidayrh_events'])->name('hollidayrh_events');
 Route::get('/myleaveevents',[LeaveStaffApplicationsController::class,'myleaveevents'])->name('myleaveevents');
 Route::get('/checkhasleaveEvent',[LeaveStaffApplicationsController::class,'checkhasleaveEvent'])->name('checkhasleaveEvent');
+Route::get('/checkanydeptpersononleave',[LeaveStaffApplicationsController::class,'checkanydeptpersononleave'])->name('checkanydeptpersononleave');
+
 
 //for fetching events of specific date (clicked) using AJAX
 Route::get('/fetchholidayrhevents',[LeaveStaffApplicationsController::class,'fetchholidayrhevents'])->name('fetchholidayrhevents');
