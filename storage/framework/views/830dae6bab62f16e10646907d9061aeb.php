@@ -687,8 +687,22 @@
                                 // Handle the response from the server
                                 //console.log(response);
                                 //$('#holidayrh_list').empty();
-                                console.log(response);
-                                // if(response ==1 ){
+                               // console.log(response);
+                                if(response !=0 ){
+                                    //alert('some have applied.');
+                                    console.log(response);
+                                    $.each(response, function(key, value) {
+                                        alert($('#alternate').find('option[value="'+response.staff_id+'"]').val());
+                                        if($('#alternate').find('option[value="'+response.staff_id+'"]') == response.staff_id){
+                                            console.log('Matching');
+                                            $("#alternate option[value='"+response.staff_id+"']").attr('disabled','disabled');
+                                        }
+                                     
+                                    });
+
+                                }else{
+                                    Console.log('NO one applied');
+                                }
                                 //     //$('#leave_form').html('<h1>Sorry ! Not Allowed to apply leave</h1>');
                                 //     $('#leave_form').hide();
                                 //     $('#leave_apply_btn').hide();
