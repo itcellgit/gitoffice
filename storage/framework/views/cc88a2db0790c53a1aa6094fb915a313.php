@@ -282,7 +282,7 @@
                                             <tr class="">
                                                 <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th>
+                                                
                                                 <th scope="col" class="dark:text-white/80 font-bold ">E-Gov ID</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Conferene Name</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Co Organizer</th>
@@ -312,12 +312,11 @@
                                                     $i=1;
                                                 ?>
                                                 <?php $__currentLoopData = $conferences_conducted; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $conducted): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    
                                                     <tr style="<?php if($conducted->validation_status =='invalid'): ?> background-color: #ffcccc; <?php elseif($conducted->validation_status =='updated'): ?> background-color: #fff2cc; <?php elseif($conducted->validation_status =='valid'): ?> background-color: #ccffcc; <?php endif; ?>">
 
                                                         <td><span><?php echo e($i++); ?></span></td>
                                                         <td><span><?php echo e($conducted->fname . ' ' . $conducted->mname . ' ' . $conducted->lname); ?></span></td>
-                                                        <td><span><?php echo e($conducted->dept_shortname); ?></span></td>
+                                                        
                                                         <td><span><?php echo e($conducted->egov_id); ?></span></td>
                                                         <td><span><?php echo e($conducted->conference_name); ?></span></td>
                                                         <td><span><?php echo e($conducted->co_organizer); ?></span></td>

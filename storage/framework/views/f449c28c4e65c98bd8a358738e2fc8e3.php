@@ -166,7 +166,7 @@
                                             <tr class="">
                                                 <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th>
+                                                
                                                 <th scope="col" class="dark:text-white/80 font-bold ">E-Gov ID</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Copyright Title</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Copyright Date</th>
@@ -184,20 +184,18 @@
                                                     $i=1;
                                                 ?>
                                                 <?php $__currentLoopData = $copyrights; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $copy): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    
                                                         <tr style="<?php if($copy->validation_status =='invalid'): ?> background-color: #ffcccc; <?php elseif($copy->validation_status =='updated'): ?> background-color: #fff2cc; <?php elseif($copy->validation_status =='valid'): ?> background-color: #ccffcc; <?php endif; ?>">
 
                                                         <td><span><?php echo e($i++); ?></span></td>
                                                         <td><span><?php echo e($copy->fname . ' ' . $copy->mname . ' ' . $copy->lname); ?></span></td>
-                                                        <td><span><?php echo e($copy->dept_shortname); ?></span></td>
+                                                        
                                                         <td><span><?php echo e($copy->egov_id); ?></span></td>
                                                         <td><span><?php echo e($copy->copyright_title); ?></span></td>
                                                         <td><span><?php echo e(\Carbon\Carbon::parse($copy->copyright_date)->format('d-M-Y')); ?></span></td>
                                                         <td><span><?php echo e($copy->author_name); ?></span></td>
                                                         <td><span><?php echo e($copy->status); ?></span></td>
                                                         <td><span><?php echo e($copy->description); ?></span></td>
-                                                        
-                                                        
+
 
                                                         <?php if(!isset($export) || !$export): ?>
                                                             <td>
