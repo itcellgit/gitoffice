@@ -515,7 +515,7 @@
                         },
                         failure: function(data) {
                            // alert(data);
-                            console.log(data);
+                            //console.log(data);
                         },
                         allDay:false,
                         eventTextColor:'#000',
@@ -758,7 +758,7 @@
                                 },
                                 success: function(response) {
                                     // Handle the response from the server
-                                    console.log(response);
+                                   // console.log(response);
                                     $('#leave_application_list').empty();
                                     if(response.length !=0){
                                         $.each(response, function(key, value) {

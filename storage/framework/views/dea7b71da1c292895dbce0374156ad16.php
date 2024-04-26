@@ -353,7 +353,12 @@
                                                                     <tr style="<?php if($act->validation_status =='invalid'): ?> background-color: #ffcccc; <?php elseif($act->validation_status =='updated'): ?> background-color: #fff2cc; <?php elseif($act->validation_status =='valid'): ?> background-color: #ccffcc; <?php endif; ?>">
 
                                                                         <td><span><?php echo e($i++); ?></span></td>
-                                                                        <td><span><?php echo e($act->egov_id); ?></span></td>
+                                                                        
+                                                                        <td>
+                                                                            <a href="https://git.edu/storage/Uploads/Research/Conference_Attended/<?php echo e($act->document); ?>" class="text-blue-500">
+                                                                                <span><?php echo e($act->egov_id); ?></span>
+                                                                            </a>
+                                                                        </td>
                                                                         <td><span><?php echo e($act->conference_name); ?></span></td>
                                                                         <td><span><?php echo e($act->attended_as); ?></span></td>
                                                                         <td><span><?php echo e(\Carbon\Carbon::parse($act->from_date)->format('d-M-Y')); ?></span></td>
@@ -1003,7 +1008,12 @@
                                                                 <tr style="<?php if($con->validation_status =='invalid'): ?> background-color: #ffcccc; <?php elseif($con->validation_status =='updated'): ?> background-color: #fff2cc; <?php elseif($con->validation_status =='valid'): ?> background-color: #ccffcc; <?php endif; ?>">
 
                                                                     <td><span><?php echo e($i++); ?></span></td>
-                                                                    <td><span><?php echo e($con->egov_id); ?></span></td>
+                                                                    
+                                                                    <td>
+                                                                        <a href="https://git.edu/storage/Uploads/Research/Conference_Conducted/<?php echo e($con->document); ?>" class="text-blue-500">
+                                                                            <span><?php echo e($con->egov_id); ?></span>
+                                                                        </a>
+                                                                    </td>
                                                                     <td><span><?php echo e($con->conference_name); ?></span></td>
                                                                     <td><span><?php echo e($con->co_organizer); ?></span></td>
                                                                     <td><span><?php echo e($con->no_of_participants); ?></span></td>
@@ -1798,23 +1808,24 @@
                             flag = true;
                         }
 
-
-
                         // if (con_att_title === '') {
                         //     $('#con_att_titleError').text('Title Name is missing');
                         //     flag = true;
-                        // } else if (!/^[a-zA-Z\s,./]*$/.test(con_att_title.trim())) {
+                        // } else if (!/^[a-zA-Z0-9\s,./]*$/.test(con_att_title.trim())) {
                         //     $('#con_att_titleError').text('Please fill in the correct value');
                         //     flag = true;
                         // }
 
-                        if (con_att_title === '') {
+                        if (con_att_title.trim() === '') {
                             $('#con_att_titleError').text('Title Name is missing');
                             flag = true;
-                        } else if (!/^[a-zA-Z0-9\s,./]*$/.test(con_att_title.trim())) {
+                        } else if (!/^[\w\s\/.,]+$/.test(con_att_title.trim())) {
                             $('#con_att_titleError').text('Please fill in the correct value');
                             flag = true;
                         }
+
+
+
 
                         if(con_att_place == ''){
                             $('#con_att_palceError').text('Place Name is missing');

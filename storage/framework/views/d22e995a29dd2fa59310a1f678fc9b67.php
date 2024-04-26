@@ -145,7 +145,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Title :<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="bc_title" class="ti-form-input" required placeholder="Title" id="bp_title">
+                                                                                <input type="text" name="bc_title" class="ti-form-input" required placeholder="Title" id="bp_title" value="<?php echo e(old('bc_title')); ?>">
                                                                                 <?php if($errors->has('bc_title')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('bc_title')); ?></div>
                                                                                  <?php endif; ?>
@@ -155,8 +155,8 @@
                                                                                 <label for="" class="ti-form-label font-bold">Book Level:<span class="text-red-500">*</span></label>
                                                                                 <select class="ti-form-select" required name="bc_book_level" id="bp_book_level">
                                                                                     <option value="#">Choose One</option>
-                                                                                    <option value="National">National</option>
-                                                                                    <option value="International">International</option>
+                                                                                    <option value="National" <?php echo e(old('bc_book_level') == 'National' ? 'selected' : ''); ?>>National</option>
+                                                                                    <option value="International" <?php echo e(old('bc_book_level') == 'International' ? 'selected' : ''); ?>>International</option>
                                                                                 </select>
                                                                                  <?php if($errors->has('bc_book_level')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('bc_book_level')); ?></div>
@@ -165,7 +165,7 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Publisher Name :<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="bc_publisher_name" class="ti-form-input" required placeholder="Publisher Name" id="bp_publisher_name">
+                                                                                <input type="text" name="bc_publisher_name" class="ti-form-input" required placeholder="Publisher Name" id="bp_publisher_name" value="<?php echo e(old('bc_publisher_name')); ?>">
                                                                                  <?php if($errors->has('bc_publisher_name')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('bc_publisher_name')); ?></div>
                                                                                  <?php endif; ?>
@@ -176,7 +176,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Edition:</label>
-                                                                                <input type="text" name="bc_edition" class="ti-form-input" required placeholder="Edition" id="bp_edition">
+                                                                                <input type="text" name="bc_edition" class="ti-form-input" required placeholder="Edition" id="bp_edition" value="<?php echo e(old('bc_edition')); ?>">
                                                                                  <?php if($errors->has('bc_edition')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('bc_edition')); ?></div>
                                                                                  <?php endif; ?>
@@ -184,7 +184,7 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">DOI Number:</label>
-                                                                                <input type="text" name="bc_doi" class="ti-form-input" placeholder="DOI" id="bp_doi">
+                                                                                <input type="text" name="bc_doi" class="ti-form-input" placeholder="DOI" id="bp_doi" value="<?php echo e(old('bc_doi')); ?>">
                                                                                  <?php if($errors->has('bc_doi')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('bc_doi')); ?></div>
                                                                                  <?php endif; ?>
@@ -201,7 +201,7 @@
 
                                                                                     <input type="date" name="bc_date" id="bp_date"
                                                                                             class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
-                                                                                             required placeholder="Choose date">
+                                                                                             required placeholder="Choose date" value="<?php echo e(old('bc_date')); ?>">
                                                                                  <?php if($errors->has('bc_date')): ?>
                                                                                         <div class="text-red-700"><?php echo e($errors->first('bc_date')); ?></div>
                                                                                  <?php endif; ?>
@@ -209,7 +209,7 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Issue:</label>
-                                                                                <input type="text" name="bc_issue" class="ti-form-input" required placeholder="Issue" id="bp_issue">
+                                                                                <input type="text" name="bc_issue" class="ti-form-input" required placeholder="Issue" id="bp_issue" value="<?php echo e(old('bc_issue')); ?>">
                                                                                  <?php if($errors->has('bc_issue')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('bc_issue')); ?></div>
                                                                                  <?php endif; ?>
@@ -223,8 +223,8 @@
                                                                                 <label for="" class="ti-form-label font-bold">Type:<span class="text-red-500">*</span></label>
                                                                                 <select class="ti-form-select book_chapter_type" name="bc_type" required id="bp_type">
                                                                                     <option value="#">Choose One</option>
-                                                                                    <option value="Book">Book</option>
-                                                                                    <option value="Chapter">Chapter</option>
+                                                                                    <option value="Book" <?php echo e(old('bc_type') == 'Book' ? 'selected' : ''); ?>>Book</option>
+                                                                                    <option value="Chapter" <?php echo e(old('bc_type') == 'Chapter' ? 'selected' : ''); ?>>Chapter</option>
                                                                                 </select>
                                                                                  <?php if($errors->has('bc_type')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('bc_type')); ?></div>
@@ -233,7 +233,7 @@
                                                                             </div>
                                                                              <div class="max-w-sm space-y-3 pb-6 chapter_title">
                                                                                 <label for="" class="ti-form-label font-bold">Chapter Title:</label>
-                                                                                <input type="text" name="bc_chapter_title" class="ti-form-input"  placeholder="Chapter Title" id="bp_chapter_title">
+                                                                                <input type="text" name="bc_chapter_title" class="ti-form-input"  placeholder="Chapter Title" id="bp_chapter_title" value="<?php echo e(old('bc_chapter_title')); ?>">
                                                                                 <?php if($errors->has('bc_chapter_title')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('bc_chapter_title')); ?></div>
                                                                                 <?php endif; ?>
@@ -242,24 +242,27 @@
 
 
                                                                         </div>
+                                                                        
+
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6 start_page_no">
                                                                                 <label for="" class="ti-form-label font-bold">Start Page No:</label>
-                                                                                <input type="number" min="0" step="1" name="bc_start_page_no" class="ti-form-input"  placeholder="Start Page No" id="bp_start_page_no">
+                                                                                <input type="number" min="0" step="1" name="bc_start_page_no" class="ti-form-input"  placeholder="Start Page No" id="bp_start_page_no" value="<?php echo e(old('bc_start_page_no')); ?>">
                                                                                 <?php if($errors->has('bc_start_page_no')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('bc_start_page_no')); ?></div>
-                                                                                 <?php endif; ?>
+                                                                                <?php endif; ?>
                                                                                 <div id="bp_startpagenoError" class="error text-red-700"></div>
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6 end_page_no">
                                                                                 <label for="" class="ti-form-label font-bold">End Page No:</label>
-                                                                                <input type="number" min="0" step="1" name="bc_end_page_no" class="ti-form-input"  placeholder="End Page No" id="bp_end_page_no">
-                                                                                 <?php if($errors->has('bc_end_page_no')): ?>
+                                                                                <input type="number" min="0" step="1" name="bc_end_page_no" class="ti-form-input"  placeholder="End Page No" id="bp_end_page_no" value="<?php echo e(old('bc_end_page_no')); ?>">
+                                                                                <?php if($errors->has('bc_end_page_no')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('bc_end_page_no')); ?></div>
-                                                                                 <?php endif; ?>
-                                                                                 <div id="bp_endpagenoError" class="error text-red-700"></div>
+                                                                                <?php endif; ?>
+                                                                                <div id="bp_endpagenoError" class="error text-red-700"></div>
                                                                             </div>
                                                                         </div>
+
                                                                         <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <div class="max-w-sm space-y-3 pb-6">
@@ -329,7 +332,12 @@
 
 
                                                                             <td><span><?php echo e($i++); ?></span></td>
-                                                                            <td><span><?php echo e($book->egov_id); ?></span></td>
+                                                                            
+                                                                            <td>
+                                                                                <a href="https://git.edu/storage/Uploads/Research/Book_Chapters/<?php echo e($book->document); ?>" class="text-blue-500">
+                                                                                    <span><?php echo e($book->egov_id); ?></span>
+                                                                                </a>
+                                                                            </td>
                                                                             <td><span><?php echo e($book->title); ?></span></td>
                                                                             <td><span><?php echo e($book->book_level); ?></span></td>
                                                                             <td><span><?php echo e($book->publisher_name); ?></span></td>
@@ -666,6 +674,26 @@
         <script>
             $(document).ready(function(){
 
+                $('#bp_start_page_no, #bp_end_page_no').on('input', function(){
+                    var startPageNo = parseInt($('#bp_start_page_no').val());
+                    var endPageNo = parseInt($('#bp_end_page_no').val());
+
+                    // Check if End Page No is less than or equal to Start Page No
+                    if (endPageNo <= startPageNo) {
+
+                        $('#bp_endpagenoError').text('End Page No must be greater than Start Page No');
+
+                        $('#book_chapter_add_btn').prop('disabled', true);
+                    } else {
+
+                        $('#bp_endpagenoError').text('');
+
+                        $('#book_chapter_add_btn').prop('disabled', false);
+                    }
+                });
+
+
+
                 $('.sponsoredBy').change(function () {
                     if ($(this).val() === 'Other') {
                         $('.otherSponsor').show();
@@ -728,14 +756,26 @@
                         flag = true;
                     }
 
+                    // if(bp_title == ''){
+                    //     $('#bp_titleError').text('Title Name is missing');
+                    //     flag = true;
+                    // } else if (!/^[a-zA-Z\s0-9]*$/.test(bp_title.trim())) {
+                    //     $('#bp_titleError').text('Please fill the correct value');
+                    //     flag = true;
+                    // }
 
-                    if(bp_title == ''){
+
+
+                    if (bp_title.trim() === '') {
                         $('#bp_titleError').text('Title Name is missing');
                         flag = true;
-                    }else if (!/^[a-zA-Z\s]+$/.test(bp_title.trim())){
+                    } else if (!/^[\w\s\/.,]+$/.test(bp_title.trim())) {
                         $('#bp_titleError').text('Please fill the correct value');
                         flag = true;
                     }
+
+
+
                     if(bp_book_level =='#'){
                         $('#bp_booklevelError').text('Please Choose a correct option.');
                         flag = true;
@@ -777,8 +817,10 @@
                         $('#bp_typeError').text('Please Choose a correct option.');
                         flag = true;
                     }
+
+
                     if (bp_chapter_title !== '') {
-                        if (!/^[a-zA-Z\s]+$/.test(bp_chapter_title.trim())) {
+                        if (!/^[\w\s\/.,]+$/.test(bp_chapter_title.trim())) {
                             $('#bp_chaptertitleError').text('Please fill the correct value');
                             flag = true;
                         }

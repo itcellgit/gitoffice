@@ -95,4 +95,25 @@ class HODLeaveController extends Controller
         // Return a response (optional)
           return response()->json($datewiseleave_events);
     }
+
+    function recommend_leave(Request $request){
+        $application_id = $request->input('application_id');
+        //dd($application_id);
+
+        $result = DB::table('leave_staff_applications')
+            ->where('id', $application_id)
+            ->update(['appl_status' => "recommended"]);
+        //$leave_staff_applications->appl_status = "recommended";
+
+        if($result){
+            $return_html = "<div class='bg-white dark:bg-bgdark border border-success alert text-success' role='alert'>
+                                <span class='font-bold'>Result</span> Successful
+                            </div>";
+        }else{
+            $return_html = "<div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
+                                <span class='font-bold'>Result</span> {{session('return_data')['result']}}
+                            </div>";
+        }
+        return $return_html;
+    }
 }
