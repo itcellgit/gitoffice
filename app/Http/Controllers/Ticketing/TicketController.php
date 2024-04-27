@@ -92,7 +92,7 @@ class TicketController extends Controller
      */
     public function update(UpdateticketRequest $request, ticket $ticket)
     {
-         dd($request);
+         //dd($request);
 
          $ticket->title=$request->title;
          $ticket->description=$request->description;

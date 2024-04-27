@@ -66,15 +66,12 @@
                                         </div>
                                         <form action="{{ route('ticket.reply.store', $ticket->id) }}" method="post" enctype="multipart/form-data">
                                             @csrf
-                                            {{-- @method('patch') --}}
-                                            <div class="ti-modal-body">
+                                             <div class="ti-modal-body">
                                                 <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                     <div class="max-w-sm space-y-3 pb-6">
                                                         <label for="" class="ti-form-label font-bold">Description:</label>
                                                         <input type="text" name="description" class="ti-form-input ti-form-textarea" placeholder="description">
                                                     </div>
-                                                    
-                                                    
                                                     <div class="max-w-sm space-y-3 pb-6">
                                                         <label for="" class="ti-form-label">attachment :</label>
                                                          <input type="file" name="attachment" class="ti-form-input"  placeholder="attachment">
@@ -89,7 +86,6 @@
                                                         </select>
                                                        
                                                     </div> --}}
-                                                    
                                                 </div>
                                             </div>
                                             <div class="ti-modal-footer">
@@ -99,7 +95,6 @@
                                                     Close
                                                 </button>
                                                 <input type="submit" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Save"/>
-
                                             </div>
                                         </form>
                                     </div>
@@ -159,21 +154,16 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                
-                                               
-                                            </tbody>
+                                             </tbody>
                                         </table>
                                          <!-- Additional table for pticket -->
-               
                                         <div class="table-bordered table-auto rounded-sm ti-striped-table ti-custom-table-head overflow-auto mt-10">
                                             <table id="Pticketing_table" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                                 <thead class="bg-gray-50 dark:bg-black/20">
                                                     <tr class="">
                                                         <th scope="col" class="dark:text-white/80">Field Name</th>
                                                         <th scope="col" class="dark:text-white/80">@sortablelink('Field Details','Field Details')</th>
-                                                        
-
-                                                    </tr>
+                                                     </tr>
                                                 </thead>
                                                 <tbody class="">
                                                 @foreach($postticket as $pt)
@@ -183,13 +173,9 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Attachment</td>
-                                                       
-                                                            <div class="flex-1">
-                                                                <td><img src="{{ asset('attachment/'.$pt->attachment) }}"></td>
-                                                            
-
-                                                            </div>
-                                                        
+                                                        <div class="flex-1">
+                                                            <td><img src="{{ asset('attachment/'.$pt->attachment) }}"></td>
+                                                        </div>
                                                     </tr>
                                                     <tr>
                                                         <td>status</td>
@@ -218,7 +204,7 @@
                                                                             Edit tickets
                                                                         </h3>
                                                                         <button type="button" class="hs-dropdown-toggle ti-modal-close-btn"
-                                                                        data-hs-overlay="#hs-medium-modal">
+                                                                        data-hs-overlay="#tickets_edit_modal">
                                                                         <span class="sr-only">Close</span>
                                                                         <svg class="w-3.5 h-3.5" width="8" height="8" viewBox="0 0 8 8" fill="none"
                                                                             xmlns="http://www.w3.org/2000/svg">
@@ -251,20 +237,11 @@
                                                                                 </select>
                                                                                
                                                                             </div>
-                                                                            
-                                                                            @if($ticket->status == 'inactive')
-                                                                            <br/>
-                                                                                <div class="flex">
-                                                                                    <input type="radio" name="status" class="ti-form-radio" id="hs-radio-group-2" value="active" required>
-                                                                                    <label for="hs-radio-group-2" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Make it Active</label>
-                                                                                </div>
-                                                                            @endif
-                                                                    
-                                                                        </div>
+                                                                         </div>
                                                                         <div class="ti-modal-footer">
                                                                             <button type="button"
                                                                                 class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
-                                                                                data-hs-overlay="#validate_edit_modal">
+                                                                                data-hs-overlay="#tickets_edit_modal">
                                                                                 Close
                                                                             </button>
                                                                             <input type="submit" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Update"/>

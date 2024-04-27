@@ -32,7 +32,7 @@ class UpdateticketRequest extends FormRequest
             'description'=>['required','regex:/^[a-zA-Z\s]+$/'],
             //'status'=>['string', Rule::in(array_column(Ticketstatus::cases(),'value'))],
             'attachment'=>['sometimes','file','mimes:jpg,jpeg,png,pdf'],
-            'status'=>['required', Rule::in(['Open', 'Pending','Resolved'])],
+            //'status'=>['required', Rule::in(['Open', 'Pending','Resolved'])],
             
         ];
     }

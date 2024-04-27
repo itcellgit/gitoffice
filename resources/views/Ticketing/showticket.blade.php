@@ -70,7 +70,6 @@
                                         </div>
                                         <form action="{{ route('ticket.reply.store', $ticket->id) }}" method="post" enctype="multipart/form-data">
                                             @csrf
-                                            {{-- @method('patch') --}}
                                             <div class="ti-modal-body">
                                                 <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                     <div class="max-w-sm space-y-3 pb-6">
@@ -130,8 +129,7 @@
                                 <th scope="col" class="dark:text-white/80">@sortablelink('Field Details','Field Details')</th>
                                 {{-- <th scope="col" class="dark:text-white/80">Status</th> --}}
                                   {{-- <th scope="col" class="dark:text-white/80">Action</th> --}}
-
-                            </tr>
+                             </tr>
                         </thead>
                         <tbody class="">
                             <tr>
@@ -175,16 +173,13 @@
                                 
                                     <div class="flex-1">
                                         <td><img src="{{ asset('attachment/'.$pt->attachment) }}"></td>
-                                       
-
-                                    </div>
-                               
+                                   </div>
                             </tr>
-                            <tr>
+                            {{-- <tr>
                                 <td>status</td>
                                 <td><span>{{$pt->status}}</span></td>
-                            </tr> 
-                            <tr>
+                            </tr>  --}}
+                            {{-- <tr>
                                 <td>Action</td>
                                 <td>
                                     <div class="hs-tooltip ti-main-tooltip">
@@ -197,7 +192,6 @@
                                                     Edit
                                                 </span>
                                         </button>
-                            
                                         <div id="tickets_edit_modal" class="hs-overlay hidden ti-modal">
                                         <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out md:!max-w-2xl md:w-full m-3 md:mx-auto">
                                             <div class="ti-modal-content">
@@ -217,7 +211,7 @@
                                                 </svg>
                                                 </button>
                                             </div>
-                                            {{-- <form  action="{{route('ticket.update',$ticket->id)}}" method="post" enctype="multipart/form-data">  --}}
+                                            <form  action="{{route('ticket.update',$ticket->id)}}" method="post" enctype="multipart/form-data"> 
                                                 @csrf
                                                 @method('patch')
                                                 <div class="ti-modal-body">
@@ -233,21 +227,11 @@
                                                         <label for="" class="ti-form-label font-bold">Status</label>
                                                         <select class="ti-form-select" name="status">
                                                             <option value="#">Choose One</option>
-                                                            <option value="Open" {{ $ticket->status == 'Open' ? 'selected' : '' }}>Open</option>
-                                                            <option value="Pending" {{ $ticket->status == 'Pending' ? 'selected' : '' }}>Pending</option>
-                                                            <option value="Resolved" {{ $ticket->status == 'Resolved' ? 'selected' : '' }}>Resolved</option>
+                                                            <option value="Open" {{ $pt->status == 'Open' ? 'selected' : '' }}>Open</option>
+                                                            <option value="Pending" {{ $pt->status == 'Pending' ? 'selected' : '' }}>Pending</option>
+                                                            <option value="Resolved" {{ $pt->status == 'Resolved' ? 'selected' : '' }}>Resolved</option>
                                                         </select>
-                                                       
-                                                    </div>
-                                                    
-                                                    @if($ticket->status == 'inactive')
-                                                    <br/>
-                                                        <div class="flex">
-                                                            <input type="radio" name="status" class="ti-form-radio" id="hs-radio-group-2" value="active" required>
-                                                            <label for="hs-radio-group-2" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Make it Active</label>
-                                                        </div>
-                                                    @endif
-                                            
+                                                   </div>
                                                 </div>
                                                 <div class="ti-modal-footer">
                                                     <button type="button"
@@ -255,29 +239,21 @@
                                                     data-hs-overlay="#hs-medium-modal">
                                                     Close
                                                     </button>
-                                                    
                                                     <input type="submit" class="ti-btn  bg-warning text-white hover:bg-warning  focus:ring-primary  dark:focus:ring-offset-white/10" value="Update"/>
-                                                    
-                                                    </div>
-                                                </form>  
-                                            </div>
+                                                </div>
+                                            </form>  
                                         </div>
                                     </div>
-                                </td>
-                            </tr>
+                                </div>
+                            </td>
+                            </tr> --}}
                           @endforeach
                         </tbody>
-                      
                     </table>
-                   
                 </div>
-              
-              
             </div>
         </div>
-       
-    </div>
- 
+     </div>
 </div>
 
 @endsection

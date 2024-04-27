@@ -36,22 +36,62 @@ class ReplyController extends Controller
         $postticket->description = $request->description;		
         
         
-        if ($request->file('attachment')) {
-            // Process attachment
-            $text = $request->file('attachment')->extension();
-            $contents = file_get_contents($request->file('attachment'));
-            $filename = Str::random(25);
-            $path = "attachment/$filename.$text";
-            Storage::disk('public')->put($path, $contents);
-            $postticket->attachment = $filename;
-        } else {
-            // Handle case where attachment is not provided
-            $postticket->attachment = ''; // or NULL, depending on your database schema
-        }
-       
-        
-        
-        $postticket->save();
+        // if ($request->file('attachment')) {
+        //     // Process attachment
+        //     $text = $request->file('attachment')->extension();
+        //     $contents = file_get_contents($request->file('attachment'));
+        //     $filename = Str::random(25);
+        //     $path = "attachment/$filename.$text";
+        //     Storage::disk('public')->put($path, $contents);
+        //     $postticket->attachment = $filename;
+        // } else {
+        //     // Handle case where attachment is not provided
+        //     $postticket->attachment = ''; // or NULL, depending on your database schema
+        // }
+       // $postticket->save();
+       //file upload
+       $file=$request->file("attachment");
+           
+       $file_size = $file->getSize();
+       $file_upload_status = 0;
+       $postticketinsertedId = 0;
+       $file_size_status = 0;
+       $result = 0;
+
+       if($file_size <= 500000)
+       {
+           $file_size_status = 1;
+           if($file->store('public/Uploads/Research/Publications/'))
+       {
+           //dd("File upload Sucess");
+           $file_upload_status = 1;
+           $postticket->attachment= $file->hashName();
+          $postticketinsertedId =  $postticket->save(); // insert the row and upload the file only when all the conditions are met.
+
+       }
+           else
+           {
+               //dd( "Failed to upload file");
+               $file_upload_status = 0;
+           }
+       }
+           if($postticketinsertedId && $file_upload_status && $file_size_status)
+           {
+               $status = 1;
+           }
+           else
+           {
+               $status = 0;
+           }
+       //dd($postticketinsertedId.'-'.$file_upload_status.'-'.$file_size_status.'-'.$result);
+       $return_data =
+       [
+           'status' => $status,
+           'file_size_status' => $file_size_status
+       ];
+
+      return redirect('Admin/tickets/adminticket')->with('return_data', $return_data);
+
         
 
         $postticket = post_ticket::where('ticket_id', $ticket->id)->get();
