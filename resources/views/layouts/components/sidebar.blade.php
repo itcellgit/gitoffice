@@ -1,4 +1,4 @@
-        
+
             <aside class="app-sidebar" id="sidebar">
 
                 <!-- Start::main-sidebar-header -->
@@ -57,15 +57,15 @@
                                 </a>
                                 <ul class="slide-menu child1">
                                     <li class="slide"><a href="{{url('/ESTB/leaves')}}" class="side-menu__item">Leaves</a></li>
-                                    
+
                                    <li class="slide"><a href="{{url('/ESTB/leaves/leave_entitlement')}}" class="side-menu__item">Enititlement</a></li>
 
                                     <li class="slide"><a href="{{url('/ESTB/leaves/holiday_rhlist')}}" class="side-menu__item">Holiday And RH List</a></li>
                                     <li class="slide"><a href="{{url('/ESTB/leaves_calender')}}" class="side-menu__item">Leaves Calender</a></li>
 
-                                   
+
                                 </ul>
-                            </li>    
+                            </li>
                             <li class="slide has-sub">
                                 <a href="#" class="side-menu__item">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12.998 2V3H19.998V5H12.998V19H16.998V21H6.99805V19H10.998V5H3.99805V3H10.998V2H12.998ZM4.99805 6.34315L7.82647 9.17157C8.55033 9.89543 8.99805 10.8954 8.99805 12C8.99805 14.2091 7.20719 16 4.99805 16C2.78891 16 0.998047 14.2091 0.998047 12C0.998047 10.8954 1.44576 9.89543 2.16962 9.17157L4.99805 6.34315ZM18.998 6.34315L21.8265 9.17157C22.5503 9.89543 22.998 10.8954 22.998 12C22.998 14.2091 21.2072 16 18.998 16C16.7889 16 14.998 14.2091 14.998 12C14.998 10.8954 15.4458 9.89543 16.1696 9.17157L18.998 6.34315ZM18.998 9.17157L17.5838 10.5858C17.2099 10.9597 16.998 11.4606 16.998 12L20.998 12.001C20.998 11.4606 20.7862 10.9597 20.4123 10.5858L18.998 9.17157ZM4.99805 9.17157L3.58383 10.5858C3.20988 10.9597 2.99805 11.4606 2.99805 12L6.99805 12.001C6.99805 11.4606 6.78621 10.9597 6.41226 10.5858L4.99805 9.17157Z" fill="rgba(255,255,255,1)"></path></svg>
@@ -99,15 +99,15 @@
                                     <span class="side-menu__label">Qualifications</span>
                                 </a>
                             </li>
-                           
+
                             <li class="slide">
                                 <a href="{{url('ESTB/religion')}}" class="side-menu__item">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M9 19H12V12.9416L8 9.45402L4 12.9416V19H7V15H9V19ZM21 21H3C2.44772 21 2 20.5523 2 20V12.4868C2 12.1978 2.12501 11.9229 2.34282 11.733L6 8.54435V4C6 3.44772 6.44772 3 7 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21ZM16 11V13H18V11H16ZM16 15V17H18V15H16ZM16 7V9H18V7H16ZM12 7V9H14V7H12Z" fill="rgba(255,255,255,1)"></path></svg>
                                     <span class="side-menu__label">Religions & Castes</span>
                                 </a>
                             </li>
-                           
-                            
+
+
                             <li class="slide">
                                 <a href="{{url('ESTB/renumerations')}}" class="side-menu__item">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12.0001 8.5L14.1161 13.5875L19.6085 14.0279L15.4239 17.6125L16.7023 22.9721L12.0001 20.1L7.29777 22.9721L8.57625 17.6125L4.3916 14.0279L9.88403 13.5875L12.0001 8.5ZM12.0001 13.707L11.2615 15.4835L9.34505 15.637L10.8051 16.8883L10.3581 18.759L12.0001 17.7564L13.6411 18.759L13.195 16.8883L14.6541 15.637L12.7386 15.4835L12.0001 13.707ZM8.00005 2V11H6.00005V2H8.00005ZM18.0001 2V11H16.0001V2H18.0001ZM13.0001 2V7H11.0001V2H13.0001Z" fill="rgba(255,255,255,1)"></path></svg>
@@ -137,6 +137,12 @@
                                       <span class="side-menu__label">Staff</span>
                                 </a>
                             </li>
+                            <li class="slide">
+                                <a href="{{url('ESTB/Biometric/Biometric_data')}}" class="side-menu__item">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M11 11V7H13V11H17V13H13V17H11V13H7V11H11ZM12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z" fill="rgba(255,255,255,1)"></path></svg>
+                                     Biometric
+                               </a>
+                           </li>
 
                             {{-- <li class="slide">
                                 <a href="{{url('ESTB/tedheads')}}" class="side-menu__item">
@@ -151,19 +157,19 @@
                                     <span class="side-menu__label">TDS Heads</span>
                                 </a>
                             </li>
-                               
-                           
 
 
 
-                            
-                            
 
 
-                           
 
 
-                           
+
+
+
+
+
+
 
                         </ul>
                         <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24"
