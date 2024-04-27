@@ -65,7 +65,7 @@
                                                         <table id="proattended" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                                             <thead class="bg-gray-50 dark:bg-black/20">
                                                             <tr class="">
-                                                                <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
+                                                                <th scope="col" class="dark:text-white/80 font-bold  ">S.No</th>
                                                                 <th scope="col" class="dark:text-white/80 font-bold ">Employee Name</th>
                                                                 <th scope="col" class="dark:text-white/80 font-bold ">PunchIn</th>
                                                                 <th scope="col" class="dark:text-white/80 font-bold ">DeviceIn</th>
