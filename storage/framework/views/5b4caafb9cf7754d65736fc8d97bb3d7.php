@@ -132,7 +132,7 @@
                                                                         //alert(1);
                                                                         $(window).on('load', function() {
 
-                                                                            alert('attended');
+                                                                            //alert('attended');
 
                                                                             //  $('#horizontal-alignment-item-1').trigger('click')
                                                                             $('#fund_btn').trigger("click");
@@ -149,21 +149,22 @@
 
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="with-corner-hint" class="ti-form-label font-bold">Proposal Title :<span class="text-red-500">*</span> </label>
-                                                                            <input type="text" name="f_proposal_title" class="ti-form-input" required placeholder="Proposal Title" id="f_proposaltitle">
-                                                                                <?php if($errors->has('f_proposal_title')): ?>
-                                                                                    <div class="text-red-700"><?php echo e($errors->first('f_proposal_title')); ?></div>
-                                                                                <?php endif; ?>
-                                                                                <div id="f_proposaltitleError" class="error text-red-700"></div>
+                                                                            <input type="text" name="f_proposal_title" class="ti-form-input" required placeholder="Proposal Title" id="f_proposaltitle" value="<?php echo e(old('f_proposal_title')); ?>">
+                                                                            <?php if($errors->has('f_proposal_title')): ?>
+                                                                                <div class="text-red-700"><?php echo e($errors->first('f_proposal_title')); ?></div>
+                                                                            <?php endif; ?>
+                                                                            <div id="f_proposaltitleError" class="error text-red-700"></div>
                                                                         </div>
+
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="with-corner-hint" class="ti-form-label font-bold">Role: <span class="text-red-500">*</span></label>
                                                                             <select class="ti-form-select role" name="f_role" required id="fund_role">
                                                                                 <option value="#">Choose Role</option>
-                                                                                <option value="Principle Investigator">Principle Investigator</option>
-                                                                                <option value="Co-Investigator">Co-Investigator</option>
-                                                                                <option value="Architect">Architect</option>
-
+                                                                                <option value="Principle Investigator" <?php echo e(old('f_role') == 'Principle Investigator' ? 'selected' : ''); ?>>Principle Investigator</option>
+                                                                                <option value="Co-Investigator" <?php echo e(old('f_role') == 'Co-Investigator' ? 'selected' : ''); ?>>Co-Investigator</option>
+                                                                                <option value="Architect" <?php echo e(old('f_role') == 'Architect' ? 'selected' : ''); ?>>Architect</option>
                                                                             </select>
+
                                                                             <?php if($errors->has('f_role')): ?>
                                                                                 <div class="text-red-700"><?php echo e($errors->first('f_role')); ?></div>
                                                                             <?php endif; ?>
@@ -173,9 +174,10 @@
                                                                             <label for="with-corner-hint" class="ti-form-label font-bold">Type: <span class="text-red-500">*</span></label>
                                                                             <select class="ti-form-select role" name="f_type" required id="f_type">
                                                                                 <option value="#">Choose Type</option>
-                                                                                <option value="Govt-funded">Govt Funded</option>
-                                                                                <option value="Private funded">Private Funded</option>
+                                                                                <option value="Govt-funded" <?php echo e(old('f_type') == 'Govt-funded' ? 'selected' : ''); ?>>Govt Funded</option>
+                                                                                <option value="Private funded" <?php echo e(old('f_type') == 'Private funded' ? 'selected' : ''); ?>>Private Funded</option>
                                                                             </select>
+
                                                                             <?php if($errors->has('f_type')): ?>
                                                                                 <div class="text-red-700"><?php echo e($errors->first('f_type')); ?></div>
                                                                             <?php endif; ?>
@@ -183,23 +185,27 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                                                        
 
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="with-corner-hint" class="ti-form-label font-bold">Amount: </label>
-                                                                                <input type="number" min="0" name="f_amount" class="ti-form-input" placeholder="Amount" id="fund_amount">
-                                                                                    <?php if($errors->has('f_amount')): ?>
-                                                                                    <div class="text-red-700"><?php echo e($errors->first('f_amount')); ?></div>
-                                                                                <?php endif; ?>
-                                                                                <div id="fund_amountError" class="error text-red-700"></div>
+                                                                            <input type="number" min="0" name="f_amount" class="ti-form-input" placeholder="Amount" id="fund_amount" value="<?php echo e(old('f_amount')); ?>">
+                                                                            <?php if($errors->has('f_amount')): ?>
+                                                                                <div class="text-red-700"><?php echo e($errors->first('f_amount')); ?></div>
+                                                                            <?php endif; ?>
+                                                                            <div id="fund_amountError" class="error text-red-700"></div>
                                                                         </div>
+
+
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="with-corner-hint" class="ti-form-label font-bold">Proposal Status:<span class="text-red-500">*</span> </label>
                                                                             <select class="ti-form-select proposal_status" name="f_proposal_status" required id="fund_proposal_status">
-                                                                                    <option value="#">Choose Proposal Status</option>
-                                                                                    <option value="Accepted">Accepted</option>
-                                                                                    <option value="Pending">Pending</option>
-                                                                                    <option value="Rejected">Rejected</option>
+                                                                                <option value="#">Choose Proposal Status</option>
+                                                                                <option value="Accepted" <?php echo e(old('f_proposal_status') == 'Accepted' ? 'selected' : ''); ?>>Accepted</option>
+                                                                                <option value="Pending" <?php echo e(old('f_proposal_status') == 'Pending' ? 'selected' : ''); ?>>Pending</option>
+                                                                                <option value="Rejected" <?php echo e(old('f_proposal_status') == 'Rejected' ? 'selected' : ''); ?>>Rejected</option>
                                                                             </select>
+
                                                                             <?php if($errors->has('f_proposal_status')): ?>
                                                                                 <div class="text-red-700"><?php echo e($errors->first('f_proposal_status')); ?></div>
                                                                             <?php endif; ?>
@@ -207,24 +213,41 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                                                        
+
+
+
                                                                         <div class="flex max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Application Date :<span class="text-red-500">*</span></label>
                                                                             <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
-                                                                                <span class="text-sm text-gray-500 dark:text-white/70"><i
-                                                                                class="ri ri-calendar-line"></i></span>
+                                                                                <span class="text-sm text-gray-500 dark:text-white/70"><i class="ri ri-calendar-line"></i></span>
                                                                             </div>
-                                                                            <input type="date" name="f_application_date" id="fund_application_date"
-                                                                                class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
-                                                                                    required placeholder="Choose date" >
-                                                                                <?php if($errors->has('f_application_date')): ?>
-                                                                                        <div class="text-red-700"><?php echo e($errors->first('f_application_date')); ?></div>
-                                                                                <?php endif; ?>
-                                                                                <div id="fund_application_dateError" class="error text-red-700"></div>
+                                                                            <input type="date" name="f_application_date" id="fund_application_date" class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date" required placeholder="Choose date" value="<?php echo e(old('f_application_date')); ?>">
+                                                                            <?php if($errors->has('f_application_date')): ?>
+                                                                                <div class="text-red-700"><?php echo e($errors->first('f_application_date')); ?></div>
+                                                                            <?php endif; ?>
+                                                                            <div id="fund_application_dateError" class="error text-red-700"></div>
                                                                         </div>
+
+                                                                        <div class="flex max-w-sm space-y-3 pb-6">
+                                                                            <label for="" class="ti-form-label font-bold">Completion Year :</label>
+                                                                            <input type="number" min="0" step="1" name="f_completion_year" class="ti-form-input" required placeholder="Completion Year" id="fund_completion_year" value="<?php echo e(old('f_completion_year')); ?>">
+                                                                            <?php if($errors->has('f_completion_year')): ?>
+                                                                                <div class="text-red-700"><?php echo e($errors->first('f_completion_year')); ?></div>
+                                                                            <?php endif; ?>
+                                                                            <div id="fund_completion_yearError" class="error text-red-700"></div>
+                                                                        </div>
+
+
+
+
+
+
+                                                                        
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Fund Received:</label>
-                                                                            <input type="number" min="0" name="f_fund_received" class="ti-form-input" placeholder="Fund Received" id="fund_received">
-                                                                                <?php if($errors->has('f_fund_received')): ?>
+                                                                            <input type="number" min="0" name="f_fund_received" class="ti-form-input" placeholder="Fund Received" id="fund_received" value="<?php echo e(old('f_fund_received')); ?>">
+                                                                            <?php if($errors->has('f_fund_received')): ?>
                                                                                 <div class="text-red-700"><?php echo e($errors->first('f_fund_received')); ?></div>
                                                                             <?php endif; ?>
                                                                             <div id="f_fundreceivedError" class="error text-red-700"></div>
@@ -235,22 +258,16 @@
                                                                             <label for="" class="ti-form-label font-bold">Project status:<span class="text-red-500">*</span></label>
                                                                             <select class="ti-form-select project_status" name="f_project_status" required id="fund_project_status">
                                                                                 <option value="#">select Project Status</option>
-                                                                                <option value="On-Going">On Going</option>
-                                                                                <option value="Completed">Completed</option>
+                                                                                <option value="On-Going" <?php echo e(old('f_project_status') == 'On-Going' ? 'selected' : ''); ?>>On Going</option>
+                                                                                <option value="Completed" <?php echo e(old('f_project_status') == 'Completed' ? 'selected' : ''); ?>>Completed</option>
                                                                             </select>
+
                                                                             <?php if($errors->has('f_project_status')): ?>
                                                                                 <div class="text-red-700"><?php echo e($errors->first('f_project_status')); ?></div>
                                                                             <?php endif; ?>
                                                                             <div id="fund_project_statusError" class="error text-red-700"></div>
                                                                         </div>
-                                                                        <div class="flex max-w-sm space-y-3 pb-6">
-                                                                            <label for="" class="ti-form-label font-bold">Completion Year :</label>
-                                                                            <input type="number" min="0" step="1" name="f_completion_year" class="ti-form-input" required placeholder="Completion Year" id="fund_completion_year">
-                                                                            <?php if($errors->has('f_completion_year')): ?>
-                                                                                <div class="text-red-700"><?php echo e($errors->first('f_completion_year')); ?></div>
-                                                                            <?php endif; ?>
-                                                                            <div id="fund_completion_yearError" class="error text-red-700"></div>
-                                                                        </div>
+                                                                        
                                                                     </div>
                                                                     <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6">
@@ -320,7 +337,12 @@
 
 
                                                                             <td><span><?php echo e($i++); ?></span></td>
-                                                                            <td><span><?php echo e($fund->egov_id); ?></span></td>
+                                                                            
+                                                                            <td>
+                                                                                <a href="https://git.edu/storage/Uploads/Research/fundedproject/<?php echo e($fund->document); ?>" class="text-blue-500">
+                                                                                    <span><?php echo e($fund->egov_id); ?></span>
+                                                                                </a>
+                                                                            </td>
                                                                             <td><span><?php echo e($fund->proposal_title); ?></span></td>
                                                                             <td><span><?php echo e($fund->role); ?></span></td>
                                                                             <td><span><?php echo e($fund->type); ?></span></td>
@@ -674,7 +696,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold">Consultacy/Testing :<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="c_consultancy_title" class="ti-form-input" required placeholder="Consultacy Title" id="consult_consultancy_title">
+                                                                                <input type="text" name="c_consultancy_title" class="ti-form-input" required placeholder="Consultacy Title" id="consult_consultancy_title"  value="<?php echo e(old('c_consultancy_title')); ?>">
                                                                                     <?php if($errors->has('c_consultancy_title')): ?>
                                                                                         <div class="text-red-700"><?php echo e($errors->first('c_consultancy_title')); ?></div>
                                                                                 <?php endif; ?>
@@ -682,7 +704,7 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Agency :</label>
-                                                                                <input type="text" name="c_agency" class="ti-form-input" required placeholder="Agency" id="consult_agency">
+                                                                                <input type="text" name="c_agency" class="ti-form-input" required placeholder="Agency" id="consult_agency" value="<?php echo e(old('c_agency')); ?>">
                                                                                     <?php if($errors->has('c_agency')): ?>
                                                                                         <div class="text-red-700"><?php echo e($errors->first('c_agency')); ?></div>
                                                                                 <?php endif; ?>
@@ -698,7 +720,7 @@
                                                                                     </div>
                                                                                     <input type="date" name="c_from_date" id="consult_from_date"
                                                                                     class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
-                                                                                        required placeholder="Choose date">
+                                                                                        required placeholder="Choose date" value="<?php echo e(old('c_from_date')); ?>">
                                                                                             <?php if($errors->has('c_from_date')): ?>
                                                                                                 <div class="text-red-700"><?php echo e($errors->first('c_from_date')); ?></div>
                                                                                             <?php endif; ?>
@@ -711,7 +733,7 @@
                                                                                     </div>
                                                                                     <input type="date" name="c_to_date" id="consult_to_date"
                                                                                         class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
-                                                                                        required placeholder="Choose date">
+                                                                                        required placeholder="Choose date" value="<?php echo e(old('c_to_date')); ?>">
                                                                                         <?php if($errors->has('c_to_date')): ?>
                                                                                             <div class="text-red-700"><?php echo e($errors->first('c_to_date')); ?></div>
                                                                                         <?php endif; ?>
@@ -724,7 +746,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Amount:</label>
-                                                                                <input type="number" min="0" name="c_amount" class="ti-form-input" placeholder="Amount" id="consult_amount">
+                                                                                <input type="number" min="0" name="c_amount" class="ti-form-input" placeholder="Amount" id="consult_amount" value="<?php echo e(old('c_amount')); ?>">
                                                                                     <?php if($errors->has('c_amount')): ?>
                                                                                                 <div class="text-red-700"><?php echo e($errors->first('c_amount')); ?></div>
                                                                                     <?php endif; ?>
@@ -735,10 +757,10 @@
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold">Consultancy Type:<span class="text-red-500">*</span> </label>
                                                                                 <select class="ti-form-select" name="c_consultancy_type" id="consult_type">
                                                                                     <option value="#">Choose Level</option>
-                                                                                    <option value="consultancy">Consultancy</option>
-                                                                                    <option value="testing">Testing</option>
+                                                                                    <option value="consultancy" <?php echo e(old('c_consultancy_type') == 'consultancy' ? 'selected' : ''); ?>>Consultancy</option>
+                                                                                    <option value="testing" <?php echo e(old('c_consultancy_type') == 'testing' ? 'selected' : ''); ?>>Testing</option>
                                                                                 </select>
-                                                                                    <?php if($errors->has('consultancy_type')): ?>
+                                                                                <?php if($errors->has('consultancy_type')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('consultancy_type')); ?></div>
                                                                                 <?php endif; ?>
                                                                                 <div id="consultancy_typeError" class="error text-red-700"></div>
@@ -812,7 +834,12 @@
                                                                     <tr style="<?php if($consult->validation_status =='invalid'): ?> background-color: #ffcccc; <?php elseif($consult->validation_status =='updated'): ?> background-color: #fff2cc; <?php elseif($consult->validation_status =='valid'): ?> background-color: #ccffcc; <?php endif; ?>">
 
                                                                         <td><span><?php echo e($i++); ?></span></td>
-                                                                        <td><span><?php echo e($consult->egov_id); ?></span></td>
+                                                                        
+                                                                        <td>
+                                                                            <a href="https://git.edu/storage/Uploads/Research/Consultancy/<?php echo e($consult->document); ?>" class="text-blue-500">
+                                                                                <span><?php echo e($consult->egov_id); ?></span>
+                                                                            </a>
+                                                                        </td>
                                                                         <td><span><?php echo e($consult->consultancy_title); ?></span></td>
                                                                         <td><span><?php echo e($consult->agency); ?></span></td>
                                                                         <td><span><?php echo e($consult->from_date); ?></span></td>
@@ -1090,10 +1117,49 @@
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <!-- Include jQuery library (if not already included) -->
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
         <script>
             $(document).ready(function(){
+                    // Function to get the year from a date string in the format YYYY-MM-DD
+                    function getYearFromDate(dateString) {
+                        return parseInt(dateString.split('-')[0]);
+                    }
 
-                    //Validation for funded project
+                    // Event handler for when either the application date or completion year changes
+                    $('#fund_application_date, #fund_completion_year').change(function() {
+                        var applicationDate = $('#fund_application_date').val();
+                        var completionYear = $('#fund_completion_year').val();
+
+                        // If either field is empty, don't perform the comparison
+                        if (applicationDate === '' || completionYear === '') {
+                            return;
+                        }
+
+                        // Get the years from the date strings
+                        var applicationYear = getYearFromDate(applicationDate);
+                        var completionYearInt = parseInt(completionYear);
+
+                        // Compare the years
+                        if (completionYearInt < applicationYear) {
+                            // Show error message
+                            $('#fund_completion_yearError').text('Completion year must be greater than or equal to application year');
+                            // Clear the completion year field
+                            $('#fund_completion_year').val('');
+                        } else {
+                            // Clear error message
+                            $('#fund_completion_yearError').text('');
+                        }
+                    });
+
+
+
+
+
+                    $('#fund_amount').on('input', function(){
+                        var amount = $(this).val();
+                        $('#fund_received').attr('max', amount);
+                    });
+
 
                     //alert('Hello from jquery');
                     new DataTable('#fund_table');

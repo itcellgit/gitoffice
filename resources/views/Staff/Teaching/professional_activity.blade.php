@@ -354,10 +354,11 @@
                                                                         <td><span>{{$i++}}</span></td>
                                                                         {{-- <td>{{ $act->egov_id }}</td> --}}
                                                                         <td>
-                                                                            <a href="https://git.edu/storage/Uploads/Professional_Activity_Attended/{{$act->egov_id}}" class="text-blue-500">
+                                                                            <a href="https://git.edu/storage/Uploads/Professional_Activity_Attended/{{$act->document}}" class="text-blue-500">
                                                                                 <span>{{$act->egov_id}}</span>
                                                                             </a>
                                                                         </td>
+
                                                                         <td><span>{{$act->title}}</span></td>
                                                                         <td><span>{{$act->organizer}}</span></td>
                                                                         <td><span>{{$act->role}}</span></td>
@@ -961,8 +962,8 @@
                                                                         <td><span>{{$i++}}</span></td>
                                                                         {{-- <td><span>{{$conduct->egov_id}}</span></td> --}}
                                                                         <td>
-                                                                            <a href="https://git.edu/storage/Uploads/Professional_Activity_Conducted/{{$act->egov_id}}" class="text-blue-500">
-                                                                                <span>{{$act->egov_id}}</span>
+                                                                            <a href="https://git.edu/storage/Uploads/Professional_Activity_Conducted/{{ $conduct->document }}" class="text-blue-500">
+                                                                                <span>{{$conduct->egov_id}}</span>
                                                                             </a>
                                                                         </td>
                                                                         <td><span>{{$conduct->title}}</span></td>

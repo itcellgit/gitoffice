@@ -86,6 +86,7 @@
                                                         <th scope="col" class="dark:text-white/80 font-bold ">Department Short Name</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">Association</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">Religion</th>
+                                                        <th scope="col" class="dark:text-white/80 font-bold ">Designation</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">Gender</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">Date of Birth</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">Date of Joining</th>
@@ -125,6 +126,7 @@
                                                                 <td>{{ $st->dept_shortname }}</td>
                                                                 <td>{{ $st->asso_name }}</td>
                                                                 <td>{{ $st->religion_name }}</td>
+                                                                <td>{{ $st->design_name }}</td>
                                                                 <td>{{ $st->gender }}</td>
                                                                 <td>{{ $st->dob }}</td>
                                                                 <td>{{ $st->doj }}</td>

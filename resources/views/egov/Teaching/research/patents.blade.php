@@ -277,7 +277,12 @@
                                                         <td><span>{{ $i++ }}</span></td>
                                                         <td><span>{{ $pate->fname . ' ' . $pate->mname . ' ' . $pate->lname }}</span></td>
                                                         {{-- <td><span>{{ $pate->dept_shortname }}</span></td> --}}
-                                                        <td><span>{{ $pate->egov_id }}</span></td>
+                                                        {{-- <td><span>{{ $pate->egov_id }}</span></td> --}}
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Research/patents/{{ $pate->document}}" class="text-blue-500">
+                                                                <span>{{$pate->egov_id}}</span>
+                                                            </a>
+                                                        </td>
                                                         <td><span>{{ $pate->appl_no }}</span></td>
                                                         <td><span>{{\Carbon\Carbon::parse($pate->appl_date)->format('d-M-Y') }}</span></td>
                                                         <td><span>{{\Carbon\Carbon::parse($pate->publication_date)->format('d-M-Y') }}</span></td>

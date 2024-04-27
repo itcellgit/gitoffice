@@ -69,6 +69,8 @@ class HODLeaveController extends Controller
         $user = Auth::user();
         $department_id=Session::get('deptid');
 
+        $leave_type_id = $request->input('leave_type');
+
         // Process the date as needed (e.g., save to database, perform calculations)
         $datewiseleave_events = leave_staff_applications::join('leaves', 'leaves.id','=','leave_staff_applications.leave_id')
         ->join('staff AS s1','s1.id','=','leave_staff_applications.staff_id')
@@ -76,6 +78,7 @@ class HODLeaveController extends Controller
         ->leftJoin('staff AS s3','s3.id','=','leave_staff_applications.additional_alternate')
         //->leftjoin('daywise__leaves AS daywise', 'leave_staff_applications.id', '=', 'daywise.leave_staff_applications_id')
         ->join('department_staff AS dept_staff','dept_staff.staff_id','=','leave_staff_applications.staff_id')
+        ->where('leave_staff_applications.leave_id','=',$leave_type_id)
         ->where('dept_staff.department_id','=',$department_id)
         ->whereDate('leave_staff_applications.start' , '<=', $date)
         ->whereDate('leave_staff_applications.end','>=',$date)
@@ -91,5 +94,26 @@ class HODLeaveController extends Controller
         //dd($leave_events);
         // Return a response (optional)
           return response()->json($datewiseleave_events);
+    }
+
+    function recommend_leave(Request $request){
+        $application_id = $request->input('application_id');
+        //dd($application_id);
+
+        $result = DB::table('leave_staff_applications')
+            ->where('id', $application_id)
+            ->update(['appl_status' => "recommended"]);
+        //$leave_staff_applications->appl_status = "recommended";
+
+        if($result){
+            $return_html = "<div class='bg-white dark:bg-bgdark border border-success alert text-success' role='alert'>
+                                <span class='font-bold'>Result</span> Successful
+                            </div>";
+        }else{
+            $return_html = "<div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
+                                <span class='font-bold'>Result</span> {{session('return_data')['result']}}
+                            </div>";
+        }
+        return $return_html;
     }
 }

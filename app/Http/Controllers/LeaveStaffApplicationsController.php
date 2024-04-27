@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use App\Models\leave_staff_entitlements;
 use App\Models\Daywise_Leave;
 use Carbon\CarbonPeriod;
+use Session;
 
 
 class LeaveStaffApplicationsController extends Controller
@@ -557,6 +558,34 @@ class LeaveStaffApplicationsController extends Controller
 
             if(count($check_has_leave)>0){
                 return 1;
+            }else{
+                return 0;
+            }
+    }
+
+    public function checkanydeptpersononleave(Request $request){
+        $date = $request->input('date');
+        //dd($date);
+        $user = Auth::user();
+        $staff = staff::where('user_id','=',$user->id)->first();
+
+        //$department_id=Session::get('deptid');
+        $staff_dept_array = staff::with('activedepartments')->where('user_id',$user->id)->first();
+        $staff_dept = $staff_dept_array->activedepartments->first()->id;
+
+        $checkpersondata = Daywise_Leave::join('leave_staff_applications','leave_staff_applications.id','=','daywise__leaves.leave_staff_applications_id')
+            ->join('department_staff AS dept_staff','dept_staff.staff_id','=','leave_staff_applications.staff_id')
+            ->where('dept_staff.department_id', $staff_dept)
+            //->where('leave_staff_applications.staff_id',$staff->id)
+            ->whereDate('leave_staff_applications.start' , '<=', $date)
+            ->whereDate('leave_staff_applications.end','>=',$date)
+            ->select('leave_staff_applications.staff_id',
+            'leave_staff_applications.leave_id',
+            'leave_staff_applications.alternate')->get();
+
+            //dd($checkpersondata);
+            if(count($checkpersondata)>0){
+                return $checkpersondata;
             }else{
                 return 0;
             }

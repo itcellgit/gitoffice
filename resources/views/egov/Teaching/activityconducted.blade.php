@@ -425,7 +425,12 @@
                                                         <td><span>{{ $i++ }}</span></td>
                                                         <td><span>{{ $con->fname . ' ' . $con->mname . ' ' . $con->lname }}</span></td>
                                                         {{-- <td><span>{{ $con->dept_shortname }}</span></td> --}}
-                                                        <td><span>{{ $con->egov_id }}</span></td>
+                                                        {{-- <td><span>{{ $con->egov_id }}</span></td> --}}
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Professional_Activity_Conducted/{{ $con->document }}" class="text-blue-500">
+                                                                <span>{{$con->egov_id}}</span>
+                                                            </a>
+                                                        </td>
                                                         <td><span>{{ $con->title }}</span></td>
                                                         <td><span>{{ $con->role }}</span></td>
                                                         <td><span>{{ $con->level }}</span></td>

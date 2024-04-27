@@ -272,11 +272,13 @@ Route::delete('/Teaching/research/revieweditor/destory/{reviewer_editor}', [Revi
 
 
 
-//Teaching Leave Rules Routes
+//Teaching Leave  Routes
 Route::get('/Teaching/leaves',[LeaveStaffApplicationsController::class,'index'])->name('Teaching.leaves');
 Route::get('/holidayrhevents',[LeaveStaffApplicationsController::class,'hollidayrh_events'])->name('hollidayrh_events');
 Route::get('/myleaveevents',[LeaveStaffApplicationsController::class,'myleaveevents'])->name('myleaveevents');
 Route::get('/checkhasleaveEvent',[LeaveStaffApplicationsController::class,'checkhasleaveEvent'])->name('checkhasleaveEvent');
+Route::get('/checkanydeptpersononleave',[LeaveStaffApplicationsController::class,'checkanydeptpersononleave'])->name('checkanydeptpersononleave');
+
 
 //for fetching events of specific date (clicked) using AJAX
 Route::get('/fetchholidayrhevents',[LeaveStaffApplicationsController::class,'fetchholidayrhevents'])->name('fetchholidayrhevents');
@@ -465,6 +467,10 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::get('/ESTB/staff/getcastecategory_list',[GetCasteCategoryListController::class,'getCasteCategoryList'])->name('ESTB.staff.getcastecategory_list');
     Route::get('/ESTB/staff/checkemailid',[CheckStaffEmailController::class,'checkEmailId'])->name('ESTB.staff.checkemailid');
     Route::get('/ESTB/staff/getdesignations_list',[GetDesignationListController::class,'getDesignationsList'])->name('ESTB.staff.getdesignations_list');
+
+    //To get full designation list
+    Route::get('/ESTB/staff/getdesignations_list',[GetDesignationListController::class,'getfullDesignationsList'])->name('ESTB.staff.getdesignations_list');
+
     // Route::get('/ESTB/staff/getTeachingpayscale_list',[GetTeachingPayscaleController::class,'getTeachingPayscaleList'])->name('ESTB.staff.getTeachingpayscale_list');
     // Route::get('/ESTB/staff/getNonTeachingKLSpayscale_list',[GetNTPayscaleListController::class,'getNTPayscaleList'])->name('ESTB.staff.getNonTeachingKLSpayscale_list');
     // Route::get('/ESTB/staff/getNTCpayscale_list',[GetNTCPayscaleListController::class,'getNTCPayscaleList'])->name('ESTB.staff.getNTCpayscale_list');
@@ -651,8 +657,13 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
      Route::get('/HOD/leaves_management/fetchDeptleaveevents',[HODLeaveController::class,'fetchDeptleaveevents'])->name('HOD.leaves.fetchDeptleaveevents');
      Route::get('/HOD/leaves_management/fetchclikdayevents',[HODLeaveController::class,'fetchclikdayevents'])->name('HOD.leaves.fetchclikdayevents');
      Route::get('/HOD/leaves_management/fetchdatewisedeptleaveevents',[HODLeaveController::class,'fetchdatewisedeptleaveevents'])->name('HOD.leaves.fetchdatewisedeptleaveevents');
+<<<<<<< HEAD
      
+     Route::get('/HOD/leaves_management/recommend_leave',[HODLeaveController::class,'recommend_leave']);
+=======
 
+
+>>>>>>> 7e9ab035d24652e29fbaa023bbacae359158144d
 
 
 
