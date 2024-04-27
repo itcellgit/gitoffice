@@ -48,8 +48,8 @@ class HODLeaveController extends Controller
 
         ->select(
                 'leave_staff_applications.leave_id AS leave_id',
-               DB::raw("COUNT(leave_staff_applications.leave_id) as leavecount"),
-               DB::raw("CONCAT(leaves.shortname, '-',COUNT(leave_staff_applications.leave_id))  AS title"),
+               DB::raw("COUNT(daywise.leave_id) as leavecount"),
+               DB::raw("CONCAT(leaves.shortname, '-',COUNT(daywise.leave_id))  AS title"),
                'daywise.start AS start',
                //DB::raw("date_add(daywise.start, INTERVAL 1 day)  AS end"), 
                 
@@ -76,13 +76,13 @@ class HODLeaveController extends Controller
         ->join('staff AS s1','s1.id','=','leave_staff_applications.staff_id')
         ->join('staff AS s2','s2.id','=','leave_staff_applications.alternate')
         ->leftJoin('staff AS s3','s3.id','=','leave_staff_applications.additional_alternate')
-        //->leftjoin('daywise__leaves AS daywise', 'leave_staff_applications.id', '=', 'daywise.leave_staff_applications_id')
+        ->leftjoin('daywise__leaves AS daywise', 'leave_staff_applications.id', '=', 'daywise.leave_staff_applications_id')
         ->join('department_staff AS dept_staff','dept_staff.staff_id','=','leave_staff_applications.staff_id')
         ->where('leave_staff_applications.leave_id','=',$leave_type_id)
         ->where('dept_staff.department_id','=',$department_id)
-        ->whereDate('leave_staff_applications.start' , '<=', $date)
-        ->whereDate('leave_staff_applications.end','>=',$date)
-        ->select(DB::raw("CONCAT(s1.fname,' ',s1.mname,' ',s1.lname) AS staff_name"),
+        ->where('daywise.start' , '=', $date)
+        ->select(DB::raw('DISTINCT(leave_staff_applications.id)'),
+                DB::raw("CONCAT(s1.fname,' ',s1.mname,' ',s1.lname) AS staff_name"),
                 DB::raw("CONCAT(s2.fname,' ',s2.mname,' ',s2.lname) AS alternate_staff"),
                 DB::raw("CONCAT(s3.fname,' ',s3.mname,' ',s3.lname) AS additional_alternate_staff"),
                 'leaves.shortname AS title',
@@ -91,11 +91,13 @@ class HODLeaveController extends Controller
                 'leave_staff_applications.appl_status AS appl_status',
                 'leave_staff_applications.id AS Application_id', 
                 'leave_staff_applications.reason AS reason')->get();
-        //dd($leave_events);
+        
         // Return a response (optional)
           return response()->json($datewiseleave_events);
     }
 
+
+    //for recommendation of leave from HoD account.
     function recommend_leave(Request $request){
         $application_id = $request->input('application_id');
         //dd($application_id);
@@ -103,15 +105,15 @@ class HODLeaveController extends Controller
         $result = DB::table('leave_staff_applications')
             ->where('id', $application_id)
             ->update(['appl_status' => "recommended"]);
-        //$leave_staff_applications->appl_status = "recommended";
+            //$leave_staff_applications->appl_status = "recommended";
 
         if($result){
             $return_html = "<div class='bg-white dark:bg-bgdark border border-success alert text-success' role='alert'>
-                                <span class='font-bold'>Result</span> Successful
+                                <span class='font-bold'>Result</span> Leave Recommended
                             </div>";
         }else{
             $return_html = "<div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
-                                <span class='font-bold'>Result</span> {{session('return_data')['result']}}
+                                <span class='font-bold'>Result</span> Unable to recommend
                             </div>";
         }
         return $return_html;
