@@ -657,9 +657,13 @@
                                             // $('#holiday_rh_div').hide();
                                             //for setting the background color based on application status
                                             var bg_color_setting = '';
-                                           
+                                            console.log(value);
+                                           if(value.appl_status == 'recommended'){
+                                                alert('recomended');
+                                                bg_color_setting = 'bg-yellow-400';
+                                           }
                                       
-                                            $('#Date_wise_leave__list').append('<tr class='+bg_color_setting+'>'
+                                            $('#Date_wise_leave__list').append('<tr class="'+ bg_color_setting +'">'
                                                                         +'<td >'+value.Application_id+ '</td>'
                                                                         +'<td>'+value.title+ '</td>'
                                                                         +'<td>'+value.staff_name+ '</td>'

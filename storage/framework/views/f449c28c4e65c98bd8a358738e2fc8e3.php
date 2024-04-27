@@ -189,7 +189,12 @@
                                                         <td><span><?php echo e($i++); ?></span></td>
                                                         <td><span><?php echo e($copy->fname . ' ' . $copy->mname . ' ' . $copy->lname); ?></span></td>
                                                         
-                                                        <td><span><?php echo e($copy->egov_id); ?></span></td>
+                                                        
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Research/Copyrights/<?php echo e($copy->document); ?>" class="text-blue-500">
+                                                                <span><?php echo e($copy->egov_id); ?></span>
+                                                            </a>
+                                                        </td>
                                                         <td><span><?php echo e($copy->copyright_title); ?></span></td>
                                                         <td><span><?php echo e(\Carbon\Carbon::parse($copy->copyright_date)->format('d-M-Y')); ?></span></td>
                                                         <td><span><?php echo e($copy->author_name); ?></span></td>

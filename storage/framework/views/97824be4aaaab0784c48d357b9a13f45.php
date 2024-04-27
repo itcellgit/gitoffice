@@ -327,12 +327,15 @@
                                             ?>
                                             <tbody class="">
                                                 <?php $__currentLoopData = $review_editor; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rc): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    
-                                                        
-                                                        <tr style="<?php if($rc->validation_status =='invalid'): ?> background-color: #ffcccc; <?php elseif($rc->validation_status =='updated'): ?> background-color: #fff2cc; <?php elseif($rc->validation_status =='valid'): ?> background-color: #ccffcc; <?php endif; ?>">
+                                                    <tr style="<?php if($rc->validation_status =='invalid'): ?> background-color: #ffcccc; <?php elseif($rc->validation_status =='updated'): ?> background-color: #fff2cc; <?php elseif($rc->validation_status =='valid'): ?> background-color: #ccffcc; <?php endif; ?>">
 
                                                         <td><span><?php echo e($i++); ?></span></td>
-                                                        <td><span><?php echo e($rc->egov_id); ?></span></td>
+                                                        
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Research/Review_Editor/<?php echo e($rc->document); ?>" class="text-blue-500">
+                                                                <span><?php echo e($rc->egov_id); ?></span>
+                                                            </a>
+                                                        </td>
                                                         <td><span><?php echo e($rc->level); ?></span></td>
                                                         <td>
                                                             <span>

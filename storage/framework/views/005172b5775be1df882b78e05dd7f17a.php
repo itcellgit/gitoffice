@@ -433,7 +433,12 @@
                                                         <td><span><?php echo e($i++); ?></span></td>
                                                         <td><span><?php echo e($con->fname . ' ' . $con->mname . ' ' . $con->lname); ?></span></td>
                                                         
-                                                        <td><span><?php echo e($con->egov_id); ?></span></td>
+                                                        
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Professional_Activity_Conducted/<?php echo e($con->document); ?>" class="text-blue-500">
+                                                                <span><?php echo e($con->egov_id); ?></span>
+                                                            </a>
+                                                        </td>
                                                         <td><span><?php echo e($con->title); ?></span></td>
                                                         <td><span><?php echo e($con->role); ?></span></td>
                                                         <td><span><?php echo e($con->level); ?></span></td>
