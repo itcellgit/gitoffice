@@ -657,13 +657,9 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
      Route::get('/HOD/leaves_management/fetchDeptleaveevents',[HODLeaveController::class,'fetchDeptleaveevents'])->name('HOD.leaves.fetchDeptleaveevents');
      Route::get('/HOD/leaves_management/fetchclikdayevents',[HODLeaveController::class,'fetchclikdayevents'])->name('HOD.leaves.fetchclikdayevents');
      Route::get('/HOD/leaves_management/fetchdatewisedeptleaveevents',[HODLeaveController::class,'fetchdatewisedeptleaveevents'])->name('HOD.leaves.fetchdatewisedeptleaveevents');
-<<<<<<< HEAD
-     
+
      Route::get('/HOD/leaves_management/recommend_leave',[HODLeaveController::class,'recommend_leave']);
-=======
 
-
->>>>>>> 7e9ab035d24652e29fbaa023bbacae359158144d
 
 
 

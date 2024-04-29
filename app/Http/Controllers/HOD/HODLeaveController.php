@@ -19,9 +19,9 @@ class HODLeaveController extends Controller
      public function index(){
 
         $leaves=leave::with('combine_leave')->with('leave_rules')->orderby('vacation_type')->orderBy('longname')->get();
-        
+
         return view('HOD.leaves_management',compact('leaves'));
-       
+
     }
 
     public function hollidayrh_events(){
@@ -38,7 +38,7 @@ class HODLeaveController extends Controller
         $user = Auth::user();
         $department_id=Session ::get('deptid');
         $staff = staff::where('user_id','=',$user->id)->first();
-        
+
         // Process the date as needed (e.g., save to database, perform calculations)
         $leave_events = leave_staff_applications::join('leaves', 'leaves.id','=','leave_staff_applications.leave_id')
         ->leftJoin('daywise__leaves AS daywise', 'leave_staff_applications.id', '=', 'daywise.leave_staff_applications_id')
@@ -51,8 +51,8 @@ class HODLeaveController extends Controller
                DB::raw("COUNT(leave_staff_applications.leave_id) as leavecount"),
                DB::raw("CONCAT(leaves.shortname, '-',COUNT(leave_staff_applications.leave_id))  AS title"),
                'daywise.start AS start',
-               //DB::raw("date_add(daywise.start, INTERVAL 1 day)  AS end"), 
-                
+               //DB::raw("date_add(daywise.start, INTERVAL 1 day)  AS end"),
+
                'leaves.shortname AS leave_name',
                 )->get();
             //dd($leave_events);
@@ -89,7 +89,7 @@ class HODLeaveController extends Controller
                 'leave_staff_applications.start AS start',
                 'leave_staff_applications.end AS end', 'leave_staff_applications.leave_id AS leave_id',
                 'leave_staff_applications.appl_status AS appl_status',
-                'leave_staff_applications.id AS Application_id', 
+                'leave_staff_applications.id AS Application_id',
                 'leave_staff_applications.reason AS reason')->get();
         //dd($leave_events);
         // Return a response (optional)
@@ -111,8 +111,8 @@ class HODLeaveController extends Controller
                             </div>";
         }else{
             $return_html = "<div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
-                                <span class='font-bold'>Result</span> {{session('return_data')['result']}}
-                            </div>";
+                                  <span class='font-bold'>Result</span> {{ session('return_data')['result'] }}
+        </div>";
         }
         return $return_html;
     }
