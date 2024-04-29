@@ -663,6 +663,12 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
 
 
 
+     Route::get('/HOD/leaves_management/recommend_leave',[HODLeaveController::class,'recommend_leave']);
+
+
+
+
+
      //Hod events
      Route::get('/HOD/event',[HodEventController::class,'index'])->name('HOD.event.index');
      Route::post('/HOD/event/create',[HodEventController::class,'store'])->name('HOD.event.store');

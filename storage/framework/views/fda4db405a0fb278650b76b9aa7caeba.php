@@ -253,7 +253,12 @@
                                                         <td><span><?php echo e($i++); ?></span></td>
                                                         <td><span><?php echo e($book->fname . ' ' . $book->mname . ' ' . $book->lname); ?></span></td>
                                                         
-                                                        <td><span><?php echo e($book->egov_id); ?></span></td>
+                                                        
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Research/Book_Chapters/<?php echo e($book->document); ?>" class="text-blue-500">
+                                                                <span><?php echo e($book->egov_id); ?></span>
+                                                            </a>
+                                                        </td>
                                                         <td><span><?php echo e($book->title); ?></span></td>
                                                         <td><span><?php echo e($book->book_level); ?></span></td>
                                                         <td><span><?php echo e($book->publisher_name); ?></span></td>

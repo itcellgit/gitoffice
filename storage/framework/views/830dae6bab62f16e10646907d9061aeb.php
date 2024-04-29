@@ -6,7 +6,8 @@
         <!-- FLATPICKR CSS -->
         <link rel="stylesheet" href="<?php echo e(asset('build/assets/libs/flatpickr/flatpickr.min.css')); ?>">
 
-
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        
     <!-- FULLCALENDAR CSS -->
     <link rel="stylesheet" href="<?php echo e(asset('build/assets/libs/fullcalendar/main.min.css')); ?>">
     <script>
@@ -437,11 +438,25 @@
                     //
 
             });
+            //for changing the things for 1/2 CL related stuff.
             $("input[name='cl_type']").change(function(e){
                 if($(this).val() == 'Morning' || $(this).val()=='Afternoon') {
+                    //alert($('#from_date').val());
                     $('#to_date').val($('#from_date').val());
-
-
+                    $('#no_of_days_count').val(0.5);
+                    
+                    flatpickr('#to_date', {
+                            "minDate": new Date($('#from_date').val()),
+                            "maxDate": new Date($('#from_date').val())
+                        });
+                }else{
+                    $('#to_date').val('');
+                    $('#no_of_days_count').val(''); 
+                    flatpickr('#to_date', {
+                            "minDate": new Date($('#from_date').val()),
+                            "maxDate": new Date($('#from_date').val()).fp_incr(30)
+                        });
+                
                 }
             });
             $(document).on('change','#type',function(){
@@ -454,6 +469,9 @@
                     $('#cl_type_block').hide();
                 }
             });
+
+            
+
                 //for generating the no of days between the leave dates.
             $(document).on('change', '#to_date',function(){
 
@@ -592,7 +610,7 @@
                    },
                    dateClick: function(info) {
 
-                       //console.log(info);
+                       //console.log(info.dateStr);
                      //   alert('Current view: ' + info.view.type);
 
                         $('#leave_apply_modal').trigger('click');
@@ -717,17 +735,9 @@
                                     });
 
                                 }else{
-                                    Console.log('NO one applied');
+                                    console.log('NO one applied');
                                 }
-                                //     //$('#leave_form').html('<h1>Sorry ! Not Allowed to apply leave</h1>');
-                                //     $('#leave_form').hide();
-                                //     $('#leave_apply_btn').hide();
-                                //     $('#msg').html('<h1>Sorry ! You have Already applied leave</h1>');
-
-                                // }else{
-                                //     $('#leave_form').show();
-                                //     $('#msg').html('<h1>Your Leave Application Form</h1>');
-                                // }
+                                
 
                             },
                             error: function(xhr, status, error) {
@@ -763,8 +773,14 @@
                                     if(response.length !=0){
                                         $.each(response, function(key, value) {
                                         $('#leave_list_div').show();
+                                        var bg_color_setting = '';
+                                        console.log(value.appl_status == "recommended");
+                                        if(response.appl_status == "recommended"){
+                                            alert('its recomended');
+                                            bg_color_setting = 'bg-yellow-400';
+                                        }
                                        // $('#holiday_rh_div').hide();
-                                        $('#leave_application_list').append('<tr>'
+                                        $('#leave_application_list').append('<tr class="'+ bg_color_setting +'">'
                                                                     +'<td >'+value.Application_id+ '</td>'
                                                                     +'<td>'+value.title+ '</td>'
                                                                     +'<td>'+value.start+ '</td>'
