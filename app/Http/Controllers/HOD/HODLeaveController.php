@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 use App\Models\leave;
 use App\Models\staff;
 use App\Models\leave_staff_applications;
+use App\Models\Daywise_leave;
 use Auth;
 use Session;
 
@@ -40,22 +41,40 @@ class HODLeaveController extends Controller
         $staff = staff::where('user_id','=',$user->id)->first();
 
         // Process the date as needed (e.g., save to database, perform calculations)
-        $leave_events = leave_staff_applications::join('leaves', 'leaves.id','=','leave_staff_applications.leave_id')
-        ->leftJoin('daywise__leaves AS daywise', 'leave_staff_applications.id', '=', 'daywise.leave_staff_applications_id')
-        ->join('department_staff AS dept_staff','dept_staff.staff_id','=','leave_staff_applications.staff_id')
-        ->groupBy('daywise.start', 'leave_staff_applications.leave_id', 'leaves.shortname')
-        ->where('dept_staff.department_id','=',$department_id)
+        $leave_events = Daywise_leave::select(DB::raw('COUNT(*) as leavecount'),
+        DB::raw("CONCAT(leaves.shortname, '-', COUNT(*)) as title"),
+                'leave_id',
+                'start'
+             ) ->join('leaves', 'daywise__leaves.leave_id', '=', 'leaves.id')
+    ->whereIn('daywise__leaves.leave_staff_applications_id', function ($query) use ($department_id) {
+        $query->select('id')
+            ->from('leave_staff_applications')
+            ->whereIn('staff_id', function ($query) use ($department_id) {
+                $query->select('staff_id')
+                    ->from('department_staff')
+                    ->where('department_id', $department_id)
+                    ->where('status', 'active');
+            });
+    })
+    ->groupBy('leave_id', 'start','shortname' )
+    ->get();
 
-        ->select(
-                'leave_staff_applications.leave_id AS leave_id',
-               DB::raw("COUNT(daywise.leave_id) as leavecount"),
-               DB::raw("CONCAT(leaves.shortname, '-',COUNT(daywise.leave_id))  AS title"),
-               'daywise.start AS start',
-               //DB::raw("date_add(daywise.start, INTERVAL 1 day)  AS end"),
+        // leave_staff_applications::join('leaves', 'leaves.id','=','leave_staff_applications.leave_id')
+        // ->leftJoin('daywise__leaves AS daywise', 'leave_staff_applications.id', '=', 'daywise.leave_staff_applications_id')
+        // ->join('department_staff AS dept_staff','dept_staff.staff_id','=','leave_staff_applications.staff_id')
+        // ->groupBy('daywise.start', 'leave_staff_applications.leave_id', 'leaves.shortname')
+        // ->where('dept_staff.department_id','=',$department_id)
 
-               'leaves.shortname AS leave_name',
-                )->get();
-            //dd($leave_events);
+        // ->select(
+        //         'leave_staff_applications.leave_id AS leave_id',
+        //        DB::raw("COUNT(daywise.leave_id) as leavecount"),
+        //        DB::raw("CONCAT(leaves.shortname, '-',COUNT(daywise.leave_id))  AS title"),
+        //        'daywise.start AS start',
+        //        //DB::raw("date_add(daywise.start, INTERVAL 1 day)  AS end"),
+
+        //        'leaves.shortname AS leave_name',
+        //         )->get();
+        //     //dd($leave_events);
         // Return a response (optional)
           return response()->json($leave_events);
         //return response()->json(['message' => 'Date clicked: ' . $date]);
@@ -108,11 +127,11 @@ class HODLeaveController extends Controller
             //$leave_staff_applications->appl_status = "recommended";
 
         if($result){
-            $return_html = "<div class='bg-white dark:bg-bgdark border border-success alert text-success' role='alert'>
+            $return_html = "<div class='bg-white border dark:bg-bgdark border-success alert text-success' role='alert'>
                                 <span class='font-bold'>Result</span> Leave Recommended
                             </div>";
         }else{
-            $return_html = "<div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
+            $return_html = "<div class='bg-white border dark:bg-bgdark border-danger alert text-danger' role='alert'>
 
                                   <span class='font-bold'>Result</span> {{ session('return_data')['result'] }}
         </div>
