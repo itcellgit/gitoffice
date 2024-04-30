@@ -484,6 +484,10 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::get('/ESTB/staff/getcastecategory_list',[GetCasteCategoryListController::class,'getCasteCategoryList'])->name('ESTB.staff.getcastecategory_list');
     Route::get('/ESTB/staff/checkemailid',[CheckStaffEmailController::class,'checkEmailId'])->name('ESTB.staff.checkemailid');
     Route::get('/ESTB/staff/getdesignations_list',[GetDesignationListController::class,'getDesignationsList'])->name('ESTB.staff.getdesignations_list');
+
+    //To get full designation list
+    Route::get('/ESTB/staff/getdesignations_list',[GetDesignationListController::class,'getfullDesignationsList'])->name('ESTB.staff.getdesignations_list');
+
     // Route::get('/ESTB/staff/getTeachingpayscale_list',[GetTeachingPayscaleController::class,'getTeachingPayscaleList'])->name('ESTB.staff.getTeachingpayscale_list');
     // Route::get('/ESTB/staff/getNonTeachingKLSpayscale_list',[GetNTPayscaleListController::class,'getNTPayscaleList'])->name('ESTB.staff.getNonTeachingKLSpayscale_list');
     // Route::get('/ESTB/staff/getNTCpayscale_list',[GetNTCPayscaleListController::class,'getNTCPayscaleList'])->name('ESTB.staff.getNTCpayscale_list');

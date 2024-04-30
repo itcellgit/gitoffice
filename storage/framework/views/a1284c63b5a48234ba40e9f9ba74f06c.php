@@ -278,6 +278,9 @@
                                                                     </button>
                                                             </div>
                                                             <div class="ti-modal-body">
+                                                                <div id="leave_appl_status_msg">
+
+                                                                </div>
                                                                 <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto pb-6 hidden" id="leave_datewise_div">
                                                                     <span class="text-primary font-bold">Leave List</span>
                                                                     <table class="ti-custom-table ti-custom-table-head whitespace-nowrap">
@@ -360,66 +363,97 @@
                //new DataTable('#leaves');
                     //
                
-            });
-            $("input[name='cl_type']").change(function(e){
-                if($(this).val() == 'Morning' || $(this).val()=='Afternoon') {
-                    $('#to_date').val($('#from_date').val());
-                    
-                
-                }
-            });
-            $(document).on('change','#type',function(){
-                if($("#type option:selected").text()=="CL")
-                {
-                    $('#cl_type_block').show();
-                }
-                else
-                {
-                    $('#cl_type_block').hide();
-                }
-            });
-                //for generating the no of days between the leave dates.
-            $(document).on('change', '#to_date',function(){
-                       
-                 var from_date = $('#from_date').val();
-                 var to_date = $('#to_date').val();
-                   // alert(from_date+'-'+to_date);
-                    if(from_date != ""){
-
-                        if(from_date == to_date){
-                            //$('.no_of_days_count').removeClass('border border-red-500 focus:border-blue-500');
-                            
-                            $('#no_of_days_count').val(1);
-                        }else if(from_date > to_date){
-                            $('#no_of_days_count').val(0);
-                            //$('.no_of_days_count').addClass('border border-red-500 focus:border-blue-500');
-                            $('#to_date').val();
-                            $('#to_date').focus();
-                        }else{
-                            //$('.no_of_days_count').removeClass('border border-red-500 focus:border-blue-500');
-                            
-                            var startDay = new Date(from_date);  
-                            var endDay = new Date(to_date);  
-
-                            //alert(startDay+'-'+endDay);
-
-                            // Determine the time difference between two dates     
-                            var millisBetween = endDay.getTime() - startDay.getTime();  
-                            
-                            // Determine the number of days between two dates  
-                            var days = millisBetween / (1000 * 3600 * 24);
-                            days=days+1;  
-                            $('#no_of_days_count').val(days);
-                        }
+           
+                $("input[name='cl_type']").change(function(e){
+                    if($(this).val() == 'Morning' || $(this).val()=='Afternoon') {
+                        $('#to_date').val($('#from_date').val());
                         
-                    }else{
-                        $('#from_date').focus();
-                        alert('Please fill the from date');
+                    
                     }
-                            
-            });
+                });
+                $(document).on('change','#type',function(){
+                    if($("#type option:selected").text()=="CL")
+                    {
+                        $('#cl_type_block').show();
+                    }
+                    else
+                    {
+                        $('#cl_type_block').hide();
+                    }
+                });
+                //for generating the no of days between the leave dates.
+                $(document).on('change', '#to_date',function(){
+                        
+                    var from_date = $('#from_date').val();
+                    var to_date = $('#to_date').val();
+                    // alert(from_date+'-'+to_date);
+                        if(from_date != ""){
 
-            
+                            if(from_date == to_date){
+                                //$('.no_of_days_count').removeClass('border border-red-500 focus:border-blue-500');
+                                
+                                $('#no_of_days_count').val(1);
+                            }else if(from_date > to_date){
+                                $('#no_of_days_count').val(0);
+                                //$('.no_of_days_count').addClass('border border-red-500 focus:border-blue-500');
+                                $('#to_date').val();
+                                $('#to_date').focus();
+                            }else{
+                                //$('.no_of_days_count').removeClass('border border-red-500 focus:border-blue-500');
+                                
+                                var startDay = new Date(from_date);  
+                                var endDay = new Date(to_date);  
+
+                                //alert(startDay+'-'+endDay);
+
+                                // Determine the time difference between two dates     
+                                var millisBetween = endDay.getTime() - startDay.getTime();  
+                                
+                                // Determine the number of days between two dates  
+                                var days = millisBetween / (1000 * 3600 * 24);
+                                days=days+1;  
+                                $('#no_of_days_count').val(days);
+                            }
+                            
+                        }else{
+                            $('#from_date').focus();
+                            alert('Please fill the from date');
+                        }
+                                
+                });
+
+                //for proceeding to recommending the leave.
+                $(document).on('click','.recommend_confirm',function(){
+                    var application_id = $(this).attr("data_val");
+                    var applicant_details = $(this).attr("appl_details");
+                    var comfirmation_status = confirm("Are you sure ? you want to recommend leave for "+applicant_details);
+                    
+                    if(comfirmation_status){
+                        $.ajax({
+                                url: base_url+'/HOD/leaves_management/recommend_leave',
+                                    method: 'GET',
+                                    data: {
+                                        application_id : application_id,
+                                        
+                                        _token : '<?php echo e(csrf_token()); ?>' // Pass the clicked date to the server
+                                    },
+                                    success: function(response) {
+                                        // Handle the response from the server
+                                        console.log(response);
+                                        $('#leave_appl_status_msg').html(response);
+                                        setInterval(() => {
+                                            location.reload();
+                                        }, 2000);
+                                    },
+                                    error: function(xhr, status, error) {
+                                        // Handle errors
+                                        console.error(xhr.responseText);
+                                    }    
+
+                        });
+                    }
+                });  
+            }); 
              //Calender javscript Starts here.
             document.addEventListener('DOMContentLoaded', function() {
                 var TileColor = '';
@@ -552,39 +586,32 @@
                                 },
                                 success: function(response) {
                                     // Handle the response from the server
-                                    console.log(response);
+                                    //console.log(response);
                                     $('#Date_wise_leave__list').empty();
                                     if(response.length !=0){
                                         $.each(response, function(key, value) {
-                                        $('#leave_datewise_div').show();
-                                       // $('#holiday_rh_div').hide();
-                                        $('#Date_wise_leave__list').append('<tr>'
-                                                                    +'<td >'+value.Application_id+ '</td>'
-                                                                    +'<td>'+value.title+ '</td>'
-                                                                    +'<td>'+value.staff_name+ '</td>'
-                                                                    +'<td>'+value.start+ '</td>'
-                                                                    +'<td>'+value.end+ '</td>'
-                                                                    +'<td>'+value.reason+ '</td>'
-                                                                    +'<td>'+value.alternate_staff+ '</td>'
-                                                                   
-                                                                    +'<td>'
-                                                                        
-                                                                        +'<div class="hs-tooltip ti-main-tooltip">'
-                                                                                                +'<form action="#" method="post">'
-                                                                                                    +'<button onclick="return confirm("Are you Sure")'
-                                                                                                    +'  class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-primary">'
-                                                                                                        +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z"></path></svg>'
-                                                                                                        +'<?php echo method_field("update"); ?>'
-                                                                                                        +'<?php echo csrf_field(); ?>'
-                                                                                                        +'<span'
-                                                                                                            +'class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700"'
-                                                                                                            +'role="tooltip">'
-                                                                                                        +'</span>'
-                                                                                                    +'</button>'
-                                                                                                +'</form>'
-                                                                                            +'</div>'
-                                                                    +'</td>'
-                                                                    +'</tr>');
+                                                $('#leave_datewise_div').show();
+                                            // $('#holiday_rh_div').hide();
+                                            //for setting the background color based on application status
+                                            var bg_color_setting = '';
+                                           
+                                      
+                                            $('#Date_wise_leave__list').append('<tr class='+bg_color_setting+'>'
+                                                                        +'<td >'+value.Application_id+ '</td>'
+                                                                        +'<td>'+value.title+ '</td>'
+                                                                        +'<td>'+value.staff_name+ '</td>'
+                                                                        +'<td>'+value.start+ '</td>'
+                                                                        +'<td>'+value.end+ '</td>'
+                                                                        +'<td>'+value.reason+ '</td>'
+                                                                        +'<td>'+value.alternate_staff+ '</td>'
+                                                                    
+                                                                        +'<td>'
+                                                                            
+                                                                            +"<button class='bg-primary recommend_confirm "+(value.appl_status == 'recommended'?'hidden':'')+"' data_val='"+value.Application_id+"' appl_details = '"+value.staff_name+"-"+ value.title+"'>"
+                                                                                +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z"></path></svg>'
+                                                                                +'</button>'
+                                                                            +'</td>'
+                                                                        +'</tr>');
                                         });
 
                                         //$('#leave_form').hide(); //for hiding the leave form div
@@ -615,6 +642,10 @@
                 })
                 calendar.render()
             });
+
+            // 
+
+        // 
         </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.components.HOD.master-hod', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\laravel Apps\gitoffice\resources\views/HOD/leaves_management.blade.php ENDPATH**/ ?>

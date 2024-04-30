@@ -8,7 +8,8 @@
         <!-- FLATPICKR CSS -->
         <link rel="stylesheet" href="{{asset('build/assets/libs/flatpickr/flatpickr.min.css')}}">
 
-
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        
     <!-- FULLCALENDAR CSS -->
     <link rel="stylesheet" href="{{asset('build/assets/libs/fullcalendar/main.min.css')}}">
     <script>
@@ -151,7 +152,7 @@
                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M11 6V14H19C19 18.4183 15.4183 22 11 22C6.58172 22 3 18.4183 3 14C3 9.66509 6.58 6 11 6ZM21 2V4L15.6726 10H21V12H13V10L18.3256 4H13V2H21Z"></path></svg>
                                                                  Apply leave  on <span id="leave_date_header" class="text-primary font-bold"></span>
                                                             </h3>
-                                                                <button type="button" class="hs-dropdown-toggle ti-modal-close-btn"
+                                                                <button type="button" class="hs-dropdown-toggle ti-modal-close-btn leave_apply_close_btn"
                                                                     data-hs-overlay="#add_leaveform">
                                                                     <span class="sr-only">Close</span>
                                                                     <svg class="w-3.5 h-3.5" width="8" height="8" viewBox="0 0 8 8" fill="none"
@@ -305,8 +306,8 @@
                                                         </div>
                                                         <div class="ti-modal-footer">
                                                             <button type="button"
-                                                                class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
-                                                                data-hs-overlay="#add_leaveform">
+                                                                class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10 leave_apply_close_btn"
+                                                                id="" data-hs-overlay="#add_leaveform">
                                                                 Cancel
                                                             </button>
 
@@ -427,16 +428,35 @@
             $(document).ready(function(){
                //alert('Hello from jquery');
 
+                ///to relad the the page loading the alternate staff list to be refreshed. (While appplying the leave.)
+               $('.leave_apply_close_btn').on('click',function(){
+                    location.reload();
+               });
+
                $('#cl_type_block').hide();
                new DataTable('#leaves');
                     //
 
             });
+            //for changing the things for 1/2 CL related stuff.
             $("input[name='cl_type']").change(function(e){
                 if($(this).val() == 'Morning' || $(this).val()=='Afternoon') {
+                    //alert($('#from_date').val());
                     $('#to_date').val($('#from_date').val());
-
-
+                    $('#no_of_days_count').val(0.5);
+                    
+                    flatpickr('#to_date', {
+                            "minDate": new Date($('#from_date').val()),
+                            "maxDate": new Date($('#from_date').val())
+                        });
+                }else{
+                    $('#to_date').val('');
+                    $('#no_of_days_count').val(''); 
+                    flatpickr('#to_date', {
+                            "minDate": new Date($('#from_date').val()),
+                            "maxDate": new Date($('#from_date').val()).fp_incr(30)
+                        });
+                
                 }
             });
             $(document).on('change','#type',function(){
@@ -449,6 +469,9 @@
                     $('#cl_type_block').hide();
                 }
             });
+
+            
+
                 //for generating the no of days between the leave dates.
             $(document).on('change', '#to_date',function(){
 
@@ -587,7 +610,7 @@
                    },
                    dateClick: function(info) {
 
-                       //console.log(info);
+                       //console.log(info.dateStr);
                      //   alert('Current view: ' + info.view.type);
 
                         $('#leave_apply_modal').trigger('click');
@@ -654,7 +677,7 @@
                                 // Handle the response from the server
                                 //console.log(response);
                                 //$('#holidayrh_list').empty();
-                                console.log(response);
+                                //console.log(response);
                                 if(response ==1 ){
                                     //$('#leave_form').html('<h1>Sorry ! Not Allowed to apply leave</h1>');
                                     $('#leave_form').hide();
@@ -685,33 +708,36 @@
                             },
                             success: function(response) {
                                 // Handle the response from the server
-                                //console.log(response);
-                                //$('#holidayrh_list').empty();
-                               // console.log(response);
+                                
                                 if(response !=0 ){
-                                    //alert('some have applied.');
-                                    console.log(response);
+                                    //console.log(response);
+                                  var i=0;
+                                  //for looping through each result from ajax call
                                     $.each(response, function(key, value) {
-                                        alert($('#alternate').find('option[value="'+response.staff_id+'"]').val());
-                                        if($('#alternate').find('option[value="'+response.staff_id+'"]') == response.staff_id){
-                                            console.log('Matching');
-                                            $("#alternate option[value='"+response.staff_id+"']").attr('disabled','disabled');
+                                        //console.log(response[i].staff_id);
+                                        if(i < response.length){
+                                            //for looping through dropdown options ;
+                                            $('#alternate option').each(function(){
+                                                var alternate_val = $(this).val(); // Get the value of the current option
+                                                
+                                                if(alternate_val == response[i].staff_id){
+                                                    //for disabling the people of the department to be disabled from selecting as alternate.
+                                                    $("#alternate option[value='"+response[i].staff_id+"']")
+                                                            .prop('disabled','true')
+                                                            .css({'background-color':'#ff4d4d','color':'white'})
+                                                            .append('  - <em>On Leave</em>');
+                                                }
+                                            });
+                                           i++; // to increment the index value.
                                         }
+                                      
                                      
                                     });
 
                                 }else{
-                                    Console.log('NO one applied');
+                                    console.log('NO one applied');
                                 }
-                                //     //$('#leave_form').html('<h1>Sorry ! Not Allowed to apply leave</h1>');
-                                //     $('#leave_form').hide();
-                                //     $('#leave_apply_btn').hide();
-                                //     $('#msg').html('<h1>Sorry ! You have Already applied leave</h1>');
-
-                                // }else{
-                                //     $('#leave_form').show();
-                                //     $('#msg').html('<h1>Your Leave Application Form</h1>');
-                                // }
+                                
 
                             },
                             error: function(xhr, status, error) {
@@ -730,9 +756,7 @@
                         $('#view_leave_modal').trigger('click');
                         //alert('view modal active');
                         var clicked_date = Clickeddate.getFullYear()+"-"+(Clickeddate.getMonth()+1)+"-"+Clickeddate.getDate();
-                        //     $('#view_leave').css('z-index', 9999);
-                        //      // change the border color just for fun
-
+                        
                         //ajax call for loading the leave events on calender
                         $.ajax({
 
@@ -744,13 +768,17 @@
                                 },
                                 success: function(response) {
                                     // Handle the response from the server
-                                    console.log(response);
+                                   // console.log(response);
                                     $('#leave_application_list').empty();
                                     if(response.length !=0){
                                         $.each(response, function(key, value) {
                                         $('#leave_list_div').show();
+                                        var bg_color_setting = '';
+                                        if(value.appl_status == 'recomended'){
+                                            bg_color_setting = 'bg-#facc15';
+                                        }
                                        // $('#holiday_rh_div').hide();
-                                        $('#leave_application_list').append('<tr>'
+                                        $('#leave_application_list').append('<tr class="'+bg_color_setting+'">'
                                                                     +'<td >'+value.Application_id+ '</td>'
                                                                     +'<td>'+value.title+ '</td>'
                                                                     +'<td>'+value.start+ '</td>'

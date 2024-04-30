@@ -73,76 +73,96 @@
                                     <div class="col-span-2 xl:col-span-2">
                                         <div class="box box-sm">
                                             <div class="box-body searchForm">
-                                                    <form action="<?php echo e(route('ESTB.staff.filter')); ?>" method="GET" id="searchForm">
-                                                        <!-- Department select -->
-                                                        <div class="grid gap-1 space-y-2 lg:grid-cols-2 lg:space-y-0">
-                                                            <div class="space-y-2">
-                                                                <label class="ti-form-label mb-0 font-bold">Department<span class="text-red-500">*</span></label>
-                                                                <select class="ti-form-select" name="departments_id">
-                                                                    <option value="#">Choose a Department</option>
-                                                                    <?php $__currentLoopData = $departments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $department): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                                    <option value="<?php echo e($department->id); ?>"><?php echo e($department->dept_name); ?></option>
-                                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                                </select>
-                                                            </div>
-                                                            <!-- Association select -->
-                                                            <div class="space-y-2">
-                                                                <label class="ti-form-label mb-0 font-bold">Association<span class="text-red-500">*</span></label>
-                                                                <select class="ti-form-select" name="associations_id" id="associations_id" required>
-                                                                    <option value="#">Choose an Association</option>
-                                                                    <?php $__currentLoopData = $associations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $association): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                                    <option value="<?php echo e($association->id); ?>"><?php echo e($association->asso_name); ?></option>
-                                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                                </select>
-                                                            </div>
+                                                <form action="<?php echo e(route('ESTB.staff.filter')); ?>" method="GET" id="searchForm">
+                                                    <!-- Department select -->
+                                                    <div class="grid gap-1 space-y-2 lg:grid-cols-2 lg:space-y-0">
+                                                        <div class="space-y-2">
+                                                            <label class="ti-form-label mb-0 font-bold">Department<span class="text-red-500">*</span></label>
+                                                            <select class="ti-form-select" name="departments_id">
+                                                                <option value="#">Choose a Department</option>
+                                                                <?php $__currentLoopData = $departments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $department): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <option value="<?php echo e($department->id); ?>"><?php echo e($department->dept_name); ?></option>
+                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                            </select>
                                                         </div>
-
-                                                        <div class="grid gap-1 space-y-2 lg:grid-cols-2 lg:space-y-0">
-                                                            <!-- Religion select -->
-                                                            <div class="space-y-2">
-                                                                <label class="ti-form-label mb-0 font-bold">Religion<span class="text-red-500">*</span></label>
-                                                                <select class="ti-form-select" name="religion_id" id="religion_id">
-                                                                    <option value="#">Choose a Religion</option>
-                                                                    <?php $__currentLoopData = $religions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $religion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                                    <option value="<?php echo e($religion->id); ?>"><?php echo e($religion->religion_name); ?></option>
-                                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                                </select>
-                                                            </div>
-                                                            <!-- Caste Category select -->
-                                                            <div class="space-y-2">
-                                                                <label class="ti-form-label mb-0 font-bold">Caste Category<span class="text-red-500">*</span></label>
-                                                                <select class="ti-form-select" name="castecategory_id" id="castecategory_list">
-                                                                    <!-- Add options if applicable -->
-                                                                </select>
-                                                            </div>
+                                                        <!-- Association select -->
+                                                        <div class="space-y-2">
+                                                            <label class="ti-form-label mb-0 font-bold">Association<span class="text-red-500">*</span></label>
+                                                            <select class="ti-form-select" name="associations_id" id="associations_id" required>
+                                                                <option value="#">Choose an Association</option>
+                                                                <?php $__currentLoopData = $associations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $association): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <option value="<?php echo e($association->id); ?>"><?php echo e($association->asso_name); ?></option>
+                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                            </select>
                                                         </div>
+                                                    </div>
 
-                                                        <div class="grid gap-1 space-y-2 lg:grid-cols-2 lg:space-y-0">
-                                                            <!-- Gender radio buttons -->
-                                                            <div class="space-y-2">
-                                                                <label class="ti-form-label mb-0">Gender<span class="text-red-500">*</span></label>
-                                                                <div class="flex gap-x-6">
-                                                                    <div class="flex">
-                                                                        <input type="radio" name="gender" value="female" class="ti-form-radio" id="hs-radio-group-1" checked>
-                                                                        <label for="hs-radio-group-1" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Female</label>
-                                                                    </div>
-                                                                    <div class="flex">
-                                                                        <input type="radio" name="gender" value="male" class="ti-form-radio" id="hs-radio-group-2">
-                                                                        <label for="hs-radio-group-2" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Male</label>
-                                                                    </div>
-                                                                    <!-- Add more radio buttons if applicable -->
+                                                    <div class="grid gap-1 space-y-2 lg:grid-cols-2 lg:space-y-0 mt-6">
+                                                        <!-- Religion select -->
+                                                        <div class="space-y-2">
+                                                            <label class="ti-form-label mb-0 font-bold">Religion<span class="text-red-500">*</span></label>
+                                                            <select class="ti-form-select" name="religion_id" id="religion_id">
+                                                                <option value="#">Choose a Religion</option>
+                                                                <?php $__currentLoopData = $religions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $religion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <option value="<?php echo e($religion->id); ?>"><?php echo e($religion->religion_name); ?></option>
+                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                            </select>
+                                                        </div>
+                                                        <!-- Caste Category select -->
+                                                        <div class="space-y-2">
+                                                            <label class="ti-form-label mb-0 font-bold">Caste Category<span class="text-red-500">*</span></label>
+                                                            <select class="ti-form-select" name="castecategory_id" id="castecategory_list">
+                                                                <!-- Add options if applicable -->
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="grid gap-1 space-y-2 lg:grid-cols-2 lg:space-y-0 mt-6">
+                                                        <!-- Gender radio buttons -->
+                                                        <div class="space-y-2">
+                                                            <label class="ti-form-label mb-0">Gender<span class="text-red-500">*</span></label>
+                                                            <div class="flex gap-x-6">
+                                                                <div class="flex">
+                                                                    <input type="radio" name="gender" value="female" class="ti-form-radio" id="hs-radio-group-1" checked>
+                                                                    <label for="hs-radio-group-1" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Female</label>
                                                                 </div>
-                                                            </div>
-                                                            <!-- Search button -->
-                                                            <div class="flex justify-center">
-                                                                <button id="filterBtn" class="bg-blue-500 text-white px-4 mt-10 py-2 rounded-md focus:outline-none hover:bg-blue-700">Search</button>
+                                                                <div class="flex">
+                                                                    <input type="radio" name="gender" value="male" class="ti-form-radio" id="hs-radio-group-2">
+                                                                    <label for="hs-radio-group-2" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Male</label>
+                                                                </div>
+                                                                <div class="flex">
+                                                                    <input type="radio" name="gender" value="all" class="ti-form-radio" id="hs-radio-group-3">
+                                                                    <label for="hs-radio-group-3" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">All</label>
+                                                                </div>
+                                                                <!-- Add more radio buttons if applicable -->
                                                             </div>
                                                         </div>
-                                                    </form>
+                                                        <div class="space-y-2">
+                                                            <label class="ti-form-label mb-0 font-bold">Designations<span class="text-red-500">*</span></label>
+                                                            <select class="ti-form-select stdesignation" name="designations_id" id="designation_id" >
+                                                                <option value="#">Choose a Designation</option>
+                                                                <?php $__currentLoopData = $st->designations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $design): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                    <?php if( $design->pivot->status == 'active'): ?>
+                                                                        <?php echo e($design->design_name); ?> <br/>
+                                                                    <?php endif; ?>
+                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                                                            </select>
+                                                            <?php if($errors->has('designations_id')): ?>
+                                                                <div class="text-red-700"><?php echo e($errors->first('designations_id')); ?></div>
+                                                            <?php endif; ?>
+                                                            <div id="stdesignationError" class="error text-red-700"></div>
+                                                        </div>
+
+
+                                                        <!-- Search button -->
+                                                        <div class="flex ">
+                                                            <button id="filterBtn" class="bg-blue-500 text-white px-4 mt-10 py-2 rounded-md focus:outline-none hover:bg-blue-700">Search</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
-
-
                                     </div>
                                     <!--Filtering the data Ends-->
                                     <div class="box">
@@ -1181,6 +1201,13 @@
             //             }
             //         }
             //    });
+
+            $('#hs-radio-group-3').change(function(){
+                if ($(this).is(':checked')) {
+                    // Select both male and female options
+                    $('input[name="gender"]').prop('checked', true);
+                }
+            });
 
             });
         </script>
