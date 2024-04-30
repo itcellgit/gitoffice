@@ -123,6 +123,14 @@ use App\Http\Controllers\HOD\HodNoticeboardController;
 use App\Http\Controllers\HOD\GrievienceCategoryController;
 use App\Http\Controllers\HOD\HODLeaveController;
 
+//Biometric
+use App\Http\Controllers\ESTB\BiometricController;
+
+
+
+
+
+
 //Ticketing
 use App\Http\Controllers\Ticketing\TicketController;
 use App\Http\Controllers\Ticketing\ReplyController;
@@ -156,6 +164,10 @@ use App\Http\Controllers\MSSqlController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/biometric', function () {
+    $biometric=DB::connection('mysql2')->table('devicelogs_4_2024')->get();
+    dd($biometric);
+});
 Route::get('/send-welcome-email', [EmailController::class, 'sendWelcomeEmail']);
 // Route::get('', [Controller::class, 'index']);
 Route::middleware(['cors','auth','role:'.UserRoles::SU->value,'middleware' => 'prevent-back-history'])->group(function(){
@@ -331,6 +343,11 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::resource('religion',ReligionController::class);
     Route::resource('religion.castecategory', CastecategoryController::class);
     Route::get('/ESTB/dashboard',[ESTBController::class,'dashboard'])->name('ESTB.dashboard');
+
+
+    //biometric
+    Route::get('/ESTB/Biometric/Biometric_data', [BiometricController::class, 'biometric_data'])->name('ESTB.Biometric.Biometric_data');
+
 
     //departments controller
     Route::get('/ESTB/departments',[DepartmentController::class,'index'])->name('ESTB.departments.index');
@@ -657,7 +674,12 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
      Route::get('/HOD/leaves_management/fetchDeptleaveevents',[HODLeaveController::class,'fetchDeptleaveevents'])->name('HOD.leaves.fetchDeptleaveevents');
      Route::get('/HOD/leaves_management/fetchclikdayevents',[HODLeaveController::class,'fetchclikdayevents'])->name('HOD.leaves.fetchclikdayevents');
      Route::get('/HOD/leaves_management/fetchdatewisedeptleaveevents',[HODLeaveController::class,'fetchdatewisedeptleaveevents'])->name('HOD.leaves.fetchdatewisedeptleaveevents');
-     
+
+     Route::get('/HOD/leaves_management/recommend_leave',[HODLeaveController::class,'recommend_leave']);
+
+
+
+
      Route::get('/HOD/leaves_management/recommend_leave',[HODLeaveController::class,'recommend_leave']);
 
 
@@ -753,6 +775,8 @@ Route::get('mssql',function(){
   $db=DB::connection('sqlsrv')->table('Employees')->get();
   dd($db);
 });
+
+
 //open new page for modal
 //Route::post('ticket/reply', [Replyontroller::class, 'replyForm'])->name('Ticketing.replyticket');
 
