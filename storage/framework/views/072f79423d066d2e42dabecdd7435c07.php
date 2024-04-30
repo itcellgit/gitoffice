@@ -280,7 +280,12 @@
                                                         <td><span><?php echo e($i++); ?></span></td>
                                                         <td><span><?php echo e($pate->fname . ' ' . $pate->mname . ' ' . $pate->lname); ?></span></td>
                                                         
-                                                        <td><span><?php echo e($pate->egov_id); ?></span></td>
+                                                        
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Research/patents/<?php echo e($pate->document); ?>" class="text-blue-500">
+                                                                <span><?php echo e($pate->egov_id); ?></span>
+                                                            </a>
+                                                        </td>
                                                         <td><span><?php echo e($pate->appl_no); ?></span></td>
                                                         <td><span><?php echo e(\Carbon\Carbon::parse($pate->appl_date)->format('d-M-Y')); ?></span></td>
                                                         <td><span><?php echo e(\Carbon\Carbon::parse($pate->publication_date)->format('d-M-Y')); ?></span></td>

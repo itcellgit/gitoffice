@@ -280,7 +280,12 @@
                                                         <td><span><?php echo e($i++); ?></span></td>
                                                         <td><span><?php echo e($fund->fname . ' ' . $fund->mname . ' ' . $fund->lname); ?></span></td>
                                                         
-                                                        <td><span><?php echo e($fund->egov_id); ?></span></td>
+                                                        
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Research/fundedproject/<?php echo e($fund->document); ?>" class="text-blue-500">
+                                                                <span><?php echo e($fund->egov_id); ?></span>
+                                                            </a>
+                                                        </td>
                                                         <td><span><?php echo e($fund->proposal_title); ?></span></td>
                                                         <td><span><?php echo e($fund->role); ?></span></td>
                                                         <td><span><?php echo e($fund->amount); ?></span></td>

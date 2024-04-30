@@ -774,11 +774,13 @@
                                         $.each(response, function(key, value) {
                                         $('#leave_list_div').show();
                                         var bg_color_setting = '';
-                                        if(value.appl_status == 'recomended'){
-                                            bg_color_setting = 'bg-#facc15';
+                                        console.log(value.appl_status == "recommended");
+                                        if(response.appl_status == "recommended"){
+                                            alert('its recomended');
+                                            bg_color_setting = 'bg-yellow-400';
                                         }
                                        // $('#holiday_rh_div').hide();
-                                        $('#leave_application_list').append('<tr class="'+bg_color_setting+'">'
+                                        $('#leave_application_list').append('<tr class="'+ bg_color_setting +'">'
                                                                     +'<td >'+value.Application_id+ '</td>'
                                                                     +'<td>'+value.title+ '</td>'
                                                                     +'<td>'+value.start+ '</td>'
