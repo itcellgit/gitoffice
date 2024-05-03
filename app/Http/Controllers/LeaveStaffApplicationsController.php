@@ -331,6 +331,10 @@ class LeaveStaffApplicationsController extends Controller
                     }
 
                 }
+                else
+                {
+                    dd("check here for leave combination");
+                }
             }
             if($staff_leave_after_end_date!=null)
             {
