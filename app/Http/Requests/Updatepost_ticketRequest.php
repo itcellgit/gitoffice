@@ -27,8 +27,10 @@ class Updatepost_ticketRequest extends FormRequest
     {
         return 
         [
-            'description'=>['required','regex:/^[a-zA-Z\s]+$/'],
-            'attachment'=>['sometimes','file','mimes:jpg,jpeg,png,pdf'],
+            // 'description'=>['required','string'],
+            // 'attachment'=>['sometimes','file','mimes:jpg,jpeg,png,pdf'],
+            'status'=>['required', Rule::in(['Open', 'Pending','Resolved'])],
+            
         ];
 
     }
@@ -37,9 +39,10 @@ class Updatepost_ticketRequest extends FormRequest
         return
         [
          
-            'description.required'=>'description is required filed',
-            'description.regex'=>'The description field should contain only letters and spaces.',
-            'attachment.mimes' => 'The attachment can be a JPG, JPEG, PNG, or PDF file.',
+            // 'description.required'=>'description is required filed',
+            // 'description.regex'=>'The description must be string.',
+            // 'attachment.mimes' => 'The attachment can be a JPG, JPEG, PNG, or PDF file.',
+            'status.in'=>'Please select a valid option from the provided choices',
      
         ];
     }

@@ -16,7 +16,7 @@ use App\Models\post_ticket;
 class ticket extends Model
 {
     use HasFactory;
-    protected $fillable =['id','title','description','attachment','user_id','status'];
+    protected $fillable =['id','title','description','attachment','user_id'];
 
     public function user():BelongsTo
     {

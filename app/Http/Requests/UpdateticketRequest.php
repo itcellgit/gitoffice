@@ -28,9 +28,8 @@ class UpdateticketRequest extends FormRequest
     {
         return
         [
-            'title' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
-            'description'=>['required','regex:/^[a-zA-Z\s]+$/'],
-            //'status'=>['string', Rule::in(array_column(Ticketstatus::cases(),'value'))],
+            'title' => ['required', 'string'],
+            'description'=>['required','string'],
             'attachment'=>['sometimes','file','mimes:jpg,jpeg,png,pdf'],
             //'status'=>['required', Rule::in(['Open', 'Pending','Resolved'])],
             
@@ -41,9 +40,9 @@ class UpdateticketRequest extends FormRequest
         return
         [
             'title.required'=>'title is required field',
-            'title.regex' => 'The title field should contain only letters and spaces.',
+            'title.string' => 'The title must be string',
             'description.required'=>'description is required filed',
-            'description.regex'=>'The description field should contain only letters and spaces.',
+            'description.regex'=>'The description must be string',
             //'status.in'=>'Please select a valid option from the provided choices',
             
         ];

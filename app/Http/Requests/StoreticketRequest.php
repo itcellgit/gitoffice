@@ -27,8 +27,8 @@ class StoreticketRequest extends FormRequest
     {
         return 
         [
-            'title' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
-            'description'=>['required','regex:/^[a-zA-Z\s]+$/'],
+            'title' => ['required', 'string'],
+            'description'=>['required','string'],
             'attachment'=>['sometimes','file','mimes:jpg,jpeg,png,pdf'],
             
         ];
@@ -38,9 +38,9 @@ class StoreticketRequest extends FormRequest
         return
         [
             'title.required'=>'title is required field',
-            'title.regex' => 'The title field should contain only letters and spaces.',
+            'title.string' => 'The title must be string',
             'description.required'=>'description is required filed',
-            'description.regex'=>'The description field should contain only letters and spaces.',
+            'description.regex'=>'The description must be string',
             'attachment.mimes' => 'The attachment can be a JPG, JPEG, PNG, or PDF file.',
 
      

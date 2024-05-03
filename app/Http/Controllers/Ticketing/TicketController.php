@@ -12,10 +12,6 @@ use App\Http\Requests\UpdateticketRequest;
 use App\Models\post_ticket;
 use Illuminate\Support\Facades\DB;
 
-
-
-
-
 class TicketController extends Controller
 {
     /**
@@ -25,8 +21,7 @@ class TicketController extends Controller
     {
         $user=auth()->user();
         $tickets=$user->isAdmin?ticket::latest()->get():$user->tickets;
-        
-        return view('Ticketing.dashboard',compact('tickets'));
+         return view('Ticketing.dashboard',compact('tickets'));
     }
 
     /**
@@ -92,13 +87,10 @@ class TicketController extends Controller
      */
     public function update(UpdateticketRequest $request, ticket $ticket)
     {
-         //dd($request);
-
+        // dd($request);
          $ticket->title=$request->title;
          $ticket->description=$request->description;
-        
-       
-       if($request->file('attachment'))
+        if($request->file('attachment'))
        {
            $text=$request->file('attachment')->extension();
            $contents=file_get_contents($request->file('attachment'));
@@ -108,9 +100,10 @@ class TicketController extends Controller
            $request->file('attachment')->move(public_path('attachment'), $filename);
            $ticket->update(['attachment'=>$filename]);
        }
+      
         return redirect(route('ticket.dashboard'));
     }
-
+   
     /**
      * Remove the specified resource from storage.
      */
@@ -125,6 +118,7 @@ class TicketController extends Controller
         
         return redirect(route('ticket.dashboard'));
     }
-    
+
+  
 
 }
