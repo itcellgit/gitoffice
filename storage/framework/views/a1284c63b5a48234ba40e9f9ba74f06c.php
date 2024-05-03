@@ -594,7 +594,7 @@
                                             // $('#holiday_rh_div').hide();
                                             //for setting the background color based on application status
                                             var bg_color_setting = '';
-                                            console.log(value);
+                                            //console.log(value);
                                            if(value.appl_status == 'recommended'){
                                                 //alert('recomended');
                                                 bg_color_setting = 'bg-yellow-400';
@@ -616,8 +616,8 @@
                                                                         +'<td>'+value.reason+ '</td>'
                                                                         +'<td>'+value.alternate_staff+ '</td>'
                                                                     
-                                                                        +'<td>'
-                                                                            
+                                                                        +'<td>';
+                                                                            +(value.appl_status == 'pending')
                                                                             +"<button class='hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary recommend_confirm "+(value.appl_status == 'recommended'?'hidden':'')+"' data_val='"+value.Application_id+"' appl_details = '"+value.staff_name+"-"+ value.title+"'>"
                                                                                 +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z"></path></svg>'
                                                                                 +'</button>'

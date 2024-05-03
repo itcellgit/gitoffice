@@ -351,8 +351,35 @@
                                                             </button>
                                                     </div>
                                                     <div class="ti-modal-body">
+                                                        <div class="avatar-container flex py-4">
+                                                            <div class="avatar-wrapper flex items-center">
+                                                                <div class="avatar rounded-sm p-1 bg-green-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                                <div class="avatar-text font-bold ml-2 ">Approved</div>
+                                                            </div>
+    
+                                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                                <div class="avatar rounded-sm p-1 bg-red-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                                <div class="avatar-text font-bold ml-2">Rejected</div>
+                                                            </div>
+    
+                                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                                <div class="avatar rounded-sm p-1 bg-yellow-400 border-gray-900 border-2 w-6 h-6"></div>
+                                                                <div class="avatar-text font-bold ml-2">Recommended</div>
+                                                            </div>
+    
+                                                            <div class="avatar-wrapper flex items-center">
+                                                                <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
+                                                                <div class="avatar-text font-semibold ml-2">Pending</div>
+                                                            </div>
+                                                            <div class="avatar-wrapper flex items-center">
+                                                                <div class="avatar rounded-sm p-1 bg-gray-400 border-black-900 border-2 w-6 h-6"></div>
+                                                                <div class="avatar-text font-semibold ml-2">Cancelled</div>
+                                                            </div>
+                                                        </div>
+
                                                         <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto pb-6 hidden" id="leave_list_div">
                                                             <span class="text-primary font-bold">Leave List</span>
+                                                            <div id="leave_status_message"></div>
                                                             <table class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                                                 <thead class="bg-gray-50 dark:bg-black/20">
                                                                     <tr class="">
@@ -372,6 +399,9 @@
                                                                 </tbody>
                                                             </table>
                                                         </div>
+                                                    </div>
+                                                    <div class="ti-modal-footer" id="edit_applied_leave">
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -513,7 +543,67 @@
 
             });
 
+            //for cancellation of leave 
+            $(document).on('click','.cancel_leave_btn',function(){
+                var application_id = $(this).attr("data_val");
+                var comfirmation_status =  confirm("Are you sure ? Want to cancel your leave.? (Application ID = "+application_id+")");
+                if(comfirmation_status){
+                    $.ajax({
+                                url: base_url+'/cancel_myleave',
+                                    method: 'GET',
+                                    data: {
+                                        application_id : application_id,
+                                        
+                                        _token : '{{csrf_token()}}' // Pass the clicked date to the server
+                                    },
+                                    success: function(response) {
+                                        // Handle the response from the server
+                                        console.log(response);
+                                        $('#leave_status_message').html(response);
+                                        setInterval(() => {
+                                            location.reload();
+                                        }, 2000);
+                                    },
+                                    error: function(xhr, status, error) {
+                                        // Handle errors
+                                        console.error(xhr.responseText);
+                                    }    
 
+                        });
+                }else{
+                    console.log('Cancelled');
+                }
+            });
+
+            //foir editing the applied leave
+            $(document).on('click','.edit_leave_applied',function(){
+                var application_id = $(this).attr("data_val");
+                //alert(application_id);
+                edit_applied_leave
+
+                $.ajax({
+                                url: base_url+'/edit_myleave',
+                                    method: 'GET',
+                                    data: {
+                                        application_id : application_id,
+                                        
+                                        _token : '{{csrf_token()}}' // Pass the clicked date to the server
+                                    },
+                                    success: function(response) {
+                                        // Handle the response from the server
+                                        console.log(response);
+                                        $('#edit_applied_leave').html(response);
+                                        setInterval(() => {
+                                            location.reload();
+                                        }, 2000);
+                                    },
+                                    error: function(xhr, status, error) {
+                                        // Handle errors
+                                        console.error(xhr.responseText);
+                                    }    
+
+                        });
+            });
              //Calender javscript Starts here.
             document.addEventListener('DOMContentLoaded', function() {
                 var TileColor = '';
@@ -564,7 +654,7 @@
                     ],
                     eventDidMount: function (info) {
                         info.el.onclick = "disabled";
-                       //console.log(info.event.extendedProps.type);
+                      // console.log(info.event);
 
                        //console.log(info.event.end.getFullYear());
 
@@ -607,6 +697,11 @@
                            info.el.style.fontSize  = "15px";
                        }
 
+                        if(info.event.extendedProps.appl_status == 'cancelled'){
+                            info.el.style.background = "#78716c";//info.event.extendedProps.background;
+                           info.el.style.color  = "white";
+                           info.el.style.fontSize  = "15px";
+                        }
                    },
                    dateClick: function(info) {
 
@@ -757,6 +852,7 @@
                         //alert('view modal active');
                         var clicked_date = Clickeddate.getFullYear()+"-"+(Clickeddate.getMonth()+1)+"-"+Clickeddate.getDate();
                         
+                        var bg_color_setting = "";
                         //ajax call for loading the leave events on calender
                         $.ajax({
 
@@ -773,12 +869,23 @@
                                     if(response.length !=0){
                                         $.each(response, function(key, value) {
                                         $('#leave_list_div').show();
-                                        var bg_color_setting = '';
-                                        console.log(value.appl_status == "recommended");
-                                        if(response.appl_status == "recommended"){
-                                            alert('its recomended');
-                                            bg_color_setting = 'bg-yellow-400';
+                                       
+                                        console.log(value.appl_status);
+                                        if(value.appl_status == "recommended"){
+                                           // alert('its recomended');
+                                            bg_color_setting = "bg-yellow-400";
+                                        }else if(value.appl_status === "pending"){
+                                            
+                                            bg_color_setting = "";
+                                        }else if(value.appl_status == "approved"){
+                                            
+                                            bg_color_setting = "bg-green-400";
+                                        }else if(value.appl_status == "rejected") {
+                                            bg_color_setting = "bg-red-400";
+                                        }else if(value.appl_status == "cancelled") {
+                                            bg_color_setting = "bg-gray-400";
                                         }
+                                        console.log(bg_color_setting);
                                        // $('#holiday_rh_div').hide();
                                         $('#leave_application_list').append('<tr class="'+ bg_color_setting +'">'
                                                                     +'<td >'+value.Application_id+ '</td>'
@@ -789,30 +896,25 @@
                                                                     +'<td>'+value.alternate_staff+ '</td>'
                                                                     +'<td>'+value.additional_alternate_staff+ '</td>'
                                                                     +'<td>'
-                                                                        +'<div class="hs-tooltip ti-main-tooltip">'
-                                                                                        +'<button data-hs-overlay="#fund_edit_modal" id="" btn-val='
-                                                                                                +'class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary fund_edit_modal_click">'
+                                                                        +(value.appl_status =='pending'? '<div class="hs-tooltip ti-main-tooltip">'
+                                                                                        +'<button id="" data_val="'+value.Application_id+'"'
+                                                                                                +'class=" m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger edit_leave_applied">'
                                                                                                 +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M16.7574 2.99666L14.7574 4.99666H5V18.9967H19V9.2393L21 7.2393V19.9967C21 20.5489 20.5523 20.9967 20 20.9967H4C3.44772 20.9967 3 20.5489 3 19.9967V3.99666C3 3.44438 3.44772 2.99666 4 2.99666H16.7574ZM20.4853 2.09717L21.8995 3.51138L12.7071 12.7038L11.2954 12.7062L11.2929 11.2896L20.4853 2.09717Z"></path></svg>'
-                                                                                                +'<span'
+                                                                                              
+                                                                                        +'</button>'
+                                                                                       
+                                                                        +'</div>': '' )
+                                                                        +(value.appl_status =='pending'? '<div class="hs-tooltip ti-main-tooltip">'
+                                                                                     +'<button data_val="'+value.Application_id+'"'
+                                                                                        +' class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger cancel_leave_btn">'
+                                                                                            +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>'
+                                                                                            
+                                                                                            +'<span'
                                                                                                 +'class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700"'
                                                                                                 +'role="tooltip">'
-                                                                                                +'</span>'
-                                                                                        +'</button>'
-                                                                        +'</div>'
-                                                                        +'<div class="hs-tooltip ti-main-tooltip">'
-                                                                                                +'<form action="#" method="post">'
-                                                                                                    +'<button onclick="return confirm("Are you Sure")'
-                                                                                                    +'  class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">'
-                                                                                                        +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>'
-                                                                                                        +'@method("delete")'
-                                                                                                        +'@csrf'
-                                                                                                        +'<span'
-                                                                                                            +'class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700"'
-                                                                                                            +'role="tooltip">'
-                                                                                                        +'</span>'
-                                                                                                    +'</button>'
-                                                                                                +'</form>'
-                                                                                            +'</div>'
+                                                                                            +'</span>'
+                                                                                    +'</button>'
+                                                                                +'</div>':'')
                                                                     +'</td>'
                                                                     +'</tr>');
                                         });
