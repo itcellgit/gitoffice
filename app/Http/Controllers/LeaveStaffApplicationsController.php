@@ -333,7 +333,21 @@ class LeaveStaffApplicationsController extends Controller
                 }
                 else
                 {
-                    dd("check here for leave combination");
+                    $flag=0;
+                    foreach($leave->combine_leave as $leavecombination)
+                    {
+
+                        if($leavecombination->combined_id==$staff_leaves_before_start_day->leave_id ||
+                        ($staff_leaves_before_start_day->shortname=='CL' && $staff_leaves_before_start_day->cl_type=="Morning")
+                         || ($leave->shortname=='CL' && $request->cl_type=='Afternoon'))
+                        {
+                            $flag=1;
+                        }
+                    }
+                    if($flag==0)
+                    {
+                        $result.="Error: Application rejected as it is combined with a leave that is not allowed. \n";
+                    }
                 }
             }
             if($staff_leave_after_end_date!=null)
@@ -352,78 +366,26 @@ class LeaveStaffApplicationsController extends Controller
                         $next_leave_duration=$staff_leave_after_end_date->no_of_days;
                     }
                 }
-            }
-
-            $flag=false;
-            if($staff_leaves_before_start_day!=null)
-            {
-
-                if($staff_leaves_before_start_day->leave_id!=$request->type)
+                else
                 {
-                    //the two leave are not same so check if they can be availed together
-                    //In combine_leave table for every leave there are a set of leaves that can be combined and applied.
-                    //if the other leave is present in the table check if it can be availed bothsides
-                    //if it cannot be availed both sides then check if this application has leave
-
-                    //foreach leave combinations check if these two leaves are allowed to combine
-                    //assume that the leave combination is not present
-                    $is_leave_combination_before_start_day_present=false;
-                    foreach($leave->combine_leave as $leave_combination)
+                    $flag=0;
+                    foreach($leave->combine_leave as $leavecombination)
                     {
-
-                        //compare the leave_combination_pivot table leave id(combined_id) with staff previous day leave
-                        if($leave_combination->pivot->combined_id==$staff_leaves_before_start_day->leave_id)
+                        if($leavecombination->combined_id==$staff_leave_after_end_date->leave_id ||
+                        ($staff_leave_after_end_date->shortname=='CL' && $staff_leave_after_end_date->cl_type=="Afternoon")
+                        || ($leave->shortname=="CL" && $request->cl_type=='Morning'))
                         {
-                            //change the status of leave combination not present to present
-                            $is_leave_combination_before_start_day_present=true;
-                            //if combination is allowed then check if it can be applied on both sides
-                            if( $leave_combination->pivot->sandwitchable=='bothsides')
-                            {
-                                //if it is allowed to apply both sides
-                                //these check if the other side is not having any leave then allow to save the leave
-                                //or if there is a leave after the to_date then check if it is the same leave type
-                                //In both cases allow to save the leave
-                                //flag is set to false indicating that there is no issue in leave acceptance here.
-                                if($staff_leave_after_end_date==null || $staff_leave_after_end_date->leave_id==$staff_leaves_before_start_day->leave_id)
-                                {
-                                    $flag=false;
-                                }
-                                else
-                                {
-                                    //The staff has applied leave but it is not the same as the leave that is applied the before the start date
-                                    // check if the leave being applied and the leave after to_date are allowed to combined.
-                                     //assume that the leave combination is not present
-                                    $is_leave_combination_after_end_day_present=false;
-
-                                    if($staff_leave_after_end_date->leave_id!=$request->type )
-                                    {
-                                        foreach($leave->combine_leave as $leave_combination_post)
-                                        {
-                                            if($leave->combination_post->combined_id==$staff_leave_after_end_date->leave_id)
-                                            {
-                                                $is_leave_combination_after_end_day_present=true;
-                                                //This leave combination is allowed as the above condition is true.
-                                                //The leave sandwitchable condition can be oneside or bothsides
-                                                //as this leave is only after the leave to_date hence we do not need to check the
-                                                //sandwitchable condition
-                                                //set flag as false to indicate no issue is accepting the leave application
-                                                $flag=false;
-                                            }
-                                        }
-                                    }
-
-                                }
-                            }
-
+                            $flag=1;
                         }
-
                     }
+                    if($flag==0)
+                    {
+                        $result.="Error: Application rejected as it is combined with a leave that is not allowed. \n";
+                    }
+
                 }
             }
-            if($flag==true)
-            {
-                $result.="Error:Application rejected as it is combined with a leave that is not allowed. ";
-            }
+
 
         if($request->no_of_days<$leave->min_days)
         {
