@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use App\Models\leave_staff_entitlements;
 use App\Models\Daywise_Leave;
 use Carbon\CarbonPeriod;
+use Session;
 
 
 class LeaveStaffApplicationsController extends Controller
@@ -157,7 +158,7 @@ class LeaveStaffApplicationsController extends Controller
     {
         //
        //calling the validate leave function to validate the leave
-
+       // dd($request);
         $user = Auth::User();
         $staff=staff::where('user_id','=',$user->id)->first();
         $result=$this->validateleave($request,$staff);
@@ -173,6 +174,7 @@ class LeaveStaffApplicationsController extends Controller
         {
             $leave_application =  new leave_staff_applications();
             $leave_application->leave_id = $request->type;
+            $leave_application->cl_type=$request->cl_type;
             $leave_application->start = $request->from_date;
             $leave_application->end = $request->to_date;
             $leave_application->reason = $request->leave_reason;
@@ -219,6 +221,7 @@ class LeaveStaffApplicationsController extends Controller
             if($leave_staff_entitlement!=null)
             {
                 $leave_staff_entitlement->consumed_curr_year= $leave_staff_entitlement->consumed_curr_year+$request->no_of_days;
+             //   dd($leave_staff_entitlement->consumed_curr_year);
                 $leave_staff_entitlement->update();
             }
             else
@@ -308,18 +311,46 @@ class LeaveStaffApplicationsController extends Controller
             ->select('leaves.shortname','leave_staff_applications.*')->first();
             if($staff_leaves_before_start_day!=null )
             {
+
                 if( $staff_leaves_before_start_day->leave_id==$request->type )
                 {
+                    if($leave->shortname=="CL")
+                    {
+                        if($request->cl_type=='Morning'||$request->cl_type=="Full")
+                        {
+                             //cl can be fullday or morning half day or afternoon half day
+                            //with previous leave, morning half day leave should not be more than max.
+                            $previous_leave_duration=$staff_leaves_before_start_day->no_of_days;
+                        }
 
-                    //the two leave are of same type so check for maximum days allowed
-                    $previous_leave_duration=$staff_leaves_before_start_day->no_of_days;
+                    }
+                    else
+                    {
+                         //the two leave are of same type so check for maximum days allowed
+                        $previous_leave_duration=$staff_leaves_before_start_day->no_of_days;
+                    }
+
+                }
+                else
+                {
+                    dd("check here for leave combination");
                 }
             }
             if($staff_leave_after_end_date!=null)
             {
                 if($staff_leave_after_end_date->leave_id==$request->type )
                 {
-                    $next_leave_duration=$staff_leave_after_end_date->no_of_days;
+                    if($leave->shortname=="CL" )
+                    {
+                        if($request->cl_type=='Afternoon'||$request->cl_type=="Full")
+                        {
+                            $next_leave_duration=$staff_leave_after_end_date->no_of_days;
+                        }
+                    }
+                    else
+                    {
+                        $next_leave_duration=$staff_leave_after_end_date->no_of_days;
+                    }
                 }
             }
 
@@ -399,9 +430,10 @@ class LeaveStaffApplicationsController extends Controller
 
             $result= "Error:Request does not match the min days requirement - Min days allowed is ".$leave->min_days;
         }
-        if($request->no_of_days+$previous_leave_duration+$next_leave_duration>$leave->max_days && $leave->max_days!=null)
+
+        elseif($request->no_of_days+$previous_leave_duration+$next_leave_duration>$leave->max_days && $leave->max_days!=null)
         {
-            $result=$result. "Error:Application rejected as it exceeds the max days allowed - Max days allowed is ".$leave->max_days;
+            $result=$result. "Error:You cannot extend your leave days as it voilates the max days allowed for this leave type and Max days allowed is ".$leave->max_days;
         }
 
         //code for Rule-2.
@@ -488,7 +520,7 @@ class LeaveStaffApplicationsController extends Controller
         ->select(DB::raw("CONCAT(s1.fname,' ',s1.mname,' ',s1.lname) AS staff_name"),
                 DB::raw("CONCAT(s2.fname,' ',s2.mname,' ',s2.lname) AS alternate_staff"),
                 DB::raw("CONCAT(s3.fname,' ',s3.mname,' ',s3.lname) AS additional_alternate_staff"),
-                'leaves.shortname AS title','daywise.start AS start',
+                DB::raw("case when leaves.shortname='CL' then concat(leaves.shortname,'-',leave_staff_applications.cl_type) else leaves.shortname end AS title"),'daywise.start AS start',
                  DB::raw("date_add(daywise.start, INTERVAL 1 day)  AS end"),
                  'leave_staff_applications.leave_id AS leave_id',
                  'leave_staff_applications.appl_status AS appl_status',
@@ -557,6 +589,34 @@ class LeaveStaffApplicationsController extends Controller
 
             if(count($check_has_leave)>0){
                 return 1;
+            }else{
+                return 0;
+            }
+    }
+
+    public function checkanydeptpersononleave(Request $request){
+        $date = $request->input('date');
+        //dd($date);
+        $user = Auth::user();
+        $staff = staff::where('user_id','=',$user->id)->first();
+
+        //$department_id=Session::get('deptid');
+        $staff_dept_array = staff::with('activedepartments')->where('user_id',$user->id)->first();
+        $staff_dept = $staff_dept_array->activedepartments->first()->id;
+
+        $checkpersondata = Daywise_Leave::join('leave_staff_applications','leave_staff_applications.id','=','daywise__leaves.leave_staff_applications_id')
+            ->join('department_staff AS dept_staff','dept_staff.staff_id','=','leave_staff_applications.staff_id')
+            ->where('dept_staff.department_id', $staff_dept)
+            //->where('leave_staff_applications.staff_id',$staff->id)
+            ->whereDate('leave_staff_applications.start' , '<=', $date)
+            ->whereDate('leave_staff_applications.end','>=',$date)
+            ->select('leave_staff_applications.staff_id',
+            'leave_staff_applications.leave_id',
+            'leave_staff_applications.alternate')->get();
+
+            //dd($checkpersondata);
+            if(count($checkpersondata)>0){
+                return $checkpersondata;
             }else{
                 return 0;
             }

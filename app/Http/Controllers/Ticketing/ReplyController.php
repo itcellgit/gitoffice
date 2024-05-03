@@ -21,7 +21,7 @@ class ReplyController extends Controller
     {
         //dd($ticket);
         $user = Auth::user();
-     
+
         if (!$ticket)
         {
                 // Handle the case where no ticket is found for the user
@@ -34,32 +34,32 @@ class ReplyController extends Controller
         $postticket = new post_ticket();
         $postticket->ticket_id = $ticket->id;
         $postticket->user_id = $user->id;
-        $postticket->title = $request->title;		
-        $postticket->description = $request->description;		
-        if ($request->file('attachment')) 
-        {
-            
-            // Process attachment
-            $text = $request->file('attachment')->extension();
-            $contents = file_get_contents($request->file('attachment'));
-            $filename = Str::random(25);
-            $path = "attachment/$filename.$text";
-            Storage::disk('public')->put($path, $contents);
-            $request->file('attachment')->move(public_path('attachment'), $filename);
-            $postticket->attachment=$filename;
-            
-        } 
-        else 
-        {
-            // Handle case where attachment is not provided
-            $postticket->attachment = ''; // or NULL, depending on your database schema
-        }
-         $postticket->save();
-       
-        $postticket = post_ticket::where('ticket_id', $ticket->id)->get();
+        $postticket->description = $request->description;
 
+        // Update attachment if provided
+        if ($request->hasFile('attachment'))
+        {
+            // Delete old attachment if exists
+            // if ($postticket->attachment)
+            // {
+            //     Storage::disk('public')->delete("attachment/{$postticket->attachment}");
+            // }
+            // Store new attachment
+                $extension = $request->file('attachment')->extension();
+                $filename = Str::random(25) . '.' . $extension;
+                $path = $request->file('attachment')->storeAs('attachment', $filename, 'public');
+            // Update attachment field in the postticket
+                $postticket->attachment = $filename;
+            }
+
+             $postticket->save();
+
+             $postticket = post_ticket::where('ticket_id', $ticket->id)->get();
+
+            // return redirect('ticket/show');
+            // return view('Ticketing/showticket/reply');
          return view('Ticketing.showticket',compact('ticket','postticket'));
-      
+
     }
 
     public function update(Updatepost_ticketRequest $request, ticket $ticket)

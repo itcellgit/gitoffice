@@ -36,7 +36,7 @@ class PatentController extends Controller
     public function store(StorepatentRequest $request)
     {
         //
-             //dd($request);
+        //dd($request);
        $user = Auth::user();
 
        $staff=staff::where('user_id','=',$user->id)->first();

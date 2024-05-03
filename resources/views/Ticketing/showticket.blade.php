@@ -11,18 +11,18 @@
     <div class="main-content">
 
         <!-- Page Header -->
-        <div class="block justify-between page-header sm:flex">
+        <div class="justify-between block page-header sm:flex">
             <div>
-                <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium">
+                <h3 class="text-2xl font-medium text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white">
                     <span class="text-primary"></span>
                 </h3>
             </div>
-            <ol class="flex items-center whitespace-nowrap min-w-0">
+            <ol class="flex items-center min-w-0 whitespace-nowrap">
                 <li class="text-sm">
-                    <a class="flex items-center font-semibold text-primary hover:text-primary dark:text-primary truncate"
+                    <a class="flex items-center font-semibold truncate text-primary hover:text-primary dark:text-primary"
                         href="javascript:void(0);">
-                        My Dashboard-tickets 
-                        <i class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
+                        My Dashboard-tickets
+                        <i class="flex-shrink-0 mx-3 overflow-visible text-gray-300 ti ti-chevrons-right dark:text-gray-300 rtl:rotate-180"></i>
                     </a>
                 </li>
 
@@ -41,15 +41,15 @@
                          <!--modal Start Here-->
                          <div class="hs-tooltip ti-main-tooltip">
                             <button data-hs-overlay="#validate_edit_modal"
-                                class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary">
+                                class="relative w-8 h-8 p-0 m-0 transition-none rounded-full hs-dropdown-toggle hs-tooltip-toggle ti-btn focus:outline-none ti-btn-soft-secondary">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M11 20L1 12L11 4V9C16.5228 9 21 13.4772 21 19C21 19.2729 20.9891 19.5433 20.9676 19.8107C19.4605 16.9502 16.458 15 13 15H11V20Z"></path></svg>
                                 <span
-                                    class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700"
+                                    class="px-2 py-1 text-xs font-medium text-white bg-gray-900 shadow-sm hs-tooltip-content ti-main-tooltip-content dark:bg-slate-700"
                                     role="tooltip">
                                    Reply
                                 </span>
                             </button>
-                            <div id="validate_edit_modal" class="hs-overlay hidden ti-modal">
+                            <div id="validate_edit_modal" class="hidden hs-overlay ti-modal">
                                 <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out lg:!max-w-4xl lg:w-full m-3 md:mx-auto">
                                     <div class="ti-modal-content">
                                         <div class="ti-modal-header">
@@ -88,11 +88,11 @@
                                             </div>
                                             <div class="ti-modal-footer">
                                                 <button type="button"
-                                                    class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
+                                                    class="font-medium text-gray-700 align-middle bg-white shadow-sm hs-dropdown-toggle ti-btn ti-border hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
                                                     data-hs-overlay="#validate_edit_modal">
                                                     Close
                                                 </button>
-                                                <input type="submit" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Save"/>
+                                                <input type="submit" class="text-white ti-btn bg-primary hover:bg-primary focus:ring-primary dark:focus:ring-offset-white/10" value="Save"/>
 
                                             </div>
                                         </form>
@@ -106,7 +106,7 @@
                     <!--Modal Ends Here-->
                 </div>
                 <div class="flex">
-                    <h5 class="box-title my-auto">
+                    <h5 class="my-auto box-title">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-church"
                             width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none"
                             stroke-linecap="round" stroke-linejoin="round">
@@ -119,8 +119,14 @@
 
                     </h5>
                 </div>
+<<<<<<< HEAD
                 <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
                     <table id="ticketing_table" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
+=======
+
+                <div class="overflow-auto rounded-sm table-auto table-bordered ti-striped-table ti-custom-table-head">
+                    <table id="Ticketing_table" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
+>>>>>>> 577981886532c569a7be3880f2625defb0c100d5
                         <thead class="bg-gray-50 dark:bg-black/20">
                             <tr class="">
                                 <th scope="col" class="dark:text-white/80 font-bold">SL.NO</th>
@@ -188,6 +194,7 @@
                                 {{-- <td><span>{{$pt->status}}</span></td> --}}
                                 {{-- <td><span>{{$pt->user_id}}</span></td> --}}
 
+<<<<<<< HEAD
                                 {{-- {{ dd($pt->user_id) }} --}}
                                 <td><span>{{$pt->user->email}}</span></td>
                         </tbody>
@@ -197,6 +204,47 @@
             </div>
         </div>
     </div>         
+=======
+                <!-- Additional table for pticket -->
+
+                <div class="mt-10 overflow-auto rounded-sm table-auto table-bordered ti-striped-table ti-custom-table-head">
+                    <table id="Pticketing_table" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
+                        <thead class="bg-gray-50 dark:bg-black/20">
+                            <tr class="">
+                                <th scope="col" class="dark:text-white/80">Field Name</th>
+                                <th scope="col" class="dark:text-white/80">@sortablelink('Field Details','Field Details')</th>
+                            </tr>
+                        </thead>
+                        <tbody class="">
+                           @foreach($postticket as $pt)
+                            <tr>
+                                <td>Description</td>
+                                <td>{{$pt->description}}</td>
+                            </tr>
+                            <tr>
+                                <td>Image</td>
+                                {{-- <td> --}}
+                                    <div class="flex-1">
+                                        <td><img src="{{ asset('attachment/'.$pt->attachment) }}"></td>
+                                    </div>
+                                {{-- </td> --}}
+                            </tr>
+                          @endforeach
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+>>>>>>> 577981886532c569a7be3880f2625defb0c100d5
 @endsection
 
 <!-- JavaScript to show large image in modal -->

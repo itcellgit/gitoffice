@@ -29,7 +29,7 @@ class Storeprofessional_activity_attendeeRequest extends FormRequest
     {
         return
         [
-            'title' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
+            //'title' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
             'organizer'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
             'role'=>['required', Rule::in(['Participant', 'Resource Person','Jury'])],
             'level' => ['required', Rule::in([ 'Local', 'National','International'])],
@@ -50,8 +50,8 @@ class Storeprofessional_activity_attendeeRequest extends FormRequest
     public function messages():array
     {
         return[
-            'title.required'=>'title is required field',
-            'title.regex' => 'The title field should contain only letters and spaces.',
+            // 'title.required'=>'title is required field',
+            // 'title.regex' => 'The title field should contain only letters and spaces.',
             'organizer.required'=>'organizer is required filed',
             'organizer.regex'=>'The organizer field should contain only letters and spaces.',
             'role.required'=>'role is required field',

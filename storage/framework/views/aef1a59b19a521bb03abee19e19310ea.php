@@ -142,77 +142,39 @@
                                                                     <?php echo csrf_field(); ?>
                                                                     <div class="ti-modal-body">
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
-                                                                            
-
                                                                             <div class="max-w-sm space-y-3 pb-6">
-                                                                                <label for="with-corner-hint" class="ti-form-label font-bold"> Level :</label>
-                                                                                <div class="border border-gray-300 p-2 max-h-5 overflow-auto" style="max-height: 100px; overflow-y: auto;">
-                                                                                    <div class="">
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="#"> Choose Level
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q1"> Q1
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q2"> Q2
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q3"> Q3
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Q4"> Q4
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="SCI"> SCI
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Web of Science"> Web of Science
-                                                                                        </div>
-
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Scopus Indexed"> Scopus Indexed
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="UGC General"> UGC General
-                                                                                        </div>
-                                                                                        <div class="mr-4">
-                                                                                            <input type="checkbox" class="ti-form-checkbox levelCheckbox pub_level" name="level[]" value="Other"> Other
-                                                                                        </div>
-                                                                                        <!-- Add other checkboxes similarly -->
-
-                                                                                    </div>
-
-                                                                                </div>
+                                                                                <label for="with-corner-hint" class="ti-form-label font-bold"> Level :<span class="text-red-500">*</span> </label>
+                                                                                <select class="ti-form-select level pub_level" name="level"  id="pub_level">
+                                                                                    <option value="#">Choose Level</option>
+                                                                                    <option value="Q1" <?php echo e(old('level') == 'Q1' ? 'selected' : ''); ?>>Q1</option>
+                                                                                    <option value="Q2" <?php echo e(old('level') == 'Q2' ? 'selected' : ''); ?>>Q2</option>
+                                                                                    <option value="Q3" <?php echo e(old('level') == 'Q3' ? 'selected' : ''); ?>>Q3</option>
+                                                                                    <option value="Q4" <?php echo e(old('level') == 'Q4' ? 'selected' : ''); ?>>Q4</option>
+                                                                                    <option value="SCI" <?php echo e(old('level') == 'SCI' ? 'selected' : ''); ?>>SCI</option>
+                                                                                    <option value="Web of Science" <?php echo e(old('level') == 'Web of Science' ? 'selected' : ''); ?>>Web of Science</option>
+                                                                                    <option value="Scopus Indexed" <?php echo e(old('level') == 'Scopus Indexed' ? 'selected' : ''); ?>>Scopus Indexed</option>
+                                                                                    <option value="UGC General" <?php echo e(old('level') == 'UGC General' ? 'selected' : ''); ?>>UGC General</option>
+                                                                                    <option value="Other" <?php echo e(old('level') == 'Other' ? 'selected' : ''); ?>>Other</option>
+                                                                                </select>
                                                                                 <?php if($errors->has('level')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('level')); ?></div>
                                                                                 <?php endif; ?>
                                                                                 <div id="pub_levelError" class="error text-red-700"></div>
                                                                             </div>
-
-
-
-                                                                            
-
-
-
-
-                                                                            
-
-
                                                                             <div class="max-w-sm space-y-3 pb-6" id="pub_other_level">
                                                                                 <label for="" class="ti-form-label font-bold">Other Level:</label>
-                                                                                <input type="text" name="other_level" class="ti-form-input" placeholder="Other Level" id="pub_otherlevel">
+                                                                                <input type="text" name="other_level" class="ti-form-input" placeholder="Other Level" id="pub_otherlevel" value="<?php echo e(old('other_level')); ?>">
                                                                                 <?php if($errors->has('other_level')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('other_level')); ?></div>
                                                                                 <?php endif; ?>
                                                                                 <div id="pub_other_levelError" class="error text-red-700"></div>
                                                                             </div>
+
                                                                         </div>
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Title :<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="title" class="ti-form-input" placeholder="Title" id="pub_title">
+                                                                                <input type="text" name="title" class="ti-form-input" placeholder="Title" id="pub_title" value="<?php echo e(old('title')); ?>">
                                                                                  <?php if($errors->has('title')): ?>
                                                                                      <div class="text-red-700"><?php echo e($errors->first('title')); ?></div>
                                                                                  <?php endif; ?>
@@ -227,7 +189,7 @@
 
                                                                                     <input type="date" name="date" id="pub_dateofpublication"
                                                                                             class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date conf_attended_from_date"
-                                                                                              placeholder="Choose date" >
+                                                                                              placeholder="Choose date" value="<?php echo e(old('date')); ?>">
                                                                                     <?php if($errors->has('date')): ?>
                                                                                          <div class="text-red-700"><?php echo e($errors->first('date')); ?></div>
                                                                                      <?php endif; ?>
@@ -237,7 +199,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Journal:<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="journal" class="ti-form-input"  placeholder="Journal" id="pub_journal">
+                                                                                <input type="text" name="journal" class="ti-form-input"  placeholder="Journal" id="pub_journal" value="<?php echo e(old('journal')); ?>">
                                                                                  <?php if($errors->has('journal')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('journal')); ?></div>
                                                                                 <?php endif; ?>
@@ -245,13 +207,10 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Publication Type:<span class="text-red-500">*</span></label>
-
                                                                                 <select class="ti-form-select" name="publication_type" id="pubtype">
                                                                                     <option value="#">Choose One</option>
-                                                                                    <option value="Journal">Journal</option>
-                                                                                    <option value="Conference Proceeding">Conference Proceeding</option>
-
-
+                                                                                    <option value="Journal" <?php echo e(old('publication_type') == 'Journal' ? 'selected' : ''); ?>>Journal</option>
+                                                                                    <option value="Conference Proceeding" <?php echo e(old('publication_type') == 'Conference Proceeding' ? 'selected' : ''); ?>>Conference Proceeding</option>
                                                                                 </select>
                                                                                 <?php if($errors->has('publication_typeError')): ?>
                                                                                         <div class="text-red-700"><?php echo e($errors->first('publication_typeError')); ?></div>
@@ -259,7 +218,7 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">DOI Number:<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="doi_number" class="ti-form-input" required placeholder="Doi Number" id="pub_doi_number" >
+                                                                                <input type="text" name="doi_number" class="ti-form-input" required placeholder="Doi Number" id="pub_doi_number" value="<?php echo e(old('doi_number')); ?>">
                                                                                     <?php if($errors->has('doi_number')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('doi_number')); ?></div>
                                                                                 <?php endif; ?>
@@ -271,7 +230,7 @@
 
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Link:</label>
-                                                                                <input type="url" id="pub_link" name="link" class="ti-form-input" placeholder="Link Should Be http://www.">
+                                                                                <input type="url" id="pub_link" name="link" class="ti-form-input" placeholder="Link Should Be http://www." value="<?php echo e(old('link')); ?>">
                                                                                     <?php if($errors->has('link')): ?>
                                                                                          <div class="text-red-700"><?php echo e($errors->first('link')); ?></div>
                                                                                      <?php endif; ?>
@@ -279,13 +238,11 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Author Role:<span class="text-red-500">*</span></label>
-
                                                                                 <select class="ti-form-select role" name="role" id="pub_authorrole">
                                                                                     <option value="#">Choose One</option>
-                                                                                    <option value="Author">Author</option>
-                                                                                    <option value="Co-Author">Co-Author</option>
-                                                                                    <option value="Corresponding-Author">Corresponding-Author</option>
-
+                                                                                    <option value="Author" <?php echo e(old('role') == 'Author' ? 'selected' : ''); ?>>Author</option>
+                                                                                    <option value="Co-Author" <?php echo e(old('role') == 'Co-Author' ? 'selected' : ''); ?>>Co-Author</option>
+                                                                                    <option value="Corresponding-Author" <?php echo e(old('role') == 'Corresponding-Author' ? 'selected' : ''); ?>>Corresponding-Author</option>
                                                                                 </select>
                                                                                 <?php if($errors->has('role')): ?>
                                                                                         <div class="text-red-700"><?php echo e($errors->first('role')); ?></div>
@@ -295,7 +252,7 @@
                                                                             <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                                 <div class="max-w-sm space-y-3 pb-6">
                                                                                     <div class="max-w-sm space-y-3 pb-6">
-                                                                                        <label for="" class="ti-form-label pt-4 font-bold">Document:<span class="text-red-500">*  Only PDF files up to 500 KB in size are accepted.</span></label>
+                                                                                        <label for="" class="ti-form-label pt-4 font-bold">Document:<span class="text-red-500">*Only PDF files up to 500 KB in size are accepted.</span></label>
                                                                                         <span class="sr-only">Choose Profile photo</span>
                                                                                             <input type="file" accept="application/pdf" name="document" id="pub_document" class="block w-full text-sm text-gray-500 dark:text-white/70 focus:outline-0
                                                                                             ltr:file:mr-4 rtl:file:ml-4 file:py-2 file:px-4
@@ -361,7 +318,12 @@
                                                                             <tr style="<?php if($pub->validation_status =='invalid'): ?> background-color: #ffcccc; <?php elseif($pub->validation_status =='updated'): ?> background-color: #fff2cc; <?php elseif($pub->validation_status =='valid'): ?> background-color: #ccffcc; <?php endif; ?>">
 
                                                                                 <td><span><?php echo e($i++); ?></span></td>
-                                                                                <td><span><?php echo e($pub->egov_id); ?></span></td>
+                                                                                
+                                                                                <td>
+                                                                                    <a href="https://git.edu/storage/Uploads/Research/Publications/<?php echo e($pub->document); ?>" class="text-blue-500">
+                                                                                        <span><?php echo e($pub->egov_id); ?></span>
+                                                                                    </a>
+                                                                                </td>
                                                                                 <td><span><?php echo e($pub->level); ?></span></td>
                                                                                 <td>
                                                                                     <span>
@@ -775,13 +737,24 @@
 
                         ///
 
-                        if(pub_title == ''){
+                        // if(pub_title == ''){
+                        //     $('#pub_titleError').text('Title Name is missing');
+                        //     flag = true;
+                        // } else if (!/^[a-zA-Z\s0-9]*$/.test(pub_title.trim())) {
+                        //     $('#pub_titleError').text('Please fill the correct value');
+                        //     flag = true;
+                        // }
+
+                        if (pub_title.trim() === '') {
                             $('#pub_titleError').text('Title Name is missing');
                             flag = true;
-                        }else if (!/^[a-zA-Z\s]+$/.test(pub_title.trim())){
+                        } else if (!/^[\w\s\/.,]+$/.test(pub_title.trim())) {
                             $('#pub_titleError').text('Please fill the correct value');
                             flag = true;
                         }
+
+
+
                         if(pub_dateofpublication.trim() === ''){
                             $('#pub_dateofpublicatonError').text('Please Select a proper date');
                             flag = true;

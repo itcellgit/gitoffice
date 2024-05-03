@@ -26,7 +26,7 @@ class Updateprofessional_activity_attendeeRequest extends FormRequest
     {
         return
         [
-            'edit_title' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
+            // 'edit_title' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
             'edit_organizer'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
             'edit_role'=>['required', Rule::in(['Participant', 'Resource Person','Jury'])],
             'edit_level' => ['required', Rule::in([ 'Local', 'National','International'])],
@@ -44,8 +44,8 @@ class Updateprofessional_activity_attendeeRequest extends FormRequest
     {
         return
         [
-            'edit_title.required'=>'title is required field',
-            'edit_title.regex' => 'The title field should contain only letters and spaces.',
+            // 'edit_title.required'=>'title is required field',
+            // 'edit_title.regex' => 'The title field should contain only letters and spaces.',
             'edit_organizer.required'=>'organizer is required filed',
             'edit_organizer.regex'=>'The organizer field should contain only letters and spaces.',
             'edit_role.required'=>'role is required field',

@@ -100,7 +100,7 @@
                                                 <tr class="">
                                                     <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
                                                     <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
-                                                    <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th>
+                                                    
                                                     <th scope="col" class="dark:text-white/80 font-bold ">Award</th>
                                                     <th scope="col" class="dark:text-white/80 font-bold ">Year</th>
                                                     <th scope="col" class="dark:text-white/80 font-bold ">Details</th>
@@ -122,7 +122,7 @@
 
                                                         <td class="dark:text-white/80 font-bold text-center border border-neutral-300"><span><?php echo e($i++); ?></span></td>
                                                         <td class="dark:text-white/80 font-bold text-center border border-neutral-900"><span><?php echo e($achive->fname . ' ' . $achive->mname . ' ' . $achive->lname); ?></span></td>
-                                                        <td class="dark:text-white/80 font-bold text-center border border-neutral-900"><span><?php echo e($achive->dept_shortname); ?></span></td>
+                                                        
                                                         <td class="dark:text-white/80 font-bold text-center border border-neutral-900"><span><?php echo e($achive->award); ?></span></td>
                                                         <td class="dark:text-white/80 font-bold text-center border border-neutral-900"><span><?php echo e($achive->year); ?></span></td>
                                                         <td class="dark:text-white/80 font-bold text-center border border-neutral-900"><span><?php echo e($achive->details); ?></span></td>

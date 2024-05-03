@@ -25,7 +25,7 @@ class Updatebook_publicationsRequest extends FormRequest
         return
          [
 
-            'ebc_title' => ['required'],
+            'ebc_title' => ['required', 'regex:/^[a-zA-Z\s0-9]+$/'],
             'ebc_book_level' => ['required', Rule::in(['National', 'International'])],
             'ebc_publisher_name'=>['required'],
             'ebc_edition'=>[],

@@ -251,12 +251,12 @@
                                             <tr class="">
                                                 <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th>
+                                                
                                                 <th scope="col" class="dark:text-white/80 font-bold ">E-Gov ID</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Proposal Title</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Role</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Amount</th>
-                                                 <th scope="col" class="dark:text-white/80 font-bold ">Type</th>
+                                                <th scope="col" class="dark:text-white/80 font-bold ">Type</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Proposal Status</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Application Date</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Fund Received</th>
@@ -274,14 +274,18 @@
                                                     $i=1;
                                                 ?>
                                                 <?php $__currentLoopData = $fundedproject; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fund): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    
                                                     <tr style="<?php if($fund->validation_status =='invalid'): ?> background-color: #ffcccc; <?php elseif($fund->validation_status =='updated'): ?> background-color: #fff2cc; <?php elseif($fund->validation_status =='valid'): ?> background-color: #ccffcc; <?php endif; ?>">
 
 
                                                         <td><span><?php echo e($i++); ?></span></td>
                                                         <td><span><?php echo e($fund->fname . ' ' . $fund->mname . ' ' . $fund->lname); ?></span></td>
-                                                        <td><span><?php echo e($fund->dept_shortname); ?></span></td>
-                                                        <td><span><?php echo e($fund->egov_id); ?></span></td>
+                                                        
+                                                        
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Research/fundedproject/<?php echo e($fund->document); ?>" class="text-blue-500">
+                                                                <span><?php echo e($fund->egov_id); ?></span>
+                                                            </a>
+                                                        </td>
                                                         <td><span><?php echo e($fund->proposal_title); ?></span></td>
                                                         <td><span><?php echo e($fund->role); ?></span></td>
                                                         <td><span><?php echo e($fund->amount); ?></span></td>
@@ -409,8 +413,6 @@
         <script href="https://cdn.tailwindcss.com/3.3.5"></script>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-
-        
 
         <!-- filering Daterange  data as per requirement-->
         <script>

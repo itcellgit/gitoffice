@@ -110,7 +110,7 @@
                                                 <tr class="">
                                                     <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
                                                     <th scope="col" class="dark:text-white/80 font-bold">Staff Name</th>
-                                                    <th scope="col" class="dark:text-white/80 font-bold">Dept Short Name</th>
+                                                    
                                                     <th scope="col" class="dark:text-white/80 font-bold ">E-Gov ID</th>
                                                     <th scope="col" class="dark:text-white/80 font-bold ">Consultancy Title</th>
                                                     <th scope="col" class="dark:text-white/80 font-bold">Agency</th>
@@ -131,13 +131,17 @@
 
                                                 <?php $__currentLoopData = $consultancy; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $consult): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                                                    
                                                     <tr style="<?php if($consult->validation_status =='invalid'): ?> background-color: #ffcccc; <?php elseif($consult->validation_status =='updated'): ?> background-color: #fff2cc; <?php elseif($consult->validation_status =='valid'): ?> background-color: #ccffcc; <?php endif; ?>">
 
                                                         <td><span><?php echo e($i++); ?></span></td>
                                                         <td><span><?php echo e($consult->fname . ' ' . $consult->mname . ' ' . $consult->lname); ?></span></td>
-                                                        <td><span><?php echo e($consult->dept_shortname); ?></span></td>
-                                                        <td><span><?php echo e($consult->egov_id); ?></span></td>
+                                                        
+                                                        
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Research/Consultancy/<?php echo e($consult->document); ?>" class="text-blue-500">
+                                                                <span><?php echo e($consult->egov_id); ?></span>
+                                                            </a>
+                                                        </td>
                                                         <td><span><?php echo e($consult->consultancy_title); ?></span></td>
                                                         <td><span><?php echo e($consult->agency); ?></span></td>
                                                         <td><span><?php echo e(\Carbon\Carbon::parse($consult->from_date)->format('d-M-Y')); ?></span></td>

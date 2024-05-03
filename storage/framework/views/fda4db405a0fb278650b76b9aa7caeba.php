@@ -223,7 +223,7 @@
                                                 <tr class="">
                                                     <th scope="col" class="dark:text-white/80 font-bold">S NO</th>
                                                     <th scope="col" class="dark:text-white/80 font-bold">Staff Name</th>
-                                                    <th scope="col" class="dark:text-white/80 font-bold">Dept Short Name</th>
+                                                    
                                                     <th scope="col" class="dark:text-white/80 font-bold">E-Gov ID</th>
                                                     <th scope="col" class="dark:text-white/80 font-bold">title</th>
                                                     <th scope="col" class="dark:text-white/80 font-bold">Book Level</th>
@@ -252,8 +252,13 @@
 
                                                         <td><span><?php echo e($i++); ?></span></td>
                                                         <td><span><?php echo e($book->fname . ' ' . $book->mname . ' ' . $book->lname); ?></span></td>
-                                                        <td><span><?php echo e($book->dept_shortname); ?></span></td>
-                                                        <td><span><?php echo e($book->egov_id); ?></span></td>
+                                                        
+                                                        
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Research/Book_Chapters/<?php echo e($book->document); ?>" class="text-blue-500">
+                                                                <span><?php echo e($book->egov_id); ?></span>
+                                                            </a>
+                                                        </td>
                                                         <td><span><?php echo e($book->title); ?></span></td>
                                                         <td><span><?php echo e($book->book_level); ?></span></td>
                                                         <td><span><?php echo e($book->publisher_name); ?></span></td>

@@ -323,12 +323,15 @@
                                             @endphp
                                             <tbody class="">
                                                 @foreach($review_editor as $rc)
-                                                    {{-- <tr class=""> --}}
-                                                        {{-- <tr class="" @if($rc->validation_status == 'valid') style="background-color: #ccffcc; color: #006400;" @elseif($rc->validation_status =='invalid') style="background-color: #ffe6e6; color: #b30000;" @endif> --}}
-                                                        <tr style="@if($rc->validation_status =='invalid') background-color: #ffcccc; @elseif($rc->validation_status =='updated') background-color: #fff2cc; @elseif($rc->validation_status =='valid') background-color: #ccffcc; @endif">
+                                                    <tr style="@if($rc->validation_status =='invalid') background-color: #ffcccc; @elseif($rc->validation_status =='updated') background-color: #fff2cc; @elseif($rc->validation_status =='valid') background-color: #ccffcc; @endif">
 
                                                         <td><span>{{$i++}}</span></td>
-                                                        <td><span>{{$rc->egov_id}}</span></td>
+                                                        {{-- <td><span>{{$rc->egov_id}}</span></td> --}}
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Research/Review_Editor/{{ $rc->document}}" class="text-blue-500">
+                                                                <span>{{$rc->egov_id}}</span>
+                                                            </a>
+                                                        </td>
                                                         <td><span>{{$rc->level}}</span></td>
                                                         <td>
                                                             <span>

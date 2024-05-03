@@ -33,30 +33,29 @@
                                     @method('patch')
                                     <div class="ti-modal-body">
                                         @if($staff->latestassociation()->first() == null)
-                                            <p class="text-red-500 antialiased">Note: The department , designation and payscale are closed for this staff. PLease make sure to add them also</p> 
+                                            <p class="text-red-500 antialiased">Note: The department , designation and payscale are closed for this staff. PLease make sure to add them also</p>
                                         @endif
                                         <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0">
                                             <div class="space-y-2">
                                                 <label class="ti-form-label mb-0 font-bold">Association</label>
                                                 <select class="ti-form-select" name="associations_id" id="associations_id">
-                                                
                                                     @foreach ($associations as $association)
                                                         <option value="{{$association->id}}" {{($association->id==$staff->associations[0]->id?'selected':'')}}>{{$association->asso_name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            
-                                                
-                                        </div> 
+
+
+                                        </div>
                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                             <div class="space-y-2">
                                                     <label for="" class="ti-form-label mb-0 font-bold">Effect from Date :</label>
                                                     <div class="flex shadow-sm max-w-sm space-y-3 pb-6">
-                                                        
+
                                                         <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M9 1V3H15V1H17V3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H7V1H9ZM20 11H4V19H20V11ZM7 5H4V9H20V5H17V7H15V5H9V7H7V5Z"></path></svg>
                                                         </div>
-        
+
                                                         <input type="date" name="start_date"
                                                             class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
                                                             id="date" placeholder="Choose date">
@@ -67,11 +66,11 @@
                                             <div class="space-y-2 hidden" id="consolidated_div">
                                                 <label for="" class="ti-form-label mb-0 font-bold">Closing Date : <span class="text-red-500">Only when the closing period is mentioned</span></label>
                                                 <div class="flex shadow-sm max-w-sm space-y-3 pb-6">
-                                                    
+
                                                     <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M9 1V3H15V1H17V3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H7V1H9ZM20 11H4V19H20V11ZM7 5H4V9H20V5H17V7H15V5H9V7H7V5Z"></path></svg>
                                                     </div>
-    
+
                                                     <input type="date" name="closing_date"
                                                         class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
                                                         id="date" placeholder="Choose date">
@@ -82,29 +81,29 @@
                                             <div class="space-y-2">
                                                 <label for="" class="ti-form-label mb-0 font-bold">Reason:</label>
                                                 <input type="text" name="reason" class="ti-form-input"/>
-                                            </div>  
+                                            </div>
                                             <div class="space-y-2">
                                                 <label for="" class="ti-form-label mb-0 font-bold">GC Resolution:</label>
                                                 <input type="text" name="gcr" class="ti-form-input"/>
                                             </div>
                                         </div>
-                                    </div>    
+                                    </div>
                                     <div class="ti-modal-footer">
                                         <button type="button"
                                         class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
                                         data-hs-overlay="#change_association">
                                         Close
                                         </button>
-                                        
+
                                         <input type="submit" class="ti-btn  bg-primary text-white hover:bg-warning  focus:ring-primary  dark:focus:ring-offset-white/10" value="Update"/>
-                                    
+
                                     </div>
-                                </form>  
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
                     <table class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                         <thead class="bg-gray-50 dark:bg-black/20">
@@ -117,7 +116,7 @@
                             <th scope="col" class="dark:text-white/80 font-bold">Duartion</th>
                             <th scope="col" class="dark:text-white/80 font-bold">Status</th>
                             <th scope="col" class="dark:text-white/80 font-bold">Actions</th>
-                            
+
                         </tr>
                         </thead>
                         @php
@@ -140,20 +139,20 @@
                                 <td><span>
                                     @php
                                             $sdate=new DateTime($association->pivot->start_date);
-                                    
-                                        
+
+
                                     if($association->pivot->end_date!=null)
                                             $edate=new DateTime($association->pivot->end_date);
                                     else
                                             $edate=Carbon\Carbon::now();
-                                    
-                                    
+
+
                                     $difference=$sdate->diff($edate);
-                                    @endphp    
-                                    
+                                    @endphp
+
                                         {{$difference->y."years ".$difference->m."months ".$difference->d."days"}}
 
-                                    
+
                                 </span></td>
                                 <td><span>{{$association->pivot->status}}</span></td>
                                 <td>
@@ -191,7 +190,7 @@
                                                         @csrf
                                                         @method('patch')
                                                         <div class="ti-modal-body">
-                                                                
+
                                                                     <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0">
                                                                         <div class="space-y-2">
                                                                             <label class="ti-form-label mb-0 font-bold">Association</label>
@@ -201,31 +200,31 @@
                                                                             @endforeach
                                                                             </select>
                                                                         </div>
-                                                                    
-                                                                        
-                                                                    </div> 
+
+
+                                                                    </div>
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="space-y-2">
                                                                                     <label for="" class="ti-form-label mb-0 font-bold">Effect from Date : </label>
                                                                                     <div class="flex shadow-sm max-w-sm space-y-3 pb-6">
-                                                                                        
+
                                                                                         <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
                                                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M9 1V3H15V1H17V3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H7V1H9ZM20 11H4V19H20V11ZM7 5H4V9H20V5H17V7H15V5H9V7H7V5Z"></path></svg>
                                                                                         </div>
-                                        
+
                                                                                         <input type="date" name="start_date"
                                                                                             class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
                                                                                             id="date" placeholder="Choose date" value="{{$association->pivot->start_date}}">
                                                                                     </div>
                                                                             </div>
                                                                             <!--to be displayed when the , default chosen association is contractual-->
-                                                                            @php 
+                                                                            @php
                                                                                     $hidden = "hidden";
 
                                                                                 @endphp
                                                                             @if($association->pivot->association_id ==4)
 
-                                                                                @php 
+                                                                                @php
                                                                                     $hidden = "";
 
                                                                                 @endphp
@@ -233,11 +232,11 @@
                                                                                 <div class="space-y-2 {{$hidden}}" id="Edit_association_closing_date">
                                                                                         <label for="" class="ti-form-label mb-0 font-bold">Tenure Closing Date :  <p class="text-red-500">Only when the closing period is mentioned</span></label>
                                                                                         <div class="flex shadow-sm max-w-sm space-y-3 pb-6">
-                                                                                            
+
                                                                                             <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M9 1V3H15V1H17V3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H7V1H9ZM20 11H4V19H20V11ZM7 5H4V9H20V5H17V7H15V5H9V7H7V5Z"></path></svg>
                                                                                             </div>
-                                            
+
                                                                                             <input type="date" name="closing_date"
                                                                                                 class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
                                                                                                 id="date" placeholder="Choose date" value="{{$association->pivot->closing_date}}">
@@ -247,43 +246,43 @@
                                                                                     <div class="flex">
                                                                                         <input type="checkbox" name="close_forever" value="close_forever" class="ti-form-checdkbox " id="hs-checkbox-group-2">
                                                                                         <label for="hs-checkbox-group-2" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Close Contractual <p class="text-red-500">Check only when closing the contractual period, forever</p></label>
-                                                                                        
+
                                                                                     </div>
                                                                                 </div>
-                                                                            
+
 
                                                                             <!-- To be displayed only when changed to contractual from any other association-->
-                                                                            
-                                                                            
-                                                                        
-                                                                    
-                                                                            
+
+
+
+
+
                                                                     </div>
-                                                                    
+
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="space-y-2">
                                                                             <label for="" class="ti-form-label mb-0 font-bold">Reason</label>
                                                                             <input type="text" name="reason" class="ti-form-input" value="{{$association->pivot->reason}}"/>
-                                                                        </div>   
+                                                                        </div>
                                                                         <div class="space-y-2">
                                                                             <label for="" class="ti-form-label mb-0 font-bold">GC Resolution:</label>
                                                                             <input type="text" name="gcr" class="ti-form-input" value="{{$association->pivot->gcr}}"/>
                                                                         </div>
-                                                                        
+
                                                                     </div>
-                                                                
-                                                        </div>    
+
+                                                        </div>
                                                         <div class="ti-modal-footer">
                                                             <button type="button"
                                                             class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
                                                             data-hs-overlay="#edit_asociation{{$i}}">
                                                             Close
                                                             </button>
-                                                            
+
                                                             <input type="submit" class="ti-btn  bg-primary text-white hover:bg-warning  focus:ring-primary  dark:focus:ring-offset-white/10" value="Update"/>
-                                                        
+
                                                         </div>
-                                                    </form>  
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -292,7 +291,7 @@
                                         @if($association->pivot->status == 'active' && ($difference->y ==0 && $difference->m <= 1))
                                         <div class="hs-tooltip ti-main-tooltip">
                                             <form action="{{ route('ESTB.staff.associations.destroy',[$staff->id,$association->id]) }}" method="post">
-                                            
+
                                             <button onclick="return confirm('Are you Sure')"
                                                 class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>
@@ -310,11 +309,11 @@
                                         @endif
                                     @endif
                                 </td>
-                            </tr>        
+                            </tr>
                             @endforeach
                         </tbody>
-                    </table>  
-                </div> 
-        
+                    </table>
+                </div>
+
             </div>
         </div>

@@ -1,6 +1,3 @@
-
-
-
 <?php $__env->startSection('styles'); ?>
 
 <?php $__env->stopSection(); ?>
@@ -42,7 +39,7 @@
                                         Welcome E-Governance Admin, Mathematics
                                          <?php elseif(session('deptid')==14): ?>
                                         Welcome E-Governance Admin, Chemistry
-                                    <?php endif; ?> 
+                                    <?php endif; ?>
                                     </span>
                                     </h3>
                                 </div>
@@ -53,7 +50,7 @@
                                         <i class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
                                     </a>
                                     </li>
-                            
+
                                 </ol>
                             </div>
                             <!-- Page Header Close -->
@@ -574,7 +571,7 @@
                                             <p class="text-sm font-bold">Funded Projects</p>
                                             <div class="flex justify-between items-center">
                                                 <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white"><?php echo e($fundedproject); ?></h5>
-                                            
+
                                             </div>
                                             <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="<?php echo e(route('egov.Teaching.research.fundedproject')); ?>">
                                                  view
@@ -596,7 +593,7 @@
                                             <p class="text-sm font-bold">Patents</p>
                                             <div class="flex justify-between items-center">
                                                 <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white"><?php echo e($patents); ?></h5>
-                                            
+
                                             </div>
                                             <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="<?php echo e(route('egov.Teaching.research.patents')); ?>">
                                                  view
@@ -618,7 +615,7 @@
                                             <p class="text-sm font-bold">Copyrights</p>
                                             <div class="flex justify-between items-center">
                                                 <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white"><?php echo e($copyrights); ?></h5>
-                                            
+
                                             </div>
                                             <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="<?php echo e(route('egov.Teaching.research.copyrights')); ?>">
                                                  view
@@ -640,7 +637,7 @@
                                             <p class="text-sm font-bold">Achivements</p>
                                             <div class="flex justify-between items-center">
                                                 <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white"><?php echo e($general_achievements); ?></h5>
-                                            
+
                                             </div>
                                             <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="<?php echo e(route('egov.Teaching.research.achivements')); ?>">
                                                  view
@@ -650,7 +647,7 @@
                                     </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <!-- End::row-3 -->
 
@@ -1849,7 +1846,8 @@
 
         <!-- INDEX JS -->
         <?php echo app('Illuminate\Foundation\Vite')('resources/assets/js/index-8.js'); ?>
-        
+
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.components.egov_admin.master-egov', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\laravel Apps\gitoffice\resources\views/egov/dashboard.blade.php ENDPATH**/ ?>
