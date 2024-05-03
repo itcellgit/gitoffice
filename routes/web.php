@@ -295,8 +295,9 @@ Route::get('/checkanydeptpersononleave',[LeaveStaffApplicationsController::class
 //for fetching events of specific date (clicked) using AJAX
 Route::get('/fetchholidayrhevents',[LeaveStaffApplicationsController::class,'fetchholidayrhevents'])->name('fetchholidayrhevents');
 Route::get('/fetchmyleaveevents',[LeaveStaffApplicationsController::class,'fetchmyleaveevents'])->name('fetchmyleaveevents');
-//Route::get('/Teaching/leavesentitlements',[TeachingLeaveController::class,'holidayrh'])->name('Teaching.leavesentitlements');
-// Route::patch('/ESTB/leaves/leaves_rules/{leave_rules}',[LeaveRulesController::class,'update'])->name('ESTB.leaves.leave_rules.update');
+
+Route::get('/cancel_myleave',[LeaveStaffApplicationsController::class,'cancel_myleave'])->name('cancel_myleave');
+Route::get('/edit_myleave',[LeaveStaffApplicationsController::class,'edit_myleave'])->name('edit_myleave');
 // Route::delete('/ESTB/leaves/leaves_rules/{leave_rules}',[LeaveRulesController::class,'destroy'])->name('ESTB.leaves.leave_rules.destroy');
 
 //Leave Application Management routes
@@ -765,8 +766,14 @@ Route::post('ticket/store', [TicketController::class, 'store'])->name('ticket.st
 Route::patch('ticket/update/{ticket}', [TicketController::class, 'update'])->name('ticket.update');
 Route::delete('ticket/destroy/{ticket}',[TicketController::class, 'destroy'])->name('ticket.destroy');
 Route::get('ticket/show/{ticket}', [TicketController::class, 'show'])->name('ticket.show');
+
+
 Route::post('ticket/{ticket}/reply/store', [ReplyController::class, 'store'])->name('ticket.reply.store');
-//Route::get('Ticketing/showticket/{ticket}', [TicketController::class, 'show'])->name('ticket.show');
+Route::patch('ticket/{ticket}reply/update',[ReplyController::class,'update'])->name('ticket.reply.update');
+
+// Route::patch('ticket/status_update/{ticket}', [TicketController::class, 'status_update'])->name('ticket.status_update');
+
+
 
 
 
@@ -783,12 +790,26 @@ Route::get('mssql',function(){
 
 
 //Routes for ticketing admin system
-// Route::middleware(['cors','auth','role:'.UserRoles::SU->value])->group(function(){
-//
-// //Route::get('Admin/show/{ticket}', [AdminTicketController::class, 'show'])->name('ticket.show');
-// //for redirecting to the super admin Dashboard.
-//   Route::get('/Admin/dashboard',[AdminController::class,'dashboard'])->name('Admin.dashboard');
-// });
+Route::middleware(['cors','auth','role:'.UserRoles::SU->value])->group(function()
+{
+
+
+  Route::get('/Admin/dashboard',[AdminController::class,'dashboard'])->name('Admin.dashboard');
+  Route::get('/Admin/tickets/adminticket',[AdminTicketController::class,'index'])->name('Admin.tickets.adminticket');
+  Route::post('Admin/tickets/adminticket/create', [AdminTicketController::class, 'store'])->name('Admin.tickets.adminticket.store');
+ // Route::patch('Admin/tickets/adminticket/update/{ticket}', [AdminTicketController::class, 'update'])->name('Admin.tickets.adminticket.update');
+  // Route::delete('Admin/tickets/adminticket/destroy/{ticket}',[AdminTicketController::class, 'destroy'])->name('Admin.tickets.adminticket.destroy');
+  Route::get('Admin/tickets/adminshowticket/show/{ticket}', [AdminTicketController::class, 'show'])->name('Admin.tickets.adminshowticket.show');
+ // Route::patch('ticket/update/{postticket}', [ReplyController::class, 'update'])->name('ticket.reply.update');
+  //Route::patch('Admin/tickets/adminticket/update/{ticket}', [AdminTicketController::class, 'status_update'])->name('Admin.tickets.adminticket.update');
+
+
+
+
+
+
+
+});
 
 
 

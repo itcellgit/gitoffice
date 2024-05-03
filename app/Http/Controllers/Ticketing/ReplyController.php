@@ -16,6 +16,7 @@ use Auth;
 
 class ReplyController extends Controller
 {
+ 
     public function store(Storepost_ticketRequest $request,ticket $ticket)
     {
         //dd($ticket);
@@ -27,9 +28,9 @@ class ReplyController extends Controller
                 // You might want to return an error or redirect the user
                 // back with a message.
                 // For now, I'll assume you want to handle this gracefully.
-        return redirect()->back()->with('error', 'No ticket found for the user.');
+            return redirect()->back()->with('error', 'No ticket found for the user.');
         }
-       //dd($request);
+      // dd($request);
         $postticket = new post_ticket();
         $postticket->ticket_id = $ticket->id;
         $postticket->user_id = $user->id;
@@ -61,5 +62,31 @@ class ReplyController extends Controller
 
     }
 
+    public function update(Updatepost_ticketRequest $request, ticket $ticket)
+    {
+         $status = $request->status;
+        //dd($request);
+        if ($status == "Pending" || $status == "Resolved") 
+        {
+            $ticket->status = $status;
+        }
+        else 
+        {
+             $ticket->status = "Open";
+        }
+        $ticket->update();
+        $postticket = post_ticket::where('ticket_id', $ticket->id)->get();
 
-}
+       return view('Admin.tickets.adminshowticket',compact('ticket','postticket'));
+    }
+    
+ }
+    
+
+
+
+
+
+
+   
+

@@ -12,10 +12,6 @@ use App\Http\Requests\UpdateticketRequest;
 use App\Models\post_ticket;
 use Illuminate\Support\Facades\DB;
 
-
-
-
-
 class TicketController extends Controller
 {
     /**
@@ -25,8 +21,7 @@ class TicketController extends Controller
     {
         $user=auth()->user();
         $tickets=$user->isAdmin?ticket::latest()->get():$user->tickets;
-
-        return view('Ticketing.dashboard',compact('tickets'));
+         return view('Ticketing.dashboard',compact('tickets'));
     }
 
     /**
@@ -52,16 +47,17 @@ class TicketController extends Controller
 
         $ticket->save();
         //dd($request);
-        if($request->file('attachment'))
-        {
-            $text=$request->file('attachment')->extension();
-            $contents=file_get_contents($request->file('attachment'));
-            $filename=Str::random(25);
-            $path="attachment/$filename.$text";
-            Storage::disk('public')->put($path,$contents);
-            $request->file('attachment')->move(public_path('attachment'), $filename);
-            $ticket->update(['attachment'=>$filename]);
-        }
+       // Update attachment if provided
+       if($request->file('attachment'))
+       {
+           $text=$request->file('attachment')->extension();
+           $contents=file_get_contents($request->file('attachment'));
+           $filename=Str::random(25);
+           $path="attachment/$filename.$text";
+           Storage::disk('public')->put($path,$contents);
+           $request->file('attachment')->move(public_path('attachment'), $filename);
+           $ticket->update(['attachment'=>$filename]);
+       }
 
         return redirect('ticket/dashboard');
     }
@@ -90,25 +86,38 @@ class TicketController extends Controller
      */
     public function update(UpdateticketRequest $request, ticket $ticket)
     {
-         //dd($request);
-        $ticket->update($request->except('attachment'));
-        if($request->has('status'))
-        {
-            $ticket->user->notify(new TicketUpdateNotification($ticket));
-
-        }
-        $ticket->update($request->validated());
+        // dd($request);
+         $ticket->title=$request->title;
+         $ticket->description=$request->description;
+        if($request->file('attachment'))
+       {
+           $text=$request->file('attachment')->extension();
+           $contents=file_get_contents($request->file('attachment'));
+           $filename=Str::random(25);
+           $path="attachment/$filename.$text";
+           Storage::disk('public')->put($path,$contents);
+           $request->file('attachment')->move(public_path('attachment'), $filename);
+           $ticket->update(['attachment'=>$filename]);
+       }
+      
         return redirect(route('ticket.dashboard'));
     }
-
+   
     /**
      * Remove the specified resource from storage.
      */
+  
     public function destroy(ticket $ticket)
-
     {
+        // Detach related records in the post_tickets table
+        $ticket->post_ticket()->delete();
+        
+        // Now delete the ticket
         $ticket->delete();
+        
         return redirect(route('ticket.dashboard'));
     }
+
+  
 
 }
