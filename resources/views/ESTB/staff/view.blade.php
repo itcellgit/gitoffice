@@ -124,8 +124,6 @@
                                 </div>
                             </div>
                             <div class="col-span-12 xl:col-span-9">
-
-
                                 <div class="box">
                                     <div class="box-body p-0">
                                         <div id="profile-settings-1" role="tabpanel" aria-labelledby="profile-settings-item-1">
