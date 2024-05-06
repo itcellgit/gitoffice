@@ -24,8 +24,8 @@ class Storebook_publicationsRequest extends FormRequest
     {
         return
          [
-            
-            'bc_title' => ['required'],
+
+            'bc_title' => ['required', 'regex:/^[a-zA-Z\s0-9]+$/'],
             'bc_book_level' => ['required', Rule::in(['National', 'International'])],
             'bc_publisher_name'=>['required'],
             'bc_edition'=>[],
@@ -51,7 +51,6 @@ class Storebook_publicationsRequest extends FormRequest
             'bc_publisher_name.required'=>'Publisher name is required filed',
             'bc_publisher_name.regex'=>'The Publisher name field should contain only letters and spaces.',
             'bc_edition.regex'=>'The edition field should contain only letters and spaces.',
-            'bc_doi.regex'=>'The doi field should contain only letters and spaces.',
             'bc_date.required'=>'date is required field',
             'bc_issue.regex'=>'The edition field should contain only letters and spaces.',
             'bc_type.required'=>'type is required field',
@@ -61,7 +60,7 @@ class Storebook_publicationsRequest extends FormRequest
             //'bc_start_page_no.numeric'=>'Start page no should contain only numbers',
             //'bc_end_page_no.numeric'=>'End page no should contain only numbers',
 
-            
+
         ];
     }
 }
