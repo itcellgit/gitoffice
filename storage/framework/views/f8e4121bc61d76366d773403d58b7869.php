@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('styles'); ?>
 
         <!-- CHOICES CSS -->
@@ -7,7 +5,7 @@
 
         <!-- FLATPICKR CSS -->
         <link rel="stylesheet" href="<?php echo e(asset('build/assets/libs/flatpickr/flatpickr.min.css')); ?>">
-        
+
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -17,21 +15,21 @@
                     <!-- Start::main-content -->
                     <div class="main-content">
 
-                       
+
                         <!-- Page Header -->
                             <div class="block justify-between page-header sm:flex">
                                 <div>
                                     
                                     <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium">Welcome<span class="text-primary"> <?php echo e($staff->fname.' '.$staff->mname.' '.$staff->lname); ?></span></h3>
-                                </div>    
-                                <ol class="flex items-center whitespace-nowrap min-w-0"> 
+                                </div>
+                                <ol class="flex items-center whitespace-nowrap min-w-0">
                                     <li class="text-sm">
                                         <a class="flex items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="javascript:void(0);">
                                             Research Activities
                                             <i class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
                                         </a>
                                     </li>
-                                        
+
                                 </ol>
                             </div>
                         <!-- Page Header Close -->
@@ -56,11 +54,11 @@
                                             </div>
                                         <?php endif; ?>
                                     <?php endif; ?>
-                                    <?php 
-                                        Illuminate\Support\Facades\Session::forget('return_data'); 
-                                        header("refresh: 2"); 
+                                    <?php
+                                        Illuminate\Support\Facades\Session::forget('return_data');
+                                        header("refresh: 2");
                                     ?>
-                                <?php endif; ?>   
+                                <?php endif; ?>
 
                             </div>
                         </div>
@@ -73,11 +71,32 @@
                                             <div class="box border-0 shadow-none mb-0">
                                                 <div class="box-header">
                                                     <h5 class="box-title leading-none flex"><i class="ri ri-global-line ltr:mr-2 rtl:ml-2"></i>Reviewer/Editor</h5>
+                                                    <div class="avatar-container flex py-4">
+                                                        <div class="avatar-wrapper flex items-center">
+                                                            <div class="avatar rounded-sm p-1 bg-green-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-bold ml-2 ">Valid</div>
+                                                        </div>
+
+                                                        <div class="avatar-wrapper flex items-center mx-2">
+                                                            <div class="avatar rounded-sm p-1 bg-red-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-bold ml-2">Invalid</div>
+                                                        </div>
+
+                                                        <div class="avatar-wrapper flex items-center mx-2">
+                                                            <div class="avatar rounded-sm p-1 bg-yellow-400 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-bold ml-2">Updated</div>
+                                                        </div>
+
+                                                        <div class="avatar-wrapper flex items-center">
+                                                            <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-semibold ml-2">New</div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="box-body">
                                                     <button data-hs-overlay="#add_reviewer_editor" id="review_btn" class="hs-dropdown-toggle ti-btn ti-btn-primary">
                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M17 19H19V11H13V19H15V13H17V19ZM3 19V4C3 3.44772 3.44772 3 4 3H18C18.5523 3 19 3.44772 19 4V9H21V19H22V21H2V19H3ZM7 11V13H9V11H7ZM7 15V17H9V15H7ZM7 7V9H9V7H7Z" fill="rgba(255,255,255,1)"></path></svg>
-                                                            Add Reviewer/Editor 
+                                                            Add Reviewer/Editor
                                                     </button>
                                                     <div id="add_reviewer_editor" class="hs-overlay hidden ti-modal">
                                                         <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out lg:!max-w-4xl lg:w-full m-3 md:mx-auto">
@@ -99,30 +118,30 @@
                                                                     </button>
                                                                     <?php if((($errors->has('title'))||($errors->has('journal_name'))||($errors->has('publisher_name'))||($errors->has('reviewed_date'))||($errors->has('level'))||($errors->has('other_level')))||($errors->has('category'))): ?>
                                                                         <script>
-                                                                            $(window).on('load', function() 
+                                                                            $(window).on('load', function()
                                                                             {
                                                                                 $('#review_btn').trigger("click");
-                                                                            }); 
+                                                                            });
                                                                         </script>
                                                                     <?php endif; ?>
                                                                 </div>
                                                                 <form  action="<?php echo e(route('Teaching.research.revieweditor.store')); ?>" method="post" enctype="multipart/form-data">
-                                                                    <?php echo csrf_field(); ?> 
+                                                                    <?php echo csrf_field(); ?>
                                                                     <div class="ti-modal-body">
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold"> Level :<span class="text-red-500">*</span> </label>
                                                                                 <select class="ti-form-select level reviewerlevel" name="level" id="re_level">
                                                                                     <option value="#">Choose Level</option>
-                                                                                    <option value="Q1">Q1</option>
-                                                                                    <option value="Q2">Q2</option>  
-                                                                                    <option value="Q3">Q3</option>
-                                                                                    <option value="Q4">Q4</option>
-                                                                                    <option value="SCI">SCI</option>
-                                                                                    <option value="Web of Science">Web of Science</option>  
-                                                                                    <option value="Scopus Indexed">Scopus Indexed</option>
-                                                                                    <option value="UGC General">UGC General</option>
-                                                                                    <option value="Other">Other</option>
+                                                                                    <option value="Q1" <?php echo e(old('level') == 'Q1' ? 'selected' : ''); ?>>Q1</option>
+                                                                                    <option value="Q2" <?php echo e(old('level') == 'Q2' ? 'selected' : ''); ?>>Q2</option>
+                                                                                    <option value="Q3" <?php echo e(old('level') == 'Q3' ? 'selected' : ''); ?>>Q3</option>
+                                                                                    <option value="Q4" <?php echo e(old('level') == 'Q4' ? 'selected' : ''); ?>>Q4</option>
+                                                                                    <option value="SCI" <?php echo e(old('level') == 'SCI' ? 'selected' : ''); ?>>SCI</option>
+                                                                                    <option value="Web of Science" <?php echo e(old('level') == 'Web of Science' ? 'selected' : ''); ?>>Web of Science</option>
+                                                                                    <option value="Scopus Indexed" <?php echo e(old('level') == 'Scopus Indexed' ? 'selected' : ''); ?>>Scopus Indexed</option>
+                                                                                    <option value="UGC General" <?php echo e(old('level') == 'UGC General' ? 'selected' : ''); ?>>UGC General</option>
+                                                                                    <option value="Other" <?php echo e(old('level') == 'Other' ? 'selected' : ''); ?>>Other</option>
                                                                                 </select>
                                                                                 <?php if($errors->has('level')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('level')); ?></div>
@@ -132,7 +151,7 @@
 
                                                                             <div class="max-w-sm space-y-3 pb-6 re_otherLevel"  style="display: none;">
                                                                                 <label for="" class="ti-form-label font-bold">Other Level:</label>
-                                                                                <input type="text" name="other_level" class="ti-form-input " placeholder="Other Level" id="re_other_level">
+                                                                                <input type="text" name="other_level" class="ti-form-input " placeholder="Other Level" id="re_other_level" value="<?php echo e(old('other_level')); ?>">
                                                                                 <?php if($errors->has('other_level')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('other_level')); ?></div>
                                                                                 <?php endif; ?>
@@ -142,7 +161,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Title :<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="title" class="ti-form-input"  placeholder="Title" id="re_title">
+                                                                                <input type="text" name="title" class="ti-form-input"  placeholder="Title" id="re_title" value="<?php echo e(old('title')); ?>">
                                                                                 <?php if($errors->has('title')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('title')); ?></div>
                                                                                 <?php endif; ?>
@@ -150,17 +169,17 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Journal Name:<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="journal_name" class="ti-form-input"  placeholder="Journal Name" id="re_journal_name">
+                                                                                <input type="text" name="journal_name" class="ti-form-input"  placeholder="Journal Name" id="re_journal_name" value="<?php echo e(old('journal_name')); ?>">
                                                                                 <?php if($errors->has('journal_name')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('journal_name')); ?></div>
                                                                                 <?php endif; ?>
                                                                                 <div id="re_journalnameError" class="error text-red-700"></div>
-                                                                            </div>                                                                    
+                                                                            </div>
                                                                         </div>
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Publisher Name:<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="publisher_name" class="ti-form-input"  placeholder="Publisher Name" id="re_publisher_name">
+                                                                                <input type="text" name="publisher_name" class="ti-form-input"  placeholder="Publisher Name" id="re_publisher_name" value="<?php echo e(old('publisher_name')); ?>">
                                                                                 <?php if($errors->has('publisher_name')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('publisher_name')); ?></div>
                                                                                 <?php endif; ?>
@@ -171,30 +190,31 @@
                                                                                 <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
                                                                                     <span class="text-sm text-gray-500 dark:text-white/70"><i class="ri ri-calendar-line"></i></span>
                                                                                 </div>
-                                                                        
+
                                                                                 <input type="date" name="reviewed_date"
                                                                                         class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
-                                                                                        required placeholder="Choose date" id="re_review_date">
+                                                                                        required placeholder="Choose date" id="re_review_date" value="<?php echo e(old('reviewed_date')); ?>">
                                                                                 <?php if($errors->has('date')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('date')); ?></div>
                                                                                 <?php endif; ?>
-                                                                                <div id="re_review_dateError" class="error text-red-700"></div>      
+                                                                                <div id="re_review_dateError" class="error text-red-700"></div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Category: <span class="text-red-500">*</span></label>
-                                                                                <select  class="ti-form-input" name="category" id="re_view_category">
+                                                                                <select class="ti-form-input" name="category" id="re_view_category">
                                                                                     <option value="#">Choose One</option>
-                                                                                    <option value="journal">Journal</option>
-                                                                                    <option value="conference proceeding">Conference Proceeding</option>
+                                                                                    <option value="journal" <?php echo e(old('category') == 'journal' ? 'selected' : ''); ?>>Journal</option>
+                                                                                    <option value="conference proceeding" <?php echo e(old('category') == 'conference proceeding' ? 'selected' : ''); ?>>Conference Proceeding</option>
                                                                                 </select>
+
                                                                                 <?php if($errors->has('category')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('category')); ?></div>
                                                                                 <?php endif; ?>
                                                                                 <div id="re_view_categoryError" class="error text-red-700"></div>
                                                                             </div>
-                                                                            
+
 
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <div class="max-w-sm space-y-3 pb-6">
@@ -220,11 +240,11 @@
                                                                             data-hs-overlay="#add_reviewer_editor">
                                                                             Close
                                                                         </button>
-                                                                                        
+
                                                                         <input type="submit" id="reviewer_editor_add_btn" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Add"/>
-                                                                                    
+
                                                                     </div>
-                                                                </form>  
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -244,7 +264,7 @@
                                                                         <th scope="col" class="dark:text-white/80 font-bold">Journal Name</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">Publisher Name</th>
                                                                          <th scope="col" class="dark:text-white/80 font-bold">Category</th>
-                                                                  
+
 
                                                                         <?php if(!isset($export) || !$export): ?>
                                                                             <th scope="col" class="dark:text-white/80 font-bold ">Action</th>
@@ -258,17 +278,17 @@
                                                                     <?php if($staff->reviewer_editor!=null): ?>
                                                                         <?php $__empty_1 = true; $__currentLoopData = $staff->reviewer_editor; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rc): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
 
-                                                                            
-
-                                                                         
-                                                                            
                                                                             <tr style="<?php if($rc->validation_status =='invalid'): ?> background-color: #ffcccc; <?php elseif($rc->validation_status =='updated'): ?> background-color: #fff2cc; <?php elseif($rc->validation_status =='valid'): ?> background-color: #ccffcc; <?php endif; ?>">
 
-                                                                            
-                                                                            
-                                                                            
                                                                                 <td><span><?php echo e($i++); ?></span></td>
-                                                                                <td><span><?php echo e($rc->egov_id); ?></span></td>
+                                                                                
+                                                                                <td>
+                                                                                    <a href="https://git.edu/storage/Uploads/Research/Review_Editor/<?php echo e($rc->document); ?>" class="text-blue-500">
+                                                                                        <span><?php echo e($rc->egov_id); ?></span>
+                                                                                    </a>
+                                                                                </td>
+
+
                                                                                 <td><span><?php echo e($rc->level); ?></span></td>
                                                                                 <td>
                                                                                     <span>
@@ -285,7 +305,7 @@
                                                                                 <td><span><?php echo e($rc->journal_name); ?></span></td>
                                                                                 <td><span><?php echo e($rc->publisher_name); ?></span></td>
                                                                                 <td><span><?php echo e($rc->category); ?></span></td>
-                                                                               
+
                                                                                 <?php if(!isset($export) || !$export): ?>
                                                                                 <td class="font-medium space-x-2 rtl:space-x-reverse">
 
@@ -297,8 +317,8 @@
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                                                                                                 
                                                                                                     <path d="M14 14.252V16.3414C13.3744 16.1203 12.7013 16 12 16C8.68629 16 6 18.6863 6 22H4C4 17.5817 7.58172 14 12 14C12.6906 14 13.3608 14.0875 14 14.252ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11ZM19 17.5858L21.1213 15.4645L22.5355 16.8787L20.4142 19L22.5355 21.1213L21.1213 22.5355L19 20.4142L16.8787 22.5355L15.4645 21.1213L17.5858 19L15.4645 16.8787L16.8787 15.4645L19 17.5858Z"></path></svg>
-                                                                                                
-                                                                                                
+
+
                                                                                                 <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700" role="tooltip">reason</span>
                                                                                             </button>
                                                                                             <div id="reason_view_modal<?php echo e($i); ?>" class="hs-overlay hidden ti-modal">
@@ -315,7 +335,7 @@
                                                                                                             <button type="button" class="hs-dropdown-toggle ti-modal-close-btn" data-hs-overlay="#reason_view_modal<?php echo e($i); ?>">
                                                                                                                 <span class="sr-only">Close</span>
                                                                                                                 <svg class="w-3.5 h-3.5" width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                                                                                                                                                                       <path d="M14 14.252V16.3414C13.3744 16.1203 12.7013 16 12 16C8.68629 16 6 18.6863 6 22H4C4 17.5817 7.58172 14 12 14C12.6906 14 13.3608 14.0875 14 14.252ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11ZM19 17.5858L21.1213 15.4645L22.5355 16.8787L20.4142 19L22.5355 21.1213L21.1213 22.5355L19 20.4142L16.8787 22.5355L15.4645 21.1213L17.5858 19L15.4645 16.8787L16.8787 15.4645L19 17.5858Z"></path></svg>
+                                                                                                                    <path d="M14 14.252V16.3414C13.3744 16.1203 12.7013 16 12 16C8.68629 16 6 18.6863 6 22H4C4 17.5817 7.58172 14 12 14C12.6906 14 13.3608 14.0875 14 14.252ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11ZM19 17.5858L21.1213 15.4645L22.5355 16.8787L20.4142 19L22.5355 21.1213L21.1213 22.5355L19 20.4142L16.8787 22.5355L15.4645 21.1213L17.5858 19L15.4645 16.8787L16.8787 15.4645L19 17.5858Z"></path></svg>
 
                                                                                                             </button>
                                                                                                         </div>
@@ -369,11 +389,11 @@
                                                                                                         </button>
                                                                                                         <?php if((($errors->has('title'))||($errors->has('journal_name'))||($errors->has('publisher_name'))||($errors->has('reviewed_date'))||($errors->has('level'))||($errors->has('other_level'))||($errors->has('category')))): ?>
                                                                                                             <script>
-                                                                                                                $(window).on('load', function() 
+                                                                                                                $(window).on('load', function()
                                                                                                                 {
                                                                                                                     $('#review_btn').trigger("click");
-                                                                                                                }); 
-                                                                                                            </script>              
+                                                                                                                });
+                                                                                                            </script>
                                                                                                         <?php endif; ?>
                                                                                                     </div>
                                                                                                     <form action="<?php echo e(route('Teaching.research.revieweditor.update',$rc->id)); ?>" method="post" enctype="multipart/form-data">
@@ -388,8 +408,8 @@
                                                                                                                         <option value="#">Choose Level</option>
                                                                                                                         <option value="Q1" <?php echo e($rc->level=='Q1'? 'selected': ''); ?>>Q1</option>
                                                                                                                         <option value="Q2" <?php echo e($rc->level=='Q2'? 'selected': ''); ?>>Q2</option>
-                                                                                                                        <option value="Q3" <?php echo e($rc->level=='Q3'? 'selected': ''); ?>>Q1</option>
-                                                                                                                        <option value="Q4" <?php echo e($rc->level=='Q4'? 'selected': ''); ?>>Q1</option>
+                                                                                                                        <option value="Q3" <?php echo e($rc->level=='Q3'? 'selected': ''); ?>>Q3</option>
+                                                                                                                        <option value="Q4" <?php echo e($rc->level=='Q4'? 'selected': ''); ?>>Q4</option>
                                                                                                                         <option value="SCI" <?php echo e($rc->level=='SCI'? 'selected': ''); ?>>SCI</option>
                                                                                                                         <option value="Web of Science" <?php echo e($rc->level=='Web of Science'? 'selected': ''); ?>>Web of Science</option>
                                                                                                                         <option value="Scopus Indexed" <?php echo e($rc->level=='Scopus Indexed'? 'selected': ''); ?>>Scopus Indexed</option>
@@ -429,7 +449,7 @@
                                                                                                                         <div class="text-red-700"><?php echo e($errors->first('journal_name')); ?></div>
                                                                                                                     <?php endif; ?>
                                                                                                                     <div id="re_journalnameError" class="error text-red-700"></div>
-                                                                                                                </div>                                                                    
+                                                                                                                </div>
                                                                                                             </div>
                                                                                                             <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                                                                 <div class="max-w-sm space-y-3 pb-6">
@@ -445,14 +465,14 @@
                                                                                                                     <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
                                                                                                                         <span class="text-sm text-gray-500 dark:text-white/70"><i class="ri ri-calendar-line"></i></span>
                                                                                                                     </div>
-                                                                                                            
+
                                                                                                                     <input type="date" name="reviewed_date"
                                                                                                                             class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
                                                                                                                                 placeholder="Choose date" id="re_review_date" value="<?php echo e($rc->reviewed_date); ?>">
                                                                                                                     <?php if($errors->has('date')): ?>
                                                                                                                         <div class="text-red-700"><?php echo e($errors->first('date')); ?></div>
                                                                                                                     <?php endif; ?>
-                                                                                                                    <div id="r_review_dateError" class="error text-red-700"></div>      
+                                                                                                                    <div id="r_review_dateError" class="error text-red-700"></div>
                                                                                                                 </div>
                                                                                                             </div>
                                                                                                             <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
@@ -489,18 +509,18 @@
                                                                                                                 data-hs-overlay="#reviewer_editor_edit_modal<?php echo e($i); ?>">
                                                                                                                 Close
                                                                                                             </button>
-                                                                                                                        
+
                                                                                                             <input type="submit" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Update"/>
-                                                                                                                    
+
                                                                                                         </div>
-                                                                                                    </form>  
+                                                                                                    </form>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="hs-tooltip ti-main-tooltip">
                                                                                         <form action="<?php echo e(route('Teaching.research.revieweditor.destroy',$rc->id)); ?>" method="post">
-                                                                                        
+
                                                                                             <button onclick="return confirm('Are you Sure')"
                                                                                                 class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>
@@ -516,30 +536,30 @@
                                                                                     </div>
                                                                                 </td>
                                                                                 <?php endif; ?>
-                                                                            </tr> 
+                                                                            </tr>
                                                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                                                                 
                                                                         <?php endif; ?>
                                                                     <?php endif; ?>
                                                                 </tbody>
-                                                            </table>  
-                                                        </div>   
+                                                            </table>
+                                                        </div>
                                                 </div>
 
                                             </div>
                                         <!--End Reviewer\Editor-->
-                                    </div>                                                                      
+                                    </div>
                                 </div>
                             </div>
                         </div>
                              <!-- End::row-1 -->
-                    </div>    
+                    </div>
                     <!-- End::main-content -->
 
                 </div>
-               
 
-            
+
+
 
 <?php $__env->stopSection(); ?>
 
@@ -574,10 +594,10 @@
                 $('.reviewerlevel').change(function () {
                     if ($(this).val() === 'Other') {
                         $('.re_otherLevel').show();
-                       
+
                     } else {
                         $('.re_otherLevel').hide();
-                      
+
                     }
                 });
 
@@ -621,13 +641,25 @@
                             flag = true;
                         }
                     }
-                    if(re_title == ''){
+
+                    // if(re_title == ''){
+                    //     $('#re_titleError').text('Title is missing');
+                    //     flag = true;
+                    // }else if (!/^[a-zA-Z\s]+$/.test(re_title.trim())){
+                    //     $('#re_titleError').text('Please fill the correct value');
+                    //     flag = true;
+                    // }
+
+
+                    if (re_title.trim() === '') {
                         $('#re_titleError').text('Title is missing');
                         flag = true;
-                    }else if (!/^[a-zA-Z\s]+$/.test(re_title.trim())){
+                    } else if (!/^[\w\s\/.,]+$/.test(re_title.trim())) {
                         $('#re_titleError').text('Please fill the correct value');
                         flag = true;
                     }
+
+
                     if(re_journal_name == ''){
                         $('#re_journalnameError').text('Journal Name is missing');
                         flag = true;
@@ -645,7 +677,7 @@
                     if(re_review_date.trim() === ''){
                         $('#re_review_dateError').text('Please Select a proper date');
                         flag = true;
-                    }  
+                    }
 
                     if(flag == true){
                         e.preventDefault();
@@ -655,15 +687,15 @@
                 });
 
                 $(document).on('click','.reviewer_editor_edit_modal',function(){
-                
-                
-                    //var 
+
+
+                    //var
                     var attended_modal_no = $(this).attr("btn-val");
-                    
+
                     //alert($(this).find('.caste_edit_modal_no').val());
-                    $('.review_modal_no').val(review_modal_no); 
+                    $('.review_modal_no').val(review_modal_no);
                 });
-                
+
                  //export to excel reviewer editor
                 $('#exportToExcel').on('click', function () {
                     var table = $('#reviewer_editor_table').clone();
@@ -702,9 +734,10 @@
         </script>
 
 
-        
-    
-        
+
+
+
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.components.staff.master-teaching', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\laravel Apps\gitoffice\resources\views/Staff/Teaching/research/revieweditor.blade.php ENDPATH**/ ?>

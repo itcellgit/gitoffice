@@ -154,11 +154,42 @@
                         </div>
 
                         <div class="col-span-12 xl:col-span-3">
+                            <!-- Count box 3 -->
+                            <div class="box">
+                                <!-- Content for count box 3 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-3 rtl:ml-3">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($conducted_category_counts->hackathon_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">Hackathon</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($conducted_category_counts->hackathon_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $conducted_category_counts->hackathon_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-span-12 xl:col-span-3">
                             <!-- Count box 4 -->
                             <div class="box">
                                 <!-- Content for count box 4 -->
                             </div>
                         </div>
+                        <!--Count Ends Here-->
+
+
                         <div class="col-span-12 xl:col-span-12">
                             <div class="box">
                                 <div class="box-body">
@@ -204,7 +235,7 @@
                                             <tr class="">
                                                 <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th>
+                                                {{-- <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th> --}}
                                                 <th scope="col" class="dark:text-white/80 font-bold ">E-Gov ID</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Title</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Role</th>
@@ -232,8 +263,13 @@
 
                                                         <td><span>{{ $i++ }}</span></td>
                                                         <td><span>{{ $con->fname . ' ' . $con->mname . ' ' . $con->lname }}</span></td>
-                                                        <td><span>{{ $con->dept_shortname }}</span></td>
-                                                        <td><span>{{ $con->egov_id }}</span></td>
+                                                        {{-- <td><span>{{ $con->dept_shortname }}</span></td> --}}
+                                                        {{-- <td><span>{{ $con->egov_id }}</span></td> --}}
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Professional_Activity_Conducted/{{ $con->document }}" class="text-blue-500">
+                                                                <span>{{$con->egov_id}}</span>
+                                                            </a>
+                                                        </td>
                                                         <td><span>{{ $con->title }}</span></td>
                                                         <td><span>{{ $con->role }}</span></td>
                                                         <td><span>{{ $con->level }}</span></td>

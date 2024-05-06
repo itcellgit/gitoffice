@@ -24,12 +24,12 @@ class UpdatecopyrightRequest extends FormRequest
     {
         return [
            //
-            'ce_copyright_title'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
+            'ce_copyright_title'=>['required', 'regex:/^[a-zA-Z\s0-9]+$/'],
             'ce_copyright_date'=>['required','date'],
             'ce_author_name'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
             'ce_status'=>['required', Rule::in(['Applied', 'Awarded'])],
             'ce_description'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
-           
+
         ];
     }
     public function messages():array
@@ -45,8 +45,8 @@ class UpdatecopyrightRequest extends FormRequest
             'ce_status.in'=>'Please select a valid option from the provided choices',
             'ce_description.required'=>'description is required field',
             'ce_description.regex'=>'The description field should contain only letters and spaces',
-            
-            
+
+
 
      ];
     }

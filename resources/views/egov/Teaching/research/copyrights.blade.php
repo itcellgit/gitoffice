@@ -166,7 +166,7 @@
                                             <tr class="">
                                                 <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th>
+                                                {{-- <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th> --}}
                                                 <th scope="col" class="dark:text-white/80 font-bold ">E-Gov ID</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Copyright Title</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Copyright Date</th>
@@ -184,22 +184,23 @@
                                                     $i=1;
                                                 @endphp
                                                 @foreach ($copyrights as $copy)
-                                                    {{-- <tr class="" @if($copy->validation_status == 'valid') style="background-color: #ccffcc; color: #006400;" @elseif($copy->validation_status =='invalid') style="background-color: #ffe6e6; color: #b30000;" @endif> --}}
                                                         <tr style="@if($copy->validation_status =='invalid') background-color: #ffcccc; @elseif($copy->validation_status =='updated') background-color: #fff2cc; @elseif($copy->validation_status =='valid') background-color: #ccffcc; @endif">
 
                                                         <td><span>{{ $i++ }}</span></td>
                                                         <td><span>{{ $copy->fname . ' ' . $copy->mname . ' ' . $copy->lname }}</span></td>
-                                                        <td><span>{{ $copy->dept_shortname }}</span></td>
-                                                        <td><span>{{ $copy->egov_id }}</span></td>
+                                                        {{-- <td><span>{{ $copy->dept_shortname }}</span></td> --}}
+                                                        {{-- <td><span>{{ $copy->egov_id }}</span></td> --}}
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Research/Copyrights/{{ $copy->document}}" class="text-blue-500">
+                                                                <span>{{$copy->egov_id}}</span>
+                                                            </a>
+                                                        </td>
                                                         <td><span>{{ $copy->copyright_title }}</span></td>
                                                         <td><span>{{\Carbon\Carbon::parse($copy->copyright_date)->format('d-M-Y') }}</span></td>
                                                         <td><span>{{ $copy->author_name }}</span></td>
                                                         <td><span>{{ $copy->status }}</span></td>
                                                         <td><span>{{ $copy->description }}</span></td>
-                                                        {{-- Exclude the "Document" column when exporting --}}
-                                                        {{-- @if(!isset($export) || !$export)
-                                                            <td><span><a href={{asset('Uploads/Research/Copyrights/'.$copy->document)}} class='font-medium text-blue-600 dark:text-blue-500 hover:underline' target="_blank">{{$copy->document}}</a></span></td>
-                                                        @endif --}}
+
 
                                                         @if(!isset($export) || !$export)
                                                             <td>

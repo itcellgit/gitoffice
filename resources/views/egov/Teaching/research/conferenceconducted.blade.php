@@ -278,7 +278,7 @@
                                             <tr class="">
                                                 <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th>
+                                                {{-- <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th> --}}
                                                 <th scope="col" class="dark:text-white/80 font-bold ">E-Gov ID</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Conferene Name</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Co Organizer</th>
@@ -308,13 +308,17 @@
                                                     $i=1;
                                                 @endphp
                                                 @foreach ($conferences_conducted as $conducted)
-                                                    {{-- <tr class="" @if($conducted->validation_status == 'valid') style="background-color: #ccffcc; color: #006400;" @elseif($conducted->validation_status =='invalid') style="background-color: #ffe6e6; color: #b30000;" @endif> --}}
                                                     <tr style="@if($conducted->validation_status =='invalid') background-color: #ffcccc; @elseif($conducted->validation_status =='updated') background-color: #fff2cc; @elseif($conducted->validation_status =='valid') background-color: #ccffcc; @endif">
 
                                                         <td><span>{{ $i++ }}</span></td>
                                                         <td><span>{{ $conducted->fname . ' ' . $conducted->mname . ' ' . $conducted->lname }}</span></td>
-                                                        <td><span>{{ $conducted->dept_shortname }}</span></td>
-                                                        <td><span>{{ $conducted->egov_id }}</span></td>
+                                                        {{-- <td><span>{{ $conducted->dept_shortname }}</span></td> --}}
+                                                        {{-- <td><span>{{ $conducted->egov_id }}</span></td> --}}
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Research/Conference_Conducted/{{$conducted->document}}" class="text-blue-500">
+                                                                <span>{{$conducted->egov_id}}</span>
+                                                            </a>
+                                                        </td>
                                                         <td><span>{{ $conducted->conference_name }}</span></td>
                                                         <td><span>{{ $conducted->co_organizer }}</span></td>
                                                         <td><span>{{ $conducted->no_of_participants }}</span></td>

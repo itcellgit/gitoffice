@@ -54,7 +54,22 @@ return [
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
-            'strict' => true,
+            'strict' => true, //changes on 22-4-2024
+            'engine' => null,
+        ],
+
+        'mysql2' => [
+            'driver' => 'mysql',
+            'host' => env('DB_SECONDARY_HOST', '10.10.1.11'),
+            'port' => env('DB_SECONDARY_PORT', '3306'),
+            'database' => env('DB_SECONDARY_DATABASE', 'biometric_data'),
+            'username' => env('DB_SECONDARY_USERNAME', 'root'),
+            'password' => env('DB_SECONDARY_PASSWORD', ''),
+            'unix_socket' => env('DB_SECONDARY_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true, //changes on 22-4-2024
             'engine' => null,
         ],
         // 'mysql' => [

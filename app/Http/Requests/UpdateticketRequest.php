@@ -3,8 +3,11 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Validator;
+//use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\Storage;
+
 
 class UpdateticketRequest extends FormRequest
 {
@@ -23,11 +26,24 @@ class UpdateticketRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'title'=>['required','string', 'max:255'],
-            'description'=>['required','string', 'max:650'],
-            'status'=>['string', Rule::in(array_column(Ticketstatus::cases(),'value'))],
+        return
+        [
+            'title' => ['required', 'string'],
+            'description'=>['required','string'],
             'attachment'=>['sometimes','file','mimes:jpg,jpeg,png,pdf'],
+            //'status'=>['required', Rule::in(['Open', 'Pending','Resolved'])],
+            
+        ];
+    }
+    public function messages():array
+    {
+        return
+        [
+            'title.required'=>'title is required field',
+            'title.string' => 'The title must be string',
+            'description.required'=>'description is required filed',
+            'description.regex'=>'The description must be string',
+            //'status.in'=>'Please select a valid option from the provided choices',
             
         ];
     }

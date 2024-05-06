@@ -409,76 +409,6 @@ class StaffController extends Controller
 
 
 
-    //Filter Staff information based on dynamic code logic
-    // public function filterstaff_information(Request $request)
-    // {
-    //      $association_id = $request->input('associations_id');
-    //      $department_id = $request->input('departments_id');
-    //      $designation_id = $request->input('designation_id');
-    //      $castecategories = $request->input('castecategory_id');
-    //      $religions = $request->input('religion_id');
-    //      $gender = $request->input('gender');
-
-    //      //dd($department_id  );
-
-    //     $query = staff::query();
-
-    //     //dd($query);
-    //     $filters = [];
-    //     $availableFilters = ['departments_id', 'associations_id', 'designations_id', 'castecategory_id', 'religion_id', 'gender'];
-    //     foreach ($availableFilters as $filter) {
-    //         // Check if filter is selected
-    //         if ($request->has($filter)) {
-    //             $filterValue = $request->input($filter);
-    //             // Add filter condition to the array
-    //             $filters[$filter] = $filterValue;
-    //         }
-    //     }
-
-    //     // Apply filter conditions to the query
-    //     foreach ($filters as $filter => $value) {
-    //         // Add joins and where clauses based on the filter
-    //         if ($filter === 'departments_id') {
-    //             $query->join('department_staff', 'department_staff.staff_id', '=', 'staff.id')
-    //                   ->whereIn('department_staff.department_id', function ($q) use ($value) {
-    //                       $q->select('id')
-    //                         ->from('departments')
-    //                         ->where('id', $value);
-    //                   })
-    //                   ->where('department_staff.status', 'active');
-    //         } elseif ($filter === 'associations_id') {
-    //             $query->join('association_staff', 'association_staff.staff_id', '=', 'staff.id')
-    //                   ->whereIn('association_staff.association_id', function ($q) use ($value) {
-    //                       $q->select('id')
-    //                         ->from('associations')
-    //                         ->where('id', $value);
-    //                   })
-    //                   ->where('association_staff.status', 'active');
-    //         } elseif ($filter === 'designations_id') {
-    //             $query->join('designation_staff', 'designation_staff.staff_id', '=', 'staff.id')
-    //                   ->whereIn('designation_staff.designation_id', function ($q) use ($value) {
-    //                       $q->select('id')
-    //                         ->from('designations')
-    //                         ->where('id', $value);
-    //                   });
-    //         } elseif ($filter === 'castecategory_id') {
-    //             $query->where('staff.castecategory_id', $value);
-    //         } elseif ($filter === 'religion_id') {
-    //             $query->where('staff.religion_id', $value);
-    //         } elseif ($filter === 'gender') {
-    //             $query->where('staff.gender', $value);
-    //         }
-    //     }
-
-    //     // Execute the query and retrieve the staff data
-    //     $staff = $query->get();
-    //     dd($request->msql());
-    //     //dd($request->all());
-
-
-    //     // Pass the staff data to the view
-    //     return view('ESTB.staff.staffinformation', compact('staff'));
-    // }
 
 
 
@@ -549,6 +479,11 @@ class StaffController extends Controller
         //dd($staff);
         return view('ESTB.staff.staffinformation', compact('staff'));
     }
+
+
+
+
+
 
 
 

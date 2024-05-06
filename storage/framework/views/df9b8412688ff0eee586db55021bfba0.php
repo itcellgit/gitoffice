@@ -139,7 +139,7 @@
                                                                         <div class="grid gap-1 space-y-2 lg:grid-cols-2 lg:space-y-0">
                                                                             <div class="max-w-sm pb-6 space-y-3">
                                                                                 <label for="with-corner-hint" class="font-bold ti-form-label">Title:<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="title" id="pro_att_title" class="ti-form-input" required placeholder="Title">
+                                                                                <input type="text" name="title" id="pro_att_title" class="ti-form-input" required placeholder="Title" value="<?php echo e(old('title')); ?>">
                                                                                 <?php if($errors->has('title')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('title')); ?></div>
                                                                                 <?php endif; ?>
@@ -147,7 +147,7 @@
                                                                             </div>
                                                                             <div class="max-w-sm pb-6 space-y-3">
                                                                                 <label for="" class="font-bold ti-form-label">Organizer: <span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="organizer" id="pro_att_organizer" class="ti-form-input" required placeholder="Organizer">
+                                                                                <input type="text" name="organizer" id="pro_att_organizer" class="ti-form-input" required placeholder="Organizer" value="<?php echo e(old('organizer')); ?>">
                                                                                 <?php if($errors->has('organizer')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('organizer')); ?></div>
                                                                                 <?php endif; ?>
@@ -157,12 +157,13 @@
                                                                         <div class="grid gap-1 space-y-2 lg:grid-cols-2 lg:space-y-0">
                                                                             <div class="max-w-sm pb-6 space-y-3">
                                                                                 <label for="" class="mb-0 font-bold ti-form-label">Role<span class="text-red-500">*</span></label>
-                                                                                    <select class="ti-form-select" id="pro_att_role" name="role" required>
-                                                                                        <option value="#">Choose Role</option>
-                                                                                        <option value="Participant">Participant</option>
-                                                                                        <option value="Resource Person">Resource Person</option>
-                                                                                        <option value="Jury">Jury</option>
-                                                                                    </select>
+                                                                                <select class="ti-form-select" id="pro_att_role" name="role" required>
+                                                                                    <option value="#">Choose Role</option>
+                                                                                    <option value="Participant" <?php echo e(old('role') == 'Participant' ? 'selected' : ''); ?>>Participant</option>
+                                                                                    <option value="Resource Person" <?php echo e(old('role') == 'Resource Person' ? 'selected' : ''); ?>>Resource Person</option>
+                                                                                    <option value="Jury" <?php echo e(old('role') == 'Jury' ? 'selected' : ''); ?>>Jury</option>
+                                                                                </select>
+
                                                                                     <?php if($errors->has('role')): ?>
                                                                                         <div class="text-red-700"><?php echo e($errors->first('role')); ?></div>
                                                                                     <?php endif; ?>
@@ -171,12 +172,13 @@
 
                                                                             <div class="max-w-sm pb-6 space-y-3">
                                                                                 <label for="" class="mb-0 font-bold ti-form-label">Level <span class="text-red-500">*</span></label>
-                                                                                <select class="ti-form-select" id="pro_att_level" name="level"  required>
+                                                                                <select class="ti-form-select" id="pro_att_level" name="level" required>
                                                                                     <option value="#">Choose Level</option>
-                                                                                    <option value="Local">Local</option>
-                                                                                    <option value="National">National</option>
-                                                                                    <option value="International">International</option>
+                                                                                    <option value="Local" <?php echo e(old('level') == 'Local' ? 'selected' : ''); ?>>Local</option>
+                                                                                    <option value="National" <?php echo e(old('level') == 'National' ? 'selected' : ''); ?>>National</option>
+                                                                                    <option value="International" <?php echo e(old('level') == 'International' ? 'selected' : ''); ?>>International</option>
                                                                                 </select>
+
                                                                                 <?php if($errors->has('level')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('level')); ?></div>
                                                                                 <?php endif; ?>
@@ -188,18 +190,18 @@
                                                                                 <label for="" class="font-bold ti-form-label">Category:<span class="text-red-500">*</span></label>
                                                                                 <select class="ti-form-select category" id="pro_att_category" name="category">
                                                                                     <option value="#">Choose Category</option>
-                                                                                    <option value="Workshop">Workshop</option>
-                                                                                    <option value="FDP">FDP</option>
-                                                                                    <option value="Seminar">Seminar</option>
-                                                                                    <option value="Webinar">Webinar</option>
-                                                                                    <option value="STTP">STTP</option>
-                                                                                    <option value="Certification Program">Certification Program</option>
-                                                                                    <option value="MDP/EDP">MDP/EDP</option>
-                                                                                    <option value="Hackathon">Hackathon</option>
-                                                                                    <option value="Space-Talk">Space Talk</option>
-                                                                                    <option value="Site Visit">Site Visit</option>
-
+                                                                                    <option value="Workshop" <?php echo e(old('category') == 'Workshop' ? 'selected' : ''); ?>>Workshop</option>
+                                                                                    <option value="FDP" <?php echo e(old('category') == 'FDP' ? 'selected' : ''); ?>>FDP</option>
+                                                                                    <option value="Seminar" <?php echo e(old('category') == 'Seminar' ? 'selected' : ''); ?>>Seminar</option>
+                                                                                    <option value="Webinar" <?php echo e(old('category') == 'Webinar' ? 'selected' : ''); ?>>Webinar</option>
+                                                                                    <option value="STTP" <?php echo e(old('category') == 'STTP' ? 'selected' : ''); ?>>STTP</option>
+                                                                                    <option value="Certification Program" <?php echo e(old('category') == 'Certification Program' ? 'selected' : ''); ?>>Certification Program</option>
+                                                                                    <option value="MDP/EDP" <?php echo e(old('category') == 'MDP/EDP' ? 'selected' : ''); ?>>MDP/EDP</option>
+                                                                                    <option value="Hackathon" <?php echo e(old('category') == 'Hackathon' ? 'selected' : ''); ?>>Hackathon</option>
+                                                                                    <option value="Space-Talk" <?php echo e(old('category') == 'Space-Talk' ? 'selected' : ''); ?>>Space-Talk</option>
+                                                                                    <option value="Site Visit" <?php echo e(old('category') == 'Site Visit' ? 'selected' : ''); ?>>Site Visit</option>
                                                                                 </select>
+
                                                                                 <?php if($errors->has('category')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('category')); ?></div>
                                                                                 <?php endif; ?>
@@ -209,9 +211,10 @@
                                                                                 <label for="" class="font-bold ti-form-label">Sponsored: <span class="text-red-500">*</span></label>
                                                                                 <select class="ti-form-select sponsored_type sponsored" id="pro_att_sponsored" name="sponsored" required>
                                                                                     <option value="#">Choose One</option>
-                                                                                    <option value="Yes">Yes</option>
-                                                                                    <option value="No">No</option>
+                                                                                    <option value="Yes" <?php echo e(old('sponsored') == 'Yes' ? 'selected' : ''); ?>>Yes</option>
+                                                                                    <option value="No" <?php echo e(old('sponsored') == 'No' ? 'selected' : ''); ?>>No</option>
                                                                                 </select>
+
                                                                                 <?php if($errors->has('sponsored')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('sponsored')); ?></div>
                                                                                 <?php endif; ?>
@@ -224,8 +227,8 @@
                                                                                 <label for="" class="font-bold ti-form-label">Sponsored By:</label>
                                                                                 <select class="ti-form-select sponsoredBy" id="pro_att_sponsoredby" name="sponsored_by">
                                                                                     <option value="#">Choose One</option>
-                                                                                    <option  value="KLS GIT">KLS GIT</option>
-                                                                                    <option value="Other">Other</option>
+                                                                                    <option value="KLS GIT" <?php echo e(old('sponsored_by') == 'KLS GIT' ? 'selected' : ''); ?>>KLS GIT</option>
+                                                                                    <option value="Other" <?php echo e(old('sponsored_by') == 'Other' ? 'selected' : ''); ?>>Other</option>
                                                                                 </select>
                                                                                 <?php if($errors->has('sponsored_by')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('sponsored_by')); ?></div>
@@ -234,7 +237,7 @@
                                                                             </div>
                                                                             <div class="max-w-sm pb-6 space-y-3 otherSponsor othersponsored">
                                                                                 <label for="" class="font-bold ti-form-label">Other Sponsor:</label>
-                                                                                <input type="text" name="other_sponsored" class="ti-form-input othersponsored" id="pro_att_otherSponsor" placeholder="Other Sponsor">
+                                                                                <input type="text" name="other_sponsored" class="ti-form-input othersponsored" id="pro_att_otherSponsor" placeholder="Other Sponsor" value="<?php echo e(old('other_sponsored')); ?>">
                                                                                 <?php if($errors->has('other_sponsored')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('other_sponsored')); ?></div>
                                                                                 <?php endif; ?>
@@ -251,7 +254,7 @@
 
                                                                                 <input type="date" name="from_date"
                                                                                     class="rounded-l-none ti-form-input focus:z-10 flatpickr-input date attended_from_date"
-                                                                                    id="pro_att_from_date" required placeholder="Choose date" >
+                                                                                    id="pro_att_from_date" required placeholder="Choose date" value="<?php echo e(old('from_date')); ?>">
 
                                                                                 <?php if($errors->has('from_date')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('from_date')); ?></div>
@@ -267,7 +270,7 @@
 
                                                                                 <input type="date" name="to_date"
                                                                                     class="border rounded-l-none ti-form-input focus:z-10 flatpickr-input date attended_to_date "
-                                                                                        id="pro_att_to_date" required placeholder="Choose date">
+                                                                                        id="pro_att_to_date" required placeholder="Choose date" value="<?php echo e(old('to_date')); ?>">
 
                                                                                 <?php if($errors->has('to_date')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('to_date')); ?></div>
@@ -279,7 +282,7 @@
                                                                         <div class="grid gap-1 space-y-2 lg:grid-cols-2 lg:space-y-0">
                                                                             <div class="max-w-sm pb-6 space-y-3">
                                                                                 <label for="" class="pt-4 font-bold ti-form-label">No Of Days :<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="no_of_days" id="pro_att_no_of_days" class="ti-form-input no_of_days_attended " placeholder="No of Days" readonly >
+                                                                                <input type="text" name="no_of_days" id="pro_att_no_of_days" class="ti-form-input no_of_days_attended " placeholder="No of Days" readonly value="<?php echo e(old('no_of_days')); ?>">
                                                                                 <?php if($errors->has('no_of_days')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('no_of_days')); ?></div>
                                                                                 <?php endif; ?>
@@ -347,7 +350,13 @@
                                                                     <tr style="<?php if($act->validation_status =='invalid'): ?> background-color: #ffcccc; <?php elseif($act->validation_status =='updated'): ?> background-color: #fff2cc; <?php elseif($act->validation_status =='valid'): ?> background-color: #ccffcc; <?php endif; ?>">
 
                                                                         <td><span><?php echo e($i++); ?></span></td>
-                                                                        <td><span><?php echo e($act->egov_id); ?></span></td>
+                                                                        
+                                                                        <td>
+                                                                            <a href="https://git.edu/storage/Uploads/Professional_Activity_Attended/<?php echo e($act->document); ?>" class="text-blue-500">
+                                                                                <span><?php echo e($act->egov_id); ?></span>
+                                                                            </a>
+                                                                        </td>
+
                                                                         <td><span><?php echo e($act->title); ?></span></td>
                                                                         <td><span><?php echo e($act->organizer); ?></span></td>
                                                                         <td><span><?php echo e($act->role); ?></span></td>
@@ -722,7 +731,7 @@
                                                                         <div class="grid gap-1 space-y-2 lg:grid-cols-2 lg:space-y-0">
                                                                             <div class="max-w-sm pb-6 space-y-3">
                                                                                 <label for="with-corner-hint" class="font-bold ti-form-label">Title : <span class="text-red-500">*</span> </label>
-                                                                                <input type="text" name="con_title" id="pro_cond_title" class="ti-form-input" placeholder="Title">
+                                                                                <input type="text" name="con_title" id="pro_cond_title" class="ti-form-input" placeholder="Title" value="<?php echo e(old('con_title')); ?>">
                                                                                 <?php if($errors->has('con_title')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('con_title')); ?></div>
                                                                                 <?php endif; ?>
@@ -733,11 +742,11 @@
                                                                                 <label for="with-corner-hint" class="font-bold ti-form-label">Level:<span class="text-red-500">*</span> </label>
                                                                                 <select class="ti-form-select" name="con_level" id="pro_cond_level">
                                                                                     <option value="#">Choose Level</option>
-                                                                                    <option value="Local">Local</option>
-                                                                                    <option value="National">National</option>
-                                                                                    <option value="International">International</option>
+                                                                                    <option value="Local" <?php echo e(old('con_level') == 'Local' ? 'selected' : ''); ?>>Local</option>
+                                                                                    <option value="National" <?php echo e(old('con_level') == 'National' ? 'selected' : ''); ?>>National</option>
+                                                                                    <option value="International" <?php echo e(old('con_level') == 'International' ? 'selected' : ''); ?>>International</option>
                                                                                 </select>
-                                                                                    <?php if($errors->has('con_level')): ?>
+                                                                                <?php if($errors->has('con_level')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('con_level')); ?></div>
                                                                                 <?php endif; ?>
                                                                                 <div id="pro_con_levelNameError" class="text-red-700 error"></div>
@@ -746,7 +755,7 @@
                                                                         <div class="grid gap-1 space-y-2 lg:grid-cols-2 lg:space-y-0">
                                                                             <div class="max-w-sm pb-6 space-y-3">
                                                                                 <label for="" class="font-bold ti-form-label">Organizer : <span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="con_organizer" class="ti-form-input" placeholder="Organizer" id="pro_cond_organizer">
+                                                                                <input type="text" name="con_organizer" class="ti-form-input" placeholder="Organizer" id="pro_cond_organizer" value="<?php echo e(old('con_organizer')); ?>">
                                                                                 <?php if($errors->has('con_organizer')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('con_organizer')); ?></div>
                                                                                 <?php endif; ?>
@@ -754,7 +763,7 @@
                                                                             </div>
                                                                             <div class="max-w-sm pb-6 space-y-3">
                                                                                 <label for="" class="font-bold ti-form-label">Co Organizer :</label>
-                                                                                <input type="text" name="con_co_organizer" class="ti-form-input" placeholder="Co Organizer" id="pro_cond_co_organizer">
+                                                                                <input type="text" name="con_co_organizer" class="ti-form-input" placeholder="Co Organizer" id="pro_cond_co_organizer" value="<?php echo e(old('con_co_organizer')); ?>">
                                                                                 <?php if($errors->has('con_co_organizer')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('con_co_organizer')); ?></div>
                                                                                 <?php endif; ?>
@@ -764,20 +773,20 @@
                                                                         <div class="grid gap-1 space-y-2 lg:grid-cols-2 lg:space-y-0">
                                                                             <div class="max-w-sm pb-6 space-y-3">
                                                                                 <label for="" class="font-bold ti-form-label">Category : <span class="text-red-500">*</span></label>
-                                                                                <select class="ti-form-select" name="con_category" id="pro_cond_category" required>
+                                                                                    <select class="ti-form-select" name="con_category" id="pro_cond_category" required>
                                                                                         <option value="#">Choose Category</option>
-                                                                                        <option value="Workshop">Workshop</option>
-                                                                                        <option value="FDP">FDP</option>
-                                                                                        <option value="Seminar">Seminar</option>
-                                                                                        <option value="Webinar">Webinar</option>
-                                                                                        <option value="STTP">STTP</option>
-                                                                                        <option value="Certification Program">Certification Program</option>
-                                                                                        <option value="MDP/EDP">MDP/EDP</option>
-                                                                                        <option value="Hackathon">Hackathon</option>
-                                                                                        <option value="Space-Talk">Space Talk</option>
-                                                                                        <option value="Site Visit">Site Visit</option>
+                                                                                        <option value="Workshop" <?php echo e(old('con_category') == 'Workshop' ? 'selected' : ''); ?>>Workshop</option>
+                                                                                        <option value="FDP" <?php echo e(old('con_category') == 'FDP' ? 'selected' : ''); ?>>FDP</option>
+                                                                                        <option value="Seminar" <?php echo e(old('con_category') == 'Seminar' ? 'selected' : ''); ?>>Seminar</option>
+                                                                                        <option value="Webinar" <?php echo e(old('con_category') == 'Webinar' ? 'selected' : ''); ?>>Webinar</option>
+                                                                                        <option value="STTP" <?php echo e(old('con_category') == 'STTP' ? 'selected' : ''); ?>>STTP</option>
+                                                                                        <option value="Certification Program" <?php echo e(old('con_category') == 'Certification Program' ? 'selected' : ''); ?>>Certification Program</option>
+                                                                                        <option value="MDP/EDP" <?php echo e(old('con_category') == 'MDP/EDP' ? 'selected' : ''); ?>>MDP/EDP</option>
+                                                                                        <option value="Hackathon" <?php echo e(old('con_category') == 'Hackathon' ? 'selected' : ''); ?>>Hackathon</option>
+                                                                                        <option value="Space-Talk" <?php echo e(old('con_category') == 'Space-Talk' ? 'selected' : ''); ?>>Space Talk</option>
+                                                                                        <option value="Site Visit" <?php echo e(old('con_category') == 'Site Visit' ? 'selected' : ''); ?>>Site Visit</option>
+                                                                                    </select>
 
-                                                                                </select>
                                                                                     <?php if($errors->has('con_category')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('con_category')); ?></div>
                                                                                 <?php endif; ?>
@@ -787,9 +796,10 @@
                                                                                 <label for="" class="font-bold ti-form-label">Sponsored:<span class="text-red-500">*</span></label>
                                                                                 <select class="ti-form-select sponsored_type_conducted sponsored" name="con_sponsored" id="pro_cond_sponsored" required>
                                                                                     <option value="#">Choose One</option>
-                                                                                    <option value="Yes">Yes</option>
-                                                                                    <option value="No">No</option>
+                                                                                    <option value="Yes" <?php echo e(old('con_sponsored') == 'Yes' ? 'selected' : ''); ?>>Yes</option>
+                                                                                    <option value="No" <?php echo e(old('con_sponsored') == 'No' ? 'selected' : ''); ?>>No</option>
                                                                                 </select>
+
                                                                                     <?php if($errors->has('con_sponsored')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('con_sponsored')); ?></div>
                                                                                 <?php endif; ?>
@@ -801,7 +811,7 @@
                                                                         <div class="grid gap-1 space-y-2 lg:grid-cols-2 lg:space-y-0">
                                                                             <div class="max-w-sm pb-6 space-y-3 sponsoring_agency_name_address">
                                                                                 <label for="" class="font-bold ti-form-label">Sponsoring Agency Name Address:</label>
-                                                                                <input type="text" name="con_sponsoring_agency_name_address" class="ti-form-input" placeholder="Sponsoring Agency Name Address" id="pro_cond_sponsoring_agency_name_address">
+                                                                                <input type="text" name="con_sponsoring_agency_name_address" class="ti-form-input" placeholder="Sponsoring Agency Name Address" id="pro_cond_sponsoring_agency_name_address" value="<?php echo e(old('con_sponsoring_agency_name_address')); ?>">
                                                                                 <?php if($errors->has('con_sponsoring_agency_name_address')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('con_sponsoring_agency_name_address')); ?></div>
                                                                                 <?php endif; ?>
@@ -811,12 +821,12 @@
                                                                                 <label for="" class="pt-4 font-bold ti-form-label">Role: <span class="text-red-500">*</span></label>
                                                                                 <select class="ti-form-select" name="con_role" id="pro_cond_role">
                                                                                     <option value="#">Choose Role</option>
-                                                                                    <option value="Coordinator">Coordinator</option>
-                                                                                    <option value="Convenor">Convenor</option>
-                                                                                    <option value="Member">Member</option>
-                                                                                    <option value="Jury">Jury</option>
-
+                                                                                    <option value="Coordinator" <?php echo e(old('con_role') == 'Coordinator' ? 'selected' : ''); ?>>Coordinator</option>
+                                                                                    <option value="Convenor" <?php echo e(old('con_role') == 'Convenor' ? 'selected' : ''); ?>>Convenor</option>
+                                                                                    <option value="Member" <?php echo e(old('con_role') == 'Member' ? 'selected' : ''); ?>>Member</option>
+                                                                                    <option value="Jury" <?php echo e(old('con_role') == 'Jury' ? 'selected' : ''); ?>>Jury</option>
                                                                                 </select>
+
                                                                                 <?php if($errors->has('con_role')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('con_role')); ?></div>
                                                                                 <?php endif; ?>
@@ -834,7 +844,7 @@
 
                                                                                 <input type="text" name="con_from_date" id="pro_cond_from_date"
                                                                                     class="rounded-l-none ti-form-input focus:z-10 flatpickr-input date conducted_from_date"
-                                                                                        required placeholder="Choose date" >
+                                                                                        required placeholder="Choose date" value="<?php echo e(old('con_from_date')); ?>">
                                                                                         <?php if($errors->has('con_from_date')): ?>
                                                                                         <div class="text-red-700"><?php echo e($errors->first('con_from_date')); ?></div>
                                                                                     <?php endif; ?>
@@ -850,7 +860,7 @@
                                                                                 </div>
                                                                                     <input type="text" name="con_to_date" id="pro_cond_to_date"
                                                                                     class="rounded-l-none ti-form-input focus:z-10 flatpickr-input date conducted_to_date"
-                                                                                    required placeholder="Choose date" >
+                                                                                    required placeholder="Choose date" value="<?php echo e(old('con_to_date')); ?>">
                                                                                     <?php if($errors->has('con_to_date')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('con_to_date')); ?></div>
                                                                                 <?php endif; ?>
@@ -862,7 +872,7 @@
                                                                         <div class="grid gap-1 space-y-2 lg:grid-cols-2 lg:space-y-0">
                                                                             <div class="max-w-sm pb-6 space-y-3">
                                                                                 <label for="" class="pt-4 font-bold ti-form-label">Place : <span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="con_place" class="ti-form-input" placeholder="Place" id="pro_cond_place">
+                                                                                <input type="text" name="con_place" class="ti-form-input" placeholder="Place" id="pro_cond_place" value="<?php echo e(old('con_place')); ?>">
                                                                                     <?php if($errors->has('con_place')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('con_place')); ?></div>
                                                                                 <?php endif; ?>
@@ -872,7 +882,7 @@
 
                                                                             <div class="max-w-sm pb-6 space-y-3">
                                                                                 <label for="" class="pt-4 font-bold ti-form-label">No Of Days:<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="con_no_of_days" class="ti-form-input no_of_days_conducted" required readonly placeholder="No of Days" id="pro_cond_no_of_days">
+                                                                                <input type="text" name="con_no_of_days" class="ti-form-input no_of_days_conducted" required readonly placeholder="No of Days" id="pro_cond_no_of_days" value="<?php echo e(old('con_no_of_days')); ?>">
                                                                                 <?php if($errors->has('con_no_of_days')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('con_no_of_days')); ?></div>
                                                                                 <?php endif; ?>
@@ -947,7 +957,12 @@
                                                                     <tr style="<?php if($conduct->validation_status =='invalid'): ?> background-color: #ffcccc; <?php elseif($conduct->validation_status =='updated'): ?> background-color: #fff2cc; <?php elseif($conduct->validation_status =='valid'): ?> background-color: #ccffcc; <?php endif; ?>">
 
                                                                         <td><span><?php echo e($i++); ?></span></td>
-                                                                        <td><span><?php echo e($conduct->egov_id); ?></span></td>
+                                                                        
+                                                                        <td>
+                                                                            <a href="https://git.edu/storage/Uploads/Professional_Activity_Conducted/<?php echo e($conduct->document); ?>" class="text-blue-500">
+                                                                                <span><?php echo e($conduct->egov_id); ?></span>
+                                                                            </a>
+                                                                        </td>
                                                                         <td><span><?php echo e($conduct->title); ?></span></td>
                                                                         <td><span><?php echo e($conduct->level); ?></span></td>
                                                                         <td><span><?php echo e($conduct->organizer); ?></span></td>
@@ -1579,13 +1594,26 @@
 
                         //alert(pro_att_title+'-'+pro_att_organizer+'-'+pro_att_role+'-'+pro_att_level+'-'+pro_att_category+'-'+pro_att_sponsored+'-'+pro_att_sponsoredby+'-'+pro_att_otherSponsor+'-'+pro_att_from_date+'-'+pro_att_to_date+'-'+pro_att_no_of_days);
 
-                        if(pro_att_title == ''){
+                        // if(pro_att_title == ''){
+                        //     $('#pr_att_titleNameError').text('Title is missing');
+                        //     flag = true;
+                        // }else if (!/^[a-zA-Z\s]+$/.test(pro_att_title.trim())){
+                        //     $('#pr_att_titleNameError').text('Please fill the correct value');
+                        //     flag = true;
+                        // }
+
+
+
+                        if (pro_att_title.trim() === '') {
                             $('#pr_att_titleNameError').text('Title is missing');
                             flag = true;
-                        }else if (!/^[a-zA-Z\s]+$/.test(pro_att_title.trim())){
+                        } else if (!/^[\w\s\/.,]+$/.test(pro_att_title.trim())) {
                             $('#pr_att_titleNameError').text('Please fill the correct value');
                             flag = true;
                         }
+
+
+
 
                         if(pro_att_organizer == ''){
                             $('#pr_att_organizerError').text('Data is missing');
@@ -1669,13 +1697,27 @@
 
                         //alert(pro_cond_title+'-'+pro_cond_level+'-'+pro_cond_organizer+'-'+pro_cond_co_organizer+'-'+pro_cond_category+'-'+pro_cond_sponsored+'-'+pro_cond_sponsoring_agency_name_address+'-'+pro_cond_role+'-'+pro_cond_from_date+'-'+pro_cond_to_date+'-'+pro_cond_place+'-'+pro_cond_no_of_days);
 
-                        if(pro_cond_title == ''){
+                        // if(pro_cond_title == ''){
+                        //     $('#pro_con_titleNameError').text('Title is missing');
+                        //      flag = true;
+                        // }else if (!/^[a-zA-Z\s]+$/.test(pro_cond_title.trim())){
+                        //     $('#pro_con_titleNameError').text('Please fill the correct value');
+                        //      flag = true;
+                        // }
+
+
+                        if (pro_cond_title.trim() === '') {
                             $('#pro_con_titleNameError').text('Title is missing');
-                             flag = true;
-                        }else if (!/^[a-zA-Z\s]+$/.test(pro_cond_title.trim())){
+                            flag = true;
+                        } else if (!/^[\w\s\/.,]+$/.test(pro_cond_title.trim())) {
                             $('#pro_con_titleNameError').text('Please fill the correct value');
-                             flag = true;
+                            flag = true;
                         }
+
+
+
+
+
                         if(pro_cond_level == '#'){
                             $('#pro_con_levelNameError').text('Please Choose a correct Option');
                              flag = true;

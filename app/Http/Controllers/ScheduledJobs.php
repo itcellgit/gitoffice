@@ -376,4 +376,11 @@ class ScheduledJobs extends Controller
         logger('day wise entitlement of EL for Teaching Non-Vacational completed');
     }
 
+    public function inactivate_previous_year()
+    {
+        $year=Carbon::now()->year-1;
+      //  dd($year);
+        $leave_entitlement_previous_year=leave_staff_entitlement::where('year',$year)->where('status','active')->get();
+    }
+
 }

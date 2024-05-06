@@ -135,8 +135,6 @@ class ReviewerEditorController extends Controller
         $reviewer_editor->other_level=$request->other_level;
         $reviewer_editor->category=$request->category;
 
-        // $reviewer_editor->validation_status=$request->validation_status;
-        // $reviewer_editor->reason=$request->reason;
 
 
         if($request->level=="Other")
@@ -148,13 +146,12 @@ class ReviewerEditorController extends Controller
             $reviewer_editor->level=$request->level;
         }
 
+
+
         // Update validation status
-        $reviewer_editor->validation_status = ($request->validation_status == "invalid") ? "updated" : $request->validation_status;
 
+        //$reviewer_editor->validation_status = ($request->validation_status == "invalid") ? "updated" : $request->validation_status;
 
-        // if ($request->validation_status == "invalid") {
-        //     $reviewer_editor->validation_status = "updated";
-        // }
 
 
         //file upload
@@ -175,8 +172,8 @@ class ReviewerEditorController extends Controller
                  if($file->store('public/Uploads/Research/Review_Editor/'))
                  {
                      //dd("File upload Sucess");
-                     $file_upload_status = 1;
-                     $reviewer_editor->document= $file->hashName();
+                    $file_upload_status = 1;
+                    $reviewer_editor->document= $file->hashName();
                     $result=  $reviewer_editor->update(); // insert the row and upload the file only when all the conditions are met.
 
                  }

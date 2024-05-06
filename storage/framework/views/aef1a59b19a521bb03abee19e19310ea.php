@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('styles'); ?>
 
         <!-- CHOICES CSS -->
@@ -7,7 +5,7 @@
 
         <!-- FLATPICKR CSS -->
         <link rel="stylesheet" href="<?php echo e(asset('build/assets/libs/flatpickr/flatpickr.min.css')); ?>">
-        
+
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -17,21 +15,21 @@
                     <!-- Start::main-content -->
                     <div class="main-content">
 
-                       
+
                         <!-- Page Header -->
                             <div class="block justify-between page-header sm:flex">
                                 <div>
                                     
                                     <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium">Welcome<span class="text-primary"> <?php echo e($staff->fname.' '.$staff->mname.' '.$staff->lname); ?></span></h3>
-                                </div>    
-                                <ol class="flex items-center whitespace-nowrap min-w-0"> 
+                                </div>
+                                <ol class="flex items-center whitespace-nowrap min-w-0">
                                     <li class="text-sm">
                                         <a class="flex items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="javascript:void(0);">
                                             Research Activities
                                             <i class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
                                         </a>
                                     </li>
-                                        
+
                                 </ol>
                             </div>
                         <!-- Page Header Close -->
@@ -56,11 +54,11 @@
                                             </div>
                                         <?php endif; ?>
                                     <?php endif; ?>
-                                    <?php 
-                                        Illuminate\Support\Facades\Session::forget('return_data'); 
-                                        header("refresh: 2"); 
+                                    <?php
+                                        Illuminate\Support\Facades\Session::forget('return_data');
+                                        header("refresh: 2");
                                     ?>
-                                <?php endif; ?>   
+                                <?php endif; ?>
 
                             </div>
                         </div>
@@ -70,23 +68,41 @@
                                 <div class="box-header">
                                     
                                 </div>
-       
+
                                 <div class="box-body pt-0">
-                                    
+
 
                                     <div class="mt-3">
                                         <!--Start of publications details-->
-                                        
-                                        
-
                                             <div class="box border-0 shadow-none mb-0">
                                                 <div class="box-header">
                                                     <h5 class="box-title leading-none flex"><i class="ri ri-global-line ltr:mr-2 rtl:ml-2"></i>Journal Publications</h5>
+                                                    <div class="avatar-container flex py-4">
+                                                        <div class="avatar-wrapper flex items-center">
+                                                            <div class="avatar rounded-sm p-1 bg-green-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-bold ml-2 ">Valid</div>
+                                                        </div>
+
+                                                        <div class="avatar-wrapper flex items-center mx-2">
+                                                            <div class="avatar rounded-sm p-1 bg-red-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-bold ml-2">Invalid</div>
+                                                        </div>
+
+                                                        <div class="avatar-wrapper flex items-center mx-2">
+                                                            <div class="avatar rounded-sm p-1 bg-yellow-400 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-bold ml-2">Updated</div>
+                                                        </div>
+
+                                                        <div class="avatar-wrapper flex items-center">
+                                                            <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
+                                                            <div class="avatar-text font-semibold ml-2">New</div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="box-body">
                                                     <button id="publication_btn" data-hs-overlay="#add_publicaitons" class="hs-dropdown-toggle ti-btn ti-btn-primary">
                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M17 19H19V11H13V19H15V13H17V19ZM3 19V4C3 3.44772 3.44772 3 4 3H18C18.5523 3 19 3.44772 19 4V9H21V19H22V21H2V19H3ZM7 11V13H9V11H7ZM7 15V17H9V15H7ZM7 7V9H9V7H7Z" fill="rgba(255,255,255,1)"></path></svg>
-                                                            Add Journal Publication 
+                                                            Add Journal Publication
                                                     </button>
                                                     <div id="add_publicaitons" class="hs-overlay hidden ti-modal">
                                                         <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out lg:!max-w-4xl lg:w-full m-3 md:mx-auto">
@@ -107,7 +123,7 @@
                                                                         </svg>
                                                                     </button>
                                                                     <?php if(($errors->has('level'))||($errors->has('other_level'))||($errors->has('title'))||($errors->has('date'))||($errors->has('journal'))||($errors->has('publication_type'))||($errors->has('link'))||($errors->has('doi_number'))||($errors->has('role'))||($errors->has('document'))): ?>
-                                                                       
+
                                                                         <script>
                                                                             //alert('Errror is set');
                                                                             $(window).on('load', function() {
@@ -118,72 +134,72 @@
                                                                                     //alert('conducted clicked');
                                                                                     $('#publication_btn').trigger("click");
 
-                                                                            }); 
+                                                                            });
                                                                         </script>
                                                                     <?php endif; ?>
                                                                 </div>
                                                                 <form  action="<?php echo e(route('Teaching.research.publications.store')); ?>" method="post" enctype="multipart/form-data">
-                                                                    <?php echo csrf_field(); ?> 
+                                                                    <?php echo csrf_field(); ?>
                                                                     <div class="ti-modal-body">
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold"> Level :<span class="text-red-500">*</span> </label>
-                                                                                <select class="ti-form-select level pub_level" name="level" id="pub_level">
+                                                                                <select class="ti-form-select level pub_level" name="level"  id="pub_level">
                                                                                     <option value="#">Choose Level</option>
-                                                                                    <option value="Q1">Q1</option>
-                                                                                    <option value="Q2">Q2</option>  
-                                                                                    <option value="Q3">Q3</option>
-                                                                                    <option value="Q4">Q4</option>
-                                                                                    <option value="SCI">SCI</option>
-                                                                                    <option value="Web of Science">Web of Science</option>  
-                                                                                    <option value="Scopus Indexed">Scopus Indexed</option>
-                                                                                    <option value="UGC General">UGC General</option>
-                                                                                    <option value="Other">Other</option>
+                                                                                    <option value="Q1" <?php echo e(old('level') == 'Q1' ? 'selected' : ''); ?>>Q1</option>
+                                                                                    <option value="Q2" <?php echo e(old('level') == 'Q2' ? 'selected' : ''); ?>>Q2</option>
+                                                                                    <option value="Q3" <?php echo e(old('level') == 'Q3' ? 'selected' : ''); ?>>Q3</option>
+                                                                                    <option value="Q4" <?php echo e(old('level') == 'Q4' ? 'selected' : ''); ?>>Q4</option>
+                                                                                    <option value="SCI" <?php echo e(old('level') == 'SCI' ? 'selected' : ''); ?>>SCI</option>
+                                                                                    <option value="Web of Science" <?php echo e(old('level') == 'Web of Science' ? 'selected' : ''); ?>>Web of Science</option>
+                                                                                    <option value="Scopus Indexed" <?php echo e(old('level') == 'Scopus Indexed' ? 'selected' : ''); ?>>Scopus Indexed</option>
+                                                                                    <option value="UGC General" <?php echo e(old('level') == 'UGC General' ? 'selected' : ''); ?>>UGC General</option>
+                                                                                    <option value="Other" <?php echo e(old('level') == 'Other' ? 'selected' : ''); ?>>Other</option>
                                                                                 </select>
                                                                                 <?php if($errors->has('level')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('level')); ?></div>
                                                                                 <?php endif; ?>
                                                                                 <div id="pub_levelError" class="error text-red-700"></div>
                                                                             </div>
-
                                                                             <div class="max-w-sm space-y-3 pb-6" id="pub_other_level">
                                                                                 <label for="" class="ti-form-label font-bold">Other Level:</label>
-                                                                                <input type="text" name="other_level" class="ti-form-input" placeholder="Other Level" id="pub_otherlevel">
+                                                                                <input type="text" name="other_level" class="ti-form-input" placeholder="Other Level" id="pub_otherlevel" value="<?php echo e(old('other_level')); ?>">
                                                                                 <?php if($errors->has('other_level')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('other_level')); ?></div>
                                                                                 <?php endif; ?>
                                                                                 <div id="pub_other_levelError" class="error text-red-700"></div>
                                                                             </div>
+
                                                                         </div>
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Title :<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="title" class="ti-form-input" placeholder="Title" id="pub_title">
+                                                                                <input type="text" name="title" class="ti-form-input" placeholder="Title" id="pub_title" value="<?php echo e(old('title')); ?>">
                                                                                  <?php if($errors->has('title')): ?>
                                                                                      <div class="text-red-700"><?php echo e($errors->first('title')); ?></div>
                                                                                  <?php endif; ?>
                                                                                 <div id="pub_titleError" class="error text-red-700"></div>
-                                                                            </div>   
+                                                                            </div>
 
                                                                             <div class="flex max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Date of Publication:<span class="text-red-500">*</span></label>
                                                                                     <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
                                                                                         <span class="text-sm text-gray-500 dark:text-white/70"><i class="ri ri-calendar-line"></i></span>
                                                                                     </div>
-                                                                            
+
                                                                                     <input type="date" name="date" id="pub_dateofpublication"
                                                                                             class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date conf_attended_from_date"
-                                                                                              placeholder="Choose date" >
+                                                                                              placeholder="Choose date" value="<?php echo e(old('date')); ?>">
                                                                                     <?php if($errors->has('date')): ?>
                                                                                          <div class="text-red-700"><?php echo e($errors->first('date')); ?></div>
                                                                                      <?php endif; ?>
-                                                                                    <div id="pub_dateofpublicatonError" class="error text-red-700"></div>      
-                                                                            </div>                                                                                 
+                                                                                    <div id="pub_dateofpublicatonError" class="error text-red-700"></div>
+                                                                            </div>
                                                                         </div>
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Journal:<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="journal" class="ti-form-input"  placeholder="Journal" id="pub_journal">
+                                                                                <input type="text" name="journal" class="ti-form-input"  placeholder="Journal" id="pub_journal" value="<?php echo e(old('journal')); ?>">
                                                                                  <?php if($errors->has('journal')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('journal')); ?></div>
                                                                                 <?php endif; ?>
@@ -191,13 +207,10 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Publication Type:<span class="text-red-500">*</span></label>
-
                                                                                 <select class="ti-form-select" name="publication_type" id="pubtype">
                                                                                     <option value="#">Choose One</option>
-                                                                                    <option value="Journal">Journal</option>
-                                                                                    <option value="Conference Proceeding">Conference Proceeding</option>
-                                                                                    
-
+                                                                                    <option value="Journal" <?php echo e(old('publication_type') == 'Journal' ? 'selected' : ''); ?>>Journal</option>
+                                                                                    <option value="Conference Proceeding" <?php echo e(old('publication_type') == 'Conference Proceeding' ? 'selected' : ''); ?>>Conference Proceeding</option>
                                                                                 </select>
                                                                                 <?php if($errors->has('publication_typeError')): ?>
                                                                                         <div class="text-red-700"><?php echo e($errors->first('publication_typeError')); ?></div>
@@ -205,19 +218,19 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">DOI Number:<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="doi_number" class="ti-form-input" required placeholder="Doi Number" id="pub_doi_number" >
+                                                                                <input type="text" name="doi_number" class="ti-form-input" required placeholder="Doi Number" id="pub_doi_number" value="<?php echo e(old('doi_number')); ?>">
                                                                                     <?php if($errors->has('doi_number')): ?>
                                                                                     <div class="text-red-700"><?php echo e($errors->first('doi_number')); ?></div>
                                                                                 <?php endif; ?>
                                                                                 <div id="pub_doi_numberError" class="error text-red-700"></div>
                                                                             </div>
-                                                                            
+
                                                                         </div>
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
-                                                                            
+
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Link:</label>
-                                                                                <input type="url" id="pub_link" name="link" class="ti-form-input" placeholder="Link Should Be http://www.">
+                                                                                <input type="url" id="pub_link" name="link" class="ti-form-input" placeholder="Link Should Be http://www." value="<?php echo e(old('link')); ?>">
                                                                                     <?php if($errors->has('link')): ?>
                                                                                          <div class="text-red-700"><?php echo e($errors->first('link')); ?></div>
                                                                                      <?php endif; ?>
@@ -225,13 +238,11 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Author Role:<span class="text-red-500">*</span></label>
-
                                                                                 <select class="ti-form-select role" name="role" id="pub_authorrole">
                                                                                     <option value="#">Choose One</option>
-                                                                                    <option value="Author">Author</option>
-                                                                                    <option value="Co-Author">Co-Author</option>
-                                                                                    <option value="Corresponding-Author">Corresponding-Author</option>
-
+                                                                                    <option value="Author" <?php echo e(old('role') == 'Author' ? 'selected' : ''); ?>>Author</option>
+                                                                                    <option value="Co-Author" <?php echo e(old('role') == 'Co-Author' ? 'selected' : ''); ?>>Co-Author</option>
+                                                                                    <option value="Corresponding-Author" <?php echo e(old('role') == 'Corresponding-Author' ? 'selected' : ''); ?>>Corresponding-Author</option>
                                                                                 </select>
                                                                                 <?php if($errors->has('role')): ?>
                                                                                         <div class="text-red-700"><?php echo e($errors->first('role')); ?></div>
@@ -241,7 +252,7 @@
                                                                             <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                                 <div class="max-w-sm space-y-3 pb-6">
                                                                                     <div class="max-w-sm space-y-3 pb-6">
-                                                                                        <label for="" class="ti-form-label pt-4 font-bold">Document:<span class="text-red-500">*  Only PDF files up to 500 KB in size are accepted.</span></label>
+                                                                                        <label for="" class="ti-form-label pt-4 font-bold">Document:<span class="text-red-500">*Only PDF files up to 500 KB in size are accepted.</span></label>
                                                                                         <span class="sr-only">Choose Profile photo</span>
                                                                                             <input type="file" accept="application/pdf" name="document" id="pub_document" class="block w-full text-sm text-gray-500 dark:text-white/70 focus:outline-0
                                                                                             ltr:file:mr-4 rtl:file:ml-4 file:py-2 file:px-4
@@ -255,9 +266,9 @@
                                                                                         <div id="pub_documentError" class="error text-red-700"></div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>  
+                                                                            </div>
                                                                         </div>
-                                                                        
+
                                                                     </div>
                                                                     <div class="ti-modal-footer">
                                                                         <button type="button"
@@ -265,11 +276,11 @@
                                                                             data-hs-overlay="#add_publicaitons">
                                                                             Close
                                                                         </button>
-                                                                                        
+
                                                                         <input type="submit" id="publication_add_btn" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Add"/>
-                                                                                    
+
                                                                     </div>
-                                                                </form>  
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -307,7 +318,12 @@
                                                                             <tr style="<?php if($pub->validation_status =='invalid'): ?> background-color: #ffcccc; <?php elseif($pub->validation_status =='updated'): ?> background-color: #fff2cc; <?php elseif($pub->validation_status =='valid'): ?> background-color: #ccffcc; <?php endif; ?>">
 
                                                                                 <td><span><?php echo e($i++); ?></span></td>
-                                                                                <td><span><?php echo e($pub->egov_id); ?></span></td>
+                                                                                
+                                                                                <td>
+                                                                                    <a href="https://git.edu/storage/Uploads/Research/Publications/<?php echo e($pub->document); ?>" class="text-blue-500">
+                                                                                        <span><?php echo e($pub->egov_id); ?></span>
+                                                                                    </a>
+                                                                                </td>
                                                                                 <td><span><?php echo e($pub->level); ?></span></td>
                                                                                 <td>
                                                                                     <span>
@@ -353,7 +369,7 @@
                                                                                                                 <button type="button" class="hs-dropdown-toggle ti-modal-close-btn" data-hs-overlay="#reason_view_modal<?php echo e($i); ?>">
                                                                                                                     <span class="sr-only">Close</span>
                                                                                                                     <svg class="w-3.5 h-3.5" width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                                                                                                                                                                   <path d="M14 14.252V16.3414C13.3744 16.1203 12.7013 16 12 16C8.68629 16 6 18.6863 6 22H4C4 17.5817 7.58172 14 12 14C12.6906 14 13.3608 14.0875 14 14.252ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11ZM19 17.5858L21.1213 15.4645L22.5355 16.8787L20.4142 19L22.5355 21.1213L21.1213 22.5355L19 20.4142L16.8787 22.5355L15.4645 21.1213L17.5858 19L15.4645 16.8787L16.8787 15.4645L19 17.5858Z"></path></svg>
+                                                                                                                        <path d="M14 14.252V16.3414C13.3744 16.1203 12.7013 16 12 16C8.68629 16 6 18.6863 6 22H4C4 17.5817 7.58172 14 12 14C12.6906 14 13.3608 14.0875 14 14.252ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11ZM19 17.5858L21.1213 15.4645L22.5355 16.8787L20.4142 19L22.5355 21.1213L21.1213 22.5355L19 20.4142L16.8787 22.5355L15.4645 21.1213L17.5858 19L15.4645 16.8787L16.8787 15.4645L19 17.5858Z"></path></svg>
 
                                                                                                                 </button>
                                                                                                             </div>
@@ -387,8 +403,8 @@
                                                                                                         Edit
                                                                                                     </span>
                                                                                             </button>
-                                                            
-                                                        
+
+
                                                                                             <div id="publication_edit_modal<?php echo e($i); ?>" class="hs-overlay hidden ti-modal">
                                                                                                 <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out lg:!max-w-4xl lg:w-full m-3 md:mx-auto">
                                                                                                     <div class="ti-modal-content">
@@ -413,8 +429,8 @@
                                                                                                                     //alert('123');
                                                                                                                         document.getElementById('btn'+<?php echo e(old('modal_no')); ?>).click();
 
-                                                                                                                    };   
-                                                                                                                
+                                                                                                                    };
+
                                                                                                                 </script>
                                                                                                             <?php endif; ?>
                                                                                                         </div>
@@ -430,9 +446,9 @@
                                                                                                                         <select class="ti-form-select level pub_level" name="e_level" id="pub_level" >
                                                                                                                             <option value="#">Choose Level</option>
                                                                                                                             <option value="Q1" <?php echo e($pub->level=='Q1'? 'selected':''); ?>>Q1</option>
-                                                                                                                            <option value="Q2"  <?php echo e($pub->level=='Q2'? 'selected':''); ?>>Q2</option>  
+                                                                                                                            <option value="Q2"  <?php echo e($pub->level=='Q2'? 'selected':''); ?>>Q2</option>
                                                                                                                             <option value="Q3"  <?php echo e($pub->level=='Q3'? 'selected':''); ?>>Q3</option>
-                                                                                                                            <option value="Q4"  <?php echo e($pub->level=='Q4'? 'selected':''); ?>>Q4</option> 
+                                                                                                                            <option value="Q4"  <?php echo e($pub->level=='Q4'? 'selected':''); ?>>Q4</option>
                                                                                                                             <option value="SCI"  <?php echo e($pub->level=='SCI'? 'selected':''); ?>>SCI</option>
                                                                                                                             <option value="Web of Science"  <?php echo e($pub->level=='Web of Science'? 'selected':''); ?>>Web of Science</option>
                                                                                                                             <option value="Scopus Indexed" <?php echo e($pub->level=='Scopus Indexed'? 'selected':''); ?>>Scopus Indexed</option>
@@ -442,7 +458,7 @@
                                                                                                                         <?php if($errors->has('e_level')): ?>
                                                                                                                             <div class="text-red-700"><?php echo e($errors->first('e_level')); ?></div>
                                                                                                                         <?php endif; ?>
-                                                                                                                                                        
+
                                                                                                                     </div>
                                                                                                                     <div class="max-w-sm space-y-3 pb-6" id="pub_other_level" >
                                                                                                                         <label for="" class="ti-form-label font-bold">Other Level:</label>
@@ -460,8 +476,8 @@
                                                                                                                             <?php if($errors->has('e_title')): ?>
                                                                                                                                 <div class="text-red-700"><?php echo e($errors->first('e_title')); ?></div>
                                                                                                                             <?php endif; ?>
-                                                                                                                        
-                                                                                                                    </div>   
+
+                                                                                                                    </div>
                                                                                                                     <div class="flex max-w-sm space-y-3 pb-6">
                                                                                                                         <label for="" class="ti-form-label font-bold">Date :<span class="text-red-500">*</span></label>
                                                                                                                         <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
@@ -473,9 +489,9 @@
                                                                                                                                     required placeholder="Choose date" value="<?php echo e($pub->date); ?>" >
                                                                                                                             <?php if($errors->has('e_date')): ?>
                                                                                                                                 <div class="text-red-700"><?php echo e($errors->first('e_date')); ?></div>
-                                                                                                                        <?php endif; ?>     
+                                                                                                                        <?php endif; ?>
                                                                                                                     </div>
-                                                                                                                                                                                                
+
                                                                                                                 </div>
                                                                                                                 <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                                                                     <div class="max-w-sm space-y-3 pb-6">
@@ -484,21 +500,21 @@
                                                                                                                             <?php if($errors->has('e_journal')): ?>
                                                                                                                                 <div class="text-red-700"><?php echo e($errors->first('e_journal')); ?></div>
                                                                                                                             <?php endif; ?>
-                                                                                                                    </div>  
+                                                                                                                    </div>
                                                                                                                     <div class="max-w-sm space-y-3 pb-6">
                                                                                                                         <label for="" class="ti-form-label font-bold">Publication Type:<span class="text-red-500">*</span></label>
                                                                                                                         <select class="ti-form-select role" name="e_publication_type">
                                                                                                                             <option value="#">Choose One</option>
                                                                                                                             <option value="Journal" <?php echo e($pub->publication_type=='Journal'? 'selected': ''); ?>>Journal</option>
                                                                                                                             <option value="Conference Proceeding" <?php echo e($pub->publication_type=='Conference Proceeding'?'selected':''); ?>>Conference Proceeding</option>
-                                                                                                                            
+
 
                                                                                                                         </select>
                                                                                                                         <?php if($errors->has('e_publication_type')): ?>
                                                                                                                             <div class="text-red-700"><?php echo e($errors->first('e_publication_type')); ?></div>
                                                                                                                         <?php endif; ?>
-                                                                                                        
-                                                                                                                    </div>   
+
+                                                                                                                    </div>
                                                                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                                                                         <label for="" class="ti-form-label font-bold">DOI Number:<span class="text-red-500">*</span></label>
                                                                                                                         <input type="text" name="e_doi_number" class="ti-form-input" placeholder="Doi Number" id="pub_doi_number" value="<?php echo e($pub->doi_number); ?>">
@@ -507,7 +523,7 @@
                                                                                                                         <?php endif; ?>
                                                                                                                         <div id="pub_doi_numberError" class="error text-red-700"></div>
                                                                                                                     </div>
-                                                                                                                    
+
                                                                                                                 </div>
                                                                                                                 <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                                                                     <div class="max-w-sm space-y-3 pb-6">
@@ -529,7 +545,7 @@
                                                                                                                         <?php if($errors->has('e_role')): ?>
                                                                                                                             <div class="text-red-700"><?php echo e($errors->first('e_role')); ?></div>
                                                                                                                         <?php endif; ?>
-                                                                                                        
+
                                                                                                                     </div>
                                                                                                                 </div>
                                                                                                                 <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
@@ -547,7 +563,7 @@
                                                                                                                             <?php endif; ?>
                                                                                                                         <div id="docEditError" class="error text-red-700"></div>
                                                                                                                     </div>
-                                                                                                                                            
+
                                                                                                                 </div>
                                                                                                                 <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                                                                    <input type="hidden" name="validation_status" value="updated">
@@ -560,18 +576,18 @@
                                                                                                                     data-hs-overlay="#publication_edit_modal<?php echo e($i); ?>">
                                                                                                                     Close
                                                                                                                 </button>
-                                                                                                                            
+
                                                                                                                 <input type="submit" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Update"/>
-                                                                                                                        
+
                                                                                                             </div>
-                                                                                                        </form>  
+                                                                                                        </form>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="hs-tooltip ti-main-tooltip">
                                                                                             <form action="<?php echo e(route('Teaching.research.publications.destroy',$pub->id)); ?>" method="post">
-                                                                                            
+
                                                                                                 <button onclick="return confirm('Are you Sure')"
                                                                                                     class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
                                                                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>
@@ -587,33 +603,30 @@
                                                                                         </div>
                                                                                     </td>
                                                                                 <?php endif; ?>
-                                                                            </tr> 
+                                                                            </tr>
                                                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                                                                 
                                                                         <?php endif; ?>
                                                                     <?php endif; ?>
                                                                 </tbody>
-                                                            </table>  
-                                                        </div>   
+                                                            </table>
+                                                        </div>
                                                 </div>
 
                                             </div>
-
-                                        
-
                                         <!--end of publications-->
-                                    </div>                                                                      
+                                    </div>
                                 </div>
                             </div>
                         </div>
                              <!-- End::row-1 -->
-                    </div>    
+                    </div>
                     <!-- End::main-content -->
 
                 </div>
-               
 
-            
+
+
 
 <?php $__env->stopSection(); ?>
 
@@ -651,7 +664,7 @@
                 } else {
                     $('#pub_other_level').hide();
                 }
-                
+
                 });
             });
         </script>
@@ -659,18 +672,18 @@
         <script>
             $(document).ready(function(){
 
-                
+
                     //Validation for publication
-               
+
                     //alert('Hello from jquery');
                     new DataTable('#publication_table');
-                    
+
                     $(document).on('click','.publication_edit_modal_click',function(){
-                        //var 
+                        //var
                         var modal_no = $(this).attr("btn-val");
-                        
+
                         //alert($(this).find('.caste_edit_modal_no').val());
-                        $('.modal_no').val(modal_no); 
+                        $('.modal_no').val(modal_no);
                     });
 
                     function isValidUrl(url) {
@@ -709,7 +722,7 @@
                                 flag = true;
                             }
                         }
-                       
+
                         /////
                         if(pub_doi_number == ''){
                             $('#pub_doi_numberError').text('DOI Number is missing');
@@ -719,15 +732,29 @@
                             flag = true;
                         }
 
+
+
+
                         ///
 
-                        if(pub_title == ''){
+                        // if(pub_title == ''){
+                        //     $('#pub_titleError').text('Title Name is missing');
+                        //     flag = true;
+                        // } else if (!/^[a-zA-Z\s0-9]*$/.test(pub_title.trim())) {
+                        //     $('#pub_titleError').text('Please fill the correct value');
+                        //     flag = true;
+                        // }
+
+                        if (pub_title.trim() === '') {
                             $('#pub_titleError').text('Title Name is missing');
                             flag = true;
-                        }else if (!/^[a-zA-Z\s]+$/.test(pub_title.trim())){
+                        } else if (!/^[\w\s\/.,]+$/.test(pub_title.trim())) {
                             $('#pub_titleError').text('Please fill the correct value');
                             flag = true;
                         }
+
+
+
                         if(pub_dateofpublication.trim() === ''){
                             $('#pub_dateofpublicatonError').text('Please Select a proper date');
                             flag = true;
@@ -763,7 +790,7 @@
 
                     });
 
-                    
+
                     //export to Excel publication
                     $('#exportToExcel').on('click', function () {
                         var table = $('#publication_table').clone();
@@ -797,16 +824,27 @@
                             link[0].click();
                         }
                     });
-          
+
 
 
             });
+
+            $(document).ready(function() {
+                $("#levelButton").click(function() {
+                    $("#levelOptions").toggle();
+                });
+
+                $("#levelOptions input[type=checkbox]").change(function() {
+                    var selectedValues = [];
+                    $("#levelOptions input[type=checkbox]:checked").each(function() {
+                        selectedValues.push($(this).val());
+                    });
+                    $("#pub_level").val(selectedValues.join(","));
+                });
+            });
+
         </script>
 
-
-        
-    
-        
-
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.components.staff.master-teaching', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\laravel Apps\gitoffice\resources\views/Staff/Teaching/research/publication.blade.php ENDPATH**/ ?>

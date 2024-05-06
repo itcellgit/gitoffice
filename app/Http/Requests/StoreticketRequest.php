@@ -3,6 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\Storage;
+
 
 class StoreticketRequest extends FormRequest
 {
@@ -21,11 +25,25 @@ class StoreticketRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'title'=>['required','string', 'max:255'],
-            'description'=>['required','string', 'max:650'],
+        return 
+        [
+            'title' => ['required', 'string'],
+            'description'=>['required','string'],
             'attachment'=>['sometimes','file','mimes:jpg,jpeg,png,pdf'],
             
+        ];
+    }
+    public function messages():array
+    {
+        return
+        [
+            'title.required'=>'title is required field',
+            'title.string' => 'The title must be string',
+            'description.required'=>'description is required filed',
+            'description.regex'=>'The description must be string',
+            'attachment.mimes' => 'The attachment can be a JPG, JPEG, PNG, or PDF file.',
+
+     
         ];
     }
 }

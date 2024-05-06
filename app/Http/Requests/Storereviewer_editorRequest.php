@@ -24,7 +24,7 @@ class Storereviewer_editorRequest extends FormRequest
     {
         return
         [
-            'title' => ['required'],
+
             'journal_name'=>['required'],
             'publisher_name'=>['required'],
             'reviewed_date'=>['required','date'],
@@ -39,7 +39,7 @@ class Storereviewer_editorRequest extends FormRequest
     {
         return
         [
-            'title.required'=>'title is required field',
+
             'journal_name.required'=>'journal name is required filed',
             'publisher_name.required'=>'publisher name is required filed',
             'reviewed_date.required'=>'date is required field',
