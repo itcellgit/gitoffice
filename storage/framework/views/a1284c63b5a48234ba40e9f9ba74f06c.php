@@ -594,9 +594,20 @@
                                             // $('#holiday_rh_div').hide();
                                             //for setting the background color based on application status
                                             var bg_color_setting = '';
-                                           
+                                            //console.log(value);
+                                           if(value.appl_status == 'recommended'){
+                                                //alert('recomended');
+                                                bg_color_setting = 'bg-yellow-400';
+                                           }else if(value.appl_status == 'pending'){
+                                                bg_color_setting = '';
+                                           }
+                                           else if(value.appl_status == 'approved'){
+                                                bg_color_setting = 'bg-green-400';
+                                           }else if(value.appl_status == 'rejected'){
+                                                bg_color_setting = 'bg-red-400';
+                                           }
                                       
-                                            $('#Date_wise_leave__list').append('<tr class='+bg_color_setting+'>'
+                                            $('#Date_wise_leave__list').append('<tr class="'+ bg_color_setting +'">'
                                                                         +'<td >'+value.Application_id+ '</td>'
                                                                         +'<td>'+value.title+ '</td>'
                                                                         +'<td>'+value.staff_name+ '</td>'
@@ -605,13 +616,16 @@
                                                                         +'<td>'+value.reason+ '</td>'
                                                                         +'<td>'+value.alternate_staff+ '</td>'
                                                                     
-                                                                        +'<td>'
-                                                                            
-                                                                            +"<button class='bg-primary recommend_confirm "+(value.appl_status == 'recommended'?'hidden':'')+"' data_val='"+value.Application_id+"' appl_details = '"+value.staff_name+"-"+ value.title+"'>"
+                                                                        +'<td>';
+                                                                            +(value.appl_status == 'pending')
+                                                                            +"<button class='hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary recommend_confirm "+(value.appl_status == 'recommended'?'hidden':'')+"' data_val='"+value.Application_id+"' appl_details = '"+value.staff_name+"-"+ value.title+"'>"
                                                                                 +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z"></path></svg>'
                                                                                 +'</button>'
-                                                                            +'</td>'
-                                                                        +'</tr>');
+                                                                            +"<button class='hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary reject"+(value.appl_status == 'pending'?'hidden':'')+"' data_val='"+value.Application_id+"' appl_details = '"+value.staff_name+"-"+ value.title+"'>"
+                                                                                +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>'
+                                                                                +'</button>'
+                                                                        +'</td>'
+                                                                    +'</tr>');
                                         });
 
                                         //$('#leave_form').hide(); //for hiding the leave form div

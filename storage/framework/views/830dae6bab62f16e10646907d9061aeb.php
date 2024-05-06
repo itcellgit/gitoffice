@@ -351,8 +351,35 @@
                                                             </button>
                                                     </div>
                                                     <div class="ti-modal-body">
+                                                        <div class="avatar-container flex py-4">
+                                                            <div class="avatar-wrapper flex items-center">
+                                                                <div class="avatar rounded-sm p-1 bg-green-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                                <div class="avatar-text font-bold ml-2 ">Approved</div>
+                                                            </div>
+    
+                                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                                <div class="avatar rounded-sm p-1 bg-red-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                                <div class="avatar-text font-bold ml-2">Rejected</div>
+                                                            </div>
+    
+                                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                                <div class="avatar rounded-sm p-1 bg-yellow-400 border-gray-900 border-2 w-6 h-6"></div>
+                                                                <div class="avatar-text font-bold ml-2">Recommended</div>
+                                                            </div>
+    
+                                                            <div class="avatar-wrapper flex items-center">
+                                                                <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
+                                                                <div class="avatar-text font-semibold ml-2">Pending</div>
+                                                            </div>
+                                                            <div class="avatar-wrapper flex items-center">
+                                                                <div class="avatar rounded-sm p-1 bg-gray-400 border-black-900 border-2 w-6 h-6"></div>
+                                                                <div class="avatar-text font-semibold ml-2">Cancelled</div>
+                                                            </div>
+                                                        </div>
+
                                                         <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto pb-6 hidden" id="leave_list_div">
                                                             <span class="text-primary font-bold">Leave List</span>
+                                                            <div id="leave_status_message"></div>
                                                             <table class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                                                 <thead class="bg-gray-50 dark:bg-black/20">
                                                                     <tr class="">
@@ -372,6 +399,127 @@
                                                                 </tbody>
                                                             </table>
                                                         </div>
+                                                    </div>
+                                                    <div class="ti-modal-footer" id="edit_applied_leave">
+                                                            
+                                                                <?php echo method_field('patch'); ?>
+                                                                <?php echo csrf_field(); ?>
+                                                                <div class="leave_form_div" id="leave_edit_form" >
+
+                                                                    <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pt-6 pb-6">
+
+                                                                        <div class="max-w-sm space-y-2 pb-6 ">
+                                                                            <label for="" class="ti-form-label font-bold">Leave Type:<span class="text-red-500">*</span></label>
+                                                                            <select class="ti-form-select" name="type" id="type" required>
+                                                                                <option value="#">Choose Leave Type</option>
+
+                                                                                <?php $__currentLoopData = $leaves; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $l): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                    <option value="<?php echo e($l->leave_id); ?>"><?php echo e($l->shortname); ?></option>
+                                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                                                                            </select>
+                                                                        </div>
+                                                                        <div id="cl_type_block" class="hidden">
+
+                                                                            <label for="cl_morning" class="ti-form-label font-bold">Select CL type</label>
+                                                                            <div class="flex">
+
+                                                                                <div class="flex items-center me-4 ">
+                                                                                    <input id="cl_morning" type="radio" value="Morning" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type">
+                                                                                    <label for="cl_morning" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">CL-Morning</label>
+                                                                                </div>
+                                                                                <div class="flex items-center me-4 ml-6">
+                                                                                    <input id="cl_afternoon" type="radio" value="Afternoon" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type">
+                                                                                    <label for="cl_afternoon" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">CL-Afternoon</label>
+                                                                                </div>
+                                                                                <div class="flex items-center me-4 ml-6 ">
+                                                                                    <input checked id="cl" type="radio" value="Full" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type">
+                                                                                    <label for="cl" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Full Day CL</label>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                    <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                                                        <div date-rangepicker class="flex max-w-sm space-y-3 pb-6">
+                                                                            <label for="" class="ti-form-label font-bold">From Date:<span class="text-red-500">*</span></label>
+                                                                                <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
+                                                                                    <span class="text-sm text-gray-500 dark:text-white/70"><i
+                                                                                                    class="ri ri-calendar-line"></i></span>
+                                                                                </div>
+
+                                                                                <input type="text" name="from_date"
+                                                                                    class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
+                                                                                    id="from_date_edit" required placeholder="Choose date" >
+                                                                        </div>
+                                                                        <div class="flex max-w-sm space-y-3 pb-6">
+                                                                            <label for="" class="ti-form-label font-bold">TO Date:<span class="text-red-500">*</span></label>
+                                                                            <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
+                                                                                <span class="text-sm text-gray-500 dark:text-white/70"><i
+                                                                                                class="ri ri-calendar-line"></i></span>
+                                                                            </div>
+
+                                                                            <input  type="text" name="to_date"
+                                                                                class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
+                                                                                    id="to_date_edit" required placeholder="Choose date">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="grid lg:grid-cols-2 gap-2 space-y-4 lg:space-y-0">
+                                                                        <div class="flex max-w-sm space-y-4 pb-6 content-center">
+                                                                            <p class="font-bold">No. of Days :</p>
+                                                                            <input type="text" class="ti-form-input text-green-500" required name="no_of_days" id="no_of_days_count_edit" readonly value=""/>
+                                                                        </div>
+                                                                        <div class="max-w-sm space-y-3 pb-6">
+                                                                            <label for="" class="ti-form-label font-bold">Leave Reason:<span class="text-red-500">*</span></label>
+                                                                            <textarea class="ti-form-input" required name="leave_reason" id="leave_reason" placeholder="Leave Reason"></textarea>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                                                        <div class="max-w-sm space-y-3 pb-6">
+                                                                            <label for="" class="ti-form-label font-bold">Alternate:</label>
+                                                                            <select class="ti-form-select" name="alternate" id="alternate" required>
+                                                                                <option value="#">Choose Alternate</option>
+
+                                                                                <?php $__currentLoopData = $dept_staff; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $depts): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                <optgroup label="<?php echo e($depts->dept_name); ?>">
+                                                                                    <?php $__currentLoopData = $depts->staff; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $dstaff): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                            <option value="<?php echo e($dstaff->id); ?>"><?php echo e($dstaff->fname.' '.$dstaff->mname.' '.$dstaff->lname); ?></option>
+                                                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                                </optgroup>
+                                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="max-w-sm space-y-3 pb-6">
+                                                                            <label for="" class="ti-form-label font-bold">Additional Alternate:</label>
+                                                                            <select class="ti-form-select" name="additional_alternate" id="add_alternate" required>
+                                                                                <option value="#">Choose an Alternate</option>
+
+                                                                                <?php $__currentLoopData = $dept_staff; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $depts): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                <optgroup label="<?php echo e($depts->dept_name); ?>">
+                                                                                    <?php $__currentLoopData = $depts->staff; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $dstaff): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                            <option value="<?php echo e($dstaff->id); ?>"><?php echo e($dstaff->fname.' '.$dstaff->mname.' '.$dstaff->lname); ?></option>
+                                                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                                </optgroup>
+                                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                            </select>
+                                                                        </div>
+                                                                       </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="ti-modal-footer">
+                                                                    <button type="button"
+                                                                        class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10 leave_apply_close_btn"
+                                                                        id="" data-hs-overlay="#add_leaveform">
+                                                                        Cancel
+                                                                    </button>
+
+                                                                    <input type="submit" class="ti-btn  bg-warning text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" id="leave_edit_btn" value="Update"/>
+
+                                                                </div>
+                                                            
                                                     </div>
                                                 </div>
                                             </div>
@@ -513,7 +661,67 @@
 
             });
 
+            //for cancellation of leave 
+            $(document).on('click','.cancel_leave_btn',function(){
+                var application_id = $(this).attr("data_val");
+                var comfirmation_status =  confirm("Are you sure ? Want to cancel your leave.? (Application ID = "+application_id+")");
+                if(comfirmation_status){
+                    $.ajax({
+                                url: base_url+'/cancel_myleave',
+                                    method: 'GET',
+                                    data: {
+                                        application_id : application_id,
+                                        
+                                        _token : '<?php echo e(csrf_token()); ?>' // Pass the clicked date to the server
+                                    },
+                                    success: function(response) {
+                                        // Handle the response from the server
+                                        console.log(response);
+                                        $('#leave_status_message').html(response);
+                                        setInterval(() => {
+                                            location.reload();
+                                        }, 2000);
+                                    },
+                                    error: function(xhr, status, error) {
+                                        // Handle errors
+                                        console.error(xhr.responseText);
+                                    }    
 
+                        });
+                }else{
+                    console.log('Cancelled');
+                }
+            });
+
+            //foir editing the applied leave
+            $(document).on('click','.edit_leave_applied',function(){
+                var application_id = $(this).attr("data_val");
+                //alert(application_id);
+                edit_applied_leave
+
+                $.ajax({
+                                url: base_url+'/edit_myleave',
+                                    method: 'GET',
+                                    data: {
+                                        application_id : application_id,
+                                        
+                                        _token : '<?php echo e(csrf_token()); ?>' // Pass the clicked date to the server
+                                    },
+                                    success: function(response) {
+                                        // Handle the response from the server
+                                        console.log(response);
+                                        $('#edit_applied_leave').html(response);
+                                        setInterval(() => {
+                                            location.reload();
+                                        }, 2000);
+                                    },
+                                    error: function(xhr, status, error) {
+                                        // Handle errors
+                                        console.error(xhr.responseText);
+                                    }    
+
+                        });
+            });
              //Calender javscript Starts here.
             document.addEventListener('DOMContentLoaded', function() {
                 var TileColor = '';
@@ -564,7 +772,7 @@
                     ],
                     eventDidMount: function (info) {
                         info.el.onclick = "disabled";
-                       //console.log(info.event.extendedProps.type);
+                      // console.log(info.event);
 
                        //console.log(info.event.end.getFullYear());
 
@@ -607,6 +815,11 @@
                            info.el.style.fontSize  = "15px";
                        }
 
+                        if(info.event.extendedProps.appl_status == 'cancelled'){
+                            info.el.style.background = "#78716c";//info.event.extendedProps.background;
+                           info.el.style.color  = "white";
+                           info.el.style.fontSize  = "15px";
+                        }
                    },
                    dateClick: function(info) {
 
@@ -757,6 +970,7 @@
                         //alert('view modal active');
                         var clicked_date = Clickeddate.getFullYear()+"-"+(Clickeddate.getMonth()+1)+"-"+Clickeddate.getDate();
                         
+                        var bg_color_setting = "";
                         //ajax call for loading the leave events on calender
                         $.ajax({
 
@@ -773,12 +987,23 @@
                                     if(response.length !=0){
                                         $.each(response, function(key, value) {
                                         $('#leave_list_div').show();
-                                        var bg_color_setting = '';
-                                        console.log(value.appl_status == "recommended");
-                                        if(response.appl_status == "recommended"){
-                                            alert('its recomended');
-                                            bg_color_setting = 'bg-yellow-400';
+                                       
+                                        console.log(value.appl_status);
+                                        if(value.appl_status == "recommended"){
+                                           // alert('its recomended');
+                                            bg_color_setting = "bg-yellow-400";
+                                        }else if(value.appl_status === "pending"){
+                                            
+                                            bg_color_setting = "";
+                                        }else if(value.appl_status == "approved"){
+                                            
+                                            bg_color_setting = "bg-green-400";
+                                        }else if(value.appl_status == "rejected") {
+                                            bg_color_setting = "bg-red-400";
+                                        }else if(value.appl_status == "cancelled") {
+                                            bg_color_setting = "bg-gray-400";
                                         }
+                                        console.log(bg_color_setting);
                                        // $('#holiday_rh_div').hide();
                                         $('#leave_application_list').append('<tr class="'+ bg_color_setting +'">'
                                                                     +'<td >'+value.Application_id+ '</td>'
@@ -789,30 +1014,25 @@
                                                                     +'<td>'+value.alternate_staff+ '</td>'
                                                                     +'<td>'+value.additional_alternate_staff+ '</td>'
                                                                     +'<td>'
-                                                                        +'<div class="hs-tooltip ti-main-tooltip">'
-                                                                                        +'<button data-hs-overlay="#fund_edit_modal" id="" btn-val='
-                                                                                                +'class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary fund_edit_modal_click">'
+                                                                        +(value.appl_status =='pending'? '<div class="hs-tooltip ti-main-tooltip">'
+                                                                                        +'<button id="" data_val="'+value.Application_id+'"'
+                                                                                                +'class=" m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger edit_leave_applied">'
                                                                                                 +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M16.7574 2.99666L14.7574 4.99666H5V18.9967H19V9.2393L21 7.2393V19.9967C21 20.5489 20.5523 20.9967 20 20.9967H4C3.44772 20.9967 3 20.5489 3 19.9967V3.99666C3 3.44438 3.44772 2.99666 4 2.99666H16.7574ZM20.4853 2.09717L21.8995 3.51138L12.7071 12.7038L11.2954 12.7062L11.2929 11.2896L20.4853 2.09717Z"></path></svg>'
-                                                                                                +'<span'
+                                                                                              
+                                                                                        +'</button>'
+                                                                                       
+                                                                        +'</div>': '' )
+                                                                        +(value.appl_status =='pending'? '<div class="hs-tooltip ti-main-tooltip">'
+                                                                                     +'<button data_val="'+value.Application_id+'"'
+                                                                                        +' class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger cancel_leave_btn">'
+                                                                                            +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>'
+                                                                                            
+                                                                                            +'<span'
                                                                                                 +'class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700"'
                                                                                                 +'role="tooltip">'
-                                                                                                +'</span>'
-                                                                                        +'</button>'
-                                                                        +'</div>'
-                                                                        +'<div class="hs-tooltip ti-main-tooltip">'
-                                                                                                +'<form action="#" method="post">'
-                                                                                                    +'<button onclick="return confirm("Are you Sure")'
-                                                                                                    +'  class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">'
-                                                                                                        +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>'
-                                                                                                        +'<?php echo method_field("delete"); ?>'
-                                                                                                        +'<?php echo csrf_field(); ?>'
-                                                                                                        +'<span'
-                                                                                                            +'class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700"'
-                                                                                                            +'role="tooltip">'
-                                                                                                        +'</span>'
-                                                                                                    +'</button>'
-                                                                                                +'</form>'
-                                                                                            +'</div>'
+                                                                                            +'</span>'
+                                                                                    +'</button>'
+                                                                                +'</div>':'')
                                                                     +'</td>'
                                                                     +'</tr>');
                                         });

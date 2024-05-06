@@ -101,8 +101,7 @@
 
                                                         <div class="space-y-2">
                                                             <label class="ti-form-label mb-0 font-bold">Designations<span class="text-red-500">*</span></label>
-                                                            <select class="ti-form-select stdesignation" name="designations_id" id="designation_id" >
-                                                                <option value="#">Choose a Designation</option>
+                                                            <select class="ti-form-select stdesignation" name="designations_id" id="filter_designation_id" >
                                                                 <option value="#">Choose a Designation</option>
 
                                                             </select>
@@ -119,7 +118,7 @@
                                                         <!-- Religion select -->
                                                         <div class="space-y-2">
                                                             <label class="ti-form-label mb-0 font-bold">Religion<span class="text-red-500">*</span></label>
-                                                            <select class="ti-form-select" name="religion_id" id="religion_id">
+                                                            <select class="ti-form-select religion_id" name="religion_id" id="">
                                                                 <option value="#">Choose a Religion</option>
                                                                 @foreach ($religions as $religion)
                                                                 <option value="{{$religion->id}}">{{$religion->religion_name}}</option>
@@ -129,7 +128,7 @@
                                                         <!-- Caste Category select -->
                                                         <div class="space-y-2">
                                                             <label class="ti-form-label mb-0 font-bold">Caste Category<span class="text-red-500">*</span></label>
-                                                            <select class="ti-form-select" name="castecategory_id" id="castecategory_list">
+                                                            <select class="ti-form-select castecategory_list" name="castecategory_id" id="">
                                                                 <!-- Add options if applicable -->
                                                             </select>
                                                         </div>
@@ -369,7 +368,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pb-4">
                                                                             <div class="space-y-2">
                                                                                 <label class="ti-form-label mb-0 font-bold">Religion<span class="text-red-500">*</span></label>
-                                                                                <select class="ti-form-select streligion" name="religion_id" id="religion_id">
+                                                                                <select class="ti-form-select streligion religion_id" name="religion_id" id="">
                                                                                     <option value="#">Choose a Religion</option>
                                                                                     @foreach ($religions as $religion)
                                                                                         <option value="{{$religion->id}}">{{$religion->religion_name}}</option>
@@ -383,7 +382,7 @@
                                                                             </div>
                                                                             <div class="space-y-2">
                                                                                 <label class="ti-form-label mb-0 font-bold">Caste Category<span class="text-red-500">*</span></label>
-                                                                                <select class="ti-form-select stcastecategory" name="castecategory_id" id="castecategory_list">
+                                                                                <select class="ti-form-select stcastecategory castecategory_list" name="castecategory_id" id="">
 
                                                                                 </select>
                                                                                 <div id="stcastecategoryError" class="error text-red-700"></div>
@@ -1129,7 +1128,7 @@
                     $('.dos').val(final_dos); //updaing it in the field.
                 });
 
-                $(document).on('change','#religion_id',function(){
+                $(document).on('change','.religion_id',function(){
                     //alert('Changed');
                     var religion_id = $(this).val();
                     $.ajax({
@@ -1137,8 +1136,8 @@
                         method:'GET',
                         data:{'r_id':religion_id},
                         success:function(data) {
-                       console.log(data);
-                            var castecategoriesDropdown = $('#castecategory_list');
+                             console.log(data);
+                            var castecategoriesDropdown = $('.castecategory_list');
                             castecategoriesDropdown.empty(); // Clear existing options
                             data.forEach(function(item) {
                                 castecategoriesDropdown.append($('<option>').text(item['caste_name']+"-"+item['subcastes_name']+"-"+item['category']+"-"+item['category_no']).attr('value', item['id']));
@@ -1172,9 +1171,9 @@
                     //alert($(this).val());
                     var pay_type = $(this).val();
                     var emp_type = $('#employee_type').val();
-                    alert(emp_type);
+                  //  alert(emp_type);
                     var designation_id = $('#designation_id').val();
-                    //$('#payscalelevel').hide();
+                    
                     //alert(pay_type+'-'+emp_type+'-'+designation_id);
                     if(pay_type == "Fixed"){
                         $('#fixed_pay_div').show();
