@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class post_ticket extends Model
 {
     use HasFactory;
-    protected $fillable =['title','description','attachment'];
+    protected $fillable =['title','description'];
     public function ticket(): BelongsTo
     {
         return $this->belongsTo(ticket::class, 'ticket_id','id');
