@@ -401,7 +401,125 @@
                                                         </div>
                                                     </div>
                                                     <div class="ti-modal-footer" id="edit_applied_leave">
+                                                            
+                                                                <?php echo method_field('patch'); ?>
+                                                                <?php echo csrf_field(); ?>
+                                                                <div class="leave_form_div" id="leave_edit_form" >
 
+                                                                    <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pt-6 pb-6">
+
+                                                                        <div class="max-w-sm space-y-2 pb-6 ">
+                                                                            <label for="" class="ti-form-label font-bold">Leave Type:<span class="text-red-500">*</span></label>
+                                                                            <select class="ti-form-select" name="type" id="type" required>
+                                                                                <option value="#">Choose Leave Type</option>
+
+                                                                                <?php $__currentLoopData = $leaves; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $l): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                    <option value="<?php echo e($l->leave_id); ?>"><?php echo e($l->shortname); ?></option>
+                                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                                                                            </select>
+                                                                        </div>
+                                                                        <div id="cl_type_block" class="hidden">
+
+                                                                            <label for="cl_morning" class="ti-form-label font-bold">Select CL type</label>
+                                                                            <div class="flex">
+
+                                                                                <div class="flex items-center me-4 ">
+                                                                                    <input id="cl_morning" type="radio" value="Morning" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type">
+                                                                                    <label for="cl_morning" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">CL-Morning</label>
+                                                                                </div>
+                                                                                <div class="flex items-center me-4 ml-6">
+                                                                                    <input id="cl_afternoon" type="radio" value="Afternoon" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type">
+                                                                                    <label for="cl_afternoon" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">CL-Afternoon</label>
+                                                                                </div>
+                                                                                <div class="flex items-center me-4 ml-6 ">
+                                                                                    <input checked id="cl" type="radio" value="Full" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type">
+                                                                                    <label for="cl" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Full Day CL</label>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                    <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                                                        <div date-rangepicker class="flex max-w-sm space-y-3 pb-6">
+                                                                            <label for="" class="ti-form-label font-bold">From Date:<span class="text-red-500">*</span></label>
+                                                                                <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
+                                                                                    <span class="text-sm text-gray-500 dark:text-white/70"><i
+                                                                                                    class="ri ri-calendar-line"></i></span>
+                                                                                </div>
+
+                                                                                <input type="text" name="from_date"
+                                                                                    class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
+                                                                                    id="from_date_edit" required placeholder="Choose date" >
+                                                                        </div>
+                                                                        <div class="flex max-w-sm space-y-3 pb-6">
+                                                                            <label for="" class="ti-form-label font-bold">TO Date:<span class="text-red-500">*</span></label>
+                                                                            <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
+                                                                                <span class="text-sm text-gray-500 dark:text-white/70"><i
+                                                                                                class="ri ri-calendar-line"></i></span>
+                                                                            </div>
+
+                                                                            <input  type="text" name="to_date"
+                                                                                class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
+                                                                                    id="to_date_edit" required placeholder="Choose date">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="grid lg:grid-cols-2 gap-2 space-y-4 lg:space-y-0">
+                                                                        <div class="flex max-w-sm space-y-4 pb-6 content-center">
+                                                                            <p class="font-bold">No. of Days :</p>
+                                                                            <input type="text" class="ti-form-input text-green-500" required name="no_of_days" id="no_of_days_count_edit" readonly value=""/>
+                                                                        </div>
+                                                                        <div class="max-w-sm space-y-3 pb-6">
+                                                                            <label for="" class="ti-form-label font-bold">Leave Reason:<span class="text-red-500">*</span></label>
+                                                                            <textarea class="ti-form-input" required name="leave_reason" id="leave_reason" placeholder="Leave Reason"></textarea>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                                                        <div class="max-w-sm space-y-3 pb-6">
+                                                                            <label for="" class="ti-form-label font-bold">Alternate:</label>
+                                                                            <select class="ti-form-select" name="alternate" id="alternate" required>
+                                                                                <option value="#">Choose Alternate</option>
+
+                                                                                <?php $__currentLoopData = $dept_staff; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $depts): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                <optgroup label="<?php echo e($depts->dept_name); ?>">
+                                                                                    <?php $__currentLoopData = $depts->staff; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $dstaff): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                            <option value="<?php echo e($dstaff->id); ?>"><?php echo e($dstaff->fname.' '.$dstaff->mname.' '.$dstaff->lname); ?></option>
+                                                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                                </optgroup>
+                                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="max-w-sm space-y-3 pb-6">
+                                                                            <label for="" class="ti-form-label font-bold">Additional Alternate:</label>
+                                                                            <select class="ti-form-select" name="additional_alternate" id="add_alternate" required>
+                                                                                <option value="#">Choose an Alternate</option>
+
+                                                                                <?php $__currentLoopData = $dept_staff; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $depts): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                <optgroup label="<?php echo e($depts->dept_name); ?>">
+                                                                                    <?php $__currentLoopData = $depts->staff; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $dstaff): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                            <option value="<?php echo e($dstaff->id); ?>"><?php echo e($dstaff->fname.' '.$dstaff->mname.' '.$dstaff->lname); ?></option>
+                                                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                                </optgroup>
+                                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                            </select>
+                                                                        </div>
+                                                                       </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="ti-modal-footer">
+                                                                    <button type="button"
+                                                                        class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10 leave_apply_close_btn"
+                                                                        id="" data-hs-overlay="#add_leaveform">
+                                                                        Cancel
+                                                                    </button>
+
+                                                                    <input type="submit" class="ti-btn  bg-warning text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" id="leave_edit_btn" value="Update"/>
+
+                                                                </div>
+                                                            
                                                     </div>
                                                 </div>
                                             </div>

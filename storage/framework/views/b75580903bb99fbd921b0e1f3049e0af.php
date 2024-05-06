@@ -68,18 +68,21 @@
                                         </div>
                                         <form action="<?php echo e(route('ticket.reply.store', $ticket->id)); ?>" method="post" enctype="multipart/form-data">
                                             <?php echo csrf_field(); ?>
-                                            
                                             <div class="ti-modal-body">
-                                                <div class="grid gap-2 space-y-2 lg:grid-cols-2 lg:space-y-0">
-                                                    <div class="max-w-sm pb-6 space-y-3">
-                                                        <label for="" class="font-bold ti-form-label">Description:</label>
-                                                        <input type="text" name="description" class="ti-form-input" placeholder="description">
-                                                    </div>
-                                                    <div class="max-w-sm pb-6 space-y-3">
-                                                        <label for="" class="ti-form-label">attachment :</label>
-                                                         <input type="file" name="attachment" class="ti-form-input"  placeholder="attachment">
-                                                    </div>
+                                                <div class="max-w-sm space-y-3 pb-6">
+                                                    <label for="with-corner-hint" class="ti-form-label">title: </label>
+                                                    <input type="text" name="title" class="ti-form-input" required placeholder="title">
+                                            
                                                 </div>
+                                                <div class="max-w-sm space-y-3 pb-6">
+                                                    <label for="" class="ti-form-label">Description:</label>
+                                                    <textarea name="description" class="ti-form-input" required placeholder="Description" style="width: 100%; height: 150px;"></textarea>
+                                                </div>
+                                                
+                                                    <div class="max-w-sm space-y-3 pb-6">
+                                                        <label for="" class="ti-form-label">attachment :</label>
+                                                        <input type="file" name="attachment" class="ti-form-input"  placeholder="attachment">
+                                                    </div>
                                             </div>
                                             <div class="ti-modal-footer">
                                                 <button type="button"
@@ -95,6 +98,7 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                         <!--Modal Ends Here-->
                     </div>
                     <!--Modal Ends Here-->
@@ -106,39 +110,99 @@
                             stroke-linecap="round" stroke-linejoin="round">
                             <!-- SVG Path -->
                         </svg>
-                        Ticket
+                            
+                            Ticket Status:&nbsp;&nbsp;
+
+                            <span style="<?php if($ticket->status =='Open'): ?> color: red; <?php elseif($ticket->status =='Pending'): ?> color: Orange; <?php elseif($ticket->status =='Resolved'): ?> color: green; <?php endif; ?>"><?php echo e($ticket->status); ?></span>
+
                     </h5>
                 </div>
+<<<<<<< HEAD
+                <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
+                    <table id="ticketing_table" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
+=======
 
                 <div class="overflow-auto rounded-sm table-auto table-bordered ti-striped-table ti-custom-table-head">
                     <table id="Ticketing_table" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
+>>>>>>> 577981886532c569a7be3880f2625defb0c100d5
                         <thead class="bg-gray-50 dark:bg-black/20">
                             <tr class="">
-                                <th scope="col" class="dark:text-white/80">Field Name</th>
-                                <th scope="col" class="dark:text-white/80"><?php echo \Kyslik\ColumnSortable\SortableLink::render(array ('Field Details','Field Details'));?></th>
+                                <th scope="col" class="dark:text-white/80 font-bold">SL.NO</th>
+                                <th scope="col" class="dark:text-white/80 font-bold">Title</th>
+                                <th scope="col" class="dark:text-white/80 font-bold">Description</th>
+                                <th scope="col" class="dark:text-white/80 font-bold">status</th>
+                                <th scope="col" class="dark:text-white/80 font-bold">Image</th>
+                                
                             </tr>
                         </thead>
+                        <?php
+                            $i=1;
+                        ?>
                         <tbody class="">
-                            <tr>
-                                <td>Title</td>
-                                <td><?php echo e($ticket->title); ?></td>
-                            </tr>
-                            <tr>
-                                <td>Description</td>
-                                <td><?php echo e($ticket->description); ?></td>
-                            </tr>
-                            <tr>
-                                <td>Image</td>
-                                <td>
-                                    <div class="flex-1">
-                                        <img src="<?php echo e(asset('attachment/'.$ticket->attachment)); ?>">
-                                    </div>
-                                </td>
-                            </tr>
+                            <td><span><?php echo e($i++); ?></span></td>
+                            <td><span><?php echo e($ticket->title); ?></span></td>
+                            <td><span><?php echo e($ticket->description); ?></span></td>
+                            <td><span><?php echo e($ticket->status); ?></span></td>
+                            <td>
+                                <span>
+                                    <img src="<?php echo e(asset('attachment/'.$ticket->attachment)); ?>" alt="Thumbnail" style="max-width: 100px; max-height: 100px; cursor: pointer;" onclick="showLargeImage('<?php echo e(asset('attachment/'.$ticket->attachment)); ?>')" >
+                                </span>
+                            </td>
+                            
                         </tbody>
                     </table>
                 </div>
+                <div class="flex">
+                    <h5 class="box-title my-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-church"
+                            width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <!-- SVG Path -->
+                        </svg>
+                        Reply
+                    </h5>
+                </div>
+                
+                <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
+                    <table id="postticket_table" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
+                        <thead class="bg-gray-50 dark:bg-black/20">
+                            <tr class="">
+                                <th scope="col" class="dark:text-white/80 font-bold">SL.NO</th>
+                                <th scope="col" class="dark:text-white/80 font-bold">Title</th>
+                                <th scope="col" class="dark:text-white/80 font-bold">Description</th>
+                                 <th scope="col" class="dark:text-white/80 font-bold">Attachment</th>
+                                 
+                                 <th scope="col" class="dark:text-white/80 font-bold">User</th>
+                            </tr>
+                        </thead>
+                        <?php
+                            $i=1;
+                        ?>
+                        <tbody class="">
+                            <?php $__currentLoopData = $postticket; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pt): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <td><span><?php echo e($i++); ?></span></td>
+                                <td><span><?php echo e($pt->title); ?></span></td>
+                                <td><span><?php echo e($pt->description); ?></span></td>
+                                
+                                <td>
+                                    <span>
+                                        <img src="<?php echo e(asset('attachment/'.$pt->attachment)); ?>" alt="Thumbnail" style="max-width: 100px; max-height: 100px; cursor: pointer;" onclick="showLargeImage('<?php echo e(asset('attachment/'.$pt->attachment)); ?>')" >
+                                    </span>
+                                </td>
+                                
+                                
 
+<<<<<<< HEAD
+                                
+                                <td><span><?php echo e($pt->user->email); ?></span></td>
+                        </tbody>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>         
+=======
                 <!-- Additional table for pticket -->
 
                 <div class="mt-10 overflow-auto rounded-sm table-auto table-bordered ti-striped-table ti-custom-table-head">
@@ -178,6 +242,38 @@
 
 </div>
 
+>>>>>>> 577981886532c569a7be3880f2625defb0c100d5
 <?php $__env->stopSection(); ?>
+
+<!-- JavaScript to show large image in modal -->
+<script>
+    function showLargeImage(imageSrc) {
+        var modal = document.createElement('div');
+        modal.style.position = 'fixed';
+        modal.style.top = '0';
+        modal.style.left = '0';
+        modal.style.width = '100%';
+        modal.style.height = '100%';
+        modal.style.backgroundColor = 'rgba(0,0,0,0.7)';
+        modal.style.display = 'flex';
+        modal.style.alignItems = 'center';
+        modal.style.justifyContent = 'center';
+        modal.style.zIndex = '9999';
+
+        var largeImage = document.createElement('img');
+        largeImage.src = imageSrc;
+        largeImage.style.maxWidth = '80%';
+        largeImage.style.maxHeight = '80%';
+        largeImage.style.borderRadius = '5px';
+        largeImage.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
+
+        modal.appendChild(largeImage);
+        document.body.appendChild(modal);
+
+        modal.onclick = function() {
+            document.body.removeChild(modal);
+        };
+    }
+</script>
 
 <?php echo $__env->make('layouts.components.Ticketing.master-ticketing', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\laravel Apps\gitoffice\resources\views/Ticketing/showticket.blade.php ENDPATH**/ ?>

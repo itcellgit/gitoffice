@@ -81,6 +81,8 @@
         <!-- SCRIPTS -->
         
         <?php echo $__env->make('layouts.components.scripts', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        
+
 
         <!-- STICKY JS -->
 		<script src="<?php echo e(asset('build/assets/sticky.js')); ?>"></script>
