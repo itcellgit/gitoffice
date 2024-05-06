@@ -1173,8 +1173,7 @@
                     var emp_type = $('#employee_type').val();
                   //  alert(emp_type);
                     var designation_id = $('#designation_id').val();
-                    alert(designation_id);
-                    //$('#payscalelevel').hide();
+                    
                     //alert(pay_type+'-'+emp_type+'-'+designation_id);
                     if(pay_type == "Fixed"){
                         $('#fixed_pay_div').show();

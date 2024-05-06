@@ -11,7 +11,7 @@ class Updateleave_staff_applicationsRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**

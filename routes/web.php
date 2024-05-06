@@ -297,7 +297,7 @@ Route::get('/fetchholidayrhevents',[LeaveStaffApplicationsController::class,'fet
 Route::get('/fetchmyleaveevents',[LeaveStaffApplicationsController::class,'fetchmyleaveevents'])->name('fetchmyleaveevents');
 
 Route::get('/cancel_myleave',[LeaveStaffApplicationsController::class,'cancel_myleave'])->name('cancel_myleave');
-Route::get('/edit_myleave',[LeaveStaffApplicationsController::class,'edit_myleave'])->name('edit_myleave');
+Route::get('/edit_myleave',[LeaveStaffApplicationsController::class,'edit_myleave'])->name('Teaching.leaves.edit');
 // Route::delete('/ESTB/leaves/leaves_rules/{leave_rules}',[LeaveRulesController::class,'destroy'])->name('ESTB.leaves.leave_rules.destroy');
 
 //Leave Application Management routes

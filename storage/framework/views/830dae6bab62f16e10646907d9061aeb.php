@@ -400,8 +400,8 @@
                                                             </table>
                                                         </div>
                                                     </div>
-                                                    <div class="ti-modal-footer" id="edit_applied_leave">
-                                                            
+                                                        <div class="ti-modal-footer" id="edit_applied_leave_div">
+                                                            <form  action="<?php echo e(route('Teaching.leaves.edit',$staff->id)); ?>" method="post">
                                                                 <?php echo method_field('patch'); ?>
                                                                 <?php echo csrf_field(); ?>
                                                                 <div class="leave_form_div" id="leave_edit_form" >
@@ -410,7 +410,7 @@
 
                                                                         <div class="max-w-sm space-y-2 pb-6 ">
                                                                             <label for="" class="ti-form-label font-bold">Leave Type:<span class="text-red-500">*</span></label>
-                                                                            <select class="ti-form-select" name="type" id="type" required>
+                                                                            <select class="ti-form-select" name="type" id="type_edit" required>
                                                                                 <option value="#">Choose Leave Type</option>
 
                                                                                 <?php $__currentLoopData = $leaves; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $l): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -419,21 +419,21 @@
 
                                                                             </select>
                                                                         </div>
-                                                                        <div id="cl_type_block" class="hidden">
+                                                                        <div id="cl_type_block_edit" class="hidden">
 
                                                                             <label for="cl_morning" class="ti-form-label font-bold">Select CL type</label>
                                                                             <div class="flex">
 
                                                                                 <div class="flex items-center me-4 ">
-                                                                                    <input id="cl_morning" type="radio" value="Morning" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type">
+                                                                                    <input id="cl_morning_edit" type="radio" value="Morning" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type">
                                                                                     <label for="cl_morning" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">CL-Morning</label>
                                                                                 </div>
                                                                                 <div class="flex items-center me-4 ml-6">
-                                                                                    <input id="cl_afternoon" type="radio" value="Afternoon" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type">
+                                                                                    <input id="cl_afternoon_edit" type="radio" value="Afternoon" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type">
                                                                                     <label for="cl_afternoon" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">CL-Afternoon</label>
                                                                                 </div>
                                                                                 <div class="flex items-center me-4 ml-6 ">
-                                                                                    <input checked id="cl" type="radio" value="Full" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type">
+                                                                                    <input checked id="cl_edit" type="radio" value="Full" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type">
                                                                                     <label for="cl" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Full Day CL</label>
                                                                                 </div>
 
@@ -473,14 +473,14 @@
                                                                         </div>
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Leave Reason:<span class="text-red-500">*</span></label>
-                                                                            <textarea class="ti-form-input" required name="leave_reason" id="leave_reason" placeholder="Leave Reason"></textarea>
+                                                                            <textarea class="ti-form-input" required name="leave_reason" id="leave_reason_edit" placeholder="Leave Reason"></textarea>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Alternate:</label>
-                                                                            <select class="ti-form-select" name="alternate" id="alternate" required>
+                                                                            <select class="ti-form-select" name="alternate" id="alternate_edit" required>
                                                                                 <option value="#">Choose Alternate</option>
 
                                                                                 <?php $__currentLoopData = $dept_staff; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $depts): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -494,7 +494,7 @@
                                                                         </div>
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Additional Alternate:</label>
-                                                                            <select class="ti-form-select" name="additional_alternate" id="add_alternate" required>
+                                                                            <select class="ti-form-select" name="additional_alternate" id="add_alternate_edit" required>
                                                                                 <option value="#">Choose an Alternate</option>
 
                                                                                 <?php $__currentLoopData = $dept_staff; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $depts): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -512,14 +512,15 @@
                                                                 <div class="ti-modal-footer">
                                                                     <button type="button"
                                                                         class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10 leave_apply_close_btn"
-                                                                        id="" data-hs-overlay="#add_leaveform">
+                                                                         data-hs-overlay="#view_leave">
                                                                         Cancel
                                                                     </button>
 
                                                                     <input type="submit" class="ti-btn  bg-warning text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" id="leave_edit_btn" value="Update"/>
 
                                                                 </div>
-                                                            
+                                                            </form>
+                                                        </div>    
                                                     </div>
                                                 </div>
                                             </div>
@@ -618,9 +619,20 @@
                 }
             });
 
+            $(document).on('change','#type_edit',function(){
+                if($("#type_edit option:selected").text()=="CL")
+                {
+                    $('#cl_type_block_edit').show();
+                }
+                else
+                {
+                    $('#cl_type_block_edit').hide();
+                }
+            });
+            
             
 
-                //for generating the no of days between the leave dates.
+                //for generating the no of days between the leave dates. (While applying).
             $(document).on('change', '#to_date',function(){
 
                  var from_date = $('#from_date').val();
@@ -660,6 +672,46 @@
                     }
 
             });
+            //for calculating the no of days between two dates while editing the leave application
+            $(document).on('change', '#to_date_edit',function(){
+
+                var from_date = $('#from_date_edit').val();
+                var to_date = $('#to_date_edit').val();
+                // alert(from_date+'-'+to_date);
+                if(from_date != ""){
+
+                    if(from_date == to_date){
+                        //$('.no_of_days_count').removeClass('border border-red-500 focus:border-blue-500');
+
+                        $('#no_of_days_count_edit').val(1);
+                    }else if(from_date > to_date){
+                        $('#no_of_days_count_edit').val(0);
+                        //$('.no_of_days_count').addClass('border border-red-500 focus:border-blue-500');
+                        $('#to_date_edit').val();
+                        $('#to_date_edit').focus();
+                    }else{
+                        //$('.no_of_days_count').removeClass('border border-red-500 focus:border-blue-500');
+
+                        var startDay = new Date(from_date);
+                        var endDay = new Date(to_date);
+
+                        //alert(startDay+'-'+endDay);
+
+                        // Determine the time difference between two dates
+                        var millisBetween = endDay.getTime() - startDay.getTime();
+
+                        // Determine the number of days between two dates
+                        var days = millisBetween / (1000 * 3600 * 24);
+                        days=days+1;
+                        $('#no_of_days_count_edit').val(days);
+                    }
+
+                }else{
+                    $('#from_date').focus();
+                    alert('Please fill the from date');
+                }
+
+                });
 
             //for cancellation of leave 
             $(document).on('click','.cancel_leave_btn',function(){
@@ -697,7 +749,8 @@
             $(document).on('click','.edit_leave_applied',function(){
                 var application_id = $(this).attr("data_val");
                 //alert(application_id);
-                edit_applied_leave
+                $('#edit_applied_leave_div').show();
+                $('#leave_edit_btn').show();
 
                 $.ajax({
                                 url: base_url+'/edit_myleave',
@@ -709,11 +762,35 @@
                                     },
                                     success: function(response) {
                                         // Handle the response from the server
+                                        
                                         console.log(response);
-                                        $('#edit_applied_leave').html(response);
-                                        setInterval(() => {
-                                            location.reload();
-                                        }, 2000);
+                                        $('#type_edit option[value='+response[0].leave_id+']').attr('selected', 'selected');
+                                        //for checking whether its CL or no
+                                        if(response[0].shortname == 'CL'){
+                                            $('#cl_type_block_edit').show();
+                                        }else{
+                                            $('#cl_type_block_edit').hide();
+                                        }
+                                            
+                                        //for setting the cl_type from the DB.
+                                        if(response[0].cl_type == "Morning"){
+                                            $('#cl_morning_edit').attr('checked',true);
+                                        }else if(response[0].cl_type == "Afternoon"){
+                                            $('#cl_afternoon_edit').attr('checked',true);
+                                        }else{
+                                            $('#cl_edit').attr('checked',true);
+                                        }
+
+                                        //for setting the from date
+                                        $('#from_date_edit').val(response[0].start);
+                                        $('#to_date_edit').val(response[0].end);
+                                        $('#no_of_days_count_edit').val(response[0].no_of_days);
+                                        $('#leave_reason_edit').val(response[0].reason);
+                                        $('#alternate_edit option[value='+response[0].alternate+']').attr('selected', 'selected');
+                                        
+                                        if(response[0].additional_alternate !=null){
+                                            $('#add_alternate_edit option[value='+response[0].additional_alternate+']').attr('selected', 'selected');
+                                        }
                                     },
                                     error: function(xhr, status, error) {
                                         // Handle errors
@@ -967,6 +1044,8 @@
                         Clickeddate = info.event.start;
 
                         $('#view_leave_modal').trigger('click');
+                        $('#edit_applied_leave_div').hide(); //for hiding the leave application edit form.(initially).
+                        $('#leave_edit_btn').hide(); // for hiding the update button in the edit application.
                         //alert('view modal active');
                         var clicked_date = Clickeddate.getFullYear()+"-"+(Clickeddate.getMonth()+1)+"-"+Clickeddate.getDate();
                         
@@ -1015,7 +1094,7 @@
                                                                     +'<td>'+value.additional_alternate_staff+ '</td>'
                                                                     +'<td>'
                                                                         +(value.appl_status =='pending'? '<div class="hs-tooltip ti-main-tooltip">'
-                                                                                        +'<button id="" data_val="'+value.Application_id+'"'
+                                                                                        +'<button  data_val="'+value.Application_id+'"'
                                                                                                 +'class=" m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger edit_leave_applied">'
                                                                                                 +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M16.7574 2.99666L14.7574 4.99666H5V18.9967H19V9.2393L21 7.2393V19.9967C21 20.5489 20.5523 20.9967 20 20.9967H4C3.44772 20.9967 3 20.5489 3 19.9967V3.99666C3 3.44438 3.44772 2.99666 4 2.99666H16.7574ZM20.4853 2.09717L21.8995 3.51138L12.7071 12.7038L11.2954 12.7062L11.2929 11.2896L20.4853 2.09717Z"></path></svg>'
                                                                                               

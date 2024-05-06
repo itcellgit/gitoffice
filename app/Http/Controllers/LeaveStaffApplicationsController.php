@@ -250,6 +250,45 @@ class LeaveStaffApplicationsController extends Controller
        return redirect('/Teaching/leaves/')->with('return_data', $return_data);
 
     }
+    //for updating the leave application (Editing)
+    public function update(Updateleave_staff_applicationsRequest $request, leave_staff_applications $leave_staff_applications)
+    {
+        $user = Auth::User();
+        $staff=staff::where('user_id','=',$user->id)->first();
+        $result=$this->validateleave($request,$staff);
+
+        if($result == "success"){
+            $leave_staff_applications->leave_id = $request->type;
+            $leave_staff_applications->cl_type = $request->cl_type;
+            $leave_staff_applications->start = $request->from_date;
+            $leave_staff_applications->end = $request->to_date; 
+            $leave_staff_applications->no_of_days = $request->no_of_days; 
+            $leave_staff_applications->leave_reason = $request->leave_reason;   
+            $leave_staff_applications->alternate = $request->alternate;  
+            $leave_staff_applications->additional_alternate = $request->additional_alternate;
+
+            $update_result = $leave_staff_applications->update();
+
+        }
+        
+        if($update_result && $result){
+            $status = 1;
+        }else{
+            $status = $result;
+        }
+
+        $return_data = [
+            'status' => $status,
+            'result' => $result,
+            'start_date'=>$request->from_date,
+            'leave_type'=>$request->type,
+            'reason'=>$request->leave_reason,
+            'alternative'=>$request->alternate
+        ];
+
+        return redirect('/Teaching/leaves/')->with('return_data', $return_data);
+
+    }
     //method to validate the leaves as per the leave rules and leave combination allowed
     public function validateleave(request $request, staff $staff)
     {
@@ -257,7 +296,7 @@ class LeaveStaffApplicationsController extends Controller
         $result="";
         $leave=leave::with('combine_leave')->with('leave_rules')->where('id',$request->type)->first();
 
-        //dd($staff_leaves_applications);
+       // dd($leave);
         //Rules to check
         //1. Leave days must not overlap.
         //2. Leave can be combined with only a few type of leaves and also they can be take on one side or bothsides -listed in combine_leaves
@@ -443,10 +482,7 @@ class LeaveStaffApplicationsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Updateleave_staff_applicationsRequest $request, leave_staff_applications $leave_staff_applications)
-    {
-        //
-    }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -620,17 +656,17 @@ class LeaveStaffApplicationsController extends Controller
         //dd($application_id);
 
         $result = DB::table('leave_staff_applications')
-            ->where('id', $application_id)
+            ->where('leave_staff_applications.id', $application_id)
+            ->join('leaves', 'leaves.id','=','leave_staff_applications.leave_id')
+            ->select('leave_staff_applications.*','leaves.longname','leaves.shortname')
             ->get();
             //$leave_staff_applications->appl_status = "recommended";
          //dd($result);
 
 
         //dd($leaves);
-        if($result){
-           
-        }
-        return $return_html;
+        
+        return response()->json($result);;
     }
 
 }
