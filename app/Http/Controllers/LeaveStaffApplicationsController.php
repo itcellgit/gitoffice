@@ -252,9 +252,51 @@ class LeaveStaffApplicationsController extends Controller
        return redirect('/Teaching/leaves/')->with('return_data', $return_data);
 
     }
+    //for updating the leave application (Editing)
+    public function update(Updateleave_staff_applicationsRequest $request, leave_staff_applications $leave_staff_applications)
+    {
+        $user = Auth::User();
+        $staff=staff::where('user_id','=',$user->id)->first();
+        $result=$this->validateleave($request,$staff);
+
+        if($result == "success"){
+            $leave_staff_applications->leave_id = $request->type;
+            $leave_staff_applications->cl_type = $request->cl_type;
+            $leave_staff_applications->start = $request->from_date;
+            $leave_staff_applications->end = $request->to_date;
+            $leave_staff_applications->no_of_days = $request->no_of_days;
+            $leave_staff_applications->leave_reason = $request->leave_reason;
+            $leave_staff_applications->alternate = $request->alternate;
+            $leave_staff_applications->additional_alternate = $request->additional_alternate;
+
+            $update_result = $leave_staff_applications->update();
+
+        }
+
+        if($update_result && $result){
+            $status = 1;
+        }else{
+            $status = $result;
+        }
+
+        $return_data = [
+            'status' => $status,
+            'result' => $result,
+            'start_date'=>$request->from_date,
+            'leave_type'=>$request->type,
+            'reason'=>$request->leave_reason,
+            'alternative'=>$request->alternate
+        ];
+
+        return redirect('/Teaching/leaves/')->with('return_data', $return_data);
+
+    }
     //method to validate the leaves as per the leave rules and leave combination allowed
     public function validateleave(request $request, staff $staff)
     {
+
+        $result="";
+        $leave=leave::with('combine_leave')->with('leave_rules')->where('id',$request->type)->first();
 
         //dd($staff_leaves_applications);
         //Rules to check
@@ -545,10 +587,7 @@ class LeaveStaffApplicationsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Updateleave_staff_applicationsRequest $request, leave_staff_applications $leave_staff_applications)
-    {
-        //
-    }
+
 
     /**
      * Remove the specified resource from storage.
@@ -806,10 +845,10 @@ class LeaveStaffApplicationsController extends Controller
 
                                         <div class="leave_form_div" id="leave_form" >
 
-                                            <div class="grid gap-2 pt-6 pb-6 space-y-2 lg:grid-cols-2 lg:space-y-0">
+                                            <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pt-6 pb-6">
 
-                                                <div class="max-w-sm pb-6 space-y-2 ">
-                                                    <label for="" class="font-bold ti-form-label">Leave Type:<span class="text-red-500">*</span></label>
+                                                <div class="max-w-sm space-y-2 pb-6 ">
+                                                    <label for="" class="ti-form-label font-bold">Leave Type:<span class="text-red-500">*</span></label>
                                                     <select class="ti-form-select" name="type" id="type" required>
                                                         <option value="#">Choose Leave Type</option>';
 
@@ -821,20 +860,20 @@ class LeaveStaffApplicationsController extends Controller
                                                 </div>
                                                 <div id="cl_type_block">
 
-                                                    <label for="cl_morning" class="font-bold ti-form-label">Select CL type</label>
+                                                    <label for="cl_morning" class="ti-form-label font-bold">Select CL type</label>
                                                     <div class="flex">
 
                                                         <div class="flex items-center me-4 ">
-                                                            <input id="cl_morning" type="radio" value="Morning" name="cl_type" class="w-4 h-4 mr-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type" '.($result->cl_type == "Morning" ? "checked":"") .'>
-                                                            <label for="cl_morning" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">CL-Morning</label>
+                                                            <input id="cl_morning" type="radio" value="Morning" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type" '.($result->cl_type == "Morning" ? "checked":"") .'>
+                                                            <label for="cl_morning" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">CL-Morning</label>
                                                         </div>
-                                                        <div class="flex items-center ml-6 me-4">
-                                                            <input id="cl_afternoon" type="radio" value="Afternoon" name="cl_type" class="w-4 h-4 mr-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type" '.($result->cl_type == "Afternoon" ? "checked":"") .'>
-                                                            <label for="cl_afternoon" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">CL-Afternoon</label>
+                                                        <div class="flex items-center me-4 ml-6">
+                                                            <input id="cl_afternoon" type="radio" value="Afternoon" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type" '.($result->cl_type == "Afternoon" ? "checked":"") .'>
+                                                            <label for="cl_afternoon" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">CL-Afternoon</label>
                                                         </div>
-                                                        <div class="flex items-center ml-6 me-4 ">
-                                                            <input checked id="cl" type="radio" value="Full" name="cl_type" class="w-4 h-4 mr-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type" '.($result->cl_type == "Full" ? "checked":"") .'>
-                                                            <label for="cl" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">Full Day CL</label>
+                                                        <div class="flex items-center me-4 ml-6 ">
+                                                            <input checked id="cl" type="radio" value="Full" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type" '.($result->cl_type == "Full" ? "checked":"") .'>
+                                                            <label for="cl" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Full Day CL</label>
                                                         </div>
 
                                                     </div>
@@ -842,44 +881,44 @@ class LeaveStaffApplicationsController extends Controller
 
 
                                             </div>
-                                            <div class="grid gap-2 space-y-2 lg:grid-cols-2 lg:space-y-0">
-                                                <div date-rangepicker class="flex max-w-sm pb-6 space-y-3">
-                                                    <label for="" class="font-bold ti-form-label">From Date:<span class="text-red-500">*</span></label>
-                                                        <div class="inline-flex items-center px-4 border border-gray-200 min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm ltr:border-r-0 rtl:border-l-0 bg-gray-50 dark:bg-black/20 dark:border-white/10">
+                                            <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                                <div date-rangepicker class="flex max-w-sm space-y-3 pb-6">
+                                                    <label for="" class="ti-form-label font-bold">From Date:<span class="text-red-500">*</span></label>
+                                                        <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
                                                             <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                             class="ri ri-calendar-line"></i></span>
                                                         </div>
 
                                                         <input type="text" name="from_date"
-                                                            class="rounded-l-none ti-form-input focus:z-10 flatpickr-input date"
+                                                            class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
                                                             id="from_date" required placeholder="Choose date" value="'.$result->start.'">
                                                 </div>
-                                                <div class="flex max-w-sm pb-6 space-y-3">
-                                                    <label for="" class="font-bold ti-form-label">TO Date:<span class="text-red-500">*</span></label>
-                                                    <div class="inline-flex items-center px-4 border border-gray-200 min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm ltr:border-r-0 rtl:border-l-0 bg-gray-50 dark:bg-black/20 dark:border-white/10">
+                                                <div class="flex max-w-sm space-y-3 pb-6">
+                                                    <label for="" class="ti-form-label font-bold">TO Date:<span class="text-red-500">*</span></label>
+                                                    <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
                                                         <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                         class="ri ri-calendar-line"></i></span>
                                                     </div>
 
                                                     <input  type="text" name="to_date"
-                                                        class="rounded-l-none ti-form-input focus:z-10 flatpickr-input date"
+                                                        class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
                                                             id="to_date" required placeholder="Choose date" value="'.$result->end.'">
                                                 </div>
                                             </div>
-                                            <div class="grid gap-2 space-y-4 lg:grid-cols-2 lg:space-y-0">
-                                                <div class="flex content-center max-w-sm pb-6 space-y-4">
+                                            <div class="grid lg:grid-cols-2 gap-2 space-y-4 lg:space-y-0">
+                                                <div class="flex max-w-sm space-y-4 pb-6 content-center">
                                                     <p class="font-bold">No. of Days :</p>
-                                                    <input type="text" class="text-green-500 ti-form-input" required name="no_of_days" id="no_of_days_count" readonly value="'.$result->no_of_days.'"/>
+                                                    <input type="text" class="ti-form-input text-green-500" required name="no_of_days" id="no_of_days_count" readonly value="'.$result->no_of_days.'"/>
                                                 </div>
-                                                <div class="max-w-sm pb-6 space-y-3">
-                                                    <label for="" class="font-bold ti-form-label">Leave Reason:<span class="text-red-500">*</span></label>
+                                                <div class="max-w-sm space-y-3 pb-6">
+                                                    <label for="" class="ti-form-label font-bold">Leave Reason:<span class="text-red-500">*</span></label>
                                                     <textarea class="ti-form-input" required name="leave_reason" id="leave_reason" placeholder="Leave Reason">'.$result->reason.'</textarea>
                                                 </div>
                                             </div>
 
-                                            <div class="grid gap-2 space-y-2 lg:grid-cols-2 lg:space-y-0">
-                                                <div class="max-w-sm pb-6 space-y-3">
-                                                    <label for="" class="font-bold ti-form-label">Alternate:</label>
+                                            <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                                <div class="max-w-sm space-y-3 pb-6">
+                                                    <label for="" class="ti-form-label font-bold">Alternate:</label>
                                                     <select class="ti-form-select" name="alternate" id="alternate" required>
                                                         <option value="#">Choose Alternate</option>';
 
@@ -892,8 +931,8 @@ class LeaveStaffApplicationsController extends Controller
                                                          }
                                                         $return_html .='</select>
                                                 </div>
-                                                <div class="max-w-sm pb-6 space-y-3">
-                                                    <label for="" class="font-bold ti-form-label">Additional Alternate:</label>
+                                                <div class="max-w-sm space-y-3 pb-6">
+                                                    <label for="" class="ti-form-label font-bold">Additional Alternate:</label>
                                                     <select class="ti-form-select" name="additional_alternate" id="add_alternate" required>
                                                         <option value="#">Choose an Alternate</option>
 
@@ -909,14 +948,14 @@ class LeaveStaffApplicationsController extends Controller
                                             </div>
                                         </div>
 
-                                        <div class="grid gap-2 space-y-2 lg:grid-cols-2 lg:space-y-0">
+                                        <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                             <button type="button"
-                                                class="font-medium text-gray-700 align-middle bg-white shadow-sm hs-dropdown-toggle ti-btn ti-border hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10 leave_apply_close_btn"
+                                                class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10 leave_apply_close_btn"
                                                 id="" data-hs-overlay="#add_leaveform">
                                                 Cancel
                                             </button>
 
-                                            <input type="submit" class="text-white ti-btn bg-primary hover:bg-primary focus:ring-primary dark:focus:ring-offset-white/10" id="leave_apply_btn" value="Apply"/>
+                                            <input type="submit" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" id="leave_apply_btn" value="Apply"/>
 
                                         </div>
                             </form>';

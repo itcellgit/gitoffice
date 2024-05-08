@@ -150,7 +150,7 @@ class PublicationController extends Controller
         $publication->egov_id=$this->gen_egov_id($request->e_date);
         $publication->journal=$request->e_journal;
         $publication->publication_type=$request->e_publication_type;
-        $publication->journal=$request->e_doi_number;
+        $publication->doi_number=$request->e_doi_number;
         $publication->link=$request->e_link;
         $publication->role=$request->e_role;
 

@@ -1,1 +1,0 @@
-<?php /**PATH F:\laravel Apps\gitoffice\resources\views/Staff/Teaching/research/fundconsultancy.blade.php ENDPATH**/ ?>

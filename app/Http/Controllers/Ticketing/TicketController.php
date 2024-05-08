@@ -21,7 +21,8 @@ class TicketController extends Controller
     {
         $user=auth()->user();
         $tickets=$user->isAdmin?ticket::latest()->get():$user->tickets;
-         return view('Ticketing.dashboard',compact('tickets'));
+        $staff = $user->staff;
+        return view('Ticketing.dashboard',compact('tickets','staff'));
     }
 
     /**

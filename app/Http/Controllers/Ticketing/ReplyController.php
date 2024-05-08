@@ -34,30 +34,28 @@ class ReplyController extends Controller
         $postticket = new post_ticket();
         $postticket->ticket_id = $ticket->id;
         $postticket->user_id = $user->id;
+        $postticket->title = $request->title;
         $postticket->description = $request->description;
 
         // Update attachment if provided
-        if ($request->hasFile('attachment'))
+        if($request->file('attachment'))
         {
-            // Delete old attachment if exists
-            // if ($postticket->attachment)
-            // {
-            //     Storage::disk('public')->delete("attachment/{$postticket->attachment}");
-            // }
-            // Store new attachment
-                $extension = $request->file('attachment')->extension();
-                $filename = Str::random(25) . '.' . $extension;
-                $path = $request->file('attachment')->storeAs('attachment', $filename, 'public');
-            // Update attachment field in the postticket
-                $postticket->attachment = $filename;
-            }
-
+            $extension=$request->file('attachment')->extension();
+            $contents=file_get_contents($request->file('attachment'));
+           // $filename=Str::random(25);
+            $filename = Str::random(25) . '.' . $extension;
+             $path = $request->file('attachment')->storeAs('attachment', $filename, 'public');
+            //$path="attachment/$filename.$text";
+            Storage::disk('public')->put($path,$contents);
+            $request->file('attachment')->move(public_path('attachment'), $filename);
+            //$ticket->update(['attachment'=>$filename]);
+            $postticket->attachment = $filename;
+        }
              $postticket->save();
 
              $postticket = post_ticket::where('ticket_id', $ticket->id)->get();
 
-            // return redirect('ticket/show');
-            // return view('Ticketing/showticket/reply');
+            
          return view('Ticketing.showticket',compact('ticket','postticket'));
 
     }
