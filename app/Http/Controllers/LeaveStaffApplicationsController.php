@@ -257,7 +257,7 @@ class LeaveStaffApplicationsController extends Controller
         $staff=staff::where('user_id','=',$user->id)->first();
         $result=$this->validateleave($request,$staff);
 
-        if($result == "success"){
+        if($result == "success"){ //if validation of leave rules hold good then insert.
             $leave_staff_applications->leave_id = $request->type;
             $leave_staff_applications->cl_type = $request->cl_type;
             $leave_staff_applications->start = $request->from_date;
@@ -268,6 +268,28 @@ class LeaveStaffApplicationsController extends Controller
             $leave_staff_applications->additional_alternate = $request->additional_alternate;
 
             $update_result = $leave_staff_applications->update();
+
+            //checking if the previous start and end dates are modified
+            if($leave_staff_applications->start != $request->from_date || $leave_staff_applications->end != $request->to_date){
+               
+               
+                //inserting the new values.
+                $period = CarbonPeriod::create($request->from_date, $request->to_date);
+                $daywise_leave_result = false;
+    
+    
+                foreach ($period as $dt) {
+    
+                    $day_wise_leave = new Daywise_Leave();
+                    $day_wise_leave->leave_staff_applications_id = $leave_application->id;
+                    $day_wise_leave->leave_id = $request->type;
+                    $day_wise_leave->start = $dt->format('Y-m-d');
+                    //dd($dt->format('Y-m-d'));
+                    $daywise_leave_result = $day_wise_leave->save();
+    
+                }
+            }
+           
 
         }
         
