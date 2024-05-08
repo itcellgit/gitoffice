@@ -283,3 +283,28 @@
         };
     }
 </script>
+
+<script>
+    document.getElementById('updateStatusBtn').addEventListener('click', function() {
+        var status = document.getElementById('ticketStatus').value;
+
+        var formData = new FormData();
+        formData.append('status', status);
+        
+        fetch("{{ route('ticket.reply.update', $ticket->id) }}", {
+            method: 'PATCH',
+            headers: {
+                'X-CSRF-Token': '{{ csrf_token() }}',
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle response, maybe show a success message or update UI
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>

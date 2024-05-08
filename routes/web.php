@@ -772,33 +772,14 @@ Route::patch('ticket/update/{ticket}', [TicketController::class, 'update'])->nam
 Route::delete('ticket/destroy/{ticket}',[TicketController::class, 'destroy'])->name('ticket.destroy');
 Route::get('ticket/show/{ticket}', [TicketController::class, 'show'])->name('ticket.show');
 
-
+//Routes for post_ticket
 Route::post('ticket/{ticket}/reply/store', [ReplyController::class, 'store'])->name('ticket.reply.store');
 Route::patch('ticket/{ticket}reply/update',[ReplyController::class,'update'])->name('ticket.reply.update');
 
-// Route::patch('ticket/status_update/{ticket}', [TicketController::class, 'status_update'])->name('ticket.status_update');
 
-
-
-
-
-
-Route::get('mssql',function(){
-  $db=DB::connection('sqlsrv')->table('Employees')->get();
-  dd($db);
-});
-
-
-//open new page for modal
-//Route::post('ticket/reply', [Replyontroller::class, 'replyForm'])->name('Ticketing.replyticket');
-
-
-
-//Routes for ticketing admin system
+//Routes for admin ticketiing  system
 Route::middleware(['cors','auth','role:'.UserRoles::SU->value])->group(function()
 {
-
-
   Route::get('/Admin/dashboard',[AdminController::class,'dashboard'])->name('Admin.dashboard');
   Route::get('/Admin/tickets/adminticket',[AdminTicketController::class,'index'])->name('Admin.tickets.adminticket');
   Route::post('Admin/tickets/adminticket/create', [AdminTicketController::class, 'store'])->name('Admin.tickets.adminticket.store');
@@ -808,13 +789,16 @@ Route::middleware(['cors','auth','role:'.UserRoles::SU->value])->group(function(
  // Route::patch('ticket/update/{postticket}', [ReplyController::class, 'update'])->name('ticket.reply.update');
   //Route::patch('Admin/tickets/adminticket/update/{ticket}', [AdminTicketController::class, 'status_update'])->name('Admin.tickets.adminticket.update');
 
-
-
-
-
-
-
 });
+
+
+
+
+Route::get('mssql',function(){
+  $db=DB::connection('sqlsrv')->table('Employees')->get();
+  dd($db);
+});
+
 
 
 
