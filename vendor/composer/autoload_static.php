@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2
+class ComposerStaticInit2bbe72fdeb7425beab04fb9ba4ae5b46
 {
     public static $files = array (
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
@@ -421,8 +421,8 @@ class ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -726,6 +726,7 @@ class ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2
         'App\\Http\\Controllers\\Deanrnd\\DeanrndResearchController' => __DIR__ . '/../..' . '/app/Http/Controllers/Deanrnd/DeanrndResearchController.php',
         'App\\Http\\Controllers\\ESTB\\AllowancesController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/AllowancesController.php',
         'App\\Http\\Controllers\\ESTB\\AssociationController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/AssociationController.php',
+        'App\\Http\\Controllers\\ESTB\\BiometricController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/BiometricController.php',
         'App\\Http\\Controllers\\ESTB\\CasteCategoryFilteringController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/CasteCategoryFilteringController.php',
         'App\\Http\\Controllers\\ESTB\\CastecategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/CastecategoryController.php',
         'App\\Http\\Controllers\\ESTB\\ConsolidatedTeachingPayStaffController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/ConsolidatedTeachingPayStaffController.php',
@@ -739,7 +740,6 @@ class ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2
         'App\\Http\\Controllers\\ESTB\\HolidayrhController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/HolidayrhController.php',
         'App\\Http\\Controllers\\ESTB\\LeaveController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/LeaveController.php',
         'App\\Http\\Controllers\\ESTB\\LeaveRulesController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/LeaveRulesController.php',
-        'App\\Http\\Controllers\\ESTB\\LeaveStaffController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/LeaveStaffController.php',
         'App\\Http\\Controllers\\ESTB\\LeaveStaffEntitlementController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/LeaveStaffEntitlementController.php',
         'App\\Http\\Controllers\\ESTB\\NTpayscaleController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/NTpayscaleController.php',
         'App\\Http\\Controllers\\ESTB\\NtcpayscaleController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/NtcpayscaleController.php',
@@ -760,7 +760,6 @@ class ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2
         'App\\Http\\Controllers\\ESTB\\staff\\StaffAssociationsController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/staff/StaffAssociationsController.php',
         'App\\Http\\Controllers\\ESTB\\staff\\StaffDepartmentController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/staff/StaffDepartmentController.php',
         'App\\Http\\Controllers\\ESTB\\staff\\StaffDesignationsController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/staff/StaffDesignationsController.php',
-        'App\\Http\\Controllers\\ESTB\\staff\\StaffLeavesController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/staff/StaffLeavesController.php',
         'App\\Http\\Controllers\\ESTB\\staff\\urlcontroller' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/staff/urlcontroller.php',
         'App\\Http\\Controllers\\ElementsController' => __DIR__ . '/../..' . '/app/Http/Controllers/ElementsController.php',
         'App\\Http\\Controllers\\EmailController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmailController.php',
@@ -804,6 +803,7 @@ class ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2
         'App\\Http\\Controllers\\Teaching\\ReviewerEditorController' => __DIR__ . '/../..' . '/app/Http/Controllers/Teaching/ReviewerEditorController.php',
         'App\\Http\\Controllers\\Teaching\\TeachingController' => __DIR__ . '/../..' . '/app/Http/Controllers/Teaching/TeachingController.php',
         'App\\Http\\Controllers\\Teaching\\TeachingLeaveController' => __DIR__ . '/../..' . '/app/Http/Controllers/Teaching/TeachingLeaveController.php',
+        'App\\Http\\Controllers\\Ticketing\\ReplyController' => __DIR__ . '/../..' . '/app/Http/Controllers/Ticketing/ReplyController.php',
         'App\\Http\\Controllers\\Ticketing\\TicketController' => __DIR__ . '/../..' . '/app/Http/Controllers/Ticketing/TicketController.php',
         'App\\Http\\Controllers\\WidgetsController' => __DIR__ . '/../..' . '/app/Http/Controllers/WidgetsController.php',
         'App\\Http\\Controllers\\egov\\EgovAdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/egov/EgovAdminController.php',
@@ -860,6 +860,7 @@ class ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2
         'App\\Http\\Requests\\StorentcpayscaleRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StorentcpayscaleRequest.php',
         'App\\Http\\Requests\\StorentpayscaleRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StorentpayscaleRequest.php',
         'App\\Http\\Requests\\StorepatentRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StorepatentRequest.php',
+        'App\\Http\\Requests\\Storepost_ticketRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Storepost_ticketRequest.php',
         'App\\Http\\Requests\\Storeprofessional_activity_attendeeRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Storeprofessional_activity_attendeeRequest.php',
         'App\\Http\\Requests\\Storeprofessional_activity_conductedRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Storeprofessional_activity_conductedRequest.php',
         'App\\Http\\Requests\\Storeprofessional_activity_resource_personRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Storeprofessional_activity_resource_personRequest.php',
@@ -908,6 +909,7 @@ class ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2
         'App\\Http\\Requests\\UpdatentcpayscaleRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdatentcpayscaleRequest.php',
         'App\\Http\\Requests\\UpdatentpayscaleRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdatentpayscaleRequest.php',
         'App\\Http\\Requests\\UpdatepatentRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdatepatentRequest.php',
+        'App\\Http\\Requests\\Updatepost_ticketRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Updatepost_ticketRequest.php',
         'App\\Http\\Requests\\Updateprofessional_activity_attendeeRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Updateprofessional_activity_attendeeRequest.php',
         'App\\Http\\Requests\\Updateprofessional_activity_conductedRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Updateprofessional_activity_conductedRequest.php',
         'App\\Http\\Requests\\Updateprofessional_activity_resource_personRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Updateprofessional_activity_resource_personRequest.php',
@@ -925,8 +927,10 @@ class ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2
         'App\\Mail\\ResetPasswordMail' => __DIR__ . '/../..' . '/app/Mail/ResetPasswordMail.php',
         'App\\Mail\\WelcomeMail' => __DIR__ . '/../..' . '/app/Mail/WelcomeMail.php',
         'App\\Models\\Daywise_Leave' => __DIR__ . '/../..' . '/app/Models/Daywise_Leave.php',
+        'App\\Models\\Device' => __DIR__ . '/../..' . '/app/Models/Device.php',
         'App\\Models\\ESTB\\leave_staff' => __DIR__ . '/../..' . '/app/Models/ESTB/leave_staff.php',
         'App\\Models\\ESTB\\leave_staff_entitlement' => __DIR__ . '/../..' . '/app/Models/ESTB/leave_staff_entitlement.php',
+        'App\\Models\\Employee' => __DIR__ . '/../..' . '/app/Models/Employee.php',
         'App\\Models\\Teaching\\leave' => __DIR__ . '/../..' . '/app/Models/Teaching/leave.php',
         'App\\Models\\Ticketing\\ticket' => __DIR__ . '/../..' . '/app/Models/Ticketing/ticket.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
@@ -967,6 +971,7 @@ class ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2
         'App\\Models\\ntpayscale' => __DIR__ . '/../..' . '/app/Models/ntpayscale.php',
         'App\\Models\\passwordreset' => __DIR__ . '/../..' . '/app/Models/passwordreset.php',
         'App\\Models\\patent' => __DIR__ . '/../..' . '/app/Models/patent.php',
+        'App\\Models\\post_ticket' => __DIR__ . '/../..' . '/app/Models/post_ticket.php',
         'App\\Models\\professional_activity_attendee' => __DIR__ . '/../..' . '/app/Models/professional_activity_attendee.php',
         'App\\Models\\professional_activity_conducted' => __DIR__ . '/../..' . '/app/Models/professional_activity_conducted.php',
         'App\\Models\\professional_activity_resource_person' => __DIR__ . '/../..' . '/app/Models/professional_activity_resource_person.php',
@@ -980,7 +985,6 @@ class ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2
         'App\\Models\\staff' => __DIR__ . '/../..' . '/app/Models/staff.php',
         'App\\Models\\tdsheads' => __DIR__ . '/../..' . '/app/Models/tdsheads.php',
         'App\\Models\\teaching_payscale' => __DIR__ . '/../..' . '/app/Models/teaching_payscale.php',
-        'App\\Models\\ticket' => __DIR__ . '/../..' . '/app/Models/ticket.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
@@ -1042,6 +1046,7 @@ class ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2
         'Aws\\Api\\Parser\\JsonParser' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Api/Parser/JsonParser.php',
         'Aws\\Api\\Parser\\JsonRpcParser' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Api/Parser/JsonRpcParser.php',
         'Aws\\Api\\Parser\\MetadataParserTrait' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Api/Parser/MetadataParserTrait.php',
+        'Aws\\Api\\Parser\\NonSeekableStreamDecodingEventStreamIterator' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Api/Parser/NonSeekableStreamDecodingEventStreamIterator.php',
         'Aws\\Api\\Parser\\PayloadParserTrait' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Api/Parser/PayloadParserTrait.php',
         'Aws\\Api\\Parser\\QueryParser' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Api/Parser/QueryParser.php',
         'Aws\\Api\\Parser\\RestJsonParser' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Api/Parser/RestJsonParser.php',
@@ -5270,9 +5275,12 @@ class ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2
         'League\\MimeTypeDetection\\OverridingExtensionToMimeTypeMap' => __DIR__ . '/..' . '/league/mime-type-detection/src/OverridingExtensionToMimeTypeMap.php',
         'MailerSend\\Common\\Constants' => __DIR__ . '/..' . '/mailersend/mailersend/src/Common/Constants.php',
         'MailerSend\\Common\\HttpLayer' => __DIR__ . '/..' . '/mailersend/mailersend/src/Common/HttpLayer.php',
+        'MailerSend\\Common\\Permissions' => __DIR__ . '/..' . '/mailersend/mailersend/src/Common/Permissions.php',
+        'MailerSend\\Common\\Roles' => __DIR__ . '/..' . '/mailersend/mailersend/src/Common/Roles.php',
         'MailerSend\\Endpoints\\AbstractEndpoint' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/AbstractEndpoint.php',
         'MailerSend\\Endpoints\\Activity' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/Activity.php',
         'MailerSend\\Endpoints\\Analytics' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/Analytics.php',
+        'MailerSend\\Endpoints\\ApiQuota' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/ApiQuota.php',
         'MailerSend\\Endpoints\\Blocklist' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/Blocklist.php',
         'MailerSend\\Endpoints\\BulkEmail' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/BulkEmail.php',
         'MailerSend\\Endpoints\\Domain' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/Domain.php',
@@ -5281,8 +5289,10 @@ class ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2
         'MailerSend\\Endpoints\\HardBounce' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/HardBounce.php',
         'MailerSend\\Endpoints\\Inbound' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/Inbound.php',
         'MailerSend\\Endpoints\\Message' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/Message.php',
+        'MailerSend\\Endpoints\\OnHoldList' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/OnHoldList.php',
         'MailerSend\\Endpoints\\Recipient' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/Recipient.php',
         'MailerSend\\Endpoints\\ScheduleMessages' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/ScheduleMessages.php',
+        'MailerSend\\Endpoints\\SenderIdentity' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/SenderIdentity.php',
         'MailerSend\\Endpoints\\Sms' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/Sms.php',
         'MailerSend\\Endpoints\\SmsActivity' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/SmsActivity.php',
         'MailerSend\\Endpoints\\SmsInbound' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/SmsInbound.php',
@@ -5290,15 +5300,18 @@ class ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2
         'MailerSend\\Endpoints\\SmsNumber' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/SmsNumber.php',
         'MailerSend\\Endpoints\\SmsRecipient' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/SmsRecipient.php',
         'MailerSend\\Endpoints\\SmsWebhook' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/SmsWebhook.php',
+        'MailerSend\\Endpoints\\SmtpUser' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/SmtpUser.php',
         'MailerSend\\Endpoints\\SpamComplaint' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/SpamComplaint.php',
         'MailerSend\\Endpoints\\Suppression' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/Suppression.php',
         'MailerSend\\Endpoints\\Template' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/Template.php',
         'MailerSend\\Endpoints\\Token' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/Token.php',
         'MailerSend\\Endpoints\\Unsubscribe' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/Unsubscribe.php',
+        'MailerSend\\Endpoints\\User' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/User.php',
         'MailerSend\\Endpoints\\Webhook' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/Webhook.php',
         'MailerSend\\Exceptions\\MailerSendAssertException' => __DIR__ . '/..' . '/mailersend/mailersend/src/Exceptions/MailerSendAssertException.php',
         'MailerSend\\Exceptions\\MailerSendException' => __DIR__ . '/..' . '/mailersend/mailersend/src/Exceptions/MailerSendException.php',
         'MailerSend\\Exceptions\\MailerSendHttpException' => __DIR__ . '/..' . '/mailersend/mailersend/src/Exceptions/MailerSendHttpException.php',
+        'MailerSend\\Exceptions\\MailerSendRateLimitException' => __DIR__ . '/..' . '/mailersend/mailersend/src/Exceptions/MailerSendRateLimitException.php',
         'MailerSend\\Exceptions\\MailerSendValidationException' => __DIR__ . '/..' . '/mailersend/mailersend/src/Exceptions/MailerSendValidationException.php',
         'MailerSend\\Helpers\\BuildUri' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/BuildUri.php',
         'MailerSend\\Helpers\\Builder\\ActivityAnalyticsParams' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/ActivityAnalyticsParams.php',
@@ -5312,11 +5325,13 @@ class ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2
         'MailerSend\\Helpers\\Builder\\EmailVerificationParams' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/EmailVerificationParams.php',
         'MailerSend\\Helpers\\Builder\\Filter' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/Filter.php',
         'MailerSend\\Helpers\\Builder\\Forward' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/Forward.php',
+        'MailerSend\\Helpers\\Builder\\Header' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/Header.php',
         'MailerSend\\Helpers\\Builder\\Inbound' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/Inbound.php',
         'MailerSend\\Helpers\\Builder\\MatchFilter' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/MatchFilter.php',
         'MailerSend\\Helpers\\Builder\\OpensAnalyticsParams' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/OpensAnalyticsParams.php',
         'MailerSend\\Helpers\\Builder\\Personalization' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/Personalization.php',
         'MailerSend\\Helpers\\Builder\\Recipient' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/Recipient.php',
+        'MailerSend\\Helpers\\Builder\\SenderIdentity' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/SenderIdentity.php',
         'MailerSend\\Helpers\\Builder\\SmsActivityParams' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/SmsActivityParams.php',
         'MailerSend\\Helpers\\Builder\\SmsInbound' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/SmsInbound.php',
         'MailerSend\\Helpers\\Builder\\SmsInboundFilter' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/SmsInboundFilter.php',
@@ -5324,8 +5339,10 @@ class ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2
         'MailerSend\\Helpers\\Builder\\SmsPersonalization' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/SmsPersonalization.php',
         'MailerSend\\Helpers\\Builder\\SmsRecipientParams' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/SmsRecipientParams.php',
         'MailerSend\\Helpers\\Builder\\SmsWebhookParams' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/SmsWebhookParams.php',
+        'MailerSend\\Helpers\\Builder\\SmtpUserParams' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/SmtpUserParams.php',
         'MailerSend\\Helpers\\Builder\\SuppressionParams' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/SuppressionParams.php',
         'MailerSend\\Helpers\\Builder\\TokenParams' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/TokenParams.php',
+        'MailerSend\\Helpers\\Builder\\UserParams' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/UserParams.php',
         'MailerSend\\Helpers\\Builder\\Variable' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/Variable.php',
         'MailerSend\\Helpers\\Builder\\WebhookParams' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/Builder/WebhookParams.php',
         'MailerSend\\Helpers\\GeneralHelpers' => __DIR__ . '/..' . '/mailersend/mailersend/src/Helpers/GeneralHelpers.php',
@@ -5348,6 +5365,7 @@ class ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2
         'Mockery\\CountValidator\\AtLeast' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/CountValidator/AtLeast.php',
         'Mockery\\CountValidator\\AtMost' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/CountValidator/AtMost.php',
         'Mockery\\CountValidator\\CountValidatorAbstract' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/CountValidator/CountValidatorAbstract.php',
+        'Mockery\\CountValidator\\CountValidatorInterface' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/CountValidator/CountValidatorInterface.php',
         'Mockery\\CountValidator\\Exact' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/CountValidator/Exact.php',
         'Mockery\\CountValidator\\Exception' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/CountValidator/Exception.php',
         'Mockery\\Exception' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Exception.php',
@@ -6574,6 +6592,7 @@ class ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2
         'PharIo\\Manifest\\ManifestLoader' => __DIR__ . '/..' . '/phar-io/manifest/src/ManifestLoader.php',
         'PharIo\\Manifest\\ManifestLoaderException' => __DIR__ . '/..' . '/phar-io/manifest/src/exceptions/ManifestLoaderException.php',
         'PharIo\\Manifest\\ManifestSerializer' => __DIR__ . '/..' . '/phar-io/manifest/src/ManifestSerializer.php',
+        'PharIo\\Manifest\\NoEmailAddressException' => __DIR__ . '/..' . '/phar-io/manifest/src/exceptions/NoEmailAddressException.php',
         'PharIo\\Manifest\\PhpElement' => __DIR__ . '/..' . '/phar-io/manifest/src/xml/PhpElement.php',
         'PharIo\\Manifest\\PhpExtensionRequirement' => __DIR__ . '/..' . '/phar-io/manifest/src/values/PhpExtensionRequirement.php',
         'PharIo\\Manifest\\PhpVersionRequirement' => __DIR__ . '/..' . '/phar-io/manifest/src/values/PhpVersionRequirement.php',
@@ -7241,6 +7260,7 @@ class ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2
         'Ramsey\\Uuid\\UuidInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/UuidInterface.php',
         'Ramsey\\Uuid\\Validator\\GenericValidator' => __DIR__ . '/..' . '/ramsey/uuid/src/Validator/GenericValidator.php',
         'Ramsey\\Uuid\\Validator\\ValidatorInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/Validator/ValidatorInterface.php',
+        'SQLite3Exception' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/SQLite3Exception.php',
         'SebastianBergmann\\CliParser\\AmbiguousOptionException' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/AmbiguousOptionException.php',
         'SebastianBergmann\\CliParser\\Exception' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/Exception.php',
         'SebastianBergmann\\CliParser\\OptionDoesNotAllowArgumentException' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/OptionDoesNotAllowArgumentException.php',
@@ -8798,9 +8818,9 @@ class ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitd22c79738af7e9e4a779582475b1d9e2::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit2bbe72fdeb7425beab04fb9ba4ae5b46::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit2bbe72fdeb7425beab04fb9ba4ae5b46::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit2bbe72fdeb7425beab04fb9ba4ae5b46::$classMap;
 
         }, null, ClassLoader::class);
     }
