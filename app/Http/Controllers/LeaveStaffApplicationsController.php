@@ -175,6 +175,8 @@ class LeaveStaffApplicationsController extends Controller
             $leave_application =  new leave_staff_applications();
             $leave_application->leave_id = $request->type;
             $leave_application->cl_type=$request->cl_type;
+            $from_year=Carbon::parse($request->from_date)->year;
+            $to_year=Carbon::parse($request->to_date)->year;
             $leave_application->start = $request->from_date;
             $leave_application->end = $request->to_date;
             $leave_application->reason = $request->leave_reason;
@@ -191,7 +193,7 @@ class LeaveStaffApplicationsController extends Controller
 
             $leave_application->appl_status = 'pending';
             $leave_application->leave_status = 'awaiting';
-            $leave_application->year = 2024;
+            $leave_application->year = Carbon::parse($request->to_date)->year;
 
             $leave_appn_id = $leave_application->save();
 
@@ -254,9 +256,6 @@ class LeaveStaffApplicationsController extends Controller
     public function validateleave(request $request, staff $staff)
     {
 
-        $result="";
-        $leave=leave::with('combine_leave')->with('leave_rules')->where('id',$request->type)->first();
-
         //dd($staff_leaves_applications);
         //Rules to check
         //1. Leave days must not overlap.
@@ -268,6 +267,21 @@ class LeaveStaffApplicationsController extends Controller
         //7. The total number of leaves that any staff can take in a year must be less than the total number of leaves entitled for that year - listed as entitled_cur_year in leave_staff_entitlements
 
         //implementation of the above rules
+        $result="";
+        $from_year=Carbon::parse($request->from_date)->year;
+        $to_year=Carbon::parse($request->to_date)->year;
+        if($from_year!=$to_year)
+        {
+          $result.="Error: Leave dates cannot be from two different years. Please create two different applications for the respective years";
+          return $result;
+        }
+        $staff_leave_entitlements=leave_staff_entitlements::where('staff_id',$staff->id)->where('leave_id',$request->type)->where('year',$from_year)->first();
+       // dd($staff_leave_entitlements);
+        if($request->no_of_days+$staff_leave_entitlements->consumed_curr_year>$staff_leave_entitlements->entitled_curr_year)
+        {
+            $result.="Error: You do not have that many leaves left to your credit. You can avail only ".$staff_leave_entitlements->entitled_curr_year-$staff_leave_entitlements->consumed_curr_year;
+        }
+        $leave=leave::with('combine_leave')->with('leave_rules')->where('id',$request->type)->first();
 
         //Code for Rule-1.
         //check for the overlapping leaves
@@ -309,9 +323,52 @@ class LeaveStaffApplicationsController extends Controller
             ->where('leave_staff_applications.staff_id',$staff->id)
             ->where('start',$next_date)
             ->select('leaves.shortname','leave_staff_applications.*')->first();
-            if($staff_leaves_before_start_day!=null )
+            $holidaydates=array();
+            if($staff_leaves_before_start_day==null && $request->cl_type!='Afternoon')
             {
+                //if there is no leave before this leave date then check if there is a holiday and any leave before that day.
+                //example leave is from 6th May 2024 and 5th May is sunday
+                $holidays="notyet";
 
+                while($holidays!=null)
+                {
+
+                    $holidays=holidayrh::where('start',$previous_date)->first();
+                    if($holidays==null)
+                    {
+                        $dayofweek=Carbon::parse($previous_date)->format('l');
+                        if($dayofweek=="Sunday")
+                        {
+                            $holidaydates[]=Carbon::parse($previous_date)->format('d-m-Y');
+                            $previous_date=Carbon::parse($previous_date)->addDays(-1)->format('Y-m-d');
+                            $holidays="check for next day";
+                        }
+                        else
+                        {
+                            break;
+                        }
+
+                    }
+                    else
+                    {
+                        $holidaydates[]=Carbon::parse($previous_date)->format('d-m-Y');
+                        $previous_date=Carbon::parse($previous_date)->addDays(-1)->format('Y-m-d');
+                    }
+
+                }
+                $staff_leaves_before_start_day=leave_staff_applications::
+                    join('leaves','leaves.id','=','leave_staff_applications.leave_id')
+                    ->where('leave_staff_applications.staff_id',$staff->id)
+                    ->where('end',$previous_date)
+                    ->select('leaves.shortname','leave_staff_applications.*')->first();
+
+            }
+            if($staff_leaves_before_start_day!=null)
+            {
+                if(!empty($holidaydates))
+                {
+                    $result="You are extending your current leave with a holiday inbetween.  Please apply this leave from the date ".$holidaydates[count($holidaydates) - 1];
+                }
                 if( $staff_leaves_before_start_day->leave_id==$request->type )
                 {
                     if($leave->shortname=="CL")
@@ -350,8 +407,53 @@ class LeaveStaffApplicationsController extends Controller
                     }
                 }
             }
+            $holidaydatespost=array();
+            if($staff_leave_after_end_date==null && $request->cl_type!='Morning')
+            {
+                //if there is no leave before this leave date then check if there is a holiday and any leave before that day.
+                //example leave is from 6th May 2024 and 5th May is sunday
+                $holidays="notyet";
+
+                while($holidays!=null)
+                {
+
+                    $holidays=holidayrh::where('start',$next_date)->first();
+                    //dd($holidays);
+                    if($holidays==null)
+                    {
+                        $dayofweek=Carbon::parse( $next_date)->format('l');
+                        if($dayofweek=="Sunday")
+                        {
+                            $holidaydatespost[]=Carbon::parse( $next_date)->format('d-m-Y');
+                            $next_date=Carbon::parse( $next_date)->addDays(1)->format('Y-m-d');
+                            $holidays="check for next day";
+                        }
+                        else
+                        {
+                            break;
+                        }
+
+                    }
+                    else
+                    {
+                        $holidaydatespost[]=Carbon::parse( $next_date)->format('d-m-Y');
+                        $next_date=Carbon::parse( $next_date)->addDays(1)->format('Y-m-d');
+                    }
+
+                }
+                $staff_leave_after_end_date=leave_staff_applications::
+                join('leaves','leaves.id','=','leave_staff_applications.leave_id')
+                ->where('leave_staff_applications.staff_id',$staff->id)
+                ->where('start',$next_date)
+                ->select('leaves.shortname','leave_staff_applications.*')->first();
+
+            }
             if($staff_leave_after_end_date!=null)
             {
+                if(!empty($holidaydatespost))
+                {
+                    $result="You are extending your current leave with a holiday inbetween.  Please apply this leave upto the date ".$holidaydatespost[count($holidaydatespost) - 1];
+                }
                 if($staff_leave_after_end_date->leave_id==$request->type )
                 {
                     if($leave->shortname=="CL" )
@@ -704,10 +806,10 @@ class LeaveStaffApplicationsController extends Controller
 
                                         <div class="leave_form_div" id="leave_form" >
 
-                                            <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pt-6 pb-6">
+                                            <div class="grid gap-2 pt-6 pb-6 space-y-2 lg:grid-cols-2 lg:space-y-0">
 
-                                                <div class="max-w-sm space-y-2 pb-6 ">
-                                                    <label for="" class="ti-form-label font-bold">Leave Type:<span class="text-red-500">*</span></label>
+                                                <div class="max-w-sm pb-6 space-y-2 ">
+                                                    <label for="" class="font-bold ti-form-label">Leave Type:<span class="text-red-500">*</span></label>
                                                     <select class="ti-form-select" name="type" id="type" required>
                                                         <option value="#">Choose Leave Type</option>';
 
@@ -719,20 +821,20 @@ class LeaveStaffApplicationsController extends Controller
                                                 </div>
                                                 <div id="cl_type_block">
 
-                                                    <label for="cl_morning" class="ti-form-label font-bold">Select CL type</label>
+                                                    <label for="cl_morning" class="font-bold ti-form-label">Select CL type</label>
                                                     <div class="flex">
 
                                                         <div class="flex items-center me-4 ">
-                                                            <input id="cl_morning" type="radio" value="Morning" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type" '.($result->cl_type == "Morning" ? "checked":"") .'>
-                                                            <label for="cl_morning" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">CL-Morning</label>
+                                                            <input id="cl_morning" type="radio" value="Morning" name="cl_type" class="w-4 h-4 mr-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type" '.($result->cl_type == "Morning" ? "checked":"") .'>
+                                                            <label for="cl_morning" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">CL-Morning</label>
                                                         </div>
-                                                        <div class="flex items-center me-4 ml-6">
-                                                            <input id="cl_afternoon" type="radio" value="Afternoon" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type" '.($result->cl_type == "Afternoon" ? "checked":"") .'>
-                                                            <label for="cl_afternoon" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">CL-Afternoon</label>
+                                                        <div class="flex items-center ml-6 me-4">
+                                                            <input id="cl_afternoon" type="radio" value="Afternoon" name="cl_type" class="w-4 h-4 mr-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type" '.($result->cl_type == "Afternoon" ? "checked":"") .'>
+                                                            <label for="cl_afternoon" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">CL-Afternoon</label>
                                                         </div>
-                                                        <div class="flex items-center me-4 ml-6 ">
-                                                            <input checked id="cl" type="radio" value="Full" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type" '.($result->cl_type == "Full" ? "checked":"") .'>
-                                                            <label for="cl" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Full Day CL</label>
+                                                        <div class="flex items-center ml-6 me-4 ">
+                                                            <input checked id="cl" type="radio" value="Full" name="cl_type" class="w-4 h-4 mr-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type" '.($result->cl_type == "Full" ? "checked":"") .'>
+                                                            <label for="cl" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">Full Day CL</label>
                                                         </div>
 
                                                     </div>
@@ -740,44 +842,44 @@ class LeaveStaffApplicationsController extends Controller
 
 
                                             </div>
-                                            <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
-                                                <div date-rangepicker class="flex max-w-sm space-y-3 pb-6">
-                                                    <label for="" class="ti-form-label font-bold">From Date:<span class="text-red-500">*</span></label>
-                                                        <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
+                                            <div class="grid gap-2 space-y-2 lg:grid-cols-2 lg:space-y-0">
+                                                <div date-rangepicker class="flex max-w-sm pb-6 space-y-3">
+                                                    <label for="" class="font-bold ti-form-label">From Date:<span class="text-red-500">*</span></label>
+                                                        <div class="inline-flex items-center px-4 border border-gray-200 min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm ltr:border-r-0 rtl:border-l-0 bg-gray-50 dark:bg-black/20 dark:border-white/10">
                                                             <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                             class="ri ri-calendar-line"></i></span>
                                                         </div>
 
                                                         <input type="text" name="from_date"
-                                                            class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
+                                                            class="rounded-l-none ti-form-input focus:z-10 flatpickr-input date"
                                                             id="from_date" required placeholder="Choose date" value="'.$result->start.'">
                                                 </div>
-                                                <div class="flex max-w-sm space-y-3 pb-6">
-                                                    <label for="" class="ti-form-label font-bold">TO Date:<span class="text-red-500">*</span></label>
-                                                    <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
+                                                <div class="flex max-w-sm pb-6 space-y-3">
+                                                    <label for="" class="font-bold ti-form-label">TO Date:<span class="text-red-500">*</span></label>
+                                                    <div class="inline-flex items-center px-4 border border-gray-200 min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm ltr:border-r-0 rtl:border-l-0 bg-gray-50 dark:bg-black/20 dark:border-white/10">
                                                         <span class="text-sm text-gray-500 dark:text-white/70"><i
                                                                         class="ri ri-calendar-line"></i></span>
                                                     </div>
 
                                                     <input  type="text" name="to_date"
-                                                        class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
+                                                        class="rounded-l-none ti-form-input focus:z-10 flatpickr-input date"
                                                             id="to_date" required placeholder="Choose date" value="'.$result->end.'">
                                                 </div>
                                             </div>
-                                            <div class="grid lg:grid-cols-2 gap-2 space-y-4 lg:space-y-0">
-                                                <div class="flex max-w-sm space-y-4 pb-6 content-center">
+                                            <div class="grid gap-2 space-y-4 lg:grid-cols-2 lg:space-y-0">
+                                                <div class="flex content-center max-w-sm pb-6 space-y-4">
                                                     <p class="font-bold">No. of Days :</p>
-                                                    <input type="text" class="ti-form-input text-green-500" required name="no_of_days" id="no_of_days_count" readonly value="'.$result->no_of_days.'"/>
+                                                    <input type="text" class="text-green-500 ti-form-input" required name="no_of_days" id="no_of_days_count" readonly value="'.$result->no_of_days.'"/>
                                                 </div>
-                                                <div class="max-w-sm space-y-3 pb-6">
-                                                    <label for="" class="ti-form-label font-bold">Leave Reason:<span class="text-red-500">*</span></label>
+                                                <div class="max-w-sm pb-6 space-y-3">
+                                                    <label for="" class="font-bold ti-form-label">Leave Reason:<span class="text-red-500">*</span></label>
                                                     <textarea class="ti-form-input" required name="leave_reason" id="leave_reason" placeholder="Leave Reason">'.$result->reason.'</textarea>
                                                 </div>
                                             </div>
 
-                                            <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
-                                                <div class="max-w-sm space-y-3 pb-6">
-                                                    <label for="" class="ti-form-label font-bold">Alternate:</label>
+                                            <div class="grid gap-2 space-y-2 lg:grid-cols-2 lg:space-y-0">
+                                                <div class="max-w-sm pb-6 space-y-3">
+                                                    <label for="" class="font-bold ti-form-label">Alternate:</label>
                                                     <select class="ti-form-select" name="alternate" id="alternate" required>
                                                         <option value="#">Choose Alternate</option>';
 
@@ -790,8 +892,8 @@ class LeaveStaffApplicationsController extends Controller
                                                          }
                                                         $return_html .='</select>
                                                 </div>
-                                                <div class="max-w-sm space-y-3 pb-6">
-                                                    <label for="" class="ti-form-label font-bold">Additional Alternate:</label>
+                                                <div class="max-w-sm pb-6 space-y-3">
+                                                    <label for="" class="font-bold ti-form-label">Additional Alternate:</label>
                                                     <select class="ti-form-select" name="additional_alternate" id="add_alternate" required>
                                                         <option value="#">Choose an Alternate</option>
 
@@ -807,14 +909,14 @@ class LeaveStaffApplicationsController extends Controller
                                             </div>
                                         </div>
 
-                                        <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                        <div class="grid gap-2 space-y-2 lg:grid-cols-2 lg:space-y-0">
                                             <button type="button"
-                                                class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10 leave_apply_close_btn"
+                                                class="font-medium text-gray-700 align-middle bg-white shadow-sm hs-dropdown-toggle ti-btn ti-border hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10 leave_apply_close_btn"
                                                 id="" data-hs-overlay="#add_leaveform">
                                                 Cancel
                                             </button>
 
-                                            <input type="submit" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" id="leave_apply_btn" value="Apply"/>
+                                            <input type="submit" class="text-white ti-btn bg-primary hover:bg-primary focus:ring-primary dark:focus:ring-offset-white/10" id="leave_apply_btn" value="Apply"/>
 
                                         </div>
                             </form>';
