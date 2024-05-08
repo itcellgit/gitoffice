@@ -63,9 +63,8 @@
 
 
             <!-- HEADER -->
-            @include('layouts.components.header')
-
-
+            @include('layouts.components.Admin.admin-ticketing-header')
+            
             <!-- END HEADER -->
 
 
@@ -74,7 +73,7 @@
                 @yield('content')
                 <!-- END MAIN-CONTENT -->
 
-                @include('layouts.components.change_pwd_modal')
+         @include('layouts.components.change_pwd_modal')
 
             <!-- SEARCH-MODAL -->
             @include('layouts.components.search-modal')
