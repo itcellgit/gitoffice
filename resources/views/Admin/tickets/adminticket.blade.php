@@ -1,4 +1,4 @@
-@extends('layouts.components.Admin.adminmaster-ticketing')
+@extends('layouts.components.Admin.adminmaster')
 
 @section('styles')
 

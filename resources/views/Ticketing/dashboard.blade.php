@@ -19,6 +19,10 @@
                     <!-- Page Header -->
                     <div class="block justify-between page-header sm:flex">
                         <div>
+                            <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium"> Welcome <span class="text-primary">{{$staff->fname.' '.$staff->mname.' '.$staff->lname}}</span></h3>
+                            
+                        </div>
+                        <div>
                             <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium"><span class="text-primary"></span></h3>
                         </div>
                             <ol class="flex items-center whitespace-nowrap min-w-0">
@@ -174,18 +178,18 @@
                                                             @csrf
                                                             <div class="ti-modal-body">
                                                                 <div class="max-w-sm space-y-3 pb-6">
-                                                                    <label for="with-corner-hint" class="ti-form-label">title: </label>
-                                                                    <input type="text" name="title" class="ti-form-input" required placeholder="title">
+                                                                    <label for="with-corner-hint" class="ti-form-label">My Issue: </label>
+                                                                    <input type="text" name="title" class="ti-form-input" required placeholder="my issue">
                                                                 </div>
                                                                 <div class="max-w-sm space-y-3 pb-6">
                                                                     <label for="" class="ti-form-label">Description:</label>
-                                                                    <textarea name="description" class="ti-form-input" required placeholder="Description" style="width: 100%; height: 150px;"></textarea>
+                                                                    <textarea name="description" class="ti-form-input" required placeholder="Please Describe the issue here... " style="width: 100%; height: 150px;"></textarea>
                                                                 </div>
                                                                     <div class="max-w-sm space-y-3 pb-6">
-                                                                        <label for="" class="ti-form-label">attachment :</label>
-                                                                        <input type="file" name="attachment" class="ti-form-input"  placeholder="attachment">
+                                                                        <label for="" class="ti-form-label">Attachment:</label>
+                                                                        <input type="file" name="attachment" class="ti-form-input" accept="image/*" placeholder="Choose an image">
                                                                     </div>
-                                                                        <div class="ti-modal-footer">
+                                                                         <div class="ti-modal-footer">
                                                                             <button type="button"
                                                                                 class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
                                                                                 data-hs-overlay="#hs-medium-modal">
@@ -207,10 +211,9 @@
                                                     <thead class="bg-gray-50 dark:bg-black/20">
                                                         <tr class="">
                                                             <th scope="col" class="dark:text-white/80">SL.No</th>
-                                                            <th scope="col" class="dark:text-white/80">@sortablelink('title','title')</th>
+                                                            <th scope="col" class="dark:text-white/80">@sortablelink('My Issue','My Issue')</th>
                                                             <th scope="col" class="dark:text-white/80">@sortablelink('description','description')</th>
                                                             <th scope="col" class="dark:text-white/80">@sortablelink('attachment','attachment')</th>
-                                                            {{-- <th scope="col" class="dark:text-white/80">Status</th> --}}
                                                             <th scope="col" class="dark:text-white/80">Action</th>
                                                         </tr>
                                                     </thead>
@@ -232,9 +235,6 @@
                                                                 <td><span>{{$ticket->description}}</span></td>
                                                                 <td><span>{{$ticket->attachment}}</span></td>
                                                                 {{-- <td><span>{{$ticket->status}}</span></td> --}}
-
-                                                                
-                                                                
                                                                 <td class="font-medium space-x-2 rtl:space-x-reverse">
                                                                 <div class="hs-tooltip ti-main-tooltip">
                                                                         <a href="{{route('ticket.show',$ticket->id)}}"
@@ -282,19 +282,18 @@
                                                                                     <div class="ti-modal-body">
                                                                                     
                                                                                         <div class="max-w-sm space-y-3 pb-6">
-                                                                                            <label for="with-corner-hint" class="ti-form-label">title: </label>
-                                                                                            <input type="text" name="title" class="ti-form-input" required placeholder="title" value = "{{$ticket->title}}">
+                                                                                            <label for="with-corner-hint" class="ti-form-label">My Issue: </label>
+                                                                                            <input type="text" name="title" class="ti-form-input" required placeholder="my issue" value = "{{$ticket->title}}">
                                                                                     
                                                                                         </div>
                                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                                             <label for="" class="ti-form-label">Description:</label>
-                                                                                            <textarea name="description" class="ti-form-input" required placeholder="Description" style="width: 100%; height: 150px;" value="{{$ticket->description}}"></textarea>
+                                                                                            <textarea name="description" class="ti-form-input" required placeholder="Please describe the issue here..." style="width: 100%; height: 150px;" value="{{$ticket->description}}"></textarea>
                                                                                         </div>
-                                                                                        
-                                                                                            <div class="max-w-sm space-y-3 pb-6">
-                                                                                                <label for="" class="ti-form-label">attachment :</label>
-                                                                                                <input type="file" name="attachment" class="ti-form-input"  placeholder="attachment" value="{{$ticket->attachment}}">
-                                                                                            </div>
+                                                                                         <div class="max-w-sm space-y-3 pb-6">
+                                                                                            <label for="" class="ti-form-label">Attachment:</label>
+                                                                                            <input type="file" name="attachment" class="ti-form-input" accept="image/*" placeholder="Choose an image">
+                                                                                        </div>
                                                                                      </div>
                                                                                         <div class="ti-modal-footer">
                                                                                             <button type="button"
