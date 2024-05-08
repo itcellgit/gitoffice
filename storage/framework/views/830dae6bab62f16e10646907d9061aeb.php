@@ -63,19 +63,35 @@
                                     <input type="hidden" id="reason" value="<?php echo e(session('return_data')['reason']); ?>"/>
                                     <input type="hidden" id="alternative" value="<?php echo e(session('return_data')['alternative']); ?>"/>
 
+                                    <?php if(session('return_data')['appl_edit'] == 1): ?>
+                                        <script>
+                                        $(document).ready(function(){
+                                            $('#leave_apply_modal').trigger('click');//css('disply','block');
+                                            $('#type').val($('#leave_type').val());
+                                            $('#from_date').val($('#start_date').val());
+                                            $('#leave_reason').val($('#reason').val());
+                                            //alert();
+                                            $('#alternate').val($('#alternative').val());
+                                        });
+                                        
+
+
+                                        </script>
+                                    <?php else: ?>   
                                     <script>
-                                      $(document).ready(function(){
-                                        $('#leave_apply_modal').trigger('click');//css('disply','block');
-                                        $('#type').val($('#leave_type').val());
-                                        $('#from_date').val($('#start_date').val());
-                                        $('#leave_reason').val($('#reason').val());
-                                        //alert();
-                                        $('#alternate').val($('#alternative').val());
-                                      });
+                                        $(document).ready(function(){
+                                            $('#view_leave').trigger('click');//css('disply','block');
+                                            // $('#type').val($('#leave_type').val());
+                                            // $('#from_date').val($('#start_date').val());
+                                            // $('#leave_reason').val($('#reason').val());
+                                            // //alert();
+                                            // $('#alternate').val($('#alternative').val());
+                                        });
+                                        
 
 
-                                    </script>
-
+                                        </script>
+                                    <?php endif; ?>
                                 <?php endif; ?>
 
                             <?php endif; ?>
@@ -401,13 +417,13 @@
                                                         </div>
                                                     </div>
                                                         <div class="ti-modal-footer" id="edit_applied_leave_div">
-                                                            <form  action="<?php echo e(route('Teaching.leaves.edit',$staff->id)); ?>" method="post">
+                                                            <form  action="<?php echo e(route('Teaching.leave_application.update',$staff->id)); ?>" method="post">
                                                                 <?php echo method_field('patch'); ?>
                                                                 <?php echo csrf_field(); ?>
                                                                 <div class="leave_form_div" id="leave_edit_form" >
 
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pt-6 pb-6">
-
+                                                                        <input type="hidden" class="leave_staff_application_id" name="leave_staff_application_id" value=""/>
                                                                         <div class="max-w-sm space-y-2 pb-6 ">
                                                                             <label for="" class="ti-form-label font-bold">Leave Type:<span class="text-red-500">*</span></label>
                                                                             <select class="ti-form-select" name="type" id="type_edit" required>
@@ -591,16 +607,25 @@
             $("input[name='cl_type']").change(function(e){
                 if($(this).val() == 'Morning' || $(this).val()=='Afternoon') {
                     //alert($('#from_date').val());
+                    //leave application
                     $('#to_date').val($('#from_date').val());
                     $('#no_of_days_count').val(0.5);
+                    //leave application edit.
+                    $('#to_date_edi').val($('#from_date_edit').val());
+                    $('#no_of_days_count_edit').val(0.5);
                     
                     flatpickr('#to_date', {
                             "minDate": new Date($('#from_date').val()),
                             "maxDate": new Date($('#from_date').val())
                         });
                 }else{
+                    //leave application
                     $('#to_date').val('');
                     $('#no_of_days_count').val(''); 
+
+                    //leave application edit.
+                    $('#to_date_edit').val('');
+                    $('#no_of_days_count_edit ').val('');
                     flatpickr('#to_date', {
                             "minDate": new Date($('#from_date').val()),
                             "maxDate": new Date($('#from_date').val()).fp_incr(30)
@@ -753,7 +778,7 @@
                 $('#leave_edit_btn').show();
 
                 $.ajax({
-                                url: base_url+'/edit_myleave',
+                                url: base_url+'/Teaching/edit_myleave',
                                     method: 'GET',
                                     data: {
                                         application_id : application_id,
@@ -764,6 +789,7 @@
                                         // Handle the response from the server
                                         
                                         console.log(response);
+                                        $('.leave_staff_application_id').val(response[0].id);
                                         $('#type_edit option[value='+response[0].leave_id+']').attr('selected', 'selected');
                                         //for checking whether its CL or no
                                         if(response[0].shortname == 'CL'){
@@ -788,9 +814,11 @@
                                         $('#leave_reason_edit').val(response[0].reason);
                                         $('#alternate_edit option[value='+response[0].alternate+']').attr('selected', 'selected');
                                         
+
                                         if(response[0].additional_alternate !=null){
                                             $('#add_alternate_edit option[value='+response[0].additional_alternate+']').attr('selected', 'selected');
                                         }
+                                        $('#to_date_edit').focus();
                                     },
                                     error: function(xhr, status, error) {
                                         // Handle errors

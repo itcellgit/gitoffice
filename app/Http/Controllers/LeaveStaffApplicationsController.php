@@ -257,22 +257,31 @@ class LeaveStaffApplicationsController extends Controller
         $staff=staff::where('user_id','=',$user->id)->first();
         $result=$this->validateleave($request,$staff);
 
+        // dd($result);
+         $update_result = '';
         if($result == "success"){ //if validation of leave rules hold good then insert.
-            $leave_staff_applications->leave_id = $request->type;
-            $leave_staff_applications->cl_type = $request->cl_type;
-            $leave_staff_applications->start = $request->from_date;
-            $leave_staff_applications->end = $request->to_date; 
-            $leave_staff_applications->no_of_days = $request->no_of_days; 
-            $leave_staff_applications->leave_reason = $request->leave_reason;   
-            $leave_staff_applications->alternate = $request->alternate;  
-            $leave_staff_applications->additional_alternate = $request->additional_alternate;
-
-            $update_result = $leave_staff_applications->update();
+        //     //dd($result);
+            
+            $update_result =  DB::table('leave_staff_applications')
+                        ->where('id', $request->leave_staff_application_id)
+                        ->update(['leave_id' => $request->type,
+                        'cl_type' => $request->cl_type,
+                        'start' => $request->from_date,
+                        'end' => $request->to_date,
+                        'no_of_days' => $request->no_of_days, 
+                        'reason' => $request->leave_reason,   
+                        'alternate' => $request->alternate,  
+                        'additional_alternate' => $request->additional_alternate]);
+                        
+             //dd($update_result);
+            // = $leave_staff_applications->update();
 
             //checking if the previous start and end dates are modified
             if($leave_staff_applications->start != $request->from_date || $leave_staff_applications->end != $request->to_date){
                
-               
+                //for deleting the old entries.
+                $previous_entry_delete_result = Daywise_Leave::where('leave_staff_applications_id', $request->leave_staff_application_id)->delete();
+
                 //inserting the new values.
                 $period = CarbonPeriod::create($request->from_date, $request->to_date);
                 $daywise_leave_result = false;
@@ -281,7 +290,7 @@ class LeaveStaffApplicationsController extends Controller
                 foreach ($period as $dt) {
     
                     $day_wise_leave = new Daywise_Leave();
-                    $day_wise_leave->leave_staff_applications_id = $leave_application->id;
+                    $day_wise_leave->leave_staff_applications_id = $request->leave_staff_application_id;
                     $day_wise_leave->leave_id = $request->type;
                     $day_wise_leave->start = $dt->format('Y-m-d');
                     //dd($dt->format('Y-m-d'));
@@ -291,9 +300,9 @@ class LeaveStaffApplicationsController extends Controller
             }
            
 
-        }
-        
-        if($update_result && $result){
+       }
+        //$result = 'success';
+        if($update_result  && $daywise_leave_result && $result){
             $status = 1;
         }else{
             $status = $result;
@@ -304,6 +313,7 @@ class LeaveStaffApplicationsController extends Controller
             'result' => $result,
             'start_date'=>$request->from_date,
             'leave_type'=>$request->type,
+            'appl_edit'=>1,
             'reason'=>$request->leave_reason,
             'alternative'=>$request->alternate
         ];
