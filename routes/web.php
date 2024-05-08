@@ -423,13 +423,18 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
 
     //Staff Routes
     Route::get('/ESTB/staff',[StaffController::class,'index'])->name('ESTB.staff');
+
+    //Route to fetch staff data using Filter
+    //Route::get('/ESTB/staff/staffinformation',[StaffController::class,'staff_filter_record'])->name('ESTB.staff.staffinformation');
+
+
     Route::post('/ESTB/staff/create',[StaffController::class,'store'])->name('ESTB.staff.store');
     Route::get('/ESTB/staff/show/{staff}',[StaffController::class,'show'])->name('ESTB.staff.show');
     Route::patch('/ESTB/staff/update/{staff}',[StaffController::class,'update'])->name('ESTB.staff.update');
 
     //Route to fetch staff data using Filter
-    //Route::get('/ESTB/staff/staffinformation',[StaffController::class,'filterstaff_information'])->name('ESTB.staff.staffinformation');
-    Route::get('/ESTB/staff/staffinformation', [StaffController::class, 'filterstaff_information'])->name('ESTB.staff.filter');
+    Route::get('/ESTB/staff/staffinformation',[StaffController::class,'filterstaff_information'])->name('ESTB.staff.staffinformation');
+    //Route::get('/ESTB/staff/staffinformation', [StaffController::class, 'filterstaff_information'])->name('ESTB.staff.filter');
 
 
 
@@ -666,7 +671,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
      Route::get('/HOD/Teaching/research/hodachivements',[HodResearchController::class,'hod_general_achievement'])->name('HOD.Teaching.research.hodachivements');
      Route::get('/HOD/Teaching/research/hodbookchap',[HodResearchController::class,'hod_books_chapt'])->name('HOD.Teaching.research.hodbookchap');
      Route::get('/HOD/Teaching/research/hodconsultancy',[HodResearchController::class,'hod_consultancy'])->name('HOD.Teaching.research.hodconsultancy');
-     Route::get('/HOD/Teaching/research/hodrevieweditor',[HodResearchController::class,'hod_review_editor'])->name('HOD.Teaching.research.hodrevieweditor');
+     Route::get('/HOD/Teaching/research/hodreviewereditor',[HodResearchController::class,'hod_review_editor'])->name('HOD.Teaching.research.hodreviewereditor');
 
 
      //Hod Leaves.

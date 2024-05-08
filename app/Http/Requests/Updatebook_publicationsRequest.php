@@ -50,7 +50,6 @@ class Updatebook_publicationsRequest extends FormRequest
             'ebc_publisher_name.required'=>'Publisher name is required filed',
             'ebc_publisher_name.regex'=>'The Publisher name field should contain only letters and spaces.',
             'ebc_edition.regex'=>'The edition field should contain only letters and spaces.',
-            'ebc_doi.regex'=>'The doi field should contain only letters and spaces.',
             'ebc_date.required'=>'date is required field',
             'ebc_issue.regex'=>'The edition field should contain only letters and spaces.',
             'ebc_type.required'=>'type is required field',

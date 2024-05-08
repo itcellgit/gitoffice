@@ -823,15 +823,17 @@
                         $('#bp_dateError').text('Please Select a proper date');
                         flag = true;
                     }
+
                     if (bp_doi !== '') {
-                        if (!/^[0-9a-zA-Z]*$/.test(bp_doi.trim())) {
-                            $('#bp_doiError').text('Please fill with alphanumeric characters');
+                        if (!/^[0-9a-zA-Z\s\-._]*$/.test(bp_doi)) {
+                            $('#bp_doiError').text('');
                         }
 
                     } else {
                         // The field is optional and empty, no validation need
                     }
-                        if(bp_issue == ''){
+
+                    if(bp_issue == ''){
                         $('#bp_issueError').text('Issue Name is missing');
                         flag = true;
                     }else if (!/^[a-zA-Z\s]+$/.test(bp_issue.trim())){
