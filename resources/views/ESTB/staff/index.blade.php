@@ -88,9 +88,9 @@
                                                                     @endphp
 
 
-                                                                    {{-- @php
+                                                                    @php
                                                                         $defaultDepartmentIds = range(1, 30);
-                                                                    @endphp --}}
+                                                                    @endphp
 
                                                                     <div class="flex">
                                                                         <input type="checkbox" class="ti-form-checkbox mt-0.5 select-all">
@@ -178,7 +178,7 @@
                                                             <div class="space-y-2">
                                                                 <label class="ti-form-label mb-0 font-bold">Religion<span class="text-red-500">*</span></label>
                                                                 <select class="ti-form-select religion_id" name="religion_id">
-                                                                    <option value="#">Choose a Religion</option>
+                                                                    <option value="all">Choose a Religion</option>
                                                                     @foreach ($religions as $religion)
                                                                     <option value="{{$religion->id}}">{{$religion->religion_name}}</option>
                                                                     @endforeach
