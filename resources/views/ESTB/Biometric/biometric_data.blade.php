@@ -62,7 +62,7 @@
                                             <div class="box">
                                                 <div class="box-body">
                                                     <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
-                                                        <table id="proattended" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
+                                                        <table id="BiometricTable" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                                             <thead class="bg-gray-50 dark:bg-black/20">
                                                             <tr class="">
                                                                 <th scope="col" class="dark:text-white/80 font-bold  ">S.No</th>
@@ -71,8 +71,9 @@
                                                                 <th scope="col" class="dark:text-white/80 font-bold ">DeviceIn</th>
                                                                 <th scope="col" class="dark:text-white/80 font-bold ">PunchOut</th>
                                                                 <th scope="col" class="dark:text-white/80 font-bold ">DeviceOut</th>
+                                                                <th scope="col" class="dark:text-white/80 font-bold ">No.of.Punches</th>
                                                                 <th scope="col" class="dark:text-white/80 font-bold ">Duration</th>
-                                                                 <th scope="col" class="dark:text-white/80 font-bold ">Action</th>
+                                                                <th scope="col" class="dark:text-white/80 font-bold ">Action</th>
 
 
                                                             </tr>
@@ -81,25 +82,68 @@
                                                                  @php
                                                                     $i=1;
                                                                 @endphp
-                                                                @foreach ($externalData as $data)
-                                                                <tr>
-                                                                    <td>{{ $i++ }}</td>
-                                                                    <td>{{ $data->EmployeeName }}</td>
-                                                                    <td>{{ $data->logDate }}</td> <!-- Potential issue -->
-                                                                    <td>{{ $data->DeviceName }}</td>
-                                                                    <td>{{ $data->logDate }}</td> <!-- Potential issue -->
-                                                                    <td>{{ $data->DeviceName }}</td>
-                                                                    <td></td>
-                                                                    <td><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3ZM12.0003 19C16.2359 19 19.8603 16.052 20.7777 12C19.8603 7.94803 16.2359 5 12.0003 5C7.7646 5 4.14022 7.94803 3.22278 12C4.14022 16.052 7.7646 19 12.0003 19ZM12.0003 16.5C9.51498 16.5 7.50026 14.4853 7.50026 12C7.50026 9.51472 9.51498 7.5 12.0003 7.5C14.4855 7.5 16.5003 9.51472 16.5003 12C16.5003 14.4853 14.4855 16.5 12.0003 16.5ZM12.0003 14.5C13.381 14.5 14.5003 13.3807 14.5003 12C14.5003 10.6193 13.381 9.5 12.0003 9.5C10.6196 9.5 9.50026 10.6193 9.50026 12C9.50026 13.3807 10.6196 14.5 12.0003 14.5Z"></path></svg></td>
-                                                                </tr>
-                                                                @endforeach
+                                                              @foreach ($externalData as $data)
+                                                              @php
+                                                                  $employeeCode = $data->EmployeeCode;
+                                                                  $hasEntryLog = isset($entry_exit['entryLogs'][$employeeCode]);
+                                                                  $hasExitLog = isset($entry_exit['exitLogs'][$employeeCode]);
+                                                              @endphp
+                                                              @if ($hasEntryLog || $hasExitLog)
+                                                                  <tr>
+                                                                      <td>{{ $loop->iteration }}</td>
+                                                                      @if ($hasEntryLog)
+                                                                          <td>{{ $entry_exit['entryLogs'][$employeeCode]->EmployeeName }}</td>
+                                                                          <td>{{ $entry_exit['entryLogs'][$employeeCode]->LogDate }}</td>
+                                                                          <td>{{ $entry_exit['entryLogs'][$employeeCode]->DeviceFName }}</td>
+                                                                      @else
+
+
+                                                                            <td colspan="3">No entry log available</td>
+
+
+                                                                      @endif
+                                                                      @if ($hasExitLog)
+                                                                          <td>{{ $entry_exit['exitLogs'][$employeeCode]->LogDate ?? null }}</td>
+                                                                          <td>{{ $entry_exit['exitLogs'][$employeeCode]->DeviceFName ?? null }}</td>
+                                                                      @else
+
+                                                                            <td colspan="2">No exit log available</td>
+
+
+                                                                            @endif
+                                                                      <td>{{ $entry_exit['punchcounts'][$employeeCode] }}</td>
+                                                                      <td>{{ $entry_exit['durations'][$employeeCode] }}</td>
+
+                                                                      <td>
+                                                                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                                                              <path d="M12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3ZM12.0003 19C16.2359 19 19.8603 16.052 20.7777 12C19.8603 7.94803 16.2359 5 12.0003 5C7.7646 5 4.14022 7.94803 3.22278 12C4.14022 16.052 7.7646 19 12.0003 19ZM12.0003 16.5C9.51498 16.5 7.50026 14.4853 7.50026 12C7.50026 9.51472 9.51498 7.5 12.0003 7.5C14.4855 7.5 16.5003 9.51472 16.5003 12C16.5003 14.4853 14.4855 16.5 12.0003 16.5ZM12.0003 14.5C13.381 14.5 14.5003 13.3807 14.5003 12C14.5003 10.6193 13.381 9.5 12.0003 9.5C10.6196 9.5 9.50026 10.6193 9.50026 12C9.50026 13.3807 10.6196 14.5 12.0003 14.5Z"></path>
+                                                                          </svg>
+                                                                      </td>
+
+
+
+                                                                  </tr>
+                                                                  @php
+                                                                      // Remove entry and exit logs for the processed employee
+                                                                      unset($entry_exit['entryLogs'][$employeeCode]);
+                                                                      unset($entry_exit['exitLogs'][$employeeCode]);
+                                                                  @endphp
+                                                              @endif
+                                                          @endforeach
+
+
+
                                                             </tbody>
                                                         </table>
+
+
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+
                                 </div>
                             </div>
                             <!-- End::row-5 -->
@@ -136,7 +180,18 @@
 
         <script href="https://cdn.tailwindcss.com/3.3.5"></script>
 
+        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/dataTables.tailwindcss.min.js"></script>
+        <script href="https://cdn.tailwindcss.com/3.3.5"></script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+<script>
+    $(document).ready(function () {
+        //$('#BiometricTable').DataTable();
+        new DataTable('#BiometricTable');
+    });
+
+</script>
 
 
 
