@@ -219,8 +219,8 @@
                                                                                     @endif
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
-                                                                                <label for="" class="ti-form-label font-bold">DOI Number:<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="doi_number" class="ti-form-input" required placeholder="Doi Number" id="pub_doi_number" value="{{ old('doi_number') }}">
+                                                                                <label for="" class="ti-form-label font-bold">DOI Number:</label>
+                                                                                <input type="text" name="doi_number" class="ti-form-input"  placeholder="Doi Number" id="pub_doi_number" value="{{ old('doi_number') }}">
                                                                                     @if($errors->has('doi_number'))
                                                                                     <div class="text-red-700">{{ $errors->first('doi_number') }}</div>
                                                                                 @endif
@@ -496,7 +496,7 @@
                                                                                                                 <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                                                                     <div class="max-w-sm space-y-3 pb-6">
                                                                                                                             <label for="" class="ti-form-label font-bold">Journal:<span class="text-red-500">*</span></label>
-                                                                                                                            <input type="text" name="e_journal" class="ti-form-input" required placeholder="Journal" value="{{$pub->journal}}">
+                                                                                                                            <input type="text" name="e_journal" class="ti-form-input" placeholder="Journal" value="{{$pub->journal}}">
                                                                                                                             @if($errors->has('e_journal'))
                                                                                                                                 <div class="text-red-700">{{ $errors->first('e_journal') }}</div>
                                                                                                                             @endif
@@ -521,7 +521,7 @@
                                                                                                                             @if($errors->has('e_doi_number'))
                                                                                                                             <div class="text-red-700">{{ $errors->first('e_doi_number') }}</div>
                                                                                                                         @endif
-                                                                                                                        <div id="pub_doi_numberError" class="error text-red-700"></div>
+                                                                                                                        <div id="pub_doi_umberError" class="error text-red-700"></div>
                                                                                                                     </div>
 
                                                                                                                 </div>
@@ -725,27 +725,25 @@
                             }
                         }
 
-                        /////
-                        if(pub_doi_number == ''){
-                            $('#pub_doi_numberError').text('DOI Number is missing');
-                            flag = true;
-                        }else if (!/^[0-9a-zA-Z]*$/.test(pub_doi_number.trim())){
-                            $('#pub_doi_numberError').text('Please fill the correct value');
-                            flag = true;
-                        }
 
-
-
-
-                        ///
-
-                        // if(pub_title == ''){
-                        //     $('#pub_titleError').text('Title Name is missing');
+                        // if(pub_doi_number == ''){
+                        //     $('#pub_doi_numberError').text('DOI Number is missing');
                         //     flag = true;
-                        // } else if (!/^[a-zA-Z\s0-9]*$/.test(pub_title.trim())) {
-                        //     $('#pub_titleError').text('Please fill the correct value');
+                        // }else if (!/^[0-9a-zA-Z]*$/.test(pub_doi_number.trim())){
+                        //     $('#pub_doi_numberError').text('Please fill the correct value');
                         //     flag = true;
                         // }
+
+
+                        if (pub_doi_number !== '') {
+                            if (!/^[0-9a-zA-Z\s\-._]*$/.test(pub_doi_number)) {
+                                $('#pub_doi_numberError').text('');
+                                flag = true;
+                            }
+                        } else {
+
+                        }
+
 
                         if (pub_title.trim() === '') {
                             $('#pub_titleError').text('Title Name is missing');

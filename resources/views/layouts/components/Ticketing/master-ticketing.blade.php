@@ -81,6 +81,8 @@
         <!-- SCRIPTS -->
         
         @include('layouts.components.scripts')
+        {{-- @include('layouts.components.Ticketing.ticketingsidebar') --}}
+
 
         <!-- STICKY JS -->
 		<script src="{{asset('build/assets/sticky.js')}}"></script>

@@ -250,6 +250,77 @@ class LeaveStaffApplicationsController extends Controller
        return redirect('/Teaching/leaves/')->with('return_data', $return_data);
 
     }
+    //for updating the leave application (Editing)
+    public function update(Updateleave_staff_applicationsRequest $request, leave_staff_applications $leave_staff_applications)
+    {
+        $user = Auth::User();
+        $staff=staff::where('user_id','=',$user->id)->first();
+        $result=$this->validateleave($request,$staff);
+
+        // dd($result);
+         $update_result = '';
+        if($result == "success"){ //if validation of leave rules hold good then insert.
+        //     //dd($result);
+            
+            $update_result =  DB::table('leave_staff_applications')
+                        ->where('id', $request->leave_staff_application_id)
+                        ->update(['leave_id' => $request->type,
+                        'cl_type' => $request->cl_type,
+                        'start' => $request->from_date,
+                        'end' => $request->to_date,
+                        'no_of_days' => $request->no_of_days, 
+                        'reason' => $request->leave_reason,   
+                        'alternate' => $request->alternate,  
+                        'additional_alternate' => $request->additional_alternate]);
+                        
+             //dd($update_result);
+            // = $leave_staff_applications->update();
+
+            //checking if the previous start and end dates are modified
+            if($leave_staff_applications->start != $request->from_date || $leave_staff_applications->end != $request->to_date){
+               
+                //for deleting the old entries.
+                $previous_entry_delete_result = Daywise_Leave::where('leave_staff_applications_id', $request->leave_staff_application_id)->delete();
+
+                //inserting the new values.
+                $period = CarbonPeriod::create($request->from_date, $request->to_date);
+                $daywise_leave_result = false;
+    
+    
+                foreach ($period as $dt) {
+    
+                    $day_wise_leave = new Daywise_Leave();
+                    $day_wise_leave->leave_staff_applications_id = $request->leave_staff_application_id;
+                    $day_wise_leave->leave_id = $request->type;
+                    $day_wise_leave->start = $dt->format('Y-m-d');
+                    //dd($dt->format('Y-m-d'));
+                    $daywise_leave_result = $day_wise_leave->save();
+    
+                }
+            }
+           
+
+       }
+        //$result = 'success';
+        if($update_result  && $daywise_leave_result && $result){
+            $status = 1;
+        }else{
+            $status = $result;
+        }
+
+        $return_data = [
+            'status' => $status,
+            'result' => $result,
+            'start_date'=>$request->from_date,
+            'leave_type'=>$request->type,
+            'appl_edit'=>1,
+            'reason'=>$request->leave_reason,
+            'alternative'=>$request->alternate
+        ];
+
+        return redirect('/Teaching/leaves/')->with('return_data', $return_data);
+
+    }
     //method to validate the leaves as per the leave rules and leave combination allowed
     public function validateleave(request $request, staff $staff)
     {
@@ -257,7 +328,7 @@ class LeaveStaffApplicationsController extends Controller
         $result="";
         $leave=leave::with('combine_leave')->with('leave_rules')->where('id',$request->type)->first();
 
-        //dd($staff_leaves_applications);
+       // dd($leave);
         //Rules to check
         //1. Leave days must not overlap.
         //2. Leave can be combined with only a few type of leaves and also they can be take on one side or bothsides -listed in combine_leaves
@@ -331,6 +402,24 @@ class LeaveStaffApplicationsController extends Controller
                     }
 
                 }
+                else
+                {
+                    $flag=0;
+                    foreach($leave->combine_leave as $leavecombination)
+                    {
+
+                        if($leavecombination->combined_id==$staff_leaves_before_start_day->leave_id ||
+                        ($staff_leaves_before_start_day->shortname=='CL' && $staff_leaves_before_start_day->cl_type=="Morning")
+                         || ($leave->shortname=='CL' && $request->cl_type=='Afternoon'))
+                        {
+                            $flag=1;
+                        }
+                    }
+                    if($flag==0)
+                    {
+                        $result.="Error: Application rejected as it is combined with a leave that is not allowed. \n";
+                    }
+                }
             }
             if($staff_leave_after_end_date!=null)
             {
@@ -348,78 +437,26 @@ class LeaveStaffApplicationsController extends Controller
                         $next_leave_duration=$staff_leave_after_end_date->no_of_days;
                     }
                 }
-            }
-
-            $flag=false;
-            if($staff_leaves_before_start_day!=null)
-            {
-
-                if($staff_leaves_before_start_day->leave_id!=$request->type)
+                else
                 {
-                    //the two leave are not same so check if they can be availed together
-                    //In combine_leave table for every leave there are a set of leaves that can be combined and applied.
-                    //if the other leave is present in the table check if it can be availed bothsides
-                    //if it cannot be availed both sides then check if this application has leave
-
-                    //foreach leave combinations check if these two leaves are allowed to combine
-                    //assume that the leave combination is not present
-                    $is_leave_combination_before_start_day_present=false;
-                    foreach($leave->combine_leave as $leave_combination)
+                    $flag=0;
+                    foreach($leave->combine_leave as $leavecombination)
                     {
-
-                        //compare the leave_combination_pivot table leave id(combined_id) with staff previous day leave
-                        if($leave_combination->pivot->combined_id==$staff_leaves_before_start_day->leave_id)
+                        if($leavecombination->combined_id==$staff_leave_after_end_date->leave_id ||
+                        ($staff_leave_after_end_date->shortname=='CL' && $staff_leave_after_end_date->cl_type=="Afternoon")
+                        || ($leave->shortname=="CL" && $request->cl_type=='Morning'))
                         {
-                            //change the status of leave combination not present to present
-                            $is_leave_combination_before_start_day_present=true;
-                            //if combination is allowed then check if it can be applied on both sides
-                            if( $leave_combination->pivot->sandwitchable=='bothsides')
-                            {
-                                //if it is allowed to apply both sides
-                                //these check if the other side is not having any leave then allow to save the leave
-                                //or if there is a leave after the to_date then check if it is the same leave type
-                                //In both cases allow to save the leave
-                                //flag is set to false indicating that there is no issue in leave acceptance here.
-                                if($staff_leave_after_end_date==null || $staff_leave_after_end_date->leave_id==$staff_leaves_before_start_day->leave_id)
-                                {
-                                    $flag=false;
-                                }
-                                else
-                                {
-                                    //The staff has applied leave but it is not the same as the leave that is applied the before the start date
-                                    // check if the leave being applied and the leave after to_date are allowed to combined.
-                                     //assume that the leave combination is not present
-                                    $is_leave_combination_after_end_day_present=false;
-
-                                    if($staff_leave_after_end_date->leave_id!=$request->type )
-                                    {
-                                        foreach($leave->combine_leave as $leave_combination_post)
-                                        {
-                                            if($leave->combination_post->combined_id==$staff_leave_after_end_date->leave_id)
-                                            {
-                                                $is_leave_combination_after_end_day_present=true;
-                                                //This leave combination is allowed as the above condition is true.
-                                                //The leave sandwitchable condition can be oneside or bothsides
-                                                //as this leave is only after the leave to_date hence we do not need to check the
-                                                //sandwitchable condition
-                                                //set flag as false to indicate no issue is accepting the leave application
-                                                $flag=false;
-                                            }
-                                        }
-                                    }
-
-                                }
-                            }
-
+                            $flag=1;
                         }
-
                     }
+                    if($flag==0)
+                    {
+                        $result.="Error: Application rejected as it is combined with a leave that is not allowed. \n";
+                    }
+
                 }
             }
-            if($flag==true)
-            {
-                $result.="Error:Application rejected as it is combined with a leave that is not allowed. ";
-            }
+
 
         if($request->no_of_days<$leave->min_days)
         {
@@ -477,10 +514,7 @@ class LeaveStaffApplicationsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Updateleave_staff_applicationsRequest $request, leave_staff_applications $leave_staff_applications)
-    {
-        //
-    }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -560,12 +594,14 @@ class LeaveStaffApplicationsController extends Controller
         ->select(DB::raw("CONCAT(s1.fname,' ',s1.mname,' ',s1.lname) AS staff_name"),
                 DB::raw("CONCAT(s2.fname,' ',s2.mname,' ',s2.lname) AS alternate_staff"),
                 DB::raw("CONCAT(s3.fname,' ',s3.mname,' ',s3.lname) AS additional_alternate_staff"),
-                'leaves.shortname AS title',
+                DB::raw('(CASE WHEN leave_staff_applications.cl_type="Morning" THEN "-Morning" WHEN leave_staff_applications.cl_type="Afternoon" THEN "-Afternoon" ELSE "" END) as cl_type'),
+                DB::raw("CONCAT(leaves.shortname,' ',cl_type)  AS title"),
                 'leave_staff_applications.start AS start',
                 'leave_staff_applications.end AS end', 'leave_staff_applications.leave_id AS leave_id',
                 'leave_staff_applications.appl_status AS appl_status',
                 'leave_staff_applications.id AS Application_id',
-                'leave_staff_applications.reason AS reason')->get();
+                'leave_staff_applications.reason AS reason',
+                )->get();
         //dd($leave_events);
         // Return a response (optional)
           return response()->json($leave_events);
@@ -616,6 +652,53 @@ class LeaveStaffApplicationsController extends Controller
             }else{
                 return 0;
             }
+    }
+
+    //for cancellation of the leave.
+    function cancel_myleave(Request $request){
+        $application_id = $request->input('application_id');
+        //dd($application_id);
+
+        $result = DB::table('leave_staff_applications')
+            ->where('id', $application_id)
+            ->update(['appl_status' => "cancelled"]);
+            //$leave_staff_applications->appl_status = "recommended";
+
+        if($result){
+            $return_html = "<div class='bg-white border dark:bg-bgdark border-success alert text-success' role='alert'>
+                                <span class='font-bold'>Result</span> Leave Cancellation Successfull
+                            </div>";
+        }else{
+            $return_html = "<div class='bg-white border dark:bg-bgdark border-danger alert text-danger' role='alert'>
+
+                                  <span class='font-bold'>Unable to cancel the leave</span>
+                            </div>
+
+                            </div>";
+
+        }
+        return $return_html;
+    }
+    //for editing the applied leave.
+    public function edit_myleave(Request $request){
+        $application_id = $request->input('application_id');
+
+        $user = Auth::user();
+        $staff_id_from_user = staff::where('user_id','=',$user->id)->first();
+        //dd($application_id);
+
+        $result = DB::table('leave_staff_applications')
+            ->where('leave_staff_applications.id', $application_id)
+            ->join('leaves', 'leaves.id','=','leave_staff_applications.leave_id')
+            ->select('leave_staff_applications.*','leaves.longname','leaves.shortname')
+            ->get();
+            //$leave_staff_applications->appl_status = "recommended";
+         //dd($result);
+
+
+        //dd($leaves);
+        
+        return response()->json($result);;
     }
 
 }

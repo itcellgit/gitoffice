@@ -75,91 +75,174 @@
                                     <div class="col-span-2 xl:col-span-2">
                                         <div class="box box-sm">
                                             <div class="box-body searchForm">
-                                                <form action="{{ route('ESTB.staff.filter') }}" method="GET" id="searchForm">
-                                                    <!-- Department select -->
-                                                    <div class="grid gap-1 space-y-2 lg:grid-cols-3 lg:space-y-0">
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">Department<span class="text-red-500">*</span></label>
-                                                            <select class="ti-form-select" name="departments_id">
-                                                                <option value="#">Choose a Department</option>
-                                                                @foreach ($departments as $department)
-                                                                <option value="{{$department->id}}">{{$department->dept_name}}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <!-- Association select -->
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">Association<span class="text-red-500">*</span></label>
-                                                            <select class="ti-form-select" name="associations_id" id="associations_id" required>
-                                                                <option value="#">Choose an Association</option>
-                                                                @foreach ($associations as $association)
-                                                                <option value="{{$association->id}}">{{$association->asso_name}}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
+                                                <div class="box-body searchForm">
+                                                    <form action="{{ route('ESTB.staff.staffinformation') }}" method="GET" id="searchForm">
+                                                        <div class="grid gap-1 space-y-2 lg:grid-cols-3 lg:space-y-0">
+                                                            <!--Dropdown multiselect checkbox For Department-->
+                                                            <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0 border border-gray-300 rounded p-4">
+                                                                <label class="ti-form-label mb-0 font-bold">Department <span class="text-red-500">*</span></label>
+                                                                <div class="space-y-2" style="max-height: 100px; overflow-y: auto;">
+                                                                    @php
+                                                                        $checked = "";
+
+                                                                    @endphp
 
 
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">Designations<span class="text-red-500">*</span></label>
-                                                            <select class="ti-form-select stdesignation" name="designations_id" id="designation_id" >
-                                                                <option value="#">Choose a Designation</option>
-                                                                <option value="#">Choose a Designation</option>
+                                                                    @php
+                                                                        $defaultDepartmentIds = range(1, 30);
+                                                                    @endphp
 
-                                                            </select>
+                                                                    <div class="flex">
+                                                                        <input type="checkbox" class="ti-form-checkbox mt-0.5 select-all">
+                                                                        <label for="select-all" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Select All</label>
+                                                                    </div>
 
 
-                                                            @if($errors->has('designations_id'))
-                                                                <div class="text-red-700">{{ $errors->first('designations_id')}}</div>
-                                                            @endif
-                                                            <div id="stdesignationError" class="error text-red-700"></div>
-                                                        </div>
-                                                    </div>
+                                                                    @foreach ($departments as $department)
 
-                                                    <div class="grid gap-1 space-y-2 lg:grid-cols-3 lg:space-y-0 mt-6">
-                                                        <!-- Religion select -->
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">Religion<span class="text-red-500">*</span></label>
-                                                            <select class="ti-form-select" name="religion_id" id="religion_id">
-                                                                <option value="#">Choose a Religion</option>
-                                                                @foreach ($religions as $religion)
-                                                                <option value="{{$religion->id}}">{{$religion->religion_name}}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <!-- Caste Category select -->
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">Caste Category<span class="text-red-500">*</span></label>
-                                                            <select class="ti-form-select" name="castecategory_id" id="castecategory_list">
-                                                                <!-- Add options if applicable -->
-                                                            </select>
-                                                        </div>
-                                                        <!-- Gender radio buttons -->
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0">Gender<span class="text-red-500">*</span></label>
-                                                            <div class="flex gap-x-6">
-                                                                <div class="flex">
-                                                                    <input type="radio" name="gender" value="all" class="ti-form-radio" id="all" checked>
-                                                                    <label for="all" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">All</label>
+                                                                        <div class="flex">
+                                                                            <input type="checkbox" name="departments[]" value="{{ $department->id }}" {{ $checked }} class="ti-form-checkbox mt-0.5 hs-checkbox-group-{{ $department->id }}">
+                                                                            <label class="hs-checkbox-group-{{ $department->id }} text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">{{ $department->dept_name }}</label>
+                                                                        </div>
+                                                                    @endforeach
+
                                                                 </div>
-                                                                <div class="flex">
-                                                                    <input type="radio" name="gender" value="female" class="ti-form-radio" id="hs-radio-group-2">
-                                                                    <label for="hs-radio-group-2" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Female</label>
+                                                            </div>
+                                                            <!--Department multi select dropdown--->
+
+                                                            <!--Association Multi select dropdown -->
+                                                            <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0 border border-gray-300 rounded p-4">
+                                                                <label class="ti-form-label mb-0 font-bold">Association <span class="text-red-500">*</span></label>
+                                                                <div class="space-y-2" style="max-height: 100px; overflow-y: auto;">
+                                                                    @php
+                                                                        $checked = "";
+                                                                    @endphp
+
+                                                                    @php
+                                                                        $defaultAssociationIds = range(1, 30);
+                                                                    @endphp
+
+                                                                    <div class="flex">
+                                                                        <input type="checkbox" class="ti-form-checkbox mt-0.5 select-all-association">
+                                                                        <label for="select-all-association" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Select All</label>
+                                                                    </div>
+
+
+                                                                    @foreach ($associations as $association)
+
+                                                                        <div class="flex">
+                                                                            <input type="checkbox" name="associations[]" value="{{ $association->id }}" {{ $checked }} class="ti-form-checkbox mt-0.5 hs-checkbox-group-{{ $association->id }}">
+                                                                            <label class="hs-checkbox-group-{{ $association->id }} text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">{{ $association->asso_name }}</label>
+                                                                        </div>
+                                                                    @endforeach
                                                                 </div>
-                                                                <div class="flex">
-                                                                    <input type="radio" name="gender" value="male" class="ti-form-radio" id="hs-radio-group-3">
-                                                                    <label for="hs-radio-group-3" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Male</label>
+                                                            </div>
+                                                            <!--Association multi select dropdown End-->
+
+                                                            <!-- Designation multi select dropdown start -->
+                                                            <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0 border border-gray-300 rounded p-4">
+                                                                <label class="ti-form-label mb-0 font-bold">Designations <span class="text-red-500">*</span></label>
+                                                                <div class="space-y-2" style="max-height: 100px; overflow-y: auto;">
+                                                                    @php $checked = ""; @endphp
+                                                                    @php $defaultDesignationIds = range(1, 30); @endphp
+                                                                    <div class="flex">
+                                                                        <input type="checkbox" class="ti-form-checkbox mt-0.5 select-all-designation">
+                                                                        <label for="select-all-designation" class="text-sm text-gray-800 ltr:ml-2 rtl:mr-2 dark:text-white/70">Select All</label>
+                                                                    </div>
+
+                                                                    <!-- Teaching Designations -->
+                                                                    <h3 class="font-bold text-lg text-gray-800">Teaching</h3>
+                                                                    @foreach ($designations->where('emp_type', 'Teaching')->where('isadditional', 0) as $designation)
+                                                                        <div class="flex">
+                                                                            <input type="checkbox" name="designations[]" value="{{ $designation->id }}" {{ $checked }} class="ti-form-checkbox mt-0.5 hs-checkbox-group-{{ $designation->id }}">
+                                                                            <label class="hs-checkbox-group-{{ $designation->id }} text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">{{ $designation->design_name }}</label>
+                                                                        </div>
+                                                                    @endforeach
+
+                                                                    <!-- Non-Teaching Designations -->
+                                                                    <h3 class="font-bold text-lg text-gray-800">Non-Teaching</h3>
+                                                                    @foreach ($designations->where('emp_type', 'Non-Teaching')->where('isadditional', 0) as $designation)
+                                                                        <div class="flex">
+                                                                            <input type="checkbox" name="designations[]" value="{{ $designation->id }}" {{ $checked }} class="ti-form-checkbox mt-0.5 hs-checkbox-group-{{ $designation->id }}">
+                                                                            <label class="hs-checkbox-group-{{ $designation->id }} text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">{{ $designation->design_name }}</label>
+                                                                        </div>
+                                                                    @endforeach
                                                                 </div>
-                                                                <!-- Add more radio buttons if applicable -->
+                                                            </div>
+                                                            <!-- Designation multi select dropdown End -->
+                                                        </div>
+
+
+                                                        <div class="grid gap-1 space-y-2 lg:grid-cols-3 lg:space-y-0 mt-6">
+                                                            <!-- Religion select -->
+                                                            <div class="space-y-2">
+                                                                <label class="ti-form-label mb-0 font-bold">Religion<span class="text-red-500">*</span></label>
+                                                                <select class="ti-form-select religion_id" name="religion_id">
+                                                                    <option value="all">Choose a Religion</option>
+                                                                    @foreach ($religions as $religion)
+                                                                    <option value="{{$religion->id}}">{{$religion->religion_name}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <!-- Religion select End -->
+
+                                                            <!-- Caste Category select -->
+                                                            <div class="space-y-2">
+                                                                <label class="ti-form-label mb-0 font-bold">Caste Category<span class="text-red-500">*</span></label>
+                                                                <select class="ti-form-select castecategory_list" name="castecategory_id" id="">
+                                                                    <!-- Add options if applicable -->
+                                                                </select>
+                                                            </div>
+
+
+                                                            <!-- Gender radio buttons -->
+                                                            <div class="space-y-2">
+                                                                <label class="ti-form-label mb-0 font-bold">Gender<span class="text-red-500">*</span></label>
+                                                                <div class="flex gap-x-6">
+                                                                    <div class="flex">
+                                                                        <input type="radio" name="gender" value="all" class="ti-form-radio" id="all" checked>
+                                                                        <label for="all" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">All</label>
+                                                                    </div>
+                                                                    <div class="flex">
+                                                                        <input type="radio" name="gender" value="female" class="ti-form-radio" id="hs-radio-group-2">
+                                                                        <label for="hs-radio-group-2" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Female</label>
+                                                                    </div>
+                                                                    <div class="flex">
+                                                                        <input type="radio" name="gender" value="male" class="ti-form-radio" id="hs-radio-group-3">
+                                                                        <label for="hs-radio-group-3" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Male</label>
+                                                                    </div>
+                                                                    <!-- Add more radio buttons if applicable -->
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="grid gap-1 space-y-2 lg:grid-cols-3 lg:space-y-0 mt-6">
+                                                            <div class="space-y-2">
+                                                                <label class="ti-form-label mb-0 font-bold">Employee Type<span class="text-red-500">*</span></label>
+                                                                <div class="flex gap-x-6">
+                                                                    <div class="flex">
+                                                                        <input type="radio" name="employee_type" value="all" class="ti-form-radio"checked>
+                                                                        <label for="all" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">All</label>
+                                                                    </div>
+                                                                    <div class="flex">
+                                                                        <input type="radio" name="employee_type" value="Teaching" class="ti-form-radio">
+                                                                        <label for="Teaching" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Teaching</label>
+                                                                    </div>
+                                                                    <div class="flex">
+                                                                        <input type="radio" name="employee_type" value="Non-teaching" class="ti-form-radio">
+                                                                        <label for="Non-teaching" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Non-teaching</label>
+                                                                    </div>
+                                                                    <!-- Add more radio buttons if applicable -->
+                                                                </div>
                                                             </div>
                                                         </div>
+                                                        <!-- Search button -->
+                                                        <div class="flex ">
+                                                            <button id="filterBtn" class="bg-blue-500 text-white px-4 mt-10 py-2 rounded-md focus:outline-none hover:bg-blue-700">Search</button>
+                                                        </div>
 
-                                                    </div>
-                                                    <!-- Search button -->
-                                                    <div class="flex ">
-                                                        <button id="filterBtn" class="bg-blue-500 text-white px-4 mt-10 py-2 rounded-md focus:outline-none hover:bg-blue-700">Search</button>
-                                                    </div>
-
-                                                </form>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -369,7 +452,7 @@
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pb-4">
                                                                             <div class="space-y-2">
                                                                                 <label class="ti-form-label mb-0 font-bold">Religion<span class="text-red-500">*</span></label>
-                                                                                <select class="ti-form-select streligion" name="religion_id" id="religion_id">
+                                                                                <select class="ti-form-select streligion religion_id" name="religion_id" id="">
                                                                                     <option value="#">Choose a Religion</option>
                                                                                     @foreach ($religions as $religion)
                                                                                         <option value="{{$religion->id}}">{{$religion->religion_name}}</option>
@@ -383,7 +466,7 @@
                                                                             </div>
                                                                             <div class="space-y-2">
                                                                                 <label class="ti-form-label mb-0 font-bold">Caste Category<span class="text-red-500">*</span></label>
-                                                                                <select class="ti-form-select stcastecategory" name="castecategory_id" id="castecategory_list">
+                                                                                <select class="ti-form-select stcastecategory castecategory_list" name="castecategory_id" id="">
 
                                                                                 </select>
                                                                                 <div id="stcastecategoryError" class="error text-red-700"></div>
@@ -685,9 +768,33 @@
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/dataTables.tailwindcss.min.js"></script>
         <script href="https://cdn.tailwindcss.com/3.3.5"></script>
+        <link rel="stylesheet" href="chosen.css">
+        <script src="jquery.js"></script>
+        <script src="chosen.jquery.js"></script>
+
         <script>
             $(document).ready(function(){
                //alert('Hello from jquery');
+
+               // To Select multiple values from dropdown to Filter the staff information
+
+                $('.select-all').change(function () {
+                    $('input[name="departments[]"]').prop('checked', this.checked);
+                });
+
+                $('.select-all-association').change(function () {
+                    $('input[name="associations[]"]').prop('checked', this.checked);
+                });
+
+                $('.select-all-designation').change(function () {
+                    $('input[name="designations[]"]').prop('checked', this.checked);
+                });
+
+                $('.select-all-religion').change(function () {
+                    $('input[name="religions[]"]').prop('checked', this.checked);
+                });
+
+
 
                 $(document).on('click','#staffinformation_store_add_btn',function(e){
 
@@ -842,7 +949,7 @@
                     }
                 });
 
-              	//for data table generation for staff table
+                //for data table generation for staff table
                 new DataTable('#staff_table');
 
                 $(document).on('click','#email_id_check',function(){
@@ -951,59 +1058,29 @@
                 });
 
 
-                //Code for Designation list designation dropdown
-                // Make an AJAX call to fetch all designations
-                $.ajax({
-                    url: base_url + '/ESTB/staff/getdesignations_list',
-                    method: 'GET',
-                    success: function(data) {
-                        console.log(data);
-                        var designationsDropdown = $('#designation_id');
-                        designationsDropdown.empty(); // Clear existing options
 
-                        // Create optgroups for Teaching and Non-Teaching
-                        var teachingOptgroup = $('<optgroup label="Teaching"></optgroup>');
-                        var nonTeachingOptgroup = $('<optgroup label="Non-Teaching"></optgroup>');
 
-                        // Iterate through the data and append options to the appropriate optgroup
-                        data.forEach(function(item) {
-                            var option = $('<option>').text(item['design_name']).attr('value', item['id']);
-                            if (item['type'] === 'Teaching') {
-                                teachingOptgroup.append(option);
-                            } else {
-                                nonTeachingOptgroup.append(option);
-                            }
-                        });
-
-                        // Append optgroups to the dropdown
-                        designationsDropdown.append(teachingOptgroup);
-                        designationsDropdown.append(nonTeachingOptgroup);
-                    },
-                    error: function(error) {
-                        console.log(error);
-                    }
-                });
 
 
                 //code for selecting a gender for filter the staff information
-                $('input[type=radio][name=gender]').change(function() {
-                    if (this.value === 'all') {
-                        // If "All" is selected and it's not already checked, deselect all other options
-                        if (!$(this).prop('checked')) {
-                            $('input[type=radio][name=gender]').prop('checked', false);
-                        }
-                    } else {
-                        // If any other option is selected, deselect "All"
-                        $('#all').prop('checked', false);
-                    }
-                });
+                // $('input[type=radio][name=gender]').change(function() {
+                //     if (this.value === 'all') {
+                //         // If "All" is selected and it's not already checked, deselect all other options
+                //         if (!$(this).prop('checked')) {
+                //             $('input[type=radio][name=gender]').prop('checked', false);
+                //         }
+                //     } else {
+                //         // If any other option is selected, deselect "All"
+                //         $('#all').prop('checked', false);
+                //     }
+                // });
 
-                $('#all').click(function() {
-                    // If "All" is clicked, deselect all other options
-                    if ($(this).prop('checked')) {
-                        $('input[type=radio][name=gender]').prop('checked', false);
-                    }
-                });
+                // $('#all').click(function() {
+                //     // If "All" is clicked, deselect all other options
+                //     if ($(this).prop('checked')) {
+                //         $('input[type=radio][name=gender]').prop('checked', false);
+                //     }
+                // });
 
 
 
@@ -1109,6 +1186,8 @@
                 //     }
                 //  });
 
+
+
                  //settting the superanuation date based on DoB.
                  $(document).on('change','.dob',function(){
                     var dob = $(this).val();
@@ -1129,7 +1208,7 @@
                     $('.dos').val(final_dos); //updaing it in the field.
                 });
 
-                $(document).on('change','#religion_id',function(){
+                $(document).on('change','.religion_id',function(){
                     //alert('Changed');
                     var religion_id = $(this).val();
                     $.ajax({
@@ -1137,8 +1216,8 @@
                         method:'GET',
                         data:{'r_id':religion_id},
                         success:function(data) {
-                       console.log(data);
-                            var castecategoriesDropdown = $('#castecategory_list');
+                             console.log(data);
+                            var castecategoriesDropdown = $('.castecategory_list');
                             castecategoriesDropdown.empty(); // Clear existing options
                             data.forEach(function(item) {
                                 castecategoriesDropdown.append($('<option>').text(item['caste_name']+"-"+item['subcastes_name']+"-"+item['category']+"-"+item['category_no']).attr('value', item['id']));
@@ -1172,9 +1251,9 @@
                     //alert($(this).val());
                     var pay_type = $(this).val();
                     var emp_type = $('#employee_type').val();
-                    alert(emp_type);
+                  //  alert(emp_type);
                     var designation_id = $('#designation_id').val();
-                    //$('#payscalelevel').hide();
+
                     //alert(pay_type+'-'+emp_type+'-'+designation_id);
                     if(pay_type == "Fixed"){
                         $('#fixed_pay_div').show();
@@ -1259,12 +1338,6 @@
             //         }
             //    });
 
-            $('#all').change(function(){
-                if ($(this).is(':checked')) {
-                    // Select both male and female options
-                    $('input[name="gender"]').prop('checked', true);
-                }
-            });
 
             });
         </script>
@@ -1275,7 +1348,7 @@
                     var formData = $('#searchForm').serialize();
 
                     //console.log('123');
-                    alert("Search button clicked!");
+                     alert("Search button clicked!");
 
                     //console.log("Form Data:", formData);
 

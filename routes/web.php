@@ -295,13 +295,14 @@ Route::get('/checkanydeptpersononleave',[LeaveStaffApplicationsController::class
 //for fetching events of specific date (clicked) using AJAX
 Route::get('/fetchholidayrhevents',[LeaveStaffApplicationsController::class,'fetchholidayrhevents'])->name('fetchholidayrhevents');
 Route::get('/fetchmyleaveevents',[LeaveStaffApplicationsController::class,'fetchmyleaveevents'])->name('fetchmyleaveevents');
-//Route::get('/Teaching/leavesentitlements',[TeachingLeaveController::class,'holidayrh'])->name('Teaching.leavesentitlements');
-// Route::patch('/ESTB/leaves/leaves_rules/{leave_rules}',[LeaveRulesController::class,'update'])->name('ESTB.leaves.leave_rules.update');
+
+Route::get('/cancel_myleave',[LeaveStaffApplicationsController::class,'cancel_myleave'])->name('cancel_myleave');
+Route::get('/Teaching/edit_myleave',[LeaveStaffApplicationsController::class,'edit_myleave'])->name('Teaching.leaves.edit');
 // Route::delete('/ESTB/leaves/leaves_rules/{leave_rules}',[LeaveRulesController::class,'destroy'])->name('ESTB.leaves.leave_rules.destroy');
 
 //Leave Application Management routes
 Route::post('/Teaching/{staff}/leave/create',[LeaveStaffApplicationsController::class,'store'])->name('Teaching.leaves.apply');
-Route::patch('/Teaching/{staff}/leave/{leave}/application/{leave_staff_applications}/update',[LeaveStaffApplicationsController::class,'update'])->name('Teaching.leave.leave_application.update');
+Route::patch('/Teaching/{staff}/leave/application/update',[LeaveStaffApplicationsController::class,'update'])->name('Teaching.leave_application.update');
 Route::post('/Teaching/{staff}/validate_leave_appln',[LeaveStaffApplicationsController::class,'validateleave']);
 });
 
@@ -422,13 +423,18 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
 
     //Staff Routes
     Route::get('/ESTB/staff',[StaffController::class,'index'])->name('ESTB.staff');
+
+    //Route to fetch staff data using Filter
+    //Route::get('/ESTB/staff/staffinformation',[StaffController::class,'staff_filter_record'])->name('ESTB.staff.staffinformation');
+
+
     Route::post('/ESTB/staff/create',[StaffController::class,'store'])->name('ESTB.staff.store');
     Route::get('/ESTB/staff/show/{staff}',[StaffController::class,'show'])->name('ESTB.staff.show');
     Route::patch('/ESTB/staff/update/{staff}',[StaffController::class,'update'])->name('ESTB.staff.update');
 
     //Route to fetch staff data using Filter
-    //Route::get('/ESTB/staff/staffinformation',[StaffController::class,'filterstaff_information'])->name('ESTB.staff.staffinformation');
-    Route::get('/ESTB/staff/staffinformation', [StaffController::class, 'filterstaff_information'])->name('ESTB.staff.filter');
+    Route::get('/ESTB/staff/staffinformation',[StaffController::class,'filterstaff_information'])->name('ESTB.staff.staffinformation');
+    //Route::get('/ESTB/staff/staffinformation', [StaffController::class, 'filterstaff_information'])->name('ESTB.staff.filter');
 
 
 
@@ -665,7 +671,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
      Route::get('/HOD/Teaching/research/hodachivements',[HodResearchController::class,'hod_general_achievement'])->name('HOD.Teaching.research.hodachivements');
      Route::get('/HOD/Teaching/research/hodbookchap',[HodResearchController::class,'hod_books_chapt'])->name('HOD.Teaching.research.hodbookchap');
      Route::get('/HOD/Teaching/research/hodconsultancy',[HodResearchController::class,'hod_consultancy'])->name('HOD.Teaching.research.hodconsultancy');
-     Route::get('/HOD/Teaching/research/hodrevieweditor',[HodResearchController::class,'hod_review_editor'])->name('HOD.Teaching.research.hodrevieweditor');
+     Route::get('/HOD/Teaching/research/hodreviewereditor',[HodResearchController::class,'hod_review_editor'])->name('HOD.Teaching.research.hodreviewereditor');
 
 
      //Hod Leaves.
@@ -765,8 +771,25 @@ Route::post('ticket/store', [TicketController::class, 'store'])->name('ticket.st
 Route::patch('ticket/update/{ticket}', [TicketController::class, 'update'])->name('ticket.update');
 Route::delete('ticket/destroy/{ticket}',[TicketController::class, 'destroy'])->name('ticket.destroy');
 Route::get('ticket/show/{ticket}', [TicketController::class, 'show'])->name('ticket.show');
+
+//Routes for post_ticket
 Route::post('ticket/{ticket}/reply/store', [ReplyController::class, 'store'])->name('ticket.reply.store');
-//Route::get('Ticketing/showticket/{ticket}', [TicketController::class, 'show'])->name('ticket.show');
+Route::patch('ticket/{ticket}reply/update',[ReplyController::class,'update'])->name('ticket.reply.update');
+
+
+//Routes for admin ticketiing  system
+Route::middleware(['cors','auth','role:'.UserRoles::SU->value])->group(function()
+{
+  Route::get('/Admin/dashboard',[AdminController::class,'dashboard'])->name('Admin.dashboard');
+  Route::get('/Admin/tickets/adminticket',[AdminTicketController::class,'index'])->name('Admin.tickets.adminticket');
+  Route::post('Admin/tickets/adminticket/create', [AdminTicketController::class, 'store'])->name('Admin.tickets.adminticket.store');
+ // Route::patch('Admin/tickets/adminticket/update/{ticket}', [AdminTicketController::class, 'update'])->name('Admin.tickets.adminticket.update');
+  // Route::delete('Admin/tickets/adminticket/destroy/{ticket}',[AdminTicketController::class, 'destroy'])->name('Admin.tickets.adminticket.destroy');
+  Route::get('Admin/tickets/adminshowticket/show/{ticket}', [AdminTicketController::class, 'show'])->name('Admin.tickets.adminshowticket.show');
+ // Route::patch('ticket/update/{postticket}', [ReplyController::class, 'update'])->name('ticket.reply.update');
+  //Route::patch('Admin/tickets/adminticket/update/{ticket}', [AdminTicketController::class, 'status_update'])->name('Admin.tickets.adminticket.update');
+
+});
 
 
 
@@ -776,19 +799,6 @@ Route::get('mssql',function(){
   dd($db);
 });
 
-
-//open new page for modal
-//Route::post('ticket/reply', [Replyontroller::class, 'replyForm'])->name('Ticketing.replyticket');
-
-
-
-//Routes for ticketing admin system
-// Route::middleware(['cors','auth','role:'.UserRoles::SU->value])->group(function(){
-//
-// //Route::get('Admin/show/{ticket}', [AdminTicketController::class, 'show'])->name('ticket.show');
-// //for redirecting to the super admin Dashboard.
-//   Route::get('/Admin/dashboard',[AdminController::class,'dashboard'])->name('Admin.dashboard');
-// });
 
 
 

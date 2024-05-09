@@ -16,6 +16,7 @@ class GetStaffPay_list extends Controller
        
         $designation_id=$request->input('designation_id');// Get the selected option from the designation_id dropdown
         $designations = designation::find($designation_id);
+        //dd($designations);
         $emp_type=$request->input('emp_type');
         
         if($emp_type=='Teaching'){
@@ -54,7 +55,7 @@ class GetStaffPay_list extends Controller
                 
                 $response_text=$response_text."</select></div>"; 
              
-                //dd( $response_text);
+               // dd( $response_text);
                 return response($response_text); // Return the options as JSON
             }
             else{
