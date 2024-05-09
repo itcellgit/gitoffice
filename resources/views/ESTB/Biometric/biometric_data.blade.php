@@ -59,8 +59,18 @@
                                     @endif
                                     <div class="box">
                                         <div class="col-span-12 xl:col-span-12">
+                                            <div class="grid gap-1 space-y-2 lg:grid-cols-1 lg:space-y-0">
+                                                <div style="display: flex; flex-direction: column; margin-left: 10px;">
+                                                    <label for="to_date" class="ti-form-label font-bold mx-2 mt-2">Date:<span class="text-red-500">*</span></label>
+                                                    <input type="date" id="to_date" class="mx-2 px-1 py-1 text-sm w-36 h-8" placeholder="To Date">
+                                                </div>
+                                            </div>
+
+
+
                                             <div class="box">
                                                 <div class="box-body">
+
                                                     <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
                                                         <table id="BiometricTable" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                                             <thead class="bg-gray-50 dark:bg-black/20">
@@ -98,7 +108,8 @@
                                                                       @else
 
 
-                                                                            <td colspan="3">No entry log available</td>
+                                                                            <td colspan="2">No entry log available</td>
+
 
 
                                                                       @endif
@@ -107,8 +118,8 @@
                                                                           <td>{{ $entry_exit['exitLogs'][$employeeCode]->DeviceFName ?? null }}</td>
                                                                       @else
 
-                                                                            <td colspan="2">No exit log available</td>
-
+                                                                            <td colspan="1">No exit log available</td>
+                                                                            <td></td>
 
                                                                             @endif
                                                                       <td>{{ $entry_exit['punchcounts'][$employeeCode] }}</td>
@@ -122,6 +133,7 @@
 
 
 
+
                                                                   </tr>
                                                                   @php
                                                                       // Remove entry and exit logs for the processed employee
@@ -130,6 +142,7 @@
                                                                   @endphp
                                                               @endif
                                                           @endforeach
+
 
 
 

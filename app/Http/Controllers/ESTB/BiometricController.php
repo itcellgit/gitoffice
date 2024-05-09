@@ -16,7 +16,10 @@ class BiometricController extends Controller
         $date="";
         if ($request->filled('date'))
          {
-            dd('given date');
+            $date=$request->date;
+          $currentMonth=Carbon::parse($date)->month;
+          $currentYear=Carbon::parse($date)->year;
+
          }
          else
          {
