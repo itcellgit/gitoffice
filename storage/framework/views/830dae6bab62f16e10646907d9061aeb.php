@@ -1,36 +1,34 @@
-@extends('layouts.components.staff.master-teaching')
-
-@section('styles')
+<?php $__env->startSection('styles'); ?>
 
         <!-- CHOICES CSS -->
-        <link rel="stylesheet" href="{{asset('build/assets/libs/choices.js/public/assets/styles/choices.min.css')}}">
+        <link rel="stylesheet" href="<?php echo e(asset('build/assets/libs/choices.js/public/assets/styles/choices.min.css')); ?>">
 
         <!-- FLATPICKR CSS -->
-        <link rel="stylesheet" href="{{asset('build/assets/libs/flatpickr/flatpickr.min.css')}}">
+        <link rel="stylesheet" href="<?php echo e(asset('build/assets/libs/flatpickr/flatpickr.min.css')); ?>">
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
         
     <!-- FULLCALENDAR CSS -->
-    <link rel="stylesheet" href="{{asset('build/assets/libs/fullcalendar/main.min.css')}}">
+    <link rel="stylesheet" href="<?php echo e(asset('build/assets/libs/fullcalendar/main.min.css')); ?>">
     <script>
-        var base_url = "{{URL::to('/')}}";
+        var base_url = "<?php echo e(URL::to('/')); ?>";
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
                 <div class="content">
 
                     <!-- Start::main-content -->
                     <div class="main-content">
-                        @php
+                        <?php
                            // $staff = Auth::user();
                           //  $staff=staff::where('user_id','=',$user->id)->first();
-                        @endphp
+                        ?>
                         <!-- Page Header -->
                         <div class="block justify-between page-header sm:flex">
                             <div>
-                                <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium">Welcome  <span class="text-primary">{{$staff->fname.' '.$staff->mname.' '.$staff->lname}}</span></h3>
+                                <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium">Welcome  <span class="text-primary"><?php echo e($staff->fname.' '.$staff->mname.' '.$staff->lname); ?></span></h3>
                             </div>
                             <ol class="flex items-center whitespace-nowrap min-w-0">
                                 <li class="text-sm">
@@ -46,25 +44,26 @@
                         <!-- Page Header Close -->
 
 
-                        @if(session('return_data'))
-                                @if (session('return_data')['result'] == "success")
+                        <?php if(session('return_data')): ?>
+                                <?php if(session('return_data')['result'] == "success"): ?>
                                     <div class='bg-white dark:bg-bgdark border border-success alert text-success' role='alert'>
                                         <span class='font-bold'>Result</span> Successful
                                     </div>
-                                    @php
+                                    <?php
                                         Illuminate\Support\Facades\Session::forget('status');
                                         header("refresh: 3");
-                                    @endphp
-                                @else
+                                    ?>
+                                <?php else: ?>
                                     <div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
-                                        <span class='font-bold'>Result</span> {{session('return_data')['result']}}
-                                    </div>
-                                    <input type="hidden" id="start_date" value="{{session('return_data')['start_date']}}"/>
-                                    <input type="hidden" id="leave_type" value="{{session('return_data')['leave_type']}}"/>
-                                    <input type="hidden" id="reason" value="{{session('return_data')['reason']}}"/>
-                                    <input type="hidden" id="alternative" value="{{session('return_data')['alternative']}}"/>
+                                        <span class='font-bold'>Result</span> <?php echo e(session('return_data')['result']); ?>
 
-                                    @if(session('return_data')['appl_edit'] == 1)
+                                    </div>
+                                    <input type="hidden" id="start_date" value="<?php echo e(session('return_data')['start_date']); ?>"/>
+                                    <input type="hidden" id="leave_type" value="<?php echo e(session('return_data')['leave_type']); ?>"/>
+                                    <input type="hidden" id="reason" value="<?php echo e(session('return_data')['reason']); ?>"/>
+                                    <input type="hidden" id="alternative" value="<?php echo e(session('return_data')['alternative']); ?>"/>
+
+                                    <?php if(session('return_data')['appl_edit'] == 1): ?>
                                         <script>
                                         $(document).ready(function(){
                                             $('#leave_apply_modal').trigger('click');//css('disply','block');
@@ -78,7 +77,7 @@
 
 
                                         </script>
-                                    @else   
+                                    <?php else: ?>   
                                     <script>
                                         $(document).ready(function(){
                                             $('#view_leave').trigger('click');//css('disply','block');
@@ -92,10 +91,10 @@
 
 
                                         </script>
-                                    @endif
-                                @endif
+                                    <?php endif; ?>
+                                <?php endif; ?>
 
-                            @endif
+                            <?php endif; ?>
                     </div>
                     <div class="grid grid-cols-12 gap-x-6">
                         <div class="col-span-12 xl:col-span-12">
@@ -110,9 +109,9 @@
 
                                                     <tr class="">
                                                         <th>Titles</th>
-                                                        @foreach ($staff_leave_entitlements as $l_types)
-                                                            <th scope="col" class="dark:text-white/80 font-bold item-center">{{$l_types->shortname}}</th>
-                                                        @endforeach
+                                                        <?php $__currentLoopData = $staff_leave_entitlements; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $l_types): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                            <th scope="col" class="dark:text-white/80 font-bold item-center"><?php echo e($l_types->shortname); ?></th>
+                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                         <th>DL-GIT</th>
                                                         <th>DL-VTU</th>
                                                     </tr>
@@ -121,21 +120,21 @@
                                                 <tbody>
                                                     <tr class="">
                                                         <th>Entitled</th>
-                                                        @foreach ($staff_leave_entitlements as $staff_leave)
+                                                        <?php $__currentLoopData = $staff_leave_entitlements; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $staff_leave): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                                                                    <td>{{$staff_leave->entitled_curr_year}}</td>
+                                                                    <td><?php echo e($staff_leave->entitled_curr_year); ?></td>
 
-                                                        @endforeach
+                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                         <td></td>
                                                         <td></td>
                                                     </tr>
                                                     <tr class="">
                                                         <th>Availed</th>
-                                                        @foreach ($staff_leave_entitlements as $staff_leave)
+                                                        <?php $__currentLoopData = $staff_leave_entitlements; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $staff_leave): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                                                                    <td>{{$staff_leave->consumed_curr_year}}</td>
+                                                                    <td><?php echo e($staff_leave->consumed_curr_year); ?></td>
 
-                                                        @endforeach
+                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                     </tr>
                                                     <tr class="">
                                                         <th>Balance</th>
@@ -196,24 +195,25 @@
                                                                 </table>
                                                             </div>
 
-                                                            {{-- for drawing a horrizontal line to seperate out the leave from and leave list --}}
+                                                            
                                                             <div class="relative flex py-5 items-center">
                                                                 <div class="flex-grow border-t border-blue-400"></div>
                                                                 <span class="flex-shrink mx-4 text-primary" id="msg">Your Leave Application</span>
                                                                 <div class="flex-grow border-t border-blue-400"></div>
                                                             </div>
-                                                            {{-- Horrizontal row ends --}}
+                                                            
                                                             <div class="" id="result_notification">
-                                                                @if(session('return_data'))
+                                                                <?php if(session('return_data')): ?>
                                                                     <div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
-                                                                        <span class='font-bold'>Result</span> {{session('return_data')['result']}}
+                                                                        <span class='font-bold'>Result</span> <?php echo e(session('return_data')['result']); ?>
+
                                                                     </div>
 
 
-                                                                @endif
+                                                                <?php endif; ?>
                                                             </div>
-                                                            <form  action="{{route('Teaching.leaves.apply',$staff->id)}}" method="post">
-                                                                @csrf
+                                                            <form  action="<?php echo e(route('Teaching.leaves.apply',$staff->id)); ?>" method="post">
+                                                                <?php echo csrf_field(); ?>
 
                                                                 <div class="leave_form_div" id="leave_form" >
 
@@ -224,9 +224,9 @@
                                                                             <select class="ti-form-select" name="type" id="type" required>
                                                                                 <option value="#">Choose Leave Type</option>
 
-                                                                                @foreach ($leaves as $l)
-                                                                                    <option value="{{$l->leave_id}}">{{$l->shortname}}</option>
-                                                                                @endforeach
+                                                                                <?php $__currentLoopData = $leaves; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $l): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                    <option value="<?php echo e($l->leave_id); ?>"><?php echo e($l->shortname); ?></option>
+                                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                                                                             </select>
                                                                         </div>
@@ -294,13 +294,13 @@
                                                                             <select class="ti-form-select" name="alternate" id="alternate" required>
                                                                                 <option value="#">Choose Alternate</option>
 
-                                                                                @foreach ($dept_staff as $depts)
-                                                                                <optgroup label="{{$depts->dept_name}}">
-                                                                                    @foreach ($depts->staff as $dstaff)
-                                                                                            <option value="{{$dstaff->id}}">{{$dstaff->fname.' '.$dstaff->mname.' '.$dstaff->lname}}</option>
-                                                                                    @endforeach
+                                                                                <?php $__currentLoopData = $dept_staff; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $depts): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                <optgroup label="<?php echo e($depts->dept_name); ?>">
+                                                                                    <?php $__currentLoopData = $depts->staff; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $dstaff): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                            <option value="<?php echo e($dstaff->id); ?>"><?php echo e($dstaff->fname.' '.$dstaff->mname.' '.$dstaff->lname); ?></option>
+                                                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                                 </optgroup>
-                                                                                @endforeach
+                                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                             </select>
                                                                         </div>
                                                                         <div class="max-w-sm space-y-3 pb-6">
@@ -308,13 +308,13 @@
                                                                             <select class="ti-form-select" name="additional_alternate" id="add_alternate" required>
                                                                                 <option value="#">Choose an Alternate</option>
 
-                                                                                @foreach ($dept_staff as $depts)
-                                                                                <optgroup label="{{$depts->dept_name}}">
-                                                                                    @foreach ($depts->staff as $dstaff)
-                                                                                            <option value="{{$dstaff->id}}">{{$dstaff->fname.' '.$dstaff->mname.' '.$dstaff->lname}}</option>
-                                                                                    @endforeach
+                                                                                <?php $__currentLoopData = $dept_staff; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $depts): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                <optgroup label="<?php echo e($depts->dept_name); ?>">
+                                                                                    <?php $__currentLoopData = $depts->staff; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $dstaff): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                            <option value="<?php echo e($dstaff->id); ?>"><?php echo e($dstaff->fname.' '.$dstaff->mname.' '.$dstaff->lname); ?></option>
+                                                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                                 </optgroup>
-                                                                                @endforeach
+                                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -417,9 +417,9 @@
                                                         </div>
                                                     </div>
                                                         <div class="ti-modal-footer" id="edit_applied_leave_div">
-                                                            <form  action="{{route('Teaching.leave_application.update',$staff->id)}}" method="post">
-                                                                @method('patch')
-                                                                @csrf
+                                                            <form  action="<?php echo e(route('Teaching.leave_application.update',$staff->id)); ?>" method="post">
+                                                                <?php echo method_field('patch'); ?>
+                                                                <?php echo csrf_field(); ?>
                                                                 <div class="leave_form_div" id="leave_edit_form" >
 
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pt-6 pb-6">
@@ -429,9 +429,9 @@
                                                                             <select class="ti-form-select" name="type" id="type_edit" required>
                                                                                 <option value="#">Choose Leave Type</option>
 
-                                                                                @foreach ($leaves as $l)
-                                                                                    <option value="{{$l->leave_id}}">{{$l->shortname}}</option>
-                                                                                @endforeach
+                                                                                <?php $__currentLoopData = $leaves; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $l): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                    <option value="<?php echo e($l->leave_id); ?>"><?php echo e($l->shortname); ?></option>
+                                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                                                                             </select>
                                                                         </div>
@@ -499,13 +499,13 @@
                                                                             <select class="ti-form-select" name="alternate" id="alternate_edit" required>
                                                                                 <option value="#">Choose Alternate</option>
 
-                                                                                @foreach ($dept_staff as $depts)
-                                                                                <optgroup label="{{$depts->dept_name}}">
-                                                                                    @foreach ($depts->staff as $dstaff)
-                                                                                            <option value="{{$dstaff->id}}">{{$dstaff->fname.' '.$dstaff->mname.' '.$dstaff->lname}}</option>
-                                                                                    @endforeach
+                                                                                <?php $__currentLoopData = $dept_staff; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $depts): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                <optgroup label="<?php echo e($depts->dept_name); ?>">
+                                                                                    <?php $__currentLoopData = $depts->staff; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $dstaff): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                            <option value="<?php echo e($dstaff->id); ?>"><?php echo e($dstaff->fname.' '.$dstaff->mname.' '.$dstaff->lname); ?></option>
+                                                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                                 </optgroup>
-                                                                                @endforeach
+                                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                             </select>
                                                                         </div>
                                                                         <div class="max-w-sm space-y-3 pb-6">
@@ -513,13 +513,13 @@
                                                                             <select class="ti-form-select" name="additional_alternate" id="add_alternate_edit" required>
                                                                                 <option value="#">Choose an Alternate</option>
 
-                                                                                @foreach ($dept_staff as $depts)
-                                                                                <optgroup label="{{$depts->dept_name}}">
-                                                                                    @foreach ($depts->staff as $dstaff)
-                                                                                            <option value="{{$dstaff->id}}">{{$dstaff->fname.' '.$dstaff->mname.' '.$dstaff->lname}}</option>
-                                                                                    @endforeach
+                                                                                <?php $__currentLoopData = $dept_staff; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $depts): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                <optgroup label="<?php echo e($depts->dept_name); ?>">
+                                                                                    <?php $__currentLoopData = $depts->staff; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $dstaff): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                            <option value="<?php echo e($dstaff->id); ?>"><?php echo e($dstaff->fname.' '.$dstaff->mname.' '.$dstaff->lname); ?></option>
+                                                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                                 </optgroup>
-                                                                                @endforeach
+                                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                             </select>
                                                                         </div>
                                                                        </div>
@@ -551,28 +551,28 @@
                 </div>
             </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
 
         <!-- FLATPICKR JS -->
-        <script src="{{asset('build/assets/libs/flatpickr/flatpickr.min.js')}}"></script>
+        <script src="<?php echo e(asset('build/assets/libs/flatpickr/flatpickr.min.js')); ?>"></script>
 
         <!-- CHOICES JS -->
-        <script src="{{asset('build/assets/libs/choices.js/public/assets/scripts/choices.min.js')}}"></script>
+        <script src="<?php echo e(asset('build/assets/libs/choices.js/public/assets/scripts/choices.min.js')); ?>"></script>
 
          <!-- TABULATOR JS -->
-         <script src="{{asset('build/assets/libs/tabulator-tables/js/tabulator.min.js')}}"></script>
+         <script src="<?php echo e(asset('build/assets/libs/tabulator-tables/js/tabulator.min.js')); ?>"></script>
          <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <!-- FORM-LAYOUT JS -->
-        @vite('resources/assets/js/profile-settings.js')
+        <?php echo app('Illuminate\Foundation\Vite')('resources/assets/js/profile-settings.js'); ?>
 
          <!-- MOMENT JS -->
-         <script src="{{asset('build/assets/libs/moment/moment.js')}}"></script>
+         <script src="<?php echo e(asset('build/assets/libs/moment/moment.js')); ?>"></script>
 
          <!-- FULLCALENDAR JS -->
-         <script src="{{asset('build/assets/libs/fullcalendar/main.min.js')}}"></script>
-         @vite('resources/assets/js/fullcalendar.js')
+         <script src="<?php echo e(asset('build/assets/libs/fullcalendar/main.min.js')); ?>"></script>
+         <?php echo app('Illuminate\Foundation\Vite')('resources/assets/js/fullcalendar.js'); ?>
 
 
         <script
@@ -749,7 +749,7 @@
                                     data: {
                                         application_id : application_id,
                                         
-                                        _token : '{{csrf_token()}}' // Pass the clicked date to the server
+                                        _token : '<?php echo e(csrf_token()); ?>' // Pass the clicked date to the server
                                     },
                                     success: function(response) {
                                         // Handle the response from the server
@@ -783,7 +783,7 @@
                                     data: {
                                         application_id : application_id,
                                         
-                                        _token : '{{csrf_token()}}' // Pass the clicked date to the server
+                                        _token : '<?php echo e(csrf_token()); ?>' // Pass the clicked date to the server
                                     },
                                     success: function(response) {
                                         // Handle the response from the server
@@ -957,7 +957,7 @@
                                 method: 'GET',
                                 data: {
                                     date: info.dateStr,
-                                    _token : '{{csrf_token()}}' // Pass the clicked date to the server
+                                    _token : '<?php echo e(csrf_token()); ?>' // Pass the clicked date to the server
                                 },
                                 success: function(response) {
                                     // Handle the response from the server
@@ -989,7 +989,7 @@
                             method: 'GET',
                             data: {
                                 date: info.dateStr,
-                                _token : '{{csrf_token()}}' // Pass the clicked date to the server
+                                _token : '<?php echo e(csrf_token()); ?>' // Pass the clicked date to the server
                             },
                             success: function(response) {
                                 // Handle the response from the server
@@ -1022,7 +1022,7 @@
                             method: 'GET',
                             data: {
                                 date: info.dateStr,
-                                _token : '{{csrf_token()}}' // Pass the clicked date to the server
+                                _token : '<?php echo e(csrf_token()); ?>' // Pass the clicked date to the server
                             },
                             success: function(response) {
                                 // Handle the response from the server
@@ -1085,7 +1085,7 @@
                                 method: 'GET',
                                 data: {
                                     date: clicked_date,
-                                    _token : '{{csrf_token()}}' // Pass the clicked date to the server
+                                    _token : '<?php echo e(csrf_token()); ?>' // Pass the clicked date to the server
                                 },
                                 success: function(response) {
                                     // Handle the response from the server
@@ -1172,4 +1172,6 @@
                 calendar.render()
             });
         </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.components.staff.master-teaching', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\laravel Apps\gitoffice\resources\views/Staff/Teaching/leaves.blade.php ENDPATH**/ ?>

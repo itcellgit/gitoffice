@@ -297,12 +297,12 @@ Route::get('/fetchholidayrhevents',[LeaveStaffApplicationsController::class,'fet
 Route::get('/fetchmyleaveevents',[LeaveStaffApplicationsController::class,'fetchmyleaveevents'])->name('fetchmyleaveevents');
 
 Route::get('/cancel_myleave',[LeaveStaffApplicationsController::class,'cancel_myleave'])->name('cancel_myleave');
-Route::get('/edit_myleave',[LeaveStaffApplicationsController::class,'edit_myleave'])->name('Teaching.leaves.edit');
+Route::get('/Teaching/edit_myleave',[LeaveStaffApplicationsController::class,'edit_myleave'])->name('Teaching.leaves.edit');
 // Route::delete('/ESTB/leaves/leaves_rules/{leave_rules}',[LeaveRulesController::class,'destroy'])->name('ESTB.leaves.leave_rules.destroy');
 
 //Leave Application Management routes
 Route::post('/Teaching/{staff}/leave/create',[LeaveStaffApplicationsController::class,'store'])->name('Teaching.leaves.apply');
-Route::patch('/Teaching/{staff}/leave/{leave}/application/{leave_staff_applications}/update',[LeaveStaffApplicationsController::class,'update'])->name('Teaching.leave.leave_application.update');
+Route::patch('/Teaching/{staff}/leave/application/update',[LeaveStaffApplicationsController::class,'update'])->name('Teaching.leave_application.update');
 Route::post('/Teaching/{staff}/validate_leave_appln',[LeaveStaffApplicationsController::class,'validateleave']);
 });
 
