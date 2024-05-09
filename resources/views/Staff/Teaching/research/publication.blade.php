@@ -219,13 +219,8 @@
                                                                                     @endif
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
-<<<<<<< HEAD
                                                                                 <label for="" class="ti-form-label font-bold">DOI Number:</label>
                                                                                 <input type="text" name="doi_number" class="ti-form-input"  placeholder="Doi Number" id="pub_doi_number" value="{{ old('doi_number') }}">
-=======
-                                                                                <label for="" class="ti-form-label font-bold">DOI Number:<span class="text-red-500">*</span></label>
-                                                                                <input type="text" name="doi_number" class="ti-form-input" required placeholder="Doi Number" id="pub_doi_number" value="{{ old('doi_number') }}">
->>>>>>> 46197155f3b015e7f48c376ec9139bc0bdb2b600
                                                                                     @if($errors->has('doi_number'))
                                                                                     <div class="text-red-700">{{ $errors->first('doi_number') }}</div>
                                                                                 @endif
@@ -750,21 +745,6 @@
                         }
 
 
-<<<<<<< HEAD
-=======
-
-
-                        ///
-
-                        // if(pub_title == ''){
-                        //     $('#pub_titleError').text('Title Name is missing');
-                        //     flag = true;
-                        // } else if (!/^[a-zA-Z\s0-9]*$/.test(pub_title.trim())) {
-                        //     $('#pub_titleError').text('Please fill the correct value');
-                        //     flag = true;
-                        // }
-
->>>>>>> 46197155f3b015e7f48c376ec9139bc0bdb2b600
                         if (pub_title.trim() === '') {
                             $('#pub_titleError').text('Title Name is missing');
                             flag = true;
