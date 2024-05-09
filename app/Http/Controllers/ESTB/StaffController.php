@@ -355,95 +355,198 @@ class StaffController extends Controller
         //
     }
 
+    public function staff_data_filter()
+	{
+	    $filter="";
+	   // dd($staff1);
+	   $staff=staff::with('designations')
+	    ->with('associations')
+	   ->with('departments' )
+	   ->with('latest_employee_type')
+	   ->orderBy('fname')->get();
+
+	   //$staff = DB::table('staff')->with('designations')->with('associations')->orderBy('id')->paginate(15);
+	   // $caste_categories = castecategory::where('status','active')->get();
+	    $religions =religion::where('status','active')->get();
+	    $associations = association::where('status','active')->get();
+	    $departments = DB::table('departments')->where('status','active')->get();
+	    $qualifications =DB::table('qualifications')->where('status','active')->get();
+
+	    $designations=designation::where('status','active')->get();
+	    //To fetch Designation As per Employee type
+	    $teachingDesignations = designation::where('status', 'active')
+	                        ->where('emp_type', 'Teaching')
+	                        ->where('isadditional', 0)
+	                        ->orderBy('design_name')
+	                        ->get();
+
+	    $nonteachingDesignations = designation::where('status', 'active')
+	                        ->where('emp_type', 'Non-teaching')
+	                        ->where('isadditional', 0)
+	                        ->orderBy('design_name')
+	                        ->get();
+
+	    //$payscales = teaching::
+
+	    return view('ESTB.staff.staffinformation',compact(['staff','religions','associations','departments','qualifications','filter','designations','teachingDesignations','nonteachingDesignations']));
+	}
+
 
 
     //Code for stafffilter information
     public function filterstaff_information(Request $request)
     {
+        $filter="";
+        $religions =religion::where('status','active')->get();
 
+	    $associations = association::where('status','active')->get();
+	    $departments = DB::table('departments')->where('status','active')->get();
+	    $qualifications =DB::table('qualifications')->where('status','active')->get();
+
+	    $designations=designation::where('status','active')->get();
+	    //To fetch Designation As per Employee type
+	    $teachingDesignations = designation::where('status', 'active')
+	                        ->where('emp_type', 'Teaching')
+	                        ->where('isadditional', 0)
+	                        ->orderBy('design_name')
+	                        ->get();
+
+	    $nonteachingDesignations = designation::where('status', 'active')
+	                        ->where('emp_type', 'Non-teaching')
+	                        ->where('isadditional', 0)
+	                        ->orderBy('design_name')
+	                        ->get();
         //dd($request->query);
         $association_id = $request->input('associations');
         $department_id = $request->input('departments');
         $designation_id = $request->input('designations');
         $castecategories = $request->input('castecategory_id');
-        $religions = $request->input('religion_id');
+        $religion = $request->input('religion_id');
         $gender = $request->input('gender');
         $employee_type = $request->input('employee_type');
 
-        $query = staff::query();
-        $query->with('latest_employee_type')->join('department_staff', 'department_staff.staff_id', '=', 'staff.id')
-                ->join('departments', 'departments.id', '=', 'department_staff.department_id')
-                ->where('department_staff.status','active')
+        $query = Staff::query();
 
-                ->join('association_staff', 'association_staff.staff_id', '=', 'staff.id')
-                ->join('associations', 'associations.id', '=', 'association_staff.association_id')
-                ->where('association_staff.status','active')
+        $query->join('department_staff', function ($join) {
+            $join->on('department_staff.staff_id', '=', 'staff.id')
+                ->where('department_staff.status', 'active');
+        });
 
-                ->join('designation_staff', 'designation_staff.staff_id', '=', 'staff.id')
-                ->join('designations', 'designations.id', '=', 'designation_staff.designation_id')
-                ->where('designation_staff.status','active')
+        $query->join('departments', 'departments.id', '=', 'department_staff.department_id');
 
-                ->join('religions', 'religions.id', '=', 'staff.religion_id');
+        $query->join('association_staff', function ($join) {
+            $join->on('association_staff.staff_id', '=', 'staff.id')
+                ->where('association_staff.status', 'active');
+        });
 
+        $query->join('associations', 'associations.id', '=', 'association_staff.association_id');
 
+        $query->join('designation_staff', function ($join) {
+            $join->on('designation_staff.staff_id', '=', 'staff.id')
+                ->where('designation_staff.status', 'active');
+        });
 
+        $query->join('designations', 'designations.id', '=', 'designation_staff.designation_id');
 
-        if ($department_id && !in_array('all', $department_id))
-        {
-                // If specific departments are selected (excluding 'all')
+        $query->join('religions', 'religions.id', '=', 'staff.religion_id')
+            ->join('employee_types', 'employee_types.staff_id', '=', 'staff.id');
+
+        if ($department_id && !in_array('all', $department_id)) {
             $query->whereIn('departments.id', $department_id);
         }
 
-
         if ($association_id && !in_array('all', $association_id)) {
-
             $query->whereIn('associations.id', $association_id);
-                //->select('staff.*', 'associations.asso_name');
         }
 
         if ($designation_id) {
-            $query
-                ->whereIn('designations.id', $designation_id);
-                //->select('staff.*', 'designations.design_name');
+            $query->whereIn('designations.id', $designation_id);
         }
 
-        if ($religions!='all') {
-            $query
-                ->where('religions.id', $religions)
+        if ($religion !== 'all') {
+            $query->where('religions.id', $religion)
                 ->select('staff.*', 'religions.religion_name');
         }
 
-        // if ($employee_type !== 'all') {
-        //     $query
-        //         ->where('employee_types.employee_type', '=', $employee_type)
-        //         ->where('department_staff.status','active');
-        // }
-
-
         if ($employee_type !== 'all') {
-            $query->where('department_staff.status', 'active');
+            $query->where('employee_types.employee_type', $employee_type)
+                ->select('staff.*', 'employee_types.employee_type');
         }
-
-        $employee_type = employee_type::where('employee_type', $employee_type)->pluck('employee_type');
-
-
-
 
         if ($gender !== 'all') {
             $query->where('staff.gender', $gender);
         }
 
-        //$query->distinct();
-        //$staff = $query->select(DB::raw('DISTINCT(staff.id)'), 'staff.*', 'departments.dept_shortname', 'associations.asso_name', 'religions.religion_name','designations.design_name','employee_types.employee_type')->get();
-        $staff = $query->select('staff.id', 'staff.*', 'departments.dept_shortname', 'associations.asso_name', 'religions.religion_name','designations.design_name')->get();
+        // Use GROUP_CONCAT to fetch multiple departments as a single entry
+        $query->select(
+            'staff.id',
+            'staff.fname',
+            'staff.mname',
+            'staff.lname',
+            'staff.gender',
 
+            //Full information About Staff if needed
+            'staff.dob',
+            'staff.doj',
+            'staff.date_of_increment',
+            'staff.date_of_superanuation',
+            'staff.date_of_confirmation',
+            'staff.bloodgroup',
+            'staff.pan_card',
+            'staff.adhar_card',
+            'staff.contactno',
+            'staff.aicte_id',
+            'staff.vtu_id',
+            'staff.local_address',
+            'staff.permanent_address',
+            'staff.emergency_no',
+            'staff.emergency_name',
+
+            DB::raw('GROUP_CONCAT(DISTINCT departments.dept_shortname ORDER BY departments.dept_shortname SEPARATOR ", ") AS departments_list'),
+            'associations.asso_name',
+            'religions.religion_name',
+            DB::raw('GROUP_CONCAT(DISTINCT designations.design_name ORDER BY designations.design_name SEPARATOR ", ") AS designations_list'),
+            'employee_types.employee_type'
+        );
+
+        // Group by staff columns to avoid duplicate staff entries
+        $query->groupBy('staff.id',
+            'staff.fname',
+            'staff.mname',
+            'staff.lname',
+            'staff.gender',
+            'associations.asso_name',
+            'religions.religion_name',
+            'employee_types.employee_type',
+
+            'staff.dob',
+            'staff.doj',
+            'staff.date_of_increment',
+            'staff.date_of_superanuation',
+            'staff.date_of_confirmation',
+            'staff.bloodgroup',
+            'staff.pan_card',
+            'staff.adhar_card',
+            'staff.contactno',
+            'staff.aicte_id',
+            'staff.vtu_id',
+            'staff.local_address',
+            'staff.permanent_address',
+            'staff.emergency_no',
+            'staff.emergency_name',
+
+        );
+
+
+
+        // Execute the query and retrieve results
         //$staff = $query->take(10)->get();
-
-
-        //$staff = $query->dd();
-        $staff = $query->get();
         //dd($staff);
-        return view('ESTB.staff.staffinformation', compact('staff'));
+        $staff = $query->get();
+
+       // dd($staff);
+       $staffCount = $staff->count();
+        return view('ESTB.staff.staffinformation', compact(['staff','staffCount','religions','associations','departments','qualifications','filter','designations','teachingDesignations','nonteachingDesignations']));
     }
 
 

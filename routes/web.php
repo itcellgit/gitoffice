@@ -425,7 +425,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::get('/ESTB/staff',[StaffController::class,'index'])->name('ESTB.staff');
 
     //Route to fetch staff data using Filter
-    //Route::get('/ESTB/staff/staffinformation',[StaffController::class,'staff_filter_record'])->name('ESTB.staff.staffinformation');
+    Route::get('/ESTB/staff/staffinformation',[StaffController::class,'staff_data_filter'])->name('ESTB.staff.staffdata');
 
 
     Route::post('/ESTB/staff/create',[StaffController::class,'store'])->name('ESTB.staff.store');
