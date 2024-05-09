@@ -9,116 +9,220 @@ use Carbon\Carbon;
 
 class BiometricController extends Controller
 {
-    public function biometric_data()
+    public function biometric_data(Request $request)
     {
+        $currentMonth="";
+        $currentYear="";
+        $date="";
+        if ($request->filled('date'))
+         {
+            $date=$request->date;
+          $currentMonth=Carbon::parse($date)->month;
+          $currentYear=Carbon::parse($date)->year;
+
+         }
+         else
+         {
+            $currentMonth = date('n');
+            $currentYear = date('Y');
+            $date=Carbon::now()->format('Y-m-d');
+           // dd($date);
+         }
         // Get current month and year
-        $currentMonth = date('n');
-        $currentYear = date('Y');
 
-        // // Construct table name
-         $tableName = "DeviceLogs_" . $currentMonth . "_" . $currentYear;
 
-        // // Retrieve data from the 'mysql2' database
+        // Construct table name
+        $tableName = "DeviceLogs_" . $currentMonth . "_" . $currentYear;
+
+        // Retrieve data from the 'mysql2' database
         $externalData = DB::connection('mysql2')
-    ->table($tableName) // Dynamically using the variable $tableName
-    ->select("$tableName.logDate as logDate", 'devices.DeviceFname as DeviceName', 'employees.EmployeeName as EmployeeName')
-    ->join('devices', "$tableName.DeviceId", '=', 'devices.DeviceId')
-    ->join('employees', "$tableName.EmployeeCode", '=', 'employees.EmployeeCode')
-    ->orderBy("$tableName.logDate", 'desc')->orderBy("employees.EmployeeName") // Sorting by logDate in descending order
-    ->get();
-    //dd($externalData);
-      $entry_exit=  $this->filterEntryExitLogs('5','2024');
-      dd($entry_exit);
-    // Return the view with the retrieved data
-     return view('ESTB.Biometric.biometric_data', compact('externalData'));
+            ->table($tableName) // Dynamically using the variable $tableName
+            ->select(
+                "$tableName.logDate as logDate",
+                'devices.DeviceFname as DeviceName',
+                'employees.EmployeeName as EmployeeName',
+                "$tableName.EmployeeCode as EmployeeCode" // Include EmployeeCode in the SELECT query
+            )
+            ->join('devices', "$tableName.DeviceId", '=', 'devices.DeviceId')
+            ->join('employees', "$tableName.EmployeeCode", '=', 'employees.EmployeeCode')
+            ->orderBy("$tableName.logDate", 'desc')
+            ->orderBy("employees.EmployeeName") // Sorting by logDate in descending order
+            ->get();
+
+        // Filter entry and exit logs
+        $entry_exit = $this->filterEntryExitLogs($currentMonth, $currentYear, $date, $externalData);
+
+        // Return the view with the retrieved data
+        return view('ESTB.Biometric.biometric_data', compact('externalData', 'entry_exit'));
     }
 
+    // public function filterEntryExitLogs($currentMonth, $currentYear, $logDate, $externalData)
+    // {
+    //     // Generate table name based on current month and year
+    //     $tableName = "DeviceLogs_" . $currentMonth . "_" . $currentYear;
+
+    //     // Retrieve log entries from the database for the specified date
+    //     $logs = DB::connection('mysql2')
+    //         ->table($tableName)
+    //         ->join('devices', "$tableName.DeviceId", '=', 'devices.DeviceId')
+    //         ->join('employees', "$tableName.EmployeeCode", '=', 'employees.EmployeeCode')
+    //         ->where('LogDate_Date', $logDate)
+    //         ->orderBy("$tableName.EmployeeCode")
+    //         ->orderBy("$tableName.logDate", 'asc')
+    //         ->get();
+
+    //     // Initialize arrays for entry and exit logs
+    //     $entryLogs = [];
+    //     $exitLogs = [];
+
+    //     // Group logs by employee code
+    //     $logsByEmployee = $logs->groupBy('EmployeeCode');
+
+    //     // Iterate through each employee's logs
+    //     foreach ($logsByEmployee as $employeeCode => $employeeLogs) {
+    //         // Sort employee logs by log date
+    //         $sortedLogs = $employeeLogs->sortBy('logDate');
+
+    //         // Set the first log as the entry log and the last log as the exit log
+    //         $entryLogs[$employeeCode] = $sortedLogs->first();
+    //         $exitLogs[$employeeCode] = $sortedLogs->last();
+    //         $employeepunchcount[$employeeCode]=$employeeLogs->count();
+    //         $employeeduration[$employeeCode]=7;
+    //         // If there's only one log for the employee, set exit log as null
+    //         if ($employeeLogs->count() === 1) {
+    //             $exitLogs[$employeeCode] = null;
+    //         }
+    //     }
 
 
-    public function filterEntryExitLogs($currentMonth, $currentYear)
+    //     return [
+    //         'entryLogs' => $entryLogs,
+    //         'exitLogs' => $exitLogs,
+    //         'punchcounts'=>$employeepunchcount,
+    //         'durations'=>$employeeduration
+    //     ];
+    // }
+
+    public function filterEntryExitLogs($currentMonth, $currentYear, $logDate, $externalData)
     {
         // Generate table name based on current month and year
         $tableName = "DeviceLogs_" . $currentMonth . "_" . $currentYear;
 
-        // Retrieve log entries from the database
+        // Retrieve log entries from the database for the specified date
         $logs = DB::connection('mysql2')
             ->table($tableName)
-            ->where('LogDate_Date', '2024-05-02')
-            ->where('EmployeeCode', 207)
-            ->orderBy('LogDate')
+            ->join('devices', "$tableName.DeviceId", '=', 'devices.DeviceId')
+            ->join('employees', "$tableName.EmployeeCode", '=', 'employees.EmployeeCode')
+            ->where('LogDate_Date', $logDate)
+            ->orderBy("$tableName.EmployeeCode")
+            ->orderBy("$tableName.logDate", 'asc')
             ->get();
 
         // Initialize arrays for entry and exit logs
         $entryLogs = [];
         $exitLogs = [];
-        $logCounter = []; // Track the number of logs for each employee on a given day
 
-        // Iterate through log entries
-        foreach ($logs as $index => $log) {
-            $employeeCode = $log->EmployeeCode;
-            $logDate = Carbon::parse($log->LogDate)->format('Y-m-d'); // Extract date part
+        // Group logs by employee code
+        $logsByEmployee = $logs->groupBy('EmployeeCode');
 
-            // Increment log counter
-            $logCounter[$employeeCode][$logDate] = isset($logCounter[$employeeCode][$logDate]) ? $logCounter[$employeeCode][$logDate] + 1 : 1;
+        // Iterate through each employee's logs
+        foreach ($logsByEmployee as $employeeCode => $employeeLogs) {
+            // Sort employee logs by log date
+            $sortedLogs = $employeeLogs->sortBy('LogDate');
 
-            // If entry log doesn't exist for the employee on the same day, store it
-            if (!isset($entryLogs[$employeeCode][$logDate])) {
-                $entryLogs[$employeeCode][$logDate] = $log;
+            // Set the first log as the entry log and the last log as the exit log
+            $entryLogs[$employeeCode] = $sortedLogs->first();
+            $exitLogs[$employeeCode] = $sortedLogs->last();
 
-                // Set exit log as null until the logs become even
-                $exitLogs[$employeeCode][$logDate] = null;
-            }
-
-            // Update exit log with the details of the last log for the day
-            $currentLogDate = Carbon::parse($log->LogDate)->format('Y-m-d');
-            if ($index == count($logs) - 1 || Carbon::parse($logs[$index + 1]->LogDate)->format('Y-m-d') !== $currentLogDate) {
-                // Check if the log count is even
-                if ($logCounter[$employeeCode][$logDate] % 2 === 0) {
-                    // Check the time difference with the previous log, if available
-                    if ($index > 0) {
-                        $previousLog = $logs[$index - 1];
-                        $timeDifference = Carbon::parse($log->LogDate)->diffInSeconds(Carbon::parse($previousLog->LogDate));
-                        $thresholdInSeconds = 30; // Adjust threshold as needed
-
-                        // If time difference is greater than the threshold, update exit log
-                        if ($timeDifference > $thresholdInSeconds) {
-                            $exitLogs[$employeeCode][$logDate] = $log;
-                        }
-                    } else {
-                        $exitLogs[$employeeCode][$logDate] = $log;
-                    }
-                }
+            // If there's only one log for the employee, set exit log as null
+            if ($employeeLogs->count() === 1) {
+                $exitLogs[$employeeCode] = null;
             }
         }
 
-        // Process and return the filtered logs
-        $filteredEntryLogs = [];
-        $filteredExitLogs = [];
-        foreach ($entryLogs as $employeeCode => $entryLogsByDate) {
-            foreach ($entryLogsByDate as $logDate => $entryLog) {
-                // Get the exit log for the same day
-                $exitLog = $exitLogs[$employeeCode][$logDate] ?? null;
+        // Calculate duration between entry and exit logs for each employee
+        $durations = [];
+        foreach ($entryLogs as $employeeCode => $entryLog) {
+            if ($entryLog && $exitLogs[$employeeCode]) {
+                $entryTime = strtotime($entryLog->LogDate);
+                $exitTime = strtotime($exitLogs[$employeeCode]->LogDate);
+                $durationSeconds = $exitTime - $entryTime;
 
-                // Only consider entry and exit events for the same day
-                if ($exitLog && Carbon::parse($exitLog->LogDate)->format('Y-m-d') == $logDate) {
-                    $filteredEntryLogs[] = $entryLog;
-                    $filteredExitLogs[] = $exitLog;
+                // Convert seconds to hours and minutes
+                $durationHours = floor($durationSeconds / 3600); // Get whole hours
+                $remainingSeconds = $durationSeconds % 3600; // Get remaining seconds after getting whole hours
+                $durationMinutes = floor($remainingSeconds / 60); // Convert remaining seconds to minutes
+
+                // Format the duration as "hours hrs minutes mins"
+                $formattedDuration = "$durationHours hrs $durationMinutes mins";
+
+                $durations[$employeeCode] = $formattedDuration;
+            } else {
+                $durations[$employeeCode] = null; // No duration if either entry or exit log is missing
+            }
+        }
+        $durations = [];
+        $totalDurations = [];
+
+        foreach ($entryLogs as $employeeCode => $entryLog) {
+            if ($entryLog && $exitLogs[$employeeCode]) {
+                $entryTime = strtotime($entryLog->LogDate);
+                $exitTime = strtotime($exitLogs[$employeeCode]->LogDate);
+
+                // Calculate duration in seconds
+                $durationSeconds = $exitTime - $entryTime;
+
+                // Convert seconds to hours and minutes
+                $durationHours = floor($durationSeconds / 3600); // Get whole hours
+                $remainingSeconds = $durationSeconds % 3600; // Get remaining seconds after getting whole hours
+                $durationMinutes = floor($remainingSeconds / 60); // Convert remaining seconds to minutes
+
+                // Format the duration
+                $formattedDuration = "$durationHours hrs $durationMinutes mins";
+
+                // Store the duration for each employee
+                $durations[$employeeCode] = $formattedDuration;
+
+                // Add the duration to the total duration for the employee
+                if (!isset($totalDurations[$employeeCode])) {
+                    $totalDurations[$employeeCode] = $durationSeconds;
                 } else {
-                    // If no corresponding exit log found, keep exit time as null
-                    $filteredEntryLogs[] = $entryLog;
-                    $filteredExitLogs[] = null;
+                    $totalDurations[$employeeCode] += $durationSeconds;
                 }
+            } else {
+                // No duration if either entry or exit log is missing
+                $durations[$employeeCode] = null;
             }
         }
+
+        // Convert total durations to formatted strings
+        foreach ($totalDurations as $employeeCode => $totalDurationSeconds) {
+            $totalDurationHours = floor($totalDurationSeconds / 3600); // Get whole hours
+            $remainingSeconds = $totalDurationSeconds % 3600; // Get remaining seconds after getting whole hours
+            $totalDurationMinutes = floor($remainingSeconds / 60); // Convert remaining seconds to minutes
+
+            // Format the total duration
+            $formattedTotalDuration = "$totalDurationHours hrs $totalDurationMinutes mins";
+
+            // Update the total duration with the formatted string
+            $totalDurations[$employeeCode] = $formattedTotalDuration;
+        }
+
+        // Now $durations contains individual durations for each employee,
+
+
+
+
+        // Calculate punch counts for each employee
+        $punchCounts = $logsByEmployee->map->count();
 
         return [
-            'entryLogs' => $filteredEntryLogs,
-            'exitLogs' => $filteredExitLogs
+            'entryLogs' => $entryLogs,
+            'exitLogs' => $exitLogs,
+            'punchcounts' => $punchCounts,
+            'durations' => $durations
         ];
     }
 
 
 }
-
-
-

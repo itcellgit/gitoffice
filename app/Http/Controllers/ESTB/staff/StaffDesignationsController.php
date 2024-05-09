@@ -1574,13 +1574,17 @@ public function create_vacational_leaves(request $request,staff $staff,$design_i
                             {
                                 $curr_year_leave->pivot->delete();
                             }
-                            $vacational_entitlement=$vl->max_entitlement;
+                            $vacational_entitlement=ceil($vl->max_entitlement/2); //EL in jan 1/2 and july 1/2 is given. Ceil if max_entitlement is odd.
                             $wef=$curr_year."-01-01";
                         }
                         else
                         {
                             $vacational_entitlement=$vl->max_entitlement-floor(($diffdays*$vl->max_entitlement)/365);
-
+                            $end_month=Carbon::parse($request->end_date)->month;
+                            if($end_month<7)
+                            {
+                                $vacational_entitlement=$vacational_entitlement-5; //5 EL will be given in July.
+                            }
                         }
 
                         $staff_entitlement=$staff->leave_staff_entitlements()->attach($vl->id,['year'=>$curr_year,
