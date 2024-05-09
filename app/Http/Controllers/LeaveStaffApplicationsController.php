@@ -175,6 +175,8 @@ class LeaveStaffApplicationsController extends Controller
             $leave_application =  new leave_staff_applications();
             $leave_application->leave_id = $request->type;
             $leave_application->cl_type=$request->cl_type;
+            $from_year=Carbon::parse($request->from_date)->year;
+            $to_year=Carbon::parse($request->to_date)->year;
             $leave_application->start = $request->from_date;
             $leave_application->end = $request->to_date;
             $leave_application->reason = $request->leave_reason;
@@ -191,7 +193,7 @@ class LeaveStaffApplicationsController extends Controller
 
             $leave_application->appl_status = 'pending';
             $leave_application->leave_status = 'awaiting';
-            $leave_application->year = 2024;
+            $leave_application->year = Carbon::parse($request->to_date)->year;
 
             $leave_appn_id = $leave_application->save();
 
@@ -261,44 +263,44 @@ class LeaveStaffApplicationsController extends Controller
          $update_result = '';
         if($result == "success"){ //if validation of leave rules hold good then insert.
         //     //dd($result);
-            
+
             $update_result =  DB::table('leave_staff_applications')
                         ->where('id', $request->leave_staff_application_id)
                         ->update(['leave_id' => $request->type,
                         'cl_type' => $request->cl_type,
                         'start' => $request->from_date,
                         'end' => $request->to_date,
-                        'no_of_days' => $request->no_of_days, 
-                        'reason' => $request->leave_reason,   
-                        'alternate' => $request->alternate,  
+                        'no_of_days' => $request->no_of_days,
+                        'reason' => $request->leave_reason,
+                        'alternate' => $request->alternate,
                         'additional_alternate' => $request->additional_alternate]);
-                        
+
              //dd($update_result);
             // = $leave_staff_applications->update();
 
             //checking if the previous start and end dates are modified
             if($leave_staff_applications->start != $request->from_date || $leave_staff_applications->end != $request->to_date){
-               
+
                 //for deleting the old entries.
                 $previous_entry_delete_result = Daywise_Leave::where('leave_staff_applications_id', $request->leave_staff_application_id)->delete();
 
                 //inserting the new values.
                 $period = CarbonPeriod::create($request->from_date, $request->to_date);
                 $daywise_leave_result = false;
-    
-    
+
+
                 foreach ($period as $dt) {
-    
+
                     $day_wise_leave = new Daywise_Leave();
                     $day_wise_leave->leave_staff_applications_id = $request->leave_staff_application_id;
                     $day_wise_leave->leave_id = $request->type;
                     $day_wise_leave->start = $dt->format('Y-m-d');
                     //dd($dt->format('Y-m-d'));
                     $daywise_leave_result = $day_wise_leave->save();
-    
+
                 }
             }
-           
+
 
        }
         //$result = 'success';
@@ -328,7 +330,7 @@ class LeaveStaffApplicationsController extends Controller
         $result="";
         $leave=leave::with('combine_leave')->with('leave_rules')->where('id',$request->type)->first();
 
-       // dd($leave);
+        //dd($staff_leaves_applications);
         //Rules to check
         //1. Leave days must not overlap.
         //2. Leave can be combined with only a few type of leaves and also they can be take on one side or bothsides -listed in combine_leaves
@@ -339,6 +341,21 @@ class LeaveStaffApplicationsController extends Controller
         //7. The total number of leaves that any staff can take in a year must be less than the total number of leaves entitled for that year - listed as entitled_cur_year in leave_staff_entitlements
 
         //implementation of the above rules
+        $result="";
+        $from_year=Carbon::parse($request->from_date)->year;
+        $to_year=Carbon::parse($request->to_date)->year;
+        if($from_year!=$to_year)
+        {
+          $result.="Error: Leave dates cannot be from two different years. Please create two different applications for the respective years";
+          return $result;
+        }
+        $staff_leave_entitlements=leave_staff_entitlements::where('staff_id',$staff->id)->where('leave_id',$request->type)->where('year',$from_year)->first();
+       // dd($staff_leave_entitlements);
+        if($request->no_of_days+$staff_leave_entitlements->consumed_curr_year>$staff_leave_entitlements->entitled_curr_year)
+        {
+            $result.="Error: You do not have that many leaves left to your credit. You can avail only ".$staff_leave_entitlements->entitled_curr_year-$staff_leave_entitlements->consumed_curr_year;
+        }
+        $leave=leave::with('combine_leave')->with('leave_rules')->where('id',$request->type)->first();
 
         //Code for Rule-1.
         //check for the overlapping leaves
@@ -380,9 +397,52 @@ class LeaveStaffApplicationsController extends Controller
             ->where('leave_staff_applications.staff_id',$staff->id)
             ->where('start',$next_date)
             ->select('leaves.shortname','leave_staff_applications.*')->first();
-            if($staff_leaves_before_start_day!=null )
+            $holidaydates=array();
+            if($staff_leaves_before_start_day==null && $request->cl_type!='Afternoon')
             {
+                //if there is no leave before this leave date then check if there is a holiday and any leave before that day.
+                //example leave is from 6th May 2024 and 5th May is sunday
+                $holidays="notyet";
 
+                while($holidays!=null)
+                {
+
+                    $holidays=holidayrh::where('start',$previous_date)->first();
+                    if($holidays==null)
+                    {
+                        $dayofweek=Carbon::parse($previous_date)->format('l');
+                        if($dayofweek=="Sunday")
+                        {
+                            $holidaydates[]=Carbon::parse($previous_date)->format('d-m-Y');
+                            $previous_date=Carbon::parse($previous_date)->addDays(-1)->format('Y-m-d');
+                            $holidays="check for next day";
+                        }
+                        else
+                        {
+                            break;
+                        }
+
+                    }
+                    else
+                    {
+                        $holidaydates[]=Carbon::parse($previous_date)->format('d-m-Y');
+                        $previous_date=Carbon::parse($previous_date)->addDays(-1)->format('Y-m-d');
+                    }
+
+                }
+                $staff_leaves_before_start_day=leave_staff_applications::
+                    join('leaves','leaves.id','=','leave_staff_applications.leave_id')
+                    ->where('leave_staff_applications.staff_id',$staff->id)
+                    ->where('end',$previous_date)
+                    ->select('leaves.shortname','leave_staff_applications.*')->first();
+
+            }
+            if($staff_leaves_before_start_day!=null)
+            {
+                if(!empty($holidaydates))
+                {
+                    $result="You are extending your current leave with a holiday inbetween.  Please apply this leave from the date ".$holidaydates[count($holidaydates) - 1];
+                }
                 if( $staff_leaves_before_start_day->leave_id==$request->type )
                 {
                     if($leave->shortname=="CL")
@@ -421,8 +481,53 @@ class LeaveStaffApplicationsController extends Controller
                     }
                 }
             }
+            $holidaydatespost=array();
+            if($staff_leave_after_end_date==null && $request->cl_type!='Morning')
+            {
+                //if there is no leave before this leave date then check if there is a holiday and any leave before that day.
+                //example leave is from 6th May 2024 and 5th May is sunday
+                $holidays="notyet";
+
+                while($holidays!=null)
+                {
+
+                    $holidays=holidayrh::where('start',$next_date)->first();
+                    //dd($holidays);
+                    if($holidays==null)
+                    {
+                        $dayofweek=Carbon::parse( $next_date)->format('l');
+                        if($dayofweek=="Sunday")
+                        {
+                            $holidaydatespost[]=Carbon::parse( $next_date)->format('d-m-Y');
+                            $next_date=Carbon::parse( $next_date)->addDays(1)->format('Y-m-d');
+                            $holidays="check for next day";
+                        }
+                        else
+                        {
+                            break;
+                        }
+
+                    }
+                    else
+                    {
+                        $holidaydatespost[]=Carbon::parse( $next_date)->format('d-m-Y');
+                        $next_date=Carbon::parse( $next_date)->addDays(1)->format('Y-m-d');
+                    }
+
+                }
+                $staff_leave_after_end_date=leave_staff_applications::
+                join('leaves','leaves.id','=','leave_staff_applications.leave_id')
+                ->where('leave_staff_applications.staff_id',$staff->id)
+                ->where('start',$next_date)
+                ->select('leaves.shortname','leave_staff_applications.*')->first();
+
+            }
             if($staff_leave_after_end_date!=null)
             {
+                if(!empty($holidaydatespost))
+                {
+                    $result="You are extending your current leave with a holiday inbetween.  Please apply this leave upto the date ".$holidaydatespost[count($holidaydatespost) - 1];
+                }
                 if($staff_leave_after_end_date->leave_id==$request->type )
                 {
                     if($leave->shortname=="CL" )
@@ -514,7 +619,7 @@ class LeaveStaffApplicationsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    
+
 
     /**
      * Remove the specified resource from storage.
@@ -683,22 +788,211 @@ class LeaveStaffApplicationsController extends Controller
     public function edit_myleave(Request $request){
         $application_id = $request->input('application_id');
 
-        $user = Auth::user();
         $staff_id_from_user = staff::where('user_id','=',$user->id)->first();
         //dd($application_id);
 
         $result = DB::table('leave_staff_applications')
-            ->where('leave_staff_applications.id', $application_id)
-            ->join('leaves', 'leaves.id','=','leave_staff_applications.leave_id')
-            ->select('leave_staff_applications.*','leaves.longname','leaves.shortname')
+            ->where('id', $application_id)
             ->get();
             //$leave_staff_applications->appl_status = "recommended";
          //dd($result);
 
 
-        //dd($leaves);
-        
-        return response()->json($result);;
+         $staff_emp_type=staff::join('employee_types','employee_types.staff_id','=','staff.id')
+         ->where('staff_id',$staff_id_from_user->id)->first();
+
+            //fetch the staff members of the department teaching staff - teaching data and
+            // non-teaching staff- non-teaching data for alternate arrangement  (Same from index method)
+            $dept_staff=department::with(['staff'=>function($q) use ( $staff_id_from_user,$staff_emp_type){
+            $q->where('staff.id','<>',$staff_id_from_user->id)
+            ->where('department_staff.status','active')
+
+            ->whereIn('staff.id',function($subquery)use($staff_emp_type){
+            $subquery->select('staff_id')
+            ->from('employee_types')
+            ->where('employee_types.employee_type',$staff_emp_type->employee_type);
+
+            })
+            ->select('staff.id','staff.fname','staff.mname','staff.lname');
+            }])->whereIn('id',$dept_ids)->orderBy('dept_name')->get();
+
+         //for extracting staff with association , additional designation with leaves.
+         $staff=staff::with('latest_employee_type')->with('latestassociation')->with('latest_additional_designation')->where('user_id',$user->id)->first();
+       //dd($staff);
+        if(count($staff->latest_additional_designation)>0)
+        {
+            foreach($staff->latest_additional_designation as $addtnl_design)
+            {
+
+                if($addtnl_design->isvacational=="Non-Vacational")
+                {
+                    $leaves=DB::table('leaves')->join('leave_rules','leave_rules.leave_id','=','leaves.id')
+                                           -> whereNull('leave_rules.max_time_allowed')
+                                           ->where('vacation_type','Non-vacational')
+                                           ->where('leaves.status','active')
+                                           ->orderBy('leaves.shortname')
+                                            ->get();
+
+                }
+                else
+                {
+                    $leaves=DB::table('leaves')->join('leave_rules','leave_rules.leave_id','=','leaves.id')
+                                           ->whereNull('leave_rules.max_time_allowed')
+                                           ->where('vacation_type','vacational')
+                                           ->where('leaves.status','active')
+                                           ->orderBy('leaves.shortname')
+                                            ->get();
+                }
+            }
+
+        }
+        else
+        {
+            //dd($staff->latestassociation()->first()->asso_name=='Confirmed');
+            if($staff->latest_employee_type[0]->employee_type=="Teaching" && ($staff->latestassociation()->first()->asso_name=='Confirmed'||$staff->latestassociation()->first()->asso_name=='Promotional Probationary'))
+            {
+                $leaves=DB::table('leaves')->join('leave_rules','leave_rules.leave_id','=','leaves.id')
+                                           ->whereNull('leave_rules.max_time_allowed')
+                                           ->where('vacation_type','vacational')
+                                           ->where('leaves.status','active')
+                                           ->orderBy('leaves.shortname')
+                                            ->get();
+            }
+            else
+            {
+                $leaves=DB::table('leaves')->join('leave_rules','leave_rules.leave_id','=','leaves.id')
+                                           -> whereNull('leave_rules.max_time_allowed')
+                                           ->where('vacation_type','Non-vacational')
+                                           ->where('leaves.status','active')
+                                           ->orderBy('leaves.shortname')
+                                            ->get();
+            }
+        }
+        //for extracting staff with association , additional designation with leaves. ENDS--------
+
+
+        if($result){
+            $return_html = '<form  action="{{ route("Teaching.leaves.apply",$staff->id) }}" method="post">
+@csrf
+
+                                        <div class="leave_form_div" id="leave_form" >
+
+                                            <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pt-6 pb-6">
+
+                                                <div class="max-w-sm space-y-2 pb-6 ">
+                                                    <label for="" class="ti-form-label font-bold">Leave Type:<span class="text-red-500">*</span></label>
+                                                    <select class="ti-form-select" name="type" id="type" required>
+                                                        <option value="#">Choose Leave Type</option>';
+
+                                                        foreach ($leaves as $l){
+                                                            $return_html .='<option value="'.$l->leave_id.'" '.($result->leave_id == $l->leave_id ? "selected":"").'>'.$l->shortname.'</option>';
+                                                        }
+
+                                                        $return_html .='</select>
+                                                </div>
+                                                <div id="cl_type_block">
+
+                                                    <label for="cl_morning" class="ti-form-label font-bold">Select CL type</label>
+                                                    <div class="flex">
+
+                                                        <div class="flex items-center me-4 ">
+                                                            <input id="cl_morning" type="radio" value="Morning" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type" '.($result->cl_type == "Morning" ? "checked":"") .'>
+                                                            <label for="cl_morning" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">CL-Morning</label>
+                                                        </div>
+                                                        <div class="flex items-center me-4 ml-6">
+                                                            <input id="cl_afternoon" type="radio" value="Afternoon" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type" '.($result->cl_type == "Afternoon" ? "checked":"") .'>
+                                                            <label for="cl_afternoon" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">CL-Afternoon</label>
+                                                        </div>
+                                                        <div class="flex items-center me-4 ml-6 ">
+                                                            <input checked id="cl" type="radio" value="Full" name="cl_type" class="mr-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cl_type" '.($result->cl_type == "Full" ? "checked":"") .'>
+                                                            <label for="cl" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Full Day CL</label>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                                <div date-rangepicker class="flex max-w-sm space-y-3 pb-6">
+                                                    <label for="" class="ti-form-label font-bold">From Date:<span class="text-red-500">*</span></label>
+                                                        <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
+                                                            <span class="text-sm text-gray-500 dark:text-white/70"><i
+                                                                            class="ri ri-calendar-line"></i></span>
+                                                        </div>
+
+                                                        <input type="text" name="from_date"
+                                                            class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
+                                                            id="from_date" required placeholder="Choose date" value="'.$result->start.'">
+                                                </div>
+                                                <div class="flex max-w-sm space-y-3 pb-6">
+                                                    <label for="" class="ti-form-label font-bold">TO Date:<span class="text-red-500">*</span></label>
+                                                    <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
+                                                        <span class="text-sm text-gray-500 dark:text-white/70"><i
+                                                                        class="ri ri-calendar-line"></i></span>
+                                                    </div>
+
+                                                    <input  type="text" name="to_date"
+                                                        class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
+                                                            id="to_date" required placeholder="Choose date" value="'.$result->end.'">
+                                                </div>
+                                            </div>
+                                            <div class="grid lg:grid-cols-2 gap-2 space-y-4 lg:space-y-0">
+                                                <div class="flex max-w-sm space-y-4 pb-6 content-center">
+                                                    <p class="font-bold">No. of Days :</p>
+                                                    <input type="text" class="ti-form-input text-green-500" required name="no_of_days" id="no_of_days_count" readonly value="'.$result->no_of_days.'"/>
+                                                </div>
+                                                <div class="max-w-sm space-y-3 pb-6">
+                                                    <label for="" class="ti-form-label font-bold">Leave Reason:<span class="text-red-500">*</span></label>
+                                                    <textarea class="ti-form-input" required name="leave_reason" id="leave_reason" placeholder="Leave Reason">'.$result->reason.'</textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                                <div class="max-w-sm space-y-3 pb-6">
+                                                    <label for="" class="ti-form-label font-bold">Alternate:</label>
+                                                    <select class="ti-form-select" name="alternate" id="alternate" required>
+                                                        <option value="#">Choose Alternate</option>';
+
+                                                        foreach ($dept_staff as $depts){
+                                                            $return_html .='<optgroup label="{{ $depts->dept_name }}">';
+                                                            foreach ($depts->staff as $dstaff){
+                                                                $return_html .='<option value="'.$dstaff->id.'">'.$dstaff->fname." ".$dstaff->mname." ".$dstaff->lname.'</option>';
+                                                            }
+                                                            $return_html .='</optgroup>';
+                                                         }
+                                                        $return_html .='</select>
+                                                </div>
+                                                <div class="max-w-sm space-y-3 pb-6">
+                                                    <label for="" class="ti-form-label font-bold">Additional Alternate:</label>
+                                                    <select class="ti-form-select" name="additional_alternate" id="add_alternate" required>
+                                                        <option value="#">Choose an Alternate</option>
+
+@foreach($dept_staff as $depts)
+                                                        <optgroup label="{{ $depts->dept_name }}">
+@foreach($depts->staff as $dstaff)
+                                                                    <option value="{{ $dstaff->id }}">{{ $dstaff->fname." ".$dstaff->mname." ".$dstaff->lname }}</option>
+@endforeach
+                                                        </optgroup>
+@endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                            <button type="button"
+                                                class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10 leave_apply_close_btn"
+                                                id="" data-hs-overlay="#add_leaveform">
+                                                Cancel
+                                            </button>
+
+                                            <input type="submit" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" id="leave_apply_btn" value="Apply"/>
+
+                                        </div>
+                            </form>';
+        }
+        return $return_html;
     }
 
 }

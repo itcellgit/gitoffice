@@ -1,1 +1,0 @@
-<?php /**PATH F:\laravel Apps\gitoffice\resources\views/castecategory/index.blade.php ENDPATH**/ ?>
