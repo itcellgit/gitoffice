@@ -42,7 +42,7 @@
                                         Welcome E-Governance Admin, Mathematics
                                          @elseif(session('deptid')==14)
                                         Welcome E-Governance Admin, Chemistry
-                                    @endif 
+                                    @endif
                                     </span>
                                     </h3>
                                 </div>
@@ -53,7 +53,7 @@
                                         <i class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
                                     </a>
                                     </li>
-                            
+
                                 </ol>
                             </div>
                             <!-- Page Header Close -->
@@ -574,7 +574,7 @@
                                             <p class="text-sm font-bold">Funded Projects</p>
                                             <div class="flex justify-between items-center">
                                                 <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">{{$fundedproject}}</h5>
-                                            
+
                                             </div>
                                             <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('egov.Teaching.research.fundedproject')}}">
                                                  view
@@ -596,7 +596,7 @@
                                             <p class="text-sm font-bold">Patents</p>
                                             <div class="flex justify-between items-center">
                                                 <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">{{$patents}}</h5>
-                                            
+
                                             </div>
                                             <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('egov.Teaching.research.patents')}}">
                                                  view
@@ -618,7 +618,7 @@
                                             <p class="text-sm font-bold">Copyrights</p>
                                             <div class="flex justify-between items-center">
                                                 <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">{{$copyrights}}</h5>
-                                            
+
                                             </div>
                                             <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('egov.Teaching.research.copyrights')}}">
                                                  view
@@ -640,7 +640,7 @@
                                             <p class="text-sm font-bold">Achivements</p>
                                             <div class="flex justify-between items-center">
                                                 <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">{{$general_achievements}}</h5>
-                                            
+
                                             </div>
                                             <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('egov.Teaching.research.achivements')}}">
                                                  view
@@ -650,7 +650,7 @@
                                     </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <!-- End::row-3 -->
 
@@ -1849,6 +1849,6 @@
 
         <!-- INDEX JS -->
         @vite('resources/assets/js/index-8.js')
-        
+
 
 @endsection

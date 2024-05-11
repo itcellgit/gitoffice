@@ -68,6 +68,7 @@
                     </div>
                     <!-- Start::main-content -->
                     <div class="grid grid-cols-12 gap-x-6">
+                        <div class="flex gap-10">
                         <div class="col-span-2 xl:col-span-3">
                             <!-- Count box 2 -->
                             <div class="box box-sm">
@@ -177,6 +178,34 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-span-2 xl:col-span-3">
+                            <!-- Count box 3 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 3 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($teaching_patents_count->published_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">Published</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($teaching_patents_count->published_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $teaching_patents_count->published_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
                         <div class="col-span-12 xl:col-span-12">
                             <div class="box">
                                 <div class="box-body">
@@ -221,7 +250,7 @@
                                             <tr class="">
                                                 <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th>
+                                                {{-- <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th> --}}
                                                 <th scope="col" class="dark:text-white/80 font-bold ">E-Gov ID</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Application No</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">application Date</th>
@@ -243,13 +272,17 @@
                                                     $i=1;
                                                 @endphp
                                                 @foreach ($patents as $pate)
-                                                    {{-- <tr class="" @if($pate->validation_status == 'valid') style="background-color: #ccffcc; color: #006400;" @elseif($pate->validation_status =='invalid') style="background-color: #ffe6e6; color: #b30000;" @endif> --}}
                                                     <tr style="@if($pate->validation_status =='invalid') background-color: #ffcccc; @elseif($pate->validation_status =='updated') background-color: #fff2cc; @elseif($pate->validation_status =='valid') background-color: #ccffcc; @endif">
 
                                                         <td><span>{{ $i++ }}</span></td>
                                                         <td><span>{{ $pate->fname . ' ' . $pate->mname . ' ' . $pate->lname }}</span></td>
-                                                        <td><span>{{ $pate->dept_shortname }}</span></td>
-                                                        <td><span>{{ $pate->egov_id }}</span></td>
+                                                        {{-- <td><span>{{ $pate->dept_shortname }}</span></td> --}}
+                                                        {{-- <td><span>{{ $pate->egov_id }}</span></td> --}}
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Research/patents/{{ $pate->document}}" class="text-blue-500">
+                                                                <span>{{$pate->egov_id}}</span>
+                                                            </a>
+                                                        </td>
                                                         <td><span>{{ $pate->appl_no }}</span></td>
                                                         <td><span>{{\Carbon\Carbon::parse($pate->appl_date)->format('d-M-Y') }}</span></td>
                                                         <td><span>{{\Carbon\Carbon::parse($pate->publication_date)->format('d-M-Y') }}</span></td>

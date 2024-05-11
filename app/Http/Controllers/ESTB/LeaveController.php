@@ -23,7 +23,7 @@ class LeaveController extends Controller
     public function index()
     {
         $leaves=leave::with('combine_leave')->with('leave_rules')->orderby('vacation_type')->orderBy('longname')->get();
-        
+
         return view('ESTB.leaves.index',compact('leaves'));
     }
 
@@ -51,7 +51,7 @@ class LeaveController extends Controller
         $leave->leave_wef=$request->leave_wef;
         $leave->applicable_to=$request->applicable_to;
         $leave->created_at=Carbon::now();
-        $insert=$leave->save(); 
+        $insert=$leave->save();
         if($insert)
         {
             $status=1;
@@ -69,25 +69,27 @@ class LeaveController extends Controller
     public function show(leave $leave)
     {
         //
-       
+
         if($leave->status=='inactive'){
             $leaves=leave::with('latest_combine_leave')->with(['leave_rules'=>function($query){
                 $query->orderBy('leave_rules.id','desc');
-            }]);
+            }])->where('id',$leave->id)->first();
+
+
         }
         else
         {
-          
+
              $leaves=leave::with('combine_leave')->with([
                 'leave_rules'=>function($query){
                 $query->orderBy('leave_rules.id','desc');
             }
             ])->where('id',$leave->id)->first();
-            
+
         }
-       
+
         $allleaves=leave::orderBy('longname')->get();
-   
+
         return view('ESTB.leaves.leave_rules.index',compact('leaves','allleaves'));
     }
 
@@ -116,9 +118,9 @@ class LeaveController extends Controller
         if($request->leave_end_date)
         {
             $leave->status='inactive';
-            
+
             $leavecombinations=$leave->combine_leave()->get();
-          
+
             foreach($leavecombinations as $cl)
             {
                 $cl->pivot->status='inactive';
@@ -126,7 +128,7 @@ class LeaveController extends Controller
                 $cl->pivot->update();
             }
             $leave_rules=$leave->leave_rules()->where('status','active')->get();
-          
+
             foreach($leave_rules as $lr)
             {
                // dd($lr);
@@ -140,10 +142,10 @@ class LeaveController extends Controller
                 $lr->status='inactive';
                 $lr->update();
             }
-            
+
         }
         $leave->created_at=Carbon::now();
-        $insert=$leave->save(); 
+        $insert=$leave->save();
         if($insert)
         {
             $status=1;
@@ -160,7 +162,7 @@ class LeaveController extends Controller
      */
     public function destroy(leave $leave)
     {
-        
+
     }
 
     public function calender_view(){
@@ -171,14 +173,14 @@ class LeaveController extends Controller
         $holidayrh=holidayrh::orderBy('start')->get();
 
         $staff=staff::with('latest_employee_type')->with('latestassociation')->with('latest_additional_designation')->get();
-       
+
         //dd($staff->latest_employee_type);
 
         // if(count($staff->latest_additional_designation)>0)
         // {
         //     foreach($staff->latest_additional_designation as $addtnl_design)
         //     {
-                
+
         //         if($addtnl_design->isvacational=="Non-Vacational")
         //         {
         //             $leaves=DB::table('leaves')->join('leave_rules','leave_rules.leave_id','=','leaves.id')
@@ -187,7 +189,7 @@ class LeaveController extends Controller
         //                                    ->where('leaves.status','active')
         //                                    ->orderBy('leaves.shortname')
         //                                     ->get();
-                           
+
         //         }
         //         else
         //         {
@@ -199,7 +201,7 @@ class LeaveController extends Controller
         //                                     ->get();
         //         }
         //     }
-             
+
         // }
         // else
         // {
@@ -238,7 +240,7 @@ class LeaveController extends Controller
 
        //used in ESTB leaves calender section
        public function fetchAllleaveevents(Request $request){
-        
+
         //$user = Auth::user();
         //$staff = staff::where('user_id','=',$user->id)->first();
         // Process the date as needed (e.g., save to database, perform calculations)
@@ -247,7 +249,7 @@ class LeaveController extends Controller
         ->join('staff AS s2','s2.id','=','leave_staff_applications.alternate')
         ->join('staff AS s3','s3.id','=','leave_staff_applications.additional_alternate')
         //->where('leave_staff_applications.staff_id',$staff->id)
-        
+
         ->select(DB::raw("CONCAT(s1.fname,' ',s1.mname,' ',s1.lname) AS staff_name"),DB::raw("CONCAT(s2.fname,' ',s2.mname,' ',s2.lname) AS alternate_staff"),DB::raw("CONCAT(s3.fname,' ',s3.mname,' ',s3.lname) AS additional_alternate_staff"),'leaves.shortname AS title','leave_staff_applications.start AS start', 'leave_staff_applications.end AS end', 'leave_staff_applications.leave_id AS leave_id','leave_staff_applications.appl_status AS appl_status','leave_staff_applications.id AS Application_id', 'leave_staff_applications.reason AS reason')->get();
         // Return a response (optional)
           return response()->json($leave_events);

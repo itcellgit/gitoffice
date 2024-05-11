@@ -83,7 +83,7 @@ class ConferencesAttendeeController extends Controller
                 //dd("File upload Sucess");
                 $file_upload_status = 1;
                 $attended->document= $file->hashName();
-               $conferenceId =  $attended->save();
+                $conferenceId =  $attended->save();
 
                 $user = Auth::user();
                 // dd($user);
@@ -113,6 +113,9 @@ class ConferencesAttendeeController extends Controller
         //return redirect('/Teaching/research')->with('return_data', $return_data);
         return redirect('/Teaching/research/conferenceactivities')->with('return_data', $return_data);
     }
+
+
+
 
     /**
      * Display the specified resource.

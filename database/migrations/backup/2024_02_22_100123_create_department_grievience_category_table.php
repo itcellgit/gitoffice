@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('department_grievience_category', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('grievience_category_id')->constrained();
+            $table->foreignId('department_grievience_category_category_id')->constrained();
             $table->foreignId('department_id')->constrained();
             $table->timestamps();
         });

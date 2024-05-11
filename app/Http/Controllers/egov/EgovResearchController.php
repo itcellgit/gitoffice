@@ -57,11 +57,12 @@ class EgovResearchController extends Controller
                                 //->where('staff.employee_type','=','Teaching')
                                 ->where('department_id','=',$department_id)
                                 ->select(
-                                    DB::raw('COUNT(CASE WHEN attended_as = "Resource Person" THEN 1 END) as resource_person_count'),
-                                    DB::raw('COUNT(CASE WHEN attended_as = "Participant" THEN 1 END) as participant_count'),
-                                    DB::raw('COUNT(CASE WHEN attended_as = "Paper Presenter" THEN 1 END) as paper_presenter_count'),
-                                    DB::raw('COUNT(CASE WHEN type_of_level = "National" THEN 1 END) as national_count'),
-                                    DB::raw('COUNT(CASE WHEN type_of_level = "International" THEN 1 END) as international_count'),
+                                    DB::raw('COUNT( CASE WHEN attended_as = "Resource Person" THEN 1 END) as resource_person_count'),
+                                    DB::raw('COUNT( CASE WHEN attended_as = "Participant" THEN 1 END) as participant_count'),
+                                    DB::raw('COUNT( CASE WHEN attended_as = "Paper Presenter" THEN 1 END) as paper_presenter_count'),
+                                    DB::raw('COUNT( CASE WHEN type_of_level = "National" THEN 1 END) as national_count'),
+                                    DB::raw('COUNT( CASE WHEN type_of_level = "International" THEN 1 END) as international_count'),
+                                    DB::raw('COUNT( CASE WHEN type_of_level = "Session Chair" THEN 1 END) as session_chair_count'),
                                     )
                                 ->first();
 
@@ -100,12 +101,12 @@ class EgovResearchController extends Controller
                                 ->where('employee_types.employee_type','=','Teaching')
                                 ->where('department_id','=',$department_id)
                                 ->select(
-                                    DB::raw('COUNT(CASE WHEN type_of_level = "National " THEN 1 END) as national_count'),
-                                    DB::raw('COUNT(CASE WHEN type_of_level = "International" THEN 1 END) as international_count'),
-                                    DB::raw('COUNT(CASE WHEN role = "Convener" THEN 1 END) as convener_count'),
-                                    DB::raw('COUNT(CASE WHEN role = "Co-convener" THEN 1 END) as co_convener_count'),
-                                    DB::raw('COUNT(CASE WHEN role = "Team Member" THEN 1 END) as team_member_count'),
-                                    DB::raw('COUNT(CASE WHEN role = "Coordinator" THEN 1 END) as coordinator_count'),
+                                    DB::raw('COUNT( CASE WHEN type_of_level = "National " THEN 1 END) as national_count'),
+                                    DB::raw('COUNT( CASE WHEN type_of_level = "International" THEN 1 END) as international_count'),
+                                    DB::raw('COUNT( CASE WHEN role = "Convener" THEN 1 END) as convener_count'),
+                                    DB::raw('COUNT( CASE WHEN role = "Co-convener" THEN 1 END) as co_convener_count'),
+                                    DB::raw('COUNT( CASE WHEN role = "Team Member" THEN 1 END) as team_member_count'),
+                                    DB::raw('COUNT( CASE WHEN role = "Coordinator" THEN 1 END) as coordinator_count'),
 
                                     )
                                 ->first();
@@ -141,12 +142,23 @@ class EgovResearchController extends Controller
 
                                 ->where('department_id','=',$department_id)
                                 ->select(
-                                    DB::raw('COUNT(CASE WHEN level = "Q1 " THEN 1 END) as Q1_count'),
-                                    DB::raw('COUNT(CASE WHEN level = "Q2" THEN 1 END) as Q2_count'),
-                                    DB::raw('COUNT(CASE WHEN level = "Q3" THEN 1 END) as Q3_count'),
-                                    DB::raw('COUNT(CASE WHEN level = "Q4" THEN 1 END) as Q4_count'),
-                                    DB::raw('COUNT(CASE WHEN level = "Web of Science" THEN 1 END) as web_of_science_count'),
-                                    DB::raw('COUNT(CASE WHEN level = "Scopus Indexed" THEN 1 END) as scopus_indexed_count'),
+                                    DB::raw('COUNT( CASE WHEN level = "Q1 " THEN 1 END) as Q1_count'),
+                                    DB::raw('COUNT( CASE WHEN level = "Q2" THEN 1 END) as Q2_count'),
+                                    DB::raw('COUNT( CASE WHEN level = "Q3" THEN 1 END) as Q3_count'),
+                                    DB::raw('COUNT( CASE WHEN level = "Q4" THEN 1 END) as Q4_count'),
+                                    DB::raw('COUNT( CASE WHEN level = "Web of Science" THEN 1 END) as web_of_science_count'),
+                                    DB::raw('COUNT( CASE WHEN level = "Scopus Indexed" THEN 1 END) as scopus_indexed_count'),
+                                    DB::raw('COUNT( CASE WHEN level = "UGC General" THEN 1 END) as UGC_count'),
+                                    DB::raw('COUNT( CASE WHEN level = "SCI" THEN 1 END) as SCI_count'),
+
+
+
+                                    DB::raw('COUNT( CASE WHEN role = "Author" THEN 1 END) as author_count'),
+                                    DB::raw('COUNT( CASE WHEN role = "Co-Author" THEN 1 END) as co_author_count'),
+                                    DB::raw('COUNT( CASE WHEN role = "Corresponding-author" THEN 1 END) as corresponding_author_count'),
+
+
+
 
                                     )
                                 ->first();
@@ -183,11 +195,11 @@ class EgovResearchController extends Controller
 
                             ->where('department_id','=',$department_id)
                             ->select(
-                                DB::raw('COUNT(CASE WHEN role = "Principle Investigator" THEN 1 END) as principle_investigator_count'),
-                                DB::raw('COUNT(CASE WHEN role = "Co-Investigator" THEN 1 END) as co_investigator_count'),
-                                DB::raw('COUNT(CASE WHEN role = "Architect" THEN 1 END) as architect_count'),
-                                DB::raw('COUNT(CASE WHEN type = "Govt-funded" THEN 1 END) as govt_count'),
-                                DB::raw('COUNT(CASE WHEN type = "Private funded" THEN 1 END) as private_count'),
+                                DB::raw('COUNT( CASE WHEN role = "Principle Investigator" THEN 1 END) as principle_investigator_count'),
+                                DB::raw('COUNT( CASE WHEN role = "Co-Investigator" THEN 1 END) as co_investigator_count'),
+                                DB::raw('COUNT( CASE WHEN role = "Architect" THEN 1 END) as architect_count'),
+                                DB::raw('COUNT( CASE WHEN type = "Govt-funded" THEN 1 END) as govt_count'),
+                                DB::raw('COUNT( CASE WHEN type = "Private funded" THEN 1 END) as private_count'),
                             )
                             ->first();
 
@@ -213,21 +225,22 @@ class EgovResearchController extends Controller
                         ->get();
         // dd($patents);
         //count display
-        $teaching_patents_count=DB::table('patents')
-                        ->join('staff','staff.id','=','patents.staff_id')
-                        ->join('department_staff','department_staff.staff_id','=','staff.id')
-                        ->join('departments','departments.id','=','department_staff.department_id')
-                        ->join('employee_types','employee_types.staff_id','=','staff.id')
-                        ->where('employee_types.employee_type','=','Teaching')
-                        ->where('department_id','=',$department_id)
-                        ->select(
-                            DB::raw('COUNT(CASE WHEN patents.status = "Granted" THEN 1 END) as granted_count'),
-                            DB::raw('COUNT(CASE WHEN patents.status = "Pending" THEN 1 END) as pending_count'),
-                            DB::raw('COUNT(CASE WHEN patents.status = "Rejected" THEN 1 END) as rejected_count'),
-                            DB::raw('COUNT(CASE WHEN patents.status = "Awarded" THEN 1 END) as awarded_count'),
+        $teaching_patents_count = DB::table('patents')
+                                ->join('staff', 'staff.id', '=', 'patents.staff_id')
+                                ->join('department_staff', 'department_staff.staff_id', '=', 'staff.id')
+                                ->join('departments', 'departments.id', '=', 'department_staff.department_id')
+                                ->join('employee_types', 'employee_types.staff_id', '=', 'staff.id')
+                                ->where('employee_types.employee_type', '=', 'Teaching')
+                                ->where('department_id', '=', $department_id)
+                                ->select(
+                                    DB::raw('COUNT( CASE WHEN patents.status = "Granted" THEN patents.id END) as granted_count'),
+                                    DB::raw('COUNT( CASE WHEN patents.status = "Pending" THEN patents.id END) as pending_count'),
+                                    DB::raw('COUNT( CASE WHEN patents.status = "Rejected" THEN patents.id END) as rejected_count'),
+                                    DB::raw('COUNT( CASE WHEN patents.status = "Awarded" THEN patents.id END) as awarded_count'),
+                                    DB::raw('COUNT( CASE WHEN patents.status = "Published" THEN patents.id END) as published_count')
+                                )
+                                ->first();
 
-                        )
-                        ->first();
 
         return view('/egov/Teaching/research/patents',compact(['patents','teaching_patents_count']));
     }
@@ -257,8 +270,8 @@ class EgovResearchController extends Controller
                         ->where('employee_types.employee_type','=','Teaching')
                         ->where('department_id','=',$department_id)
                         ->select(
-                            DB::raw('COUNT(CASE WHEN copyrights.status = "Applied" THEN 1 END) as applied_count'),
-                            DB::raw('COUNT(CASE WHEN copyrights.status = "Awarded" THEN 1 END) as awarded_count'),
+                            DB::raw('COUNT( CASE WHEN copyrights.status = "Applied" THEN 1 END) as applied_count'),
+                            DB::raw('COUNT( CASE WHEN copyrights.status = "Awarded" THEN 1 END) as awarded_count'),
                             )
                         ->first();
 
@@ -272,16 +285,16 @@ class EgovResearchController extends Controller
         $department_id=Session ::get('deptid');
         $general_achievements=DB::table('general_achievements')
 
-                            ->join('staff','staff.id','=','general_achievements.staff_id')
-                            ->join('department_staff','department_staff.staff_id','=','staff.id')
-                            ->join('departments','departments.id','=','department_staff.department_id')
-                            ->join('employee_types','employee_types.staff_id','=','staff.id')
-                            ->where('employee_types.employee_type','=','Teaching')
-                           // ->where('staff.employee_type','=','Teaching')
-                            ->where('department_id','=',$department_id)
-                            ->select('general_achievements.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
-                            //->select(DB::raw('DISTINCT(general_achievements.egov_id)'),'general_achievements.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
-                            ->get();
+                        ->join('staff','staff.id','=','general_achievements.staff_id')
+                        ->join('department_staff','department_staff.staff_id','=','staff.id')
+                        ->join('departments','departments.id','=','department_staff.department_id')
+                        ->join('employee_types','employee_types.staff_id','=','staff.id')
+                        ->where('employee_types.employee_type','=','Teaching')
+                        //->where('staff.employee_type','=','Teaching')
+                        ->where('department_id','=',$department_id)
+                        ->select('general_achievements.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
+                        //->select(DB::raw('DISTINCT(general_achievements.egov_id)'),'general_achievements.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
+                        ->get();
 
 
         return view('/egov/Teaching/research/achivements',compact(['general_achievements']));
@@ -313,12 +326,12 @@ class EgovResearchController extends Controller
                             ->where('employee_types.employee_type','=','Teaching')
                             ->where('department_id','=',$department_id)
                             ->select(
-                                DB::raw('COUNT(CASE WHEN level = "Q1 " THEN 1 END) as Q1_count'),
-                                DB::raw('COUNT(CASE WHEN level = "Q2" THEN 1 END) as Q2_count'),
-                                DB::raw('COUNT(CASE WHEN level = "Q3" THEN 1 END) as Q3_count'),
-                                DB::raw('COUNT(CASE WHEN level = "Q4" THEN 1 END) as Q4_count'),
-                                DB::raw('COUNT(CASE WHEN level = "Web of Science" THEN 1 END) as web_of_science_count'),
-                                DB::raw('COUNT(CASE WHEN level = "Scopus Indexed" THEN 1 END) as scopus_indexed_count'),
+                                DB::raw('COUNT( CASE WHEN level = "Q1 " THEN 1 END) as Q1_count'),
+                                DB::raw('COUNT( CASE WHEN level = "Q2" THEN 1 END) as Q2_count'),
+                                DB::raw('COUNT( CASE WHEN level = "Q3" THEN 1 END) as Q3_count'),
+                                DB::raw('COUNT( CASE WHEN level = "Q4" THEN 1 END) as Q4_count'),
+                                DB::raw('COUNT( CASE WHEN level = "Web of Science" THEN 1 END) as web_of_science_count'),
+                                DB::raw('COUNT( CASE WHEN level = "Scopus Indexed" THEN 1 END) as scopus_indexed_count'),
 
                                 )
                             ->first();
@@ -354,10 +367,10 @@ class EgovResearchController extends Controller
                         ->where('employee_types.employee_type','=','Teaching')
                         ->where('department_id','=',$department_id)
                         ->select(
-                            DB::raw('COUNT(CASE WHEN book_level = "National" THEN 1 END) as national_count'),
-                            DB::raw('COUNT(CASE WHEN book_level = "International" THEN 1 END) as international_count'),
-                            DB::raw('COUNT(CASE WHEN type = "Book" THEN 1 END) as book_count'),
-                            DB::raw('COUNT(CASE WHEN type = "Chapter" THEN 1 END) as chapter_count'),
+                            DB::raw('COUNT( CASE WHEN book_level = "National" THEN 1 END) as national_count'),
+                            DB::raw('COUNT( CASE WHEN book_level = "International" THEN 1 END) as international_count'),
+                            DB::raw('COUNT( CASE WHEN type = "Book" THEN 1 END) as book_count'),
+                            DB::raw('COUNT( CASE WHEN type = "Chapter" THEN 1 END) as chapter_count'),
                         )
                         ->first();
 

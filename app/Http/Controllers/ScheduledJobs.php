@@ -50,14 +50,34 @@ class ScheduledJobs extends Controller
 
                 if($pre_year_entltm==null)
                 {
-                        $staff_entitlement=$l->leave_staff_entitlements()->attach($st->id,['year'=>$year,'entitled_curr_year'=>$l->max_entitlement,'wef'=>$year.'-01-01']);
+                    if($l->shortname=="EL") //EL for vacational staff is 1/2 in Jan and 1/2 in July.
+                    {
+                        $max_entitlement=ceil($l->max_entitlement/2); //flooring is use if incase no. of el are odd. In july use ceil.
+                    }
+                    else
+                    {
+                        $max_entitlement=$l->max_entitlement;
+                    }
+                        $staff_entitlement=$l->leave_staff_entitlements()->attach($st->id,['year'=>$year,'entitled_curr_year'=>$max_entitlement,'wef'=>$year.'-01-01']);
                 }
                 else
                 {
                     $pre_year_entltm=$pre_year_entltm[0];
                     if($l->leave_rules[0]->carry_forwardable=='Yes')
                     {
-                        $accumulated=$pre_year_entltm->accumulated+$pre_year_entltm->entitled_curr_year-$pre_year_entltm->consumed_curr_year;
+                        if($pre_year_entltm->accumulated<($l->leave_rules[0]->max_cf-$l->max_entitlement))
+                        {
+                            $accumulated=$pre_year_entltm->accumulated+$pre_year_entltm->entitled_curr_year-$pre_year_entltm->consumed_curr_year;
+                        }
+                        elseif($pre_year_entltm->accumulated<$l->leave_rules[0]->max_cf)
+                        {
+                            $accumulated=$l->leave_rules[0]->max_cf-$pre_year_entltm->accumulated+$pre_year_entltm->entitled_curr_year-$pre_year_entltm->consumed_curr_year;
+                        }
+                        else
+                        {
+                            $accumulated=0;
+                        }
+
                     }
                     else
                     {
@@ -71,7 +91,15 @@ class ScheduledJobs extends Controller
                     {
                         $total_encashable=0;
                     }
-                    $staff_entitlement=$st->leave_entitlements()->attach($l->id,['year'=>$year,'entitled_curr_year'=>$l->max_entitlement,'accumulated'=>$accumulated,'total_encashed'=> $total_encashable,'wef'=>$year.'-01-01']);
+                    if($l->shortname=="EL") //EL for vacational staff is 1/2 in Jan and 1/2 in July.
+                    {
+                        $max_entitlement=ceil($l->max_entitlement/2); //flooring is use if incase no. of el are odd. In Jan ceil and in july use floor.
+                    }
+                    else
+                    {
+                        $max_entitlement=$l->max_entitlement;
+                    }
+                    $staff_entitlement=$st->leave_entitlements()->attach($l->id,['year'=>$year,'entitled_curr_year'=>$max_entitlement,'accumulated'=>$accumulated,'total_encashed'=> $total_encashable,'wef'=>$year.'-01-01']);
                 }
 
             }
@@ -112,7 +140,19 @@ class ScheduledJobs extends Controller
                         $pre_year_entltm=$pre_year_entltm[0];
                         if($l->leave_rules[0]->carry_forwardable=='Yes')
                         {
-                            $accumulated=$pre_year_entltm->accumulated+$pre_year_entltm->entitled_curr_year-$pre_year_entltm->consumed_curr_year;
+                            if($pre_year_entltm->accumulated<($l->leave_rules[0]->max_cf-$l->max_entitlement))
+                            {
+                                $accumulated=$pre_year_entltm->accumulated+$pre_year_entltm->entitled_curr_year-$pre_year_entltm->consumed_curr_year;
+                            }
+                            elseif($pre_year_entltm->accumulated<$l->leave_rules[0]->max_cf)
+                            {
+                                $accumulated=$l->leave_rules[0]->max_cf-$pre_year_entltm->accumulated+$pre_year_entltm->entitled_curr_year-$pre_year_entltm->consumed_curr_year;
+                            }
+                            else
+                            {
+                                $accumulated=0;
+                            }
+
                         }
                         else
                         {
@@ -374,6 +414,67 @@ class ScheduledJobs extends Controller
 
         }
         logger('day wise entitlement of EL for Teaching Non-Vacational completed');
+    }
+
+    public function inactivate_previous_year()
+    {
+        $year=Carbon::now()->year-1;
+      //  dd($year);
+        $leave_entitlement_previous_year=leave_staff_entitlement::where('year',$year)->where('status','active')->get();
+       // dd($leave_entitlement_previous_year);
+        foreach($leave_entitlement_previous_year as $l_e_p_y)
+        {
+            $l_e_p_y->status='inactive';
+            $l_e_p_y->update();
+        }
+
+    }
+
+    public function halfyearlyEL()
+    {
+        logger("Teaching vacational running");
+        //Teaching Vacational
+        $statement="select staff.id, fname,mname, lname
+        from staff, employee_types, association_staff
+        where staff.id not in
+        (SELECT s.id
+            FROM `staff` s, designation_staff, designations
+             where s.id=designation_staff.staff_id and
+                    designation_staff.designation_id=designations.id and
+                    designations.isadditional=1 and
+                    designations.isvacational='Non-Vacational' and
+                    designation_staff.status='active') and
+                    employee_types.staff_id=staff.id and
+                    association_staff.staff_id=staff.id and
+                    employee_types.employee_type='teaching' and
+                    (association_staff.association_id in
+                        (select id
+                            from associations
+                            where asso_name='Confirmed' or asso_name='Promotional Probationary')) and
+                    association_staff.status='active'";
+
+            $staff=DB::select($statement);
+        $l=leave::with('leave_rules')->where('vacation_type','Vacational')->where('shortname','EL')->where('status','active')->first();
+
+        $year=Carbon::now()->year;
+       // $year=intval($year)+1;
+        foreach($staff as $st)
+        {
+
+                $curr_el_entltm=staff::with(['leave_staff_entitlements'=>function($q) use($l){
+                    $q->where('leave_id',$l->id);
+                }])->where('id',$st->id)->first();
+
+                // "select * from leave_staff_entitlements where staff_id=".$st->id." and leave_id=".$l->id." and year=".$year;
+                 $curr_el_entltm=$curr_el_entltm->leave_staff_entitlements[0];
+               //  dd($curr_el_entltm);
+                // $curr_el_entltm=$curr_el_entltm[0];
+                $max_entitlement=floor($l->max_entitlement/2); //flooring is use if incase no. of el are odd. In july use floor.
+
+                $curr_el_entltm->pivot->entitled_curr_year=  $curr_el_entltm->pivot->entitled_curr_year+$max_entitlement;
+
+                $curr_el_entltm->pivot->update();
+            }
     }
 
 }
