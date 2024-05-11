@@ -157,6 +157,8 @@
                                                         </td>
                                                         <td><span>{{$ticket->description}}</span></td>
                                                         <td><span>{{$ticket->attachment}}</span></td>
+                                                       
+                                                        
                                                         <td><span>{{$ticket->user->email}}</span></td>
                                                         {{-- <td>{{$ticket->status}}</td> --}}
                                                         <td class="font-medium space-x-2 rtl:space-x-reverse">

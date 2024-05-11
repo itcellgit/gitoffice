@@ -143,6 +143,11 @@ class MyAuthController extends Controller
             
                 return redirect()->intended('/HOD/dashboard');
             }
+            //DEAN_ADMIN login
+            elseif(Auth::user()->role == UserRoles::Dean_admin->value && Auth::user()->email=="dean_admin@git.edu"){
+                
+                return redirect()->intended('/Dean_admin/dashboard');
+            }
 
            //principal office
            elseif(Auth::user()->role === UserRoles::PRINCIPAL_OFFICE->value && Auth::user()->email=="principaloffice@git.edu"){

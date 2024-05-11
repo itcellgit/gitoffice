@@ -63,7 +63,7 @@
                                     <input type="hidden" id="reason" value="<?php echo e(session('return_data')['reason']); ?>"/>
                                     <input type="hidden" id="alternative" value="<?php echo e(session('return_data')['alternative']); ?>"/>
 
-                                    <?php if(session('return_data')['appl_edit'] == 1): ?>
+                                    <?php if(session('return_data')['appl_edit'] == 0): ?>
                                         <script>
                                         $(document).ready(function(){
                                             $('#leave_apply_modal').trigger('click');//css('disply','block');
@@ -395,18 +395,18 @@
 
                                                         <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto pb-6 hidden" id="leave_list_div">
                                                             <span class="text-primary font-bold">Leave List</span>
-                                                            <div id="leave_status_message"></div>
+                                                            <div id=""></div>
                                                             <table class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                                                 <thead class="bg-gray-50 dark:bg-black/20">
                                                                     <tr class="">
 
-                                                                        <th scope="col" class="dark:text-white/80 font-bold">Application Number</th>
+                                                                        <th scope="col" class="dark:text-white/80 font-bold">#</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">Leave Type</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">From Date</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">To Date</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">Leave Reasons</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">Alternate</th>
-                                                                        <th scope="col" class="dark:text-white/80 font-bold">Additional Alternate</th>
+                                                                        <th scope="col" class="dark:text-white/80 font-bold">Additional <br/> Alternate</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">Actions</th>
                                                                     </tr>
                                                                 </thead>
@@ -611,7 +611,7 @@
                     $('#to_date').val($('#from_date').val());
                     $('#no_of_days_count').val(0.5);
                     //leave application edit.
-                    $('#to_date_edi').val($('#from_date_edit').val());
+                    $('#to_date_edit').val($('#from_date_edit').val());
                     $('#no_of_days_count_edit').val(0.5);
                     
                     flatpickr('#to_date', {
@@ -644,6 +644,8 @@
                 }
             });
 
+            
+            //setting of cl types on changing it to CL.
             $(document).on('change','#type_edit',function(){
                 if($("#type_edit option:selected").text()=="CL")
                 {
@@ -741,6 +743,8 @@
             //for cancellation of leave 
             $(document).on('click','.cancel_leave_btn',function(){
                 var application_id = $(this).attr("data_val");
+                var no_of_days = $(this).attr("data_no_of_days");
+
                 var comfirmation_status =  confirm("Are you sure ? Want to cancel your leave.? (Application ID = "+application_id+")");
                 if(comfirmation_status){
                     $.ajax({
@@ -748,13 +752,13 @@
                                     method: 'GET',
                                     data: {
                                         application_id : application_id,
-                                        
+                                        no_of_days: no_of_days,
                                         _token : '<?php echo e(csrf_token()); ?>' // Pass the clicked date to the server
                                     },
                                     success: function(response) {
                                         // Handle the response from the server
                                         console.log(response);
-                                        $('#leave_status_message').html(response);
+                                        $('#leave_list_div').html(response);
                                         setInterval(() => {
                                             location.reload();
                                         }, 2000);
@@ -793,6 +797,7 @@
                                         $('#type_edit option[value='+response[0].leave_id+']').attr('selected', 'selected');
                                         //for checking whether its CL or no
                                         if(response[0].shortname == 'CL'){
+                                            //alert(response[0].shortname);
                                             $('#cl_type_block_edit').show();
                                         }else{
                                             $('#cl_type_block_edit').hide();
@@ -1095,7 +1100,7 @@
                                         $.each(response, function(key, value) {
                                         $('#leave_list_div').show();
                                        
-                                        console.log(value.appl_status);
+                                        console.log(value);
                                         if(value.appl_status == "recommended"){
                                            // alert('its recomended');
                                             bg_color_setting = "bg-yellow-400";
@@ -1110,8 +1115,15 @@
                                         }else if(value.appl_status == "cancelled") {
                                             bg_color_setting = "bg-gray-400";
                                         }
-                                        console.log(bg_color_setting);
+                                        //console.log(bg_color_setting);
                                        // $('#holiday_rh_div').hide();
+                                    //    if(value.leave_name == "CL"){
+                                    //     alert(value.leave_name);
+                                    //     $('#cl_type_block_edit').removeClass('hidden');
+                                    //     }else{
+                                    //         $('#cl_type_block_edit').addClass('hidden');
+                                    //     }
+
                                         $('#leave_application_list').append('<tr class="'+ bg_color_setting +'">'
                                                                     +'<td >'+value.Application_id+ '</td>'
                                                                     +'<td>'+value.title+ '</td>'
@@ -1123,16 +1135,16 @@
                                                                     +'<td>'
                                                                         +(value.appl_status =='pending'? '<div class="hs-tooltip ti-main-tooltip">'
                                                                                         +'<button  data_val="'+value.Application_id+'"'
-                                                                                                +'class=" m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger edit_leave_applied">'
+                                                                                                +'class=" m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary edit_leave_applied">'
                                                                                                 +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M16.7574 2.99666L14.7574 4.99666H5V18.9967H19V9.2393L21 7.2393V19.9967C21 20.5489 20.5523 20.9967 20 20.9967H4C3.44772 20.9967 3 20.5489 3 19.9967V3.99666C3 3.44438 3.44772 2.99666 4 2.99666H16.7574ZM20.4853 2.09717L21.8995 3.51138L12.7071 12.7038L11.2954 12.7062L11.2929 11.2896L20.4853 2.09717Z"></path></svg>'
                                                                                               
                                                                                         +'</button>'
                                                                                        
                                                                         +'</div>': '' )
                                                                         +(value.appl_status =='pending'? '<div class="hs-tooltip ti-main-tooltip">'
-                                                                                     +'<button data_val="'+value.Application_id+'"'
+                                                                                     +'<button data_val="'+value.Application_id+'" data_no_of_days="'+value.no_of_days+'"'
                                                                                         +' class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger cancel_leave_btn">'
-                                                                                            +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>'
+                                                                                            +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M11.9997 10.5865L16.9495 5.63672L18.3637 7.05093L13.4139 12.0007L18.3637 16.9504L16.9495 18.3646L11.9997 13.4149L7.04996 18.3646L5.63574 16.9504L10.5855 12.0007L5.63574 7.05093L7.04996 5.63672L11.9997 10.5865Z"></path></svg>'
                                                                                             
                                                                                             +'<span'
                                                                                                 +'class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700"'

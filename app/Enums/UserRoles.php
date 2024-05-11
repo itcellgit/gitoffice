@@ -20,4 +20,5 @@ enum UserRoles: string
     case EGOV_ADMIN="egov_admin";
     case PRINCIPAL_OFFICE="principal_office";
     case EXAM_SECTION="Exam_section";
+    case Dean_admin = "Dean_admin";
 }

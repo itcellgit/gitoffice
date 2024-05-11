@@ -11,7 +11,7 @@ export default defineConfig({
                 'resources/css/app.css', 
                 'resources/sass/app.scss', 
                 'resources/js/app.js',
-
+               
                 // Resources assets js file paths
                 'resources/assets/js/401-error',
                 'resources/assets/js/about',

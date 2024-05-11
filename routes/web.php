@@ -24,6 +24,10 @@ use App\Http\Controllers\NonTeaching\NonTeachingController;
 use App\Http\Controllers\ESTB\DepartmentController;
 use App\Http\Controllers\ESTB\QualificationController;
 
+use App\Http\Controllers\Dean_admin\DeanadminController;
+
+
+
 
 use App\Http\Controllers\ESTB\ReligionController;
 use App\Http\Controllers\ESTB\CastecategoryController;
@@ -561,7 +565,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     });
 
      //Dean rnd related all routes
-     Route::middleware(['cors','auth','role:'.UserRoles::DEANRND->value])->group(function(){
+    Route::middleware(['cors','auth','role:'.UserRoles::DEANRND->value])->group(function(){
 
       Route::get('/Deanrnd/dashboard',[DeanRndController::class,'dashboard'])->name('Deanrnd.dashboard');
 
@@ -730,6 +734,20 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::delete('/Principaloffice/ponotice/destory/{notice}', [NoticeController::class, 'destroy'])->name('Principaloffice.ponotice.destroy');
 
   });
+
+    //Dean_Admin All Routes Here
+    Route::middleware(['cors','auth','role:'.UserRoles::Dean_admin->value])->group(function(){
+
+      Route::get('/Dean_admin/dashboard',[DeanadminController::class,'index'])->name('Dean_Admin.dashboard');
+      Route::get('/Dean_admin/leaves_management/daleaves',[DeanadminController::class,'leaves_lest'])->name('Dean_Admin.leaves_management.leaves');
+      Route::get('/Dean_admin/leaves_management/daleaves_entitlement',[DeanadminController::class,'da_leaves_entitlement'])->name('Dean_Admin.leaves_management');
+      Route::get('/Dean_admin/leaves_management/daholiday_rh_list',[DeanadminController::class,'da_holiday_rh_list'])->name('Dean_Admin.leaves_management');
+      Route::get('/Dean_admin/leaves_management/daleaves_calender',[DeanadminController::class,'da_calender_view'])->name('Dean_Admin.leaves_management');
+
+      
+      //Route::get('/Dean_admin/leaves_management/leaves',[DeanadminController::class,'index'])->name('Dean_Admin.leaves_management.leaves');
+
+    });
 
   //Examoffice
   // Route::middleware(['cors','auth','role:'.UserRoles::EXAM_SECTION->value, 'prevent-back-history'])->group(function(){
