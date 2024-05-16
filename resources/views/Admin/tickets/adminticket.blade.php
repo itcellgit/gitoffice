@@ -27,7 +27,7 @@
                                     <li class="text-sm">
                                     <a class="flex items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="javascript:void(0);">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M11.8611 2.39057C12.8495 1.73163 14.1336 1.71797 15.1358 2.35573L19.291 4.99994H20.9998C21.5521 4.99994 21.9998 5.44766 21.9998 5.99994V14.9999C21.9998 15.5522 21.5521 15.9999 20.9998 15.9999H19.4801C19.5396 16.9472 19.0933 17.9102 18.1955 18.4489L13.1021 21.505C12.4591 21.8907 11.6609 21.8817 11.0314 21.4974C10.3311 22.1167 9.2531 22.1849 8.47104 21.5704L3.33028 17.5312C2.56387 16.9291 2.37006 15.9003 2.76579 15.0847C2.28248 14.7057 2 14.1254 2 13.5109V6C2 5.44772 2.44772 5 3 5H7.94693L11.8611 2.39057ZM4.17264 13.6452L4.86467 13.0397C6.09488 11.9632 7.96042 12.0698 9.06001 13.2794L11.7622 16.2518C12.6317 17.2083 12.7903 18.6135 12.1579 19.739L17.1665 16.7339C17.4479 16.5651 17.5497 16.2276 17.4448 15.9433L13.0177 9.74551C12.769 9.39736 12.3264 9.24598 11.9166 9.36892L9.43135 10.1145C8.37425 10.4316 7.22838 10.1427 6.44799 9.36235L6.15522 9.06958C5.58721 8.50157 5.44032 7.69318 5.67935 7H4V13.5109L4.17264 13.6452ZM14.0621 4.04306C13.728 3.83047 13.3 3.83502 12.9705 4.05467L7.56943 7.65537L7.8622 7.94814C8.12233 8.20827 8.50429 8.30456 8.85666 8.19885L11.3419 7.45327C12.5713 7.08445 13.8992 7.53859 14.6452 8.58303L18.5144 13.9999H19.9998V6.99994H19.291C18.9106 6.99994 18.5381 6.89148 18.2172 6.68727L14.0621 4.04306ZM6.18168 14.5448L4.56593 15.9586L9.70669 19.9978L10.4106 18.7659C10.6256 18.3897 10.5738 17.9178 10.2823 17.5971L7.58013 14.6247C7.2136 14.2215 6.59175 14.186 6.18168 14.5448Z"></path></svg>
-                                        Title
+                                        Ticket
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12.1717 12.0005L9.34326 9.17203L10.7575 7.75781L15.0001 12.0005L10.7575 16.2431L9.34326 14.8289L12.1717 12.0005Z"></path></svg>
                                     </a>
                                     </li>
@@ -62,7 +62,7 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M11.8611 2.39057C12.8495 1.73163 14.1336 1.71797 15.1358 2.35573L19.291 4.99994H20.9998C21.5521 4.99994 21.9998 5.44766 21.9998 5.99994V14.9999C21.9998 15.5522 21.5521 15.9999 20.9998 15.9999H19.4801C19.5396 16.9472 19.0933 17.9102 18.1955 18.4489L13.1021 21.505C12.4591 21.8907 11.6609 21.8817 11.0314 21.4974C10.3311 22.1167 9.2531 22.1849 8.47104 21.5704L3.33028 17.5312C2.56387 16.9291 2.37006 15.9003 2.76579 15.0847C2.28248 14.7057 2 14.1254 2 13.5109V6C2 5.44772 2.44772 5 3 5H7.94693L11.8611 2.39057ZM4.17264 13.6452L4.86467 13.0397C6.09488 11.9632 7.96042 12.0698 9.06001 13.2794L11.7622 16.2518C12.6317 17.2083 12.7903 18.6135 12.1579 19.739L17.1665 16.7339C17.4479 16.5651 17.5497 16.2276 17.4448 15.9433L13.0177 9.74551C12.769 9.39736 12.3264 9.24598 11.9166 9.36892L9.43135 10.1145C8.37425 10.4316 7.22838 10.1427 6.44799 9.36235L6.15522 9.06958C5.58721 8.50157 5.44032 7.69318 5.67935 7H4V13.5109L4.17264 13.6452ZM14.0621 4.04306C13.728 3.83047 13.3 3.83502 12.9705 4.05467L7.56943 7.65537L7.8622 7.94814C8.12233 8.20827 8.50429 8.30456 8.85666 8.19885L11.3419 7.45327C12.5713 7.08445 13.8992 7.53859 14.6452 8.58303L18.5144 13.9999H19.9998V6.99994H19.291C18.9106 6.99994 18.5381 6.89148 18.2172 6.68727L14.0621 4.04306ZM6.18168 14.5448L4.56593 15.9586L9.70669 19.9978L10.4106 18.7659C10.6256 18.3897 10.5738 17.9178 10.2823 17.5971L7.58013 14.6247C7.2136 14.2215 6.59175 14.186 6.18168 14.5448Z"></path></svg>
                                             Ticket Details
                                         </h5>
-                                        <div class=" block ltr:ml-auto rtl:mr-auto my-auto">
+                                        {{-- <div class=" block ltr:ml-auto rtl:mr-auto my-auto">
                                                 <button type="button" id="association_add_btn" class="hs-dropdown-toggle ti-btn ti-btn-primary" data-hs-overlay="#hs-medium-modal">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M4 3H20C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM5 5V19H19V5H5ZM11 11V7H13V11H17V13H13V17H11V13H7V11H11Z" fill="rgba(255,255,255,1)"></path></svg>
                                                     Add Ticket
@@ -93,17 +93,17 @@
                                                             @csrf
                                                             <div class="ti-modal-body">
                                                                 <div class="max-w-sm space-y-3 pb-6">
-                                                                    <label for="with-corner-hint" class="ti-form-label">title: </label>
-                                                                    <input type="text" name="title" class="ti-form-input" required placeholder="title">
+                                                                    <label for="with-corner-hint" class="ti-form-label">My Issue: </label>
+                                                                    <input type="text" name="title" class="ti-form-input" required placeholder="my issue">
                                                             
                                                                 </div>
                                                                 <div class="max-w-sm space-y-3 pb-6">
                                                                     <label for="" class="ti-form-label">Description:</label>
-                                                                    <textarea name="description" class="ti-form-input" required placeholder="Description" style="width: 100%; height: 150px;"></textarea>
+                                                                    <textarea name="description" class="ti-form-input" required placeholder="please describe the issue here..." style="width: 100%; height: 150px;"></textarea>
                                                                 </div>
                                                                 
                                                                     <div class="max-w-sm space-y-3 pb-6">
-                                                                        <label for="" class="ti-form-label">attachment :</label>
+                                                                        <label for="" class="ti-form-label">Attachment :</label>
                                                                         <input type="file" name="attachment" class="ti-form-input"  placeholder="attachment">
                                                                     </div>
                                                                 
@@ -120,20 +120,21 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
-                                    <div class="box-body">
-                                        <div class="table-bordered rounded-sm ti-striped-table ti-custom-table-head overflow-auto">
+                                     <div class="box-body">
+                                    <div class="table-bordered rounded-sm ti-striped-table ti-custom-table-head overflow-auto">
                                         <table id="table" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                             <thead class="bg-gray-50 dark:bg-black/20">
                                             <tr class="">
                                                 <th scope="col" class="dark:text-white/80">SL.no</th>
+                                                <th scope="col" class="dark:text-white/80">@sortablelink('user','user')</th>
+                                                <th scope="col" class="dark:text-white/80">Status</th>
                                                 <th scope="col" class="dark:text-white/80">@sortablelink('title','title')</th>
                                                 <th scope="col" class="dark:text-white/80">@sortablelink('description','description')</th>
                                                 <th scope="col" class="dark:text-white/80">@sortablelink('attachment','attachment')</th>
-                                                <th scope="col" class="dark:text-white/80">@sortablelink('user','user')</th>
-                                                {{-- <th scope="col" class="dark:text-white/80">Status</th> --}}
+                                                
                                                 <th scope="col" class="dark:text-white/80">Action</th>
 
                                                 {{-- <th scope="col" class="dark:text-white/80">Action</th> --}}
@@ -145,8 +146,58 @@
                                             @endphp
                                             @if($tickets!=null)
                                                 @forelse($tickets as $ticket)
+                                                <tr class="">
+                                                    <td>{{ $i++ }}</td>
+                                                    <td><span>{{$ticket->user->email}}</span></td>
+                                                    {{-- <td><a href="mailto:{{$ticket->user->email}}">{{$ticket->user->email}}</a></td> --}}
+                                                    <td>{{$ticket->status}}</td>
+
+                                                    <td>
+                                                        <div class="flex space-x-3 rtl:space-x-reverse w-full min-w-[200px]">
+                                                            <div class="block w-full my-auto">
+                                                                {{$ticket->title}}
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td><span>{{$ticket->description}}</span></td>
+                                                   
+                                                   
+                                                    
+                                                    <td class="font-medium space-x-2 rtl:space-x-reverse">
+                                                        <div class="hs-tooltip ti-main-tooltip">
+                                                            @if ($ticket->attachment)
+                                                                <a href="#" onclick="showLargeImage('{{ asset('attachment/'.$ticket->attachment)}}')">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M14 13.5V8C14 5.79086 12.2091 4 10 4C7.79086 4 6 5.79086 6 8V13.5C6 17.0899 8.91015 20 12.5 20C16.0899 20 19 17.0899 19 13.5V4H21V13.5C21 18.1944 17.1944 22 12.5 22C7.80558 22 4 18.1944 4 13.5V8C4 4.68629 6.68629 2 10 2C13.3137 2 16 4.68629 16 8V13.5C16 15.433 14.433 17 12.5 17C10.567 17 9 15.433 9 13.5V8H11V13.5C11 14.3284 11.6716 15 12.5 15C13.3284 15 14 14.3284 14 13.5Z"></path></svg>
+                                                                </a>
+                                                            @else
+                                                                <!-- Placeholder image or alternative content -->
+                                                                <span class="no-image-text">No Image</span>
+                                                            @endif
+                                                            <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm" role="tooltip">
+                                                                attachment
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    
+                                                    {{-- <td>{{$ticket->status}}</td> --}}
+                                                    <td class="font-medium space-x-2 rtl:space-x-reverse">
+                                                        <div class="hs-tooltip ti-main-tooltip">
+                                                            <a href="{{route('Admin.tickets.adminshowticket.show',$ticket->id)}}"
+                                                                class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-primary">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3ZM12.0003 19C16.2359 19 19.8603 16.052 20.7777 12C19.8603 7.94803 16.2359 5 12.0003 5C7.7646 5 4.14022 7.94803 3.22278 12C4.14022 16.052 7.7646 19 12.0003 19ZM12.0003 16.5C9.51498 16.5 7.50026 14.4853 7.50026 12C7.50026 9.51472 9.51498 7.5 12.0003 7.5C14.4855 7.5 16.5003 9.51472 16.5003 12C16.5003 14.4853 14.4855 16.5 12.0003 16.5ZM12.0003 14.5C13.381 14.5 14.5003 13.3807 14.5003 12C14.5003 10.6193 13.381 9.5 12.0003 9.5C10.6196 9.5 9.50026 10.6193 9.50026 12C9.50026 13.3807 10.6196 14.5 12.0003 14.5Z"></path></svg>
+                                                                <span
+                                                                class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm"
+                                                                role="tooltip">
+                                                                View
+                                                                </span>
+                                                            </a>
+                                                        </div>
+                                                   
+                                                     </div>
+                                                    </td>
+</tr> 
                                 
-                                                    <tr class="">
+                                                    {{-- <tr class="">
                                                         <td>{{ $i++ }}</td>
                                                         <td>
                                                             <div class="flex space-x-3 rtl:space-x-reverse w-full min-w-[200px]">
@@ -156,12 +207,27 @@
                                                             </div>
                                                         </td>
                                                         <td><span>{{$ticket->description}}</span></td>
-                                                        <td><span>{{$ticket->attachment}}</span></td>
+                                                       
                                                        
                                                         
+                                                        <td class="font-medium space-x-2 rtl:space-x-reverse">
+                                                            <div class="hs-tooltip ti-main-tooltip">
+                                                                @if ($ticket->attachment)
+                                                                    <a href="#" onclick="showLargeImage('{{ asset('attachment/'.$ticket->attachment)}}')">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M14 13.5V8C14 5.79086 12.2091 4 10 4C7.79086 4 6 5.79086 6 8V13.5C6 17.0899 8.91015 20 12.5 20C16.0899 20 19 17.0899 19 13.5V4H21V13.5C21 18.1944 17.1944 22 12.5 22C7.80558 22 4 18.1944 4 13.5V8C4 4.68629 6.68629 2 10 2C13.3137 2 16 4.68629 16 8V13.5C16 15.433 14.433 17 12.5 17C10.567 17 9 15.433 9 13.5V8H11V13.5C11 14.3284 11.6716 15 12.5 15C13.3284 15 14 14.3284 14 13.5Z"></path></svg>
+                                                                    </a>
+                                                                @else
+                                                                    <!-- Placeholder image or alternative content -->
+                                                                    <span class="no-image-text">No Image</span>
+                                                                @endif
+                                                                <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm" role="tooltip">
+                                                                    attachment
+                                                                </span>
+                                                            </div>
+                                                        </td>
                                                         <td><span>{{$ticket->user->email}}</span></td>
                                                         {{-- <td>{{$ticket->status}}</td> --}}
-                                                        <td class="font-medium space-x-2 rtl:space-x-reverse">
+                                                        {{-- <td class="font-medium space-x-2 rtl:space-x-reverse">
                                                             <div class="hs-tooltip ti-main-tooltip">
                                                                 <a href="{{route('Admin.tickets.adminshowticket.show',$ticket->id)}}"
                                                                     class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-primary">
@@ -175,15 +241,15 @@
                                                             </div>
                                                        
                                                          </div>
-                                                        </td>
-                                                    </tr> 
+                                                        </td> --}}
+                                                    {{-- </tr> --}}
                                                      @empty
                                                     <p class="text-dark"><b>No tickets Added.</b></p>
                                                 @endforelse
                                             @endif
                                              </tbody>
                                         </table>
-                                    </div>
+                                    </div> 
                                 </div>
                                     
                             </div>
@@ -230,7 +296,37 @@
 
             });   
         </script>
-      
+        <script>
+            function showLargeImage(imageSrc) {
+                var modal = document.createElement('div');
+                modal.style.position = 'fixed';
+                modal.style.top = '0';
+                modal.style.left = '0';
+                modal.style.width = '100%';
+                modal.style.height = '100%';
+                modal.style.backgroundColor = 'rgba(0,0,0,0.7)';
+                modal.style.display = 'flex';
+                modal.style.alignItems = 'center';
+                modal.style.justifyContent = 'center';
+                modal.style.zIndex = '9999';
+
+                var largeImage = document.createElement('img');
+                largeImage.src = imageSrc;
+                largeImage.style.maxWidth = '80%';
+                largeImage.style.maxHeight = '80%';
+                largeImage.style.borderRadius = '5px';
+                largeImage.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
+
+                modal.appendChild(largeImage);
+                document.body.appendChild(modal);
+
+                modal.onclick = function() {
+                    document.body.removeChild(modal);
+                };
+            }
+        </script>
+
+        
 
 
 @endsection

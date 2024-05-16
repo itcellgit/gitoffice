@@ -24,7 +24,7 @@ class Storefunded_projectRequest extends FormRequest
     {
         return [
             //
-            'f_proposal_title'=>['required'],
+            //'f_proposal_title'=>['required'],
             'f_role'=>['required', Rule::in(['Principle Investigator', 'Co-Investigator','Architect'])],
             'f_type'=>[Rule::in(['Govt-funded','Private funded'])],
             'f_amount'=>['required','numeric'],
@@ -40,8 +40,8 @@ class Storefunded_projectRequest extends FormRequest
         {
             return 
              [
-                'f_proposal_title.required'=>'proposal title is required field',
-                'f_proposal_title.regex' => 'The proposal title field should contain only letters and spaces.',
+                // 'f_proposal_title.required'=>'proposal title is required field',
+                // 'f_proposal_title.regex' => 'The proposal title field should contain only letters and spaces.',
                 'f_role.required'=>'role is required field',
                 'f_proposal_title.regex' => 'The proposal title field should contain only letters and spaces.',
                 // 'f_type.required'=>'type is required field',

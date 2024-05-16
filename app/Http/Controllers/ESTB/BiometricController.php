@@ -51,9 +51,10 @@ class BiometricController extends Controller
 
         // Filter entry and exit logs
         $entry_exit = $this->filterEntryExitLogs($currentMonth, $currentYear, $date, $externalData);
-
+        $employeePunchLogs = $entry_exit['employeePunchLogs']; 
+      // dd($employeePunchLogs[728][0]->LogDate);
         // Return the view with the retrieved data
-        return view('ESTB.Biometric.biometric_data', compact('externalData', 'entry_exit'));
+        return view('ESTB.Biometric.biometric_data', compact('externalData', 'entry_exit', 'employeePunchLogs'));
     }
 
     // public function filterEntryExitLogs($currentMonth, $currentYear, $logDate, $externalData)
@@ -124,9 +125,16 @@ class BiometricController extends Controller
 
         // Group logs by employee code
         $logsByEmployee = $logs->groupBy('EmployeeCode');
+        $employeePunchLogs = [];
 
         // Iterate through each employee's logs
         foreach ($logsByEmployee as $employeeCode => $employeeLogs) {
+            // Store logs directly without wrapping in an extra array
+            $employeePunchLogs[$employeeCode] = $employeeLogs;
+        
+        
+           //dd($employeePunchLogs);
+
             // Sort employee logs by log date
             $sortedLogs = $employeeLogs->sortBy('LogDate');
 
@@ -139,28 +147,9 @@ class BiometricController extends Controller
                 $exitLogs[$employeeCode] = null;
             }
         }
+      //  dd($employeePunchLogs);
 
-        // Calculate duration between entry and exit logs for each employee
-        $durations = [];
-        foreach ($entryLogs as $employeeCode => $entryLog) {
-            if ($entryLog && $exitLogs[$employeeCode]) {
-                $entryTime = strtotime($entryLog->LogDate);
-                $exitTime = strtotime($exitLogs[$employeeCode]->LogDate);
-                $durationSeconds = $exitTime - $entryTime;
-
-                // Convert seconds to hours and minutes
-                $durationHours = floor($durationSeconds / 3600); // Get whole hours
-                $remainingSeconds = $durationSeconds % 3600; // Get remaining seconds after getting whole hours
-                $durationMinutes = floor($remainingSeconds / 60); // Convert remaining seconds to minutes
-
-                // Format the duration as "hours hrs minutes mins"
-                $formattedDuration = "$durationHours hrs $durationMinutes mins";
-
-                $durations[$employeeCode] = $formattedDuration;
-            } else {
-                $durations[$employeeCode] = null; // No duration if either entry or exit log is missing
-            }
-        }
+        
         $durations = [];
         $totalDurations = [];
 
@@ -220,9 +209,9 @@ class BiometricController extends Controller
             'entryLogs' => $entryLogs,
             'exitLogs' => $exitLogs,
             'punchcounts' => $punchCounts,
-            'durations' => $durations
+            'durations' => $durations,
+            'employeePunchLogs' => $employeePunchLogs
         ];
     }
-
-
+    
 }

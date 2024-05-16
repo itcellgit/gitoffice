@@ -41,10 +41,197 @@
                     </div>
                     <!-- Start::main-content -->
                     <div class="grid grid-cols-12 gap-x-6">
+                           <!--Count Boxes-->
+                           <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 1 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 1 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($review_editor_count->Q1_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">Q1</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($review_editor_count->Q1_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $review_editor_count->Q1_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 2 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 2 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($review_editor_count->Q2_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">Q2</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($review_editor_count->Q2_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $review_editor_count->Q2_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 3 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 3 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($review_editor_count->Q3_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">Q3</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($review_editor_count->Q3_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $review_editor_count->Q3_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 3 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 3 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($review_editor_count->Q4_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">Q4</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($review_editor_count->Q4_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $review_editor_count->Q4_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 3 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 3 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($review_editor_count->web_of_science_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">Web-Science</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($review_editor_count->web_of_science_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $review_editor_count->web_of_science_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 3 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 3 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($review_editor_count->scopus_indexed_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">ScopusIndexed</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($review_editor_count->scopus_indexed_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $review_editor_count->scopus_indexed_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="col-span-12 xl:col-span-12">
                             <div class="box">
                                 <div class="box-body">                
                                     <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
+                                        <div class="avatar-container flex py-4">
+                                            <div class="avatar-wrapper flex items-center">
+                                                <div class="avatar rounded-sm p-1 bg-green-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2 ">Valid</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                <div class="avatar rounded-sm p-1 bg-red-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2">Invalid</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                <div class="avatar rounded-sm p-1 bg-yellow-400 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2">Updated</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center">
+                                                <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-semibold ml-2">New</div>
+                                            </div>
+                                        </div>
                                         <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto">
                                             <div style="display: flex; align-items: center;">
                                                 <div style="display: flex; flex-direction: column;">
@@ -62,23 +249,24 @@
                                             </div>
                                         <table id="reviewer_editor_table" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                             <thead class="bg-gray-50 dark:bg-black/20">
-                                            <tr class="">
-                                                <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">E-Gov ID</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Level</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Other Level</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Title</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Review Date</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Journal Name</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Publisher Name</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Category</th>
-                                                {{-- Exclude the "Document" column when exporting --}}
+                                                <tr class="">
+                                                    <th scope="col" class="dark:text-white/80 font-bold">S.No</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th>
+
+                                                    <th scope="col" class="dark:text-white/80 font-bold">E-Gov ID</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold">Level</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold">Other Level</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold">Title</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold">Review Date</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold">Journal Name</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold">Publisher Name</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold">Category</th>
+                                                    {{-- Exclude the "Document" column when exporting --}}
                                                     @if(!isset($export) || !$export)
-                                                    <th scope="col" class="dark:text-white/80 font-bold ">Document</th>
-                                                @endif
-                                            </tr>
+                                                        <th scope="col" class="dark:text-white/80 font-bold ">Document</th>
+                                                    @endif
+                                                </tr>
                                             </thead>
                                             <tbody>
                                                 @php
@@ -90,15 +278,28 @@
                                                         <td><span>{{ $i++ }}</span></td>
                                                         <td><span>{{ $rc->fname . ' ' . $rc->mname . ' ' . $rc->lname }}</span></td>
                                                         <td><span>{{ $rc->dept_shortname }}</span></td>
-                                                        <td><span>{{ $rc->egov_id }}</span></td>
-                                                        <td><span>{{ $rc->level }}</span></td>
-                                                        <td><span>{{ $rc->other_level }}</span></td>
-                                                        <td><span>{{ $rc->title }}</span></td>
-                                                        {{-- <td><span>{{ $rc->status }}</span></td> --}}
+                                                        {{-- <td><span>{{ $rc->egov_id }}</span></td> --}}
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Research/Review_Editor/{{ $rc->document}}" class="text-blue-500">
+                                                                <span>{{$rc->egov_id}}</span>
+                                                            </a>
+                                                        </td>
+                                                        <td><span>{{$rc->level}}</span></td>
+                                                        <td>
+                                                            <span>
+                                                                @if(in_array($rc->level, ['Q1', 'Q2', 'Q3', 'Q4', 'SCI', 'Web of Science', 'Scopus Indexed', 'UGC General']))
+                                                                    --NA--
+                                                                @else
+                                                                    {{ $rc->other_level }}
+                                                                @endif
+                                                            </span>
+                                                        </td>
+                                                        <td><span>{{$rc->title}}</span></td>
                                                         <td><span>{{\Carbon\Carbon::parse($rc->reviewed_date)->format('d-M-Y') }}</span></td>
-                                                        <td><span>{{ $rc->journal_name }}</span></td>
-                                                        <td><span>{{ $rc->publisher_name }}</span></td>
-                                                        <td><span>{{ $rc->category }}</span></td>
+                                                        <td><span>{{$rc->journal_name}}</span></td>
+                                                        <td><span>{{$rc->publisher_name}}</span></td>
+                                                         <td><span>{{$rc->category}}</span></td>
+                                                        {{-- Exclude the "Document" column when exporting --}}
                                                         @if(!isset($export) || !$export)
                                                         {{-- <td><span><a href={{asset('Uploads/Research/Review_Editor/'.$rc->document)}} class='font-medium text-blue-600 dark:text-blue-500 hover:underline' target="_blank">{{$rc->document}}</a></span></td> --}}
                                                         <td>

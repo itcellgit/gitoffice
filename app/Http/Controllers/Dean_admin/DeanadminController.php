@@ -11,6 +11,7 @@ use App\Models\staff;
 use Illuminate\Support\Carbon;
 use App\Models\holidayrh;
 use App\Http\Controllers\ScheduledJobs;
+use App\Models\leave_staff_applications;
 
 use App\Models\designation;
 use App\Models\department;
@@ -86,8 +87,364 @@ class DeanadminController extends Controller
         return view ('Dean_admin.leaves_management.daleaves_calender');
     }
 
+    public function staff_view()
+    {
+        $filter="";
+       // dd($staff1);
+       $staff=staff::with('designations')
+        ->with('associations')
+       ->with('departments' )
+       ->with('teaching_payscale')
+       ->with('ntpayscale')
+       ->with('ntcpayscale')
+       ->with('consolidated_teaching_pay')
+       ->with('fixed_nt_pay')
+       ->with('latest_employee_type')
+       ->orderBy('fname')->get();
 
+       //$staff = DB::table('staff')->with('designations')->with('associations')->orderBy('id')->paginate(15);
+       // $caste_categories = castecategory::where('status','active')->get();
+        $religions =religion::where('status','active')->get();
+        $associations = association::where('status','active')->get();
+        $departments = DB::table('departments')->where('status','active')->get();
+        $qualifications =DB::table('qualifications')->where('status','active')->get();
+
+        $designations=designation::where('status','active')->get();
+        
+
+        //$payscales = teaching::
+        return view('Dean_admin.staff.staffindex',compact(['staff','religions','associations','departments','qualifications','filter','designations']));
+    }
+
+
+    public function show_staff_details( staff $staff)
+    {
+        //
+
+        $user=user::where('id',$staff->user_id)->get();
+            $user=$user[0];
+
+        $staff=staff::where('staff.id',$staff->id)
+        ->with(
+            ['departments' => function ($q){
+                $q->latest();
+            }]
+            )
+        ->with(
+            ['designations'=> function ($q){
+                $q->latest();
+            }]
+            )
+            ->with(
+                ['associations'=> function ($q){
+                    $q->latest();
+                }]
+                )
+        ->with(
+            ['teaching_payscale'=> function ($q){
+                $q->latest();
+            }]
+            )
+        ->with('ntpayscale')
+        ->with('ntcpayscale')
+        ->with('latestassociation')
+
+            ->with(
+                ['qualifications'])
+
+               ->with(['consolidated_teaching_pay'=>function($q){
+                $q->latest();
+               }])
+                ->with(['fixed_nt_pay'=>function($q){
+                    $q->latest();
+                }])
+                ->with('latest_employee_type')
+                ->with('latestfixedntpay','latest_consolidated_teaching_pay','latestteaching_payscale','latestntpayscale','latestntcpayscale')
+                ->first();
+
+       $confirmation=$staff->confirmationAssociation()->first();
+       $confirmationdate=null;
+       if($confirmation!=null)
+       {
+            $confirmationdate=$confirmation->pivot->start_date;
+       }
+       //dd($staff->latest_employee_type[0]->employee_type);
+        $religions =religion::where('status','active')->get();
+       $associations = association::where('status','active')->get();
+       $departments = DB::table('departments')->where('status','active')->get();
+       $castecategories=DB::table('castecategories')->where('status','active')->get();
+       $emp_type=$staff->latest_employee_type()->first();
+
+       $designations = DB::table('designations')->where('status','active')->where('emp_type',$emp_type->employee_type)->where('isadditional','=',0)->get();
+
+       $add_designations = DB::table('designations')->where('status','active')->where('emp_type',$emp_type->employee_type)->where('isadditional','=',1)->get();
+
+       $payscales="";
+       if($emp_type->employee_type==='Teaching')
+       {
+            $payscales=DB::table('teaching_payscales')->where('status','active')->get();
+       }
+       else if($emp_type->employee_type==="Non-Teaching" && $staff->associations[0]->asso_name=='Confirmed'){
+           // $payscales=DB::table('ntpayscales')->where('status','active')->get();
+            $payscales=designation::with('ntpayscales')->where('status','active')->where('isadditional',0)->where('emp_type','Non-Teaching')->orderby('designations.id')->get();
+       }
+       else
+       {
+       // $payscales=DB::table('ntcpayscales')->where('status','active')->get();
+       $payscales=designation::with('ntcpayscales')->where('status','active')->where('isadditional',0)->where('emp_type','Non-Teaching')->orderby('designations.id')->get();
+
+       }
+
+        $qualifications =DB::table('qualifications')->where('status','active')->get();
+        return view('Dean_admin.staff.staffview', compact(['staff','user','payscales','castecategories','religions','associations','qualifications','departments','designations','add_designations','confirmationdate']));
+    }
+
+
+
+
+    public function hollidayrh_events()
+    {
+
+        $holidayrh=holidayrh::select('id','title','start','type')->get();
+        //dd($holidayrh);
+        return response()->json($holidayrh);
+
+        
+
+    }
+
+    //used in Dean Admin leaves calender section
+    public function fetchAllleaveevents(Request $request)
+    {
+
+        //$user = Auth::user();
+        //$staff = staff::where('user_id','=',$user->id)->first();
+        // Process the date as needed (e.g., save to database, perform calculations)
+        // $leave_events = leave_staff_applications::join('leaves', 'leaves.id','=','leave_staff_applications.leave_id')
+        // ->join('staff AS s1','s1.id','=','leave_staff_applications.staff_id')
+        // ->join('staff AS s2','s2.id','=','leave_staff_applications.alternate')
+        // ->join('staff AS s3','s3.id','=','leave_staff_applications.additional_alternate')
+        //->where('leave_staff_applications.staff_id',$staff->id)
+
+        $leave_events=leave_staff_applications::join('leaves', 'leaves.id','=','leave_staff_applications.leave_id')
+        ->join('staff AS s1','s1.id','=','leave_staff_applications.staff_id')
+        ->join('staff AS s2','s2.id','=','leave_staff_applications.alternate')
+        ->leftJoin('staff AS s3','s3.id','=','leave_staff_applications.additional_alternate')
+        ->leftJoin('daywise__leaves AS daywise', 'leave_staff_applications.id', '=', 'daywise.leave_staff_applications_id')
+        //->where('leave_staff_applications.staff_id',$staff->id)
+        ->select(DB::raw("CONCAT(s1.fname,' ',s1.mname,' ',s1.lname) AS staff_name"),
+                DB::raw("CONCAT(s2.fname,' ',s2.mname,' ',s2.lname) AS alternate_staff"),
+                DB::raw("CONCAT(s3.fname,' ',s3.mname,' ',s3.lname) AS additional_alternate_staff"),
+                DB::raw("case when leaves.shortname='CL' then concat(leaves.shortname,'-',leave_staff_applications.cl_type) else leaves.shortname end AS title"),'daywise.start AS start',
+                 DB::raw("date_add(daywise.start, INTERVAL 1 day)  AS end"),
+                 'leave_staff_applications.leave_id AS leave_id',
+                 'leave_staff_applications.appl_status AS appl_status',
+                 'leaves.shortname AS leave_name',
+                 'leave_staff_applications.id')->get();
+
+        return response()->json($leave_events);
+        //return response()->json(['message' => 'Date clicked: ' . $date]);
+    }
+
+
+    //for fetching the specific holiday and rh for the clicked date (Ajax call)
+    public function fetchholidayrhevents(Request $request){
+
+        $date = $request->input('date');
+        //dd($date);
+        // Process the date as needed (e.g., save to database, perform calculations)
+        $holidayrh_list=holidayrh::where('start',$date)->get();
+        // Return a response (optional)
+        //dd($holidayrh_list);
+        return response()->json($holidayrh_list);
+        //['message' => 'Date clicked: ' . $date]
+    }
+
+    public function fetchleaveevents(Request $request){
+        $date = $request->input('date');
+        //dd($date);
+        // $user = Auth::user();
+        // $staff = staff::where('user_id','=',$user->id)->first();
+        // dd($staff);
+        // Process the date as needed (e.g., save to database, perform calculations)
+        $leave_events = leave_staff_applications::join('leaves', 'leaves.id','=','leave_staff_applications.leave_id')
+        ->join('staff AS s1','s1.id','=','leave_staff_applications.staff_id')
+        ->join('staff AS s2','s2.id','=','leave_staff_applications.alternate')
+        ->leftJoin('staff AS s3','s3.id','=','leave_staff_applications.additional_alternate')
+        //->leftjoin('daywise__leaves AS daywise', 'leave_staff_applications.id', '=', 'daywise.leave_staff_applications_id')
+        //->where('leave_staff_applications.staff_id',$staff->id)
+
+        ->whereDate('leave_staff_applications.start' , '<=', $date)
+        ->whereDate('leave_staff_applications.end','>=',$date)
+        ->select(DB::raw("CONCAT(s1.fname,' ',s1.mname,' ',s1.lname) AS staff_name"),
+                DB::raw("CONCAT(s2.fname,' ',s2.mname,' ',s2.lname) AS alternate_staff"),
+                DB::raw("CONCAT(s3.fname,' ',s3.mname,' ',s3.lname) AS additional_alternate_staff"),
+                DB::raw('(CASE WHEN leave_staff_applications.cl_type="Morning" THEN "-Morning" WHEN leave_staff_applications.cl_type="Afternoon" THEN "-Afternoon" ELSE "" END) as cl_type'),
+                DB::raw("CONCAT(leaves.shortname,' ',cl_type)  AS title"),
+                'leave_staff_applications.start AS start',
+                'leave_staff_applications.end AS end', 'leave_staff_applications.leave_id AS leave_id',
+                'leave_staff_applications.appl_status AS appl_status',
+                'leave_staff_applications.id AS Application_id',
+                'leave_staff_applications.reason AS reason',
+                'leaves.shortname AS leave_name')->get();
+        //dd($leave_events);
+        // Return a response (optional)
+          return response()->json($leave_events);
+        //return response()->json(['message' => 'Date clicked: ' . $date]);
+    }
    
+
+
+
+    //Function for staffdepartment update in Dean_admin Login
+    public function update(Request $request, staff $staff)
+    {
+        $updateresult=true;
+        //fetch all the departments the staff is currently working in
+        $rdepartments=$request->departments;
+        $staff_departments=$staff->activedepartments;
+        if($staff->activedepartments()->first()==null){
+            foreach($rdepartments as $rdepts)
+            {
+                 $insertnew=$staff->departments()->attach($rdepts,['start_date'=>$request->start_date,'reason'=>$request->reason,'gcr'=>$request->gcr]);
+            }
+        }
+        else
+        {
+            // dd($staff_departments);
+            //fetch all the departments the staff is assigned in the UI.
+
+            //check if there are changes in currently working and the assigned in the UI
+            foreach($staff_departments as $sdept)
+            {
+                $flag=0;
+                foreach($rdepartments as $rdepts)
+                {
+                    if($sdept->id==$rdepts)
+                    {
+                        $flag=1;
+                    }
+                }
+                //if flag reamians 0, it means that the staff is no more associated with that department
+                //update exisiting entry for that department of the staff
+                if($flag==0){
+                  //  $updateresult= $staff->departments()->updateExistingPivot($sdept->id,['end_date'=>$request->start_date,'reason'=>$request->reason,'gcr'=>$request->gcr,'status'=>'closed']);
+                    $staff_latest_depts=$staff->activedepartments()->get();
+                    foreach($staff_latest_depts as $staff_dept)
+                    {
+                        if($staff_dept->pivot->department_id==$sdept->id){
+                            $staff_dept->pivot->end_date=$request->start_date;
+                            $staff_dept->pivot->reason=$request->reason;
+                            $staff_dept->pivot->gcr=$request->gcr;
+                            $staff_dept->pivot->status='closed';
+                            $updateresult=$staff_dept->pivot->update();
+                        }
+                    }
+                }
+            }
+
+        }
+
+        //check if any new department is assigned to the staff
+        foreach($rdepartments as $rdepts)
+        {
+            $flag=0;
+            foreach($staff->departments as $sdept)
+            {
+                if($sdept->id==$rdepts)
+                {
+                    $flag=1;
+                }
+            }
+            //if flag reamians 0, implies that the new department is assigned to the staff
+            if($flag==0){
+                $insertnew=$staff->departments()->attach($rdepts,['start_date'=>$request->start_date,'reason'=>$request->reason,'gcr'=>$request->gcr]);
+            }
+        }
+        if($updateresult || $insertnew)
+        {
+            $status=1;
+        }
+        else
+        {
+            $status=0;
+        }
+        return redirect('Dean_admin/staff/staffview'.$staff->id)->with('status',$status);
+    }
+
+
+    public function updatecurrent(request $request, staff $staff, $sdept)
+    {
+        //dd($request);
+        if($request->status=="active"){
+          //  $updateresult= $staff->departments()->updateExistingPivot($sdept,['end_date'=>null,'status'=>'active']);
+            $staff_latest_depts=$staff->activedepartments()->get();
+            foreach($staff_latest_depts as $staff_dept)
+            {
+                if($staff_dept->pivot->department_id==$sdept->id)
+                {
+                    $staff_dept->pivot->end_date=null;
+                    $staff_dept->pivot->status='active';
+                    $updateresult=$staff_dept->pivot->update();
+                }
+            }
+        }
+        else
+        {
+            // $updateresult= $staff->departments()->updateExistingPivot($sdept,['department_id'=>$request->departments_id,'start_date'=>$request->start_date,'reason'=>$request->reason,'gcr'=>$request->gcr]);
+             $staff_latest_depts=$staff->activedepartments()->get();
+
+                    foreach($staff_latest_depts as $staff_dept)
+                    {
+
+                        if($staff_dept->pivot->department_id==$sdept)
+                        {
+                            $staff_dept->pivot->department_id=$request->departments_id;
+                            $staff_dept->pivot->start_date=$request->start_date;
+                            $staff_dept->pivot->reason=$request->reason;
+                            $staff_dept->pivot->gcr=$request->gcr;
+                            $updateresult=$staff_dept->pivot->update();
+                        }
+                    }
+
+        }
+
+        if($updateresult)
+        {
+            $status=1;
+        }
+        else
+        {
+            $status=0;
+        }
+        return redirect('Dean_admin/staff/staffview'.$staff->id)->with('status',$status);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(staff $staff,$dept)
+    {
+
+        $delete=DB::table('department_staff')->where('id',$dept)->where('status','active')->delete();
+
+        if($delete){
+            $status=1;
+        }
+        else{
+            $status=0;
+        }
+        return redirect('Dean_admin/staff/staffview'.$staff->id)->with('status',$status);
+    }
+
+    
+
+
+
+
+
+    
+
 
     
 }

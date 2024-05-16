@@ -162,10 +162,10 @@ class BookPublicationController extends Controller
             $book_publication->end_page_no=$request->ebc_end_page_no;
         }
 
-         // Update validation status
+        // Update validation status
         //dd($request->validation_status);
 
-        $book_publication->validation_status = ($request->validation_status == "invalid") ? "updated" : $request->validation_status;
+        //$book_publication->validation_status = ($request->validation_status == "invalid") ? "updated" : $request->validation_status;
 
 
         //file upload

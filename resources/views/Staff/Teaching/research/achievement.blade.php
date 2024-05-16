@@ -173,7 +173,7 @@
 
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
-                                                                                <label for="" class="ti-form-label font-bold">Details:</label>
+                                                                                <label for="" class="ti-form-label font-bold">Details:<span class="text-red-500">*</span></label>
                                                                                 <input type="text" name="ga_details" class="ti-form-input" required placeholder="Details" id="rga_details" value="{{ old('ga_details') }}">
                                                                                  @if($errors->has('ga_details'))
                                                                                     <div class="text-red-700">{{ $errors->first('ga_details')}}</div>
@@ -493,7 +493,7 @@
             $(document).ready(function(){
 
 
-                    //Validation for general achievements
+                    //backendValidation for general achievements
 
                     //alert('Hello from jquery');
                     new DataTable('#general_achievements_table');
@@ -518,12 +518,13 @@
                     var flag = false;
 
 
-                    if (awardbody == '') {
+                    
+
+                    if (awardbody.trim() === '') {
                         $('#awarding_bodyError').text('Awarding Body is missing');
                         flag = true;
-                    } else if (!/^[a-zA-Z\s]+$/.test(awardbody.trim())) {
-                        $('#awarding_bodyError').text('Please fill the correct value');
-                        flag = true;
+                    } else {
+                        $('#awarding_bodyError').text(''); 
                     }
 
                     if (!general_document) {
@@ -531,23 +532,14 @@
                         flag = true;
                     }
 
-                    // if(rga_award == ''){
-                    //     $('#rga_awardError').text('Award Name is missing');
-                    //     flag = true;
-                    // } else if (!/^[a-zA-Z\s0-9]*$/.test(rga_award.trim())) {
-                    //     $('#rga_awardError').text('Please fill the correct value');
-                    //     flag = true;
-                    // }
-
+                   
 
                     if (rga_award.trim() === '') {
                         $('#rga_awardError').text('Award Name is missing');
                         flag = true;
-                    } else if (!/^[\w\s\/.,]+$/.test(rga_award.trim())) {
-                        $('#rga_awardError').text('Please fill the correct value');
-                        flag = true;
+                    } else {
+                        $('#rga_awardError').text(''); 
                     }
-
 
 
                     if (rga_year == '') {
@@ -559,11 +551,10 @@
                     }
 
 
-
-                    // if(rga_details == ''){
+                    // if (rga_details.trim() === '') {
                     //     $('#rga_detailsError').text('Details is missing');
                     //     flag = true;
-                    // } else if (!/^[a-zA-Z\s0-9]*$/.test(rga_details.trim())) {
+                    // } else if (!/^[\w\s\/.,]+$/.test(rga_details.trim())) {
                     //     $('#rga_detailsError').text('Please fill the correct value');
                     //     flag = true;
                     // }
@@ -571,15 +562,17 @@
                     if (rga_details.trim() === '') {
                         $('#rga_detailsError').text('Details is missing');
                         flag = true;
-                    } else if (!/^[\w\s\/.,]+$/.test(rga_details.trim())) {
-                        $('#rga_detailsError').text('Please fill the correct value');
-                        flag = true;
+                    } else {
+                        $('#rga_detailsError').text(''); 
                     }
 
                     if (flag == true) {
                         e.preventDefault();
                     }
                 });
+
+
+
                  //export to excel achievement
                  $('#exportToExcel').on('click', function () {
                     var table = $('#general_achievements_table').clone();

@@ -792,8 +792,8 @@
                                     success: function(response) {
                                         // Handle the response from the server
                                         
-                                        console.log(response);
-                                        $('.leave_staff_application_id').val(response[0].id);
+                                        console.log(response[0].id);
+                                        $('.leave_staff_application_id').val(application_id);
                                         $('#type_edit option[value='+response[0].leave_id+']').attr('selected', 'selected');
                                         //for checking whether its CL or no
                                         if(response[0].shortname == 'CL'){
@@ -925,11 +925,11 @@
                            info.el.style.fontSize  = "15px";
                        }
 
-                        if(info.event.extendedProps.appl_status == 'cancelled'){
-                            info.el.style.background = "#78716c";//info.event.extendedProps.background;
-                           info.el.style.color  = "white";
-                           info.el.style.fontSize  = "15px";
-                        }
+                        // if(info.event.extendedProps.appl_status == 'cancelled'){
+                        //     info.el.style.background = "#78716c";//info.event.extendedProps.background;
+                        //    info.el.style.color  = "white";
+                        //    info.el.style.fontSize  = "15px";
+                        // }
                    },
                    dateClick: function(info) {
 

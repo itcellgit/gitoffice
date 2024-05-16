@@ -15,12 +15,12 @@
                             <!-- Page Header -->
                             <div class="block justify-between page-header sm:flex">
                                 <div>
-                                    <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium"> Establishment Dashboard</h3>
+                                    <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium"> Dean Admin Dashboard</h3>
                                 </div>
                                 <ol class="flex items-center whitespace-nowrap min-w-0">
                                     <li class="text-sm">
                                     <a class="flex items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="javascript:void(0);">
-                                        Establishment Dashboard
+                                        Dean Admin Dashboard
                                         <i class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
                                     </a>
                                     </li>

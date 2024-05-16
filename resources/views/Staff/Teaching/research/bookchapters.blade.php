@@ -213,7 +213,7 @@
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Issue:</label>
-                                                                                <input type="text" name="bc_issue" class="ti-form-input" required placeholder="Issue" id="bp_issue" value="{{ old('bc_issue') }}">
+                                                                                <input type="text" name="bc_issue" class="ti-form-input"  placeholder="Issue" id="bp_issue" value="{{ old('bc_issue') }}">
                                                                                  @if($errors->has('bc_issue'))
                                                                                     <div class="text-red-700">{{ $errors->first('bc_issue') }}</div>
                                                                                  @endif
@@ -246,24 +246,7 @@
 
 
                                                                         </div>
-                                                                        {{-- <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
-                                                                            <div class="max-w-sm space-y-3 pb-6 start_page_no">
-                                                                                <label for="" class="ti-form-label font-bold">Start Page No:</label>
-                                                                                <input type="number" min="0" step="1" name="bc_start_page_no" class="ti-form-input"  placeholder="Start Page No" id="bp_start_page_no" value="{{ old('bc_start_page_no') }}">
-                                                                                @if($errors->has('bc_start_page_no'))
-                                                                                    <div class="text-red-700">{{ $errors->first('bc_start_page_no') }}</div>
-                                                                                 @endif
-                                                                                <div id="bp_startpagenoError" class="error text-red-700"></div>
-                                                                            </div>
-                                                                            <div class="max-w-sm space-y-3 pb-6 end_page_no">
-                                                                                <label for="" class="ti-form-label font-bold">End Page No:</label>
-                                                                                <input type="number" min="0" step="1" name="bc_end_page_no" class="ti-form-input"  placeholder="End Page No" id="bp_end_page_no" value="{{ old('bc_end_page_no') }}">
-                                                                                 @if($errors->has('bc_end_page_no'))
-                                                                                    <div class="text-red-700">{{ $errors->first('bc_end_page_no') }}</div>
-                                                                                 @endif
-                                                                                 <div id="bp_endpagenoError" class="error text-red-700"></div>
-                                                                            </div>
-                                                                        </div> --}}
+                                                                       
 
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6 start_page_no">
@@ -537,7 +520,7 @@
                                                                                                             </div>
                                                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                                                 <label for="" class="ti-form-label font-bold">Issue:</label>
-                                                                                                                <input type="text" name="ebc_issue" class="ti-form-input" required placeholder="Issue" value="{{$book->issue}}">
+                                                                                                                <input type="text" name="ebc_issue" class="ti-form-input"  placeholder="Issue" value="{{$book->issue}}">
                                                                                                                     @if($errors->has('ebc_issue'))
                                                                                                                     <div class="text-red-700">{{ $errors->first('ebc_issue') }}</div>
                                                                                                                 @endif
@@ -781,22 +764,14 @@
                         flag = true;
                     }
 
-                    // if(bp_title == ''){
-                    //     $('#bp_titleError').text('Title Name is missing');
-                    //     flag = true;
-                    // } else if (!/^[a-zA-Z\s0-9]*$/.test(bp_title.trim())) {
-                    //     $('#bp_titleError').text('Please fill the correct value');
-                    //     flag = true;
-                    // }
 
 
 
-                    if (bp_title.trim() === '') {
+                    if(bp_title.trim() === '') {
                         $('#bp_titleError').text('Title Name is missing');
                         flag = true;
-                    } else if (!/^[\w\s\/.,]+$/.test(bp_title.trim())) {
-                        $('#bp_titleError').text('Please fill the correct value');
-                        flag = true;
+                    } else {
+                        $('#bp_titleError').text('');
                     }
 
 
@@ -833,25 +808,36 @@
                         // The field is optional and empty, no validation need
                     }
 
-                    if(bp_issue == ''){
-                        $('#bp_issueError').text('Issue Name is missing');
-                        flag = true;
-                    }else if (!/^[a-zA-Z\s]+$/.test(bp_issue.trim())){
-                        $('#bp_issueError').text('Please fill the correct value');
-                        flag = true;
+                    
+
+
+                    if (bp_issue.trim() !== '') { 
+                        if (!/^[\w\s\/.,0-9]+$/.test(bp_issue.trim())) { 
+                            $('#bp_issueError').text('Please fill in the correct value');
+                            flag = true;
+                        } else {
+                            $('#bp_issueError').text(''); 
+                        }
+                    } else {
+                        $('#bp_issueError').text('');
                     }
+
+
+
                     if(bp_type =='#'){
                         $('#bp_typeError').text('Please Choose a correct option.');
                         flag = true;
                     }
 
 
-                    if (bp_chapter_title !== '') {
-                        if (!/^[\w\s\/.,]+$/.test(bp_chapter_title.trim())) {
-                            $('#bp_chaptertitleError').text('Please fill the correct value');
-                            flag = true;
-                        }
-                    }
+                    // if (bp_chapter_title !== '') {
+                    //     if (!/^[\w\s\/.,]+$/.test(bp_chapter_title.trim())) {
+                    //         $('#bp_chaptertitleError').text('Please fill the correct value');
+                    //         flag = true;
+                    //     }
+                    // }
+
+
 
                     if (bp_start_page_no !== '') {
                         if (!/^\d+$/.test(bp_start_page_no.trim())) {

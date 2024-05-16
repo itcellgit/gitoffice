@@ -31,6 +31,7 @@ class EgovAdminController extends Controller
                                             ->join('department_staff','department_staff.staff_id','=','staff.id')
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
+                                            ->where('department_staff.status','active')
                                             ->where('employee_types.employee_type','=','Teaching')
                                             //->where('staff.employee_type','=','Teaching')
                                             ->where('department_id','=',$department_id)
@@ -49,6 +50,7 @@ class EgovAdminController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Teaching')
+                                            ->where('department_staff.status','active')
                                             //->where('staff.employee_type','=','Teaching')
                                             ->where('department_id','=',$department_id)
                                             //->select('professional_activity_conducteds.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','sponsoring_agency_name_address')
@@ -64,6 +66,7 @@ class EgovAdminController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Non-Teaching')
+                                            ->where('department_staff.status','active')
                                             //->where('staff.employee_type','=','Non-teaching')
                                             ->where('department_id','=',$department_id)
                                             //->select('professional_activity_attendees.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','organizer','sponsored','sponsored_by')
@@ -79,6 +82,7 @@ class EgovAdminController extends Controller
                                     ->join('departments','departments.id','=','department_staff.department_id')
                                     ->join('employee_types','employee_types.staff_id','=','staff.id')
                                     ->where('employee_types.employee_type','=','Non-Teaching')
+                                    ->where('department_staff.status','active')
                                     //->where('staff.employee_type','=','Non-teaching')
                                     ->where('department_id','=',$department_id)
                                     //->select('professional_activity_conducteds.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','sponsoring_agency_name_address')
@@ -94,6 +98,7 @@ class EgovAdminController extends Controller
                             ->join('departments','departments.id','=','department_staff.department_id')
                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                             ->where('employee_types.employee_type','=','Teaching')
+                            ->where('department_staff.status','active')
                             //->where('staff.employee_type','=','Teaching')
                             ->where('department_id','=',$department_id)
                             //->select('conferences_attendees.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -114,6 +119,7 @@ class EgovAdminController extends Controller
                         ->join('departments','departments.id','=','department_staff.department_id')
                         ->join('employee_types','employee_types.staff_id','=','staff.id')
                         ->where('employee_types.employee_type','=','Teaching')
+                        ->where('department_staff.status','active')
                        // ->where('staff.employee_type','=','Teaching')
                         ->where('department_id','=',$department_id)
                         //->select('conferences_conducteds.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -128,6 +134,7 @@ class EgovAdminController extends Controller
                         ->join('departments','departments.id','=','department_staff.department_id')
                         ->join('employee_types','employee_types.staff_id','=','staff.id')
                         ->where('employee_types.employee_type','=','Teaching')
+                        ->where('department_staff.status','active')
                        // ->where('staff.employee_type','=','Teaching')
                         ->where('department_id','=',$department_id)
                         //->select('publications.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -143,6 +150,7 @@ class EgovAdminController extends Controller
                         ->join('departments','departments.id','=','department_staff.department_id')
                         ->join('employee_types','employee_types.staff_id','=','staff.id')
                         ->where('employee_types.employee_type','=','Teaching')
+                        ->where('department_staff.status','active')
                         //->where('staff.employee_type','=','Teaching')
                         ->where('department_id','=',$department_id)
                         //->select('funded_projects.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -158,6 +166,7 @@ class EgovAdminController extends Controller
                         ->join('departments','departments.id','=','department_staff.department_id')
                         ->join('employee_types','employee_types.staff_id','=','staff.id')
                         ->where('employee_types.employee_type','=','Teaching')
+                        ->where('department_staff.status','active')
                        // ->where('staff.employee_type','=','Teaching')
                         ->where('department_id','=',$department_id)
                         //->select('patents.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -173,6 +182,7 @@ class EgovAdminController extends Controller
                         ->join('departments','departments.id','=','department_staff.department_id')
                         ->join('employee_types','employee_types.staff_id','=','staff.id')
                         ->where('employee_types.employee_type','=','Teaching')
+                        ->where('department_staff.status','active')
                         //->where('staff.employee_type','=','Teaching')
                         ->where('department_id','=',$department_id)
                         //->select('copyrights.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -187,6 +197,7 @@ class EgovAdminController extends Controller
                         ->join('departments','departments.id','=','department_staff.department_id')
                         ->join('employee_types','employee_types.staff_id','=','staff.id')
                         ->where('employee_types.employee_type','=','Teaching')
+                        ->where('department_staff.status','active')
                         //->where('staff.employee_type','=','Teaching')
                         ->where('department_id','=',$department_id)
                         //->select('general_achievements.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -214,6 +225,7 @@ class EgovAdminController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Teaching')
+                                            ->where('department_staff.status','active')
                                             ->where('department_id','=',$department_id)
                                             //->select('professional_activity_attendees.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname','organizer','sponsored','sponsored_by')
                                             ->select(DB::raw('DISTINCT(professional_activity_attendees.egov_id)'),'professional_activity_attendees.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname','organizer','sponsored','sponsored_by')
@@ -222,26 +234,27 @@ class EgovAdminController extends Controller
 
         //category count teaching
         $teaching_category_counts = DB::table('professional_activity_attendees')
-        ->join('professional_activity_attendee_staff', 'professional_activity_attendee_id', '=', 'professional_activity_attendees.id')
-        ->join('staff', 'staff.id', '=', 'professional_activity_attendee_staff.staff_id')
-        ->join('department_staff', 'department_staff.staff_id', '=', 'staff.id')
-        ->join('departments', 'departments.id', '=', 'department_staff.department_id')
-        ->join('employee_types', 'employee_types.staff_id', '=', 'staff.id')
-        ->where('employee_types.employee_type', '=', 'Teaching')
-        ->where('department_id', '=', $department_id)
-        ->select(
-            DB::raw('COUNT( CASE WHEN category = "Seminar" THEN 1 END) as seminar_count'),
-            DB::raw('COUNT( CASE WHEN category = "Webinar" THEN 1 END) as webinar_count'),
-            DB::raw('COUNT( CASE WHEN category = "Certification Program" THEN 1 END) as certification_count'),
-            DB::raw('COUNT( CASE WHEN category = "Workshop" THEN 1 END) as workshop_count'),
-            DB::raw('COUNT( CASE WHEN category = "FDP" THEN 1 END) as FDP_count'),
-            DB::raw('COUNT( CASE WHEN category = "STTP" THEN 1 END) as STTP_count'),
-            DB::raw('COUNT( CASE WHEN category = "MDP/EDP" THEN 1 END) as MDP_FDP_count'),
-            DB::raw('COUNT( CASE WHEN category = "Hackathon" THEN 1 END) as hackathon_count'),
-            DB::raw('COUNT( CASE WHEN category = "Space-Talk" THEN 1 END) as space_talk_count'),
-            DB::raw('COUNT( CASE WHEN category = "Site Visit" THEN 1 END) as site_visit_count'),
-            )
-        ->first();
+                                ->join('professional_activity_attendee_staff', 'professional_activity_attendee_id', '=', 'professional_activity_attendees.id')
+                                ->join('staff', 'staff.id', '=', 'professional_activity_attendee_staff.staff_id')
+                                ->join('department_staff', 'department_staff.staff_id', '=', 'staff.id')
+                                ->join('departments', 'departments.id', '=', 'department_staff.department_id')
+                                ->join('employee_types', 'employee_types.staff_id', '=', 'staff.id')
+                                ->where('employee_types.employee_type', '=', 'Teaching')
+                                ->where('department_staff.status','active')
+                                ->where('department_id', '=', $department_id)
+                                ->select(
+                                    DB::raw('COUNT( CASE WHEN category = "Seminar" THEN 1 END) as seminar_count'),
+                                    DB::raw('COUNT( CASE WHEN category = "Webinar" THEN 1 END) as webinar_count'),
+                                    DB::raw('COUNT( CASE WHEN category = "Certification Program" THEN 1 END) as certification_count'),
+                                    DB::raw('COUNT( CASE WHEN category = "Workshop" THEN 1 END) as workshop_count'),
+                                    DB::raw('COUNT( CASE WHEN category = "FDP" THEN 1 END) as FDP_count'),
+                                    DB::raw('COUNT( CASE WHEN category = "STTP" THEN 1 END) as STTP_count'),
+                                    DB::raw('COUNT( CASE WHEN category = "MDP/EDP" THEN 1 END) as MDP_FDP_count'),
+                                    DB::raw('COUNT( CASE WHEN category = "Hackathon" THEN 1 END) as hackathon_count'),
+                                    DB::raw('COUNT( CASE WHEN category = "Space-Talk" THEN 1 END) as space_talk_count'),
+                                    DB::raw('COUNT( CASE WHEN category = "Site Visit" THEN 1 END) as site_visit_count'),
+                                    )
+                                ->first();
 
 
 
@@ -262,6 +275,7 @@ class EgovAdminController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Teaching')
+                                            ->where('department_staff.status','active')
                                             //->where('staff.employee_type','=','Teaching')
                                             ->where('department_id','=',$department_id)
 
@@ -272,27 +286,27 @@ class EgovAdminController extends Controller
         // dd($professional_activity_conducteds);
 
         $conducted_category_counts = DB::table('professional_activity_conducteds')
-        ->join('professional_activity_conducted_staff','professional_activity_conducted_id','=','professional_activity_conducteds.id')
-        ->join('staff','staff.id','=','professional_activity_conducted_staff.staff_id')
-        ->join('department_staff','department_staff.staff_id','=','staff.id')
-        ->join('departments','departments.id','=','department_staff.department_id')
-        ->join('employee_types','employee_types.staff_id','=','staff.id')
-        ->where('employee_types.employee_type','=','Teaching')
-
-        ->where('department_id','=',$department_id)
-        ->select(
-            DB::raw('COUNT( CASE WHEN category = "Seminar" THEN 1 END) as seminar_count'),
-            DB::raw('COUNT( CASE WHEN category = "Webinar" THEN 1 END) as webinar_count'),
-            DB::raw('COUNT( CASE WHEN category = "Certification Program" THEN 1 END) as certification_count'),
-            DB::raw('COUNT( CASE WHEN category = "Workshop" THEN 1 END) as workshop_count'),
-            DB::raw('COUNT( CASE WHEN category = "FDP" THEN 1 END) as FDP_count'),
-            DB::raw('COUNT( CASE WHEN category = "STTP" THEN 1 END) as STTP_count'),
-            DB::raw('COUNT( CASE WHEN category = "MDP/EDP" THEN 1 END) as MDP_FDP_count'),
-            DB::raw('COUNT( CASE WHEN category = "Hackathon" THEN 1 END) as hackathon_count'),
-            DB::raw('COUNT( CASE WHEN category = "Space-Talk" THEN 1 END) as space_talk_count'),
-            DB::raw('COUNT( CASE WHEN category = "Site Visit" THEN 1 END) as site_visit_count'),
-        )
-        ->first();
+                    ->join('professional_activity_conducted_staff','professional_activity_conducted_id','=','professional_activity_conducteds.id')
+                    ->join('staff','staff.id','=','professional_activity_conducted_staff.staff_id')
+                    ->join('department_staff','department_staff.staff_id','=','staff.id')
+                    ->join('departments','departments.id','=','department_staff.department_id')
+                    ->join('employee_types','employee_types.staff_id','=','staff.id')
+                    ->where('employee_types.employee_type','=','Teaching')
+                    ->where('department_staff.status','active')
+                    ->where('department_id','=',$department_id)
+                    ->select(
+                        DB::raw('COUNT( CASE WHEN category = "Seminar" THEN 1 END) as seminar_count'),
+                        DB::raw('COUNT( CASE WHEN category = "Webinar" THEN 1 END) as webinar_count'),
+                        DB::raw('COUNT( CASE WHEN category = "Certification Program" THEN 1 END) as certification_count'),
+                        DB::raw('COUNT( CASE WHEN category = "Workshop" THEN 1 END) as workshop_count'),
+                        DB::raw('COUNT( CASE WHEN category = "FDP" THEN 1 END) as FDP_count'),
+                        DB::raw('COUNT( CASE WHEN category = "STTP" THEN 1 END) as STTP_count'),
+                        DB::raw('COUNT( CASE WHEN category = "MDP/EDP" THEN 1 END) as MDP_FDP_count'),
+                        DB::raw('COUNT( CASE WHEN category = "Hackathon" THEN 1 END) as hackathon_count'),
+                        DB::raw('COUNT( CASE WHEN category = "Space-Talk" THEN 1 END) as space_talk_count'),
+                        DB::raw('COUNT( CASE WHEN category = "Site Visit" THEN 1 END) as site_visit_count'),
+                    )
+                    ->first();
 
         return view('/egov/Teaching/activityconducted',compact(['professional_activity_conducteds','conducted_category_counts']));
     }
@@ -308,6 +322,7 @@ class EgovAdminController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Non-Teaching')
+                                            ->where('department_staff.status','active')
                                             //->where('staff.employee_type','=','Non-teaching')
                                             ->where('department_id','=',$department_id)
                                             //->select('professional_activity_attendees.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname','organizer','sponsored','sponsored_by')
@@ -324,6 +339,7 @@ class EgovAdminController extends Controller
             ->join('departments', 'departments.id', '=', 'department_staff.department_id')
             ->join('employee_types', 'employee_types.staff_id', '=', 'staff.id')
             ->where('employee_types.employee_type', '=', 'Non-Teaching')
+            ->where('department_staff.status','active')
             ->where('department_id', '=', $department_id)
             ->select(
                 DB::raw('COUNT( CASE WHEN category = "Seminar" THEN 1 END) as seminar_count'),
@@ -349,7 +365,8 @@ class EgovAdminController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Non-Teaching')
-                                           // ->where('staff.employee_type','=','Non-teaching')
+                                            ->where('department_staff.status','active')
+                                            // ->where('staff.employee_type','=','Non-teaching')
                                             ->where('department_id','=',$department_id)
                                             //->select('professional_activity_conducteds.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname','sponsoring_agency_name_address')
                                             ->select(DB::raw('DISTINCT(professional_activity_conducteds.egov_id)'),'professional_activity_conducteds.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname','sponsoring_agency_name_address')
@@ -359,21 +376,22 @@ class EgovAdminController extends Controller
         //count category
 
         $conducted_category_counts = DB::table('professional_activity_conducteds')
-        ->join('professional_activity_conducted_staff','professional_activity_conducted_id','=','professional_activity_conducteds.id')
-        ->join('staff','staff.id','=','professional_activity_conducted_staff.staff_id')
-        ->join('department_staff','department_staff.staff_id','=','staff.id')
-        ->join('departments','departments.id','=','department_staff.department_id')
-        ->join('employee_types','employee_types.staff_id','=','staff.id')
-        ->where('employee_types.employee_type','=','Non-Teaching')
+                                ->join('professional_activity_conducted_staff','professional_activity_conducted_id','=','professional_activity_conducteds.id')
+                                ->join('staff','staff.id','=','professional_activity_conducted_staff.staff_id')
+                                ->join('department_staff','department_staff.staff_id','=','staff.id')
+                                ->join('departments','departments.id','=','department_staff.department_id')
+                                ->join('employee_types','employee_types.staff_id','=','staff.id')
+                                ->where('employee_types.employee_type','=','Non-Teaching')
+                                ->where('department_staff.status','active')
 
-        ->where('department_id','=',$department_id)
-        ->select(
-            DB::raw('COUNT( CASE WHEN category = "Seminar" THEN 1 END) as seminar_count'),
-            DB::raw('COUNT( CASE WHEN category = "Webinar" THEN 1 END) as webinar_count'),
-            DB::raw('COUNT( CASE WHEN category = "Certification Program" THEN 1 END) as certification_count'),
-            DB::raw('COUNT( CASE WHEN category = "Hackathon" THEN 1 END) as hackathon_count'),
-        )
-        ->first();
+                                ->where('department_id','=',$department_id)
+                                ->select(
+                                    DB::raw('COUNT( CASE WHEN category = "Seminar" THEN 1 END) as seminar_count'),
+                                    DB::raw('COUNT( CASE WHEN category = "Webinar" THEN 1 END) as webinar_count'),
+                                    DB::raw('COUNT( CASE WHEN category = "Certification Program" THEN 1 END) as certification_count'),
+                                    DB::raw('COUNT( CASE WHEN category = "Hackathon" THEN 1 END) as hackathon_count'),
+                                )
+                                ->first();
 
         return view('/egov/Non-Teaching/conducted',compact(['professional_activity_conducteds','conducted_category_counts']));
     }

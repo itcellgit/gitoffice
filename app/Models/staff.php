@@ -251,5 +251,18 @@ class staff extends Model
          return $this->belongsToMany(leave::class,'leave_staff_entitlements')->where('leave_staff_entitlements.status','active')->withPivot('id','year','entitled_curr_year','accumulated','consumed_curr_year','encashed_curr_year','total_encashed');
      }
 
+     //festivaladvance
+     public function FestivalAdvance():HasMany
+     {
+        return $this->hasMany(festival_advance::class);
+     }
+
+     //laptoploan
+     public function laptoploan():HasMany
+     {
+        return $this->hasMany(laptoploan::class);
+     }
+
+
 
 }

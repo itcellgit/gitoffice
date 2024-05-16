@@ -12,9 +12,8 @@
         <!-- Page Header -->
             <div class="justify-between block page-header sm:flex">
                 <div>
-                    <h3 class="text-2xl font-medium text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white">
-                        <span class="text-primary"></span>
-                    </h3>
+                    {{-- <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium"> Welcome <span class="text-primary">{{$staff->fname.' '.$staff->mname.' '.$staff->lname}}</span></h3> --}}
+
                 </div>
                 <ol class="flex items-center min-w-0 whitespace-nowrap">
                     <li class="text-sm">
@@ -32,7 +31,11 @@
                 <div class="col-span-12">
                     <div class="box">
                         <div class="box-header flex justify-between items-center">
-                            <h5 class="box-title">Ticket</h5>
+                            <h5 class="box-title">Ticket Status:&nbsp;&nbsp;
+                                <span style="@if($ticket->status =='Open') color: red; @elseif($ticket->status =='Pending') color: Orange; @elseif($ticket->status =='Resolved') color: green; @endif">{{$ticket->status}}</span>
+                                
+
+                            </h5>
                             <button type="button" class="hs-dropdown-toggle ti-btn ti-btn-primary" data-hs-overlay="#hs-medium-modal">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                                     <path d="M11 20L1 12L11 4V9C16.5228 9 21 13.4772 21 19C21 19.2729 20.9891 19.5433 20.9676 19.8107C19.4605 16.9502 16.458 15 13 15H11V20Z"></path>
@@ -64,15 +67,18 @@
                                             <div class="ti-modal-body">
                                                 <div class="max-w-sm space-y-3 pb-6">
                                                     <label for="with-corner-hint" class="ti-form-label">My Issue : </label>
-                                                    <input type="text" name="title" class="ti-form-input" required placeholder="title">
+                                                    <input type="text" name="title" class="ti-form-input" required placeholder="title" id="myissue">
+                                                    <div id="myissueError" class="error text-red-700"></div>
                                                 </div>
                                                 <div class="max-w-sm space-y-3 pb-6">
                                                     <label for="" class="ti-form-label">Description:</label>
-                                                    <textarea name="description" class="ti-form-input" required placeholder="Please Describe the issue here..." style="width: 100%; height: 150px;"></textarea>
+                                                    <textarea name="description" class="ti-form-input" required placeholder="Please Describe the issue here..." style="width: 100%; height: 150px;" id="description"></textarea>
+                                                    <div id="descriptionError" class="error text-red-700"></div>
                                                 </div>
                                                 <div class="max-w-sm space-y-3 pb-6">
                                                     <label for="" class="ti-form-label">Attachment :</label>
-                                                    <input type="file" name="attachment" class="ti-form-input"  placeholder="attachment">
+                                                    <input type="file" name="attachment" class="ti-form-input"  placeholder="attachment" id="attachment">
+                                                    <div id="attachmentError" class="error text-red-700"></div>
                                                 </div>
                                             </div>
                                             <div class="ti-modal-footer">
@@ -81,7 +87,7 @@
                                                     data-hs-overlay="#hs-medium-modal">
                                                         Close
                                                 </button>
-                                                    <input type="submit" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Save"/>
+                                                    <input type="submit" id="reply_store_add_btn" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Save"/>
                                             </div>
                                         </form> 
                                     </div>
@@ -171,6 +177,50 @@
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+        <script>
+            $(document).ready(function(){
+               //alert('Hello from jquery');
+
+              
+
+                 // Validation for reply
+                  
+                  $(document).on('click', '#reply_store_add_btn', function (e) {
+                    var myissue = $('#myissue').val();
+                    var description = $('#description').val();
+                    var attachment = $('#attachment')[0].files[0]; // Get the selected file
+                    var flag = false;
+
+                    if (myissue.trim() === '') {
+                        $('#myissueError').text('My Issue is missing');
+                        flag = true;
+                    } else {
+                        $('#myissueError').text(''); 
+                    }
+
+                    if (description.trim() === '') {
+                        $('#descriptionError').text('Description is missing');
+                        flag = true;
+                    } else {
+                        $('#descriptionError').text(''); 
+                    }
+
+                    if (!attachment) {
+                        $('#attachmentError').text('Please choose a file');
+                        flag = true;
+                    }
+
+                    if (flag == true) {
+                        e.preventDefault();
+                    }
+                });
+
+               
+
+
+            });   
+        </script>
 
 
 

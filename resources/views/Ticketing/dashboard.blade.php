@@ -179,23 +179,35 @@
                                                             <div class="ti-modal-body">
                                                                 <div class="max-w-sm space-y-3 pb-6">
                                                                     <label for="with-corner-hint" class="ti-form-label">My Issue: </label>
-                                                                    <input type="text" name="title" class="ti-form-input" required placeholder="my issue">
+                                                                    <input type="text" name="title" class="ti-form-input" required placeholder="myissue" id="myissue" value="{{ old('title') }}">
+                                                                    <div id="myissueError" class="error text-red-700"></div>
                                                                 </div>
                                                                 <div class="max-w-sm space-y-3 pb-6">
                                                                     <label for="" class="ti-form-label">Description:</label>
-                                                                    <textarea name="description" class="ti-form-input" required placeholder="Please Describe the issue here... " style="width: 100%; height: 150px;"></textarea>
+                                                                    <textarea name="description" class="ti-form-input" required placeholder="Please Describe the issue here... " style="width: 100%; height: 150px;" id="description" value="{{ old('description') }}"></textarea>
+                                                                    <div id="descriptionError" class="error text-red-700"></div>
+
                                                                 </div>
-                                                                    <div class="max-w-sm space-y-3 pb-6">
-                                                                        <label for="" class="ti-form-label">Attachment:</label>
-                                                                        <input type="file" name="attachment" class="ti-form-input" accept="image/*" placeholder="Choose an image">
-                                                                    </div>
+                                                                {{-- <div class="max-w-sm space-y-3 pb-6">
+                                                                    <label for="" class="ti-form-label">Attachment:</label>
+                                                                    <input type="file" name="attachment" class="ti-form-input" accept="image/*" placeholder="Choose an image" id="attachment" value="{{ old('attachment') }}">
+                                                                    <div id="attachmentError" class="error text-red-700"></div>
+
+                                                                </div> --}}
+                                                                <div class="max-w-sm space-y-3 pb-6">
+                                                                    <label for="attachment" class="ti-form-label">Attachment:</label>
+                                                                    <input type="file" name="attachment[]" class="ti-form-input" accept="image/*" multiple placeholder="Choose images" id="attachment">
+                                                                    <div id="attachmentError" class="error text-red-700"></div>
+                                                                    <div id="imagePreview" class="mt-4 flex flex-wrap gap-2"></div>
+                                                                </div>
+                                                                
                                                                          <div class="ti-modal-footer">
                                                                             <button type="button"
                                                                                 class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
                                                                                 data-hs-overlay="#hs-medium-modal">
                                                                                 Close
                                                                             </button>
-                                                                            <input type="submit" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Add"/>
+                                                                            <input type="submit" id="ticket_store_add_btn" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Add"/>
                                                                         </div>
                                                                     </div>
                                                             </div>
@@ -214,6 +226,7 @@
                                                             <th scope="col" class="dark:text-white/80">@sortablelink('My Issue','My Issue')</th>
                                                             <th scope="col" class="dark:text-white/80">@sortablelink('description','description')</th>
                                                             <th scope="col" class="dark:text-white/80">@sortablelink('attachment','attachment')</th>
+                                                            <th scope="col" class="dark:text-white/80">Ticket Status</th>
                                                             <th scope="col" class="dark:text-white/80">Action</th>
                                                         </tr>
                                                     </thead>
@@ -233,8 +246,23 @@
                                                                 </div>
                                                                 </td>
                                                                 <td><span>{{$ticket->description}}</span></td>
-                                                                <td><span>{{$ticket->attachment}}</span></td>
-                                                                {{-- <td><span>{{$ticket->status}}</span></td> --}}
+                                                                {{-- <td><span>{{$ticket->attachment}}</span></td> --}}
+                                                                <td class="font-medium space-x-2 rtl:space-x-reverse">
+                                                                    <div class="hs-tooltip ti-main-tooltip">
+                                                                        @if ($ticket->attachment)
+                                                                            <a href="#" onclick="showLargeImage('{{ asset('attachment/'.$ticket->attachment)}}')">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M14 13.5V8C14 5.79086 12.2091 4 10 4C7.79086 4 6 5.79086 6 8V13.5C6 17.0899 8.91015 20 12.5 20C16.0899 20 19 17.0899 19 13.5V4H21V13.5C21 18.1944 17.1944 22 12.5 22C7.80558 22 4 18.1944 4 13.5V8C4 4.68629 6.68629 2 10 2C13.3137 2 16 4.68629 16 8V13.5C16 15.433 14.433 17 12.5 17C10.567 17 9 15.433 9 13.5V8H11V13.5C11 14.3284 11.6716 15 12.5 15C13.3284 15 14 14.3284 14 13.5Z"></path></svg>
+                                                                            </a>
+                                                                        @else
+                                                                            <!-- Placeholder image or alternative content -->
+                                                                            <span class="no-image-text">No Image</span>
+                                                                        @endif
+                                                                        <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm" role="tooltip">
+                                                                            attachment
+                                                                        </span>
+                                                                    </div>
+                                                                </td>
+                                                                <td><span>{{$ticket->status}}</span></td>
                                                                 <td class="font-medium space-x-2 rtl:space-x-reverse">
                                                                 <div class="hs-tooltip ti-main-tooltip">
                                                                         <a href="{{route('ticket.show',$ticket->id)}}"
@@ -286,10 +314,15 @@
                                                                                             <input type="text" name="title" class="ti-form-input" required placeholder="my issue" value = "{{$ticket->title}}">
                                                                                     
                                                                                         </div>
-                                                                                        <div class="max-w-sm space-y-3 pb-6">
+                                                                                        {{-- <div class="max-w-sm space-y-3 pb-6">
                                                                                             <label for="" class="ti-form-label">Description:</label>
                                                                                             <textarea name="description" class="ti-form-input" required placeholder="Please describe the issue here..." style="width: 100%; height: 150px;" value="{{$ticket->description}}"></textarea>
+                                                                                        </div> --}}
+                                                                                        <div class="max-w-sm space-y-3 pb-6">
+                                                                                            <label for="description" class="ti-form-label">Description:</label>
+                                                                                            <textarea name="description" class="ti-form-input" required placeholder="Please describe the issue here..." style="width: 100%; height: 150px;">{{$ticket->description}}</textarea>
                                                                                         </div>
+                                                                                        
                                                                                          <div class="max-w-sm space-y-3 pb-6">
                                                                                             <label for="" class="ti-form-label">Attachment:</label>
                                                                                             <input type="file" name="attachment" class="ti-form-input" accept="image/*" placeholder="Choose an image">
@@ -379,9 +412,97 @@
 
                new DataTable('#table');
 
+               //multiple images
+               document.getElementById('attachment').addEventListener('change', function(event) {
+                const files = event.target.files;
+                const imagePreview = document.getElementById('imagePreview');
+                imagePreview.innerHTML = ''; // Clear previous images
+
+                    if (files.length > 0) {
+                        Array.from(files).forEach(file => {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                const img = document.createElement('img');
+                                img.src = e.target.result;
+                                img.alt = file.name;
+                                img.className = 'h-24 w-24 object-cover border border-gray-300';
+                                imagePreview.appendChild(img);
+                            };
+                            reader.readAsDataURL(file);
+                        });
+                    }
+                });
+
+
+                 // Validation for tickets
+                  
+                  $(document).on('click', '#ticket_store_add_btn', function (e) {
+                    var myissue = $('#myissue').val();
+                    var description = $('#description').val();
+                    var attachment = $('#attachment')[0].files[0]; // Get the selected file
+                    var flag = false;
+
+                    if (myissue.trim() === '') {
+                        $('#myissueError').text('My Issue is missing');
+                        flag = true;
+                    } else {
+                        $('#myissueError').text(''); 
+                    }
+
+                    if (description.trim() === '') {
+                        $('#descriptionError').text('Description is missing');
+                        flag = true;
+                    } else {
+                        $('#descriptionError').text(''); 
+                    }
+
+                    if (!attachment) {
+                        $('#attachmentError').text('Please choose a file');
+                        flag = true;
+                    }
+
+                    if (flag == true) {
+                        e.preventDefault();
+                    }
+                });
+
+               
+
 
             });   
         </script>
+         <script>
+            function showLargeImage(imageSrc) {
+                var modal = document.createElement('div');
+                modal.style.position = 'fixed';
+                modal.style.top = '0';
+                modal.style.left = '0';
+                modal.style.width = '100%';
+                modal.style.height = '100%';
+                modal.style.backgroundColor = 'rgba(0,0,0,0.7)';
+                modal.style.display = 'flex';
+                modal.style.alignItems = 'center';
+                modal.style.justifyContent = 'center';
+                modal.style.zIndex = '9999';
+
+                var largeImage = document.createElement('img');
+                largeImage.src = imageSrc;
+                largeImage.style.maxWidth = '80%';
+                largeImage.style.maxHeight = '80%';
+                largeImage.style.borderRadius = '5px';
+                largeImage.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
+
+                modal.appendChild(largeImage);
+                document.body.appendChild(modal);
+
+                modal.onclick = function() {
+                    document.body.removeChild(modal);
+                };
+
+
+            }
+        </script>
+
       
 
 

@@ -45,6 +45,27 @@
                             <div class="box">
                                 <div class="box-body">                
                                     <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
+                                        <div class="avatar-container flex py-4">
+                                            <div class="avatar-wrapper flex items-center">
+                                                <div class="avatar rounded-sm p-1 bg-green-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2 ">Valid</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                <div class="avatar rounded-sm p-1 bg-red-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2">Invalid</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                <div class="avatar rounded-sm p-1 bg-yellow-400 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2">Updated</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center">
+                                                <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-semibold ml-2">New</div>
+                                            </div>
+                                        </div>
                                         <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto">
                                             <div style="display: flex; align-items: center;">
                                                 <div style="display: flex; flex-direction: column;">
@@ -62,7 +83,7 @@
                                             </div>
                                         <table id="consultancy_table" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                             <thead class="bg-gray-50 dark:bg-black/20">
-                                            <tr class="">
+                                                <tr class="">
                                                     <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
                                                     <th scope="col" class="dark:text-white/80 font-bold">Staff Name</th>
                                                     <th scope="col" class="dark:text-white/80 font-bold">Dept Short Name</th>
@@ -76,7 +97,7 @@
                                                     @if(!isset($export) || !$export)
                                                         <th scope="col" class="dark:text-white/80 font-bold ">Document</th>
                                                     @endif
-                                                
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -88,7 +109,12 @@
                                                          <td><span>{{$i++}}</span></td>
                                                         <td><span>{{ $consult->fname . ' ' . $consult->mname . ' ' . $consult->lname }}</span></td>
                                                         <td><span>{{ $consult->dept_shortname }}</span></td>
-                                                        <td><span>{{$consult->egov_id}}</span></td>
+                                                        {{-- <td><span>{{$consult->egov_id}}</span></td> --}}
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Research/Consultancy/{{ $consult->document}}" class="text-blue-500">
+                                                                <span>{{$consult->egov_id}}</span>
+                                                            </a>
+                                                        </td>
                                                         <td><span>{{$consult->consultancy_title}}</span></td>
                                                         <td><span>{{$consult->agency}}</span></td>
                                                         <td><span>{{\Carbon\Carbon::parse($consult->from_date)->format('d-M-Y') }}</span></td>

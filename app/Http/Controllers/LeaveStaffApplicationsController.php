@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\leave_staff_applications;
@@ -228,7 +227,9 @@ class LeaveStaffApplicationsController extends Controller
             }
             else
             {
-                //for leaves other than entitled given, check if the entry for this leave is already present.
+               // $leaves=leave::
+               
+               //for leaves other than entitled given, check if the entry for this leave is already present.
                 //if present, then perform updated query else perform insert query
             }
 
@@ -261,12 +262,12 @@ class LeaveStaffApplicationsController extends Controller
         $result=$this->validateleave($request,$staff);
        // dd($request);
         $leave_staff_applications=leave_staff_applications::where('id',$request->leave_staff_application_id)->first();
-        //dd($request);
+       // dd($request->leave_staff_application_id);
          $update_result = '';
         if($result == "success"){ //if validation of leave rules hold good then insert.
         //     //dd($result);
              $from_year=Carbon::parse($request->from_date)->year;
-          // dd($leave_staff_applications);
+           //dd($leave_staff_applications);
             $difference_in_days=$request->no_of_days-$leave_staff_applications->no_of_days;
            // dd($request->no_of_days.' '.$leave_staff_applications->no_of_days.' '.$difference_in_days);
             $leave_staff_entitlement=leave_staff_entitlements::where('staff_id',$staff->id)->where('leave_id',$request->type)->where('year', $from_year)->first();
@@ -277,6 +278,14 @@ class LeaveStaffApplicationsController extends Controller
              //   dd($leave_staff_entitlement->consumed_curr_year);
                 $leave_staff_entitlement->update();
             }
+            if($request->additional_alternate=='#')
+            {
+                $additional_aternate=null;
+            }
+            else
+            {
+                $additional_aternate=$request->additional_alternate;
+            }
             $update_result =  DB::table('leave_staff_applications')
                         ->where('id', $request->leave_staff_application_id)
                         ->update(['leave_id' => $request->type,
@@ -286,11 +295,12 @@ class LeaveStaffApplicationsController extends Controller
                         'no_of_days' => $request->no_of_days,
                         'reason' => $request->leave_reason,
                         'alternate' => $request->alternate,
-                        'additional_alternate' => $request->additional_alternate]);
+                        'additional_alternate' => $additional_aternate]);
 
              //dd($update_result);
             // = $leave_staff_applications->update();
-
+            $daywise_leave_result = false;
+            
             //checking if the previous start and end dates are modified
             if($leave_staff_applications->start != $request->from_date || $leave_staff_applications->end != $request->to_date){
 
@@ -299,7 +309,7 @@ class LeaveStaffApplicationsController extends Controller
 
                 //inserting the new values.
                 $period = CarbonPeriod::create($request->from_date, $request->to_date);
-                $daywise_leave_result = false;
+                
 
 
                 foreach ($period as $dt) {
@@ -359,7 +369,7 @@ class LeaveStaffApplicationsController extends Controller
         $to_year=Carbon::parse($request->to_date)->year;
         if($from_year!=$to_year)
         {
-          $result.="Error: Leave dates cannot be from two different years. Please create two different applications for the respective years";
+          $result.="Error: Leave dates cannot be from two different years. Please create two different applications for the respective years. ";
           return $result;
         }
         $staff_leave_entitlements=leave_staff_entitlements::where('staff_id',$staff->id)->where('leave_id',$request->type)->where('year',$from_year)->first();
@@ -368,7 +378,7 @@ class LeaveStaffApplicationsController extends Controller
         {
             if($request->no_of_days+$staff_leave_entitlements->consumed_curr_year>($staff_leave_entitlements->entitled_curr_year+$staff_leave_entitlements->accumulated))
             {
-                $result.="Error: You do not have that many leaves left to your credit. You can avail only ".($staff_leave_entitlements->entitled_curr_year+$staff_leave_entitlements->accumulated)-$staff_leave_entitlements->consumed_curr_year;
+                $result.="Error: You do not have that many leaves left to your credit. You can avail only ".($staff_leave_entitlements->entitled_curr_year+$staff_leave_entitlements->accumulated)-$staff_leave_entitlements->consumed_curr_year.".  ";
             }
         }
         
@@ -394,7 +404,7 @@ class LeaveStaffApplicationsController extends Controller
         //if $staff_leaves count is greater than 0 => the leave dates are clashing
         if(count($staff_leaves)>0)
         {
-            $result="Error: The day mentioned in this leave applicaiton is having an overlapping days of another leave application.";
+            $result="Error: The day mentioned in this leave applicaiton is having an overlapping days of another leave application. ";
             return $result;
         }
         // else indicates that the leave dates are not clashing hence, check for any leave that is ending on the previous day of this applications start date
@@ -471,7 +481,7 @@ class LeaveStaffApplicationsController extends Controller
                     
             }
 
-            if($staff_leaves_before_start_day!=null)
+            if($staff_leaves_before_start_day!=null  && $request->cl_type!='Afternoon' && $staff_leaves_before_start_day->cl_type!='Morning')
             {
                 
                 if(!empty($holidaydates))
@@ -483,8 +493,9 @@ class LeaveStaffApplicationsController extends Controller
 
                 while($previous_leave!=null && $previous_leave->cl_type!='Afternoon')
                 {
+                  
                     $staff_leaves_before_start_day=$previous_leave;
-                    $total_no_of_leave_days=$total_no_of_leave_days+floatval($staff_leaves_before_start_day->no_of_days);
+                    
                     $previous_date=Carbon::parse($staff_leaves_before_start_day->start)->addDays(-1)->format('Y-m-d');
                     $previous_leave=leave_staff_applications::
                         join('leaves','leaves.id','=','leave_staff_applications.leave_id')
@@ -495,35 +506,23 @@ class LeaveStaffApplicationsController extends Controller
                 
 
                 // dd($staff_leaves_before_start_day);
-                    if( $staff_leaves_before_start_day->leave_id==$request->type )
+               
+                    if( $staff_leaves_before_start_day->leave_id==$request->type && $request->cl_type!='Afternoon')
                     {
-
-                        if($leave->shortname=="CL")
-                        {
-                            if($request->cl_type=='Morning'||$request->cl_type=="Full")
-                            {
-                                //cl can be fullday or morning half day or afternoon half day
-                                //with previous leave, morning half day leave should not be more than max.
-                                $previous_leave_duration=$staff_leaves_before_start_day->no_of_days;
-                            }
-                        }
-                        else
-                        {
                             //the two leave are of same type so check for maximum days allowed
-                            $previous_leave_duration=$staff_leaves_before_start_day->no_of_days;
-                        }
+                            $total_no_of_leave_days=$total_no_of_leave_days+$staff_leaves_before_start_day->no_of_days;
+                        
                     }
                     else
                     {
                         $flag=0;
                         foreach($leave->combine_leave as $leavecombination)
                         {
-
-                            if($leavecombination->combined_id==$staff_leaves_before_start_day->leave_id ||
-                            ($staff_leaves_before_start_day->shortname=='CL' && $staff_leaves_before_start_day->cl_type=="Morning")
-                            || ($leave->shortname=='CL' && $request->cl_type=='Afternoon'))
+                         
+                            if($leavecombination->pivot->combined_id==$staff_leaves_before_start_day->leave_id || $request->cl_type=='Afternoon' || $staff_leaves_before_start_day->cl_type=='Morning')
                             {
                                 $flag=1;
+                                break;
                             }
                         }
                         if($flag==0)
@@ -587,7 +586,7 @@ class LeaveStaffApplicationsController extends Controller
 
             }
 
-            if($staff_leave_after_end_date!=null)
+            if($staff_leave_after_end_date!=null && $request->cl_type!='Morning' && $staff_leaves_before_start_day->cl_type!='Afternoon')
             {
                
                 if(!empty($holidaydatespost))
@@ -599,7 +598,7 @@ class LeaveStaffApplicationsController extends Controller
                 while($post_leave!=null && $post_leave->cl_type!='Morning')
                 {
                     $staff_leave_after_end_date=$post_leave; //required when next leave is present
-                    $total_no_of_leave_days=   $total_no_of_leave_days+floatval($staff_leave_after_end_date->no_of_days);
+                  
                     $next_date=Carbon::parse($staff_leave_after_end_date->end)->addDays(1)->format('Y-m-d');
                     $post_leave=leave_staff_applications::
                     join('leaves','leaves.id','=','leave_staff_applications.leave_id')
@@ -608,30 +607,22 @@ class LeaveStaffApplicationsController extends Controller
                     ->where('start',$next_date)
                     ->select('leaves.shortname','leave_staff_applications.*')->first();
                 
-                    if($staff_leave_after_end_date->leave_id==$request->type )
+                    if($staff_leave_after_end_date->leave_id==$request->type && $request->cl_type!='Morning' )
                     {
-                        if($leave->shortname=="CL" )
-                        {
-                            if($request->cl_type=='Afternoon'||$request->cl_type=="Full")
-                            {
-                                $next_leave_duration=$staff_leave_after_end_date->no_of_days;
-                            }
-                        }
-                        else
-                        {
-                            $next_leave_duration=$staff_leave_after_end_date->no_of_days;
-                        }
+                       
+                        $total_no_of_leave_days=$total_no_of_leave_days+$staff_leave_after_end_date->no_of_days;
+            
                     }
                     else
                     {
                         $flag=0;
+
                         foreach($leave->combine_leave as $leavecombination)
                         {
-                            if($leavecombination->combined_id==$staff_leave_after_end_date->leave_id ||
-                            ($staff_leave_after_end_date->shortname=='CL' && $staff_leave_after_end_date->cl_type=="Afternoon")
-                            || ($leave->shortname=="CL" && $request->cl_type=='Morning'))
+                            if($leavecombination->pivot->combined_id==$staff_leave_after_end_date->leave_id || $request->cl_type=='Morning' || $staff_leaves_before_start_day->cl_type=='Afternoon')
                             {
                                 $flag=1;
+                                break;
                             }
                         }
                         if($flag==0)
@@ -648,12 +639,13 @@ class LeaveStaffApplicationsController extends Controller
         if($request->no_of_days<$leave->min_days)
         {
 
-            $result= "Error:Request does not match the min days requirement - Min days allowed is ".$leave->min_days;
+            $result= "Error:Request does not match the min days requirement - Min days allowed is ".$leave->min_days.". ";
         }
 
         elseif($request->no_of_days+ $total_no_of_leave_days>$leave->max_days && $leave->max_days!=null)
         {
-            $result=$result. "Error:You cannot extend your leave days as it voilates the max days allowed for this leave type and Max days allowed is ".$leave->max_days;
+            dd($request->no_of_days." ".$total_no_of_leave_days);
+            $result=$result. "Error:You cannot extend your leave days as it voilates the max days allowed for this leave type and Max days allowed is ".$leave->max_days.". ";
         }
 
         //code for Rule-2.
@@ -671,7 +663,7 @@ class LeaveStaffApplicationsController extends Controller
         // dd($request->from_date.' carbon='.$leave_start_date.' three days after='.$three_days_from_current_date.' greaterthanor='.$leave_start_date->greaterThanOrEqualTo($three_days_from_current_date));
             if($leave_start_date->lessThan($three_days_from_current_date))
             {
-                $result=$result."Error:Application is rejected as the application must be done ".$leave->leave_rules[0]->prior_intimation_days." days before";
+                $result=$result."Error:Application is rejected as the application must be done ".$leave->leave_rules[0]->prior_intimation_days." days before. ";
             }
         }
 

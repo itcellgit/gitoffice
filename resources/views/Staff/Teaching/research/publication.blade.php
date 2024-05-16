@@ -232,7 +232,7 @@
 
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Link:</label>
-                                                                                <input type="url" id="pub_link" name="link" class="ti-form-input" placeholder="Link Should Be http://www." value="{{ old('link') }}">
+                                                                                <input type="url" id="pub_link" name="link" class="ti-form-input" placeholder="https://www.google.com" value="{{ old('link') }}">
                                                                                     @if($errors->has('link'))
                                                                                          <div class="text-red-700">{{ $errors->first('link') }}</div>
                                                                                      @endif
@@ -251,25 +251,62 @@
                                                                                     @endif
                                                                                 <div id="pub_authorroleError" class="error text-red-700"></div>
                                                                             </div>
-                                                                            <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
+                                                                        </div>
+                                                                        <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                                                            <div class="max-w-sm space-y-3 pb-6">
+                                                                                <label for="" class="ti-form-label font-bold">Volume:</label>
+                                                                                <input type="text" name="volume" class="ti-form-input" placeholder="Volume" id="pub_volume" value="{{ old('volume') }}">
+                                                                                 @if($errors->has('volume'))
+                                                                                     <div class="text-red-700">{{ $errors->first('volume') }}</div>
+                                                                                 @endif
+                                                                                <div id="pub_volumeError" class="error text-red-700"></div>
+                                                                            </div>
+                                                                            <div class="max-w-sm space-y-3 pb-6">
+                                                                                <label for="" class="ti-form-label font-bold">issue:</label>
+                                                                                <input type="text" name="issue" class="ti-form-input" placeholder="issue" id="pub_issue" value="{{ old('issue') }}">
+                                                                                 @if($errors->has('issue'))
+                                                                                     <div class="text-red-700">{{ $errors->first('issue') }}</div>
+                                                                                 @endif
+                                                                                <div id="pub_issueError" class="error text-red-700"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                                                            <div class="max-w-sm space-y-3 pb-6">
+                                                                                <label for="" class="ti-form-label font-bold">Page No:</label>
+                                                                                <input type="text" name="page_no" class="ti-form-input" placeholder="Page Number" id="pub_pageno" value="{{ old('page_no') }}">
+                                                                                 @if($errors->has('page_no'))
+                                                                                     <div class="text-red-700">{{ $errors->first('page_no') }}</div>
+                                                                                 @endif
+                                                                                <div id="pub_pagenumberError" class="error text-red-700"></div>
+                                                                            </div>
+                                                                            <div class="max-w-sm space-y-3 pb-6">
+                                                                                <label for="" class="ti-form-label font-bold">Year:<span class="text-red-500">*</span></label>
+                                                                                <input type="number" min="0" step="1" name="year" class="ti-form-input" placeholder="Year" id="pub_year" value="{{ old('pub_year') }}">
+                                                                                 @if($errors->has('year'))
+                                                                                     <div class="text-red-700">{{ $errors->first('year') }}</div>
+                                                                                 @endif
+                                                                                <div id="pub_yearError" class="error text-red-700"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
+                                                                            <div class="max-w-sm space-y-3 pb-6">
                                                                                 <div class="max-w-sm space-y-3 pb-6">
-                                                                                    <div class="max-w-sm space-y-3 pb-6">
-                                                                                        <label for="" class="ti-form-label pt-4 font-bold">Document:<span class="text-red-500">*Only PDF files up to 500 KB in size are accepted.</span></label>
-                                                                                        <span class="sr-only">Choose Profile photo</span>
-                                                                                            <input type="file" accept="application/pdf" name="document" id="pub_document" class="block w-full text-sm text-gray-500 dark:text-white/70 focus:outline-0
-                                                                                            ltr:file:mr-4 rtl:file:ml-4 file:py-2 file:px-4
-                                                                                            file:rounded-sm file:border-0
-                                                                                            file:text-sm file:font-semibold
-                                                                                            file:bg-primary file:text-white
-                                                                                            hover:file:bg-primary focus-visible:outline-none doc" required value="">
-                                                                                            @if($errors->has('document'))
-                                                                                                <div class="text-red-700">{{ $errors->first('document') }}</div>
-                                                                                            @endif
-                                                                                        <div id="pub_documentError" class="error text-red-700"></div>
-                                                                                    </div>
+                                                                                    <label for="" class="ti-form-label pt-4 font-bold">Document:<span class="text-red-500">*Only PDF files up to 500 KB in size are accepted.</span></label>
+                                                                                    <span class="sr-only">Choose Profile photo</span>
+                                                                                        <input type="file" accept="application/pdf" name="document" id="pub_document" class="block w-full text-sm text-gray-500 dark:text-white/70 focus:outline-0
+                                                                                        ltr:file:mr-4 rtl:file:ml-4 file:py-2 file:px-4
+                                                                                        file:rounded-sm file:border-0
+                                                                                        file:text-sm file:font-semibold
+                                                                                        file:bg-primary file:text-white
+                                                                                        hover:file:bg-primary focus-visible:outline-none doc" required value="">
+                                                                                        @if($errors->has('document'))
+                                                                                            <div class="text-red-700">{{ $errors->first('document') }}</div>
+                                                                                        @endif
+                                                                                    <div id="pub_documentError" class="error text-red-700"></div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
+                                                                        
 
                                                                     </div>
                                                                     <div class="ti-modal-footer">
@@ -304,7 +341,10 @@
                                                                         <th scope="col" class="dark:text-white/80 font-bold">DOI Number</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">Web Link of the Publication</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">Role of the Author</th>
-                                                                        {{-- <th scope="col" class="dark:text-white/80 font-bold">Document</th> --}}
+                                                                        <th scope="col" class="dark:text-white/80 font-bold">Volume</th>
+                                                                        <th scope="col" class="dark:text-white/80 font-bold">Issue</th>
+                                                                        <th scope="col" class="dark:text-white/80 font-bold">Page No</th>
+                                                                        <th scope="col" class="dark:text-white/80 font-bold">Year</th>
                                                                         @if(!isset($export) || !$export)
                                                                             <th scope="col" class="dark:text-white/80 font-bold ">Action</th>
                                                                         @endif
@@ -345,6 +385,12 @@
                                                                                 <td><span>{{$pub->doi_number}}</span></td>
                                                                                 <td><span>{{$pub->link}}</span></td>
                                                                                 <td><span>{{$pub->role}}</span></td>
+                                                                                
+                                                                                <td><span>{{$pub->volume}}</span></td>
+                                                                                <td><span>{{$pub->issue}}</span></td>
+                                                                                <td><span>{{$pub->page_no}}</span></td>
+                                                                                <td><span>{{$pub->year}}</span></td>
+
                                                                                 {{-- <td><span><a href={{asset('Uploads/Research/Publications/'.$pub->document)}} class='font-medium text-blue-600 dark:text-blue-500 hover:underline' target="_blank">{{$pub->document}}</a></span></td> --}}
                                                                                 @if(!isset($export) || !$export)
                                                                                     <td class="font-medium space-x-2 rtl:space-x-reverse">
@@ -516,7 +562,7 @@
 
                                                                                                                     </div>
                                                                                                                         <div class="max-w-sm space-y-3 pb-6">
-                                                                                                                        <label for="" class="ti-form-label font-bold">DOI Number:<span class="text-red-500">*</span></label>
+                                                                                                                        <label for="" class="ti-form-label font-bold">DOI Number:</label>
                                                                                                                         <input type="text" name="e_doi_number" class="ti-form-input" placeholder="Doi Number" id="pub_doi_number" value="{{$pub->doi_number}}">
                                                                                                                             @if($errors->has('e_doi_number'))
                                                                                                                             <div class="text-red-700">{{ $errors->first('e_doi_number') }}</div>
@@ -528,14 +574,14 @@
                                                                                                                 <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                                                                     <div class="max-w-sm space-y-3 pb-6">
                                                                                                                         <label for="" class="ti-form-label font-bold">Link:</label>
-                                                                                                                        <input type="url" name="e_link" class="ti-form-input" required placeholder="Link Should Be http://www." value="{{$pub->link}}">
+                                                                                                                        <input type="url" name="e_link" class="ti-form-input" placeholder="http://www.google.com" value="{{$pub->link}}">
                                                                                                                         @if($errors->has('e_link'))
                                                                                                                                 <div class="text-red-700">{{ $errors->first('e_link') }}</div>
                                                                                                                             @endif
                                                                                                                     </div>
                                                                                                                     <div class="max-w-sm space-y-3 pb-6">
                                                                                                                         <label for="" class="ti-form-label font-bold">Author Role:<span class="text-red-500">*</span></label>
-                                                                                                                        <select class="ti-form-select role" name="e_role">
+                                                                                                                        <select class="ti-form-select role" name="e_role" >
                                                                                                                             <option value="#">Choose One</option>
                                                                                                                             <option value="Author" {{$pub->role=='Author'? 'selected': ''}}>Author</option>
                                                                                                                             <option value="Co-Author" {{$pub->role=='Co-Author'?'selected':''}}>Co-Author</option>
@@ -546,6 +592,42 @@
                                                                                                                             <div class="text-red-700">{{ $errors->first('e_role') }}</div>
                                                                                                                         @endif
 
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                                                                                                    <div class="max-w-sm space-y-3 pb-6">
+                                                                                                                        <label for="" class="ti-form-label font-bold">Volume:</label>
+                                                                                                                        <input type="text" name="e_volume" class="ti-form-input" placeholder="Volume" id="pub_volume" value="{{$pub->volume}}">
+                                                                                                                         @if($errors->has('volume'))
+                                                                                                                             <div class="text-red-700">{{ $errors->first('volume') }}</div>
+                                                                                                                         @endif
+                                                                                                                        <div id="pub_volumemError" class="error text-red-700"></div>
+                                                                                                                    </div>
+                                                                                                                    <div class="max-w-sm space-y-3 pb-6">
+                                                                                                                        <label for="" class="ti-form-label font-bold">issue:</label>
+                                                                                                                        <input type="text" name="e_issue" class="ti-form-input" placeholder="issue" id="pub_issue" value="{{$pub->issue}}">
+                                                                                                                         @if($errors->has('issue'))
+                                                                                                                             <div class="text-red-700">{{ $errors->first('issue') }}</div>
+                                                                                                                         @endif
+                                                                                                                        <div id="pub_issueError" class="error text-red-700"></div>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                                                                                                    <div class="max-w-sm space-y-3 pb-6">
+                                                                                                                        <label for="" class="ti-form-label font-bold">Page No:</label>
+                                                                                                                        <input type="text" name="e_page_no" class="ti-form-input" placeholder="Page Number" value="{{$pub->page_no}}">
+                                                                                                                         @if($errors->has('page_no'))
+                                                                                                                             <div class="text-red-700">{{ $errors->first('page_no') }}</div>
+                                                                                                                         @endif
+                                                                                                                        <div id="pub_pagenumberError" class="error text-red-700"></div>
+                                                                                                                    </div>
+                                                                                                                    <div class="max-w-sm space-y-3 pb-6">
+                                                                                                                        <label for="" class="ti-form-label font-bold">Year:<span class="text-red-500">*</span></label>
+                                                                                                                        <input type="number" min="0" step="1" name="e_year" class="ti-form-input" placeholder="Year" id="pub_year" value="{{$pub->year}}">
+                                                                                                                         @if($errors->has('year'))
+                                                                                                                             <div class="text-red-700">{{ $errors->first('year') }}</div>
+                                                                                                                         @endif
+                                                                                                                        <div id="pub_yearError" class="error text-red-700"></div>
                                                                                                                     </div>
                                                                                                                 </div>
                                                                                                                 <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
@@ -566,7 +648,7 @@
 
                                                                                                                 </div>
                                                                                                                 <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
-                                                                                                                   <input type="hidden" name="validation_status" value="updated">
+                                                                                                                   
 
                                                                                                                 </div>
                                                                                                             </div>
@@ -705,10 +787,16 @@
                         var pub_doi_number = $('#pub_doi_number').val();
                         var pub_document = $('#pub_document').val();
                         var pubtype = $('#pubtype').val();
-
+                        var pub_volume = $('#pub_volume').val();
+                        var pub_issue = $('#pub_issue').val();
+                        var pub_pageno = $('#pub_pageno').val();
+                        var pub_year =$('#pub_year').val();
+                        
                         var flag = false;
 
 
+
+                        
 
                         if(pubtype =='#'){
                             $('#publication_typeError').text('Please Choose a correct option.');
@@ -725,16 +813,6 @@
                             }
                         }
 
-
-                        // if(pub_doi_number == ''){
-                        //     $('#pub_doi_numberError').text('DOI Number is missing');
-                        //     flag = true;
-                        // }else if (!/^[0-9a-zA-Z]*$/.test(pub_doi_number.trim())){
-                        //     $('#pub_doi_numberError').text('Please fill the correct value');
-                        //     flag = true;
-                        // }
-
-
                         if (pub_doi_number !== '') {
                             if (!/^[0-9a-zA-Z\s\-._]*$/.test(pub_doi_number)) {
                                 $('#pub_doi_numberError').text('');
@@ -748,10 +826,10 @@
                         if (pub_title.trim() === '') {
                             $('#pub_titleError').text('Title Name is missing');
                             flag = true;
-                        } else if (!/^[\w\s\/.,]+$/.test(pub_title.trim())) {
-                            $('#pub_titleError').text('Please fill the correct value');
-                            flag = true;
+                        } else {
+                            $('#pub_titleError').text(''); // Clear error message if title is not empty
                         }
+
 
 
 
@@ -770,13 +848,20 @@
                             $('#pub_authorroleError').text('Please Choose a correct option.');
                             flag = true;
                         }
-                        if (pub_link == '') {
-                            $('#pub_linkError').text('Web link is missing');
-                            flag = true;
-                        } else if (!isValidUrl(pub_link)) {
-                            $('#pub_linkError').text('Please enter a valid web link');
-                            flag = true;
+
+                      
+
+                        if (pub_link.trim() !== '') {
+                            if (!isValidUrl(pub_link)) { 
+                                $('#pub_linkError').text('Please enter a valid web link');
+                                flag = true;
+                            } else {
+                                $('#pub_linkError').text(''); 
+                            }
+                        } else {
+                            $('#pub_linkError').text('');
                         }
+
 
                          if(pub_document[0].files.length === 0){
                             //alert('file not choosen');

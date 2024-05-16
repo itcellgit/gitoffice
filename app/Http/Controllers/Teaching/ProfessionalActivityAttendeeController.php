@@ -238,44 +238,23 @@ class ProfessionalActivityAttendeeController extends Controller
           $year = date('Y', strtotime($activity_date));
           $month = date('M',strtotime($activity_date));
           $no="";
-          $professional_activity_attendee=professional_activity_attendee::where('from_date','<=',$year.'-12-31')->orderBy('id','desc')->first();
-          if($professional_activity_attendee==null){
-              $no="00001";
-          }
-          else
-          {
-              $oldyear=date('Y', strtotime($professional_activity_attendee->from_date));
-
-              if($oldyear<$year){
-                  $no="00001";
-              }
-              else
-              {
-                  $oldegov_id=$professional_activity_attendee->egov_id;
+          $professional_activity_attendee=professional_activity_attendee::whereYear('from_date', $year)->orderBy('id', 'desc')->first();
+        //dd($professional_activity_attendee);
+          if ($professional_activity_attendee == null || date('Y', strtotime($professional_activity_attendee->from_date)) < $year) {
+            $no = "00001";
+          
+        } else {
+              
+                    $oldegov_id=$professional_activity_attendee->egov_id;
                   //dd(substr($oldegov_id,9,10));
-                  $oldno=intval(substr($oldegov_id,9,10));
+                    $oldno=intval(substr($oldegov_id,9,10));
 
-                  $no=$oldno+1;
-
-                  if($no<10)
-                  {
-                      $no='0000'.$no;
-                  }
-                  if($no<100 && $no>=10)
-                  {
-                      $no='000'.$no;
-                  }
-                  if($no<1000 && $no>100)
-                  {
-                      $no='00'.$no;
-                  }
-                  if($no<10000 & $no>1000)
-                  {
-                      $no='0'.$no;
-                  }
+                    $oldno = intval(substr($oldegov_id, 9));
+                    $no = str_pad($oldno + 1, 5, '0', STR_PAD_LEFT);
+                 
               }
 
-          }
+          
           return ($year.$month."PA".$no);
         }
 

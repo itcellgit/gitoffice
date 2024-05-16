@@ -41,10 +41,170 @@
                     </div>
                     <!-- Start::main-content -->
                     <div class="grid grid-cols-12 gap-x-6">
+                        <!---countboxcode here-->
+                        <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 2 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 2 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($fundedproject_count->govt_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">GovtFunded</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($fundedproject_count->govt_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $fundedproject_count->govt_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 3 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 3 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($fundedproject_count->private_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">PrivateFunded</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($fundedproject_count->private_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $fundedproject_count->private_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="col-span-2 xl:col-span-3">
+                            <!-- Count box 3 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 3 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($fundedproject_count->principle_investigator_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">Priniciple-Investigator</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($fundedproject_count->principle_investigator_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $fundedproject_count->principle_investigator_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-2 xl:col-span-3">
+                            <!-- Count box 3 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 3 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($fundedproject_count->co_investigator_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">Co-Investigator</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($fundedproject_count->co_investigator_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $fundedproject_count->co_investigator_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 3 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 3 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($fundedproject_count->architect_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">Architect</p>
+                                            <div class="flex justify-between items-center">
+                                                <div class="flex flex-col">
+                                                    <h5 class="mb-0 text-2xl font-semibold
+                                                        @if($fundedproject_count->architect_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                        {{ $fundedproject_count->architect_count }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!---countbox ends here-->
+
                         <div class="col-span-12 xl:col-span-12">
                             <div class="box">
                                 <div class="box-body">                
                                     <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
+                                        <div class="avatar-container flex py-4">
+                                            <div class="avatar-wrapper flex items-center">
+                                                <div class="avatar rounded-sm p-1 bg-green-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2 ">Valid</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                <div class="avatar rounded-sm p-1 bg-red-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2">Invalid</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                <div class="avatar rounded-sm p-1 bg-yellow-400 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2">Updated</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center">
+                                                <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-semibold ml-2">New</div>
+                                            </div>
+                                        </div>
                                         <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto">
                                             <div style="display: flex; align-items: center;">
                                                 <div style="display: flex; flex-direction: column;">
@@ -62,25 +222,26 @@
                                             </div>
                                         <table id="fund" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                             <thead class="bg-gray-50 dark:bg-black/20">
-                                            <tr class="">
-                                                <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">E-Gov ID</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Proposal Title</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Role</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Amount</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Proposal Status</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Application Date</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Fund Received</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Project Status</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Completion Year</th>
-                                                {{-- Exclude the "Document" column when exporting --}}
-                                                @if(!isset($export) || !$export)
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Document</th>
-                                            @endif
-
-                                            </tr>
+                                                <tr class="">
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">E-Gov ID</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">Proposal Title</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">Role</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">Amount</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">Type</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">Proposal Status</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">Application Date</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">Fund Received</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">Project Status</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">Completion Year</th>
+                                                    {{-- Exclude the "Document" column when exporting --}}
+                                                    @if(!isset($export) || !$export)
+                                                        <th scope="col" class="dark:text-white/80 font-bold ">Document</th>
+                                                    @endif
+    
+                                                </tr>
                                             </thead>
                                             <tbody>
                                                  @php
@@ -92,10 +253,16 @@
                                                         <td><span>{{ $i++ }}</span></td>
                                                         <td><span>{{ $fund->fname . ' ' . $fund->mname . ' ' . $fund->lname }}</span></td>
                                                         <td><span>{{ $fund->dept_shortname }}</span></td>
-                                                        <td><span>{{ $fund->egov_id }}</span></td>
+                                                        {{-- <td><span>{{ $fund->egov_id }}</span></td> --}}
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Research/fundedproject/{{ $fund->document}}" class="text-blue-500">
+                                                                <span>{{$fund->egov_id}}</span>
+                                                            </a>
+                                                        </td>
                                                         <td><span>{{ $fund->proposal_title }}</span></td>
                                                         <td><span>{{ $fund->role }}</span></td>
                                                         <td><span>{{ $fund->amount }}</span></td>
+                                                        <td><span>{{ $fund->type }}</span></td>
                                                         <td><span>{{ $fund->proposal_status }}</span></td>
                                                         <td><span>{{\Carbon\Carbon::parse($fund->application_date)->format('d-M-Y') }}</span></td>
                                                         <td><span>{{ $fund->fund_received }}</span></td>

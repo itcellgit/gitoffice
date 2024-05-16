@@ -18,7 +18,7 @@ class ScheduledJobs extends Controller
         $statement="select staff.id, fname,mname, lname
         from staff, employee_types, association_staff
         where staff.id not in
-        (SELECT s.id
+        (SELECT s.id, s.date_of_superanuation
             FROM `staff` s, designation_staff, designations
              where s.id=designation_staff.staff_id and
                     designation_staff.designation_id=designations.id and
@@ -52,7 +52,34 @@ class ScheduledJobs extends Controller
                 {
                     if($l->shortname=="EL") //EL for vacational staff is 1/2 in Jan and 1/2 in July.
                     {
-                        $max_entitlement=ceil($l->max_entitlement/2); //flooring is use if incase no. of el are odd. In july use ceil.
+                        //check if the staff is going to retire in this year. If yes,
+                        // then check the max EL as per the number of days of service left in this year.
+                        //Example: if a person is going to get retired in August. Then the max entitlement will be for 8months.
+                        //if the employee is eligible for 7days, then allocate 5 in jan and 2 in july.
+                        //if the employee is eligible for 4days, then allocate 4 in jan and 0 in july.
+                        $dor=Carbon::parse($st->date_of_superanuation)->year;
+                        if($dor==$year)
+                        {
+                            //compute the max as per date of retirement.
+                            $retirement_date=Carbon::parse($st->date_of_superanuation);
+                            $first_of_jan=Carbon::parse($year.'-01-01');
+                            $no_of_days_remaining= floatval($retirement_date->diffInDays($first_of_jan));
+                            $max_entitlement_full=ceil($no_of_days_remaining*$l->max_entitlement/365);
+                            
+                            if($max_entitlement_full>ceil($l->max_entitlement/2))
+                            {
+                                $max_entitlement=ceil($l->max_entitlement/2);
+                            }
+                            else
+                            {
+                                $max_entitlement=$max_entitlement_full;
+                            }                    
+                        }
+                        else
+                        {
+                             $max_entitlement=ceil($l->max_entitlement/2); //flooring is use if incase no. of el are odd. In july use ceil.
+                        }
+                       
                     }
                     else
                     {

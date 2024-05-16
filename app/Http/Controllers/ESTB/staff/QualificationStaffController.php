@@ -18,15 +18,15 @@ class QualificationStaffController extends Controller
     /**
      * Store the staff qualifications
      */
-        public function store(Request $request, staff $staff)
-        {
-          //dd($request);
-            $result=$staff->qualifications()->attach($request->qualification_id,['board_university'=>$request->board_university,'grade'=>$request->grade,'yop'=>$request->yop,'status'=>$request->status]);
+    public function store(Request $request, staff $staff)
+    {
+        //dd($request);
+        $result=$staff->qualifications()->attach($request->qualification_id,['board_university'=>$request->board_university,'grade'=>$request->grade,'yop'=>$request->yop,'status'=>$request->status]);
 
-           // dd($result);
-            return redirect('/ESTB/staff/show/'.$staff->id)->with('status',1);
-          
-        }
+        // dd($result);
+        return redirect('/ESTB/staff/show/'.$staff->id)->with('status',1);
+        
+    }
 
 
     /**

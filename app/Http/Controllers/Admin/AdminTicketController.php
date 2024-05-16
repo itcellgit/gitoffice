@@ -16,10 +16,14 @@ class AdminTicketController extends Controller
 {
     public function index()
     {
-       
+        $user=auth()->user();
         $tickets=ticket::with('user')->latest()->get();
         
+        
         return view('Admin.tickets.adminticket',compact('tickets'));
+
+
+
     }
 
     /**
@@ -66,8 +70,10 @@ class AdminTicketController extends Controller
     public function show(ticket $ticket)
     {
         $postticket = post_ticket::where('ticket_id', $ticket->id)->get();
+        $user=auth()->user();
+        $staff = $user->staff;
        
-        return view('Admin.tickets.adminshowticket',compact('ticket','postticket'));
+        return view('Admin.tickets.adminshowticket',compact('ticket','postticket','staff'));
     }
 
     /**

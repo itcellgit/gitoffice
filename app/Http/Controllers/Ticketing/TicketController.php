@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Ticketing;
 
 use App\Models\Ticketing\ticket;
@@ -49,16 +48,46 @@ class TicketController extends Controller
         $ticket->save();
         //dd($request);
        // Update attachment if provided
-       if($request->file('attachment'))
-       {
-           $text=$request->file('attachment')->extension();
-           $contents=file_get_contents($request->file('attachment'));
-           $filename=Str::random(25);
-           $path="attachment/$filename.$text";
-           Storage::disk('public')->put($path,$contents);
-           $request->file('attachment')->move(public_path('attachment'), $filename);
-           $ticket->update(['attachment'=>$filename]);
-       }
+
+    //    if($request->file('attachment'))
+    //    {
+    //        $text=$request->file('attachment')->extension();
+    //        $contents=file_get_contents($request->file('attachment'));
+    //        $filename=Str::random(25);
+    //        $path="attachment/$filename.$text";
+    //        Storage::disk('public')->put($path,$contents);
+    //        $request->file('attachment')->move(public_path('attachment'), $filename);
+    //        $ticket->update(['attachment'=>$filename]);
+    //    }
+        
+    if ($request->hasFile('attachment')) {
+        $files = $request->file('attachment');
+        dd($files); // Check the uploaded files array
+        $filePaths = [];
+    
+        foreach ($files as $file) {
+            $extension = $file->extension();
+            dd($file, $extension); // Check each file and its extension
+            $contents = file_get_contents($file);
+            $filename = Str::random(25);
+            $path = "attachment/$filename.$extension";
+            Storage::disk('public')->put($path, $contents);
+            $file->move(public_path('attachment'), $filename . '.' . $extension);
+            $filePaths[] = $filename . '.' . $extension;
+        }
+        dd($filePaths); // Check the array of file paths
+    
+        // Assuming 'attachment' is a JSON column in the database
+        $ticket->update(['attachment' => json_encode($filePaths)]);
+    }
+    
+    
+        // Assuming 'attachment' is a JSON column in the database
+        // $ticket->update(['attachment' => json_encode($filePaths)]);
+    
+
+
+
 
         return redirect('ticket/dashboard');
     }
@@ -69,9 +98,11 @@ class TicketController extends Controller
     public function show(ticket $ticket)
     {
         $postticket = post_ticket::where('ticket_id', $ticket->id)->get();
+        $user=auth()->user();
+        $staff = $user->staff;
 
 
-         return view('Ticketing.showticket',compact('ticket','postticket'));
+         return view('Ticketing.showticket',compact('ticket','postticket','staff'));
     }
 
     /**

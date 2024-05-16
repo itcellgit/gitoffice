@@ -647,21 +647,13 @@
                         }
                     }
 
-                    // if(re_title == ''){
-                    //     $('#re_titleError').text('Title is missing');
-                    //     flag = true;
-                    // }else if (!/^[a-zA-Z\s]+$/.test(re_title.trim())){
-                    //     $('#re_titleError').text('Please fill the correct value');
-                    //     flag = true;
-                    // }
-
+                    
 
                     if (re_title.trim() === '') {
                         $('#re_titleError').text('Title is missing');
                         flag = true;
-                    } else if (!/^[\w\s\/.,]+$/.test(re_title.trim())) {
-                        $('#re_titleError').text('Please fill the correct value');
-                        flag = true;
+                    } else {
+                        $('#re_titleError').text(''); 
                     }
 
 

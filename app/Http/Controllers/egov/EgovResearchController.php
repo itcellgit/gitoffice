@@ -39,6 +39,7 @@ class EgovResearchController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Teaching')
+                                            ->where('department_staff.status','active')
                                             //->where('staff.employee_type','=','Teaching')
                                             ->where('department_id','=',$department_id)
                                             //->select('conferences_attendees.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -54,6 +55,7 @@ class EgovResearchController extends Controller
                                 ->join('departments','departments.id','=','department_staff.department_id')
                                 ->join('employee_types','employee_types.staff_id','=','staff.id')
                                 ->where('employee_types.employee_type','=','Teaching')
+                                ->where('department_staff.status','active')
                                 //->where('staff.employee_type','=','Teaching')
                                 ->where('department_id','=',$department_id)
                                 ->select(
@@ -83,6 +85,7 @@ class EgovResearchController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Teaching')
+                                            ->where('department_staff.status','active')
                                            // ->where('staff.employee_type','=','Teaching')
                                             ->where('department_id','=',$department_id)
                                             //->select('conferences_conducteds.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -99,6 +102,7 @@ class EgovResearchController extends Controller
                                 ->join('departments','departments.id','=','department_staff.department_id')
                                 ->join('employee_types','employee_types.staff_id','=','staff.id')
                                 ->where('employee_types.employee_type','=','Teaching')
+                                ->where('department_staff.status','active')
                                 ->where('department_id','=',$department_id)
                                 ->select(
                                     DB::raw('COUNT( CASE WHEN type_of_level = "National " THEN 1 END) as national_count'),
@@ -126,6 +130,7 @@ class EgovResearchController extends Controller
                                     ->where('employee_types.employee_type','=','Teaching')
                                    // ->where('staff.employee_type','=','Teaching')
                                     ->where('department_id','=',$department_id)
+                                    ->where('department_staff.status','=','active')
                                     //->select('publications.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
                                     ->select(DB::raw('DISTINCT(publications.egov_id)'),'publications.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
                                     ->get();
@@ -139,8 +144,9 @@ class EgovResearchController extends Controller
                                 ->join('departments','departments.id','=','department_staff.department_id')
                                 ->join('employee_types','employee_types.staff_id','=','staff.id')
                                 ->where('employee_types.employee_type','=','Teaching')
-
+                                ->where('department_staff.status','active')
                                 ->where('department_id','=',$department_id)
+
                                 ->select(
                                     DB::raw('COUNT( CASE WHEN level = "Q1 " THEN 1 END) as Q1_count'),
                                     DB::raw('COUNT( CASE WHEN level = "Q2" THEN 1 END) as Q2_count'),
@@ -151,19 +157,20 @@ class EgovResearchController extends Controller
                                     DB::raw('COUNT( CASE WHEN level = "UGC General" THEN 1 END) as UGC_count'),
                                     DB::raw('COUNT( CASE WHEN level = "SCI" THEN 1 END) as SCI_count'),
 
-
-
                                     DB::raw('COUNT( CASE WHEN role = "Author" THEN 1 END) as author_count'),
                                     DB::raw('COUNT( CASE WHEN role = "Co-Author" THEN 1 END) as co_author_count'),
                                     DB::raw('COUNT( CASE WHEN role = "Corresponding-author" THEN 1 END) as corresponding_author_count'),
 
-
-
-
                                     )
-                                ->first();
+                                    ->first();
 
 
+        //dd($teaching_publication);
+
+       
+
+        //dd($teaching_publication);
+     
         return view('/egov/Teaching/research/publication',compact(['publication','teaching_publication']));
     }
 
@@ -178,6 +185,7 @@ class EgovResearchController extends Controller
                                     ->join('departments','departments.id','=','department_staff.department_id')
                                     ->join('employee_types','employee_types.staff_id','=','staff.id')
                                     ->where('employee_types.employee_type','=','Teaching')
+                                    ->where('department_staff.status','active')
                                    // ->where('staff.employee_type','=','Teaching')
                                     ->where('department_id','=',$department_id)
                                     //->select('funded_projects.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -192,7 +200,7 @@ class EgovResearchController extends Controller
                             ->join('departments','departments.id','=','department_staff.department_id')
                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                             ->where('employee_types.employee_type','=','Teaching')
-
+                            ->where('department_staff.status','active')
                             ->where('department_id','=',$department_id)
                             ->select(
                                 DB::raw('COUNT( CASE WHEN role = "Principle Investigator" THEN 1 END) as principle_investigator_count'),
@@ -217,6 +225,7 @@ class EgovResearchController extends Controller
                         ->join('departments','departments.id','=','department_staff.department_id')
                         ->join('employee_types','employee_types.staff_id','=','staff.id')
                         ->where('employee_types.employee_type','=','Teaching')
+                        ->where('department_staff.status','active')
                         //->where('staff.employee_type','=','Teaching')
                         ->where('department_id','=',$department_id)
                         //->select('patents.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -231,6 +240,7 @@ class EgovResearchController extends Controller
                                 ->join('departments', 'departments.id', '=', 'department_staff.department_id')
                                 ->join('employee_types', 'employee_types.staff_id', '=', 'staff.id')
                                 ->where('employee_types.employee_type', '=', 'Teaching')
+                                ->where('department_staff.status','active')
                                 ->where('department_id', '=', $department_id)
                                 ->select(
                                     DB::raw('COUNT( CASE WHEN patents.status = "Granted" THEN patents.id END) as granted_count'),
@@ -255,6 +265,7 @@ class EgovResearchController extends Controller
                             ->join('departments','departments.id','=','department_staff.department_id')
                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                             ->where('employee_types.employee_type','=','Teaching')
+                            ->where('department_staff.status','active')
                            // ->where('staff.employee_type','=','Teaching')
                             ->where('department_id','=',$department_id)
                             //->select('copyrights.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -268,6 +279,7 @@ class EgovResearchController extends Controller
                         ->join('departments','departments.id','=','department_staff.department_id')
                         ->join('employee_types','employee_types.staff_id','=','staff.id')
                         ->where('employee_types.employee_type','=','Teaching')
+                        ->where('department_staff.status','active')
                         ->where('department_id','=',$department_id)
                         ->select(
                             DB::raw('COUNT( CASE WHEN copyrights.status = "Applied" THEN 1 END) as applied_count'),
@@ -290,6 +302,7 @@ class EgovResearchController extends Controller
                         ->join('departments','departments.id','=','department_staff.department_id')
                         ->join('employee_types','employee_types.staff_id','=','staff.id')
                         ->where('employee_types.employee_type','=','Teaching')
+                        ->where('department_staff.status','active')
                         //->where('staff.employee_type','=','Teaching')
                         ->where('department_id','=',$department_id)
                         ->select('general_achievements.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -311,6 +324,7 @@ class EgovResearchController extends Controller
                             ->join('departments','departments.id','=','department_staff.department_id')
                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                             ->where('employee_types.employee_type','=','Teaching')
+                            ->where('department_staff.status','active')
                            // ->where('staff.employee_type','=','Teaching')
                             ->where('department_id','=',$department_id)
                             //->select('reviewer_editors.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -324,6 +338,7 @@ class EgovResearchController extends Controller
                             ->join('departments','departments.id','=','department_staff.department_id')
                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                             ->where('employee_types.employee_type','=','Teaching')
+                            ->where('department_staff.status','active')
                             ->where('department_id','=',$department_id)
                             ->select(
                                 DB::raw('COUNT( CASE WHEN level = "Q1 " THEN 1 END) as Q1_count'),
@@ -352,6 +367,7 @@ class EgovResearchController extends Controller
                             ->join('departments','departments.id','=','department_staff.department_id')
                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                             ->where('employee_types.employee_type','=','Teaching')
+                            ->where('department_staff.status','active')
                            // ->where('staff.employee_type','=','Teaching')
                             ->where('department_id','=',$department_id)
                             //->select('book_publications.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -365,6 +381,7 @@ class EgovResearchController extends Controller
                         ->join('departments','departments.id','=','department_staff.department_id')
                         ->join('employee_types','employee_types.staff_id','=','staff.id')
                         ->where('employee_types.employee_type','=','Teaching')
+                        ->where('department_staff.status','active')
                         ->where('department_id','=',$department_id)
                         ->select(
                             DB::raw('COUNT( CASE WHEN book_level = "National" THEN 1 END) as national_count'),
@@ -390,6 +407,7 @@ class EgovResearchController extends Controller
                             ->join('departments','departments.id','=','department_staff.department_id')
                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                             ->where('employee_types.employee_type','=','Teaching')
+                            ->where('department_staff.status','active')
                            // ->where('staff.employee_type','=','Teaching')
                             ->where('department_id','=',$department_id)
                             //->select('consultancies.*','fname','staff.id as staff_id','mname','lname','employee_type','department_id','dept_shortname',)

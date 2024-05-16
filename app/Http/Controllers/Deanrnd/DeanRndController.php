@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Deanrnd;
 
 use App\Http\Controllers\Controller;
@@ -40,6 +39,7 @@ class DeanRndController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Non-Teaching')
+                                            ->where('department_staff.status','active')
                                             //->where('staff.employee_type','=','Non-teaching')
                                             //->select('professional_activity_attendees.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','organizer','sponsored','sponsored_by')
                                             ->select(DB::raw('DISTINCT(professional_activity_attendees.egov_id)'),'professional_activity_attendees.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','organizer','sponsored','sponsored_by')
@@ -55,6 +55,7 @@ class DeanRndController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Non-Teaching')
+                                            ->where('department_staff.status','active')
                                            // ->where('staff.employee_type','=','Non-teaching')
                                             //->select('professional_activity_conducteds.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','sponsoring_agency_name_address')
                                             ->select(DB::raw('DISTINCT(professional_activity_conducteds.egov_id)'),'professional_activity_conducteds.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','sponsoring_agency_name_address')
@@ -69,6 +70,7 @@ class DeanRndController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Teaching')
+                                            ->where('department_staff.status','active')
                                            // ->where('staff.employee_type','=','Teaching')
                                             //->select('professional_activity_attendees.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','organizer','sponsored','sponsored_by')
                                             ->select(DB::raw('DISTINCT(professional_activity_attendees.egov_id)'),'professional_activity_attendees.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','organizer','sponsored','sponsored_by')
@@ -83,6 +85,7 @@ class DeanRndController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Teaching')
+                                            ->where('department_staff.status','active')
                                            // ->where('staff.employee_type','=','Teaching')
                                             //->select('professional_activity_conducteds.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','sponsoring_agency_name_address')
                                             ->select(DB::raw('DISTINCT(professional_activity_conducteds.egov_id)'),'professional_activity_conducteds.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','sponsoring_agency_name_address')
@@ -98,6 +101,7 @@ class DeanRndController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Teaching')
+                                            ->where('department_staff.status','active')
                                            // ->where('staff.employee_type','=','Teaching')
                                             //->select('conferences_attendees.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
                                             ->select(DB::raw('DISTINCT(conferences_attendees.egov_id)'),'conferences_attendees.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -112,6 +116,7 @@ class DeanRndController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Teaching')
+                                            ->where('department_staff.status','active')
                                            // ->where('staff.employee_type','=','Teaching')
                                             //->select('conferences_conducteds.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
                                             ->select(DB::raw('DISTINCT(conferences_conducteds.egov_id)'),'conferences_conducteds.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -126,6 +131,7 @@ class DeanRndController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Teaching')
+                                            ->where('department_staff.status','active')
                                             //->where('staff.employee_type','=','Teaching')
                                             //->select('publications.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
                                             ->select(DB::raw('DISTINCT(publications.egov_id)'),'publications.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -139,6 +145,7 @@ class DeanRndController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Teaching')
+                                            ->where('department_staff.status','active')
                                             //->where('staff.employee_type','=','Teaching')
                                             //->select('funded_projects.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
                                             ->select(DB::raw('DISTINCT(funded_projects.egov_id)'),'funded_projects.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -153,6 +160,7 @@ class DeanRndController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Teaching')
+                                            ->where('department_staff.status','active')
                                            // ->where('staff.employee_type','=','Teaching')
                                             //->select('patents.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
                                             ->select(DB::raw('DISTINCT(patents.egov_id)'),'patents.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -166,6 +174,7 @@ class DeanRndController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Teaching')
+                                            ->where('department_staff.status','active')
                                             //->where('staff.employee_type','=','Teaching')
                                             //->select('copyrights.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
                                             ->select(DB::raw('DISTINCT(copyrights.egov_id)'),'copyrights.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -178,6 +187,7 @@ class DeanRndController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Teaching')
+                                            ->where('department_staff.status','active')
                                            // ->where('staff.employee_type','=','Teaching')
                                             //->select('general_achievements.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
                                             ->select(DB::raw('DISTINCT(general_achievements.egov_id)'),'general_achievements.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -218,14 +228,34 @@ class DeanRndController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Non-Teaching')
+                                            ->where('department_staff.status','active')
                                             //->where('staff.employee_type','=','Non-teaching')
                                             //->select('professional_activity_attendees.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','organizer','sponsored','sponsored_by')
                                             ->select(DB::raw('DISTINCT(professional_activity_attendees.egov_id)'),'professional_activity_attendees.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','organizer','sponsored','sponsored_by')
                                             ->get();
          //dd($professional_activity_attendee);
 
+                                            //category count 
+                                            $category_counts = DB::table('professional_activity_attendees')
+                                            ->join('professional_activity_attendee_staff', 'professional_activity_attendee_id', '=', 'professional_activity_attendees.id')
+                                            ->join('staff', 'staff.id', '=', 'professional_activity_attendee_staff.staff_id')
+                                            ->join('department_staff', 'department_staff.staff_id', '=', 'staff.id')
+                                            ->join('departments', 'departments.id', '=', 'department_staff.department_id')
+                                            ->join('employee_types', 'employee_types.staff_id', '=', 'staff.id')
+                                            ->where('employee_types.employee_type', '=', 'Non-Teaching')
+                                            ->where('department_staff.status','active')
+                                            //->where('department_id', '=', $department_id)
+                                            ->select(
+                                                DB::raw('COUNT( CASE WHEN category = "Seminar" THEN 1 END) as seminar_count'),
+                                                DB::raw('COUNT( CASE WHEN category = "Webinar" THEN 1 END) as webinar_count'),
+                                                DB::raw('COUNT( CASE WHEN category = "Certification Program" THEN 1 END) as certification_count'),
+                                                DB::raw('COUNT( CASE WHEN category = "Hackathon" THEN 1 END) as hackathon_count'),
 
-        return view('/Deanrnd/Non-Teaching/index',compact(['professional_activity_attendee']));
+                                            )
+                                            ->first();
+
+
+        return view('/Deanrnd/Non-Teaching/index',compact(['professional_activity_attendee','category_counts']));
     }
 
 
@@ -240,18 +270,39 @@ class DeanRndController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Non-Teaching')
+                                            ->where('department_staff.status','active')
                                             //->where('staff.employee_type','=','Non-teaching')
                                             //->select('professional_activity_conducteds.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','sponsoring_agency_name_address')
                                             ->select(DB::raw('DISTINCT(professional_activity_conducteds.egov_id)'),'professional_activity_conducteds.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','sponsoring_agency_name_address')
                                             ->get();
-        // dd($professional_activity_conducteds);
+                                            // dd($professional_activity_conducteds);
 
-        return view('/Deanrnd/Non-Teaching/conducted',compact(['professional_activity_conducteds']));
+                                        //categorycount
+                                        $conducted_category_counts = DB::table('professional_activity_conducteds')
+                                        ->join('professional_activity_conducted_staff','professional_activity_conducted_id','=','professional_activity_conducteds.id')
+                                        ->join('staff','staff.id','=','professional_activity_conducted_staff.staff_id')
+                                        ->join('department_staff','department_staff.staff_id','=','staff.id')
+                                        ->join('departments','departments.id','=','department_staff.department_id')
+                                        ->join('employee_types','employee_types.staff_id','=','staff.id')
+                                        ->where('employee_types.employee_type','=','Non-Teaching')
+                                        ->where('department_staff.status','active')
+
+                                    // ->where('department_id','=',$department_id)
+                                        ->select(
+                                            DB::raw('COUNT( CASE WHEN category = "Seminar" THEN 1 END) as seminar_count'),
+                                            DB::raw('COUNT( CASE WHEN category = "Webinar" THEN 1 END) as webinar_count'),
+                                            DB::raw('COUNT( CASE WHEN category = "Certification Program" THEN 1 END) as certification_count'),
+                                            DB::raw('COUNT( CASE WHEN category = "Hackathon" THEN 1 END) as hackathon_count'),
+                                        )
+                                        ->first();
+
+        return view('/Deanrnd/Non-Teaching/conducted',compact(['professional_activity_conducteds','conducted_category_counts']));
     }
 
        public function professional_activity_attended_teaching(Request $request)
     {
 
+       // $department_id=Session ::get('deptid');
 
         $professional_activity_attendee=DB::table('professional_activity_attendees')
                                             ->join('professional_activity_attendee_staff','professional_activity_attendee_id','=','professional_activity_attendees.id')
@@ -260,13 +311,39 @@ class DeanRndController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Teaching')
+                                            ->where('department_staff.status','active')
                                             //->where('staff.employee_type','=','Teaching')
                                             //->select('professional_activity_attendees.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','organizer','sponsored','sponsored_by')
                                             ->select(DB::raw('DISTINCT(professional_activity_attendees.egov_id)'),'professional_activity_attendees.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','organizer','sponsored','sponsored_by')
                                             ->get();
-         //dd($professional_activity_attendee);
+                                         //dd($professional_activity_attendee);
 
-        return view('/Deanrnd/Teaching/activityattended',compact(['professional_activity_attendee']));
+
+                                        //category count teaching
+                                        $teaching_category_counts_dean = DB::table('professional_activity_attendees')
+                                        ->join('professional_activity_attendee_staff', 'professional_activity_attendee_id', '=', 'professional_activity_attendees.id')
+                                        ->join('staff', 'staff.id', '=', 'professional_activity_attendee_staff.staff_id')
+                                        ->join('department_staff', 'department_staff.staff_id', '=', 'staff.id')
+                                        ->join('departments', 'departments.id', '=', 'department_staff.department_id')
+                                        ->join('employee_types', 'employee_types.staff_id', '=', 'staff.id')
+                                        ->where('employee_types.employee_type', '=', 'Teaching')
+                                        ->where('department_staff.status','active')
+                                        //->where('department_id', '=', $department_id)
+                                        ->select(
+                                            DB::raw('COUNT( CASE WHEN category = "Seminar" THEN 1 END) as seminar_count'),
+                                            DB::raw('COUNT( CASE WHEN category = "Webinar" THEN 1 END) as webinar_count'),
+                                            DB::raw('COUNT( CASE WHEN category = "Certification Program" THEN 1 END) as certification_count'),
+                                            DB::raw('COUNT( CASE WHEN category = "Workshop" THEN 1 END) as workshop_count'),
+                                            DB::raw('COUNT( CASE WHEN category = "FDP" THEN 1 END) as FDP_count'),
+                                            DB::raw('COUNT( CASE WHEN category = "STTP" THEN 1 END) as STTP_count'),
+                                            DB::raw('COUNT( CASE WHEN category = "MDP/EDP" THEN 1 END) as MDP_FDP_count'),
+                                            DB::raw('COUNT( CASE WHEN category = "Hackathon" THEN 1 END) as hackathon_count'),
+                                            DB::raw('COUNT( CASE WHEN category = "Space-Talk" THEN 1 END) as space_talk_count'),
+                                            DB::raw('COUNT( CASE WHEN category = "Site Visit" THEN 1 END) as site_visit_count'),
+                                            )
+                                        ->first();
+
+        return view('/Deanrnd/Teaching/activityattended',compact(['professional_activity_attendee','teaching_category_counts_dean']));
     }
 
     public function professional_activity_conducted_teaching(Request $request)
@@ -280,13 +357,39 @@ class DeanRndController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Teaching')
+                                            ->where('department_staff.status','active')
                                             //->where('staff.employee_type','=','Teaching')
                                             //->select('professional_activity_conducteds.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','sponsoring_agency_name_address')
                                             ->select(DB::raw('DISTINCT(professional_activity_conducteds.egov_id)'),'professional_activity_conducteds.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','sponsoring_agency_name_address')
                                             ->get();
-        // dd($professional_activity_conducteds);
+                                            // dd($professional_activity_conducteds);
+        
+                                                //category count for conducted
+                                                $conducted_category_counts= DB::table('professional_activity_conducteds')
+                                                ->join('professional_activity_conducted_staff','professional_activity_conducted_id','=','professional_activity_conducteds.id')
+                                                ->join('staff','staff.id','=','professional_activity_conducted_staff.staff_id')
+                                                ->join('department_staff','department_staff.staff_id','=','staff.id')
+                                                ->join('departments','departments.id','=','department_staff.department_id')
+                                                ->join('employee_types','employee_types.staff_id','=','staff.id')
+                                                ->where('department_staff.status','active')
+                                                ->where('employee_types.employee_type','=','Teaching')
 
-        return view('/Deanrnd/Teaching/activityconducted',compact(['professional_activity_conducteds']));
+                                                //->where('department_id','=',$department_id)
+                                                ->select(
+                                                    DB::raw('COUNT( CASE WHEN category = "Seminar" THEN 1 END) as seminar_count'),
+                                                    DB::raw('COUNT( CASE WHEN category = "Webinar" THEN 1 END) as webinar_count'),
+                                                    DB::raw('COUNT( CASE WHEN category = "Certification Program" THEN 1 END) as certification_count'),
+                                                    DB::raw('COUNT( CASE WHEN category = "Workshop" THEN 1 END) as workshop_count'),
+                                                    DB::raw('COUNT( CASE WHEN category = "FDP" THEN 1 END) as FDP_count'),
+                                                    DB::raw('COUNT( CASE WHEN category = "STTP" THEN 1 END) as STTP_count'),
+                                                    DB::raw('COUNT( CASE WHEN category = "MDP/EDP" THEN 1 END) as MDP_FDP_count'),
+                                                    DB::raw('COUNT( CASE WHEN category = "Hackathon" THEN 1 END) as hackathon_count'),
+                                                    DB::raw('COUNT( CASE WHEN category = "Space-Talk" THEN 1 END) as space_talk_count'),
+                                                    DB::raw('COUNT( CASE WHEN category = "Site Visit" THEN 1 END) as site_visit_count'),
+                                                )
+                                                ->first();
+
+        return view('/Deanrnd/Teaching/activityconducted',compact(['professional_activity_conducteds','conducted_category_counts']));
     }
 
 

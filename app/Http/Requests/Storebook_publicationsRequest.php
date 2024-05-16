@@ -25,13 +25,13 @@ class Storebook_publicationsRequest extends FormRequest
         return
          [
 
-            'bc_title' => ['required', 'regex:/^[a-zA-Z\s0-9]+$/'],
+            //'bc_title' => ['required', 'regex:/^[a-zA-Z\s0-9]+$/'],
             'bc_book_level' => ['required', Rule::in(['National', 'International'])],
             'bc_publisher_name'=>['required'],
             'bc_edition'=>[],
             'bc_doi'=>[],
             'bc_date'=>['required','date'],
-            'bc_issue'=>[],
+            //'bc_issue'=>[],
             'bc_type'=>['required', Rule::in(['Book', 'Chapter'])],
             // 'bc_chapter_title'=>[''],
             // 'bc_start_page_no'=>['numeric'],
@@ -44,7 +44,7 @@ class Storebook_publicationsRequest extends FormRequest
     {
         return
         [
-            'bc_title.required'=>'title is required field',
+            //'bc_title.required'=>'title is required field',
            //'bc_title.regex' => 'The title field should contain only letters and spaces.',
             'bc_book_level.required'=>'Book_level is required field',
             'bc_book_level.in'=>'Please select a valid option from the provided choices',
@@ -52,13 +52,9 @@ class Storebook_publicationsRequest extends FormRequest
             'bc_publisher_name.regex'=>'The Publisher name field should contain only letters and spaces.',
             'bc_edition.regex'=>'The edition field should contain only letters and spaces.',
             'bc_date.required'=>'date is required field',
-            'bc_issue.regex'=>'The edition field should contain only letters and spaces.',
             'bc_type.required'=>'type is required field',
             'bc_type.in'=>'Please select a valid option from the provided choices',
-            //'bc_chapter_title.required'=>'chapter_title is required field',
-            //'bc_chapter_title.regex' => 'The chapter title field should contain only letters and spaces.',
-            //'bc_start_page_no.numeric'=>'Start page no should contain only numbers',
-            //'bc_end_page_no.numeric'=>'End page no should contain only numbers',
+           
 
 
         ];

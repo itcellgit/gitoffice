@@ -30,11 +30,11 @@ class Storeconferences_attendeeRequest extends FormRequest
             'from_date'=> ['required','date'],
             'to_date'=> ['required','date'],
             'no_of_days'=> ['required','numeric','min:1','max:365'],
-            'place'=> ['required', 'alpha'],
+            //'place'=> ['required', 'alpha'],
             'sponsored' => ['required', Rule::in(['Yes', 'No'])],
            'sponsored_by'=>['sometimes'],
             'amount'=> [''],
-            'weblink'=> ['url'],
+            
             'type_of_level' => ['required', Rule::in(['National', 'International'])],
             'ISSN_NO' =>[],
             'document'=>['required','file','mimes:pdf'],
@@ -55,14 +55,12 @@ class Storeconferences_attendeeRequest extends FormRequest
             'no_of_days.min'=>'no_of_days should be min 1 day',
             'no_of_days.max'=>'no_of_days should be max 365 days',
             'place.required'=>'place is required field',
-            'place.alpha'=>'place can be characters only',
+           
             'sponsored.required'=>'sponsored is required field',
             'sponsored.in'=>'Please select a valid option from the provided choices',
-           // 'sponsored_by.required'=>'sponsored by name is required field',
-            //'sponsored_by.in'=>'Please select a valid option from the provided choices',
-            //'sponsored_by.regex' => 'The sponsored by field should contain only letters and spaces.',
+       
             'amount.numeric'=>'amount can be numbers only',
-            'weblink.url'=>'The web link must be valid url',
+          
 
      ];
     }

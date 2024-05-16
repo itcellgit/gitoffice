@@ -31,12 +31,11 @@ class Updateconferences_attendeeRequest extends FormRequest
             'edit_from_date'=>['required','date'],
             'edit_to_date'=>['required','date'],
             'edit_no_of_days'=>['required','numeric','min:1','max:255'],
-            //'edit_title' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
-            'edit_place'=>['required', 'alpha'],
+           
             'edit_sponsored' => ['required', Rule::in(['Yes', 'No'])],
             'edit_sponsored_by'=>['sometimes'],
             'edit_amount'=>[],
-            'edit_weblink'=>['url'],
+          
             'edit_type_of_level' => [Rule::in(['National', 'International'])],
             'edit_ISSN_NO' =>[],
             'document'=>['required','file','mimes:pdf'],
@@ -58,14 +57,13 @@ class Updateconferences_attendeeRequest extends FormRequest
             'edit_no_of_days.max'=>'no_of_days should be max 365 days',
             // 'edit_title.required'=>'title  is required field',
             // 'edit_title.regex' => 'The title field should contain only letters and spaces.',
-            'edit_place.required'=>'place is required field',
-            'edit_place.alpha'=>'place can be characters only',
+            // 'edit_place.required'=>'place  is required field',
             'edit_sponsored.required'=>'sponsored is required field',
             'edit_sponsored.in'=>'Please select a valid option from the provided choices',
             //'edit_sponsored_by.required'=>'edit_sponsored by  is required field',
             //'edit_sponsored_by.regex' => 'The edit_sponsored by field should contain only letters and spaces.',
             'edit_amount.numeric'=>'amount can be numbers only',
-            'edit_weblink.url'=>'The web link must be valid url',
+            
 
 
      ];

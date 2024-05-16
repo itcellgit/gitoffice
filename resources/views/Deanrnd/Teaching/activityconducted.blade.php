@@ -40,10 +40,305 @@
                     </div>
                     <!-- Start::main-content -->
                     <div class="grid grid-cols-12 gap-x-6">
-                        <div class="col-span-12 xl:col-span-12">
+                           <!-- Add count boxes here -->
+                           <div class="col-span-2 xl:col-span-2">
+                            <!-- Count box 1 -->
+                            <div class="box box-sm">
+                                <!-- Content for count box 1 -->
+                                <div class="box-body">
+                                    <div class="flex">
+                                        <div class="ltr:mr-2 rtl:ml-2">
+                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                @if($conducted_category_counts->seminar_count == 0) text-red-500 @endif">
+                                                <i class="ti ti-users text-2xl leading-none"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-bold">Seminar</p>
+                                                <div class="flex justify-between items-center">
+                                                    <div class="flex flex-col">
+                                                         <h5 class="mb-0 text-2xl font-semibold
+                                                            @if($conducted_category_counts->seminar_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                                {{ $conducted_category_counts->seminar_count }}
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="col-span-2 xl:col-span-2">
+                                <!-- Count box 2 -->
+                                <div class="box box-sm">
+                                    <!-- Content for count box 2 -->
+                                    <div class="box-body">
+                                        <div class="flex">
+                                            <div class="ltr:mr-2 rtl:ml-2">
+                                                <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                     @if($conducted_category_counts->webinar_count == 0) text-red-500 @endif">
+                                                        <i class="ti ti-users text-2xl leading-none"></i>
+                                                </div>
+                                            </div>
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-bold">Webinar</p>
+                                                        <div class="flex justify-between items-center">
+                                                            <div class="flex flex-col">
+                                                                <h5 class="mb-0 text-2xl font-semibold
+                                                                    @if($conducted_category_counts->webinar_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                                    {{ $conducted_category_counts->webinar_count }}
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-span-2 xl:col-span-2">
+                                    <!-- Count box 3 -->
+                                    <div class="box box-sm">
+                                        <!-- Content for count box 3 -->
+                                        <div class="box-body">
+                                            <div class="flex">
+                                                <div class="ltr:mr-2 rtl:ml-2">
+                                                    <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                        @if($conducted_category_counts->certification_count == 0) text-red-500 @endif">
+                                                        <i class="ti ti-users text-2xl leading-none"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-bold">Certification</p>
+                                                    <div class="flex justify-between items-center">
+                                                        <div class="flex flex-col">
+                                                            <h5 class="mb-0 text-2xl font-semibold
+                                                                @if($conducted_category_counts->certification_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                                {{ $conducted_category_counts->certification_count }}
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="col-span-2 xl:col-span-2">
+                                    <!-- Count box 4 -->
+                                    <div class="box box-sm">
+                                    <!-- Content for count box 4 -->
+                                    <div class="box-body">
+                                        <div class="flex">
+                                            <div class="ltr:mr-2 rtl:ml-2">
+                                                <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                    @if($conducted_category_counts->workshop_count == 0) text-red-500 @endif">
+                                                    <i class="ti ti-users text-2xl leading-none"></i>
+                                                </div>
+                                            </div>
+                                            <div class="flex-1">
+                                                <p class="text-sm font-bold">Workshop</p>
+                                                <div class="flex justify-between items-center">
+                                                    <div class="flex flex-col">
+                                                        <h5 class="mb-0 text-2xl font-semibold
+                                                            @if($conducted_category_counts->workshop_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                            {{ $conducted_category_counts->workshop_count }}
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="col-span-2 xl:col-span-2">
+                                    <!-- Count box 5 -->
+                                    <div class="box box-sm">
+                                        <!-- Content for count box 4 -->
+                                        <div class="box-body">
+                                            <div class="flex">
+                                                <div class="ltr:mr-2 rtl:ml-2">
+                                                    <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                        @if($conducted_category_counts->FDP_count == 0) text-red-500 @endif">
+                                                        <i class="ti ti-users text-2xl leading-none"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-bold">FDP</p>
+                                                    <div class="flex justify-between items-center">
+                                                        <div class="flex flex-col">
+                                                            <h5 class="mb-0 text-2xl font-semibold
+                                                                @if($conducted_category_counts->FDP_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                                {{ $conducted_category_counts->FDP_count }}
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-span-2 xl:col-span-2">
+                                <!-- Count box 6 -->
+                                <div class="box box-sm">
+                                    <!-- Content for count box 6 -->
+                                    <div class="box-body">
+                                        <div class="flex">
+                                            <div class="ltr:mr-2 rtl:ml-2">
+                                                <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                    @if($conducted_category_counts->STTP_count == 0) text-red-500 @endif">
+                                                    <i class="ti ti-users text-2xl leading-none"></i>
+                                                </div>
+                                            </div>
+                                            <div class="flex-1">
+                                                <p class="text-sm font-bold">STTP</p>
+                                                    <div class="flex justify-between items-center">
+                                                        <div class="flex flex-col">
+                                                            <h5 class="mb-0 text-2xl font-semibold
+                                                                @if($conducted_category_counts->STTP_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                                {{ $conducted_category_counts->STTP_count }}
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                               <div class="col-span-2 xl:col-span-2">
+                                    <!-- Count box 7 -->
+                                    <div class="box box-sm">
+                                        <!-- Content for count box 7 -->
+                                        <div class="box-body">
+                                            <div class="flex">
+                                                <div class="ltr:mr-2 rtl:ml-2">
+                                                    <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                        @if($conducted_category_counts->MDP_FDP_count == 0) text-red-500 @endif">
+                                                        <i class="ti ti-users text-2xl leading-none"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-bold">MDP/FDP</p>
+                                                        <div class="flex justify-between items-center">
+                                                            <div class="flex flex-col">
+                                                                 <h5 class="mb-0 text-2xl font-semibold
+                                                                    @if($conducted_category_counts->MDP_FDP_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                                        {{ $conducted_category_counts->MDP_FDP_count }}
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="col-span-2 xl:col-span-2">
+                                <!-- Count box 8-->
+                                    <div class="box box-sm">
+                                        <!-- Content for count box 8 -->
+                                        <div class="box-body">
+                                            <div class="flex">
+                                                <div class="ltr:mr-2 rtl:ml-2">
+                                                    <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                        @if($conducted_category_counts->hackathon_count == 0) text-red-500 @endif">
+                                                        <i class="ti ti-users text-2xl leading-none"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-bold">Hackathon</p>
+                                                        <div class="flex justify-between items-center">
+                                                            <div class="flex flex-col">
+                                                                <h5 class="mb-0 text-2xl font-semibold
+                                                                    @if($conducted_category_counts->hackathon_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                                        {{ $conducted_category_counts->hackathon_count }}
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-span-2 xl:col-span-2">
+                                    <!-- Count box 9 -->
+                                    <div class="box box-sm">
+                                        <!-- Content for count box 9 -->
+                                        <div class="box-body">
+                                            <div class="flex">
+                                                <div class="ltr:mr-2 rtl:ml-2">
+                                                    <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                        @if($conducted_category_counts->space_talk_count == 0) text-red-500 @endif">
+                                                        <i class="ti ti-users text-2xl leading-none"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-bold">Space-Talk</p>
+                                                        <div class="flex justify-between items-center">
+                                                            <div class="flex flex-col">
+                                                                 <h5 class="mb-0 text-2xl font-semibold
+                                                                    @if($conducted_category_counts->space_talk_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                                        {{ $conducted_category_counts->space_talk_count }}
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-span-2 xl:col-span-2">
+                                    <!-- Count box 10 -->
+                                    <div class="box box-sm">
+                                        <!-- Content for count box 10 -->
+                                        <div class="box-body">
+                                            <div class="flex">
+                                                <div class="ltr:mr-2 rtl:ml-2">
+                                                    <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
+                                                        @if($conducted_category_counts->site_visit_count == 0) text-red-500 @endif">
+                                                        <i class="ti ti-users text-2xl leading-none"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-bold">Site Visit</p>
+                                                        <div class="flex justify-between items-center">
+                                                            <div class="flex flex-col">
+                                                                 <h5 class="mb-0 text-2xl font-semibold
+                                                                    @if($conducted_category_counts->site_visit_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
+                                                                        {{ $conducted_category_counts->site_visit_count }}
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                         <!--Count End Here--> 
+                         
+                       <div class="col-span-12 xl:col-span-12">
                             <div class="box">
                                 <div class="box-body">                
                                     <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
+                                        <div class="avatar-container flex py-4">
+                                            <div class="avatar-wrapper flex items-center">
+                                                <div class="avatar rounded-sm p-1 bg-green-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2 ">Valid</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                <div class="avatar rounded-sm p-1 bg-red-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2">Invalid</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                <div class="avatar rounded-sm p-1 bg-yellow-400 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2">Updated</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center">
+                                                <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-semibold ml-2">New</div>
+                                            </div>
+                                        </div>
+                                        <!-- Add the export button here -->
                                         <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto">
                                             <div style="display: flex; align-items: center;">
                                                 <div style="display: flex; flex-direction: column;">
@@ -76,6 +371,8 @@
                                                 <th scope="col" class="dark:text-white/80 font-bold ">No Of Days</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Sponsored</th>
                                                 <th scope="col" class="dark:text-white/80 font-bold ">Sponsoring Agency Name And Address</th>
+                                                <th scope="col" class="dark:text-white/80 font-bold ">Place</th>
+
 
                                                  {{-- Exclude the "Document" column when exporting --}}
                                                       @if(!isset($export) || !$export)
@@ -96,7 +393,11 @@
                                                         <td><span>{{ $i++ }}</span></td>
                                                         <td><span>{{ $con->fname . ' ' . $con->mname . ' ' . $con->lname }}</span></td>
                                                         <td><span>{{ $con->dept_shortname }}</span></td>
-                                                        <td><span>{{ $con->egov_id }}</span></td>
+                                                        <td>
+                                                            <a href="https://git.edu/storage/Uploads/Professional_Activity_Conducted/{{ $con->document }}" class="text-blue-500">
+                                                                <span>{{$con->egov_id}}</span>
+                                                            </a>
+                                                        </td>
                                                         <td><span>{{ $con->title }}</span></td>
                                                         <td><span>{{ $con->role }}</span></td>
                                                         <td><span>{{ $con->level }}</span></td>
@@ -106,7 +407,14 @@
                                                         <td><span>{{\Carbon\Carbon::parse($con->to_date)->format('d-M-Y') }}</span></td>
                                                         <td><span>{{ $con->no_of_days }}</span></td>
                                                         <td><span>{{ $con->sponsored }}</span></td>
-                                                        <td><span>{{ $con->sponsoring_agency_name_address }}</span></td>
+                                                        {{-- <td><span>{{ $con->sponsoring_agency_name_address }}</span></td> --}}
+                                                        <td>
+                                                            <span>
+                                                                {{ $con->sponsored == 'No' ? '--NA--' : $con->sponsoring_agency_name_address }}
+                                                            </span>
+                                                        </td>
+                                                        <td><span>{{ $con->place }}</span></td>
+
                                                         {{-- <td><span>{{ $act->sponsored_by }}</span></td> --}}
                                                          @if(!isset($export) || !$export)
                                                             {{-- <td><span><a href={{asset('Uploads/Professional_Activity_Conducted/'.$con->document)}} class='font-medium text-blue-600 dark:text-blue-500 hover:underline' target="_blank">{{$con->document}}</a></span></td> --}}

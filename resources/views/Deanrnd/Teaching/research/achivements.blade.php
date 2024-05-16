@@ -45,24 +45,45 @@
                             <div class="box">
                                 <div class="box-body">                
                                     <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
+                                        <div class="avatar-container flex py-4">
+                                            <div class="avatar-wrapper flex items-center">
+                                                <div class="avatar rounded-sm p-1 bg-green-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2 ">Valid</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                <div class="avatar rounded-sm p-1 bg-red-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2">Invalid</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center mx-2">
+                                                <div class="avatar rounded-sm p-1 bg-yellow-400 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-bold ml-2">Updated</div>
+                                            </div>
+
+                                            <div class="avatar-wrapper flex items-center">
+                                                <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
+                                                <div class="avatar-text font-semibold ml-2">New</div>
+                                            </div>
+                                        </div>
                                         <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto">
-                                            <div class="flex justify-end mt-4">
+                                        <div class="flex justify-end mt-4">
                                                 <button id="exportToExcel" class="bg-green-500 text-white px-4 py-2 rounded-md focus:outline-none hover:bg-green-600">Export to Excel</button>
                                             </div>
                                         <table id="achivement" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                             <thead class="bg-gray-50 dark:bg-black/20">
-                                            <tr class="">
-                                                <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Award</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Year</th>
-                                                <th scope="col" class="dark:text-white/80 font-bold ">Details</th>
-                                                   {{-- Exclude the "Document" column when exporting --}}
-                                                   @if(!isset($export) || !$export)
-                                                   <th scope="col" class="dark:text-white/80 font-bold ">Document</th>
-                                               @endif
-                                            </tr>
+                                                <tr class="">
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">Dept Short Name</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">Award</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">Year</th>
+                                                    <th scope="col" class="dark:text-white/80 font-bold ">Details</th>
+                                                    {{-- Exclude the "Document" column when exporting --}}
+                                                    @if(!isset($export) || !$export)
+                                                        <th scope="col" class="dark:text-white/80 font-bold ">Document</th>
+                                                    @endif
+                                                </tr>
                                             </thead>
                                             <tbody>
                                                 @php
@@ -74,6 +95,7 @@
                                                         <td><span>{{ $i++ }}</span></td>
                                                         <td><span>{{ $achive->fname . ' ' . $achive->mname . ' ' . $achive->lname }}</span></td>
                                                         <td><span>{{ $achive->dept_shortname }}</span></td>
+                                                        
                                                         <td><span>{{ $achive->award }}</span></td>
                                                         <td><span>{{ $achive->year }}</span></td>
                                                         <td><span>{{ $achive->details }}</span></td>

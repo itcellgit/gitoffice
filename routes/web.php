@@ -24,7 +24,12 @@ use App\Http\Controllers\NonTeaching\NonTeachingController;
 use App\Http\Controllers\ESTB\DepartmentController;
 use App\Http\Controllers\ESTB\QualificationController;
 
+
+
 use App\Http\Controllers\Dean_admin\DeanadminController;
+
+use App\Http\Controllers\ESTB\festivaladvanceController;
+use App\Http\Controllers\ESTB\laptoploanController;
 
 
 
@@ -39,6 +44,8 @@ use App\Http\Controllers\ESTB\NTpayscaleController;
 use App\Http\Controllers\ESTB\NtcpayscaleController;
 use App\Http\Controllers\ESTB\SalaryHeadsController;
 use App\Http\Controllers\ESTB\TdsheadsController;
+use App\Http\Controllers\ESTB\TaxSlabController;
+use App\Http\Controllers\ESTB\TaxHeadsController;
 use App\Http\Controllers\ESTB\TeachingPayscaleController;
 use App\Http\Controllers\ESTB\AllowancesController;
 use App\Http\Controllers\ESTB\StaffController;
@@ -69,6 +76,10 @@ use App\Http\Controllers\ESTB\LeaveRulesController;
 use App\Http\Controllers\ESTB\LeaveController;
 use App\Http\Controllers\ESTB\LeaveStaffEntitlementController;
 use App\Http\Controllers\ESTB\HolidayrhController;
+
+//Grading related
+use App\Http\Controllers\ESTB\GradeMappingController;
+use App\Http\Controllers\ESTB\GradingStaffController;
 
 //teaching related leave
 use App\Http\Controllers\Teaching\TeachingLeaveController;
@@ -172,6 +183,10 @@ Route::get('/biometric', function () {
     $biometric=DB::connection('mysql2')->table('devicelogs_4_2024')->get();
     dd($biometric);
 });
+Route::post('/biometric_data', [biometricController::class, 'biometric_data'])->name('biometric_data');
+
+
+
 Route::get('/send-welcome-email', [EmailController::class, 'sendWelcomeEmail']);
 // Route::get('', [Controller::class, 'index']);
 Route::middleware(['cors','auth','role:'.UserRoles::SU->value,'middleware' => 'prevent-back-history'])->group(function(){
@@ -360,6 +375,17 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::patch('/ESTB/departments/update/{department}',[DepartmentController::class,'update'])->name('ESTB.departments.update');
     Route::delete('/ESTB/departments/destory/{department}', [DepartmentController::class, 'destroy'])->name('ESTB.departments.destroy');
 
+//festival advance controller
+    //Route::get('/ESTB/FestivalAdvance',[festivaladvanceController::class,'index'])->name('ESTB.festivaladvance.index');
+    Route::post('/ESTB/staff/{staff}/festival_advances/create',[festivaladvanceController::class,'store'])->name('ESTB.staff.festivaladvance.store');
+    Route::patch('/ESTB/staff/{staff}/festival_advances/{festival_advance}/update',[festivaladvanceController::class,'update'])->name('ESTB.festivaladvance.update');
+    Route::delete('/ESTB/staff/{staff}/festival_advances/{festival_advance}/destroy',[festivaladvanceController::class, 'destroy'])->name('ESTB.festivaladvance.destroy');
+
+    //laptoploan controller
+    Route::post('/ESTB/staff/{staff}/laptoploans/create',[laptoploanController::class,'store'])->name('ESTB.staff.laptoploan.store');
+    Route::patch('/ESTB/staff/{staff}/laptoploan/{laptoploan}/update',[laptoploanController::class,'update'])->name('ESTB.laptoploan.update');
+    Route::delete('/ESTB/staff/{staff}/laptoploan/{laptoploan}/destroy',[laptoploanController::class, 'destroy'])->name('ESTB.laptoploan.destroy');
+
     //search sort and filter routes for department
     Route::get('/ESTB/departments/indexfiltering', [DepartmentFilteringController::class,'indexFiltering'])->name('ESTB.departments.indexfiltering');
 
@@ -387,6 +413,17 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::get('/ESTB/designations/indexfiltering', [DesignationFilteringController::class,'indexFiltering'])->name('ESTB.designations.indexfiltering');
     //Route::get('/ESTB/designation-filtering',[DesignationController::class,'designationsDataSource']);
 
+    // Grading routes
+
+    Route::get('ESTB/Grading/autonomous_a_grading', [GradeMappingController::class, 'index'])->name('ESTB.Grading.autonomous_a_grading');
+    Route::post('ESTB/Grading/autonomous_a_grading/create', [GradeMappingController::class, 'store'])->name('ESTB.Grading.autonomous_a_grading.store');
+    Route::delete('ESTB/Grading/autonomous_a_grading/{grade_mapping}',[GradeMappingController::class,'destroy'])->name('ESTB.Grading.autonomous_a_grading.destroy');
+    Route::patch('ESTB/Grading/autonomous_a_grading/{grade_mapping}',[GradeMappingController::class, 'update'])->name('ESTB.Grading.autonomous_a_grading.update');
+
+    Route::post('grading-staff', [GradingStaffController::class, 'index'])->name('grading.staff.index');
+    Route::post('/grading-staff/store', [GradingStaffController::class, 'store'])->name('grading.staff.store');
+    Route::get('ESTB/Grading/gradetemplate', [GradingStaffController::class, 'showGradeTemplate'])->name('ESTB.Grading.gradetemplate');
+    Route::post('/grading-staff/update', [GradingStaffController::class, 'update'])->name('grading.staff.update');
 
 
     //Assocations Controllers
@@ -452,6 +489,8 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::get('/ESTB/staff/{staff}/associations',[urlcontroller::class,'assocaitons'])->name('ESTB.staff.associations');
     Route::get('/ESTB/staff/{staff}/departments',[urlcontroller::class,'departments'])->name('ESTB.staff.departments');
     Route::get('/ESTB/staff/{staff}/designationpayscales',[urlcontroller::class,'designationpayscales'])->name('ESTB.staff.designationpayscales');
+    Route::get('/ESTB/staff/{staff}/festivaladvance',[urlcontroller::class,'festival_advance'])->name('ESTB.staff.festival_advance');
+    Route::get('/ESTB/staff/{staff}/laptoploan',[urlcontroller::class,'laptoploan'])->name('ESTB.staff.laptoploan');
     /****************** */
 
 
@@ -561,7 +600,32 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::delete('/ESTB/staff/{staff}/qualification/destroy/{qualification}',[QualificationStaffController::class,'destroy'])->name('ESTB.staff.qualification.destroy');
 
 
+    //start of tds related routes
+    Route::get('ESTB/TDS/TdsHeads/index',[TdsheadsController::class,'index'])->name('ESTB.TDS.TdsHeads.index');
+    Route::post('ESTB/TDS/TdsHeads/store',[TdsheadsController::class,'store'])->name('ESTB.TDS.TdsHeads.store');
+    Route::post('ESTB/TDS/TdsHeads/store2',[TdsheadsController::class,'store2'])->name('ESTB.TDS.TdsHeads.store2');
+    Route::get('ESTB/TDS/TdsHeads/show/{tdsheads}',[TdsheadsController::class,'show'])->name('ESTB.TDS.TdsHeads.show');
+    Route::patch('ESTB/TDS/TdsHeads/update/{tdsheads}',[TdsheadsController::class,'update'])->name('ESTB.TDS.TdsHeads.update');
+    Route::delete('ESTB/TDS/TdsHeads/delete',[TdsheadsController::class,'destroy'])->name('ESTB.TDS.TdsHeads.delete');
 
+
+                  //taxheads realted
+    Route::get('ESTB/TDS/Taxheads/index',[TaxHeadsController::class,'index'])->name('ESTB.TDS.Taxheads.index');
+    Route::post('ESTB/TDS/Taxheads/store',[TaxHeadsController::class,'store'])->name('ESTB.TDS.Taxheads.store');
+    Route::patch('ESTB/TDS/Taxheads/update/{taxHeads}',[TaxHeadsController::class,'update'])->name('ESTB.TDS.Taxheads.update');
+    Route::delete('ESTB/TDS/Taxheads/destroy/{taxHeads}',[TaxHeadsController::class,'destroy'])->name('ESTB.TDS.Taxheads.destroy');
+
+                //taxslabs
+    Route::get('ESTB/TDS/Taxheads{taxHeads}/show',[TaxHeadsController::class,'show'])->name('ESTB.TDS.Taxheads.show');
+    Route::get('ESTB/TDS/Taxheads/taxslab/index',[TaxSlabController::class,'index'])->name('ESTB.TDS.Taxheads.Taxslabs.index');
+    Route::get('ESTB/TDS/Taxheads{taxHeads}/taxslab/show',[TaxSlabController::class,'show'])->name('ESTB.TDS.Taxheads.Taxslabs.show');
+    Route::post('ESTB/TDS/Taxheads{taxHeads}/taxslab/store',[TaxSlabController::class,'store'])->name('ESTB.TDS.Taxheads.Taxslabs.store');
+    Route::patch('ESTB/TDS/Taxheads/{taxHeads}/taxslab/update/{taxslab}',[TaxSlabController::class,'update'])->name('ESTB.TDS.Taxheads.Taxslabs.update');
+    Route::delete('ESTB/TDS/Taxheads/{taxHeads}/taxslab/destroy/{taxslab}',[TaxSlabController::class,'destroy'])->name('ESTB.TDS.Taxheads.Taxslabs.destroy');
+
+
+
+    // end of tds related routes
     });
 
      //Dean rnd related all routes
@@ -737,15 +801,55 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
 
     //Dean_Admin All Routes Here
     Route::middleware(['cors','auth','role:'.UserRoles::Dean_admin->value])->group(function(){
-
+      //Dean_Admin Leave Management Routes
       Route::get('/Dean_admin/dashboard',[DeanadminController::class,'index'])->name('Dean_Admin.dashboard');
       Route::get('/Dean_admin/leaves_management/daleaves',[DeanadminController::class,'leaves_lest'])->name('Dean_Admin.leaves_management.leaves');
       Route::get('/Dean_admin/leaves_management/daleaves_entitlement',[DeanadminController::class,'da_leaves_entitlement'])->name('Dean_Admin.leaves_management');
       Route::get('/Dean_admin/leaves_management/daholiday_rh_list',[DeanadminController::class,'da_holiday_rh_list'])->name('Dean_Admin.leaves_management');
-      Route::get('/Dean_admin/leaves_management/daleaves_calender',[DeanadminController::class,'da_calender_view'])->name('Dean_Admin.leaves_management');
 
-      
-      //Route::get('/Dean_admin/leaves_management/leaves',[DeanadminController::class,'index'])->name('Dean_Admin.leaves_management.leaves');
+      //Dean_admin calender Routes
+      Route::get('/Dean_admin/leaves_management/daleaves_calender',[DeanadminController::class,'da_calender_view'])->name('Dean_Admin.leaves_management');
+      Route::get('/Dean_admin/leaves_management/hollidayrh_events',[DeanadminController::class,'hollidayrh_events'])->name('Dean_Admin.leaves_management.hollidayrh_events');
+      Route::get('/Dean_admin/leaves_management/fetchAllleaveevents',[DeanadminController::class,'fetchAllleaveevents'])->name('Dean_Admin.leaves_management.fetchAllleaveevents');
+
+      // //for fetching events of specific date (clicked) using AJAX
+      Route::get('/Dean_admin/leaves_management/fetchholidayrhevents',[DeanadminController::class,'fetchholidayrhevents'])->name('fetchholidayrhevents');
+      Route::get('/Dean_admin/leaves_management/fetchleaveevents',[DeanadminController::class,'fetchleaveevents'])->name('fetchmyleaveevents');
+
+
+      //Dean_admin staff Routes
+      Route::get('/Dean_admin/staff/staffindex',[DeanadminController::class,'staff_view'])->name('Dean_Admin.staff');
+      Route::get('/Dean_admin/staff/staffview{staff}',[DeanadminController::class,'show_staff_details'])->name('Dean_Admin.staff.staffview');
+      Route::get('/Dean_admin/staff/departmentindex',[DeanadminController::class,'update'])->name('Dean_Admin.staff.departmentindex');
+
+
+      Route::get('/Dean_admin/staff/{staff}/qualifications',[urlcontroller::class,'da_qualifications'])->name('Dean_admin.staff.qualifications');
+      Route::get('/Dean_admin/staff/{staff}/associations',[urlcontroller::class,'da_assocaitons'])->name('Dean_admin.staff.associations');
+      Route::get('/Dean_admin/staff/{staff}/departments',[urlcontroller::class,'da_departments'])->name('Dean_admin.staff.departments');
+      Route::get('/Dean_admin/staff/{staff}/designationpayscales',[urlcontroller::class,'da_designationpayscales'])->name('Dean_admin.staff.designationpayscales');
+
+
+      //updating qualification of the staff.
+      Route::post('/Dean_admin/staff/{staff}/qualifications/create',[StaffQualificationController::class,'store'])->name('Dean_admin.staff.qualification.store');
+      Route::patch('/Dean_admin/staff/{staff}/qualifications/update/{qualification}',[StaffQualificationController::class,'update'])->name('Dean_admin.staff.qualification.update');
+      //for deleting the staff qualification details when want to change the qualification with the condition being duration of the staff in that perticular department is within 1 month
+      Route::delete('/Dean_admin/staff/{staff}/qualification/destroy/{qualification}',[StaffQualificationController::class,'destroy'])->name('Dean_admin.staff.qualification.destroy');
+
+
+
+      //updating department of the staff.
+      Route::patch('/Dean_admin/staff/department/update/{staff}',[DeanadminController::class,'update'])->name('Dean_admin.staff.department.update');
+      //Upating the correcting the department information of the staff
+      Route::patch('/Dean_admin/staff/{staff}/department/corrections/{department}',[DeanadminController::class,'updatecurrent'])->name('Dean_admin.staff.department.correction');
+      //for deleting the staff department details when want to change the department with the condition being duration of the staff in that perticular department is within 1 month
+      Route::delete('/Dean_admin/staff/{staff}/department/destroy/{department}',[DeanadminController::class,'destroy'])->name('Dean_admin.staff.departments.destroy');
+     
+
+    Route::patch('Dean_admin/staff/association/update/{staff}',[StaffAssociationsController::class,'update'])->name('Dean_admin.staff.association.update');
+    //Upating the correcting the Association information of the staff
+    Route::patch('/Dean_admin/staff/{staff}/association/corrections/{association}',[StaffAssociationsController::class,'updatecurrent'])->name('Dean_admin.staff.association.correction');
+    //for deleting the staff association details when want to change the association with the condition being duration of the staff with that perticular association is within 1 month
+    Route::delete('/Dean_admin/staff/{staff}/association/destroy/{association}',[StaffAssociationsController::class,'destroy'])->name('Dean_admin.staff.associations.destroy');
 
     });
 

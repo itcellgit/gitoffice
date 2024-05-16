@@ -544,12 +544,12 @@
                                                                                                                 <option value="KLS GIT" {{$act->sponsored_by=='KLS GIT'? 'selected':''}}>KLS GIT</option>
                                                                                                                 <option value="Other" {{$act->sponsored_by=='Other'? 'selected':''}}>Other</option>
                                                                                                             </select>
-                                                                                                                @if($errors->has('edit_sponsored_by'))
+                                                                                                            @if($errors->has('edit_sponsored_by'))
                                                                                                                 <div class="text-red-700">{{ $errors->first('edit_sponsored_by') }}</div>
                                                                                                             @endif
                                                                                                             <div id="sponsoredbyError" class="text-red-700 error"></div>
                                                                                                         </div>
-                                                                                                        <div class="max-w-sm pb-6 space-y-3 otherSponsor" id="otherSponsor">
+                                                                                                        <div class="max-w-sm pb-6 space-y-3 otherSponsor  othersponsored">
                                                                                                             <label for="" class="font-bold ti-form-label">Other Sponsor:</label>
                                                                                                             <input type="text" name="edit_other_sponsored" class="ti-form-input othersponsored" placeholder="Other Sponsor" value="{{$act->sponsored_by}}">
                                                                                                                 @if($errors->has('edit_othersponsor'))
@@ -1596,25 +1596,13 @@
 
                         //alert(pro_att_title+'-'+pro_att_organizer+'-'+pro_att_role+'-'+pro_att_level+'-'+pro_att_category+'-'+pro_att_sponsored+'-'+pro_att_sponsoredby+'-'+pro_att_otherSponsor+'-'+pro_att_from_date+'-'+pro_att_to_date+'-'+pro_att_no_of_days);
 
-                        // if(pro_att_title == ''){
-                        //     $('#pr_att_titleNameError').text('Title is missing');
-                        //     flag = true;
-                        // }else if (!/^[a-zA-Z\s]+$/.test(pro_att_title.trim())){
-                        //     $('#pr_att_titleNameError').text('Please fill the correct value');
-                        //     flag = true;
-                        // }
-
-
-
+                       
                         if (pro_att_title.trim() === '') {
                             $('#pr_att_titleNameError').text('Title is missing');
                             flag = true;
-                        } else if (!/^[\w\s\/.,]+$/.test(pro_att_title.trim())) {
-                            $('#pr_att_titleNameError').text('Please fill the correct value');
-                            flag = true;
+                        } else {
+                            $('#pr_att_titleNameError').text(''); 
                         }
-
-
 
 
                         if(pro_att_organizer == ''){
@@ -1699,21 +1687,23 @@
 
                         //alert(pro_cond_title+'-'+pro_cond_level+'-'+pro_cond_organizer+'-'+pro_cond_co_organizer+'-'+pro_cond_category+'-'+pro_cond_sponsored+'-'+pro_cond_sponsoring_agency_name_address+'-'+pro_cond_role+'-'+pro_cond_from_date+'-'+pro_cond_to_date+'-'+pro_cond_place+'-'+pro_cond_no_of_days);
 
-                        // if(pro_cond_title == ''){
+                       
+
+
+                        // if (pro_cond_title.trim() === '') {
                         //     $('#pro_con_titleNameError').text('Title is missing');
-                        //      flag = true;
-                        // }else if (!/^[a-zA-Z\s]+$/.test(pro_cond_title.trim())){
+                        //     flag = true;
+                        // } else if (!/^[\w\s\/.,]+$/.test(pro_cond_title.trim())) {
                         //     $('#pro_con_titleNameError').text('Please fill the correct value');
-                        //      flag = true;
+                        //     flag = true;
                         // }
 
 
                         if (pro_cond_title.trim() === '') {
                             $('#pro_con_titleNameError').text('Title is missing');
                             flag = true;
-                        } else if (!/^[\w\s\/.,]+$/.test(pro_cond_title.trim())) {
-                            $('#pro_con_titleNameError').text('Please fill the correct value');
-                            flag = true;
+                        } else {
+                            $('#pro_con_titleNameError').text(''); 
                         }
 
 
@@ -1724,6 +1714,7 @@
                             $('#pro_con_levelNameError').text('Please Choose a correct Option');
                              flag = true;
                         }
+                        
                         if(pro_cond_organizer == ''){
                             $('#pro_con_organizerNameError').text('Organizer is missing');
                              flag = true;
@@ -1731,13 +1722,18 @@
                             $('#pro_con_organizerNameError').text('Please fill the correct value');
                              flag = true;
                         }
-                        if(pro_cond_co_organizer == ''){
+
+
+                        
+                        
+                        if (pro_cond_co_organizer.trim() !== '') {
                             $('#pro_con_coorganizerNameError').text('Co-Organizer is missing');
-                             flag = true;
-                        }else if (!/^[a-zA-Z\s]+$/.test(pro_cond_co_organizer.trim())){
-                            $('#pro_con_coorganizerNameError').text('Please fill the correct value');
-                             flag = true;
+                            flag = true;
+                        } else {
+                            $('#pro_con_coorganizerNameError').text(''); 
                         }
+
+                
                         if(pro_cond_category == '#'){
                             $('#pro_con_categoryNameError').text('Please Choose a correct Option');
                              flag = true;

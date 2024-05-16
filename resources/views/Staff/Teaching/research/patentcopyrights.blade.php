@@ -1131,31 +1131,42 @@
                         flag = true;
                     }
 
-                    // if(pt_title == ''){
+                   
+
+                    // if (pt_title.trim() === '') {
                     //     $('#pt_titleError').text('Title Name is missing');
                     //     flag = true;
-                    // }else if (!/^[a-zA-Z\s]+$/.test(pt_title.trim())){
+                    // } else if (!/^[\w\s\/.,]+$/.test(pt_title.trim())) {
                     //     $('#pt_titleError').text('Please fill the correct value');
                     //     flag = true;
                     // }
 
+
                     if (pt_title.trim() === '') {
                         $('#pt_titleError').text('Title Name is missing');
                         flag = true;
-                    } else if (!/^[\w\s\/.,]+$/.test(pt_title.trim())) {
-                        $('#pt_titleError').text('Please fill the correct value');
-                        flag = true;
+                    } else {
+                        $('#pt_titleError').text(''); 
                     }
 
 
+                    // if(stream_domain == ''){
+                    //     $('#pt_stream_domainError').text('Stream Domain Name is missing');
+                    //     flag = true;
+                    // }else if (!/^[a-zA-Z\s]+$/.test(pt_title.trim())){
+                    //     $('#pt_stream_domainError').text('Please fill the correct value');
+                    //     flag = true;
+                    // }
 
-                    if(stream_domain == ''){
-                        $('#pt_stream_domainError').text('Stream Domain Name is missing');
+
+                    if (stream_domain.trim() === '') {
+                        $('#pt_stream_domainError').text('Stream Domain is missing');
                         flag = true;
-                    }else if (!/^[a-zA-Z\s]+$/.test(pt_title.trim())){
-                        $('#pt_stream_domainError').text('Please fill the correct value');
-                        flag = true;
+                    } else {
+                        $('#pt_stream_domainError').text(''); 
                     }
+
+
                     if(pt_status =='#'){
                         $('#pt_statusError').text('Please Choose a correct option.');
                         flag = true;
@@ -1205,20 +1216,21 @@
                     }
 
 
+                    
+
                     // if(rc_copyright_title == ''){
                     //     $('#rc_copyrighttitleError').text('Copyright Title is missing');
                     //     flag = true;
-                    // }else if (!/^[a-zA-Z\s]+$/.test(rc_copyright_title.trim())){
+                    // } else if (!/^[a-zA-Z\s0-9]*$/.test(rc_copyright_title.trim())) {
                     //     $('#rc_copyrighttitleError').text('Please fill the correct value');
                     //     flag = true;
                     // }
 
-                    if(rc_copyright_title == ''){
+                    if (rc_copyright_title.trim() === '') {
                         $('#rc_copyrighttitleError').text('Copyright Title is missing');
                         flag = true;
-                    } else if (!/^[a-zA-Z\s0-9]*$/.test(rc_copyright_title.trim())) {
-                        $('#rc_copyrighttitleError').text('Please fill the correct value');
-                        flag = true;
+                    } else {
+                        $('#rc_copyrighttitleError').text(''); 
                     }
 
 
@@ -1238,13 +1250,24 @@
                         $('#rc_statusError').text('Please Choose a correct option.');
                         flag = true;
                     }
-                    if(rc_description == ''){
+
+
+                    // if(rc_description == ''){
+                    //     $('#rc_descriptionError').text('Description is missing');
+                    //     flag = true;
+                    // }else if (!/^[a-zA-Z\s]+$/.test(rc_description.trim())){
+                    //     $('#rc_descriptionError').text('Please fill the correct value');
+                    //     flag = true;
+                    // }
+
+
+                    if (rc_description.trim() === '') {
                         $('#rc_descriptionError').text('Description is missing');
                         flag = true;
-                    }else if (!/^[a-zA-Z\s]+$/.test(rc_description.trim())){
-                        $('#rc_descriptionError').text('Please fill the correct value');
-                        flag = true;
+                    } else {
+                        $('#rc_descriptionError').text(''); 
                     }
+
 
                     if(flag == true){
                         e.preventDefault();

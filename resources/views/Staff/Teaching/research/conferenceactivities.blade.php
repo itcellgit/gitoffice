@@ -256,7 +256,7 @@
                                                                         </div>
                                                                         <div class="max-w-sm space-y-6 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Weblink:</label>
-                                                                            <input type="url" name="weblink" id="cont_att_weblink" class="ti-form-input" placeholder=" https://www." value="{{ old('weblink') }}">
+                                                                            <input type="url" name="weblink" id="cont_att_weblink" class="ti-form-input" placeholder=" https://www.google.com" value="{{ old('weblink') }}">
                                                                             @if($errors->has('weblink'))
                                                                                 <div class="text-red-700">{{ $errors->first('weblink')}}</div>
                                                                             @endif
@@ -791,7 +791,7 @@
 
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label">Co Organizer :</label>
-                                                                            <input type="text" name="cc_co_organizer" class="ti-form-input" required placeholder="Co Organizer" id="con_cond_co_organizer" value="{{ old('cc_co_organizer') }}">
+                                                                            <input type="text" name="cc_co_organizer" class="ti-form-input"  placeholder="Co Organizer" id="con_cond_co_organizer" value="{{ old('cc_co_organizer') }}">
                                                                             @if($errors->has('cc_co_organizer'))
                                                                                 <div class="text-red-700">{{ $errors->first('cc_co_organizer')}}</div>
                                                                             @endif
@@ -877,7 +877,7 @@
                                                                     </div>
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6">
-                                                                            <label for="" class="ti-form-label">No Of Days:</label>
+                                                                            <label for="" class="ti-form-label">No Of Days:<span class="text-red-500">*</span></label>
                                                                             <input type="text" id="con_cond_no_ofdays" name="cc_no_of_days" class="ti-form-input conf_conducted_no_of_days" required placeholder="No Of Days" value="{{ old('cc_no_of_days') }}" readonly>
                                                                             @if($errors->has('con_cond_no_ofdays'))
                                                                                 <div class="text-red-700">{{ $errors->first('con_cond_no_ofdays')}}</div>
@@ -885,7 +885,7 @@
                                                                             <div id="con_cond_noofError" class="error text-red-700"></div>
                                                                         </div>
                                                                         <div class="max-w-sm space-y-3 pb-6">
-                                                                            <label for="" class="ti-form-label">Place:</label>
+                                                                            <label for="" class="ti-form-label">Place:<span class="text-red-500">*</span></label>
                                                                             <input type="text" name="cc_place" class="ti-form-input" placeholder="Place" id="con_cond_place" value="{{ old('cc_place') }}">
                                                                             @if($errors->has('cc_place'))
                                                                                 <div class="text-red-700">{{ $errors->first('cc_place')}}</div>
@@ -895,7 +895,7 @@
                                                                     </div>
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6">
-                                                                            <label for="" class="ti-form-label">Publisher:</label>
+                                                                            <label for="" class="ti-form-label">Publisher:<span class="text-red-500">*</span></label>
                                                                             <input type="text" name="cc_publisher" class="ti-form-input" placeholder="Publisher" id="con_cond_publisher" value="{{ old('cc_publisher') }}">
                                                                             @if($errors->has('cc_publisher'))
                                                                                 <div class="text-red-700">{{ $errors->first('cc_publisher')}}</div>
@@ -1143,7 +1143,7 @@
                                                                                                     </div>
                                                                                                     <div class="max-w-sm space-y-3 pb-6">
                                                                                                         <label for="" class="ti-form-label">Co Organizer :<span class="text-red-500">*</span></label>
-                                                                                                        <input type="text" name="ce_co_organizer" class="ti-form-input" required placeholder="Co Organizer"value="{{$con->co_organizer}}">
+                                                                                                        <input type="text" name="ce_co_organizer" class="ti-form-input"  placeholder="Co Organizer"value="{{$con->co_organizer}}">
                                                                                                         <div id="coorganizerError" class="error text-red-700"></div>
                                                                                                     </div>
                                                                                                 </div>
@@ -1208,12 +1208,12 @@
                                                                                                 </div>
                                                                                                 <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                                                     <div class="max-w-sm space-y-3 pb-6">
-                                                                                                        <label for="" class="ti-form-label">No Of Days:</label>
+                                                                                                        <label for="" class="ti-form-label">No Of Days:<span class="text-red-500">*</span></label>
                                                                                                         <input type="text" name="ce_no_of_days" class="ti-form-input conf_conducted_no_of_days_edit" required placeholder="No Of Days" value="{{$con->no_of_days}}">
                                                                                                         <div id="noofdaysError" class="error text-red-700"></div>
                                                                                                     </div>
                                                                                                     <div class="max-w-sm space-y-3 pb-6">
-                                                                                                        <label for="" class="ti-form-label">Place:</label>
+                                                                                                        <label for="" class="ti-form-label">Place:<span class="text-red-500">*</span></label>
                                                                                                         <input type="text" name="ce_place" class="ti-form-input" placeholder="Place" value="{{$con->place}}">
                                                                                                         <div id="placeError" class="error text-red-700"></div>
                                                                                                     </div>
@@ -1816,32 +1816,44 @@
                             flag = true;
                         }
 
-                        // if (con_att_title === '') {
+                       
+
+
+                        // if (con_att_title.trim() === '') {
                         //     $('#con_att_titleError').text('Title Name is missing');
                         //     flag = true;
-                        // } else if (!/^[a-zA-Z0-9\s,./]*$/.test(con_att_title.trim())) {
+                        // } else if (!/^[\w\s\/.,]+$/.test(con_att_title.trim())) {
                         //     $('#con_att_titleError').text('Please fill in the correct value');
                         //     flag = true;
                         // }
 
+
                         if (con_att_title.trim() === '') {
                             $('#con_att_titleError').text('Title Name is missing');
                             flag = true;
-                        } else if (!/^[\w\s\/.,]+$/.test(con_att_title.trim())) {
-                            $('#con_att_titleError').text('Please fill in the correct value');
-                            flag = true;
+                        } else {
+                            $('#con_att_titleError').text('');
                         }
 
 
+                        // if(con_att_place == ''){
+                        //     $('#con_att_palceError').text('Place Name is missing');
+                        //     flag = true;
+                        // }else if (!/^[a-zA-Z\s]+$/.test(con_att_place.trim())){
+                        //     $('#con_att_palceError').text('Please fill the correct value');
+                        //     flag = true;
+                        // }
 
-
-                        if(con_att_place == ''){
+                        if (con_att_place.trim() === '') {
                             $('#con_att_palceError').text('Place Name is missing');
                             flag = true;
-                        }else if (!/^[a-zA-Z\s]+$/.test(con_att_place.trim())){
+                        } else if (!/^[\w\s\/.,]+$/.test(con_att_place.trim())) {
                             $('#con_att_palceError').text('Please fill the correct value');
                             flag = true;
                         }
+
+
+
                         if(con_att_sponsored == '#'){
                             $('#con_att_sponsoredError').text('Please Choose a correct option');
                             flag = true;
@@ -1878,6 +1890,7 @@
                         } else {
                             // The field is optional and empty, no validation
                         }
+
                         if(con_att_typeoflevel == '#'){
                             $('#con_att_typeoflevelError').text('Please Choose a correct Option');
                             flag = true;
@@ -1942,13 +1955,27 @@
                             $('#con_cond_conferenceNameError').text('Please fill the correct value');
                             flag = true;
                         }
-                        if(con_cond_co_organizer == ''){
-                            $('#con_cond_coorganizerError').text('Organizer Name is missing');
-                            flag = true;
-                        }else if (!/^[a-zA-Z\s]+$/.test(con_cond_co_organizer.trim())){
-                            $('#con_cond_coorganizerError').text('Please fill the correct value');
-                            flag = true;
+
+                        // if(con_cond_co_organizer == ''){
+                        //     $('#con_cond_coorganizerError').text('Organizer Name is missing');
+                        //     flag = true;
+                        // }else if (!/^[a-zA-Z\s]+$/.test(con_cond_co_organizer.trim())){
+                        //     $('#con_cond_coorganizerError').text('Please fill the correct value');
+                        //     flag = true;
+                        // }
+
+
+                        if (con_cond_co_organizer.trim() !== '') { 
+                            if (!/^[a-zA-Z\s]+$/.test(con_cond_co_organizer.trim())) { 
+                                $('#con_cond_coorganizerError').text('Please fill in the correct value');
+                                flag = true;
+                            } else {
+                                $('#con_cond_coorganizerError').text('');
+                            }
                         }
+
+
+
                         if(con_cond_no_ofparticipants == ''){
                             $('#con_cond_participantError').text('No Of Participant is missing');
                             flag = true;
@@ -1987,13 +2014,25 @@
                             $('#con_cond_placeError').text('Please fill the correct value');
                             flag = true;
                         }
-                        if(con_cond_publisher == ''){
-                            $('#con_cond_publisherError').text('Publisher Name is missing');
-                            flag = true;
-                        }else if (!/^[a-zA-Z\s]+$/.test(con_cond_publisher.trim())){
-                            $('#con_cond_publisherError').text('Please fill the correct value');
-                            flag = true;
+
+                        // if(con_cond_publisher == ''){
+                        //     $('#con_cond_publisherError').text('Publisher Name is missing');
+                        //     flag = true;
+                        // }else if (!/^[a-zA-Z\s]+$/.test(con_cond_publisher.trim())){
+                        //     $('#con_cond_publisherError').text('Please fill the correct value');
+                        //     flag = true;
+                        // }
+
+                        if (con_cond_publisher.trim() !== '') { 
+                            if (!/^[a-zA-Z\s]+$/.test(con_cond_publisher.trim())) { 
+                                $('#con_cond_publisherError').text('Please fill in the correct value');
+                                flag = true;
+                            } else {
+                                $('#con_cond_publisherError').text(''); 
+                            }
                         }
+
+
                         if(con_cond_role =='#'){
                             $('#con_cond_roleError').text('Please Choose a correct option.');
                             flag = true;

@@ -26,8 +26,8 @@ class Updateprofessional_activity_conductedRequest extends FormRequest
         [
             // 'e_title' => ['required'],
             'e_level' => ['required', Rule::in(['Local', 'National', 'International'])],
-            'e_organizer'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
-            'e_co_organizer'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
+            //'e_organizer'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
+            // 'e_co_organizer'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
             'e_category'=>['required', Rule::in(['Workshop', 'FDP', 'Seminar','Webinar','STTP','Certification Program','MDP/EDP','Hackathon','Space-Talk','Site Visit'])],
             'e_sponsored'=>['required', Rule::in(['Yes', 'No'])],
             'e_sponsoring_agency_name_address' => ['sometimes'],
@@ -38,7 +38,7 @@ class Updateprofessional_activity_conductedRequest extends FormRequest
             'e_role'=>['required', Rule::in(['Coordinator', 'Convenor', 'Member','Jury'])],
             //'document'=>['required','file','mimes:pdf'],
 
-            ];
+        ];
     }
     public function messages():array
     {
@@ -48,10 +48,10 @@ class Updateprofessional_activity_conductedRequest extends FormRequest
             // 'e_title.regex'=>'The title field should contain only letters and spaces',
             'e_level.required'=>'level is required field',
             'e_level.in'=>'Please select a valid option from the provided choices',
-            'e_organizer.required'=>'organizer is required filed',
-            'e_organizer.regex'=>'The organizer field should contain only letters and spaces',
-            'e_co_organizer.required'=>'co_organizer is required field',
-            'e_co_organizer.regex'=>'The co organizer field should contain only letters and spaces',
+            // 'e_organizer.required'=>'organizer is required filed',
+            // 'e_organizer.regex'=>'The organizer field should contain only letters and spaces',
+            // 'e_co_organizer.required'=>'co_organizer is required field',
+            // 'e_co_organizer.regex'=>'The co organizer field should contain only letters and spaces',
             'e_category.required'=>'category is required field',
             'e_category.in'=>'Please select a valid option from the provided choices',
             'e_sponsored.required'=>'sponsored is required field',

@@ -25,7 +25,7 @@ class Updateconferences_conductedRequest extends FormRequest
         return
          [
             'ce_conference_name'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
-            'ce_co_organizer'=>['regex:/^[a-zA-Z\s]+$/'],
+            // 'ce_co_organizer'=>['regex:/^[a-zA-Z\s]+$/'],
             'ce_no_of_participants'=>['required','numeric'],
             'ce_sponsored' => ['required', Rule::in(['Yes', 'No'])],
             //'ce_sponsoring_agency'=>['required', Rule::in(['Yes', 'No'])],
@@ -35,9 +35,9 @@ class Updateconferences_conductedRequest extends FormRequest
             'ce_place'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
             'ce_publisher'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
             'ce_role' => ['required', Rule::in(['Convener', 'Co-convener','Team Member','Coordinator'])],
-            'ce_weblink'=>['url'],
+          
             'cc_type_of_level' => [Rule::in(['National', 'International'])],
-            'ce_ISSN_NO'=>[],
+           
 
         ];
     }
@@ -46,7 +46,7 @@ class Updateconferences_conductedRequest extends FormRequest
         return[
             'ce_conference_name.required'=>'conference name is required field',
             'ce_conference_name.regex' => 'The conference name field should contain only letters and spaces.',
-            'ce_co_organizer.regex'=>'The co organizer field should contain only letters and spaces.',
+            // 'ce_co_organizer.regex'=>'The co organizer field should contain only letters and spaces.',
             'ce_no_of_participants.required'=>'No of participants is required field',
             'ce_sponsored.required'=>'sponsored is required field',
             'ce_sponsored.in'=>'Please select a valid option from the provided choices',
@@ -64,10 +64,10 @@ class Updateconferences_conductedRequest extends FormRequest
             'ce_publisher.regex'=>'publisher field should contain only letters and spaces',
             'ce_role.required'=>'role is required field',
             'ce_role.in'=>'Please select a valid option from the provided choices',
-            'ce_weblink.url'=>'The weblink must be valid url',
+           
             'ce_type_of_level.required'=>'level is required field',
             'ce_type_of_level.in'=>'Please select a valid option from the provided choices',
-            //'ce_ISSN_NO'=>'',
+          
 
 
 

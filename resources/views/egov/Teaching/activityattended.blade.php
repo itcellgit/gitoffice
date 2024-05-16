@@ -100,34 +100,7 @@
                             </div>
                         </div>
 
-                        <div class="col-span-2 xl:col-span-2">
-                            <!-- Count box 2 -->
-                            <div class="box box-sm">
-                                <!-- Content for count box 2 -->
-                                <div class="box-body">
-                                    <div class="flex">
-                                        <div class="ltr:mr-3 rtl:ml-3">
-                                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20
-                                                @if($teaching_category_counts->webinar_count == 0) text-red-500 @endif">
-                                                <i class="ti ti-users text-2xl leading-none"></i>
-                                            </div>
-                                        </div>
-                                        <div class="flex-1">
-                                            <p class="text-sm font-bold">Webinar</p>
-                                            <div class="flex justify-between items-center">
-                                                <div class="flex flex-col">
-                                                    <h5 class="mb-0 text-2xl font-semibold
-                                                        @if($teaching_category_counts->webinar_count == 0) text-red-500 @else text-gray-800 dark:text-white @endif">
-                                                        {{ $teaching_category_counts->webinar_count }}
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        
                         <div class="col-span-2 xl:col-span-2">
                             <!-- Count box 3 -->
                             <div class="box box-sm">

@@ -59,6 +59,12 @@ class PublicationController extends Controller
         $publication->doi_number=$request->doi_number;
         $publication->link=$request->link;
         $publication->role=$request->role;
+        $publication->volume=$request->volume;
+        $publication->issue=$request->issue;
+        $publication->page_no=$request->page_no;
+        $publication->year=$request->year;
+
+        
 
         //file upload
             $file=$request->file("document");
@@ -154,11 +160,16 @@ class PublicationController extends Controller
         $publication->link=$request->e_link;
         $publication->role=$request->e_role;
 
+
+        $publication->volume=$request->e_volume;
+        $publication->issue=$request->e_issue;
+        $publication->page_no=$request->e_page_no;
+        $publication->year=$request->e_year;
+
          // Update validation status
         //dd($request->validation_status);
-        $publication->validation_status = ($request->validation_status == "invalid") ? "updated" : $request->validation_status;
-
-
+        //$publication->validation_status = ($request->validation_status == "invalid") ? "updated" : $request->validation_status;
+       
         //File Upload
         $file=$request->file("document");
        // $final_file_upload_name = $publication->egov_id.'.'.$file->getClientOriginalExtension();

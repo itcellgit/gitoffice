@@ -75,7 +75,7 @@ class CastecategoryController extends Controller
      */
     public function edit(castecategory $castecategory)
     {
-        //
+        
     }
 
     /**

@@ -25,7 +25,7 @@ class StoreconsultancyRequest extends FormRequest
         return
          [
             //
-            'c_consultancy_title'=> ['required', 'regex:/^[a-zA-Z\s]+$/'],
+            //'c_consultancy_title'=> ['required', 'regex:/^[a-zA-Z\s]+$/'],
             'c_agency'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
             'c_from_date'=>['required','date'],
             'c_to_date'=>['required','date'],
@@ -39,8 +39,8 @@ class StoreconsultancyRequest extends FormRequest
     {
         return
         [
-            'c_consultancy_title.required'=>'consultancy title is required field',
-            'c_consultancy_title.regex' => 'The consultancy title field should contain only letters and spaces.',
+            // 'c_consultancy_title.required'=>'consultancy title is required field',
+            // 'c_consultancy_title.regex' => 'The consultancy title field should contain only letters and spaces.',
             'c_agency.required'=>'agency is required filed',
             'c_agency.regex' => 'The agency field should contain only letters and spaces.',
             'c_from_date.required'=>'from_date is required field',

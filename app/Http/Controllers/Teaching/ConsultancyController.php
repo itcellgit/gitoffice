@@ -66,7 +66,7 @@ class ConsultancyController extends Controller
        $result = 0;
 
 
-       if($file_size <= 500000)
+       if($file_size <= 20000000)
         {
            $file_size_status = 1;
            if($file->store('public/Uploads/Research/Consultancy/'))
@@ -146,7 +146,7 @@ class ConsultancyController extends Controller
          $file_upload_status = 0;
          $file_size_status = 0;
 
-         if($file_size <= 500000)
+         if($file_size <= 20000000)
          {
              $file_size_status = 1;
                  //for deleting the existing file and replacing it with the new one.

@@ -1,4 +1,4 @@
-@extends('layouts.components.staff.master-teaching')
+ @extends('layouts.components.staff.master-teaching')
 
 @section('styles')
 
@@ -199,7 +199,7 @@
                                                                         </div> --}}
 
                                                                         <div class="max-w-sm space-y-3 pb-6">
-                                                                            <label for="with-corner-hint" class="ti-form-label font-bold">Amount: </label>
+                                                                            <label for="with-corner-hint" class="ti-form-label font-bold">Amount: <span class="text-red-500">*</span></label>
                                                                             <input type="number" min="0" name="f_amount" class="ti-form-input" placeholder="Amount" id="fund_amount" value="{{ old('f_amount') }}">
                                                                             @if($errors->has('f_amount'))
                                                                                 <div class="text-red-700">{{ $errors->first('f_amount') }}</div>
@@ -254,7 +254,7 @@
                                                                         </div>
 
                                                                         <div class="flex max-w-sm space-y-3 pb-6">
-                                                                            <label for="" class="ti-form-label font-bold">Completion Year :</label>
+                                                                            <label for="" class="ti-form-label font-bold">Completion Year :<span class="text-red-500">*</span></label>
                                                                             <input type="number" min="0" step="1" name="f_completion_year" class="ti-form-input" required placeholder="Completion Year" id="fund_completion_year" value="{{ old('f_completion_year') }}">
                                                                             @if($errors->has('f_completion_year'))
                                                                                 <div class="text-red-700">{{ $errors->first('f_completion_year') }}</div>
@@ -276,7 +276,7 @@
                                                                             <div id="f_fundreceivedError" class="error text-red-700"></div>
                                                                         </div> --}}
                                                                         <div class="max-w-sm space-y-3 pb-6">
-                                                                            <label for="" class="ti-form-label font-bold">Fund Received:</label>
+                                                                            <label for="" class="ti-form-label font-bold">Fund Received:<span class="text-red-500">*</span></label>
                                                                             <input type="number" min="0" name="f_fund_received" class="ti-form-input" placeholder="Fund Received" id="fund_received" value="{{ old('f_fund_received') }}">
                                                                             @if($errors->has('f_fund_received'))
                                                                                 <div class="text-red-700">{{ $errors->first('f_fund_received') }}</div>
@@ -566,7 +566,7 @@
                                                                                                                                     @endif
                                                                                                             </div>
                                                                                                             <div class="max-w-sm space-y-3 pb-6">
-                                                                                                                <label for="" class="ti-form-label font-bold">Fund Received:</label>
+                                                                                                                <label for="" class="ti-form-label font-bold">Fund Received:<span class="text-red-500">*</span></label>
                                                                                                                 <input type="number" min="0" name="fe_fund_received" class="ti-form-input" placeholder="Fund Received" value="{{$fund->fund_received}}">
                                                                                                                 @if($errors->has('fe_fund_received'))
                                                                                                                     <div class="text-red-700">{{ $errors->first('fe_fund_received') }}</div>
@@ -586,7 +586,7 @@
                                                                                                                     @endif
                                                                                                             </div>
                                                                                                             <div class="flex max-w-sm space-y-3 pb-6">
-                                                                                                                <label for="" class="ti-form-label font-bold">Completion Year :</label>
+                                                                                                                <label for="" class="ti-form-label font-bold">Completion Year :<span class="text-red-500">*</span></label>
                                                                                                                 <input type="number" name="fe_completion_year" class="ti-form-input" required placeholder="Completion Year" value="{{$fund->completion_year}}">
                                                                                                                     @if($errors->has('fe_completion_year'))
                                                                                                                     <div class="text-red-700">{{ $errors->first('fe_completion_year') }}</div>
@@ -742,7 +742,7 @@
                                                                                 <div id="consult_consultancy_titleError" class="error text-red-700"></div>
                                                                             </div>
                                                                             <div class="max-w-sm space-y-3 pb-6">
-                                                                                <label for="" class="ti-form-label font-bold">Agency :</label>
+                                                                                <label for="" class="ti-form-label font-bold">Agency :<span class="text-red-500">*</span></label>
                                                                                 <input type="text" name="c_agency" class="ti-form-input" required placeholder="Agency" id="consult_agency" value="{{ old('c_agency') }}">
                                                                                     @if($errors->has('c_agency'))
                                                                                         <div class="text-red-700">{{ $errors->first('c_agency')}}</div>
@@ -784,7 +784,7 @@
                                                                         </div>
                                                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
-                                                                                <label for="" class="ti-form-label font-bold">Amount:</label>
+                                                                                <label for="" class="ti-form-label font-bold">Amount:<span class="text-red-500">*</span></label>
                                                                                 <input type="number" min="0" name="c_amount" class="ti-form-input" placeholder="Amount" id="consult_amount" value="{{ old('c_amount') }}">
                                                                                     @if($errors->has('c_amount'))
                                                                                                 <div class="text-red-700">{{ $errors->first('c_amount')}}</div>
@@ -809,7 +809,7 @@
                                                                             <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                                 <div class="max-w-sm space-y-3 pb-6">
                                                                                     <div class="max-w-sm space-y-3 pb-6">
-                                                                                        <label for="" class="ti-form-label pt-4 font-bold">Document:<span class="text-red-500">*  Only PDF files up to 500 KB in size are accepted.</span></label>
+                                                                                        <label for="" class="ti-form-label pt-4 font-bold">Document:<span class="text-red-500">*  Only PDF files up to 20MB  in size are accepted.</span></label>
                                                                                         <span class="sr-only">Choose Profile photo</span>
                                                                                             <input type="file" accept="application/pdf" name="document" id="consult_document" class="block w-full text-sm text-gray-500 dark:text-white/70 focus:outline-0
                                                                                             ltr:file:mr-4 rtl:file:ml-4 file:py-2 file:px-4
@@ -1257,13 +1257,23 @@
                         }
 
 
-                        if(f_proposaltitle == ''){
-                            $('#f_proposaltitleError').text('Proposal Title Name is missing');
+                        // if(f_proposaltitle == ''){
+                        //     $('#f_proposaltitleError').text('Proposal Title Name is missing');
+                        //     flag = true;
+                        // }else if (!/^[a-zA-Z\s]+$/.test(f_proposaltitle.trim())){
+                        //     $('#f_proposaltitleError').text('Please fill the correct value');
+                        //     flag = true;
+                        // }
+
+
+                        if (f_proposaltitle.trim() === '') {
+                            $('#f_proposaltitleError').text('Proposal Title is missing');
                             flag = true;
-                        }else if (!/^[a-zA-Z\s]+$/.test(f_proposaltitle.trim())){
-                            $('#f_proposaltitleError').text('Please fill the correct value');
-                            flag = true;
+                        } else {
+                            $('#f_proposaltitleError').text(''); 
                         }
+
+
                         if(fund_role =='#'){
                             $('#fund_roleError').text('Please Choose a correct option.');
                             flag = true;
@@ -1272,6 +1282,7 @@
                             $('#f_typeError').text('Please Choose a correct option.');
                             flag = true;
                         }
+
                         if(fund_amount == ''){
                             $('#fund_amountError').text('Amount is missing');
                             flag = true;
@@ -1279,6 +1290,7 @@
                             $('#fund_amountError').text('Please fill the correct value');
                             flag = true;
                         }
+
                         if(fund_proposal_status =='#'){
                             $('#fund_proposal_statusError').text('Please Choose a correct option.');
                             flag = true;
@@ -1335,13 +1347,23 @@
                         }
 
 
-                        if(consult_consultancy_title == ''){
-                            $('#consult_consultancy_titleError').text('Consultancy Title Name is missing');
+                        // if(consult_consultancy_title == ''){
+                        //     $('#consult_consultancy_titleError').text('Consultancy Title Name is missing');
+                        //     flag = true;
+                        // }else if (!/^[a-zA-Z\s]+$/.test(consult_consultancy_title.trim())){
+                        //     $('#consult_consultancy_titleError').text('Please fill the correct value');
+                        //     flag = true;
+                        // }
+
+
+                        if (consult_consultancy_title.trim() === '') {
+                            $('#consult_consultancy_titleError').text('Consultancy Title is missing');
                             flag = true;
-                        }else if (!/^[a-zA-Z\s]+$/.test(consult_consultancy_title.trim())){
-                            $('#consult_consultancy_titleError').text('Please fill the correct value');
-                            flag = true;
+                        } else {
+                            $('#consult_consultancy_titleError').text(''); 
                         }
+
+
                         if(consult_agency == ''){
                             $('#consult_agencyError').text('Consultancy Agency Name is missing');
                             flag = true;
@@ -1359,6 +1381,8 @@
                             $('#consult_to_dateError').text('Please Select a proper date');
                             flag = true;
                         }
+
+
                         if (consult_amount !== '') {
                             if (!/^\d+$/.test(consult_amount.trim())) {
                                 $('#consult_amountError').text('Please fill the correct value (Only digits)');

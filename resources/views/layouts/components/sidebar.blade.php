@@ -114,11 +114,30 @@
                                     <span class="side-menu__label">Renumeration Heads</span>
                                 </a>
                             </li>
-                            <li class="slide">
-                                <a href="{{url('ESTB/salaryheads')}}" class="side-menu__item">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M22.0049 7H23.0049V17H22.0049V20C22.0049 20.5523 21.5572 21 21.0049 21H3.00488C2.4526 21 2.00488 20.5523 2.00488 20V4C2.00488 3.44772 2.4526 3 3.00488 3H21.0049C21.5572 3 22.0049 3.44772 22.0049 4V7ZM20.0049 17H14.0049C11.2435 17 9.00488 14.7614 9.00488 12C9.00488 9.23858 11.2435 7 14.0049 7H20.0049V5H4.00488V19H20.0049V17ZM21.0049 15V9H14.0049C12.348 9 11.0049 10.3431 11.0049 12C11.0049 13.6569 12.348 15 14.0049 15H21.0049ZM14.0049 11H17.0049V13H14.0049V11Z" fill="rgba(255,255,255,1)"></path></svg>
-                                     <span class="side-menu__label">Salary Heads</span>
+                            <li class="slide has-sub">
+                                <a href="javascript:void(0);" class="side-menu__item">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+                                        <path d="M22.0049 7H23.0049V17H22.0049V20C22.0049 20.5523 21.5572 21 21.0049 21H3.00488C2.4526 21 2.00488 20.5523 2.00488 20V4C2.00488 3.44772 2.4526 3 3.00488 3H21.0049C21.5572 3 22.0049 3.44772 22.0049 4V7ZM20.0049 17H14.0049C11.2435 17 9.00488 14.7614 9.00488 12C9.00488 9.23858 11.2435 7 14.0049 7H20.0049V5H4.00488V19H20.0049V17ZM21.0049 15V9H14.0049C12.348 9 11.0049 10.3431 11.0049 12C11.0049 13.6569 12.348 15 14.0049 15H21.0049ZM14.0049 11H17.0049V13H14.0049V11Z" fill="rgba(255,255,255,1)"></path>
+                                    </svg>
+                                    <span class="side-menu__label">Salaries</span>
+                                    <i class="ri ri-arrow-right-s-line side-menu__angle"></i>
                                 </a>
+                                <ul class="slide-menu child1">
+                                    <li class="slide"><a href="javascript:void(0);" class="side-menu__item">Salary Types</a></li>
+                                    <li class="slide"><a href="javascript:void(0);" class="side-menu__item">Salary Head Groups</a></li>
+                                    <li class="slide"><a href="javascript:void(0);" class="side-menu__item">Salary Heads</a></li>
+                                    <li class="slide"><a href="javascript:void(0);" class="side-menu__item">Monthwise Salary</a></li>
+                                    <li class="slide has-sub">
+                                        <a href="javascript:void(0);" class="side-menu__item">Autonomous A. Grading
+                                            <i class="ri ri-arrow-right-s-line side-menu__angle"></i>
+                                        </a>
+                                        <ul class="slide-menu child2">
+                                            <li class="slide"><a href="{{url('ESTB/Grading/autonomous_a_grading')}}" class="side-menu__item">Grade Mapping</a></li>
+                                            <li class="slide"><a href="{{url('ESTB/Grading/gradetemplate')}}" class="side-menu__item">Download Template</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="slide"><a href="javascript:void(0);" class="side-menu__item">Leaves Encashment</a></li>
+                                </ul>
                             </li>
                             <li class="slide">
                                 <a href="{{url('ESTB/staff')}}" class="side-menu__item">
@@ -151,26 +170,22 @@
                                 </a>
                             </li> --}}
 
-                            <li class="slide">
-                                <a href="{{url('ESTB/construction')}}" class="side-menu__item">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12.0049 22.0029C6.48204 22.0029 2.00488 17.5258 2.00488 12.0029C2.00488 6.48008 6.48204 2.00293 12.0049 2.00293C17.5277 2.00293 22.0049 6.48008 22.0049 12.0029C22.0049 17.5258 17.5277 22.0029 12.0049 22.0029ZM8.50488 14.0029V16.0029H11.0049V18.0029H13.0049V16.0029H14.0049C15.3856 16.0029 16.5049 14.8836 16.5049 13.5029C16.5049 12.1222 15.3856 11.0029 14.0049 11.0029H10.0049C9.72874 11.0029 9.50488 10.7791 9.50488 10.5029C9.50488 10.2268 9.72874 10.0029 10.0049 10.0029H15.5049V8.00293H13.0049V6.00293H11.0049V8.00293H10.0049C8.62417 8.00293 7.50488 9.12222 7.50488 10.5029C7.50488 11.8836 8.62417 13.0029 10.0049 13.0029H14.0049C14.281 13.0029 14.5049 13.2268 14.5049 13.5029C14.5049 13.7791 14.281 14.0029 14.0049 14.0029H8.50488Z" fill="rgba(255,255,255,1)"></path></svg>
-                                    <span class="side-menu__label">TDS Heads</span>
+                            <li class="slide  has-sub">
+                                <a href="javascript:void(0);" class="side-menu__item">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M20 5C20 6.65685 18.6569 8 17 8C15.3431 8 14 6.65685 14 5C14 3.34315 15.3431 2 17 2C18.6569 2 20 3.34315 20 5ZM7 3C4.79086 3 3 4.79086 3 7V9H5V7C5 5.89543 5.89543 5 7 5H10V3H7ZM17 21C19.2091 21 21 19.2091 21 17V15H19V17C19 18.1046 18.1046 19 17 19H14V21H17ZM7 16C8.65685 16 10 14.6569 10 13C10 11.3431 8.65685 10 7 10C5.34315 10 4 11.3431 4 13C4 14.6569 5.34315 16 7 16ZM17 9C14.7909 9 13 10.7909 13 13H21C21 10.7909 19.2091 9 17 9ZM3 21C3 18.7909 4.79086 17 7 17C9.20914 17 11 18.7909 11 21H3Z" fill="rgba(255,255,255,1)"></path></svg>
+                                    <span class="side-menu__label">TDS HEADS</span>
+                                    <i class="ri ri-arrow-right-s-line side-menu__angle"></i>
                                 </a>
+                                <ul class="slide-menu child1">
+                                    <li class="slide"><a href="{{url('ESTB/TDS/TdsHeads/index')}}" class="side-menu__item">TDS Heads</a></li>
+                                    
+                                   <li class="slide"><a href="{{url('ESTB/TDS/Taxheads/index')}}" class="side-menu__item">Tax regime Setting</a></li>
+
+                                    <li class="slide"><a href="{{url('/ESTB/leaves/holiday_rhlist')}}" class="side-menu__item">Staff tax regime</a></li>
+                                    <li class="slide"><a href="{{url('/ESTB/leaves_calender')}}" class="side-menu__item">Form 16</a></li>
+                                </ul>
+                            </li>    
                             </li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         </ul>
                         <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24"
                                 height="24" viewBox="0 0 24 24">

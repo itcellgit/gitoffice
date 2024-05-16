@@ -25,7 +25,7 @@ class Updatefunded_projectRequest extends FormRequest
         return 
         [
             //
-            'fe_proposal_title'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
+            //'fe_proposal_title'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
             'fe_role'=>['required', Rule::in(['Principle Investigator', 'Co-Investigator','Architect'])],
             'fe_type'=>[ Rule::in(['Govt-funded','Private funded'])],
 
@@ -42,8 +42,8 @@ class Updatefunded_projectRequest extends FormRequest
     {
         return 
          [
-            'fe_proposal_title.required'=>'proposal title is required field',
-            'fe_proposal_title.regex' => 'The proposal title field should contain only letters and spaces.',
+            // 'fe_proposal_title.required'=>'proposal title is required field',
+            // 'fe_proposal_title.regex' => 'The proposal title field should contain only letters and spaces.',
             'fe_role.required'=>'role is required field',
             'fe_role.in'=>'Please select a valid option from the provided choices',
             'fe_type.required'=>'type is required field',

@@ -71,9 +71,9 @@
                                             <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">{{$totalresearchCount}}</h5>
                                             
                                             </div>
-                                            <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('Deanrnd.dashboard')}}">
+                                            {{-- <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('Deanrnd.dashboard')}}">
                                                  view
-                                            </a>
+                                            </a> --}}
                                         </div>
                                         </div>
                                     </div>
@@ -113,9 +113,9 @@
                                             <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">{{$totalFundsReceived}}</h5>
                                             
                                             </div>
-                                            <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('Deanrnd.Teaching.research.fundedproject')}}">
+                                            {{-- <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('Deanrnd.Teaching.research.fundedproject')}}">
                                                  view
-                                            </a>
+                                            </a> --}}
                                         </div>
                                         </div>
                                     </div>
