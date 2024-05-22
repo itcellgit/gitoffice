@@ -49,6 +49,14 @@ class BiometricController extends Controller
             ->orderBy("employees.EmployeeName") // Sorting by logDate in descending order
             ->get();
 
+            // $staff_biometric=DB::connection('mysql2')->table('biometric_data.'.$tableName.' as bd')
+            // ->join('biometric_data.devices as d', "bd.DeviceId", '=', 'd.DeviceId')
+            // ->join('gitoffice.staff as gos','bd.EmployeeCode','=','gos.EmployeeCode')
+            // ->select("db.logDate as logDate",
+            // 'd.DeviceFname as DeviceName', "bd.EmployeeCode as EmployeeCode",
+            // (DB::raw("CONCAT(s1.fname,' ',s1.mname,' ',s1.lname) AS staff_name")))->get();
+            //     //dd($staff_biometric);
+
         // Filter entry and exit logs
         $entry_exit = $this->filterEntryExitLogs($currentMonth, $currentYear, $date, $externalData);
         $employeePunchLogs = $entry_exit['employeePunchLogs']; 
@@ -57,6 +65,8 @@ class BiometricController extends Controller
         return view('ESTB.Biometric.biometric_data', compact('externalData', 'entry_exit', 'employeePunchLogs'));
     }
 
+
+   
     // public function filterEntryExitLogs($currentMonth, $currentYear, $logDate, $externalData)
     // {
     //     // Generate table name based on current month and year

@@ -155,6 +155,11 @@ class MyAuthController extends Controller
             return redirect()->intended('/Principaloffice/podashboard');
         
             }
+            elseif(Auth::user()->role === UserRoles::PRINCIPAL->value && Auth::user()->email=="principal@git.edu"){
+            
+            return redirect()->intended('/PRINCIPAL/dashboard');
+        
+            }
             //Exam section
             // elseif(Auth::user()->role == UserRoles::EXAM_SECTION->value && Auth::user()->email=="coeoffice@git.edu"){
             

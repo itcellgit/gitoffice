@@ -214,9 +214,32 @@
                                                                     <a href="javascript:void(0);">
                                                                         <p class="mb-1 timeline-widget-content text-sm text-wrap !max-w-[15rem] font-semibold">{{ $event->event_name }}</p>
                                                                         <p class="mb-0 text-xs leading-none text-gray-500 dark:text-white/70">{{ \Carbon\Carbon::parse($event->start_date)->format('h:i A') }}<span
-                                                                                class="badge bg-primary/10 ltr:ml-2 rtl:mr-2 py-1 text-xs text-primary rounded-sm">{{ $event->organizers }}</span>
-                                                                                <br>
-                                                                                {{-- {{ $event->event_location }} --}}
+                                                                            class="badge bg-primary/10 ltr:ml-2 rtl:mr-2 py-1 text-xs text-primary rounded-sm">{{ $event->organizers }}</span>
+                                                                            
+                                                                            <td class="font-medium space-x-2 rtl:space-x-reverse">
+                                                                                <div class="hs-tooltip ti-main-tooltip text-center">
+                                                                                    <button data-hs-overlay="#image_view_modal"
+                                                                                        class="hs-dropdown-toggle m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M21 3C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H21ZM20 5H4V19H20V5ZM18 15V17H6V15H18Z"></path></svg>
+                                                                                        <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700" role="tooltip">image</span>
+                                                                                    </button>
+                                                                                    <div id="image_view_modal" class="hs-overlay hidden ti-modal">
+                                                                                        <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out lg:!max-w-4xl lg:w-full m-3 md:mx-auto">
+                                                                                            <div class="ti-modal-content">
+                                                                                                <div class="ti-modal-header">
+                                                                                                    IMAGE VIEW
+                                                                                                </div>
+                                                                                                <div class="ti-modal-body">
+                                                                                                    <img src="{{ asset('storage/attachments/' . $event->attachment) }}" alt="Event attachment">
+                                                                                                </div>
+                                                                                            
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                            <br>
+                                                                            <h2><span class="text-green-600">Location:</span> {{ $event->location }}</h2>
                                                                         </p>
                                                                     </a>
                                                                 </div>

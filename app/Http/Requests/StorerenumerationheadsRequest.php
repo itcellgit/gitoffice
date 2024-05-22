@@ -22,10 +22,7 @@ class StorerenumerationheadsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
-            
-            'activity' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
-            'level' => ['required', Rule::in(['UG', 'PG'])],
+            'staff_id' => 'required|exists:staff,id',
             
         ];
     }
@@ -33,10 +30,7 @@ class StorerenumerationheadsRequest extends FormRequest
     {
         return
         [
-            'activity.required'=>'Renumeration activity Name is required field',
-            'activity.regex'=>'Renumeration activity Name should be characters only',
-            'level.required'=>'level is required field',
-            'level.in'=>'Please select the valid option from provided choices',
+           
         ];
     } 
 }

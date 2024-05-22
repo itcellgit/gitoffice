@@ -387,10 +387,7 @@
                                                                 <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
                                                                 <div class="avatar-text font-semibold ml-2">Pending</div>
                                                             </div>
-                                                            <div class="avatar-wrapper flex items-center">
-                                                                <div class="avatar rounded-sm p-1 bg-gray-400 border-black-900 border-2 w-6 h-6"></div>
-                                                                <div class="avatar-text font-semibold ml-2">Cancelled</div>
-                                                            </div>
+                                                            
                                                         </div>
 
                                                         <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto pb-6 hidden" id="leave_list_div">
@@ -587,7 +584,7 @@
                 }
             });
         </script>
-
+        
         <script>
             //import { formatDate } from '@fullcalendar/core'
             $(document).ready(function(){
@@ -642,6 +639,14 @@
                 {
                     $('#cl_type_block').hide();
                 }
+
+                if($("#type option:selected").text()=="RH"){
+                    flatpickr('#to_date', {
+                            "minDate": new Date($('#from_date').val()),
+                            "maxDate": new Date($('#from_date').val())
+                    });
+                }
+
             });
 
             
@@ -654,6 +659,12 @@
                 else
                 {
                     $('#cl_type_block_edit').hide();
+                }
+                if($("#type_edit option:selected").text()=="RH"){
+                    flatpickr('#to_date_edit', {
+                            "minDate": new Date($('#from_date_edit').val()),
+                            "maxDate": new Date($('#from_date_edit').val())
+                    });
                 }
             });
             
@@ -832,14 +843,31 @@
 
                         });
             });
+
+          
+          
              //Calender javscript Starts here.
+
             document.addEventListener('DOMContentLoaded', function() {
                 var TileColor = '';
                 //var clientevents = $('#calender2').fullCalendar('clientEvents');
                 //console.log(clientevents);
+                
+
                 const calendarEl = document.getElementById('calendar2')
+                //import tableViewPlugin from 'js/table_view.js';
                 const calendar = new FullCalendar.Calendar(calendarEl, {
+                    
+                    //plugins: [ tableViewPlugin ],
                     initialView: 'dayGridMonth',
+                    headerToolbar: {
+                        center: 'dayGridMonth, listYear', // buttons for switching between views
+                        
+                    },
+                    buttonText : {
+                            month:    'Month View',
+                            list:     'Leaves List',
+                        },
                     height: 650,
                     eventSources: [
                     {
@@ -923,6 +951,18 @@
                             info.el.style.background = "#8ded07";//info.event.extendedProps.background;
                            info.el.style.color  = "black";
                            info.el.style.fontSize  = "15px";
+                       } else if(info.event.extendedProps.leave_name =='DL-Other'){
+                            info.el.style.background = "#a64dff";//info.event.extendedProps.background;
+                           info.el.style.color  = "black";
+                           info.el.style.fontSize  = "15px";
+                       }else if(info.event.extendedProps.leave_name =='DL-VTU'){
+                            info.el.style.background = "#ff8533";//info.event.extendedProps.background;
+                           info.el.style.color  = "black";
+                           info.el.style.fontSize  = "15px";
+                       }else if(info.event.extendedProps.leave_name =='LWP'){
+                            info.el.style.background = "#ff3333";//info.event.extendedProps.background;
+                           info.el.style.color  = "black";
+                           info.el.style.fontSize  = "15px";
                        }
 
                         // if(info.event.extendedProps.appl_status == 'cancelled'){
@@ -933,17 +973,17 @@
                    },
                    dateClick: function(info) {
 
-                       //console.log(info.dateStr);
+                       console.log(info);
                      //   alert('Current view: ' + info.view.type);
 
                         $('#leave_apply_modal').trigger('click');
                         //alert('leave modal active');
-                        $('#from_date').val(info.dateStr);
-                        flatpickr('#from_date', {
-                            "minDate": new Date(info.dateStr),
-                            "maxDate": new Date(info.dateStr),
+                        // $('#from_date').val(info.dateStr);
+                        // flatpickr('#from_date', {
+                        //     "minDate": new Date(info.dateStr),
+                        //     "maxDate": new Date(info.dateStr),
 
-                        });
+                        // });
                         $('#type').focus();
                         flatpickr('#to_date', {
                             "minDate": new Date(info.dateStr),
@@ -954,6 +994,11 @@
 
                         $('#add_leaveform').css('z-index', 3333);
                         $('#leave_date_header').html(info.dateStr);
+
+                        
+                        // if($('.is_rh_val').val() == "RH"){
+
+                        // }
 
                         //ajax call for loading the Holiday and RH Events on the modal.
                         $.ajax({
@@ -973,7 +1018,11 @@
                                         $('#holiday_rh_div').show();
                                         $.each(response, function(key, value) {
 
-                                            $('#holidayrh_list').append('<tr class="'+(value['type']=="RH"?"bg-orange-400":"bg-red-400")+'"><td >'+value['type']+ '</td><td>'+value['title']+ '</td></tr>');
+                                            $('#holidayrh_list').append('<tr class="'+(value['type']=="RH"?"bg-orange-400":"bg-red-400")+'">'
+                                                            +'<td >'+value['type']+ '</td>'
+                                                            +'<td>'+value['title']+ '</td>'
+                                                            +'<input type="hidden" class="is_rh_val" value="'+value['type']+'"/>'
+                                                            +'</tr>');
 
                                         });
                                      }else{
@@ -1069,6 +1118,51 @@
                             }
                         });
 
+                        //for checking if the clicked date is RH or NO.
+                        $.ajax({
+
+                        url: base_url+'/checkhasRH',
+                        method: 'GET',
+                        data: {
+                            date: info.dateStr,
+                            _token : '{{csrf_token()}}' // Pass the clicked date to the server
+                        },
+                        success: function(response) {
+                            // Handle the response from the server
+                            //console.log(response);
+                            //if no RH
+                            if(response == 0){
+                                //console.log(response);
+                                
+                                $('#type option').each(function(){
+                                    if ($(this).text() === "RH") {
+                                        found = true;
+                                        $(this).prop('disabled','disabled');
+                                        $(this).css('background-color','#d1d5db')
+                                        return false; // Exit the loop if found
+                                    }
+                                });
+                                
+                                
+                            //for looping through each result from ajax call
+                               
+
+                            }else{
+                                //if RH
+                                //console.log('No RH');
+                            }
+                            
+
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle errors
+                            console.error(xhr.responseText);
+                        }
+                        });
+
+
+                        //console.log($('.is_rh_val').val());
+
 
 
                     },
@@ -1111,9 +1205,7 @@
                                             
                                             bg_color_setting = "bg-green-400";
                                         }else if(value.appl_status == "rejected") {
-                                            bg_color_setting = "bg-red-400";
-                                        }else if(value.appl_status == "cancelled") {
-                                            bg_color_setting = "bg-gray-400";
+                                            bg_color_setting = "bg-red-200";
                                         }
                                         //console.log(bg_color_setting);
                                        // $('#holiday_rh_div').hide();
@@ -1131,7 +1223,7 @@
                                                                     +'<td>'+value.end+ '</td>'
                                                                     +'<td>'+value.reason+ '</td>'
                                                                     +'<td>'+value.alternate_staff+ '</td>'
-                                                                    +'<td>'+value.additional_alternate_staff+ '</td>'
+                                                                    +'<td>'+(value.additional_alternate_staff == null ? '-NA-':value.additional_alternate_staff)+ '</td>'
                                                                     +'<td>'
                                                                         +(value.appl_status =='pending'? '<div class="hs-tooltip ti-main-tooltip">'
                                                                                         +'<button  data_val="'+value.Application_id+'"'

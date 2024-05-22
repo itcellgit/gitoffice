@@ -25,6 +25,9 @@ use App\Models\ntcpayscale;
 use App\Models\consolidated_teaching_pay;
 use App\Models\users;
 use App\Models\fixed_nt_pay;
+use App\Models\event;
+use App\Models\notice;
+
 use Session;
 use Hash;
 use Auth;
@@ -32,8 +35,16 @@ use Auth;
 class DeanadminController extends Controller
 {
     //
-    public function index(){
-        return view('Dean_admin.dashboard');
+    public function dashboard()
+    {
+        //event
+        $dean_admin_event = event::with('department')->get();
+
+         //notice
+         $dean_admin_notice = notice::with('department')->get();
+
+
+       return view('Dean_admin.dashboard',compact('dean_admin_event','dean_admin_notice'));
     }
 
     public function leaves_lest()

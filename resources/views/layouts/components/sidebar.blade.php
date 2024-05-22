@@ -132,11 +132,15 @@
                                             <i class="ri ri-arrow-right-s-line side-menu__angle"></i>
                                         </a>
                                         <ul class="slide-menu child2">
-                                            <li class="slide"><a href="{{url('ESTB/Grading/autonomous_a_grading')}}" class="side-menu__item">Grade Mapping</a></li>
-                                            <li class="slide"><a href="{{url('ESTB/Grading/gradetemplate')}}" class="side-menu__item">Download Template</a></li>
+                                            <li class="slide"><a href="{{url('ESTB/Grading/autonomous_a_grading')}}" class="side-menu__item">Grading List</a></li>
+                                            <li class="slide"><a href="{{url('ESTB/Grading/gradetemplate')}}" class="side-menu__item">Grade Mapping</a></li>
                                         </ul>
                                     </li>
                                     <li class="slide"><a href="javascript:void(0);" class="side-menu__item">Leaves Encashment</a></li>
+                                    
+                                    <li class="slide"><a href="{{url('ESTB/Generateannualincrement/')}}" class="side-menu__item">Generate Annual Increment List </a></li>
+                                    
+
                                 </ul>
                             </li>
                             <li class="slide">

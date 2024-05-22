@@ -35,6 +35,33 @@ class TicketController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    // public function store(StoreticketRequest $request)
+    // {
+    //      $ticket=ticket::create
+    //     ([
+    //         'title'=>$request->title,
+    //         'description'=>$request->description,
+    //         'user_id'=>auth()->id(),
+
+    //     ]);
+
+    //     $ticket->save();
+    //     //dd($request);
+    //    // Update attachment if provided
+
+    //    if($request->file('attachment'))
+    //    {
+    //        $text=$request->file('attachment')->extension();
+    //        $contents=file_get_contents($request->file('attachment'));
+    //        $filename=Str::random(25);
+    //        $path="attachment/$filename.$text";
+    //        Storage::disk('public')->put($path,$contents);
+    //        $request->file('attachment')->move(public_path('attachment'), $filename);
+    //        $ticket->update(['attachment'=>$filename]);
+    //     }
+    //         return redirect('ticket/dashboard');
+    // }
+
     public function store(StoreticketRequest $request)
     {
          $ticket=ticket::create
@@ -49,48 +76,28 @@ class TicketController extends Controller
         //dd($request);
        // Update attachment if provided
 
-    //    if($request->file('attachment'))
-    //    {
-    //        $text=$request->file('attachment')->extension();
-    //        $contents=file_get_contents($request->file('attachment'));
-    //        $filename=Str::random(25);
-    //        $path="attachment/$filename.$text";
-    //        Storage::disk('public')->put($path,$contents);
-    //        $request->file('attachment')->move(public_path('attachment'), $filename);
-    //        $ticket->update(['attachment'=>$filename]);
-    //    }
-        
-    if ($request->hasFile('attachment')) {
-        $files = $request->file('attachment');
-        dd($files); // Check the uploaded files array
-        $filePaths = [];
-    
-        foreach ($files as $file) {
-            $extension = $file->extension();
-            dd($file, $extension); // Check each file and its extension
-            $contents = file_get_contents($file);
-            $filename = Str::random(25);
-            $path = "attachment/$filename.$extension";
-            Storage::disk('public')->put($path, $contents);
-            $file->move(public_path('attachment'), $filename . '.' . $extension);
-            $filePaths[] = $filename . '.' . $extension;
-        }
-        dd($filePaths); // Check the array of file paths
-    
-        // Assuming 'attachment' is a JSON column in the database
-        $ticket->update(['attachment' => json_encode($filePaths)]);
+       $attachments = $request->file('attachment');
+
+if ($attachments) {
+    $file_data = [];
+    foreach ($attachments as $attachment) {
+        $text = $attachment->extension();
+        $contents = file_get_contents($attachment);
+        $filename = Str::random(25);
+        $path = "attachment/$filename.$text";
+        Storage::disk('public')->put($path, $contents);
+        $attachment->move(public_path('attachment'), $filename);
+        $file_data[] = [
+            'filename' => $filename,
+            'extension' => $text,
+            'path' => $path,
+        ];
     }
-    
-    
-        // Assuming 'attachment' is a JSON column in the database
-        // $ticket->update(['attachment' => json_encode($filePaths)]);
-    
-
-
-
-
-        return redirect('ticket/dashboard');
+    $ticket->update(['attachment' => json_encode($file_data)]);
+}
+            return redirect('ticket/dashboard');
     }
+
 
     /**
      * Display the specified resource.

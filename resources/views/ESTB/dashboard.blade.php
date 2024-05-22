@@ -158,33 +158,57 @@
                                     </div>
                                 </div>
                                 <div class="col-span-12 md:col-span-6 xxl:col-span-3">
-                                    <div class="box">
+                                    <div class="box" style="height: 450px; overflow-y: auto;">
                                     <div class="box-header justify-between flex">
                                         <div class="box-title my-auto">
                                         Upcoming Events
                                         </div>
                                         <div>
-                                        <button type="button" aria-label="button"
-                                            class="ti-btn ti-btn-soft-primary ltr:mr-2 rtl:ml-2 py-1 m-0">View All</button>
+                                        {{-- <button type="button" aria-label="button"
+                                            class="ti-btn ti-btn-soft-primary ltr:mr-2 rtl:ml-2 py-1 m-0">View All</button> --}}
                                         </div>
                                     </div>
                                     <div class="box-body">
                                         <div class="overflow-x-auto">
                                         <ul class="list-unstyled timeline-widget mb-0">
+                                            @foreach ($estb_event as $event)
                                             <li class="ti-list-group border-0 p-0 w-full timeline-widget-list">
                                             <div class="flex w-full">
                                                 <div class="ltr:mr-12 rtl:ml-12 text-center">
-                                                <span class="block text-sm font-semibold">02</span>
-                                                <span class="block text-xs text-gray-500 dark:text-white/70">Mon</span>
+                                                    <span class="block text-sm font-semibold">{{ \Carbon\Carbon::parse($event->start_date)->format('d M') }}</span>
+
                                                 </div>
                                                 <div class="flex flex-wrap flex-auto items-center justify-between">
                                                 <div>
                                                     <a href="javascript:void(0);">
-                                                    <p class="mb-1 timeline-widget-content text-sm text-wrap !max-w-[15rem] truncate">You have
-                                                        an announcement - Ipsum Est Diam Eirmod</p>
-                                                    <p class="mb-0 text-xs leading-none text-gray-500 dark:text-white/70">10:00AM<span
-                                                        class="badge bg-primary/10 ltr:ml-2 rtl:mr-2 py-1 text-xs text-primary rounded-sm">Announcement</span>
-                                                    </p>
+                                                        <p class="mb-1 timeline-widget-content text-sm text-wrap !max-w-[15rem] font-semibold">{{ $event->event_name }}</p>
+                                                        <p class="mb-0 text-xs leading-none text-gray-500 dark:text-white/70">{{ \Carbon\Carbon::parse($event->start_date)->format('h:i A') }}<span
+                                                            class="badge bg-primary/10 ltr:ml-2 rtl:mr-2 py-1 text-xs text-primary rounded-sm">{{ $event->organizers }}</span>
+                                                            <td class="font-medium space-x-2 rtl:space-x-reverse">
+                                                                <div class="hs-tooltip ti-main-tooltip text-center">
+                                                                    <button data-hs-overlay="#image_view_modal"
+                                                                        class="hs-dropdown-toggle m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M21 3C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H21ZM20 5H4V19H20V5ZM18 15V17H6V15H18Z"></path></svg>
+                                                                        <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700" role="tooltip">image</span>
+                                                                    </button>
+                                                                    <div id="image_view_modal" class="hs-overlay hidden ti-modal">
+                                                                        <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out lg:!max-w-4xl lg:w-full m-3 md:mx-auto">
+                                                                            <div class="ti-modal-content">
+                                                                                <div class="ti-modal-header">
+                                                                                    IMAGE VIEW
+                                                                                </div>
+                                                                                <div class="ti-modal-body">
+                                                                                    <img src="{{ asset('storage/attachments/' . $event->attachment) }}" alt="Event attachment">
+                                                                                </div>
+                                                                            
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <br>
+                                                            <h2><span class="text-green-600">Location:</span> {{ $event->location }}</h2>
+                                                        </p>
                                                     </a>
                                                 </div>
                                                 <div class="hs-dropdown ti-dropdown">
@@ -207,7 +231,7 @@
                                                 </div>
                                             </div>
                                             </li>
-                                            <li class="ti-list-group border-0 p-0 w-full timeline-widget-list">
+                                            {{-- <li class="ti-list-group border-0 p-0 w-full timeline-widget-list">
                                             <div class="flex w-full">
                                                 <div class="ltr:mr-12 rtl:ml-12 text-center">
                                                 <span class="block text-sm font-semibold">15</span>
@@ -242,8 +266,8 @@
                                                 </div>
                                                 </div>
                                             </div>
-                                            </li>
-                                            <li class="ti-list-group border-0 p-0 w-full timeline-widget-list">
+                                            </li> --}}
+                                            {{-- <li class="ti-list-group border-0 p-0 w-full timeline-widget-list">
                                             <div class="flex w-full">
                                                 <div class="ltr:mr-12 rtl:ml-12 text-center">
                                                 <span class="block text-sm font-semibold">23</span>
@@ -282,8 +306,8 @@
                                                 </div>
                                                 </div>
                                             </div>
-                                            </li>
-                                            <li class="ti-list-group border-0 p-0 w-full timeline-widget-list">
+                                            </li> --}}
+                                            {{-- <li class="ti-list-group border-0 p-0 w-full timeline-widget-list">
                                             <div class="flex w-full">
                                                 <div class="ltr:mr-12 rtl:ml-12 text-center">
                                                 <span class="block text-sm font-semibold">31</span>
@@ -318,42 +342,43 @@
                                                 </div>
                                                 </div>
                                             </div>
-                                            </li>
+                                            </li> --}}
+                                            @endforeach
                                         </ul>
                                         </div>
                                     </div>
                                     </div>
                                 </div>
                                 <div class="col-span-12 md:col-span-6 xxl:col-span-3">
-                                    <div class="box">
+                                    <div class="box" style="height: 450px; overflow-y: auto;">
                                     <div class="box-header justify-between flex">
                                         <div class="box-title my-auto">
                                         Notice Board
                                         </div>
                                         <div>
-                                        <button type="button" aria-label="button"
-                                            class="ti-btn ti-btn-soft-primary ltr:mr-2 rtl:ml-2 py-1 m-0">View All</button>
+                                        {{-- <button type="button" aria-label="button"
+                                            class="ti-btn ti-btn-soft-primary ltr:mr-2 rtl:ml-2 py-1 m-0">View All</button> --}}
                                         </div>
                                     </div>
                                     <div class="box-body">
                                         <ul class="list-unstyled mb-0">
+                                            @foreach ($estb_notice as $dn)
                                         <li class="ti-list-group mb-6 border-0 p-0 w-full">
                                             <div class="flex border-0">
                                             <div class="ltr:mr-3 rtl:ml-3">
                                                 <div class="calendar-icon icons">
                                                 <div class="avatar bg-primary/20 text-primary text-sm rounded-sm text-center p-1.5 leading-none">
-                                                    <span class="block mb-1">10</span>
-                                                    <span class="block">April</span>
+                                                    <span class="block mb-1">{{ \Carbon\Carbon::parse($dn->date)->format('d M') }}</span>
+
                                                 </div>
                                                 </div>
                                             </div>
                                             <div class="ltr:ml-1 rtl:mr-1 my-auto">
-                                                <div class="font-semibold text-sm text-gray-800 dark:text-white">Board meeting Completed</div> <small class="text-xs font-normal text-gray-500 dark:text-white/70">attend the
-                                                company mangers...</small>
-                                            </div>
+                                                <div class="font-semibold text-sm text-gray-800 dark:text-white">{{$dn->title}}</div> 
+                                                 <small class="text-xs font-normal text-gray-500 dark:text-white/70">{{$dn->description}}...</small>
                                             </div>
                                         </li>
-                                        <li class="ti-list-group mb-6 border-0 p-0 w-full">
+                                        {{-- <li class="ti-list-group mb-6 border-0 p-0 w-full">
                                             <div class="flex border-0">
                                             <div class="ltr:mr-3 rtl:ml-3">
                                                 <div class="calendar-icon icons">
@@ -368,8 +393,8 @@
                                                 <small class="text-xs font-normal text-gray-500 dark:text-white/70">participate the all employess</small>
                                             </div>
                                             </div>
-                                        </li>
-                                        <li class="ti-list-group mb-6 border-0 p-0 w-full">
+                                        </li> --}}
+                                        {{-- <li class="ti-list-group mb-6 border-0 p-0 w-full">
                                             <div class="flex border-0">
                                             <div class="ltr:mr-3 rtl:ml-3">
                                                 <div class="calendar-icon icons">
@@ -384,8 +409,8 @@
                                                 <small class="text-xs font-normal text-gray-500 dark:text-white/70">some changes &amp; add the terms &amp; conditions</small>
                                             </div>
                                             </div>
-                                        </li>
-                                        <li class="ti-list-group mb-6 border-0 p-0 w-full">
+                                        </li> --}}
+                                        {{-- <li class="ti-list-group mb-6 border-0 p-0 w-full">
                                             <div class="flex border-0">
                                             <div class="ltr:mr-3 rtl:ml-3">
                                                 <div class="calendar-icon icons">
@@ -400,8 +425,8 @@
                                                 <small class="text-xs font-normal text-gray-500 dark:text-white/70">this effetct after May 01st 9:00 Am To 5:00 Pm</small>
                                             </div>
                                             </div>
-                                        </li>
-                                        <li class="ti-list-group mb-0 border-0 p-0 w-full">
+                                        </li> --}}
+                                        {{-- <li class="ti-list-group mb-0 border-0 p-0 w-full">
                                             <div class="flex border-0">
                                             <div class="ltr:mr-3 rtl:ml-3">
                                                 <div class="calendar-icon icons">
@@ -416,7 +441,8 @@
                                                 <small class="text-xs font-normal text-gray-500 dark:text-white/70">participate the all employess</small>
                                             </div>
                                             </div>
-                                        </li>
+                                        </li> --}}
+                                        @endforeach
                                         </ul>
                                     </div>
                                     </div>

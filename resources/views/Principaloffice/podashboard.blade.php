@@ -184,8 +184,36 @@
                                                                         <p class="mb-1 timeline-widget-content text-sm text-wrap !max-w-[15rem] font-semibold">{{ $event->event_name }}</p>
                                                                         <p class="mb-0 text-xs leading-none text-gray-500 dark:text-white/70">{{ \Carbon\Carbon::parse($event->start_date)->format('h:i A') }}<span
                                                                             class="badge bg-primary/10 ltr:ml-2 rtl:mr-2 py-1 text-xs text-primary rounded-sm">{{ $event->organizers }}</span>
+                                                                            {{-- <br> --}}
+                                                                            {{-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="inline-block">
+                                                                                <path d="M11 4V2H13V4H19C19.5523 4 20 4.44772 20 5V10C20 10.5523 19.5523 11 19 11H13V13H17C17.5523 13 18 13.4477 18 14V19C18 19.5523 17.5523 20 17 20H13V22H11V20H7C6.44772 20 6 19.5523 6 19V14C6 13.4477 6.44772 13 7 13H11V11H5C4.44772 11 4 10.5523 4 10V5C4 4.44772 4.44772 4 5 4H11Z"></path>
+                                                                            </svg> --}}
+
+                                                                            <td class="font-medium space-x-2 rtl:space-x-reverse">
+                                                                                <div class="hs-tooltip ti-main-tooltip text-center">
+                                                                                    <button data-hs-overlay="#image_view_modal"
+                                                                                        class="hs-dropdown-toggle m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M21 3C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H21ZM20 5H4V19H20V5ZM18 15V17H6V15H18Z"></path></svg>
+                                                                                        <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700" role="tooltip">image</span>
+                                                                                    </button>
+                                                                                    <div id="image_view_modal" class="hs-overlay hidden ti-modal">
+                                                                                        <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out lg:!max-w-4xl lg:w-full m-3 md:mx-auto">
+                                                                                            <div class="ti-modal-content">
+                                                                                                <div class="ti-modal-header">
+                                                                                                    IMAGE VIEW
+                                                                                                </div>
+                                                                                                <div class="ti-modal-body">
+                                                                                                    <img src="{{ asset('storage/attachments/' . $event->attachment) }}" alt="Event attachment">
+                                                                                                </div>
+                                                                                            
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+
                                                                             <br>
-                                                                            <!--<p class="badge bg-danger/10 ltr:ml-2 rtl:mr-2 py-1 text-xs text-black rounded-sm">{{ $event->location }}</p>-->
+                                                                            <h2><span class="text-green-600">Location:</span> {{ $event->location }}</h2>
                                                                         </p>
                                                                     </a>
                                                                         {{-- {{ $event->event_website }} --}}
@@ -1557,8 +1585,55 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy6pRmaTjWTd1AaI0MueG4Lw7oUOmFItQ" crossorigin="anonymous"></script>
 
 
+                
+        <script>
+            $(document).ready(function () {
+                function showLargeImage(imageSrc) {
+                    var modal = document.createElement('div');
+                    modal.style.position = 'fixed';
+                    modal.style.top = '0';
+                    modal.style.left = '0';
+                    modal.style.width = '100%';
+                    modal.style.height = '100%';
+                    modal.style.backgroundColor = 'rgba(0,0,0,0.7)';
+                    modal.style.display = 'flex';
+                    modal.style.alignItems = 'center';
+                    modal.style.justifyContent = 'center';
+                    modal.style.zIndex = '9999';
+
+                    var largeImage = document.createElement('img');
+                    largeImage.src = imageSrc;
+                    largeImage.style.maxWidth = '80%';
+                    largeImage.style.maxHeight = '80%';
+                    largeImage.style.borderRadius = '5px';
+                    largeImage.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
+
+                    modal.appendChild(largeImage);
+                    document.body.appendChild(modal);
+
+                    modal.onclick = function() {
+                        document.body.removeChild(modal);
+                    };
+
+
+                }
+
+
+                function showLargeImage(imageUrl) {
+                    console.log("Image URL: " + imageUrl);
+                    window.open(imageUrl, '_blank');
+                }
+
+            });
+
+        </script>
+
+
+
         <!-- INDEX JS -->
         @vite('resources/assets/js/index-8.js')
+
+
         
 
 @endsection

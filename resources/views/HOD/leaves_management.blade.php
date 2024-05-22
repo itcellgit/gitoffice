@@ -341,6 +341,29 @@
                                                                     </button>
                                                             </div>
                                                             <div class="ti-modal-body">
+                                                                <div class="avatar-container flex py-4">
+                                                                    <div class="avatar-wrapper flex items-center">
+                                                                        <div class="avatar rounded-sm p-1 bg-green-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                                        <div class="avatar-text font-bold ml-2 ">Approved</div>
+                                                                    </div>
+            
+                                                                    <div class="avatar-wrapper flex items-center mx-2">
+                                                                        <div class="avatar rounded-sm p-1 bg-red-500 border-gray-900 border-2 w-6 h-6"></div>
+                                                                        <div class="avatar-text font-bold ml-2">Rejected</div>
+                                                                    </div>
+            
+                                                                    <div class="avatar-wrapper flex items-center mx-2">
+                                                                        <div class="avatar rounded-sm p-1 bg-yellow-400 border-gray-900 border-2 w-6 h-6"></div>
+                                                                        <div class="avatar-text font-bold ml-2">Recommended</div>
+                                                                    </div>
+            
+                                                                    <div class="avatar-wrapper flex items-center">
+                                                                        <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
+                                                                        <div class="avatar-text font-semibold ml-2">Pending</div>
+                                                                    </div>
+                                                                    
+                                                                </div>
+
                                                                 <div id="leave_appl_status_msg">
 
                                                                 </div>
@@ -350,7 +373,7 @@
                                                                         <thead class="bg-gray-50 dark:bg-black/20">
                                                                             <tr class="">
                                                                                 
-                                                                                <th scope="col" class="dark:text-white/80 font-bold">Application Number</th>
+                                                                                <th scope="col" class="dark:text-white/80 font-bold">#</th>
                                                                                 <th scope="col" class="dark:text-white/80 font-bold">Leave Type</th>
                                                                                 <th scope="col" class="dark:text-white/80 font-bold">Faculty on Leave</th>
                                                                                 <th scope="col" class="dark:text-white/80 font-bold">From Date</th>
@@ -516,6 +539,38 @@
                         });
                     }
                 });  
+
+                $(document).on('click','.reject_leave',function(){
+                    //alert('Reject clicked');
+                    var application_id = $(this).attr("data_val");
+                    var applicant_details = $(this).attr("appl_details");
+                    var comfirmation_status = confirm("Are you sure ? you want to Reject the leave for "+applicant_details+" with application id :"+application_id);
+                    
+                    if(comfirmation_status){
+                        $.ajax({
+                                url: base_url+'/HOD/leaves_management/reject_leave',
+                                    method: 'GET',
+                                    data: {
+                                        application_id : application_id,
+                                        
+                                        _token : '{{csrf_token()}}' // Pass the clicked date to the server
+                                    },
+                                    success: function(response) {
+                                        // Handle the response from the server
+                                        console.log(response);
+                                        $('#leave_appl_status_msg').html(response);
+                                        setInterval(() => {
+                                            location.reload();
+                                        }, 2000);
+                                    },
+                                    error: function(xhr, status, error) {
+                                        // Handle errors
+                                        console.error(xhr.responseText);
+                                    }    
+
+                        });
+                    }
+                });
             }); 
              //Calender javscript Starts here.
             document.addEventListener('DOMContentLoaded', function() {
@@ -525,6 +580,14 @@
                 const calendarEl = document.getElementById('calendar2')
                 const calendar = new FullCalendar.Calendar(calendarEl, {
                     initialView: 'dayGridMonth',
+                    headerToolbar: {
+                        center: 'dayGridMonth, listYear', // buttons for switching between views
+                        
+                    },
+                    buttonText : {
+                            month:    'Month View',
+                            list:     'Leaves List',
+                        },
                     height: 650,
                     eventSources: [
                     {
@@ -549,7 +612,7 @@
                         url: base_url+'/HOD/leaves_management/fetchDeptleaveevents',
                         method: 'GET',
                         success:function(data){
-                           console.log(data);
+                           //console.log(data);
                         },
                         failure: function(data) {
                            // alert(data);
@@ -569,7 +632,7 @@
                         info.el.onclick = "disabled";
                        //console.log(info.event.extendedProps.type);
                        
-                       //console.log(info.event.end.getFullYear());
+                      /// console.log(info);
 
                        var date = new Date(info.event.end);
                        //console.log(date);
@@ -588,9 +651,8 @@
                            info.el.style.fontSize  = "15px";
                        }   
 
-                        
-                       //for styling the leave events
-                       if(info.event.extendedProps.leave_name == 'CL'){ //for CL
+                        //for styling the leave events
+                        if(info.event.extendedProps.leave_name == 'CL'){ //for CL
                             info.el.style.background = "blue";//info.event.extendedProps.background;
                            info.el.style.color  = "white";
                            info.el.style.fontSize  = "15px";
@@ -607,12 +669,18 @@
                        else if(info.event.extendedProps.leave_name =='DL-GIT'){
                             info.el.style.background = "#8ded07";//info.event.extendedProps.background;
                            info.el.style.color  = "black";
-                          
+                           info.el.style.fontSize  = "15px";
+                       } else if(info.event.extendedProps.leave_name =='DL-Other'){
+                            info.el.style.background = "#a64dff";//info.event.extendedProps.background;
+                           info.el.style.color  = "black";
+                           info.el.style.fontSize  = "15px";
+                       }else if(info.event.extendedProps.leave_name =='DL-VTU'){
+                            info.el.style.background = "#ff8533";//info.event.extendedProps.background;
+                           info.el.style.color  = "black";
                            info.el.style.fontSize  = "15px";
                        }else if(info.event.extendedProps.leave_name =='LWP'){
-                            info.el.style.background = "#f50505";//info.event.extendedProps.background;
+                            info.el.style.background = "#ff3333";//info.event.extendedProps.background;
                            info.el.style.color  = "black";
-                          
                            info.el.style.fontSize  = "15px";
                        }
                    },  dateClick: function(info) {
@@ -667,7 +735,7 @@
                                            else if(value.appl_status == 'approved'){
                                                 bg_color_setting = 'bg-green-400';
                                            }else if(value.appl_status == 'rejected'){
-                                                bg_color_setting = 'bg-red-400';
+                                                bg_color_setting = 'bg-red-300';
                                            }
                                       
                                             $('#Date_wise_leave__list').append('<tr class="'+ bg_color_setting +'">'
@@ -683,7 +751,7 @@
                                                                             +'<button class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary recommend_confirm '+(value.appl_status == "recommended"?"hidden":"")+'" data_val="'+value.Application_id+'" appl_details = "'+value.staff_name+'-'+ value.title+'">'
                                                                                 +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z"></path></svg>'
                                                                                 +'</button>'
-                                                                            +'<button class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger reject'+(value.appl_status == "pending"?"hidden":"")+'" data_val="'+value.Application_id+'" appl_details = "'+value.staff_name+'-'+ value.title+'">'
+                                                                            +'<button class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger reject_leave"  data_val="'+value.Application_id+'" appl_details = "'+value.staff_name+'-'+ value.title+'">'
                                                                                 +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M11.9997 10.5865L16.9495 5.63672L18.3637 7.05093L13.4139 12.0007L18.3637 16.9504L16.9495 18.3646L11.9997 13.4149L7.04996 18.3646L5.63574 16.9504L10.5855 12.0007L5.63574 7.05093L7.04996 5.63672L11.9997 10.5865Z"></path></svg>'
                                                                                 +'</button>'
                                                                         +'</td>'

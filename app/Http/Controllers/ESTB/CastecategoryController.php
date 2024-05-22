@@ -108,7 +108,6 @@ class CastecategoryController extends Controller
      */
     public function destroy(religion $religion ,castecategory $castecategory)
     {
-      
         
        $castecategory->status='inactive';
         $result = $castecategory->update();

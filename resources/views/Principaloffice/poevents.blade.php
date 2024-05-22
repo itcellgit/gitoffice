@@ -100,7 +100,7 @@
                             
                                                                     @endif
                                                                 </div>
-                                                                <form action="{{route('Principaloffice.poevents.store')}}" method="post">
+                                                                <form action="{{route('Principaloffice.poevents.store')}}" method="post" enctype="multipart/form-data">
                                                                     @csrf
                                                                     <div class="ti-modal-body">
                                                                         <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
@@ -123,7 +123,7 @@
                                                                                 
                                                                             </div>
                                                                         </div>
-                                                                        <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
+                                                                        {{-- <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                             <div class="flex max-w-sm space-y-3 pb-6 no no_fromdate">
                                                                                 <label for="" class="ti-form-label font-bold">Start Date:<span class="text-red-500">*</span></label>
                                                                                 <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
@@ -155,7 +155,38 @@
                                                                                     
                                                                             </div>
                                                                            
+                                                                        </div> --}}
+
+
+
+                                                                        <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
+                                                                            <div class="flex max-w-sm space-y-3 pb-6 no no_fromdate">
+                                                                                <label for="start_date" class="ti-form-label font-bold">Start Date:<span class="text-red-500">*</span></label>
+                                                                                <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
+                                                                                    <span class="text-sm text-gray-500 dark:text-white/70"><i class="ri ri-calendar-line"></i></span>
+                                                                                </div>
+                                                                                <input type="text" name="start_date" class="ti-form-input rounded-l-none focus:z-10 flatpickr-input po_startdate" id="start_date" placeholder="Choose date" readonly>
+                                                                                @if($errors->has('start_date'))
+                                                                                    <div class="text-red-700">{{ $errors->first('start_date') }}</div>
+                                                                                @endif
+                                                                                <div id="po_startdateError" class="error text-red-700"></div>
+                                                                            </div>
+                                                                            <div class="flex max-w-sm space-y-3 pb-6 no_todate">
+                                                                                <label for="to_date" class="ti-form-label font-bold">To Date: <span class="text-red-500">*</span></label>
+                                                                                <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
+                                                                                    <span class="text-sm text-gray-500 dark:text-white/70"><i class="ri ri-calendar-line"></i></span>
+                                                                                </div>
+                                                                                <input type="text" name="to_date" class="ti-form-input rounded-l-none focus:z-10 flatpickr-input po_todate" id="to_date" placeholder="Choose date" readonly>
+                                                                                @if($errors->has('to_date'))
+                                                                                    <div class="text-red-700">{{ $errors->first('to_date') }}</div>
+                                                                                @endif
+                                                                                <div id="po_todateError" class="error text-red-700"></div>
+                                                                            </div>
                                                                         </div>
+                                                                        
+                                                                       
+                                                                        
+
                                                                         <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Organizer:<span class="text-red-500">*</span></label>
@@ -212,6 +243,12 @@
                                                                                 <div id="departmentsError" class="text-red-500"></div>
                                                                             </div> 
                                                                         </div>
+                                                                        <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
+                                                                            <div class="max-w-sm space-y-3 pb-6">
+                                                                                <label for="" class="ti-form-label">Attachment :</label>
+                                                                                <input type="file" name="attachment" class="ti-form-input" accept="image/*" placeholder="Choose an image">
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                     <div class="ti-modal-footer">
                                                                         <button type="button"
@@ -234,7 +271,7 @@
                                                 <table id="events_table" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                                     <thead class="bg-gray-50 dark:bg-black/20">
                                                         <tr class="">
-                                                            <th scope="col" class="dark:text-white/80">S.no</th>
+                                                            <th scope="col" class="w-1/4 dark:text-white/80">S.no</th>
                                                             <th scope="col" class="dark:text-white/80">Event Name</th>
                                                             <th scope="col" class="dark:text-white/80">Location</th>
                                                             <th scope="col" class="dark:text-white/80">start Date</th>
@@ -243,6 +280,7 @@
                                                             <th scope="col" class="dark:text-white/80">Websites Link</th>
                                                             <th scope="col" class="dark:text-white/80">Employee Type</th>
                                                             <th scope="col" class="dark:text-white/80">Departments</th>
+                                                            <th scope="col" class="dark:text-white/80">Attachment</th>
                                                             <th scope="col" class="dark:text-white/80">Action</th>
                                                         </tr>
                                                     </thead>
@@ -255,12 +293,16 @@
                                                                 <td><span>{{$i++}}</span></td>
                                                                 <td><span>{{$ev->event_name}}</span></td>
                                                                 <td><span>{{$ev->location}}</span></td>
-                                                                {{-- <td><span>{{$ev->start_date}}</span></td>
-                                                                <td><span>{{$ev->to_date}}</span></td> --}}
                                                                 <td><span>{{ \Carbon\Carbon::parse($ev->start_date)->format('d-M-Y H:i') }}</span></td>
                                                                 <td><span>{{ \Carbon\Carbon::parse($ev->to_date)->format('d-M-Y H:i') }}</span></td>
                                                                 <td><span>{{$ev->organizers}}</span></td>
-                                                                <td><span>{{$ev->event_website}}</span></td>
+                                                                {{-- <td><span>{{$ev->event_website}}</span></td> --}}
+                                                                <td>
+                                                                    <a href="{{ $ev->event_website }}" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:underline">
+                                                                        <span class="text-blue-500">{{$ev->event_website}}</span>
+                                                                    </a>
+                                                                </td>
+                                                                
                                                                 <td><span>{{$ev->staff_type}}</span></td>
                                                                 <td>
                                                                     @foreach($ev->department as $department)
@@ -268,6 +310,31 @@
                                                                         
                                                                     @endforeach
                                                                 </td>
+
+                                                                <td class="font-medium space-x-2 rtl:space-x-reverse">
+                                                                    <div class="hs-tooltip ti-main-tooltip text-center">
+                                                                        <button data-hs-overlay="#image_view_modal{{$i}}"
+                                                                            class="hs-dropdown-toggle m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M21 3C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H21ZM20 5H4V19H20V5ZM18 15V17H6V15H18Z"></path></svg>
+                                                                            <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700" role="tooltip">image</span>
+                                                                        </button>
+                                                                        <div id="image_view_modal{{$i}}" class="hs-overlay hidden ti-modal">
+                                                                            <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out lg:!max-w-4xl lg:w-full m-3 md:mx-auto">
+                                                                                <div class="ti-modal-content">
+                                                                                    <div class="ti-modal-header">
+                                                                                        IMAGE VIEW
+                                                                                    </div>
+                                                                                    <div class="ti-modal-body">
+                                                                                        <img src="{{ asset('storage/attachments/' . $ev->attachment) }}" alt="Event attachment">
+                                                                                    </div>
+                                                                                
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                {{-- <td>{{$ev->attachment}}</td> --}}
+
                                                                 <td class="font-medium space-x-2 rtl:space-x-reverse">
                                                                 <div class="hs-tooltip ti-main-tooltip">
                                                                     <button data-hs-overlay="#events_edit_modal{{$i}}"  id="btn{{$i}}" btn-val={{$i}}
@@ -307,7 +374,7 @@
                                                                                         </script>
                                                                                     @endif
                                                                                 </div>
-                                                                                <form action="{{route('Principaloffice.poevents.update',$ev->id)}}" method="post">
+                                                                                <form action="{{route('Principaloffice.poevents.update',$ev->id)}}" method="post" enctype="multipart/form-data">
                                                                                     @csrf
                                                                                     @method('patch')
                                                                                      <div class="ti-modal-body">
@@ -361,6 +428,7 @@
                                                                                             </div>
                                                                                         
                                                                                         </div>
+                                                                                        
                                                                                         <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                                 <label for="" class="ti-form-label font-bold">Organizer:<span class="text-red-500">*</span></label>
@@ -389,9 +457,9 @@
                                                                                                     <option value="Non-Teaching" {{($ev->staff_type=='Non-Teaching'? 'selected':'')}}>Non-Teaching</option>
                                                                                                     <option value="All" {{($ev->staff_type=='All'? 'selected':'')}}>All</option>
                                                                                                 </select>
-                                                                                                 @if($errors->has('e_staff_type'))
-                                                                                                            <div class="text-red-700">{{ $errors->first('e_staff_type') }}</div>
-                                                                                                    @endif
+                                                                                                @if($errors->has('e_staff_type'))
+                                                                                                    <div class="text-red-700">{{ $errors->first('e_staff_type') }}</div>
+                                                                                                @endif
                                                                                                
                                                                                             </div>
                                                                                             <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0">
@@ -416,6 +484,15 @@
                                                                                                 <!--Dropdown multiselect checkbox-->
                                                                                             </div> 
                                                                                         </div>
+
+                                                                                        
+                                                                                        <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
+                                                                                            <div class="max-w-sm space-y-3 pb-6 ">
+                                                                                                <label for="" class="ti-form-label mb-0 font-bold">Attachment:<span class="text-red-500"> {{$ev->attachment}}</span></label>
+                                                                                                <input type="file" name="attachment" class="ti-form-input" accept="image/*" placeholder="Choose an image" value="{{ old('attachment', $ev->attachment) }}">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        
                                                                                     </div>
                                                                                     <div class="ti-modal-footer">
                                                                                         <button type="button"
@@ -493,22 +570,38 @@
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/dataTables.tailwindcss.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="path/to/your/script.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
-        <!-- pro activity other sponsored code start-->
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+
         <script>
-            $(document).ready(function(){
-               //alert('Hello from jquery');
-
-               new DataTable('#events_table');
-            });
+            
             $(document).ready(function () {
                 $('.select-all').change(function () {
                     $('input[name="departments[]"]').prop('checked', this.checked);
                 });
                 
                 
-               
+                new DataTable('#events_table');
+
+                $('.po_todate').on('change', function() {
+                    var startDate = $('.po_startdate').val();
+                    var toDate = $('.po_todate').val();
+
+                    if (new Date(toDate) < new Date(startDate)) {
+                        $('#po_todateError').text('To Date must be greater than or equal to Start Date');
+                        $('.po_todate').val('');
+                    } else {
+                        $('.po_todateError').text('');
+                    }
+                });
+
+                
+
+
                 //Frontend validation
                 function isValidUrl(url) {
                     var urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/;
@@ -592,9 +685,94 @@
                     //alert($(this).find('.caste_edit_modal_no').val());
                     $('.event_modal_no').val(event_modal_no); 
                 });
+
+                
             });
 
         </script>
+
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                flatpickr('.po_startdate', {
+                    enableTime: true,
+                    dateFormat: 'Y-m-d H:i',
+                    // Add more options if required
+                });
+
+                flatpickr('.po_todate', {
+                    enableTime: true,
+                    dateFormat: 'Y-m-d H:i',
+                    // Add more options if required
+                });
+
+                $('.po_todate').on('change', function() {
+                    var startDate = new Date($('.po_startdate').val());
+                    var toDate = new Date($('.po_todate').val());
+
+                    if (toDate < startDate) {
+                        $('#po_todateError').text('To Date must be equal to or greater than Start Date');
+                        $('.po_todate').val('');
+                    } else {
+                        $('#po_todateError').text('');
+                    }
+
+                    var startTime = $('.po_startdate').val().split(' ')[1];
+                    var endTime = $('.po_todate').val().split(' ')[1];
+
+                    if (startTime && endTime) {
+                        if (endTime <= startTime) {
+                            $('#po_todateError').text('To Time must be greater than Start Time');
+                            $('.po_todate').val('');
+                        } else {
+                            $('#po_todateError').text('');
+                        }
+                    }
+                });
+            });
+
+            // document.addEventListener('DOMContentLoaded', function () {
+            //     flatpickr('.po_startdate', {
+            //         enableTime: true,
+            //         dateFormat: 'Y-m-d H:i',
+            //         // Add more options if required
+            //     });
+
+            //     flatpickr('.po_todate', {
+            //         enableTime: true,
+            //         dateFormat: 'Y-m-d H:i',
+            //         // Add more options if required
+            //     });
+
+            //     $('.po_todate').on('change', function() {
+            //         var startDate = new Date($('.po_startdate').val());
+            //         var toDate = new Date($('.po_todate').val());
+
+            //         // Check if toDate is less than or equal to startDate
+            //         if (toDate <= startDate) {
+            //             $('#po_todateError').text('To Date must be greater than Start Date');
+            //             $('.po_todate').val('');
+            //         } else {
+            //             $('#po_todateError').text('');
+
+            //             var startTime = $('.po_startdate').val().split(' ')[1];
+            //             var endTime = $('.po_todate').val().split(' ')[1];
+
+            //             // If start date and end date are on the same day,
+            //             // check if end time is greater than start time
+            //             if (startDate.toDateString() === toDate.toDateString() && endTime <= startTime) {
+            //                 $('#po_todateError').text('To Time must be greater than Start Time');
+            //                 $('.po_todate').val('');
+            //             } else {
+            //                 $('#po_todateError').text('');
+            //             }
+            //         }
+            //     });
+            // });
+
+        </script>
+
+        
 
        
         @vite('resources/assets/js/index-8.js')

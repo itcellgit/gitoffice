@@ -16,6 +16,10 @@ use App\Models\qualification_staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Models\event;
+use App\Models\notice;
+
+
 use Session;
 use Hash;
 use Auth;
@@ -212,8 +216,15 @@ class DeanRndController extends Controller
         ->where('q1.status', '=', 'Pursuing')
         ->count();
 
+        //events count
+        $dean_event = event::with('department')->get();
 
-         return view('Deanrnd.dashboard',compact(['professional_activity_attendee','professional_activity_conducteds','teaching_activity_attended','teaching_activity_conducted','conferences_attendees','conferences_conducted','publication','fundedproject','patents','copyrights','general_achievements','totalresearchCount','totalFundsReceived','gitsponsoredevents','researchscholarscount']));
+        //notice
+        $dean_notice = notice::with('department')->get();
+
+
+
+         return view('Deanrnd.dashboard',compact(['professional_activity_attendee','professional_activity_conducteds','teaching_activity_attended','teaching_activity_conducted','conferences_attendees','conferences_conducted','publication','fundedproject','patents','copyrights','general_achievements','totalresearchCount','totalFundsReceived','gitsponsoredevents','researchscholarscount','dean_event','dean_notice']));
     }
 
 

@@ -431,28 +431,31 @@
                 });
 
 
-                $('#filterBtn').click(function() {
-                    var formData = $('#searchForm').serialize();
-                    //console.log('123');
-                    alert("Search button clicked!");
 
-                    // Send AJAX request to server
-                    $.ajax({
-                        type: 'get',
-                        url: 'ESTB/staff/staffinformation',
-                        //url: 'staff/staffinformation',
 
-                        data: formData,
-                        success: function(response) {
-                            $('#staff_table').html(response);
-                        },
+                // $('#filterBtn').click(function() {
+                //     var formData = $('#searchForm').serialize();
+                //     //console.log('123');
+                //     //alert("Search button clicked!");
 
-                        error: function(xhr, status, error) {
-                            console.error(xhr.responseText);
-                            //alert("An error occurred. Please try again.");
-                        }
-                    });
-                });
+                //     // Send AJAX request to server
+                //     $.ajax({
+                //         type: 'get',
+                //         url: 'ESTB/staff/staffinformation',
+                //         //url: 'staff/staffinformation',
+
+                //         data: formData,
+                //         success: function(response) {
+                //             $('#staff_table').html(response);
+                //         },
+
+                //         error: function(xhr, status, error) {
+                //             console.error(xhr.responseText);
+                //             //alert("An error occurred. Please try again.");
+                //         }
+                //     });
+                // });
+                
 
                 // To Select multiple values from dropdown to Filter the staff information
                 $('.select-all').change(function () {
