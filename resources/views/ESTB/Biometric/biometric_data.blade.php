@@ -54,6 +54,42 @@
                                     header("refresh: 3");
                                 @endphp
                         @endif
+
+
+
+                        {{-- chart --}}
+                        <div class="col-span-12 xxl:col-span-6">
+                            <div class="box">
+                                <div class="box-header">
+                                    <div class="sm:flex justify-between sm:space-y-0 space-y-2">
+                                        <h5 class="box-title my-auto">Biometric Overview</h5>
+                                        <div class="inline-flex rounded-md shadow-sm">
+                                            <button type="button" class="ti-btn-group text-xs !border-0 py-2 px-3 ti-btn-soft-primary">
+                                            1D
+                                            </button>
+                                            <button type="button" class="ti-btn-group text-xs !border-0 py-2 px-3 ti-btn-soft-primary">
+                                            1W
+                                            </button>
+                                            <button type="button" class="ti-btn-group text-xs !border-0 py-2 px-3 ti-btn-soft-primary">
+                                            1M
+                                            </button>
+                                            <button type="button" class="ti-btn-group text-xs !border-0 py-2 px-3 ti-btn-soft-primary">
+                                            3M
+                                            </button>
+                                            <button type="button" class="ti-btn-group text-xs !border-0 py-2 px-3 ti-btn-soft-primary">
+                                            6M
+                                            </button>
+                                            <button type="button" class="ti-btn-group text-xs !border-0 py-2 px-3 ti-btn-primary">
+                                            1Y
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div id="performanceReport"></div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="box">
                             <div class="col-span-12 xl:col-span-12">
                                 <form method="POST" action="{{ route('biometric_data') }}">

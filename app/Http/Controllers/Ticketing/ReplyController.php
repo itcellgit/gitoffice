@@ -53,10 +53,13 @@ class ReplyController extends Controller
         }
              $postticket->save();
 
-             $postticket = post_ticket::where('ticket_id', $ticket->id)->get();
+             return redirect()->route('ticket.show', ['ticket' => $ticket->id])
+             ->with('success', 'Ticket post saved successfully.');
+
+        //      $postticket = post_ticket::where('ticket_id', $ticket->id)->get();
 
             
-         return view('Ticketing.showticket',compact('ticket','postticket'));
+        //  return view('Ticketing.showticket',compact('ticket','postticket'));
 
     }
 

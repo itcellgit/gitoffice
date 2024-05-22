@@ -24,6 +24,7 @@ use App\Models\ntcpayscale;
 use App\Models\consolidated_teaching_pay;
 use App\Models\users;
 use App\Models\fixed_nt_pay;
+
 use Session;
 
 
@@ -242,6 +243,7 @@ class StaffController extends Controller
                 ->with('latest_employee_type')
                 ->with('latestfixedntpay','latest_consolidated_teaching_pay','latestteaching_payscale','latestntpayscale','latestntcpayscale')
                 ->first();
+                //dd($staff);
 
        $confirmation=$staff->confirmationAssociation()->first();
        $confirmationdate=null;
@@ -317,7 +319,7 @@ class StaffController extends Controller
         $staff->vtu_id=$request->vtu_id;
         $staff->aicte_id=$request->aicte_id;
         $staff->date_of_confirmation=$request->date_of_confirmation;
-
+        $staff->EmployeeCode=$request->EmployeeCode;
         $sresult=$staff->update();
         $staff->latest_employee_type()->first();
         $emp_type=$staff->latest_employee_type()->first();
@@ -355,41 +357,41 @@ class StaffController extends Controller
         //
     }
 
-    public function staff_data_filter()
-	{
-	    $filter="";
-	   // dd($staff1);
-	   $staff=staff::with('designations')
-	    ->with('associations')
-	   ->with('departments' )
-	   ->with('latest_employee_type')
-	   ->orderBy('fname')->get();
+    // public function staff_data_filter()
+	// {
+	//     $filter="";
+	//    // dd($staff1);
+	//    $staff=staff::with('designations')
+	//     ->with('associations')
+	//    ->with('departments' )
+	//    ->with('latest_employee_type')
+	//    ->orderBy('fname')->get();
 
-	   //$staff = DB::table('staff')->with('designations')->with('associations')->orderBy('id')->paginate(15);
-	   // $caste_categories = castecategory::where('status','active')->get();
-	    $religions =religion::where('status','active')->get();
-	    $associations = association::where('status','active')->get();
-	    $departments = DB::table('departments')->where('status','active')->get();
-	    $qualifications =DB::table('qualifications')->where('status','active')->get();
+	//    //$staff = DB::table('staff')->with('designations')->with('associations')->orderBy('id')->paginate(15);
+	//    // $caste_categories = castecategory::where('status','active')->get();
+	//     $religions =religion::where('status','active')->get();
+	//     $associations = association::where('status','active')->get();
+	//     $departments = DB::table('departments')->where('status','active')->get();
+	//     $qualifications =DB::table('qualifications')->where('status','active')->get();
 
-	    $designations=designation::where('status','active')->get();
-	    //To fetch Designation As per Employee type
-	    $teachingDesignations = designation::where('status', 'active')
-	                        ->where('emp_type', 'Teaching')
-	                        ->where('isadditional', 0)
-	                        ->orderBy('design_name')
-	                        ->get();
+	//     $designations=designation::where('status','active')->get();
+	//     //To fetch Designation As per Employee type
+	//     $teachingDesignations = designation::where('status', 'active')
+	//                         ->where('emp_type', 'Teaching')
+	//                         ->where('isadditional', 0)
+	//                         ->orderBy('design_name')
+	//                         ->get();
 
-	    $nonteachingDesignations = designation::where('status', 'active')
-	                        ->where('emp_type', 'Non-teaching')
-	                        ->where('isadditional', 0)
-	                        ->orderBy('design_name')
-	                        ->get();
+	//     $nonteachingDesignations = designation::where('status', 'active')
+	//                         ->where('emp_type', 'Non-teaching')
+	//                         ->where('isadditional', 0)
+	//                         ->orderBy('design_name')
+	//                         ->get();
 
-	    //$payscales = teaching::
+	//     //$payscales = teaching::
 
-	    return view('ESTB.staff.staffinformation',compact(['staff','religions','associations','departments','qualifications','filter','designations','teachingDesignations','nonteachingDesignations']));
-	}
+	//     return view('ESTB.staff.staffinformation',compact(['staff','religions','associations','departments','qualifications','filter','designations','teachingDesignations','nonteachingDesignations']));
+	// }
 
 
 
@@ -431,9 +433,10 @@ class StaffController extends Controller
             $join->on('department_staff.staff_id', '=', 'staff.id')
                 ->where('department_staff.status', 'active');
         });
-
+        
         $query->join('departments', 'departments.id', '=', 'department_staff.department_id');
 
+        
         $query->join('association_staff', function ($join) {
             $join->on('association_staff.staff_id', '=', 'staff.id')
                 ->where('association_staff.status', 'active');
@@ -537,15 +540,13 @@ class StaffController extends Controller
 
         );
 
-
-
-        // Execute the query and retrieve results
         //$staff = $query->take(10)->get();
         //dd($staff);
         $staff = $query->get();
 
        // dd($staff);
        $staffCount = $staff->count();
+
         return view('ESTB.staff.staffinformation', compact(['staff','staffCount','religions','associations','departments','qualifications','filter','designations','teachingDesignations','nonteachingDesignations']));
     }
 

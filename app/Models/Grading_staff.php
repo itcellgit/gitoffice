@@ -10,7 +10,7 @@ class Grading_staff extends Model
     use HasFactory;
     public function staff()
     {
-        return $this->belongsTo(Staff::class);
+        return $this->belongsTo(staff::class);
     }
     protected $fillable = ['staff_id', 'year', 'month', 'grade'];
 

@@ -150,6 +150,10 @@
                                                     <td>{{ $i++ }}</td>
                                                     <td><span>{{$ticket->user->email}}</span></td>
                                                     {{-- <td><a href="mailto:{{$ticket->user->email}}">{{$ticket->user->email}}</a></td> --}}
+                                                    {{-- <td><a href="https://mail.google.com/mail/u/0/#search/{{$ticket->user->email}}" target="_blank">{{$ticket->user->email}}</a></td> --}}
+                                                    {{-- <td><a href="https://git.edu/office}" target="_blank">{{$ticket->user->email}}</a></td> --}}
+
+
                                                     <td>{{$ticket->status}}</td>
 
                                                     <td>
@@ -195,7 +199,7 @@
                                                    
                                                      </div>
                                                     </td>
-</tr> 
+                                                </tr> 
                                 
                                                     {{-- <tr class="">
                                                         <td>{{ $i++ }}</td>

@@ -79,13 +79,13 @@
                                                     <path d="M12 3l0 5" />
                                                     <path d="M6 21v-7m-2 2l8 -8l8 8m-2 -2v7" />
                                                   </svg>
-                                                  Taxslabs List for the TdsHeads  <b style="color:red;font-size:18px"></b></h5>   
-                                                  {{-- {{$taxslabs->tax_heads->name}}   --}}
+                                                  Taxslabs List for the Tax Regime  <b style="color:red;font-size:18px">{{$taxHeads->name}}  </b></h5>   
+                                                  
                                             <div class=" block ltr:ml-auto rtl:mr-auto my-auto">
                                                     <button type="button" id="add_caste_category_btn" class="hs-dropdown-toggle ti-btn ti-btn-primary" data-hs-overlay="#add_caste_category">
                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M4 3H20C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM5 5V19H19V5H5ZM11 11V7H13V11H17V13H13V17H11V13H7V11H11Z" fill="rgba(255,255,255,1)"></path></svg>
                                                         
-                                                        Add a Taxslabs
+                                                        Add a Taxslab
                                                     </button>
                 
                                                     <div id="add_caste_category" class="hs-overlay hidden ti-modal">
@@ -95,7 +95,7 @@
                                                                 <h3 class="ti-modal-title">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M4 3H20C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM5 5V19H19V5H5ZM11 11V7H13V11H17V13H13V17H11V13H7V11H11Z"></path></svg>
                                                                     
-                                                                    Add a taxslabs <b style="color:red">{{$taxHeads->name}} </b>TaxHeads
+                                                                    Add a taxslab <b style="color:red">{{$taxHeads->name}} </b>TaxHeads
                                                                 </h3>
                                                                
                                                                 <button type="button" class="hs-dropdown-toggle ti-modal-close-btn"
@@ -174,7 +174,7 @@
                                         <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto">
                                             <a class="flex items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('ESTB.TDS.Taxheads.index')}}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M11.8284 12.0005L14.6569 14.8289L13.2426 16.2431L9 12.0005L13.2426 7.75781L14.6569 9.17203L11.8284 12.0005Z"></path></svg>
-                                                Back to TaxHeads
+                                                Back to TaxRegime
                                              </a>
                                         <table id="castecategory_table" class="ti-custom-table ti-striped-table  ti-custom-table-head whitespace-nowrap">
                                             <thead class="bg-gray-50 dark:bg-black/20">
@@ -200,7 +200,7 @@
                                                     <td>
                                                     <div class="flex space-x-3 rtl:space-x-reverse w-full min-w-[200px]">
                                                         <div class="block w-full my-auto">
-                                                           {{ $taxSlabs->regime_id }}
+                                                           {{ $taxSlabs->taxheads->name }}
                                                         </div>
                                                     </div>
                                                     </td>
@@ -222,7 +222,7 @@
                                                     <td>
                                                     <div class="flex space-x-3 rtl:space-x-reverse w-full min-w-[200px]">
                                                         <div class="block w-full my-auto">
-                                                           {{ $taxSlabs->tax_rate}}
+                                                           {{ $taxSlabs->tax_rate}}%
                                                         </div>
                                                     </div>
                                                     </td>
@@ -240,7 +240,7 @@
                                                             </button>
                                 
                             
-                                                                {{-- <div id="caste_edit_modal{{$i}}" class="hs-overlay hidden ti-modal">
+                                                                <div id="caste_edit_modal{{$i}}" class="hs-overlay hidden ti-modal">
                                                                     
                                                                     <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out md:!max-w-2xl md:w-full m-3 md:mx-auto">
                                                                         <div class="ti-modal-content">
@@ -248,7 +248,7 @@
                                                                             <h3 class="ti-modal-title">
                                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M16.7574 2.99666L14.7574 4.99666H5V18.9967H19V9.2393L21 7.2393V19.9967C21 20.5489 20.5523 20.9967 20 20.9967H4C3.44772 20.9967 3 20.5489 3 19.9967V3.99666C3 3.44438 3.44772 2.99666 4 2.99666H16.7574ZM20.4853 2.09717L21.8995 3.51138L12.7071 12.7038L11.2954 12.7062L11.2929 11.2896L20.4853 2.09717Z"></path></svg>
                                                                                 
-                                                                                Edit Caste & Category
+                                                                                Edit Tax slabs
                                                                             </h3>
                                                                             <button type="button" class="hs-dropdown-toggle ti-modal-close-btn"
                                                                             data-hs-overlay="#caste_edit_modal{{$i}}">
@@ -260,7 +260,7 @@
                                                                                 fill="currentColor" />
                                                                             </svg>
                                                                             </button>
-                                                                            @if(($errors->has('e_caste_name'))||($errors->has('e_subcaste_name'))||($errors->has('e_category'))||($errors->has('e_category_no')))
+                                                                            @if(($errors->has('e_lower_limit'))||($errors->has('e_upper_limit'))||($errors->has('e_tax_rate')))
                                                                                 <script>
                                                                                     //alert(387);
                                                                                     window.onload=function(){
@@ -271,12 +271,12 @@
                                                                                 </script>
                                                                             @endif
                                                                         </div>
-                                                                        <form  action="{{route('ESTB.TDS.Taxheads.update',[$taxHeads->id,$taxSlabs->id])}}" method="post">
+                                                                        <form  action="{{route('ESTB.TDS.Taxheads.Taxslabs.update',[$taxHeads->id,$taxSlabs->id])}}" method="post">
                                                                             @csrf
                                                                             @method('patch')
                                                                             <div class="ti-modal-body pb-6">
                                                                                 <input type='hidden' name='modal_no' id='modal_no' value={{old('modal_no')}}/>
-                                                                                <input type="hidden" name="regime_id" value="{{$taxHeads->id}}">
+                                                                                <input type="hidden" name="e_regime_id" value="{{$taxHeads->id}}">
                                                                                 <div class="max-w-sm space-y-3 pb-6">
                                                                                     <label for="with-corner-hint" class="ti-form-label font-bold">lower limit: </label>
                                                                                     <input type="text" name="e_lower_limit" class="ti-form-input" placeholder="lower_limit" value="{{$taxSlabs->lower_limit}}">
@@ -287,7 +287,7 @@
                                                                                 </div>
                                                                                 <div class="max-w-sm space-y-3 pb-6">
                                                                                     <label for="with-corner-hint" class="ti-form-label font-bold">upper limit : </label>
-                                                                                    <input type="text" name="e_upper_limit" class="ti-form-input" placeholder="lower_limit" value="{{$taxSlabs->lower_limit}}">
+                                                                                    <input type="text" name="e_upper_limit" class="ti-form-input" placeholder="lower_limit" value="{{$taxSlabs->upper_limit}}">
                                                                                     @if($errors->has('e_upper_limit'))
                                                                                         <div class="text-red-700">{{ $errors->first('e_upper_limit') }}</div>
                                                                                     @endif
@@ -304,14 +304,14 @@
                                                                                 
                                                                                 
                                                                                 
-                                                                                @if($caste->status == 'inactive')
+                                                                                {{-- @if($caste->status == 'inactive')
                                                                                 <br/>
                                                                                     <div class="flex">
                                                                                         <input type="radio" name="status" class="ti-form-radio" id="hs-radio-group-2" value="active">
                                                                                         <label for="hs-radio-group-2" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Make it Active</label>
                                                                                     </div>
                                                                                 @endif
-                                                                        
+                                                                         --}}
                                                                             </div>
                                                                             <div class="ti-modal-footer">
                                                                                 <button type="button"
@@ -327,8 +327,8 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                        </div> --}}
-                                                        {{-- <div class="hs-tooltip ti-main-tooltip">
+                                                        </div> 
+                                                        <div class="hs-tooltip ti-main-tooltip">
                                                         <form action="{{ route('ESTB.TDS.Taxheads.Taxslabs.destroy',[$taxHeads->id,$taxSlabs->id]) }}" method="post">
                                                             @method('delete')
                                                              @csrf
@@ -343,7 +343,7 @@
                                                             </span>
                                                             </button>
                                                         </form>
-                                                        </div> --}}
+                                                        </div>
                                                         </td>
                                                     </tr>
                                                     @empty

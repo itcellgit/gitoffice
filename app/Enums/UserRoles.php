@@ -12,7 +12,6 @@ enum UserRoles: string
     case ADMISSION = "Admission";
     case ACCOUNTS = "Accounts";
     case ESTB = "Establishment";
-    case PRINCIPAL = "Principal";
     case OS = "Office Superintendent";
     case HOD = "Head of Department";
     case DEAN = "Dean";
@@ -21,4 +20,6 @@ enum UserRoles: string
     case PRINCIPAL_OFFICE="principal_office";
     case EXAM_SECTION="Exam_section";
     case Dean_admin = "Dean_admin";
+    case PRINCIPAL = "Principal";
+    
 }

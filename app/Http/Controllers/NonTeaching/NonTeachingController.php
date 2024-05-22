@@ -148,7 +148,7 @@ class NonTeachingController extends Controller
     {
 
         //dd($request);
-
+        
         $staff->fname=$request->fname;
         $staff->mname=$request->mname;
         $staff->lname=$request->lname;

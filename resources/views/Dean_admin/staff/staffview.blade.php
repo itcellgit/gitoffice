@@ -27,7 +27,7 @@
                             </div>
                             <ol class="flex items-center whitespace-nowrap min-w-0">
                                 <li class="text-sm">
-                                <a class="flex items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('ESTB.staff')}}">
+                                <a class="flex items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('Dean_Admin.staff')}}">
                                     Staff
                                     <i class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
                                 </a>
@@ -168,6 +168,7 @@
                                                                         </span-->
                                                                     </div>
                                                                 </div>
+                                                               
 
                                                             </div>
 

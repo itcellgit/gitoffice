@@ -16,7 +16,8 @@ class TaxSlabController extends Controller
     public function index()
     {
        $taxSlab = TaxSlab::all();
-       return view('ESTB.TDS.Taxheads.edittaxheads', compact('taxSlab'));
+       $taxHeads = TaxHeads::all();
+       return view('ESTB.TDS.Taxheads.edittaxheads', compact('taxSlab','taxHeads'));
     }
 
     /**
@@ -34,7 +35,6 @@ class TaxSlabController extends Controller
     {
         $request->validate([
         "lower_limit"=>"required",
-        "upper_limit"=>"required",
         "tax_rate"=>"required",
         ]);
 
@@ -71,23 +71,25 @@ class TaxSlabController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTaxSlabRequest $request, TaxSlab $taxSlab)
-    {
-        $taxSlab = lower_limit=$request->e_lower_limit;
-        $taxSlab = regime_id = $request->e_regime_id;
-        $taxSlab = upper_limit=$request->e_upper_limit;
-        $taxSlab = tax_rate=$request->e_tax_rate;
-        $taxSlab->update();
-        
+    public function update(UpdateTaxSlabRequest $request, $regime_id, TaxSlab $taxSlab)
+{
+    $taxSlab->lower_limit = $request->e_lower_limit;
+    $taxSlab->regime_id = $request->e_regime_id; // Assuming regime_id comes from the request
+    $taxSlab->upper_limit = $request->e_upper_limit;
+    $taxSlab->tax_rate = $request->e_tax_rate;
+    $taxSlab->save(); // Use save() instead of update()
 
-        return redirect()->route('ESTB.TDS.Taxheads.Taxslabs.index');
-    }
+    return redirect()->route('ESTB.TDS.Taxheads.show', ['taxHeads' => $taxSlab->regime_id])->with('success', 'Tax slab updated successfully');
+}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TaxSlab $taxSlab)
+    public function destroy(TaxHeads $taxHeads,TaxSlab $taxSlab)
     {
-        //
+        // dd($taxSlab);
+        $taxSlab->delete();
+    
+        return redirect()->route('ESTB.TDS.Taxheads.show', ['taxHeads' => $taxSlab->regime_id])->with('success', 'Tax slab deleted successfully');  
     }
 }

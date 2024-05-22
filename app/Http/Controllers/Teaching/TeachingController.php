@@ -139,6 +139,7 @@ class TeachingController extends Controller
         //dd($staff);
         $user = Auth::user();
         $staff=staff::where('staff.id',$staff)->first();
+        
         $religions =religion::where('status','active')->get();
         $castecategories=DB::table('castecategories')->where('status','active')->get();
 
@@ -161,7 +162,9 @@ class TeachingController extends Controller
     {
 
         //dd($request);
-
+        //$user = Auth::user();
+        //$staff=staff::where('staff.id',$staff)->first();
+      
         $staff->fname=$request->fname;
         $staff->mname=$request->mname;
         $staff->lname=$request->lname;

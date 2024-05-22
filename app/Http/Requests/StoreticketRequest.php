@@ -29,7 +29,7 @@ class StoreticketRequest extends FormRequest
         [
             'title' => ['required', 'string'],
             'description'=>['required','string'],
-            'attachment'=>['sometimes','file','mimes:jpg,jpeg,png,pdf'],
+            'attachment.*'=>['sometimes','file','mimes:jpg,jpeg,png,pdf'],
             
         ];
     }

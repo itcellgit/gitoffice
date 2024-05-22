@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateGrading_staffRequest;
 use App\Models\staff;
 use App\Models\designation;
 use Illuminate\Support\Facades\Input;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class GradingStaffController extends Controller
 {
@@ -33,7 +34,7 @@ class GradingStaffController extends Controller
             })
             ->where('status', 'active');
     })
-    ->select('staff.id', 'staff.fname', 'staff.lname')
+    ->select('staff.id as id', 'staff.fname', 'staff.lname','departments.id as dept_id')
     ->orderBy('departments.id')
     ->distinct()
     ->get();
@@ -45,7 +46,7 @@ class GradingStaffController extends Controller
             'staff_id' => $member->id,
             'year' => $year,
             'month' => $month,
-            'grade' => '',
+        
             'status' => 'active'
             // Add other necessary fields
         ]);
@@ -61,15 +62,53 @@ class GradingStaffController extends Controller
         return view('ESTB.Grading.gradetemplate.GradeTemplate', compact(['grading', 'gradesArray']));
     }
 
-    public function updateGrades(Request $request)
+public function update(UpdateGrading_staffRequest $request, Grading_staff $grading_staff)
 {
-    $data = $request->except('_token');
+    foreach ($request->grade as $staffId => $grade) {
+        $gradingStaff = Grading_Staff::find($staffId);
+        if ($gradingStaff) {
+            $gradingStaff->grade = $grade;
+            $gradingStaff->save();
+        }
+    }
+    return redirect()->back()->with('success', 'Grades updated successfully');
 
-    foreach ($data['grades'] as $gradingId => $grade) {
-        Grading_staff::where('id', $gradingId)->update(['grade' => $grade]);
+    dd($request->all());
+}
+
+public function importExcel(Request $request)
+{
+    // Validate the uploaded file
+    $request->validate([
+        'excel_file' => 'required|file|mimes:xlsx,xls'
+    ]);
+
+    // Process the uploaded file
+    $file = $request->file('excel_file');
+    $spreadsheet = IOFactory::load($file);
+    $sheet = $spreadsheet->getActiveSheet();
+
+    // Get the highest row number
+    $highestRow = $sheet->getHighestRow();
+
+    // Iterate through each row to read and store grade data
+    for ($row = 2; $row <= $highestRow; $row++) {
+        $staffId = $sheet->getCell('A' . $row)->getValue();
+        $grade = $sheet->getCell('F' . $row)->getValue(); // Assuming grade is in column E
+
+        // Check if the staff exists in the database
+        $staff = Staff::find($staffId);
+        if ($staff) {
+            // Assuming Grading_staff model has necessary fillable fields
+            Grading_staff::updateOrCreate(
+                ['staff_id' => $staffId],
+                ['grade' => $grade]
+            );
+        }
     }
 
-    return redirect()->back()->with('success', 'Grades updated successfully');
+
+    return redirect()->back()->with('success', 'Excel file imported successfully');
 }
 
     public function create()
@@ -92,22 +131,8 @@ class GradingStaffController extends Controller
         //
     }
 
-    public function update(UpdateGrading_staffRequest $request, Grading_staff $grading_staff)
-    {
-        foreach ($request->grade as $gradingId => $grade) {
-            $gradingStaff = Grading_staff::find($gradingId);
-            $gradingStaff->grade = $grade;
-            $gradingStaff->save();
-        }
-    
-        return redirect()->back()->with('success', 'Grades updated successfully.');
-        // dd($request->all());
-    }
-
     public function destroy(Grading_staff $grading_staff)
     {
         //
     }
 }
-
-

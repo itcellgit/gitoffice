@@ -32,7 +32,7 @@
                                 </svg>
                             </button>
                         </div>
-                        <form action="{{route('ESTB.staff.designationpayscale.update',$staff->id)}}" method="post">
+                        <form action="{{route('Dean_admin.staff.designationpayscale.update',$staff->id)}}" method="post">
                             @csrf
                             @method('patch')
                             <div class="ti-modal-body">
@@ -400,7 +400,7 @@
                                                                 </svg>
                                                         </button>
                                                     </div>
-                                                    <form  action="{{route('ESTB.staff.designation.currentupdate',[$staff->id,$designation->id])}}" method="post">
+                                                    <form  action="{{route('Dean_admin.staff.designation.currentupdate',[$staff->id,$designation->id])}}" method="post">
                                                         @csrf
                                                         @method('patch')
                                                         <div class="ti-modal-body">
@@ -567,7 +567,7 @@
                                                                                 </svg>
                                                                             </button>
                                                                         </div>
-                                                                        <form  action="{{route('ESTB.staff.payscale.update',[$staff->id,$payscale->id])}}" method="post">
+                                                                        <form  action="{{route('Dean_admin.staff.payscale.update',[$staff->id,$payscale->id])}}" method="post">
                                                                             @csrf
                                                                             @method('patch')
                                                                             <div class="ti-modal-body">
@@ -705,7 +705,7 @@
                                                             <!-- Delete the entry only when the duration is within 1 month of change of the department-->
                                                             @if($payscale->pivot->status == 'active' && ($difference->y ==0 && $difference->m <= 1))
                                                                 <div class="hs-tooltip ti-main-tooltip">
-                                                                    <form action="{{ route('ESTB.staff.payscale.destroy',[$staff->id,$payscale->id]) }}" method="post">
+                                                                    <form action="{{ route('Dean_admin.staff.payscale.destroy',[$staff->id,$payscale->id]) }}" method="post">
 
                                                                         <button onclick="return confirm('Are you Sure')"
                                                                             class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
@@ -813,7 +813,7 @@
                                                                             </svg>
                                                                         </button>
                                                                     </div>
-                                                                    <form  action="{{route('ESTB.staff.payscale.update',[$staff->id,$cons_teaching_pay->id])}}" method="post">
+                                                                    <form  action="{{route('Dean_admin.staff.payscale.update',[$staff->id,$cons_teaching_pay->id])}}" method="post">
                                                                         @csrf
                                                                         @method('patch')
                                                                             <div class="ti-modal-body">
@@ -920,7 +920,7 @@
                                                         <!-- Delete the entry only when the duration is within 1 month of change of the department-->
                                                     @if($cons_teaching_pay->status == 'active' && ($difference->y ==0 && $difference->m <= 1))
                                                         <div class="hs-tooltip ti-main-tooltip">
-                                                            <form action="{{ route('ESTB.staff.payscale.destroy',[$staff->id,$cons_teaching_pay->id]) }}" method="post">
+                                                            <form action="{{ route('Dean_admin.staff.payscale.destroy',[$staff->id,$cons_teaching_pay->id]) }}" method="post">
 
                                                                 <button onclick="return confirm('Are you Sure')"
                                                                     class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
@@ -1022,7 +1022,7 @@
                                                                         </svg>
                                                                         </button>
                                                                     </div>
-                                                                    <form  action="{{route('ESTB.staff.payscale.update',[$staff->id,$ntpays->id])}}" method="post">
+                                                                    <form  action="{{route('Dean_admin.staff.payscale.update',[$staff->id,$ntpays->id])}}" method="post">
                                                                         @csrf
                                                                         @method('patch')
                                                                         <div class="ti-modal-body">
@@ -1145,7 +1145,7 @@
                                                             <!-- Delete the entry only when the duration is within 1 month of change of the department-->
                                                         @if($ntpays->pivot->status == 'active' && ($difference->y ==0 && $difference->m <= 1))
                                                             <div class="hs-tooltip ti-main-tooltip">
-                                                                <form action="{{ route('ESTB.staff.payscale.destroy',[$staff->id,$ntpays->id]) }}" method="post">
+                                                                <form action="{{ route('Dean_admin.staff.payscale.destroy',[$staff->id,$ntpays->id]) }}" method="post">
 
                                                                 <button onclick="return confirm('Are you Sure')"
                                                                     class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
@@ -1234,7 +1234,7 @@
                                                                         </svg>
                                                                         </button>
                                                                     </div>
-                                                                    <form  action="{{route('ESTB.staff.payscale.update',[$staff->id,$ntpays->id])}}" method="post">
+                                                                    <form  action="{{route('Dean_admin.staff.payscale.update',[$staff->id,$ntpays->id])}}" method="post">
                                                                         @csrf
                                                                         @method('patch')
                                                                         <div class="ti-modal-body">
@@ -1365,7 +1365,7 @@
                                                             <!-- Delete the entry only when the duration is within 1 month of change of the department-->
                                                         @if($ntpays->pivot->status == 'active' && ($difference->y ==0 && $difference->m <= 1))
                                                             <div class="hs-tooltip ti-main-tooltip">
-                                                                <form action="{{ route('ESTB.staff.payscale.destroy',[$staff->id,$ntpays->id]) }}" method="post">
+                                                                <form action="{{ route('Dean_admin.staff.payscale.destroy',[$staff->id,$ntpays->id]) }}" method="post">
 
                                                                     <button onclick="return confirm('Are you Sure')"
                                                                         class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
@@ -1445,7 +1445,7 @@
                                                                         </svg>
                                                                         </button>
                                                                     </div>
-                                                                    <form  action="{{route('ESTB.staff.payscale.update',[$staff->id,$ntcpays->id])}}" method="post">
+                                                                    <form  action="{{route('Dean_admin.staff.payscale.update',[$staff->id,$ntcpays->id])}}" method="post">
                                                                         @csrf
                                                                         @method('patch')
                                                                         <div class="ti-modal-body">
@@ -1569,7 +1569,7 @@
                                                             <!-- Delete the entry only when the duration is within 1 month of change of the department-->
                                                             @if($ntcpays->pivot->status == 'active' && ($difference->y ==0 && $difference->m <= 1))
                                                                 <div class="hs-tooltip ti-main-tooltip">
-                                                                    <form action="{{ route('ESTB.staff.payscale.destroy',[$staff->id,$ntcpays->id]) }}" method="post">
+                                                                    <form action="{{ route('Dean_admin.staff.payscale.destroy',[$staff->id,$ntcpays->id]) }}" method="post">
 
                                                                     <button onclick="return confirm('Are you Sure')"
                                                                         class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
@@ -1642,7 +1642,7 @@
                                                                         </svg>
                                                                         </button>
                                                                     </div>
-                                                                    <form  action="{{route('ESTB.staff.payscale.update',[$staff->id,$ntcpays->id])}}" method="post">
+                                                                    <form  action="{{route('Dean_admin.staff.payscale.update',[$staff->id,$ntcpays->id])}}" method="post">
                                                                         @csrf
                                                                         @method('patch')
                                                                         <div class="ti-modal-body">
@@ -1766,7 +1766,7 @@
                                                             <!-- Delete the entry only when the duration is within 1 month of change of the department-->
                                                             @if($ntcpays->pivot->status == 'active' && ($difference->y ==0 && $difference->m <= 1))
                                                                 <div class="hs-tooltip ti-main-tooltip">
-                                                                    <form action="{{ route('ESTB.staff.payscale.destroy',[$staff->id,$ntcpays->id]) }}" method="post">
+                                                                    <form action="{{ route('Dean_admin.staff.payscale.destroy',[$staff->id,$ntcpays->id]) }}" method="post">
 
                                                                     <button onclick="return confirm('Are you Sure')"
                                                                         class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
@@ -1848,7 +1848,7 @@
                                                                         </svg>
                                                                         </button>
                                                                     </div>
-                                                                     <form  action="{{route('ESTB.staff.payscale.update',[$staff->id,$fntp->id])}}" method="post">
+                                                                     <form  action="{{route('Dean_admin.staff.payscale.update',[$staff->id,$fntp->id])}}" method="post">
                                                                         @csrf
                                                                         @method('patch')
                                                                         <div class="ti-modal-body">
@@ -2025,7 +2025,7 @@
                                                                             </svg>
                                                                             </button>
                                                                         </div>
-                                                                        <form  action="{{route('ESTB.staff.payscale.update',[$staff->id,$fntp->id])}}" method="post">
+                                                                        <form  action="{{route('Dean_admin.staff.payscale.update',[$staff->id,$fntp->id])}}" method="post">
                                                                             @csrf
                                                                             @method('patch')
                                                                             <div class="ti-modal-body">
@@ -2209,7 +2209,7 @@
                         </svg>
                         </button>
                     </div>
-                    <form  action="{{route('ESTB.staff.additional_designation.create',$staff->id)}}" method="post">
+                    <form  action="{{route('Dean_admin.staff.additional_designation.create',$staff->id)}}" method="post">
                         @csrf
                         <div class="ti-modal-body">
                             <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
@@ -2357,7 +2357,7 @@
                                                 </svg>
                                                 </button>
                                             </div>
-                                            <form  action="{{route('ESTB.staff.additional_designation.update',[$staff->id, $add_designaions->pivot->id])}}" method="post">
+                                            <form  action="{{route('Dean_admin.staff.additional_designation.update',[$staff->id, $add_designaions->pivot->id])}}" method="post">
                                                 @csrf
                                                 @method('patch')
                                                 <div class="ti-modal-body">
@@ -2439,7 +2439,7 @@
                                     </div>
                                 </div>
                                 <div class="hs-tooltip ti-main-tooltip">
-                                    <form action="{{ route('ESTB.staff.additionaldesignation.destroy',[$staff->id,$add_designaions->pivot->id]) }}" method="post">
+                                    <form action="{{ route('Dean_admin.staff.additionaldesignation.destroy',[$staff->id,$add_designaions->pivot->id]) }}" method="post">
 
                                     <button onclick="return confirm('Are you Sure')"
                                         class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">

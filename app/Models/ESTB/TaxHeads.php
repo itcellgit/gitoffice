@@ -14,4 +14,9 @@ class TaxHeads extends Model
     {
         return $this->hasMany(TaxSlab::class,'regime_id','id');
     }
+
+    public function staff()
+    {
+        return $this->belongsToMany(staff::class, 'staff_taxregime');
+    }
 }

@@ -316,7 +316,7 @@
                                                     
                                                 </div> --}}
 
-                                                <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                         <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                             <div class="space-y-2">
                                                 <label for="" class="ti-form-label mb-0 font-bold">Date of Disburesement:<span class="text-red-500">*</span></label>
                                                     <div class="flex shadow-sm max-w-sm space-y-3 pb-6">

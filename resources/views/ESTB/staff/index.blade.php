@@ -72,9 +72,9 @@
                             <div class="grid grid-cols-12 gap-x-6">
                                 <div class="col-span-12">
                                     <!--For filtering the data as per requirement-->
-                                    <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('ESTB.staff.staffinformation')}}">
+                                    {{-- <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('ESTB.staff.staffinformation')}}">
                                         Staff Filter
-                                   </a>
+                                    </a> --}}
 
                                     <!--Filtering the data Ends-->
                                     <div class="box">
@@ -84,8 +84,15 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M11 14.0619V20H13V14.0619C16.9463 14.554 20 17.9204 20 22H4C4 17.9204 7.05369 14.554 11 14.0619ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13Z" fill="rgba(0,0,0,1)"></path></svg>
                                                     Staff List
                                                 </h5>
+                                                
                                                 <div class=" block ltr:ml-auto rtl:mr-auto my-auto">
-                                                    <button type="button" id="add_staff_btn" data-hs-overlay="#add_staff" class="hs-dropdown-toggle ti-btn ti-btn-primary">
+                                                    <!--For filtering the data as per requirement-->
+                                                    <button type="button" class="hs-dropdown-toggle ti-btn bg-green-500 hover:bg-green-600 text-white rounded-full px-4 py-2" onclick="location.href='{{ route('ESTB.staff.staffinformation') }}'">
+                                                        Staff Filter
+                                                    </button>
+                                                    
+                                                    
+                                                    <button type="button" id="add_staff_btn" data-hs-overlay="#add_staff" class="hs-dropdown-toggle ti-btn ti-btn-primary rounded-full">
                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M4 3H20C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM5 5V19H19V5H5ZM11 11V7H13V11H17V13H13V17H11V13H7V11H11Z" fill="rgba(255,255,255,1)"></path></svg>
                                                         Add Staff
                                                     </button>
@@ -474,13 +481,21 @@
                                                 <table id="staff_table" class="ti-custom-table ti-custom-table-head  max-w-8 overflow-auto relative">
                                                     <thead class="bg-gray-50 dark:bg-black/20">
                                                         <tr class="">
-                                                            <th scope="col" class="dark:text-white/80 ">S.no</th>
-                                                            <th scope="col" class="dark:text-white/80 ">Staff Name</th>
-                                                            <th scope="col" class="dark:text-white/80 ">Employee Type</th>
-                                                            <th scope="col" class="dark:text-white/80 ">Department</th>
-                                                            <th scope="col" class="dark:text-white/80 columns-6">Designation</th>
-                                                            <th scope="col" class="dark:text-white/80 ">Associatation</th>
-                                                            <th scope="col" class="dark:text-white/80 ">Actions</th>
+                                                            <!--<th scope="col" class="dark:text-white/80">S.no</th>
+                                                            <th scope="col" class="dark:text-white/80">Staff Name</th>
+                                                            <th scope="col" class="dark:text-white/80">Employee Type</th>
+                                                            <th scope="col" class="dark:text-white/80">Department</th>
+                                                            <th scope="col" class="dark:text-white/80">Designation</th>
+                                                            <th scope="col" class="dark:text-white/80">Associatation</th>
+                                                            <th scope="col" class="dark:text-white/80">Actions</th>-->
+
+                                                            <th scope="col" class="dark:text-white/80 w-1/4">S.no</th>
+                                                            <th scope="col" class="dark:text-white/80 w-2/4">Staff Name</th>
+                                                            <th scope="col" class="dark:text-white/80 w-2/4">Employee Type</th>
+                                                            <th scope="col" class="dark:text-white/80 w-2/4">Department</th>
+                                                            <th scope="col" class="dark:text-white/80 w-[10%]">Designation</th>
+                                                            <th scope="col" class="dark:text-white/80 w-2/4">Associatation</th>
+                                                            <th scope="col" class="dark:text-white/80 w-2/4">Actions</th>
 
                                                         </tr>
                                                     </thead>

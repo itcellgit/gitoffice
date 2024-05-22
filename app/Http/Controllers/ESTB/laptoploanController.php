@@ -33,7 +33,7 @@ class laptoploanController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreLaptopLoanRequest $request, staff $staff)
+    public function store(StorelaptoploanRequest $request, staff $staff)
     {
         //dd($staff);
         //dd($request);
@@ -83,20 +83,18 @@ class laptoploanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatelaptoploanRequest $request,staff $staff, laptoploan $laptoploan)
+    public function update(UpdatelaptoploanRequest $request,staff $staff,  laptoploan $laptopLoan)
     {
        // $festivalAdvance->staff_id=$request->staff_id;
-       // dd($request);
-       //$laptopLoan=laptoploan::where('id',$laptopLoan)->first();
-       //dd($laptoploan);
-        $laptoploan->date_of_application=$request->date_of_application;
-        $laptoploan->configuration=$request->configuration;
-        $laptoploan->amount=$request->amount;
-        $laptoploan->emi=$request->emi;
-        $laptoploan->start_date=$request->start_date;
-        $laptoploan->end_date=$request->end_date;
+        //dd($festivalAdvance);
+        $laptopLoan->date_of_application=$request->date_of_application;
+        $laptopLoan->configuration=$request->configuration;
+        $laptopLoan->amount=$request->amount;
+        $laptopLoan->emi=$request->emi;
+        $laptopLoan->start_date=$request->start_date;
+        $laptopLoan->end_date=$request->end_date;
 
-        $result=$laptoploan->update();
+        $result=$laptopLoan->update();
        // dd($result);
        // return redirect('/ESTB/FestivalAdvance');
        
@@ -140,10 +138,10 @@ class laptoploanController extends Controller
 //     return redirect('/ESTB/staff/show/'.$staff->id);
 // }
 
-public function destroy(staff $staff,  $laptoploan)
+public function destroy(staff $staff,  $laptopLoan)
 {
     
-    $laptopLoan=laptoploan::where('id',$laptoploan)->first();
+    $laptopLoan=laptoploan::where('id',$laptopLoan)->first();
    // dd($festivaladvance);
     $result=$laptopLoan->delete();
    // $festivaladvance->staff()->detach($staff_id);
