@@ -87,7 +87,7 @@ class StaffAssociationController extends Controller
         }
         
         
-        return redirect('Dean_admin/staff/staffview'.$staff->id)->with('status',$status);
+        return redirect('/Dean_admin/staff/staffview/'.$staff->id)->with('status',$status);
     }
 
     public function updatecurrent(request $request, staff $staff, $sasso_id)
@@ -177,7 +177,7 @@ class StaffAssociationController extends Controller
                 $status=0;
             }
         }
-        return redirect('Dean_admin/staff/staffview'.$staff->id)->with('status',$status);
+        return redirect('/Dean_admin/staff/staffview/'.$staff->id)->with('status',$status);
     }
 
     /**
@@ -192,7 +192,7 @@ class StaffAssociationController extends Controller
         else{
             $status=0;
         }
-        return redirect('Dean_admin/staff/staffview'.$staff->id)->with('status',$status);
+        return redirect('/Dean_admin/staff/staffview/'.$staff->id)->with('status',$status);
     }
 
     

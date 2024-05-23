@@ -76,6 +76,47 @@ class RenumerationheadsController extends Controller
         return view('ESTB.renumerations.index', compact('renumerationheads','departments','filter','designations','teachingDesignations','nonteachingDesignations'));
     }
 
+public function importExcel(Request $request)
+{
+     // Validate the uploaded file
+     $request->validate([
+        'excel_file' => 'required|file|mimes:xlsx,xls'
+    ]);
+
+    // Process the uploaded file
+    $file = $request->file('excel_file');
+    $spreadsheet = IOFactory::load($file);
+    $sheet = $spreadsheet->getActiveSheet();
+
+    // Get the highest row number
+    $highestRow = $sheet->getHighestRow();
+
+    // Iterate through each row to read and store grade data
+    for ($row = 2; $row <= $highestRow; $row++) {
+            $staffId = $sheet->getCell('A' . $row)->getValue();
+            $renumeration_head = $sheet->getCell('B' . $row)->getValue();
+            $date_number_from_excel = $sheet->getCell('C' . $row)->getValue();
+            // Convert Excel date to PHP date
+            $date = ($date_number_from_excel - 25569) * 86400;
+            $date_of_disbursement = gmdate("Y-m-d", $date);
+            $amount = $sheet->getCell('D' . $row)->getValue();
+
+            // Check if the staff exists in the database
+            $staff = Staff::find($staffId);
+            if ($staff) {
+                // Update or create renumeration head
+                    Renumerationheads::updateOrCreate(
+                        ['staff_id' => $staffId],
+                        [
+                            'renumeration_head' => $renumeration_head,
+                            'date_of_disbursement' => $date_of_disbursement,
+                            'amount' => $amount
+                        ]
+                    );
+                }
+            }
+            return redirect()->back()->with('success', 'Excel file imported successfully');
+        }
     /**
      * Show the form for creating a new resource.
      */
@@ -91,47 +132,6 @@ class RenumerationheadsController extends Controller
 {
 
 }
-
-public function importExcel(Request $request)
-{
-    // Validate the uploaded file
-    $request->validate([
-        'excel_file' => 'required|file|mimes:xlsx,xls'
-    ]);
-
-    // Process the uploaded file
-    $file = $request->file('excel_file');
-    $spreadsheet = IOFactory::load($file);
-    $sheet = $spreadsheet->getActiveSheet();
-
-    // Get the highest row number
-    $highestRow = $sheet->getHighestRow();
-
-    // Iterate through each row to read and store data
-    for ($row = 2; $row <= $highestRow; $row++) {
-        $staffId = $sheet->getCell('A' . $row)->getValue();
-        $renumeration_head = $sheet->getCell('B' . $row)->getValue();
-        $date_number_from_excel=$sheet->getCell('C' . $row)->getValue();
-        $date=($date_number_from_excel -  25569)*86400;
-        $date_of_disbursement =gmdate("Y-m-d",$date);
-       // dd($date_of_disbursement);
-        $amount = $sheet->getCell('D' . $row)->getValue();
-
-        // Check if the staff exists in the database
-        $staff = Staff::find($staffId);
-        if ($staff) {
-            // Assuming renumerationheads model has necessary fillable fields
-            Renumerationheads::updateOrCreate(
-                ['staff_id' => $staffId],
-                ['renumeration_head' => $renumeration_head,
-                 'date_of_disbursement' => $date_of_disbursement,
-                 'amount' => $amount]
-            );
-        }
-    }
-    return redirect()->back()->with('success', 'Excel file imported successfully');
-}
-
     /**
      * Display the specified resource.
      */
@@ -207,7 +207,6 @@ public function importExcel(Request $request)
             DB::raw('GROUP_CONCAT(DISTINCT designations.design_name ORDER BY designations.design_name SEPARATOR ", ") AS designations_list'),
             'employee_types.employee_type'
         );
-
         // Group by staff columns to avoid duplicate staff entries
         $query->groupBy('staff.id',
             'staff.fname',
@@ -215,7 +214,6 @@ public function importExcel(Request $request)
             'staff.lname',
             'employee_types.employee_type',
         );
-
         //$staff = $query->take(10)->get();
         //dd($staff);
         $renumerationheads = $query->get();

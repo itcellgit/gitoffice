@@ -462,7 +462,7 @@
                                                                                                 @endif
                                                                                                
                                                                                             </div>
-                                                                                            <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0">
+                                                                                            {{-- <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0">
                                                                                                 <label class="ti-form-label mb-0 font-bold">Department List<span class="text-red-500">*</span></label>
                                                                                                 <div class="space-y-2" style="max-height: 100px; overflow-y: auto;">
                                                                                                     @php
@@ -482,7 +482,28 @@
                                                                                                     @endforeach
                                                                                                 </div>
                                                                                                 <!--Dropdown multiselect checkbox-->
-                                                                                            </div> 
+                                                                                            </div>  --}}
+
+                                                                                            <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0">
+                                                                                                <label class="ti-form-label mb-0 font-bold">Department List<span class="text-red-500">*</span></label>
+                                                                                                <div class="space-y-2" style="max-height: 100px; overflow-y: auto;">
+                                                                                                    <div class="flex">
+                                                                                                        <input type="checkbox" class="ti-form-checkbox mt-0.5 select-all">
+                                                                                                        <label for="select-all" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70 font-bold">Select All</label>
+                                                                                                    </div>
+                                                                                                    @foreach ($departments as $department)
+                                                                                                        @php
+                                                                                                            $checked = in_array($department->id, $selectedDepartments) ? 'checked' : '';
+                                                                                                        @endphp
+                                                                                                        <div class="flex">
+                                                                                                            <input type="checkbox" required name="departments[]" value="{{ $department->id }}" {{ $checked }} class="ti-form-checkbox mt-0.5 hs-checkbox-group-{{ $department->id }}">
+                                                                                                            <label class="hs-checkbox-group-{{ $department->id }} text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">{{ $department->dept_name }}</label>
+                                                                                                        </div>
+                                                                                                    @endforeach
+                                                                                                </div>
+                                                                                                <!--Dropdown multiselect checkbox-->
+                                                                                            </div>
+                                                                                            
                                                                                         </div>
 
                                                                                         
@@ -693,6 +714,8 @@
 
 
         <script>
+
+            //working as per requirement
             document.addEventListener('DOMContentLoaded', function () {
                 flatpickr('.po_startdate', {
                     enableTime: true,
@@ -731,50 +754,53 @@
                 });
             });
 
+
+
             // document.addEventListener('DOMContentLoaded', function () {
+            //     // Initialize flatpickr without default dates
             //     flatpickr('.po_startdate', {
             //         enableTime: true,
             //         dateFormat: 'Y-m-d H:i',
-            //         // Add more options if required
+            //         defaultDate: null  // Ensure no default date is set
             //     });
 
             //     flatpickr('.po_todate', {
             //         enableTime: true,
             //         dateFormat: 'Y-m-d H:i',
-            //         // Add more options if required
+            //         defaultDate: null  // Ensure no default date is set
             //     });
 
             //     $('.po_todate').on('change', function() {
-            //         var startDate = new Date($('.po_startdate').val());
-            //         var toDate = new Date($('.po_todate').val());
+            //         var startDateTimeStr = $('.po_startdate').val();
+            //         var toDateTimeStr = $('.po_todate').val();
 
-            //         // Check if toDate is less than or equal to startDate
-            //         if (toDate <= startDate) {
-            //             $('#po_todateError').text('To Date must be greater than Start Date');
+            //         if (!startDateTimeStr || !toDateTimeStr) {
+            //             return;
+            //         }
+
+            //         var startDate = new Date(startDateTimeStr);
+            //         var toDate = new Date(toDateTimeStr);
+
+            //         if (toDate < startDate) {
+            //             $('#po_todateError').text('To Date must be equal to or greater than Start Date');
+            //             $('.po_todate').val('');
+            //         } else if (startDateTimeStr === toDateTimeStr) {
+            //             $('#po_todateError').text('To Date and Time must be different from Start Date and Time');
             //             $('.po_todate').val('');
             //         } else {
             //             $('#po_todateError').text('');
-
-            //             var startTime = $('.po_startdate').val().split(' ')[1];
-            //             var endTime = $('.po_todate').val().split(' ')[1];
-
-            //             // If start date and end date are on the same day,
-            //             // check if end time is greater than start time
-            //             if (startDate.toDateString() === toDate.toDateString() && endTime <= startTime) {
-            //                 $('#po_todateError').text('To Time must be greater than Start Time');
-            //                 $('.po_todate').val('');
-            //             } else {
-            //                 $('#po_todateError').text('');
-            //             }
             //         }
+            //     });
+
+            //     $('.po_startdate').on('change', function() {
+            //         // Clear the "To Date" and error message if the "Start Date" is changed
+            //         $('.po_todate').val('');
+            //         $('#po_todateError').text('');
             //     });
             // });
 
         </script>
 
-        
-
-       
         @vite('resources/assets/js/index-8.js')
        
 @endsection

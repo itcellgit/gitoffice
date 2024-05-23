@@ -117,6 +117,7 @@
                                                         <th scope="col" class="dark:text-white/80 font-bold ">DeviceIn</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">PunchOut</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">DeviceOut</th>
+                                                      
                                                         <th scope="col" class="dark:text-white/80 font-bold ">No.of.Punches</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">Duration</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">Action</th>
@@ -126,7 +127,7 @@
                                                     @php
                                                         $i=1;
                                                     @endphp
-                                                    @foreach ($externalData as $data)
+                                                    @foreach ($combinedData as $data)
                                                         @php
                                                             $employeeCode = $data->EmployeeCode;
                                                             $hasEntryLog = isset($entry_exit['entryLogs'][$employeeCode]);
@@ -151,6 +152,7 @@
                                                                     <td></td>
 
                                                                 @endif
+                                                               
                                                                 <td>{{ $entry_exit['punchcounts'][$employeeCode] }}</td>
                                                                 <td>{{ $entry_exit['durations'][$employeeCode] }}</td>
 
@@ -182,9 +184,14 @@
                                                                                     <!-- Modal body to display row data -->
                                                                                     <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
                                                                                         <h3>
-                                                                                            <b>
-                                                                                                Employee Name: {{$entry_exit['entryLogs'][$employeeCode]->EmployeeName}}
-                                                                                                <span style="float: right; margin-left: 10px;">Employee Code: {{$entry_exit['entryLogs'][$employeeCode]->EmployeeCode}}</span>
+                                                                                            <b style="display: flex; justify-content: space-between;">
+                                                                                                <span>
+                                                                                                    Employee Name: {{$entry_exit['entryLogs'][$employeeCode]->EmployeeName}}
+                                                                                                </span>
+                                                                                                <span style="display: flex; align-items: center;">
+                                                                                                    <span style="margin-right: 10px;">Employee Code: {{$entry_exit['entryLogs'][$employeeCode]->EmployeeCode}}</span>
+                                                                                                    <span>STAFF ID:{{$data->id}}</span>
+                                                                                                </span>
                                                                                             </b>
                                                                                         </h3>
                                                                                          <table id="BiometricTable" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
@@ -226,6 +233,7 @@
                                                             @endphp
                                                         @endif
                                                     @endforeach
+                                                
                                                 </tbody>
                                             </table>
                                         </div>

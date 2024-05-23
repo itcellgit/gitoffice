@@ -99,7 +99,7 @@ class HODLeaveController extends Controller
                 'leave_staff_applications.reason AS reason')->get();
 
         // Return a response (optional)
-          return response()->json($datewiseleave_events);
+        return response()->json($datewiseleave_events);
     }
 
 

@@ -195,6 +195,8 @@
 
                                                                         <th scope="col" class="dark:text-white/80 font-bold">#</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">Leave Type</th>
+                                                                        <th scope="col" class="dark:text-white/80 font-bold">Staff on Leave</th>
+                                                                        <th scope="col" class="dark:text-white/80 font-bold">Dept</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">From Date</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">To Date</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">Leave Reasons</th>
@@ -265,7 +267,11 @@
         src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
-
+        {{-- <script type="javascript" src="js/require.js"></script>
+        <script>
+            const customViewPlugin = require('js/table_list_view.js');
+            </script>
+             --}}
         <script type="text/javascript">
             $.ajaxSetup({
                 headers: {
@@ -273,6 +279,7 @@
                 }
             });
         </script>
+        {{-- <script type="javascript" src="js/table_list_view.js"></script> --}}
         
         <script>
             //import { formatDate } from '@fullcalendar/core'
@@ -342,22 +349,90 @@
                             
             });
 
-            
-             //Calender javscript Starts here.
+            //for proceeding to approving  the leave.
+            $(document).on('click','.approve_leave',function(){
+                var application_id = $(this).attr("data_val");
+                var applicant_details = $(this).attr("appl_details");
+                var comfirmation_status = confirm("Are you sure ? you want to Approve leave for "+applicant_details);
+                
+                if(comfirmation_status){
+                    $.ajax({
+                            url: base_url+'/Dean_admin/leaves_management/approve_leave',
+                                method: 'GET',
+                                data: {
+                                    application_id : application_id,
+                                    
+                                    _token : '{{csrf_token()}}' // Pass the clicked date to the server
+                                },
+                                success: function(response) {
+                                    // Handle the response from the server
+                                    console.log(response);
+                                    $('#leave_appl_status_msg').html(response);
+                                    setInterval(() => {
+                                        location.reload();
+                                    }, 2000);
+                                },
+                                error: function(xhr, status, error) {
+                                    // Handle errors
+                                    console.error(xhr.responseText);
+                                }    
+
+                    });
+                }
+            });  
+
+
+            $(document).on('click','.reject_leave',function(){
+                //alert('Reject clicked');
+                var application_id = $(this).attr("data_val");
+                var applicant_details = $(this).attr("appl_details");
+                var comfirmation_status = confirm("Are you sure ? you want to Reject the leave for "+applicant_details+" with application id :"+application_id);
+                
+                if(comfirmation_status){
+                    $.ajax({
+                            url: base_url+'/Dean_admin/leaves_management/reject_leave',
+                                method: 'GET',
+                                data: {
+                                    application_id : application_id,
+                                    
+                                    _token : '{{csrf_token()}}' // Pass the clicked date to the server
+                                },
+                                success: function(response) {
+                                    // Handle the response from the server
+                                    console.log(response);
+                                    $('#leave_appl_status_msg').html(response);
+                                    setInterval(() => {
+                                        location.reload();
+                                    }, 2000);
+                                },
+                                error: function(xhr, status, error) {
+                                    // Handle errors
+                                    console.error(xhr.responseText);
+                                }    
+
+                    });
+                }
+            });
+
+
+           // import customViewPlugin from 'js/table_list_view.js';
+            //Calender javscript Starts here.
             document.addEventListener('DOMContentLoaded', function() {
                 var TileColor = '';
                 //var clientevents = $('#calender2').fullCalendar('clientEvents');
                 //console.log(clientevents);
                 const calendarEl = document.getElementById('calendar2')
                 const calendar = new FullCalendar.Calendar(calendarEl, {
+
                     initialView: 'dayGridMonth',
+                    //plugins: [ customViewPlugin ],
                     headerToolbar: {
-                        center: 'dayGridMonth, listDay', // buttons for switching between views
-                        
+                        center: 'dayGridMonth, listDay, table', // buttons for switching between views
                     },
                     buttonText : {
                             month:    'Month View',
                             list:     'Leaves List',
+                            custom:  'List'
                         },
                     height: 650,
                     eventSources: [
@@ -547,6 +622,8 @@
 
                                     $('#leave_application_list').append('<tr class="'+ bg_color_setting +'">'
                                                                 +'<td >'+value.Application_id+ '</td>'
+                                                                +'<td >'+value.staff_name+ '</td>'
+                                                                +'<td >'+value.shortname+ '</td>'
                                                                 +'<td>'+value.title+ '</td>'
                                                                 +'<td>'+value.start+ '</td>'
                                                                 +'<td>'+value.end+ '</td>'
@@ -554,7 +631,7 @@
                                                                 +'<td>'+value.alternate_staff+ '</td>'
                                                                 +'<td>'+(value.additional_alternate_staff == null ? '-NA-':value.additional_alternate_staff)+ '</td>'
                                                                 +'<td>'
-                                                                    +'<button class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-success recommend_confirm '+(value.appl_status != "recommended"?"hidden":"")+'" data_val="'+value.Application_id+'" appl_details = "'+value.staff_name+'-'+ value.title+'" title="Approve">'
+                                                                    +'<button class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-success approve_leave '+(value.appl_status != "recommended"?"hidden":"")+'" data_val="'+value.Application_id+'" appl_details = "'+value.staff_name+'-'+ value.title+'" title="Approve">'
                                                                                 +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z"></path></svg>'
                                                                                 +'</button>'
                                                                             +'<button class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger reject_leave"  data_val="'+value.Application_id+'" appl_details = "'+value.staff_name+'-'+ value.title+'" title="Reject">'

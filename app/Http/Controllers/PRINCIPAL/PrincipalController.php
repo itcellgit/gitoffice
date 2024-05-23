@@ -94,6 +94,7 @@ class PrincipalController extends Controller
 
 
     
+    //code for calenderview in principal
 
     public function hollidayrh_events()
     {
@@ -101,9 +102,6 @@ class PrincipalController extends Controller
         $holidayrh=holidayrh::select('id','title','start','type')->get();
         //dd($holidayrh);
         return response()->json($holidayrh);
-
-        
-
     }
 
     //used in Dean Admin leaves calender section
@@ -119,21 +117,23 @@ class PrincipalController extends Controller
         // ->join('staff AS s3','s3.id','=','leave_staff_applications.additional_alternate')
         //->where('leave_staff_applications.staff_id',$staff->id)
 
-        $leave_events=leave_staff_applications::join('leaves', 'leaves.id','=','leave_staff_applications.leave_id')
-        ->join('staff AS s1','s1.id','=','leave_staff_applications.staff_id')
-        ->join('staff AS s2','s2.id','=','leave_staff_applications.alternate')
-        ->leftJoin('staff AS s3','s3.id','=','leave_staff_applications.additional_alternate')
-        ->leftJoin('daywise__leaves AS daywise', 'leave_staff_applications.id', '=', 'daywise.leave_staff_applications_id')
-        //->where('leave_staff_applications.staff_id',$staff->id)
-        ->select(DB::raw("CONCAT(s1.fname,' ',s1.mname,' ',s1.lname) AS staff_name"),
-                DB::raw("CONCAT(s2.fname,' ',s2.mname,' ',s2.lname) AS alternate_staff"),
-                DB::raw("CONCAT(s3.fname,' ',s3.mname,' ',s3.lname) AS additional_alternate_staff"),
-                DB::raw("case when leaves.shortname='CL' then concat(leaves.shortname,'-',leave_staff_applications.cl_type) else leaves.shortname end AS title"),'daywise.start AS start',
-                 DB::raw("date_add(daywise.start, INTERVAL 1 day)  AS end"),
-                 'leave_staff_applications.leave_id AS leave_id',
-                 'leave_staff_applications.appl_status AS appl_status',
-                 'leaves.shortname AS leave_name',
-                 'leave_staff_applications.id')->get();
+        $leave_events= DB::table('daywise__leaves as daywise')
+        ->select(
+            DB::raw("CASE 
+                        WHEN leave_staff_applications.cl_type = 'Morning' or leave_staff_applications.cl_type = 'Afternoon'  THEN 
+                            CONCAT(leaves.shortname, '-', leave_staff_applications.cl_type, '-', COUNT(daywise.leave_id)) 
+                        ELSE 
+                            CONCAT(leaves.shortname, '-', COUNT(daywise.leave_id)) 
+                     END AS title"),
+                     'leaves.shortname as leave_name',
+            'daywise.start as start',
+            DB::raw('DATE_ADD(daywise.start, INTERVAL 1 DAY) AS end'),
+            
+        )
+        ->join('leave_staff_applications', 'leave_staff_applications.id', '=', 'daywise.leave_id')
+        ->join('leaves', 'leaves.id', '=', 'leave_staff_applications.leave_id')
+        ->groupBy('daywise.start', 'leaves.shortname', 'leave_staff_applications.cl_type')
+        ->get();
 
         return response()->json($leave_events);
         //return response()->json(['message' => 'Date clicked: ' . $date]);
@@ -164,8 +164,8 @@ class PrincipalController extends Controller
         ->join('staff AS s1','s1.id','=','leave_staff_applications.staff_id')
         ->join('staff AS s2','s2.id','=','leave_staff_applications.alternate')
         ->leftJoin('staff AS s3','s3.id','=','leave_staff_applications.additional_alternate')
-        //->leftjoin('daywise__leaves AS daywise', 'leave_staff_applications.id', '=', 'daywise.leave_staff_applications_id')
-        //->where('leave_staff_applications.staff_id',$staff->id)
+        ->join('department_staff AS dept_staff', 'dept_staff.staff_id', '=', 'leave_staff_applications.staff_id')
+        ->join('departments AS dept', 'dept.id', '=', 'dept_staff.department_id')//->where('leave_staff_applications.staff_id',$staff->id)
 
         ->whereDate('leave_staff_applications.start' , '<=', $date)
         ->whereDate('leave_staff_applications.end','>=',$date)
@@ -179,14 +179,15 @@ class PrincipalController extends Controller
                 'leave_staff_applications.appl_status AS appl_status',
                 'leave_staff_applications.id AS Application_id',
                 'leave_staff_applications.reason AS reason',
-                'leaves.shortname AS leave_name')->get();
+                'leaves.shortname AS leave_name',
+                'dept.dept_shortname as shortname')->get();
         //dd($leave_events);
         // Return a response (optional)
           return response()->json($leave_events);
         //return response()->json(['message' => 'Date clicked: ' . $date]);
     }
-
-
+    
+   
 
 
 

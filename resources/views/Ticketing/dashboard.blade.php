@@ -188,13 +188,16 @@
                                                                     <div id="descriptionError" class="error text-red-700"></div>
 
                                                                 </div>
+                                                                {{-- single image  --}}
                                                                 {{-- <div class="max-w-sm space-y-3 pb-6">
                                                                     <label for="" class="ti-form-label">Attachment:</label>
                                                                     <input type="file" name="attachment" class="ti-form-input" accept="image/*" placeholder="Choose an image">
                                                                 </div> --}}
+                                                                {{-- single image ends here  --}}
                                                                 <div class="max-w-sm space-y-3 pb-6">
                                                                     <label for="attachment" class="ti-form-label">Attachment:</label>
                                                                     <input type="file" name="attachment[]" id="attachment" class="ti-form-input" accept="image/*" multiple placeholder="Choose images">
+                                                                    <h3>select multiple images</h3>
                                                                 </div>
                                                                  <div class="ti-modal-footer">
                                                                             <button type="button"
@@ -257,6 +260,7 @@
                                                                         </span>
                                                                     </div>
                                                                 </td> --}}
+                                                                <!---ro code here-->
                                                                 <td class="font-medium space-x-2 rtl:space-x-reverse">
                                                                     <div class="hs-tooltip ti-main-tooltip text-center">
                                                                         <button data-hs-overlay="#image_view_modal{{$i}}"
@@ -271,7 +275,28 @@
                                                                                             Attachment
                                                                                         </div>
                                                                                             <div class="ti-modal-body">
-                                                                                                <img src="{{ asset('attachment/' . $ticket->attachment) }}" alt="No Image">
+                                                                                                @if(!empty($ticket->attachment))
+                                                                                                @php
+                                                                                                    $attachments = is_array(json_decode($ticket->attachment, true)) ? json_decode($ticket->attachment, true) : [$ticket->attachment];
+                                                                                                @endphp
+                                                                                        
+                                                                                                {{-- @foreach($attachments as $at)
+                                                                                                    <img src="{{ asset('storage/attachment/' . $at) }}" alt="No Image" class="mb-2">
+                                                                                                @endforeach --}}
+
+                                                                                               
+                                                                                                @foreach($attachments as $key => $at)
+                                                                                                    <div class="mb-4">
+                                                                                                        <h3 class="mb-2">Image {{ $key + 1 }}</h3>
+                                                                                                        <img src="{{ asset('storage/attachment/' . $at) }}" alt="No Image" class="mb-2">
+                                                                                                    </div>
+                                                                                                @endforeach
+
+                                                                                            @else
+                                                                                                <p>No attachments available.</p>
+                                                                                            @endif
+                                                                                            
+                                                                                                {{-- <img src="{{ asset('attachment/' .$ticket->attachment) }}" alt="No Image"> --}}
                                                                                             </div>
                                                                                                                                                 
                                                                                     </div>
@@ -279,37 +304,7 @@
                                                                             </div>
                                                                     </div>
                                                                 </td>
-                                                                
-
-                                                                {{-- multiple images --}}
-                                                                {{-- <td class="font-medium space-x-2 rtl:space-x-reverse">
-                                                                    @if (is_array($ticket->attachment))
-                                                                        <div class="flex space-x-2">
-                                                                            @foreach ($ticket->attachment as $attachment)
-                                                                                <div class="hs-tooltip ti-main-tooltip">
-                                                                                    <a href="#" onclick="showLargeImage('{{ asset('attachment/'.$ticket->attachment) }}')">
-                                                                                        <img src="{{ asset('attachment/'.$ticket->attachment) }}" alt="Attachment" class="w-10 h-10 object-cover">
-                                                                                    </a>
-                                                                                    <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm" role="tooltip">
-                                                                                        attachment
-                                                                                    </span>
-                                                                                </div>
-                                                                            @endforeach
-                                                                        </div>
-                                                                    @elseif ($ticket->attachment)
-                                                                        <div class="hs-tooltip ti-main-tooltip">
-                                                                            <a href="#" onclick="showLargeImage('{{ asset('attachment/'.$ticket->attachment) }}')">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M14 13.5V8C14 5.79086 12.2091 4 10 4C7.79086 4 6 5.79086 6 8V13.5C6 17.0899 8.91015 20 12.5 20C16.0899 20 19 17.0899 19 13.5V4H21V13.5C21 18.1944 17.1944 22 12.5 22C7.80558 22 4 18.1944 4 13.5V8C4 4.68629 6.68629 2 10 2C13.3137 2 16 4.68629 16 8V13.5C16 15.433 14.433 17 12.5 17C10.567 17 9 15.433 9 13.5V8H11V13.5C11 14.3284 11.6716 15 12.5 15C13.3284 15 14 14.3284 14 13.5Z"></path></svg>
-                                                                            </a>
-                                                                            <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm" role="tooltip">
-                                                                                attachment
-                                                                            </span>
-                                                                        </div>
-                                                                    @else
-                                                                        <!-- Placeholder image or alternative content -->
-                                                                        <span class="no-image-text">No Image</span>
-                                                                    @endif
-                                                                </td> --}}
+                                                              <!--rocode ends here--->  
                                                                 <td><span>{{$ticket->status}}</span></td>
                                                                 <td class="font-medium space-x-2 rtl:space-x-reverse">
                                                                 <div class="hs-tooltip ti-main-tooltip">
@@ -362,18 +357,20 @@
                                                                                             <input type="text" name="title" class="ti-form-input" required placeholder="my issue" value = "{{$ticket->title}}">
                                                                                     
                                                                                         </div>
-                                                                                        {{-- <div class="max-w-sm space-y-3 pb-6">
-                                                                                            <label for="" class="ti-form-label">Description:</label>
-                                                                                            <textarea name="description" class="ti-form-input" required placeholder="Please describe the issue here..." style="width: 100%; height: 150px;" value="{{$ticket->description}}"></textarea>
-                                                                                        </div> --}}
+                                                                                      
                                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                                             <label for="description" class="ti-form-label">Description:</label>
                                                                                             <textarea name="description" class="ti-form-input" required placeholder="Please describe the issue here..." style="width: 100%; height: 150px;">{{$ticket->description}}</textarea>
                                                                                         </div>
                                                                                         
-                                                                                        <div class="max-w-sm space-y-3 pb-6">
+                                                                                        {{-- <div class="max-w-sm space-y-3 pb-6">
                                                                                             <label for="" class="ti-form-label">Attachment:</label>
                                                                                             <input type="file" name="attachment" class="ti-form-input" accept="image/*" placeholder="Choose an image">
+                                                                                        </div> --}}
+                                                                                        <div class="max-w-sm space-y-3 pb-6">
+                                                                                            <label for="attachment" class="ti-form-label">Attachment:</label>
+                                                                                            <input type="file" name="attachment[]" id="attachment" class="ti-form-input" accept="image/*" multiple placeholder="Choose images">
+                                                                                            <h3>select multiple images</h3>
                                                                                         </div>
                                                                                      </div>
                                                                                         <div class="ti-modal-footer">
@@ -462,46 +459,44 @@
                new DataTable('#table');
              });
 
+            // Validation for tickets
+            $(document).on('click', '#ticket_store_add_btn', function (e) 
+            {
+                var myissue = $('#myissue').val();
+                var description = $('#description').val();
+                var attachment = $('#attachment')[0].files[0]; // Get the selected file
+                var flag = false;
+                if (myissue.trim() === '') 
+                {
+                    $('#myissueError').text('My Issue is missing');
+                    flag = true;
+                } else
+                {
+                    $('#myissueError').text(''); 
+                 }
+                 if (description.trim() === '') 
+                 {
+                    $('#descriptionError').text('Description is missing');
+                    flag = true;
+                } else
+                {
+                    $('#descriptionError').text(''); 
+                }
+                // if (!attachment)
+                // {
+                //     $('#attachmentError').text('Please choose a file');
+                //     flag = true;
+                // }
+                if (flag == true) 
+                {
+                    e.preventDefault();
+                }
+            });
 
-                 // Validation for tickets
-                  
-                  $(document).on('click', '#ticket_store_add_btn', function (e) {
-                    var myissue = $('#myissue').val();
-                    var description = $('#description').val();
-                    var attachment = $('#attachment')[0].files[0]; // Get the selected file
-                    var flag = false;
-
-                    if (myissue.trim() === '') {
-                        $('#myissueError').text('My Issue is missing');
-                        flag = true;
-                    } else {
-                        $('#myissueError').text(''); 
-                    }
-
-                    if (description.trim() === '') {
-                        $('#descriptionError').text('Description is missing');
-                        flag = true;
-                    } else {
-                        $('#descriptionError').text(''); 
-                    }
-
-                    // if (!attachment) {
-                    //     $('#attachmentError').text('Please choose a file');
-                    //     flag = true;
-                    // }
-
-                    if (flag == true) {
-                        e.preventDefault();
-                    }
-                });
-
-               
-
-
-            });   
         </script>
         <script>
-            function showLargeImage(imageSrc) {
+            function showLargeImage(imageSrc)
+            {
                 var modal = document.createElement('div');
                 modal.style.position = 'fixed';
                 modal.style.top = '0';

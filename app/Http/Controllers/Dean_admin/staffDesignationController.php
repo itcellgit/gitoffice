@@ -82,7 +82,7 @@ class staffDesignationController extends Controller
        {
            $status=0;
        }
-       return redirect('Dean_admin/staff/staffview'.$staff->id)->with('status',$status);
+       return redirect('/Dean_admin/staff/staffview/'.$staff->id)->with('status',$status);
 
    }
 
@@ -764,7 +764,7 @@ class staffDesignationController extends Controller
 
        }
 
-           return redirect('Dean_admin/staff/staffview'.$staff->id)->with('status',$status);
+           return redirect('/Dean_admin/staff/staffview/'.$staff->id)->with('status',$status);
    }
 
    /**
@@ -1199,7 +1199,7 @@ class staffDesignationController extends Controller
        }
 
 
-       return redirect('Dean_admin/staff/staffview'.$staff->id)->with('status',$status);
+       return redirect('/Dean_admin/staff/staffview/'.$staff->id)->with('status',$status);
    }
 
    /**
@@ -1219,7 +1219,7 @@ class staffDesignationController extends Controller
        else{
            $status=0;
        }
-       return redirect('Dean_admin/staff/staffview'.$staff->id)->with('status',$status);
+       return redirect('/Dean_admin/staff/staffview/'.$staff->id)->with('status',$status);
 
    }
 
@@ -1267,7 +1267,7 @@ class staffDesignationController extends Controller
        else{
            $status=0;
        }
-       return redirect('Dean_admin/staff/staffview'.$staff->id)->with('status',$status);
+       return redirect('/Dean_admin/staff/staffview/'.$staff->id)->with('status',$status);
    }
 
    //adding additional designation for the staff
@@ -1296,7 +1296,7 @@ class staffDesignationController extends Controller
        else{
            $status=0;
        }
-       return redirect('Dean_admin/staff/staffview'.$staff->id)->with('status',$status);
+       return redirect('/Dean_admin/staff/staffview/'.$staff->id)->with('status',$status);
    }
 
    //function to create non-vacational leaves on staff assigning additional designation
@@ -1465,7 +1465,7 @@ class staffDesignationController extends Controller
                else{
                    $status=0;
                }
-           return redirect('Dean_admin/staff/staffview'.$staff->id)->with('status',$status);
+           return redirect('/Dean_admin/staff/staffview/'.$staff->id)->with('status',$status);
        }
    }
    //This function is used to create the vactional leaves when an employee's additional designation  is closed.
@@ -1665,7 +1665,7 @@ class staffDesignationController extends Controller
            else{
                $status=0;
            }
-           return redirect('Dean_admin/staff/staffview'.$staff->id)->with('status',$status);
+           return redirect('/Dean_admin/staff/staffview/'.$staff->id)->with('status',$status);
 
     }
 
