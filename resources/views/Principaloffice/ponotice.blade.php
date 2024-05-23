@@ -127,7 +127,7 @@
                                                                                 </div>
                                                                                 <input type="date" name="date"
                                                                                     class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date po_noticedate"
-                                                                                    placeholder="Choose date">
+                                                                                    placeholder="Choose date"  min="1979-01-01" max="2100-12-31">
                                                                                     @if($errors->has('date'))
                                                                                         <div class="text-red-700">{{ $errors->first('date') }}</div>
                                                                                     @endif

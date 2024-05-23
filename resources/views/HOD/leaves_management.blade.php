@@ -572,6 +572,8 @@
                     }
                 });
             }); 
+
+            
              //Calender javscript Starts here.
             document.addEventListener('DOMContentLoaded', function() {
                 var TileColor = '';
@@ -587,6 +589,7 @@
                     buttonText : {
                             month:    'Month View',
                             list:     'Leaves List',
+                           
                         },
                     height: 650,
                     eventSources: [

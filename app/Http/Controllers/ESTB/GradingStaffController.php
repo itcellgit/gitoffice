@@ -3,7 +3,8 @@ namespace App\Http\Controllers\ESTB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Exports\GradingStaffExport;
-use App\Models\Grading_staff;
+use App\Models\allowance_staff;
+use App\Models\allowance;
 use App\Http\Requests\StoreGrading_staffRequest;
 use App\Http\Requests\UpdateGrading_staffRequest;
 use App\Models\staff;
@@ -14,58 +15,46 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 class GradingStaffController extends Controller
 {
     public function index()
-{
-    // Assuming you have received the year and month data from somewhere
-    $year = request('year');
-    $month = request('month');
+    {
+        // Assuming you have received the year and month data from somewhere
+        $year = request('year');
+        $month = request('month');
 
-    $staff = Staff::with(['departments' => function ($query) {
-        $query->orderBy('id');
-    }])
-    ->leftJoin('department_staff', 'staff.id', '=', 'department_staff.staff_id')
-    ->leftJoin('departments', 'department_staff.department_id', '=', 'departments.id')
-    ->whereNotIn('staff.id', function ($query) {
-        $query->select('staff_id')
-            ->from('designation_staff')
-            ->whereIn('designation_id', function ($subquery) {
-                $subquery->select('id')
-                    ->from('designations')
-                    ->where('isvacational', 'Non-Vacational');
-            })
-            ->where('status', 'active');
-    })
-    ->select('staff.id as id', 'staff.fname', 'staff.lname','departments.id as dept_id')
-    ->orderBy('departments.id')
-    ->distinct()
-    ->get();
+        $staff = Staff::with(['departments' => function ($query) {
+            $query->orderBy('id');
+        }])
+        ->leftJoin('department_staff', 'staff.id', '=', 'department_staff.staff_id')
+        ->leftJoin('departments', 'department_staff.department_id', '=', 'departments.id')
+        ->whereNotIn('staff.id', function ($query) {
+            $query->select('staff_id')
+                ->from('designation_staff')
+                ->whereIn('designation_id', function ($subquery) {
+                    $subquery->select('id')
+                        ->from('designations')
+                        ->where('isvacational', 'Non-Vacational');
+                })
+                ->where('status', 'active');
+        })
+        ->select('staff.id as id', 'staff.fname', 'staff.lname','departments.id as dept_id')
+        ->orderBy('departments.id')
+        ->distinct()
+        ->get();
 
-    // Loop through each staff member and store data into grading_staff table
-    foreach ($staff as $member) {
-        // Assuming Grading_staff model has necessary fillable fields
-        Grading_staff::create([
-            'staff_id' => $member->id,
-            'year' => $year,
-            'month' => $month,
-        
-            'status' => 'active'
-            // Add other necessary fields
-        ]);
+       
+        return view('ESTB.Grading.gradetemplate.GradeTemplate',compact('staff'));
+            
     }
-    return redirect()->back()->with('success', 'data added successfully');
-        
-}
     public function showGradeTemplate()
     {
      
-        $grading = Grading_staff::with('staff')->get();
-        $gradesArray = ['A', 'B', 'C'];
-        return view('ESTB.Grading.gradetemplate.GradeTemplate', compact(['grading', 'gradesArray']));
+        
+        return view('ESTB.Grading.gradetemplate.GradeTemplate');
     }
 
-public function update(UpdateGrading_staffRequest $request, Grading_staff $grading_staff)
+public function update(UpdateGrading_staffRequest $request, allowance_staff $grading_staff)
 {
     foreach ($request->grade as $staffId => $grade) {
-        $gradingStaff = Grading_Staff::find($staffId);
+        $gradingStaff = allowance_staff::find($staffId);
         if ($gradingStaff) {
             $gradingStaff->grade = $grade;
             $gradingStaff->save();
@@ -100,7 +89,7 @@ public function importExcel(Request $request)
         $staff = Staff::find($staffId);
         if ($staff) {
             // Assuming Grading_staff model has necessary fillable fields
-            Grading_staff::updateOrCreate(
+            allowance_staff::updateOrCreate(
                 ['staff_id' => $staffId],
                 ['grade' => $grade]
             );
@@ -121,17 +110,17 @@ public function importExcel(Request $request)
            
         }
 
-    public function show(Grading_staff $grading_staff)
+    public function show(allowance_staff $grading_staff)
     {
         //
     }
 
-    public function edit(Grading_staff $grading_staff)
+    public function edit(allowance_staff $grading_staff)
     {
         //
     }
 
-    public function destroy(Grading_staff $grading_staff)
+    public function destroy(allowance_staff $grading_staff)
     {
         //
     }

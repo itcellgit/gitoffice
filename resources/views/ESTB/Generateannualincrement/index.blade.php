@@ -189,6 +189,111 @@
                                         </tr>
                                     @endforeach
                                 </tbody> --}}
+                                                    <tbody class="">
+
+                                                        @php
+                                                            $i = 1;
+                                                            //print_r($staff->religions->religion_id);
+                                                        @endphp
+                                                        @forelse($staff as $st)
+
+                                                        <tr class="bg-red-700">
+                                                            <td rowspan="5">{{ $i++ }}</td>
+                                                            <td>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="flex space-x-3 rtl:space-x-reverse w-full min-w-[200px]">
+                                                                            <div class="block w-full my-auto">
+
+                                                                                {{$st->fname.' '.$st->mname.' '.$st->lname}}
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <span>{{$st->latest_employee_type()->first()->employee_type}}</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <span>
+                                                                            @foreach ($st->departments as $dept)
+                                                                                @if($dept->pivot->status == 'active')
+                                                                                    {{$dept->dept_shortname}} <br/>
+                                                                                @endif
+                                                                            @endforeach
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr> 
+                                                                    <td >
+                                                                        <span class="w-3/4">
+
+                                                                            @foreach ($st->designations as $design)
+                                                                                @if( $design->pivot->status == 'active')
+                                                                                    {{$design->design_name}} <br/>
+                                                                                @endif
+                                                                            @endforeach
+
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                            
+                                                                <tr>
+                                                            
+                                                                    <td><span>
+                                                                        @foreach ($st->qualifications as $st_quli)
+                                                                            @if($st_quli->pivot->status=='active')
+                                                                                {{$st_quli->qual_shortname}}
+                                                                            @endif
+                                                                        @endforeach
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                            </td>
+                                                            <td rowspan="5" class="border border-gray-300 px-4 py-2"><span>{{ $st->dob }}</span></td>
+                                                            <td rowspan="5" class="border border-gray-300 px-4 py-2"><span>{{ $st->doj }}</span></td>
+                                                            <td rowspan="5" class="border border-gray-300 px-4 py-2"><span>{{ $st->date_of_increment}}</span></td>
+                                                            
+                                                           <td rowspan="5" class="border border-gray-300 px-4 py-2"><span>{{ $st->basic}}</span></td>
+
+                                                            <td rowspan="5" class="font-medium space-x-2 rtl:space-x-reverse">
+                                                                <div class="hs-tooltip ti-main-tooltip">
+                                                                    <button
+                                                                        class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary">
+                                                                        <a href="{{route('PRINCIPAL.staff.staffview',$st->id)}}">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3ZM12.0003 19C16.2359 19 19.8603 16.052 20.7777 12C19.8603 7.94803 16.2359 5 12.0003 5C7.7646 5 4.14022 7.94803 3.22278 12C4.14022 16.052 7.7646 19 12.0003 19ZM12.0003 16.5C9.51498 16.5 7.50026 14.4853 7.50026 12C7.50026 9.51472 9.51498 7.5 12.0003 7.5C14.4855 7.5 16.5003 9.51472 16.5003 12C16.5003 14.4853 14.4855 16.5 12.0003 16.5ZM12.0003 14.5C13.381 14.5 14.5003 13.3807 14.5003 12C14.5003 10.6193 13.381 9.5 12.0003 9.5C10.6196 9.5 9.50026 10.6193 9.50026 12C9.50026 13.3807 10.6196 14.5 12.0003 14.5Z"></path></svg>
+                                                                            <span
+                                                                                class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700"
+                                                                                role="tooltip">
+                                                                                View Staff
+                                                                            </span>
+                                                                        </a>
+                                                                    </button>
+
+                                                                    <div class="hs-tooltip ti-main-tooltip">
+                                                                        <!--form action="#" method="post">
+
+                                                                        <button onclick="return confirm('Are you Sure')"
+                                                                            class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>
+
+                                                                            <span
+                                                                                class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700"
+                                                                                role="tooltip">
+                                                                                Delete
+                                                                            </span>
+                                                                            </button>
+                                                                        </form-->
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @empty
+                                                            <p class="text-dark"><b>No Staff Added.</b></p>
+                                                        @endforelse
+                                                    </tbody>
                             </table>
                             <button id="submit" class="ti-btn bg-primary text-white px-4 py-2 rounded-md hover:bg-primary focus:ring-primary dark:focus:ring-offset-white/10">Submit</button>
                         </div>

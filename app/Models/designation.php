@@ -26,7 +26,7 @@ class designation extends Model
     }
     public function allowances():HasMany
     {
-        return $this->hasMany(allowances::class);
+        return $this->hasMany(allowance::class);
     }
     public function staff():HasMany
     {

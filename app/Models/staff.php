@@ -283,6 +283,9 @@ class staff extends Model
     {
         return $this->hasMany(Renumerationheads::class,'staff_id');
     }
-
+    public function allowances():BelongsToMany
+    {
+        return $this->belongsToMany(allowance::class);
+    }
 
 }

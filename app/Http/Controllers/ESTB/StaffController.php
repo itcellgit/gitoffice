@@ -220,7 +220,7 @@ class StaffController extends Controller
             ->with(
                 ['associations'=> function ($q){
                     $q->latest();
-                }]
+                }]  
                 )
         ->with(
             ['teaching_payscale'=> function ($q){

@@ -61,7 +61,6 @@ class TicketController extends Controller
     //     }
     //         return redirect('ticket/dashboard');
     // }
-
     public function store(StoreticketRequest $request)
     {
          $ticket=ticket::create
@@ -69,34 +68,32 @@ class TicketController extends Controller
             'title'=>$request->title,
             'description'=>$request->description,
             'user_id'=>auth()->id(),
-
         ]);
-
         $ticket->save();
         //dd($request);
        // Update attachment if provided
+      $attachments = $request->file('attachment');
+        if ($attachments) 
+        {
+             $file_data = [];
 
-       $attachments = $request->file('attachment');
-
-if ($attachments) {
-    $file_data = [];
-    foreach ($attachments as $attachment) {
-        $text = $attachment->extension();
-        $contents = file_get_contents($attachment);
-        $filename = Str::random(25);
-        $path = "attachment/$filename.$text";
-        Storage::disk('public')->put($path, $contents);
-        $attachment->move(public_path('attachment'), $filename);
-        $file_data[] = [
-            'filename' => $filename,
-            'extension' => $text,
-            'path' => $path,
-        ];
-    }
-    $ticket->update(['attachment' => json_encode($file_data)]);
-}
+         $attachments = is_array($attachments) ? $attachments : [$attachments];
+         foreach ($attachments as $attachment) 
+         {
+            $extension = $attachment->extension();
+            $filename = Str::random(25) . '.' . $extension;
+            $path = "attachment/$filename";
+            Storage::disk('public')->put($path, file_get_contents($attachment));
+            $file_data[] = $filename;
+        }
+         $ticket->update
+         ([
+            'attachment' => count($file_data) === 1 ? $file_data[0] : json_encode($file_data)
+        ]);
+        }
             return redirect('ticket/dashboard');
     }
+   
 
 
     /**
@@ -128,16 +125,37 @@ if ($attachments) {
         // dd($request);
          $ticket->title=$request->title;
          $ticket->description=$request->description;
-        if($request->file('attachment'))
-       {
-           $text=$request->file('attachment')->extension();
-           $contents=file_get_contents($request->file('attachment'));
-           $filename=Str::random(25);
-           $path="attachment/$filename.$text";
-           Storage::disk('public')->put($path,$contents);
-           $request->file('attachment')->move(public_path('attachment'), $filename);
-           $ticket->update(['attachment'=>$filename]);
-       }
+    //     if($request->file('attachment'))
+    //    {
+    //        $text=$request->file('attachment')->extension();
+    //        $contents=file_get_contents($request->file('attachment'));
+    //        $filename=Str::random(25);
+    //        $path="attachment/$filename.$text";
+    //        Storage::disk('public')->put($path,$contents);
+    //        $request->file('attachment')->move(public_path('attachment'), $filename);
+    //        $ticket->update(['attachment'=>$filename]);
+    //    }
+
+    // multiple images
+    $attachments = $request->file('attachment');
+    if ($attachments) 
+    {
+         $file_data = [];
+
+     $attachments = is_array($attachments) ? $attachments : [$attachments];
+     foreach ($attachments as $attachment) 
+     {
+        $extension = $attachment->extension();
+        $filename = Str::random(25) . '.' . $extension;
+        $path = "attachment/$filename";
+        Storage::disk('public')->put($path, file_get_contents($attachment));
+        $file_data[] = $filename;
+    }
+     $ticket->update
+     ([
+        'attachment' => count($file_data) === 1 ? $file_data[0] : json_encode($file_data)
+    ]);
+    }
       
         return redirect(route('ticket.dashboard'));
     }
