@@ -278,11 +278,14 @@ class staff extends Model
      {
          return $this->hasMany(GradingStaff::class,'staff_id');
      }
-     
+
      public function renumerationheads()
     {
         return $this->hasMany(Renumerationheads::class,'staff_id');
     }
 
-
+    public function allowance():BelongsToMany
+    {
+        return $this->belongsToMany(allowance::class)->withPivot('id','staff_id','allowance_id','year','month','status');
+    }
 }

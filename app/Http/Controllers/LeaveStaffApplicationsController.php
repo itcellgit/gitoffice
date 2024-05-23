@@ -434,9 +434,9 @@ class LeaveStaffApplicationsController extends Controller
             {
                 $holidaydates[]=Carbon::parse($previous_date)->format('d-m-Y');
                 $previous_date=Carbon::parse($previous_date)->addDays(-1)->format('Y-m-d');
-
             }
             $isFirstOrThirdSaturdayflag=$this->isFirstOrThirdSaturday($previous_date);
+
             if($isFirstOrThirdSaturdayflag)
             {
                 $holidaydates[]=Carbon::parse($previous_date)->format('d-m-Y');
@@ -471,6 +471,7 @@ class LeaveStaffApplicationsController extends Controller
                 else
                 {
                     $not_combine_able=true;
+
                     foreach($leave->combine_leave as $leavecombination)
                     {
                         if($leavecombination->pivot->combined_id==$staff_leaves_before_start_day->leave_id)
@@ -487,6 +488,10 @@ class LeaveStaffApplicationsController extends Controller
                         return $result;
                     }
                 }
+            }
+            else
+            {
+                $leaveholidayflag=false;
             }
 
             if($staff_leaves_before_start_day==null && $holidays==null && $dayofweek!='Sunday' && $isFirstOrThirdSaturdayflag==false)
