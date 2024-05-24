@@ -84,6 +84,7 @@ class BiometricController extends Controller
                             if ($data->EmployeeCode === $staff->EmployeeCode) {
                                 $data->id = $staff->id;
                                 $data->EmployeeName = $staff->fname . ' ' . $staff->mname . ' ' . $staff->lname; // Concatenate fname, mname, and lname as EmployeeName
+                                $staff->activedepartments;
                                 $combinedData[] = $data;
                                 break;
                             }
