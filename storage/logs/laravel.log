@@ -1,0 +1,4 @@
+[2024-05-24 10:17:59] local.ERROR: Cannot declare class App\Models\festival_advance, because the name is already in use {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot declare class App\\Models\\festival_advance, because the name is already in use at F:\\laravel Apps\\gitoffice\\app\\Models\\festivaladvance.php:12)
+[stacktrace]
+#0 {main}
+"} 
