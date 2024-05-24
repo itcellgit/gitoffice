@@ -113,11 +113,11 @@
                                                     <tr class="">
                                                         <th scope="col" class="dark:text-white/80 font-bold  ">S.No</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">Employee Name</th>
+                                                        <th scope="col" class="dark:text-white/80 font-bold  ">Department</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">PunchIn</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">DeviceIn</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">PunchOut</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">DeviceOut</th>
-                                                      
                                                         <th scope="col" class="dark:text-white/80 font-bold ">No.of.Punches</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">Duration</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">Action</th>
@@ -130,6 +130,7 @@
                                                     @foreach ($combinedData as $data)
                                                         @php
                                                             $employeeCode = $data->EmployeeCode;
+
                                                             $hasEntryLog = isset($entry_exit['entryLogs'][$employeeCode]);
                                                             $hasExitLog = isset($entry_exit['exitLogs'][$employeeCode]);
                                                         @endphp
@@ -138,6 +139,12 @@
                                                                 <td>{{ $loop->iteration }}</td>
                                                                 @if ($hasEntryLog)
                                                                     <td>{{$data->EmployeeName}}</td>
+                                                                    
+                                                                    @if(isset($data->DepartmentName))
+                                                                        <td>{{$data->DepartmentName}}</td>
+                                                                    @else
+                                                                        <td></td>
+                                                                    @endif
                                                                     <td>{{ $entry_exit['entryLogs'][$employeeCode]->LogDate }}</td>
                                                                     <td>{{ $entry_exit['entryLogs'][$employeeCode]->DeviceFName }}</td>
                                                                 @else
@@ -187,10 +194,16 @@
                                                                                             <b style="display: flex; justify-content: space-between;">
                                                                                                 <span>
                                                                                                     Employee Name: {{$entry_exit['entryLogs'][$employeeCode]->EmployeeName}}
+                                                                                                
+                                                                                                    @if(isset($data->id))
+                                                                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                                                      
+                                                                                                        Staff ID: {{$data->id}}
+                                                                                                    @endif
                                                                                                 </span>
                                                                                                 <span style="display: flex; align-items: center;">
                                                                                                     <span style="margin-right: 10px;">Employee Code: {{$entry_exit['entryLogs'][$employeeCode]->EmployeeCode}}</span>
-                                                                                                    <span>STAFF ID:{{$data->id}}</span>
+                                                                                                    
                                                                                                 </span>
                                                                                             </b>
                                                                                         </h3>

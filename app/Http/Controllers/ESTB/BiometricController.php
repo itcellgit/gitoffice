@@ -33,67 +33,77 @@ class BiometricController extends Controller
 
         // Retrieve data from the 'staff' table in the 'mysql' connection
     $staffData = staff::with('activedepartments')->get();
+
+
    
 
     // Retrieve data from the 'employees' table in the 'mysql2' connection
     $employeesData = DB::connection('mysql2')->table('employees')->get();
 
-    // Perform the join operation in PHP code
-    $biometricData = [];
-    foreach ($staffData as $staff) {
-        foreach ($employeesData as $employee) {
-            if ($staff->EmployeeCode === $employee->EmployeeCode) {
-                $biometricData[] = [
-                    'id' => $staff->id,
-                    'full_name' => $staff->fname . ' ' . $staff->mname . ' ' . $staff->lname,
-                    'EmployeeCode' => $employee->EmployeeCode,
-                    'EmployeeName' => $employee->EmployeeName
-                ];
-                break; // Exit the inner loop once a match is found
-            }
+   // Perform the join operation in PHP code
+$biometricData = [];
+foreach ($staffData as $staff) {
+    foreach ($employeesData as $employee) {
+        if ($staff->EmployeeCode === $employee->EmployeeCode) {
+            $biometricData[] = [
+                'id' => $staff->id,
+                'full_name' => $staff->fname . ' ' . $staff->mname . ' ' . $staff->lname,
+                'EmployeeCode' => $employee->EmployeeCode,
+                'EmployeeName' => $employee->EmployeeName
+            ];
+            // No need to break here, as there might be multiple matches
         }
     }
+}
 
-    // Now $biometricData contains the result of the join operation
+// Retrieve data from the 'mysql' database (default connection) if 'staff' table is there
+$staffData = staff::with('activedepartments')->get();
 
-    // Dump the result for debugging
-    //dd($biometricData);
+            // Retrieve data from the 'mysql2' database
+            $externalData = DB::connection('mysql2')
+                ->table('DeviceLogs_' . $currentMonth . '_' . $currentYear)
+                ->select(
+                    'DeviceLogs_' . $currentMonth . '_' . $currentYear . '.logDate as logDate',
+                    'devices.DeviceFname as DeviceName',
+                    'employees.EmployeeName as EmployeeName',
+                    'employees.EmployeeCode as EmployeeCode'
+                )
+                ->join('devices', 'DeviceLogs_' . $currentMonth . '_' . $currentYear . '.DeviceId', '=', 'devices.DeviceId')
+                ->join('employees', 'DeviceLogs_' . $currentMonth . '_' . $currentYear . '.EmployeeCode', '=', 'employees.EmployeeCode')
+                ->orderBy('DeviceLogs_' . $currentMonth . '_' . $currentYear . '.logDate', 'desc')
+                ->orderBy('employees.EmployeeName')
+                ->get();
 
-       // Retrieve data from the 'mysql' database (default connection) if 'staff' table is there
-        $staffData = DB::table('staff')->get();
+            // Joining data in PHP
+            $combinedData = [];
+            foreach ($externalData as $data) {
+                // Check if the employee code exists in staff data
+                $matched = false;
 
-                    // Retrieve data from the 'mysql2' database
-                    $externalData = DB::connection('mysql2')
-                        ->table('DeviceLogs_' . $currentMonth . '_' . $currentYear)
-                        ->select(
-                            'DeviceLogs_' . $currentMonth . '_' . $currentYear . '.logDate as logDate',
-                            'devices.DeviceFname as DeviceName',
-                            'employees.EmployeeName as EmployeeName',
-                            'employees.EmployeeCode as EmployeeCode'
-                        )
-                        ->join('devices', 'DeviceLogs_' . $currentMonth . '_' . $currentYear . '.DeviceId', '=', 'devices.DeviceId')
-                        ->join('employees', 'DeviceLogs_' . $currentMonth . '_' . $currentYear . '.EmployeeCode', '=', 'employees.EmployeeCode')
-                        ->orderBy('DeviceLogs_' . $currentMonth . '_' . $currentYear . '.logDate', 'desc')
-                        ->orderBy('employees.EmployeeName')
-                        ->get();
-
-                    // Joining data in PHP
-                    $combinedData = [];
-                    foreach ($externalData as $data) {
-                        foreach ($staffData as $staff) {
-                            if ($data->EmployeeCode === $staff->EmployeeCode) {
-                                $data->id = $staff->id;
-                                $data->EmployeeName = $staff->fname . ' ' . $staff->mname . ' ' . $staff->lname; // Concatenate fname, mname, and lname as EmployeeName
-                                               $combinedData[] = $data;
-                                break;
-                            }
+                foreach ($staffData as $staff) {
+                    if ($data->EmployeeCode === $staff->EmployeeCode) {
+                        $data->id = $staff->id;
+                        $data->EmployeeName = $staff->fname . ' ' . $staff->mname . ' ' . $staff->lname; // Concatenate fname, mname, and lname as EmployeeName
+                      $data->DepartmentName="";
+                      
+                        foreach($staff->activedepartments as $dept)
+                        {
+                           
+                            $data->DepartmentName .= $dept->dept_shortname.',';
                             
                         }
+                        $combinedData[] = $data;
+                        $matched = true;
+                        break;
                     }
-                   dd($combinedData);
-
-                   
-
+                }
+               
+                // If no match is found, add the data as it is
+                if (!$matched) {
+                    $combinedData[] = $data;
+                }
+            }
+           // dd($combinedData);
            
         // Filter entry and exit logs
         $entry_exit = $this->filterEntryExitLogs($currentMonth, $currentYear, $date, $externalData);
@@ -103,10 +113,6 @@ class BiometricController extends Controller
         // Return the view with the retrieved data
         return view('ESTB.Biometric.biometric_data', compact('combinedData', 'entry_exit', 'employeePunchLogs'));
     }
-
-
-   
-    
 
     public function filterEntryExitLogs($currentMonth, $currentYear, $logDate, $externalData)
     {
@@ -141,8 +147,9 @@ class BiometricController extends Controller
 
             // Sort employee logs by log date
             $sortedLogs = $employeeLogs->sortBy('LogDate');
-
+            
             // Set the first log as the entry log and the last log as the exit log
+
             $entryLogs[$employeeCode] = $sortedLogs->first();
             $exitLogs[$employeeCode] = $sortedLogs->last();
 

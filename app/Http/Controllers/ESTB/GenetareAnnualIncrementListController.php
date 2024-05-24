@@ -37,43 +37,37 @@ class GenetareAnnualIncrementListController extends Controller
     {
         $filter="";
        // dd($staff1);
-       $staff=staff::with('designations')
-        ->with('associations')
-        ->with('qualifications')
-        ->with('annualIncrement')
-       ->with('departments')
-       ->with('teaching_payscale')
-       ->with('ntpayscale')
-       ->with('ntcpayscale')
-       ->with('consolidated_teaching_pay')
-       ->with('fixed_nt_pay')
-       ->with('latest_employee_type')
-       ->whereRaw('month(date_of_increment)=?',[8])
-       ->orderBy('fname')->get();
+       $staff=staff::
+      with('designations')
+     ->with(['associations'=>function($q){
+             $q->wherePivot('status','active');
+    }])
+     ->with('qualifications')
+    ->with('annualIncrement')
+     ->with('departments')
+     ->with(['teaching_payscale'=>function($q){
+         $q->wherePivot('status','active');
+       }])
+       
+      ->with('ntpayscale')
+     ->with('ntcpayscale')
+    ->with('consolidated_teaching_pay')
+        ->with('fixed_nt_pay')
+    ->with('latest_employee_type')
+      ->whereRaw('month(date_of_increment)=?',[8])
+       ->orderBy('fname')->take(5)->get();
 
-       //dd($staff);
+      //dd($staff);
+      $data=[];
+      foreach($staff as $st)
+      {
+        $data[$st->id]=[];
+        $data[$st->id]['newbasic']=23434;
+        $data[$st->id]['increment']=898;
+        $data[$st->id]['gross']=654545;
+      }
+      dd($data[139]['newbasic']);
 
-       //$staff = DB::table('staff')->with('designations')->with('associations')->orderBy('id')->paginate(15);
-       // $caste_categories = castecategory::where('status','active')->get();
-       // $religions =religion::where('status','active')->get();
-        // $associations = association::where('status','active')->get();
-        // $departments = DB::table('departments')->where('status','active')->get();
-        // $qualifications =DB::table('qualifications')->where('status','active')->get();
-        // $designations=designation::where('status','active')->get();
-        // //To fetch Designation As per Employee type
-        // $teachingDesignations = designation::where('status', 'active')
-        //                     ->where('emp_type', 'Teaching')
-        //                     ->where('isadditional', 0)
-        //                     ->orderBy('design_name')
-        //                     ->get();
-
-        // $nonteachingDesignations = designation::where('status', 'active')
-        //                     ->where('emp_type', 'Non-teaching')
-        //                     ->where('isadditional', 0)
-        //                     ->orderBy('design_name')
-        //                     ->get();
-
-        //$payscales = teaching::
         return view('ESTB.Generateannualincrement.index',compact(['staff']));
     }
 
@@ -91,18 +85,7 @@ class GenetareAnnualIncrementListController extends Controller
     public function store(StorestaffRequest $request)
     {
 
-        //dd('Hello and welcome to store function');
-        //dd($request);
-        //users table entry
-    //     $user_details=new User();
-    //     $user_details->email=$request->email."@git.edu";
-    //     $user_details->password=Hash::make('password');
-    //     if($request->employee_type == "Teaching"){
-    //         $user_details->role=UserRoles::TEACHING->value;
-    //     }else{
-    //         $user_details->role=UserRoles::NONTEACHING->value;
-    //     }
-    //    $uresult= $user_details->save();
+      
 
         // staff table details entry
         $staff_details=new staff();

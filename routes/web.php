@@ -371,6 +371,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::NONTEACHING->value, 'prevent
   Route::delete('/Non-Teaching/professionalactivities/conducted/destory/{professional_activity_conducted}', [NT_ProfessionalActivityConductedController::class, 'destroy'])->name('Non-Teaching.professionalactivities.conducted.destroy');
 
   Route::get('/Non-Teaching/construction',[NonTeachingController::class,'index'])->name('construction');
+
 });
 
 Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-history'])->group(function(){
@@ -447,7 +448,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
 
     Route::get('ESTB/autonomous_allowance',[AllowanceStaffController::class,'index'])->name('ESTB.autonomous_allowance');
     Route::post('ESTB/autonomous_allowance',[AllowanceStaffController::class,'create'])->name('ESTB.autonomous_allowance.create');
-    Route::post('/ESTB/autonomous_allowance/create', [AllowanceStaffController::class, 'store'])->name('import.excel');
+    Route::post('/ESTB/autonomous_allowance/create', [AllowanceStaffController::class, 'store'])->name('ESTB.autonomous_allowance.import');
 
     Route::post('grading-staff', [GradingStaffController::class, 'index'])->name('grading.staff.index');
     Route::post('/grading-staff/store', [GradingStaffController::class, 'store'])->name('grading.staff.store');
@@ -599,19 +600,17 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     // End of leave management related routes.
 
     //REnumerations Controllers
-     Route::get('/ESTB/renumerations',[RenumerationheadsController::class,'index'])->name('ESTB.renumerations');
-     Route::post('/ESTB/renumerations/create',[RenumerationheadsController::class,'store'])->name('ESTB.renumerations.store');
-     Route::patch('/ESTB/renumerations/update/{renumeration}',[RenumerationheadsController::class,'update'])->name('ESTB.renumerations.update');
-     Route::delete('/ESTB/renumerations/destory/{renumeration}', [RenumerationheadsController::class, 'destroy'])->name('ESTB.renumerations.destroy');
+    Route::get('/ESTB/renumerations',[RenumerationheadsController::class,'index'])->name('ESTB.renumerations');
+    // Route::post('/ESTB/renumerations/create',[RenumerationheadsController::class,'store'])->name('ESTB.renumerations.store');
+    // Route::patch('/ESTB/renumerations/update/{renumeration}',[RenumerationheadsController::class,'update'])->name('ESTB.renumerations.update');
+    // Route::delete('/ESTB/renumerations/destory/{renumeration}', [RenumerationheadsController::class, 'destroy'])->name('ESTB.renumerations.destroy');
+    Route::post('/import-excel', [RenumerationheadsController::class, 'importExcel'])->name('import.excel');
+   
+    //Route to fetch renumeration for perticular staff using Filter
+   Route::get('/ESTB/renumerations/renumedetails',[RenumerationheadsController::class,'filterrenume_information'])->name('ESTB.renumerations.renumedetails');
+   Route::get('/ESTB/renumerations/indexfiltering', [RenumerationheadsController::class,'indexFiltering'])->name('ESTB.renumerations.indexfiltering');
 
-     Route::post('/import-excel', [RenumerationheadsController::class, 'importExcel'])->name('import.excel');
-
-      //Route to fetch renumeration for perticular staff using Filter
-    Route::get('/ESTB/renumerations/renumedetails',[RenumerationheadsController::class,'filterrenume_information'])->name('ESTB.renumerations.renumedetails');
-
-    //route for staff searching , sorting and filtering
-    Route::get('/ESTB/renumerations/indexfiltering', [RenumeFilterController::class,'indexFiltering'])->name('ESTB.renumerations.indexfiltering');
-
+   
     Route::get('/ESTB/salaryheads',[SalaryHeadsController::class,'index'])->name('ESTB.salaryheads');
     Route::post('/ESTB/salaryheads/create',[SalaryHeadsController::class,'store'])->name('ESTB.salaryheads.store');
     Route::patch('/ESTB/salaryheads/update/{salaryhead}',[SalaryHeadsController::class,'update'])->name('ESTB.salaryheads.update');
@@ -932,6 +931,13 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
       Route::get('/PRINCIPAL/leaves_management/fetchholidayrhevents',[PrincipalController::class,'fetchholidayrhevents'])->name('fetchholidayrhevents');
       Route::get('/PRINCIPAL/leaves_management/fetchleaveevents',[PrincipalController::class,'fetchleaveevents'])->name('fetchmyleaveevents');
 
+      //Approve and Reject Leaves Routes in Principal login
+      Route::get('/PRINCIPAL/leaves_management/approve_leave',[PrincipalController::class,'approve_leave'])->name('PRINCIPAL.leaves_management.approve_leave');
+      Route::get('/PRINCIPAL/leaves_management/reject_leave',[PrincipalController::class,'reject_leave'])->name('PRINCIPAL.leaves_management.reject_leave');
+
+
+
+     
 
 
       Route::get('/PRINCIPAL/staff/index',[PrincipalController::class,'staff_view'])->name('PRINCIPAL.staff');

@@ -281,14 +281,14 @@ class DeanadminController extends Controller
         ->leftJoin('staff AS s3','s3.id','=','leave_staff_applications.additional_alternate')
         ->join('department_staff AS dept_staff', 'dept_staff.staff_id', '=', 'leave_staff_applications.staff_id')
         ->join('departments AS dept', 'dept.id', '=', 'dept_staff.department_id')//->where('leave_staff_applications.staff_id',$staff->id)
-
+        ->where('dept_staff.status','=','active')
         ->whereDate('leave_staff_applications.start' , '<=', $date)
         ->whereDate('leave_staff_applications.end','>=',$date)
         ->select(DB::raw("CONCAT(s1.fname,' ',s1.mname,' ',s1.lname) AS staff_name"),
                 DB::raw("CONCAT(s2.fname,' ',s2.mname,' ',s2.lname) AS alternate_staff"),
                 DB::raw("CONCAT(s3.fname,' ',s3.mname,' ',s3.lname) AS additional_alternate_staff"),
-                DB::raw('(CASE WHEN leave_staff_applications.cl_type="Morning" THEN "-Morning" WHEN leave_staff_applications.cl_type="Afternoon" THEN "-Afternoon" ELSE "" END) as cl_type'),
-                DB::raw("CONCAT(leaves.shortname,' ',cl_type)  AS title"),
+                DB::raw('(CASE WHEN leave_staff_applications.cl_type="Morning" THEN "-Morning" WHEN leave_staff_applications.cl_type="Afternoon" THEN "-Afternoon" ELSE "" END) as cltype'),
+                DB::raw("CONCAT(leaves.shortname,' ',(CASE WHEN leave_staff_applications.cl_type='Morning' THEN '-Morning' WHEN leave_staff_applications.cl_type='Afternoon' THEN '-Afternoon' ELSE '' END))  AS title"),
                 'leave_staff_applications.start AS start',
                 'leave_staff_applications.end AS end', 'leave_staff_applications.leave_id AS leave_id',
                 'leave_staff_applications.appl_status AS appl_status',

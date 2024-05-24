@@ -30,54 +30,63 @@ class AllowanceStaffController extends Controller
     {
         $year = request('year');
         $month = request('month');
+        $grading=staff::with('activedepartments')->with('allowance')->whereIn('staff.id',function($q)use($year,$month){
+            $q->select('id')
+            ->from('allowance_staff')
+            ->where('year',$year)->where('month',$month);
+        })->get();
+        dd($grading);
+        if($grading!=null)
+        {
+            $staff = Staff::with(['departments' => function ($query) {
+                $query->orderBy('id');
+            }])
+            ->leftJoin('department_staff', 'staff.id', '=', 'department_staff.staff_id')
+            ->leftJoin('departments', 'department_staff.department_id', '=', 'departments.id')
+            ->whereNotIn('staff.id', function ($query) {
+                $query->select('staff_id')
+                    ->from('designation_staff')
+                    ->whereIn('designation_id', function ($subquery) {
+                        $subquery->select('id')
+                            ->from('designations')
+                            ->where('isvacational', 'Non-Vacational');
+                    })
+                    ->where('status', 'active');
+            })
+            ->where('department_staff.status','active')
+            ->select('staff.id as id', DB::raw("concat(staff.fname, '-',staff.mname,'-',staff.lname) as name"),'departments.dept_shortname as dept')
+            ->orderBy('departments.id')
+            ->distinct()
+            ->get();
 
-        $staff = Staff::with(['departments' => function ($query) {
-            $query->orderBy('id');
-        }])
-        ->leftJoin('department_staff', 'staff.id', '=', 'department_staff.staff_id')
-        ->leftJoin('departments', 'department_staff.department_id', '=', 'departments.id')
-        ->whereNotIn('staff.id', function ($query) {
-            $query->select('staff_id')
-                ->from('designation_staff')
-                ->whereIn('designation_id', function ($subquery) {
-                    $subquery->select('id')
-                        ->from('designations')
-                        ->where('isvacational', 'Non-Vacational');
-                })
-                ->where('status', 'active');
-        })
-        ->where('department_staff.status','active')
-        ->select('staff.id as id', DB::raw("concat(staff.fname, '-',staff.mname,'-',staff.lname) as name"),'departments.dept_shortname as dept')
-        ->orderBy('departments.id')
-        ->distinct()
-        ->get();
+            $spreadsheet = new Spreadsheet();
+            $sheet = $spreadsheet->getActiveSheet();
+            $sheet->setCellValue('A1', 'Sl.No.');
+            $sheet->setCellValue('B1','StaffID');
+            $sheet->setCellValue('C1', 'Name');
+            $sheet->setCellValue('D1','Dept');
+            $sheet->setCellValue('E1','Year');
+            $sheet->setCellValue('F1','Month');
+            $sheet->setCellValue('G1','Grade(A/B/C)');
+            $cellno=2;
+            foreach($staff as $s)
+            {
+                $sheet->setCellValue('A'.$cellno,$cellno-1);
+                $sheet->setCellValue('B'.$cellno,$s->id);
+                $sheet->setCellValue('C'.$cellno,$s->name);
+                $sheet->setCellValue('D'.$cellno,$s->dept);
+                $sheet->setCellValue('E'.$cellno,$year);
+                $sheet->setCellValue('F'.$cellno,$month);
+                $sheet->setCellValue('G'.$cellno,"");
+                $cellno++;
+            }
 
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', 'Sl.No.');
-        $sheet->setCellValue('B1','StaffID');
-        $sheet->setCellValue('C1', 'Name');
-        $sheet->setCellValue('D1','Dept');
-        $sheet->setCellValue('E1','Year');
-        $sheet->setCellValue('F1','Month');
-        $sheet->setCellValue('G1','Grade(A/B/C)');
-        $cellno=2;
-       foreach($staff as $s)
-       {
-            $sheet->setCellValue('A'.$cellno,$cellno-1);
-            $sheet->setCellValue('B'.$cellno,$s->id);
-            $sheet->setCellValue('C'.$cellno,$s->name);
-            $sheet->setCellValue('D'.$cellno,$s->dept);
-            $sheet->setCellValue('E'.$cellno,$year);
-            $sheet->setCellValue('F'.$cellno,$month);
-            $sheet->setCellValue('G'.$cellno,"");
-            $cellno++;
-       }
-
-        // Create a writer
-        $writer = new Xlsx($spreadsheet);
-        $temp_file = tempnam(sys_get_temp_dir(), 'grading_template_'.$year.' '.$month);
-        $writer->save($temp_file);
+            // Create a writer
+            $writer = new Xlsx($spreadsheet);
+            $temp_file = tempnam(sys_get_temp_dir(), 'grading_template_'.$year.' '.$month);
+            $writer->save($temp_file);
+        }
+        
 
         // Return download response
         return response()->download($temp_file, 'grading_template_'.$year.' '.$month.'.xlsx')->deleteFileAfterSend(true);
@@ -116,21 +125,14 @@ class AllowanceStaffController extends Controller
         // Get the highest row number
         $highestRow = $sheet->getHighestRow();
         //create an array to display to user.
-        $grade_array=[];
-        $cntr=0;
+        
         // Iterate through each row to read and store grade data
         for ($row = 2; $row <= $highestRow; $row++) {
             $staffId = $sheet->getCell('B' . $row)->getValue();
             $year=$sheet->getCell('E'.$row)->getValue();
             $month=$sheet->getCell('F'.$row)->getValue();
             $grade = $sheet->getCell('G' . $row)->getValue(); // Assuming grade is in column G
-            $grade_array[$cntr]=[];
-            $grade_array[$cntr][0]=$cntr;
-            $grade_array[$cntr][1]=$sheet->getCell('C'.$row)->getValue();
-            $grade_array[$cntr][2]=$sheet->getCell('D'.$row)->getValue();
-            $grade_array[$cntr][3]=$sheet->getCell('E'.$row)->getValue();
-            $grade_array[$cntr][4]=$sheet->getCell('F'.$row)->getValue();
-            $grade_array[$cntr][5]=$sheet->getCell('G'.$row)->getValue();
+           
             $staff_designation=DB::table('designation_staff')->where('staff_id',$staffId)->whereIn('designation_id',function($q){
                 $q->select('designations.id')
                 ->from('designations')
@@ -145,6 +147,12 @@ class AllowanceStaffController extends Controller
                 $attach=$allowance->staff()->attach($staffId,['year'=>$year,'month'=>$month,'status'=>'active','created_at'=>Carbon::now()]);
             }
         }
+        $grading=staff::with('activedepartments')->with('allowance')->whereIn('staff.id',function($q){
+            $q->select('*')
+            ->from('allowance_staff')
+            ->where('year',$year)->where('month',$month);
+        })->get();
+        dd($grading);
         return view('ESTB.autonomous_allowances.index',compact('grade_array'));
     }
     /**

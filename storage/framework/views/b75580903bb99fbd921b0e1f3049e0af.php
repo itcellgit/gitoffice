@@ -75,10 +75,11 @@
                                                     <textarea name="description" class="ti-form-input" required placeholder="Please Describe the issue here..." style="width: 100%; height: 150px;" id="description"></textarea>
                                                     <div id="descriptionError" class="error text-red-700"></div>
                                                 </div>
+                                                
                                                 <div class="max-w-sm space-y-3 pb-6">
-                                                    <label for="" class="ti-form-label">Attachment :</label>
-                                                    <input type="file" name="attachment" class="ti-form-input"  placeholder="attachment" id="attachment">
-                                                    <div id="attachmentError" class="error text-red-700"></div>
+                                                    <label for="attachment" class="ti-form-label">Attachment:</label>
+                                                    <input type="file" name="attachment[]" id="attachment" class="ti-form-input" accept="image/*" multiple placeholder="Choose images">
+                                                    <h3>select multiple images</h3>
                                                 </div>
                                             </div>
                                             <div class="ti-modal-footer">
@@ -106,7 +107,7 @@
                                     </div>
                                     <div class="avatar avatar-xs absolute top-0 rounded-full bg-gray-200 shadow text-center ltr:-left-[4px] rtl:-right-[4px]">
                                         <img src="<?php echo e(asset('build/assets/img/users/avtar1.jpg')); ?>" class="rounded-full" alt="timeline-img">
-                                        
+                                       
 
                                     </div>
                                 </div>
@@ -145,6 +146,7 @@
             
                             <!-- Display additional tickets -->
                             <?php $__currentLoopData = $postticket; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pt): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            
                             <div class="flex flex-row">
                                 <div class="mx-auto relative">
                                     <div class="h-full w-6 flex items-center justify-center">

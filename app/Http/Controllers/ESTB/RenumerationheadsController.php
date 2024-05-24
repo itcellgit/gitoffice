@@ -93,28 +93,41 @@ public function importExcel(Request $request)
 
     // Iterate through each row to read and store grade data
     for ($row = 2; $row <= $highestRow; $row++) {
-            $staffId = $sheet->getCell('A' . $row)->getValue();
-            $renumeration_head = $sheet->getCell('B' . $row)->getValue();
-            $date_number_from_excel = $sheet->getCell('C' . $row)->getValue();
-            // Convert Excel date to PHP date
-            $date = ($date_number_from_excel - 25569) * 86400;
-            $date_of_disbursement = gmdate("d-m-Y", $date);
-            $amount = $sheet->getCell('D' . $row)->getValue();
+        $staffId = $sheet->getCell('A' . $row)->getValue();
+        $renumeration_head = $sheet->getCell('C' . $row)->getValue();
+        $date_number_from_excel = $sheet->getCell('D' . $row)->getValue();
+        
+        // Convert Excel date to PHP date
+        $date = ($date_number_from_excel - 25569) * 86400;
+        $date_of_disbursement = gmdate("d-m-Y", $date);  // Convert to d-m-Y format
+        $amount = $sheet->getCell('E' . $row)->getValue();
 
-            // Check if the staff exists in the database
-            $staff = Staff::find($staffId);
-            if ($staff) {
-                // Update or create renumeration head
-                    Renumerationheads::updateOrCreate(
-                        ['staff_id' => $staffId],
-                        [
-                            'renumeration_head' => $renumeration_head,
-                            'date_of_disbursement' => $date_of_disbursement,
-                            'amount' => $amount
-                        ]
-                    );
-                }
+        // Check if the staff exists in the database
+        $staff = Staff::find($staffId);
+        if ($staff) {
+            // Check if a renumeration head with the same staff_id and date_of_disbursement exists
+            $existingRenumerationHead = Renumerationheads::where('staff_id', $staffId)
+                ->where('date_of_disbursement', $date_of_disbursement)
+                ->first();
+
+            if ($existingRenumerationHead) {
+                // Update the existing record
+                $existingRenumerationHead->update([
+                    'renumeration_head' => $renumeration_head,
+                    'amount' => $amount
+                ]);
+            } else {
+                // Create a new record
+                Renumerationheads::create([
+                    'staff_id' => $staffId,
+                    'renumeration_head' => $renumeration_head,
+                    'date_of_disbursement' => $date_of_disbursement,
+                    'amount' => $amount
+                ]);
             }
+        }
+    }
+
             return redirect()->back()->with('success', 'Excel file imported successfully');
         }
     /**

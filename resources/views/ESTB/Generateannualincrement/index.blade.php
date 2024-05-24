@@ -159,6 +159,7 @@
                                         <th scope="col" class="dark:text-white/80">Incentive earned up to 30.06.2015</th>
                                         <th scope="col" class="dark:text-white/80">Autonomous allowance</th>
                                         <th scope="col" class="dark:text-white/80">Gross salary</th>
+                                        <th scope="col" class="dark:text-white/80">Actions</th>
 
                                     </tr>
                                 </thead>
@@ -198,25 +199,23 @@
                                                         @forelse($staff as $st)
 
                                                         <tr class="bg-red-700">
-                                                            <td rowspan="5">{{ $i++ }}</td>
+                                                            <td >{{ $i++ }}</td>
                                                             <td>
-                                                                <tr>
-                                                                    <td>
-                                                                        <div class="flex space-x-3 rtl:space-x-reverse w-full min-w-[200px]">
+                                                                <ul>
+                                                                    <li> <div class="flex space-x-3 rtl:space-x-reverse w-full min-w-[200px]">
                                                                             <div class="block w-full my-auto">
 
                                                                                 {{$st->fname.' '.$st->mname.' '.$st->lname}}
                                                                             </div>
                                                                         </div>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
+                                                                    </li>
+                                                                
+                                                                {{-- <tr>
                                                                     <td>
                                                                         <span>{{$st->latest_employee_type()->first()->employee_type}}</span>
                                                                     </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
+                                                                </tr> --}}
+                                                                <li>
                                                                         <span>
                                                                             @foreach ($st->departments as $dept)
                                                                                 @if($dept->pivot->status == 'active')
@@ -224,10 +223,9 @@
                                                                                 @endif
                                                                             @endforeach
                                                                         </span>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr> 
-                                                                    <td >
+                                                                    </li>
+                                                                
+                                                                    <li >
                                                                         <span class="w-3/4">
 
                                                                             @foreach ($st->designations as $design)
@@ -237,28 +235,55 @@
                                                                             @endforeach
 
                                                                         </span>
-                                                                    </td>
-                                                                </tr>
+                                                                    </li>
                                                             
-                                                                <tr>
+                                                                
                                                             
-                                                                    <td><span>
+                                                                    <li><span>
                                                                         @foreach ($st->qualifications as $st_quli)
                                                                             @if($st_quli->pivot->status=='active')
                                                                                 {{$st_quli->qual_shortname}}
                                                                             @endif
                                                                         @endforeach
                                                                         </span>
-                                                                    </td>
-                                                                </tr>
+                                                                    </li>
                                                             </td>
-                                                            <td rowspan="5" class="border border-gray-300 px-4 py-2"><span>{{ $st->dob }}</span></td>
-                                                            <td rowspan="5" class="border border-gray-300 px-4 py-2"><span>{{ $st->doj }}</span></td>
-                                                            <td rowspan="5" class="border border-gray-300 px-4 py-2"><span>{{ $st->date_of_increment}}</span></td>
-                                                            
-                                                           <td rowspan="5" class="border border-gray-300 px-4 py-2"><span>{{ $st->basic}}</span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{ $st->dob }}</span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{ $st->doj }}</span></td>
+                                                            <td class=""><span>
+                                                            @foreach($st->associations as $st_asso)
+                                                            {{$st_asso->asso_name}}
+                                                            @endforeach
+                                                            </td>
+                                                            <td class="">
+                                                            <span>
+                                                            @foreach($st->teaching_payscale as $st_pay)
+                                                                {{$st_pay->basepay.'-'.$st_pay->maxpay}}
+                                                                         {{$st_pay->agp}}
+                                                            @endforeach
+                                                                {{-- @if(count()) --}}
 
-                                                            <td rowspan="5" class="font-medium space-x-2 rtl:space-x-reverse">
+                                                            </td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>@foreach($st->annualIncrement as $st_ai)
+                                                                        {{$st_ai->basic}}
+                                                                        @endforeach
+                                                                           @foreach($st->teaching_payscale as $st_pay)
+                                                                         {{$st_pay->agp}}
+                                                                          @endforeach</span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span></span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span></span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span></span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{$st->wef}}</span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{ $st->date_of_increment}}</span></td>
+                                                    
+                                                            <td  class="border border-gray-300 px-4 py-2"><span></span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>0</span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span></span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span></span></td>
+                                                            <td  class=""><span>
+                                                            
+                                                            </td>
+                                                            <td  class="font-medium space-x-2 rtl:space-x-reverse">
                                                                 <div class="hs-tooltip ti-main-tooltip">
                                                                     <button
                                                                         class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary">

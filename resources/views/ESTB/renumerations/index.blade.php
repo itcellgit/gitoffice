@@ -113,15 +113,7 @@
                                                             @endforeach
                                                         </div>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="year">Select Year:</label>
-                                                        <select class="form-control" id="year" name="year">
-                                                            <option value="">Select Year</option>
-                                                            @for ($year = date('Y'); $year >= 2010; $year--)
-                                                                <option value="{{ $year }}">{{ $year }}</option>
-                                                            @endfor
-                                                        </select>
-                                                    </div>
+                                                    
                                                 </div>
 
 
@@ -257,8 +249,8 @@
            
                $('#exportToExcel').on('click', function () {
                     var table = $('#renumtable').clone();
-                    table.find('th:nth-child(1), th:nth-child(3), th:nth-child(4)').remove();
-                    table.find('td:nth-child(1), td:nth-child(3), td:nth-child(4)').remove();
+                    table.find('th:nth-child(1),th:nth-child(4)').remove();
+                    table.find('td:nth-child(1),td:nth-child(4)').remove();
                     // Ensure each cell has proper formatting
                     table.find('td').css({
                         'border': '1px solid #000',

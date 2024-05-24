@@ -195,7 +195,7 @@
 
                                                                         <th scope="col" class="dark:text-white/80 font-bold">#</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">Leave Type</th>
-                                                                        <th scope="col" class="dark:text-white/80 font-bold">Staff on Leave</th>
+                                                                        <th scope="col" class="dark:text-white/80 font-bold">Staff</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">Dept</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">From Date</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">To Date</th>
@@ -622,10 +622,10 @@
 
                                     $('#leave_application_list').append('<tr class="'+ bg_color_setting +'">'
                                                                 +'<td >'+value.Application_id+ '</td>'
+                                                                +'<td>'+value.title+ '</td>'
                                                                 +'<td >'+value.staff_name+ '</td>'
                                                                 +'<td >'+value.shortname+ '</td>'
-                                                                +'<td>'+value.title+ '</td>'
-                                                                +'<td>'+value.start+ '</td>'
+                                                                 +'<td>'+value.start+ '</td>'
                                                                 +'<td>'+value.end+ '</td>'
                                                                 +'<td>'+value.reason+ '</td>'
                                                                 +'<td>'+value.alternate_staff+ '</td>'
