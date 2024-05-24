@@ -151,6 +151,7 @@
             
                             <!-- Display additional tickets -->
                             @foreach($postticket as $pt)
+                            
                             <div class="flex flex-row">
                                 <div class="mx-auto relative">
                                     <div class="h-full w-6 flex items-center justify-center">

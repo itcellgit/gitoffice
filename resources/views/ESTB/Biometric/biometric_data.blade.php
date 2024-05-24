@@ -137,7 +137,7 @@
                                                             <tr>
                                                                 <td>{{ $loop->iteration }}</td>
                                                                 @if ($hasEntryLog)
-                                                                    <td>{{ $entry_exit['entryLogs'][$employeeCode]->EmployeeName }}</td>
+                                                                    <td>{{$data->EmployeeName}}</td>
                                                                     <td>{{ $entry_exit['entryLogs'][$employeeCode]->LogDate }}</td>
                                                                     <td>{{ $entry_exit['entryLogs'][$employeeCode]->DeviceFName }}</td>
                                                                 @else
