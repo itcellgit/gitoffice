@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-
 class allowance extends Model
 {
     use HasFactory;
@@ -15,6 +14,7 @@ class allowance extends Model
     }
     public function staff():BelongsToMany
     {
-        return $this->belongsToMany(staff::class)->withPivot('id','staff_id','allowance_id','month','year','status');
+        return $this->belongsToMany(staff::class)->withPivot('id','staff_id','allowance_id','year','month','status');
     }
+
 }

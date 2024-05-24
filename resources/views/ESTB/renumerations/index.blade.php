@@ -51,93 +51,126 @@
                                             header("refresh: 3");  
                                         @endphp
                                     @endif
+
+                                    <div class="col-span-2 xl:col-span-2">
+                                <div class="box box-sm">
+                                    <div class="box-body searchForm">
+                                        <div class="box-body searchForm">
+                                            <form action="{{ route('ESTB.renumerations.renumedetails') }}" method="GET" id="searchForm">
+                                                <div class="grid gap-1 space-y-2 lg:grid-cols-3 lg:space-y-0">
+                                                    <!--Dropdown multiselect checkbox For Department-->
+                                                    <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0 border border-gray-300 rounded p-4">
+                                                        <label class="ti-form-label mb-0 font-bold">Department <span class="text-red-500">*</span></label>
+                                                        <div class="space-y-2" style="max-height: 100px; overflow-y: auto;">
+                                                            @php
+                                                                $checked = "";
+                                                            @endphp
+
+                                                            @php
+                                                                $defaultDepartmentIds = range(1, 30);
+                                                            @endphp
+                                                            <div class="flex">
+                                                                <input type="checkbox" class="ti-form-checkbox mt-0.5 select-all">
+                                                                <label for="select-all" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Select All</label>
+                                                            </div>
+
+                                                            @foreach ($departments as $department)
+                                                                <div class="flex">
+                                                                    <input type="checkbox" name="departments[]" value="{{ $department->id }}" {{ $checked }} class="ti-form-checkbox mt-0.5 hs-checkbox-group-{{ $department->id }}">
+                                                                    <label class="hs-checkbox-group-{{ $department->id }} text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">{{ $department->dept_name }}</label>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Designation multi select dropdown start -->
+                                                    <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0 border border-gray-300 rounded p-4">
+                                                        <label class="ti-form-label mb-0 font-bold">Designations <span class="text-red-500">*</span></label>
+                                                        <div class="space-y-2" style="max-height: 100px; overflow-y: auto;">
+                                                            @php $checked = ""; @endphp
+                                                            @php $defaultDesignationIds = range(1, 30); @endphp
+                                                            <div class="flex">
+                                                                <input type="checkbox" class="ti-form-checkbox mt-0.5 select-all-designation">
+                                                                <label for="select-all-designation" class="text-sm text-gray-800 ltr:ml-2 rtl:mr-2 dark:text-white/70">Select All</label>
+                                                            </div>
+
+                                                            <!-- Teaching Designations -->
+                                                            <h3 class="font-bold text-lg text-gray-800">Teaching</h3>
+                                                            @foreach ($designations->where('emp_type', 'Teaching')->where('isadditional', 0) as $designation)
+                                                                <div class="flex">
+                                                                    <input type="checkbox" name="designations[]" value="{{ $designation->id }}" {{ $checked }} class="ti-form-checkbox mt-0.5 hs-checkbox-group-{{ $designation->id }}">
+                                                                    <label class="hs-checkbox-group-{{ $designation->id }} text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">{{ $designation->design_name }}</label>
+                                                                </div>
+                                                            @endforeach
+
+                                                            <!-- Non-Teaching Designations -->
+                                                            <h3 class="font-bold text-lg text-gray-800">Non-Teaching</h3>
+                                                            @foreach ($designations->where('emp_type', 'Non-Teaching')->where('isadditional', 0) as $designation)
+                                                                <div class="flex">
+                                                                    <input type="checkbox" name="designations[]" value="{{ $designation->id }}" {{ $checked }} class="ti-form-checkbox mt-0.5 hs-checkbox-group-{{ $designation->id }}">
+                                                                    <label class="hs-checkbox-group-{{ $designation->id }} text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">{{ $designation->design_name }}</label>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="year">Select Year:</label>
+                                                        <select class="form-control" id="year" name="year">
+                                                            <option value="">Select Year</option>
+                                                            @for ($year = date('Y'); $year >= 2010; $year--)
+                                                                <option value="{{ $year }}">{{ $year }}</option>
+                                                            @endfor
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+                                                </div>
+                                                <div class="grid gap-1 space-y-2 lg:grid-cols-3 lg:space-y-0 mt-6">
+                                                    <div class="space-y-2">
+                                                        <label class="ti-form-label mb-0 font-bold">Employee Type<span class="text-red-500">*</span></label>
+                                                        <div class="flex gap-x-6">
+                                                            <div class="flex">
+                                                                <input type="radio" name="employee_type" value="all" class="ti-form-radio"checked>
+                                                                <label for="all" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">All</label>
+                                                            </div>
+                                                            <div class="flex">
+                                                                <input type="radio" name="employee_type" value="Teaching" class="ti-form-radio">
+                                                                <label for="Teaching" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Teaching</label>
+                                                            </div>
+                                                            <div class="flex">
+                                                                <input type="radio" name="employee_type" value="Non-teaching" class="ti-form-radio">
+                                                                <label for="Non-teaching" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Non-teaching</label>
+                                                            </div>
+                                                            <!-- Add more radio buttons if applicable -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Search button -->
+                                                <div class="flex ">
+                                                    <button id="filterBtn" class="bg-blue-500 text-white px-4 mt-10 py-2 rounded-md focus:outline-none hover:bg-blue-700">Search</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            <!-- </div> -->
+
                                     <div class="box">
                                     <div class="box-header">
                                         <div class="flex">
                                         <h5 class="box-title my-auto">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12.0001 8.5L14.1161 13.5875L19.6085 14.0279L15.4239 17.6125L16.7023 22.9721L12.0001 20.1L7.29777 22.9721L8.57625 17.6125L4.3916 14.0279L9.88403 13.5875L12.0001 8.5ZM12.0001 13.707L11.2615 15.4835L9.34505 15.637L10.8051 16.8883L10.3581 18.759L12.0001 17.7564L13.6411 18.759L13.195 16.8883L14.6541 15.637L12.7386 15.4835L12.0001 13.707ZM8.00005 2V11H6.00005V2H8.00005ZM18.0001 2V11H16.0001V2H18.0001ZM13.0001 2V7H11.0001V2H13.0001Z"></path></svg>
                                             Renumeration Head Details</h5>
-                                        <!-- <div class=" block ltr:ml-auto rtl:mr-auto my-auto">
-                                                <button type="button" id="renum_add_btn" class="hs-dropdown-toggle ti-btn ti-btn-primary" data-hs-overlay="#hs-medium-modal">
-                                                
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M4 3H20C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM5 5V19H19V5H5ZM11 11V7H13V11H17V13H13V17H11V13H7V11H11Z" fill="rgba(255,255,255,1)"></path></svg>
-                                                    Add Renumeration Head
-                                                </button>
-            
-                                                <div id="hs-medium-modal" class="hs-overlay hidden ti-modal">
-                                                    <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out md:!max-w-2xl md:w-full m-3 md:mx-auto">
-                                                        <div class="ti-modal-content">
-                                                        <div class="ti-modal-header">
-                                                            <h3 class="ti-modal-title">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M4 3H20C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM5 5V19H19V5H5ZM11 11V7H13V11H17V13H13V17H11V13H7V11H11Z"></path></svg>
-                                                               
-                                                                Add New Renumeration Head
-                                                            </h3>
-                                                            <button type="button" class="hs-dropdown-toggle ti-modal-close-btn"
-                                                                data-hs-overlay="#hs-medium-modal">
-                                                                <span class="sr-only">Close</span>
-                                                                <svg class="w-3.5 h-3.5" width="8" height="8" viewBox="0 0 8 8" fill="none"
-                                                                    xmlns="http://www.w3.org/2000/svg">
-                                                                    <path
-                                                                    d="M0.258206 1.00652C0.351976 0.912791 0.479126 0.860131 0.611706 0.860131C0.744296 0.860131 0.871447 0.912791 0.965207 1.00652L3.61171 3.65302L6.25822 1.00652C6.30432 0.958771 6.35952 0.920671 6.42052 0.894471C6.48152 0.868271 6.54712 0.854471 6.61352 0.853901C6.67992 0.853321 6.74572 0.865971 6.80722 0.891111C6.86862 0.916251 6.92442 0.953381 6.97142 1.00032C7.01832 1.04727 7.05552 1.1031 7.08062 1.16454C7.10572 1.22599 7.11842 1.29183 7.11782 1.35822C7.11722 1.42461 7.10342 1.49022 7.07722 1.55122C7.05102 1.61222 7.01292 1.6674 6.96522 1.71352L4.31871 4.36002L6.96522 7.00648C7.05632 7.10078 7.10672 7.22708 7.10552 7.35818C7.10442 7.48928 7.05182 7.61468 6.95912 7.70738C6.86642 7.80018 6.74102 7.85268 6.60992 7.85388C6.47882 7.85498 6.35252 7.80458 6.25822 7.71348L3.61171 5.06702L0.965207 7.71348C0.870907 7.80458 0.744606 7.85498 0.613506 7.85388C0.482406 7.85268 0.357007 7.80018 0.264297 7.70738C0.171597 7.61468 0.119017 7.48928 0.117877 7.35818C0.116737 7.22708 0.167126 7.10078 0.258206 7.00648L2.90471 4.36002L0.258206 1.71352C0.164476 1.61976 0.111816 1.4926 0.111816 1.36002C0.111816 1.22744 0.164476 1.10028 0.258206 1.00652Z"
-                                                                    fill="currentColor" />
-                                                                </svg>
-                                                            </button>
-                                                            @if(($errors->has('activity')))
-                                                                <script>
-                                                                    //alert(1);
-                                                                    $(window).on('load', function() {
-                                                                    
-                                                                        $('#renum_add_btn').trigger("click");
-                                                                    });      
-                                                                </script>
-                                                            @endif
-                                                        </div>
-                                                        <form action="{{route('ESTB.renumerations.store')}}" method="post">
-                                                            @csrf
-                                                            <div class="ti-modal-body ">
-                                                               
-                                                                <div class="max-w-xs space-y-3">
-                                                                    <label for="with-corner-hint" class="ti-form-label font-bold">Staff Id: </label>
-                                                                    <input type="text" id="staffid" name="staffid" class="ti-form-input" placeholder="staff id">
-                                                                    @if($errors->has('staffid'))
-                                                                        <div class="text-red-700">{{ $errors->first('staffid')}}</div>
-                                                                    @endif
-                                                                    <div id="staffidError" class="error text-red-700"></div>
-                                                                    <label for="with-corner-hint" class="ti-form-label font-bold">Renumeration Head: </label>
-                                                                    <input type="text" id="renumhead" name="renumhead" class="ti-form-input" placeholder="renumeration head">
-                                                                    @if($errors->has('renumhead'))
-                                                                        <div class="text-red-700">{{ $errors->first('renumhead')}}</div>
-                                                                    @endif
-                                                                    <div id="renumheadError" class="error text-red-700"></div>
-                                                                </div>
-                                                        
-                                                            </div>
-                                                            <div class="ti-modal-footer">
-                                                                <button type="button"
-                                                                class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
-                                                                data-hs-overlay="#hs-medium-modal">
-                                                                Close
-                                                                </button>
-                                                                
-                                                                <input type="submit" id="renum_store_add_btn" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Add"/>
-                                                                
-                                                                </div>
-                                                            </form>  
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                        </div>
-                                        </div>-->
-                                    
+                                     
                                         <div class="box-body">
                                         <!-- <div class=" block ltr:ml-auto rtl:mr-auto my-auto"> -->
                                                     <!--For filtering the data as per requirement-->
                                                     
                                             <div class="flex justify-end space-x-4 items-center">
-                                            <button type="button" class="hs-dropdown-toggle bg-green-500 text-white px-4 py-2 text-xs rounded-md focus:outline-none hover:bg-green-600 focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 whitespace-nowrap" onclick="location.href='{{ route('ESTB.renumerations.renumedetails') }}'">
+                                            <!-- <button type="button" class="hs-dropdown-toggle bg-green-500 text-white px-4 py-2 text-xs rounded-md focus:outline-none hover:bg-green-600 focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 whitespace-nowrap" onclick="location.href='{{ route('ESTB.renumerations.renumedetails') }}'">
                                                         Generate Template
-                                                    </button>
+                                                    </button> -->
                                                 <form action="{{ route('import.excel') }}" method="POST" enctype="multipart/form-data" class="flex items-center space-x-2">
                                                     @csrf
                                                     <div class="space-y-8 font-[sans-serif] max-w-md mx-auto">
@@ -159,7 +192,7 @@
                                                     <th scope="col" class="dark:text-white/80">Staff Name</th>
                                                     <th scope="col" class="dark:text-white/80">Department</th>
                                                     <th scope="col" class="dark:text-white/80">Renumeration Head</th>
-                                                    <th scope="col" class="dark:text-white/80">Date of Disbursement</th>
+                                                    <th scope="col" class="dark:text-white/80">Date of Disbursement('d-m-Y')</th>
                                                     <th scope="col" class="dark:text-white/80">Amount</th>
                                                 </tr>
                                             </thead>
@@ -249,8 +282,20 @@
                         // Trigger the click to download
                         link[0].click();
                     }
+                    setTimeout(function() {
+                        window.location.href="{{url('ESTB/renumerations')}}"; // Update this URL to your actual route
+                    }, 1000);
                 });
             });
             </script>
+            <script>
+                $('.select-all').change(function () {
+                    $('input[name="departments[]"]').prop('checked', this.checked);
+                });
+
+                $('.select-all-designation').change(function () {
+                    $('input[name="designations[]"]').prop('checked', this.checked);
+                });
+    </script>
         
 @endsection
