@@ -20,8 +20,11 @@ class NoticeController extends Controller
         $dept_notice = notice::with('department')->get();
         //dd($dept_notice);
         $departments = DB::table('departments')->where('status','active')->get();
-        return view('Principaloffice.ponotice',compact('dept_notice','departments'));
+        $selectedDepartments = range(1, 30);
+        return view('Principaloffice.ponotice',compact('dept_notice','departments','selectedDepartments'));
     }
+
+    
 
     /**
      * Show the form for creating a new resource.

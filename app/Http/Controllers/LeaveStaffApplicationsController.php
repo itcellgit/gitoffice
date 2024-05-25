@@ -27,6 +27,7 @@ class LeaveStaffApplicationsController extends Controller
     public function index()
     {
         //
+        
         $user = Auth::user();
         $staff_id_from_user = staff::where('user_id','=',$user->id)->first();
         $year=Carbon::now()->year;
@@ -35,7 +36,7 @@ class LeaveStaffApplicationsController extends Controller
         $leave_types=leave::select('shortname')->distinct('shortname')->where('max_entitlement','>',0)->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();
         // $leave_types_taken = leave::select('id','shortname')->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();// $query="select * from staff s, leaves l, leave_staff_entitlements lse where s.id=lse.staff_id and l.id=lse.leave_id and lse.status='active' and year=$year";
         // $leave_types_distinct = leave::select('shortname')->distinct('shortname')->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();// $query="select * from staff s, leaves l, leave_staff_entitlements lse where s.id=lse.staff_id and l.id=lse.leave_id and lse.status='active' and year=$year";
-
+        
         $staff_leave_entitlements=staff::join('leave_staff_entitlements','staff_id','=','staff.id')
                                         ->join('leaves','leaves.id','=','leave_staff_entitlements.leave_id')
                                         ->where('user_id',$user->id)

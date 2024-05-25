@@ -322,6 +322,9 @@
                                                                                                     </div>
 
                                                                                                     @foreach ($departments as $department)
+                                                                                                        @php
+                                                                                                            $checked = in_array($department->id, $selectedDepartments) ? 'checked' : '';
+                                                                                                        @endphp
                                                                                                         <div class="flex">
                                                                                                             <input type="checkbox" name="departments[]" value="{{ $department->id }}" {{ $checked }} class="ti-form-checkbox mt-0.5 hs-checkbox-group-{{ $department->id }}">
                                                                                                             <label class="hs-checkbox-group-{{ $department->id }} text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">{{ $department->dept_name }}</label>
@@ -332,6 +335,7 @@
                                                                                             </div> 
                                                                                             
                                                                                         </div>
+                                                                                        
                                                                                     </div>
                                                                                     <div class="ti-modal-footer">
                                                                                         <button type="button"
@@ -404,7 +408,6 @@
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
             crossorigin="anonymous">
         </script>
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/dataTables.tailwindcss.min.js"></script>
@@ -442,9 +445,8 @@
                     if(po_noticetitle == ''){
                         $('#po_noticetitleError').text('Notice Title is missing');
                         flag = true;
-                    }else if (!/^[a-zA-Z\s]+$/.test(po_noticetitle.trim())){
-                        $('#po_noticetitleError').text('Please fill the correct value');
-                        flag = true;
+                    }else if {
+                       
                     }
                     
                     if (po_noticedescription.trim() == '') {

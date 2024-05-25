@@ -38,6 +38,7 @@ class ReplyController extends Controller
         $postticket->description = $request->description;
 
         // Update attachment if provided
+
         if($request->file('attachment'))
         {
             $extension=$request->file('attachment')->extension();
@@ -51,17 +52,40 @@ class ReplyController extends Controller
             //$ticket->update(['attachment'=>$filename]);
             $postticket->attachment = $filename;
         }
-             $postticket->save();
 
-             return redirect()->route('ticket.show', ['ticket' => $ticket->id])
-             ->with('success', 'Ticket post saved successfully.');
+        // multiple images
+        // $attachments = $request->file('attachment');
+        // if ($attachments) 
+        // {
+        //     $file_data = [];
 
+        // $attachments = is_array($attachments) ? $attachments : [$attachments];
+        // foreach ($attachments as $attachment) 
+        // {
+        //     $extension = $attachment->extension();
+        //     $filename = Str::random(25) . '.' . $extension;
+        //     $path = "attachment/$filename";
+        //     Storage::disk('public')->put($path, file_get_contents($attachment));
+        //     $file_data[] = $filename;
+        // }
+        // $ticket->update
+        // ([
+        //     'attachment' => count($file_data) === 1 ? $file_data[0] : json_encode($file_data)
+        // ]);
+        // }
+        //  $postticket->save();
+
+         return redirect()->route('ticket.show', ['ticket' => $ticket->id])
+         ->with('success', 'postticket saved successfully.');
+    }
+        
+    
         //      $postticket = post_ticket::where('ticket_id', $ticket->id)->get();
 
             
         //  return view('Ticketing.showticket',compact('ticket','postticket'));
 
-    }
+    
 
     public function update(Updatepost_ticketRequest $request, ticket $ticket)
     {

@@ -66,7 +66,7 @@ class GenetareAnnualIncrementListController extends Controller
         $data[$st->id]['increment']=898;
         $data[$st->id]['gross']=654545;
       }
-      dd($data[139]['newbasic']);
+    //   dd($data[139]['newbasic']);
 
         return view('ESTB.Generateannualincrement.index',compact(['staff']));
     }
@@ -163,7 +163,7 @@ class GenetareAnnualIncrementListController extends Controller
             $status=1;
         }
         else{
-            DB::rollBack();
+            //DB::rollBack();
             $status=0;
         }
         return redirect('ESTB/staff')->with('status',$status);

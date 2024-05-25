@@ -36,6 +36,10 @@ class staff extends Model
     {
         return $this->belongsToMany(department::class)->wherePivot('status','active')->withPivot('id','start_date','end_date','reason','status','gcr')->orderByPivot('start_date','desc');
     }
+    public function department_list():BelongsToMany
+    {
+        return $this->belongsToMany(department::class)->pluck('name')->implode(',');
+    }
 
     //fetch staff designations
     public function designations(): BelongsToMany

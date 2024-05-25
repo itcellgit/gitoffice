@@ -350,7 +350,7 @@
                                                 
                                                 
                                                 <div class="hs-tooltip ti-main-tooltip">
-                                                <form action="{{ route('ESTB.payscales.allowances.destory',$all->id) }}" method="post">
+                                                <form action="{{ route('ESTB.payscales.allowances.destroy',$all->id) }}" method="post">
                                                    
                                                    <button onclick="return confirm('Are you Sure')"
                                                     class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">

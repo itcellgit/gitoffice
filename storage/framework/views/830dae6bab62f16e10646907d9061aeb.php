@@ -122,7 +122,7 @@
                                                         <th>Entitled</th>
                                                         <?php $__currentLoopData = $staff_leave_entitlements; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $staff_leave): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                                                                    <td><?php echo e($staff_leave->entitled_curr_year); ?></td>
+                                                                    <td><?php echo e($staff_leave->entitled_curr_year+$staff_leave->accumulated); ?></td>
 
                                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                         <td></td>
@@ -973,17 +973,17 @@
                    },
                    dateClick: function(info) {
 
-                       console.log(info);
+                       //console.log(info);
                      //   alert('Current view: ' + info.view.type);
 
                         $('#leave_apply_modal').trigger('click');
                         //alert('leave modal active');
-                        // $('#from_date').val(info.dateStr);
-                        // flatpickr('#from_date', {
-                        //     "minDate": new Date(info.dateStr),
-                        //     "maxDate": new Date(info.dateStr),
+                         $('#from_date').val(info.dateStr);
+                        flatpickr('#from_date', {
+                            "minDate": new Date(info.dateStr),
+                            "maxDate": new Date(info.dateStr),
 
-                        // });
+                        });
                         $('#type').focus();
                         flatpickr('#to_date', {
                             "minDate": new Date(info.dateStr),

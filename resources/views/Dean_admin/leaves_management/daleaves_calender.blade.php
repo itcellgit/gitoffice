@@ -540,8 +540,10 @@
                     },
                     eventClick: function(info) {
                         ///alert('Event: ' + info.event.start);
-                        //console.log(info.event.start);
+                        //console.log(info.event.extendedProps.leave_id);
                         var Clickeddate = info.event.start;
+                        var leave_name = info.event.extendedProps.leave_name;
+                        //console.log(leave_name);
                         $('#view_leave_modal').trigger('click');
                         // $('.event_title').html(info.event.title+' on '+ Clickeddate.getDate()+"/"+Clickeddate.getMonth()+"/"+Clickeddate.getFullYear());
                         // $('#view_leave').css('z-index', 9999);
@@ -563,6 +565,7 @@
                             method: 'GET',
                             data: {
                                 date: clicked_date,
+                              
                                 _token : '{{csrf_token()}}' // Pass the clicked date to the server
                             },
                             success: function(response) {
@@ -596,6 +599,7 @@
                             method: 'GET',
                             data: {
                                 date: clicked_date,
+                                leave_name: leave_name,
                                 _token : '{{csrf_token()}}' // Pass the clicked date to the server
                             },
                             success: function(response) {

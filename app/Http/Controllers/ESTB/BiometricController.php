@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\staff;
 
+
 class BiometricController extends Controller
 {
     public function biometric_data(Request $request)
@@ -32,47 +33,47 @@ class BiometricController extends Controller
         // Get current month and year
 
         // Retrieve data from the 'staff' table in the 'mysql' connection
-    $staffData = staff::with('activedepartments')->get();
+        $staffData = staff::with('activedepartments')->get();
 
 
    
 
-    // Retrieve data from the 'employees' table in the 'mysql2' connection
-    $employeesData = DB::connection('mysql2')->table('employees')->get();
+            // Retrieve data from the 'employees' table in the 'mysql2' connection
+            $employeesData = DB::connection('mysql2')->table('employees')->get();
 
-   // Perform the join operation in PHP code
-$biometricData = [];
-foreach ($staffData as $staff) {
-    foreach ($employeesData as $employee) {
-        if ($staff->EmployeeCode === $employee->EmployeeCode) {
-            $biometricData[] = [
-                'id' => $staff->id,
-                'full_name' => $staff->fname . ' ' . $staff->mname . ' ' . $staff->lname,
-                'EmployeeCode' => $employee->EmployeeCode,
-                'EmployeeName' => $employee->EmployeeName
-            ];
-            // No need to break here, as there might be multiple matches
-        }
-    }
-}
+        // Perform the join operation in PHP code
+            $biometricData = [];
+            foreach ($staffData as $staff) {
+                foreach ($employeesData as $employee) {
+                    if ($staff->EmployeeCode === $employee->EmployeeCode) {
+                        $biometricData[] = [
+                            'id' => $staff->id,
+                            'full_name' => $staff->fname . ' ' . $staff->mname . ' ' . $staff->lname,
+                            'EmployeeCode' => $employee->EmployeeCode,
+                            'EmployeeName' => $employee->EmployeeName
+                        ];
+                        // No need to break here, as there might be multiple matches
+                    }
+                }
+            }
 
-// Retrieve data from the 'mysql' database (default connection) if 'staff' table is there
-$staffData = staff::with('activedepartments')->get();
+            // Retrieve data from the 'mysql' database (default connection) if 'staff' table is there
+            $staffData = staff::with('activedepartments')->get();
 
-            // Retrieve data from the 'mysql2' database
-            $externalData = DB::connection('mysql2')
-                ->table('DeviceLogs_' . $currentMonth . '_' . $currentYear)
-                ->select(
-                    'DeviceLogs_' . $currentMonth . '_' . $currentYear . '.logDate as logDate',
-                    'devices.DeviceFname as DeviceName',
-                    'employees.EmployeeName as EmployeeName',
-                    'employees.EmployeeCode as EmployeeCode'
-                )
-                ->join('devices', 'DeviceLogs_' . $currentMonth . '_' . $currentYear . '.DeviceId', '=', 'devices.DeviceId')
-                ->join('employees', 'DeviceLogs_' . $currentMonth . '_' . $currentYear . '.EmployeeCode', '=', 'employees.EmployeeCode')
-                ->orderBy('DeviceLogs_' . $currentMonth . '_' . $currentYear . '.logDate', 'desc')
-                ->orderBy('employees.EmployeeName')
-                ->get();
+                // Retrieve data from the 'mysql2' database
+                $externalData = DB::connection('mysql2')
+                    ->table('DeviceLogs_' . $currentMonth . '_' . $currentYear)
+                    ->select(
+                        'DeviceLogs_' . $currentMonth . '_' . $currentYear . '.logDate as logDate',
+                        'devices.DeviceFname as DeviceName',
+                        'employees.EmployeeName as EmployeeName',
+                        'employees.EmployeeCode as EmployeeCode'
+                    )
+                    ->join('devices', 'DeviceLogs_' . $currentMonth . '_' . $currentYear . '.DeviceId', '=', 'devices.DeviceId')
+                    ->join('employees', 'DeviceLogs_' . $currentMonth . '_' . $currentYear . '.EmployeeCode', '=', 'employees.EmployeeCode')
+                    ->orderBy('DeviceLogs_' . $currentMonth . '_' . $currentYear . '.logDate', 'desc')
+                    ->orderBy('employees.EmployeeName')
+                    ->get();
 
             // Joining data in PHP
             $combinedData = [];
@@ -104,15 +105,23 @@ $staffData = staff::with('activedepartments')->get();
                 }
             }
            // dd($combinedData);
+
+           //missing punch data
+           $missingEmployeesBio = staff::where('EmployeeCode', 0)
+                ->select('id', DB::raw("CONCAT(fname, ' ', COALESCE(mname, ''), ' ', lname) AS full_name"))
+                ->get();
+         
            
         // Filter entry and exit logs
-        $entry_exit = $this->filterEntryExitLogs($currentMonth, $currentYear, $date, $externalData);
-        $employeePunchLogs = $entry_exit['employeePunchLogs']; 
+            $entry_exit = $this->filterEntryExitLogs($currentMonth, $currentYear, $date, $externalData);
+            $employeePunchLogs = $entry_exit['employeePunchLogs']; 
 
-      // dd($employeePunchLogs[728][0]->LogDate);
-        // Return the view with the retrieved data
-        return view('ESTB.Biometric.biometric_data', compact('combinedData', 'entry_exit', 'employeePunchLogs'));
+        // dd($employeePunchLogs[728][0]->LogDate);
+            // Return the view with the retrieved data
+            return view('ESTB.Biometric.biometric_data', compact('combinedData', 'entry_exit', 'employeePunchLogs','missingEmployeesBio'));
     }
+
+   
 
     public function filterEntryExitLogs($currentMonth, $currentYear, $logDate, $externalData)
     {
