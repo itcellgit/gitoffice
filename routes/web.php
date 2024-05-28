@@ -397,7 +397,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
 
 
 
-//festival advance controller
+    //festival advance controller
     //Route::get('/ESTB/FestivalAdvance',[festivaladvanceController::class,'index'])->name('ESTB.festivaladvance.index');
     Route::post('/ESTB/staff/{staff}/festival_advances/create',[festivaladvanceController::class,'store'])->name('ESTB.staff.festivaladvance.store');
     Route::patch('/ESTB/staff/{staff}/festival_advances/{festival_advance}/update',[festivaladvanceController::class,'update'])->name('ESTB.festivaladvance.update');
@@ -439,21 +439,9 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     //Route::get('/ESTB/designation-filtering',[DesignationController::class,'designationsDataSource']);
 
     // Grading routes
-
-    Route::get('ESTB/Grading/autonomous_a_grading', [GradeMappingController::class, 'index'])->name('ESTB.Grading.autonomous_a_grading');
-    Route::post('ESTB/Grading/autonomous_a_grading/create', [GradeMappingController::class, 'store'])->name('ESTB.Grading.autonomous_a_grading.store');
-    Route::delete('ESTB/Grading/autonomous_a_grading/{grade_mapping}',[GradeMappingController::class,'destroy'])->name('ESTB.Grading.autonomous_a_grading.destroy');
-    Route::patch('ESTB/Grading/autonomous_a_grading/{grade_mapping}',[GradeMappingController::class, 'update'])->name('ESTB.Grading.autonomous_a_grading.update');
-
-    Route::get('ESTB/autonomous_allowance',[AllowanceStaffController::class,'index'])->name('ESTB.autonomous_allowance');
-    Route::post('ESTB/autonomous_allowance',[AllowanceStaffController::class,'create'])->name('ESTB.autonomous_allowance.create');
+    Route::get('/ESTB/autonomous_allowance',[AllowanceStaffController::class,'index'])->name('ESTB.autonomous_allowance');
+    Route::post('/ESTB/autonomous_allowance',[AllowanceStaffController::class,'create'])->name('ESTB.autonomous_allowance.create');
     Route::post('/ESTB/autonomous_allowance/create', [AllowanceStaffController::class, 'store'])->name('import.excel');
-
-    Route::post('grading-staff', [GradingStaffController::class, 'index'])->name('grading.staff.index');
-    Route::post('/grading-staff/store', [GradingStaffController::class, 'store'])->name('grading.staff.store');
-    Route::get('ESTB/Grading/gradetemplate', [GradingStaffController::class, 'showGradeTemplate'])->name('ESTB.Grading.gradetemplate');
-    Route::post('/grading-staff/update', [GradingStaffController::class, 'update'])->name('grading.staff.update');
-
 
     // Generate annual increment list controller
     Route::get('/ESTB/Generateannualincrement', [GenetareAnnualIncrementListController::class, 'index'])->name('aanualincrement.staff.index');

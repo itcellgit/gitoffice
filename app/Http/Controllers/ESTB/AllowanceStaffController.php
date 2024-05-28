@@ -30,7 +30,11 @@ class AllowanceStaffController extends Controller
     {
         $year = request('year');
         $month = request('month');
-
+        $staff=staff::join('allowance_staff','allowance_staff.staff_id','=','staff.id')
+        ->where('year',$year)
+        ->where('month',$month)
+        ->get();
+        dd($staff);
         $staff = Staff::with(['departments' => function ($query) {
             $query->orderBy('id');
         }])
