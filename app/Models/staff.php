@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\User;
 use App\Models\employee_type;
+use App\Models\annual_increment;
+use App\Models\HOD\exam_section_isuues;
+use App\Models\student_issue;
+
 
 class staff extends Model
 {
@@ -161,6 +165,14 @@ class staff extends Model
         return $this->belongsToMany(qualification::class)->withPivot('id','board_university','grade','yop','status')->orderByPivot('yop','desc');
     }
 
+    // public function qualification_staff():BelongsToMany
+    // {
+    //     return $this->belongsToMany(qualification_staff::class);
+    // }
+
+    
+   
+
     /* professional activity attended*/
     public function professional_activity_attendee():BelongsToMany
     {
@@ -290,6 +302,29 @@ class staff extends Model
 
     public function allowance():BelongsToMany
     {
-        return $this->belongsToMany(allowance::class)->withPivot('id','staff_id','allowance_id','year','month','status');
+        return $this->belongsToMany(allowance::class,'allowance_staff')->withPivot('id','staff_id','allowance_id','year','month','status');
+    }
+
+    public function staffTeachingPayscale()
+    {
+        return $this->hasMany(StaffTeachingPayscale::class);
+
+    }
+
+    public function exam_section_isuues():HasMany
+    {
+        return $this->hasMany(exam_section_isuues::class);
+    }
+
+    public function issue_timeline(): BelongsTo
+    {
+        return $this->belongsTo(issue_timeline::class);
+    }
+
+    public function ntissue_timeline(): BelongsTo
+    {
+        return $this->belongsTo(ntissue_timeline::class);
     }
 }
+
+

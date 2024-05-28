@@ -259,6 +259,7 @@
                                     <p class="flex items-center font-semibold font-bold text-primary hover:text-primary dark:text-primary truncate">
                                         Total Staff : <span class="text-black  text-lg">{{ $staffCount }}</span>
                                     </p>
+                                    
 
                                     <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
                                         <div class="box">

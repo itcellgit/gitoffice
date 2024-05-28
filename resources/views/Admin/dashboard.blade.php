@@ -18,10 +18,9 @@
                                 </div>
                                 <ol class="flex items-center whitespace-nowrap min-w-0">
                                     <li class="text-sm">
-                                    <a class="flex items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="javascript:void(0);">
-                                       Dashboard
-                                        <i class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
-                                    </a>
+                                        <a class="flex items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('Admin.users')}}">
+                                            User Login
+                                        </a>
                                     </li>
                             
                                 </ol>
@@ -41,13 +40,14 @@
                                         <div class="flex-1">
                                             <p class="text-sm font-bold">Total Employee</p>
                                             <div class="flex justify-between items-center">
-                                            <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white"></h5>
+                                            {{-- <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white"></h5> --}}
+                                            <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">{{$totalemployee}}</h5>
                                             <span class="text-success badge bg-success/20 rounded-sm p-1"><i
                                                 class="ti ti-trending-up leading-none"></i> +1.03%</span>
                                             </div>
-                                            <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('ESTB.staff')}}">
+                                            {{-- <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('ESTB.staff')}}">
                                                     view
-                                            </a>
+                                            </a> --}}
                                         </div>
                                         </div>
                                     </div>
@@ -64,13 +64,14 @@
                                         <div class="flex-1">
                                             <p class="text-sm font-bold">Teaching Employee</p>
                                             <div class="flex justify-between items-center">
-                                            <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white"></h5>
+                                            {{-- <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white"></h5> --}}
+                                            <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">{{$totalteachingEmployees}}</h5>
                                             <span class="text-success badge bg-success/20 rounded-sm p-1"><i
                                                 class="ti ti-trending-up leading-none"></i> +0.36%</span>
                                             </div>
-                                            <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('ESTB.staff')}}">
+                                            {{-- <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('ESTB.staff')}}">
                                                     view
-                                            </a>
+                                            </a> --}}
                                         </div>
                                         </div>
                                     </div>
@@ -87,13 +88,13 @@
                                         <div class="flex-1">
                                             <p class="text-sm font-bold">Non-Teaching Employee</p>
                                             <div class="flex justify-between items-center">
-                                            <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white"></h5>
+                                            <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">{{$totalnonTeachingEmployees}}</h5>
                                             <span class="text-success badge bg-sucsess/20 rounded-sm p-1"><i
                                                 class="ti ti-trending-down leading-none"></i> -1.28%</span>
                                             </div>
-                                            <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('ESTB.staff')}}">
+                                            {{-- <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('ESTB.staff')}}">
                                                     view
-                                            </a>
+                                            </a> --}}
                                         </div>
                                         </div>
                                     </div>
@@ -158,269 +159,132 @@
                                     </div>
                                 </div>
                                 <div class="col-span-12 md:col-span-6 xxl:col-span-3">
-                                    <div class="box">
+                                    {{-- <div class="box"> --}}
+                                <div class="box" style="height: 450px; overflow-y: auto;">
+
                                     <div class="box-header justify-between flex">
                                         <div class="box-title my-auto">
                                         Upcoming Events
                                         </div>
                                         <div>
-                                        <button type="button" aria-label="button"
-                                            class="ti-btn ti-btn-soft-primary ltr:mr-2 rtl:ml-2 py-1 m-0">View All</button>
+                                            <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('Admin.adminevents.index')}}">
+                                                View All
+                                            </a>
                                         </div>
                                     </div>
                                     <div class="box-body">
                                         <div class="overflow-x-auto">
-                                        <ul class="list-unstyled timeline-widget mb-0">
-                                            <li class="ti-list-group border-0 p-0 w-full timeline-widget-list">
-                                            <div class="flex w-full">
-                                                <div class="ltr:mr-12 rtl:ml-12 text-center">
-                                                <span class="block text-sm font-semibold">02</span>
-                                                <span class="block text-xs text-gray-500 dark:text-white/70">Mon</span>
-                                                </div>
-                                                <div class="flex flex-wrap flex-auto items-center justify-between">
-                                                <div>
-                                                    <a href="javascript:void(0);">
-                                                    <p class="mb-1 timeline-widget-content text-sm text-wrap !max-w-[15rem] truncate">You have
-                                                        an announcement - Ipsum Est Diam Eirmod</p>
-                                                    <p class="mb-0 text-xs leading-none text-gray-500 dark:text-white/70">10:00AM<span
-                                                        class="badge bg-primary/10 ltr:ml-2 rtl:mr-2 py-1 text-xs text-primary rounded-sm">Announcement</span>
-                                                    </p>
-                                                    </a>
-                                                </div>
-                                                <div class="hs-dropdown ti-dropdown">
-                                                    <a aria-label="anchor" href="javascript:void(0);"
-                                                    class="text-lg leading-none text-gray-500">
-                                                    <i class="ri-more-2-line"></i>
-                                                    </a>
-                                                    <div class="hs-dropdown-menu ti-dropdown-menu hidden">
-                                                    <a class="ti-dropdown-item" href="javascript:void(0);">
-                                                        Action
-                                                    </a>
-                                                    <a class="ti-dropdown-item" href="javascript:void(0);">
-                                                        Another action
-                                                    </a>
-                                                    <a class="ti-dropdown-item" href="javascript:void(0);">
-                                                        Something else here
-                                                    </a>
-                                                    </div>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            </li>
-                                            <li class="ti-list-group border-0 p-0 w-full timeline-widget-list">
-                                            <div class="flex w-full">
-                                                <div class="ltr:mr-12 rtl:ml-12 text-center">
-                                                <span class="block text-sm font-semibold">15</span>
-                                                <span class="block text-xs text-gray-500 dark:text-white/70">Sun</span>
-                                                </div>
-                                                <div class="flex flex-wrap flex-auto items-center justify-between">
-                                                <div>
-                                                    <a href="javascript:void(0);">
-                                                    <p class="mb-1 truncate timeline-widget-content text-sm text-wrap !max-w-[15rem]">National
-                                                        holiday - Vero Jayanti</p>
-                                                    <p class="mb-0 text-xs leading-none text-gray-500 dark:text-white/70"><span
-                                                        class="badge bg-warning/10 ltr:ml-2 rtl:mr-2 py-1 text-xs text-warning rounded-sm">Holiday</span>
-                                                    </p>
-                                                    </a>
-                                                </div>
-                                                <div class="hs-dropdown ti-dropdown">
-                                                    <a aria-label="anchor" href="javascript:void(0);"
-                                                    class="text-lg leading-none text-gray-500">
-                                                    <i class="ri-more-2-line"></i>
-                                                    </a>
-                                                    <div class="hs-dropdown-menu ti-dropdown-menu hidden">
-                                                    <a class="ti-dropdown-item" href="javascript:void(0);">
-                                                        Action
-                                                    </a>
-                                                    <a class="ti-dropdown-item" href="javascript:void(0);">
-                                                        Another action
-                                                    </a>
-                                                    <a class="ti-dropdown-item" href="javascript:void(0);">
-                                                        Something else here
-                                                    </a>
-                                                    </div>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            </li>
-                                            <li class="ti-list-group border-0 p-0 w-full timeline-widget-list">
-                                            <div class="flex w-full">
-                                                <div class="ltr:mr-12 rtl:ml-12 text-center">
-                                                <span class="block text-sm font-semibold">23</span>
-                                                <span class="block text-xs text-gray-500 dark:text-white/70">Mon</span>
-                                                </div>
-                                                <div class="flex flex-wrap flex-auto items-center justify-between">
-                                                <div>
-                                                    <a href="javascript:void(0);">
-                                                    <p class="mb-1 truncate timeline-widget-content text-sm text-wrap !max-w-[15rem]">John pup
-                                                        birthday - Team Member</p>
-                                                    <p class="mb-4 text-xs leading-none text-gray-500 dark:text-white/70">09:00AM<span
-                                                        class="badge bg-success/10 ltr:ml-2 rtl:mr-2">Birthday</span></p>
-                                                    <p class="mb-1 truncate timeline-widget-content text-sm text-wrap !max-w-[15rem]">Amet sed
-                                                        no dolor kasd - Et Dolores Tempor Erat</p>
-                                                    <p class="mb-0 text-xs leading-none text-gray-500 dark:text-white/70">04:00PM<span
-                                                        class="badge bg-primary/10 ltr:ml-2 rtl:mr-2 py-1 text-xs text-primary rounded-sm">Announcement</span>
-                                                    </p>
-                                                    </a>
-                                                </div>
-                                                <div class="hs-dropdown ti-dropdown">
-                                                    <a aria-label="anchor" href="javascript:void(0);"
-                                                    class="text-lg leading-none text-gray-500">
-                                                    <i class="ri-more-2-line"></i>
-                                                    </a>
-                                                    <div class="hs-dropdown-menu ti-dropdown-menu hidden">
-                                                    <a class="ti-dropdown-item" href="javascript:void(0);">
-                                                        Action
-                                                    </a>
-                                                    <a class="ti-dropdown-item" href="javascript:void(0);">
-                                                        Another action
-                                                    </a>
-                                                    <a class="ti-dropdown-item" href="javascript:void(0);">
-                                                        Something else here
-                                                    </a>
-                                                    </div>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            </li>
-                                            <li class="ti-list-group border-0 p-0 w-full timeline-widget-list">
-                                            <div class="flex w-full">
-                                                <div class="ltr:mr-12 rtl:ml-12 text-center">
-                                                <span class="block text-sm font-semibold">31</span>
-                                                <span class="block text-xs text-gray-500 dark:text-white/70">Tue</span>
-                                                </div>
-                                                <div class="flex flex-wrap flex-auto items-center justify-between">
-                                                <div>
-                                                    <a href="javascript:void(0);">
-                                                    <p class="mb-1 truncate timeline-widget-content text-sm text-wrap !max-w-[15rem]">National
-                                                        Holiday - Dolore Ipsum</p>
-                                                    <p class="mb-0 text-xs leading-none text-gray-500 dark:text-white/70"><span
-                                                        class="badge bg-warning/10 ltr:ml-2 rtl:mr-2 py-1 text-xs text-warning rounded-sm">Holiday</span>
-                                                    </p>
-                                                    </a>
-                                                </div>
-                                                <div class="hs-dropdown ti-dropdown">
-                                                    <a aria-label="anchor" href="javascript:void(0);"
-                                                    class="text-lg leading-none text-gray-500">
-                                                    <i class="ri-more-2-line"></i>
-                                                    </a>
-                                                    <div class="hs-dropdown-menu ti-dropdown-menu hidden">
-                                                    <a class="ti-dropdown-item" href="javascript:void(0);">
-                                                        Action
-                                                    </a>
-                                                    <a class="ti-dropdown-item" href="javascript:void(0);">
-                                                        Another action
-                                                    </a>
-                                                    <a class="ti-dropdown-item" href="javascript:void(0);">
-                                                        Something else here
-                                                    </a>
-                                                    </div>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            </li>
-                                        </ul>
+                                            <ul class="list-unstyled timeline-widget mb-0">
+                                                @foreach ($deptevent as $event)
+                                                    <li class="ti-list-group border-0 p-0 w-full timeline-widget-list">
+                                                        <div class="flex w-full">
+                                                            <div class="ltr:mr-12 rtl:ml-12 text-center">
+                                                                <span class="block text-sm font-semibold">{{ \Carbon\Carbon::parse($event->start_date)->format('d M') }}</span>
+                                                                {{-- <span class="block text-xs text-gray-500 dark:text-white/70">{{ \Carbon\Carbon::parse($event->to_date)->format('d M') }}</span> --}}
+                                                            </div>
+                                                            <div class="flex flex-wrap flex-auto items-center justify-between w-full">
+                                                                <div class="flex-1">
+                                                                    <a href="javascript:void(0);">
+                                                                        <p class="mb-1 timeline-widget-content text-sm text-wrap !max-w-[15rem] font-semibold">{{ $event->event_name }}</p>
+                                                                        <p class="mb-0 text-xs leading-none text-gray-500 dark:text-white/70">{{ \Carbon\Carbon::parse($event->start_date)->format('h:i A') }}<span
+                                                                            class="badge bg-primary/10 ltr:ml-2 rtl:mr-2 py-1 text-xs text-primary rounded-sm">{{ $event->organizers }}</span>
+                                                                            {{-- <br> --}}
+                                                                            {{-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="inline-block">
+                                                                                <path d="M11 4V2H13V4H19C19.5523 4 20 4.44772 20 5V10C20 10.5523 19.5523 11 19 11H13V13H17C17.5523 13 18 13.4477 18 14V19C18 19.5523 17.5523 20 17 20H13V22H11V20H7C6.44772 20 6 19.5523 6 19V14C6 13.4477 6.44772 13 7 13H11V11H5C4.44772 11 4 10.5523 4 10V5C4 4.44772 4.44772 4 5 4H11Z"></path>
+                                                                            </svg> --}}
+
+                                                                            <td class="font-medium space-x-2 rtl:space-x-reverse">
+                                                                                <div class="hs-tooltip ti-main-tooltip text-center">
+                                                                                    <button data-hs-overlay="#image_view_modal"
+                                                                                        class="hs-dropdown-toggle m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M21 3C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H21ZM20 5H4V19H20V5ZM18 15V17H6V15H18Z"></path></svg>
+                                                                                        <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700" role="tooltip">image</span>
+                                                                                    </button>
+                                                                                    <div id="image_view_modal" class="hs-overlay hidden ti-modal">
+                                                                                        <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out lg:!max-w-4xl lg:w-full m-3 md:mx-auto">
+                                                                                            <div class="ti-modal-content">
+                                                                                                <div class="ti-modal-header">
+                                                                                                    IMAGE VIEW
+                                                                                                </div>
+                                                                                                <div class="ti-modal-body">
+                                                                                                    <img src="{{ asset('storage/attachments/' . $event->attachment) }}" alt="Event attachment">
+                                                                                                </div>
+                                                                                            
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+
+                                                                            <br>
+                                                                            <h2><span class="text-green-600">Location:</span> {{ $event->location }}</h2>
+                                                                        </p>
+                                                                    </a>
+                                                                        {{-- {{ $event->event_website }} --}}
+                                                                </div>
+                                                                <div class="hs-dropdown ti-dropdown">
+                                                                    <a aria-label="anchor" href="javascript:void(0);" class="text-lg leading-none text-gray-500">
+                                                                        <i class="ri-more-2-line"></i>
+                                                                    </a>
+                                                                    <div class="hs-dropdown-menu ti-dropdown-menu hidden">
+                                                                        <a class="ti-dropdown-item" href="javascript:void(0);">
+                                                                            Action
+                                                                        </a>
+                                                                        <a class="ti-dropdown-item" href="javascript:void(0);">
+                                                                            Another action
+                                                                        </a>
+                                                                        <a class="ti-dropdown-item" href="javascript:void(0);">
+                                                                            Something else here
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                            
                                         </div>
                                     </div>
                                     </div>
                                 </div>
-                                <div class="col-span-12 md:col-span-6 xxl:col-span-3">
-                                    <div class="box">
+                               <!--Notice Board-->
+                               <div class="col-span-12 md:col-span-6 xxl:col-span-3">
+                                <div class="box" style="height: 450px; overflow-y: auto;">
                                     <div class="box-header justify-between flex">
                                         <div class="box-title my-auto">
                                         Notice Board
                                         </div>
                                         <div>
-                                        <button type="button" aria-label="button"
-                                            class="ti-btn ti-btn-soft-primary ltr:mr-2 rtl:ml-2 py-1 m-0">View All</button>
+                                            <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('Admin.adminnotice.index')}}">
+                                                View All
+                                            </a>
                                         </div>
                                     </div>
                                     <div class="box-body">
                                         <ul class="list-unstyled mb-0">
-                                        <li class="ti-list-group mb-6 border-0 p-0 w-full">
-                                            <div class="flex border-0">
-                                            <div class="ltr:mr-3 rtl:ml-3">
-                                                <div class="calendar-icon icons">
-                                                <div class="avatar bg-primary/20 text-primary text-sm rounded-sm text-center p-1.5 leading-none">
-                                                    <span class="block mb-1">10</span>
-                                                    <span class="block">April</span>
+                                        @foreach ($dept_notice as $dn)
+                                            <li class="ti-list-group mb-6 border-0 p-0 w-full">
+                                                <div class="flex border-0">
+                                                    <div class="ltr:mr-3 rtl:ml-3">
+                                                        <div class="calendar-icon icons">
+                                                        <div class="avatar bg-primary/20 text-primary text-sm rounded-sm text-center p-1.5 leading-none">
+                                                            <span class="block mb-1">{{ \Carbon\Carbon::parse($dn->date)->format('d M') }}</span>
+                                                            {{-- <span class="block">April</span> --}}
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ltr:ml-1 rtl:mr-1 my-auto">
+                                                        <div class="font-semibold text-sm text-gray-800 dark:text-white">{{$dn->title}}</div> 
+                                                        <small class="text-xs font-normal text-gray-500 dark:text-white/70">{{$dn->description}}...</small>
+                                                    </div>
                                                 </div>
-                                                </div>
-                                            </div>
-                                            <div class="ltr:ml-1 rtl:mr-1 my-auto">
-                                                <div class="font-semibold text-sm text-gray-800 dark:text-white">Board meeting Completed</div> <small class="text-xs font-normal text-gray-500 dark:text-white/70">attend the
-                                                company mangers...</small>
-                                            </div>
-                                            </div>
-                                        </li>
-                                        <li class="ti-list-group mb-6 border-0 p-0 w-full">
-                                            <div class="flex border-0">
-                                            <div class="ltr:mr-3 rtl:ml-3">
-                                                <div class="calendar-icon icons">
-                                                <div class="avatar bg-info/20 text-info text-sm rounded-sm text-center p-1.5 leading-none">
-                                                    <span class="block mb-1">07</span>
-                                                    <span class="block">April</span>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div class="ltr:ml-1 rtl:mr-1 my-auto">
-                                                <div class="font-semibold text-sm text-gray-800 dark:text-white">Good Friday</div>
-                                                <small class="text-xs font-normal text-gray-500 dark:text-white/70">participate the all employess</small>
-                                            </div>
-                                            </div>
-                                        </li>
-                                        <li class="ti-list-group mb-6 border-0 p-0 w-full">
-                                            <div class="flex border-0">
-                                            <div class="ltr:mr-3 rtl:ml-3">
-                                                <div class="calendar-icon icons">
-                                                <div class="avatar bg-secondary/20 text-secondary text-sm rounded-sm text-center p-1.5 leading-none">
-                                                    <span class="block mb-1">16</span>
-                                                    <span class="block">April</span>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div class="ltr:ml-1 rtl:mr-1 my-auto">
-                                                <div class="font-semibold text-sm text-gray-800 dark:text-white">Updated the Company Policy</div>
-                                                <small class="text-xs font-normal text-gray-500 dark:text-white/70">some changes &amp; add the terms &amp; conditions</small>
-                                            </div>
-                                            </div>
-                                        </li>
-                                        <li class="ti-list-group mb-6 border-0 p-0 w-full">
-                                            <div class="flex border-0">
-                                            <div class="ltr:mr-3 rtl:ml-3">
-                                                <div class="calendar-icon icons">
-                                                <div class="avatar bg-warning/20 text-warning text-sm rounded-sm text-center p-1.5 leading-none">
-                                                    <span class="block mb-1">20</span>
-                                                    <span class="block">April</span>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div class="ltr:ml-1 rtl:mr-1 my-auto">
-                                                <div class="font-semibold text-sm text-gray-800 dark:text-white">Office Timings Changed</div>
-                                                <small class="text-xs font-normal text-gray-500 dark:text-white/70">this effetct after May 01st 9:00 Am To 5:00 Pm</small>
-                                            </div>
-                                            </div>
-                                        </li>
-                                        <li class="ti-list-group mb-0 border-0 p-0 w-full">
-                                            <div class="flex border-0">
-                                            <div class="ltr:mr-3 rtl:ml-3">
-                                                <div class="calendar-icon icons">
-                                                <div class="avatar bg-danger/20 text-danger text-sm rounded-sm text-center p-1.5 leading-none">
-                                                    <span class="block mb-1">01</span>
-                                                    <span class="block">May</span>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div class="ltr:ml-1 rtl:mr-1 my-auto">
-                                                <div class="font-semibold text-sm text-gray-800 dark:text-white">May Day</div>
-                                                <small class="text-xs font-normal text-gray-500 dark:text-white/70">participate the all employess</small>
-                                            </div>
-                                            </div>
-                                        </li>
+                                            </li>
+                                        @endforeach
                                         </ul>
                                     </div>
-                                    </div>
                                 </div>
+                            </div>
                             </div>
                             <!-- End::row-2 -->
 

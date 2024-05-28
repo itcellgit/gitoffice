@@ -364,6 +364,18 @@ class LeaveStaffApplicationsController extends Controller
         //6. Some leave require prior initmation ie., the leave application must be done that many days before availing the leave - listed in leave_rules
         //7. The total number of leaves that any staff can take in a year must be less than the total number of leaves entitled for that year - listed as entitled_cur_year in leave_staff_entitlements
 
+        //Rule 4:Gap between leaves
+        $similar_leave_appl=$result = leave_staff_applications::
+            where('staff_id', $staff->id)
+            ->where('leave_id', $request->type)
+            ->select(DB::raw('ABS(DATEDIFF(start, "2024-05-27")) as days'))
+            ->take(1)->get();
+         if($leave->leave_rules[0]->gas=="Yes" && $leave->leave_rules[0]->min_gap>$similar_leave_appl->days)
+         {
+            $result="Error You have already taken a similar leave recently. You must wait for at least ".$leave->leave_rules[0]->min_gap.".";
+            return $result;
+        }
+      //  if($similar_leave_appl->days<$leave->leave_rules-
         //implementation of the above rules
         $result="";
         $from_year=Carbon::parse($request->from_date)->year;
@@ -385,8 +397,7 @@ class LeaveStaffApplicationsController extends Controller
 
         $leave=leave::with('combine_leave')->with('leave_rules')->where('id',$request->type)->first();
 
-        //Code for Rule-1.
-        //check for the overlapping leaves
+        //Rule-1: No overlapping leaves
         $staff_leaves=array();
         //this 'if' is only to check for overlapping of leave in case of new leaves
         //it must not be checked for updated leave

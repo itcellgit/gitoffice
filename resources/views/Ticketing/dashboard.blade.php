@@ -380,11 +380,12 @@
                                                                                             <input type="file" name="attachment" class="ti-form-input" accept="image/*" placeholder="Choose an image">
                                                                                         </div> --}}
                                                                                         <div class="max-w-sm space-y-3 pb-6">
-                                                                                            <label for="attachment" class="ti-form-label">Attachment:</label>
+                                                                                            <label for="attachment" class="ti-form-label">Attachment:<span class="text-red-500"> {{$ticket->attachment}}</span></label>
                                                                                             <input type="file" name="attachment[]" id="attachment" class="ti-form-input" accept="image/*" multiple placeholder="Choose images">
                                                                                             <h3>select multiple images</h3>
+                                                                                            
                                                                                         </div>
-                                                                                     </div>
+                                                                                    </div>
                                                                                         <div class="ti-modal-footer">
                                                                                             <button type="button"
                                                                                                 class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
@@ -538,6 +539,8 @@
 
             }
         </script>
+
+
 
       
 

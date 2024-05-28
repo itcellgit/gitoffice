@@ -15,26 +15,30 @@ class ScheduledJobs extends Controller
     {
         logger("Teaching vacational running");
         //Teaching Vacational
-        $statement="select staff.id, fname,mname, lname
-        from staff, employee_types, association_staff
-        where staff.id not in
-        (SELECT s.id, s.date_of_superanuation
-            FROM `staff` s, designation_staff, designations
-             where s.id=designation_staff.staff_id and
-                    designation_staff.designation_id=designations.id and
-                    designations.isadditional=1 and
-                    designations.isvacational='Non-Vacational' and
-                    designation_staff.status='active') and
-                    employee_types.staff_id=staff.id and
-                    association_staff.staff_id=staff.id and
-                    employee_types.employee_type='teaching' and
-                    (association_staff.association_id in
-                        (select id
-                            from associations
-                            where asso_name='Confirmed' or asso_name='Promotional Probationary')) and
-                    association_staff.status='active'";
-
-            $staff=DB::select($statement);
+        $statement= "
+        SELECT staff.id, date_of_superanuation
+        FROM staff
+        JOIN employee_types ON employee_types.staff_id = staff.id
+        JOIN association_staff ON association_staff.staff_id = staff.id
+        WHERE staff.id NOT IN (
+            SELECT s.id
+            FROM staff s
+            JOIN designation_staff ON s.id = designation_staff.staff_id
+            JOIN designations ON designation_staff.designation_id = designations.id
+            WHERE designations.isadditional = 1
+              AND designations.isvacational = 'Non-Vacational'
+              AND designation_staff.status = 'active'
+        )
+          AND employee_types.employee_type = 'teaching'
+          AND association_staff.association_id IN (
+            SELECT id
+            FROM associations
+            WHERE asso_name = 'Confirmed' OR asso_name = 'Promotional Probationary'
+        )
+          AND association_staff.status = 'active'
+    ";
+    
+    $staff = DB::select($statement);
         $leaves=leave::with('leave_rules')->where('vacation_type','Vacational')->where('max_entitlement','>',0)->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();
 
         $year=Carbon::now()->year;
@@ -461,7 +465,7 @@ class ScheduledJobs extends Controller
     {
         logger("Teaching vacational running");
         //Teaching Vacational
-        $statement="select staff.id, fname,mname, lname
+        $statement="select staff.id, fname,mname, lname,  date_of_superanuation
         from staff, employee_types, association_staff
         where staff.id not in
         (SELECT s.id
@@ -492,13 +496,22 @@ class ScheduledJobs extends Controller
                     $q->where('leave_id',$l->id);
                 }])->where('id',$st->id)->first();
 
-                // "select * from leave_staff_entitlements where staff_id=".$st->id." and leave_id=".$l->id." and year=".$year;
-                 $curr_el_entltm=$curr_el_entltm->leave_staff_entitlements[0];
-               //  dd($curr_el_entltm);
-                // $curr_el_entltm=$curr_el_entltm[0];
-                $max_entitlement=floor($l->max_entitlement/2); //flooring is use if incase no. of el are odd. In july use floor.
+                $curr_el_entltm=$curr_el_entltm->leave_staff_entitlements[0];
+                $dor=Carbon::parse($st->date_of_superanuation)->year;
+                if($dor==$year)
+                {
+                    //compute the max as per date of retirement.
+                    $retirement_date=Carbon::parse($st->date_of_superanuation);
+                    $first_of_jan=Carbon::parse($year.'-01-01');
+                    $no_of_days_remaining= floatval($retirement_date->diffInDays($first_of_jan));
+                    $max_entitlement_full=ceil($no_of_days_remaining*$l->max_entitlement/365);
+                }
+                else
+                {
+                    $max_entitlement_full=$l->max_entitlement;  //flooring is use if incase no. of el are odd. In july use floor.
+                }
 
-                $curr_el_entltm->pivot->entitled_curr_year=  $curr_el_entltm->pivot->entitled_curr_year+$max_entitlement;
+                $curr_el_entltm->pivot->entitled_curr_year=  $max_entitlement_full;
 
                 $curr_el_entltm->pivot->update();
             }

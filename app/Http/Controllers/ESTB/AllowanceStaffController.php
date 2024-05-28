@@ -35,7 +35,7 @@ class AllowanceStaffController extends Controller
             ->from('allowance_staff')
             ->where('year',$year)->where('month',$month);
         })->get();
-        dd($grading);
+        
         if($grading!=null)
         {
             $staff = Staff::with(['departments' => function ($query) {
@@ -147,12 +147,12 @@ class AllowanceStaffController extends Controller
                 $attach=$allowance->staff()->attach($staffId,['year'=>$year,'month'=>$month,'status'=>'active','created_at'=>Carbon::now()]);
             }
         }
-        $grading=staff::with('activedepartments')->with('allowance')->whereIn('staff.id',function($q){
-            $q->select('*')
+        $grade_array=staff::with('activedepartments')->with('allowance')->whereIn('staff.id',function($q)use($year,$month){
+            $q->select('staff_id')
             ->from('allowance_staff')
             ->where('year',$year)->where('month',$month);
         })->get();
-        dd($grading);
+       // dd($grading);
         return view('ESTB.autonomous_allowances.index',compact('grade_array'));
     }
     /**

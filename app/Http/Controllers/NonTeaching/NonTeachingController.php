@@ -18,6 +18,7 @@ use App\Models\designation;
 use App\Models\ntpayscales;
 use App\Models\ntcpayscales;
 use App\Models\users;
+use App\Models\qualification;
 use App\Models\professional_activity_attendee;
 use App\Models\professional_activity_conducted;
 use Hash;
@@ -193,4 +194,87 @@ class NonTeachingController extends Controller
 
 
 
+
+    //staff qualification 
+    public function qualifications(){
+
+        $user = Auth::user();
+        $qualifications =qualification::where('status','active')->get();
+        
+        $staff=staff::with('qualifications')->where('user_id','=',$user->id)->get();
+
+        return view('Staff.Non-Teaching.ntqualification',compact('staff','qualifications'));
+
     }
+
+  
+    
+
+    public function store(Request $request)
+    {
+        // Get the authenticated user
+        $user = Auth::user();
+    
+        // Attach qualifications to the authenticated user's staff
+        $result = $user->staff->qualifications()->attach($request->qualification_id, [
+            'qualification_name' => $request->qualification_name,
+            'board_university' => $request->board_university,
+            'grade' => $request->grade,
+            'yop' => $request->yop,
+           
+        ]);
+    
+        // Redirect back with success message
+        return redirect('/Non-Teaching/ntqualification')->with('status', 'Qualifications added successfully.');
+    }
+    
+   
+
+    /**
+     * Update the specified resource in storage.
+     */
+    
+    public function update_qualification(Request $request, staff $staff,$squal)
+    {
+        $user = Auth::user();
+        $staff= staff::where('user_id',$user->id)->first();
+        $updateresult=true;
+        //dd($squal);
+         //check if there are changes in currently working and the assigned in the UI
+         //update exisiting entry of the staff qualification
+        // dd($staff);
+         $updateresult= $staff->qualifications()->updateExistingPivot($squal,['yop'=>$request->yop,'board_university'=>$request->board_university,'grade'=>$request->grade,'status'=>$request->status]);
+         
+         //dd($updateresult);
+         if($updateresult)
+        {
+            //dd('success');
+            $status=1;
+        }
+        else
+        {
+            $status=0;
+        }
+        return redirect('/Non-Teaching/ntqualification/')->with('status',$status);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(staff $staff,$qual)
+    {
+        $user = Auth::user();
+        $staff= staff::where('user_id',$user->id)->first();
+        $delete=$staff->qualifications()->detach($qual);
+        if($delete){
+            $status=1;
+        }
+        else{
+            $status=0;
+        }
+        return redirect('/Non-Teaching/ntqualification/')->with('status',$status);
+    }
+
+
+
+}

@@ -127,20 +127,9 @@
                                     <li class="slide"><a href="javascript:void(0);" class="side-menu__item">Salary Head Groups</a></li>
                                     <li class="slide"><a href="javascript:void(0);" class="side-menu__item">Salary Heads</a></li>
                                     <li class="slide"><a href="javascript:void(0);" class="side-menu__item">Monthwise Salary</a></li>
-                                    <li class="slide has-sub">
-                                        <a href="javascript:void(0);" class="side-menu__item">Autonomous Grading
-                                            <i class="ri ri-arrow-right-s-line side-menu__angle"></i>
-                                        </a>
-                                        <ul class="slide-menu child2">
-                                            <li class="slide"><a href="{{url('ESTB/autonomous_allowance')}}" class="side-menu__item">Grading List</a></li>
-                                            <li class="slide"><a href="{{url('ESTB/Grading/gradetemplate')}}" class="side-menu__item">Grade Mapping</a></li>
-                                        </ul>
-                                    </li>
+                                    <li class="slide"><a href="{{url('ESTB/autonomous_allowance')}}" class="side-menu__item">Autonomous Grading</a></li>
                                     <li class="slide"><a href="javascript:void(0);" class="side-menu__item">Leaves Encashment</a></li>
-                                    
                                     <li class="slide"><a href="{{url('ESTB/Generateannualincrement/')}}" class="side-menu__item">Generate Annual Increment List </a></li>
-                                    
-
                                 </ul>
                             </li>
                             <li class="slide">

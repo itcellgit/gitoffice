@@ -10,7 +10,7 @@
         <!-- Page Header -->
             <div class="justify-between block page-header sm:flex">
                 <div>
-                    <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium"> Welcome <span class="text-primary"><?php echo e($staff->fname.' '.$staff->mname.' '.$staff->lname); ?></span></h3>
+                    
 
                 </div>
                 <ol class="flex items-center min-w-0 whitespace-nowrap">
@@ -74,12 +74,13 @@
                                                     <textarea name="description" class="ti-form-input" required placeholder="Please Describe the issue here..." style="width: 100%; height: 150px;" id="description"></textarea>
                                                     <div id="descriptionError" class="error text-red-700"></div>
                                                 </div>
-                                                <div class="max-w-sm space-y-3 pb-6">
-                                                    <label for="" class="ti-form-label">Attachment :</label>
-                                                    <input type="file" name="attachment" class="ti-form-input"  placeholder="attachment" id="attachment">
-                                                    <div id="attachmentError" class="error text-red-700"></div>
-                                                </div>
                                                 
+                                                <div class="max-w-sm space-y-3 pb-6">
+                                                    <label for="postAttachment" class="ti-form-label">Attachment:</label>
+                                                    <input type="file" name="post_attachment[]" id="post_attachment" class="ti-form-input" accept="image/*" multiple placeholder="Choose images">
+                                                    <h3>Select multiple images</h3>
+                                                    
+                                                </div>
                                             </div>
                                             <div class="ti-modal-footer">
                                                 <button type="button"
@@ -136,7 +137,7 @@
                                 </div>
                             </div>
             
-                            <!-- Display additional tickets -->
+                           <!-- Display additional tickets -->
                             <?php $__currentLoopData = $postticket; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pt): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <div class="flex flex-row">
                                 <div class="mx-auto relative">
@@ -158,7 +159,18 @@
                                         </div>
                                         <div class="flex flex-col rtl:flex-row -space-y-2 rtl:space-x-reverse" style="margin-top: 10px;">
                                             <span class="text-dark dark:text-white">Description: <?php echo e($pt->description); ?></span>
-                                            <img src="<?php echo e(asset('attachment/'.$pt->attachment)); ?>" alt="NoImage" onclick="showLargeImage('<?php echo e(asset('attachment/'.$pt->attachment)); ?>')" style="width: 50px; height: 50px;">
+                                            <?php if(!empty($pt->post_attachment)): ?>
+                                                <?php
+                                                    $attachments = is_array(json_decode($pt->post_attachment, true)) ? json_decode($pt->post_attachment, true) : [$pt->post_attachment];
+                                                ?>
+                                                <div class="flex flex-wrap space-x-4 rtl:space-x-reverse">
+                                                    <?php $__currentLoopData = $attachments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $attachment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <img src="<?php echo e(asset('storage/post_attachment/'.$attachment)); ?>" onclick="showLargeImage('<?php echo e(asset('storage/post_attachment/'.$attachment)); ?>')" class="h-32 w-32 mb-4">
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </div>
+                                            <?php else: ?>
+                                                <p class="text-dark dark:text-white">No attachments available.</p>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>

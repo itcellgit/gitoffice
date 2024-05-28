@@ -84,6 +84,7 @@
                                                     <thead class="bg-neutral-50 dark:bg-black/20" >
                                                         <tr class="">
                                                             <th scope="col" class="dark:text-white/80 font-bold" rowspan="2">Sl. No</th>
+                                                            <th scope="col" class="dark:text-white/80 font-bold" rowspan="2">Emp. ID</th>
                                                             <th scope="col" class="dark:text-white/80 font-bold" rowspan="2" >Employee Name</th>
                                                             <th scope="col" class="dark:text-white/80 font-bold text-center"  colspan="{{count($leave_types)}}" data-dt-order="disable"> Entitled</th> 
                                                            
@@ -119,6 +120,7 @@
                                                         @foreach ($staff as $st)
                                                             <tr>
                                                                 <td>{{$i++}}</td>
+                                                                <td>{{$st->id}}</td>
                                                                 <td>{{$st->fname." ".$st->mname." ".$st->lname }}</td>
                                                                     
                                                                 {{-- @foreach ($st as ) --}}
@@ -205,7 +207,7 @@
                     
                     fixedColumns: true,
                     fixedColumns: {
-                        left: 2
+                        left: 3
                     },
                   
                     responsive: true,

@@ -7,7 +7,9 @@
         <link rel="stylesheet" href="{{asset('build/assets/libs/flatpickr/flatpickr.min.css')}}">
         {{-- datatables css --}}
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.tailwindcss.min.css">
-
+        <script>
+            var base_url = "{{URL::to('/')}}";
+        </script>
 @endsection
 
 @section('content')
@@ -62,6 +64,7 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M17 19H19V11H13V19H15V13H17V19ZM3 19V4C3 3.44772 3.44772 3 4 3H18C18.5523 3 19 3.44772 19 4V9H21V19H22V21H2V19H3ZM7 11V13H9V11H7ZM7 15V17H9V15H7ZM7 7V9H9V7H7Z" fill="rgba(255,255,255,1)"></path></svg>
                                         Missing Employee Bio
                                     </button>
+
                                      <!-- Modal -->
                                     <div id="add_publicaitons" class="hs-overlay hidden ti-modal">
                                         <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out lg:!max-w-4xl lg:w-full m-3 md:mx-auto">
@@ -104,9 +107,11 @@
                                                 <div style="display: flex; flex-direction: row; align-items: center; margin-left: 10px;">
                                                     <label for="to_date" class="ti-form-label font-bold mx-2 mt-2">Date:<span class="text-red-500">*</span></label>
                                                     <input type="date" id="to_date" name="date" class="mx-2 px-1 py-1 text-sm w-36 h-8" placeholder="To Date">
-                                                    <button type="submit" class="text-white px-4 py-2 focus:outline-none" style="background-color: #818cf8;">Search</button>
+                                                    <button type="submit" class="text-white px-4 py-2 focus:outline-none" style="background-color: #818cf8;">Search</button>&nbsp &nbsp
+                                                    
 
-
+                                                    <button id="missing-biometric-button" class="text-white px-4 py-2 focus:outline-none" style="background-color: Skyblue">Missing Biometric</button>
+                                                   
 
                                                     
                                                 </div>                                               
@@ -299,13 +304,39 @@
         <script href="https://cdn.tailwindcss.com/3.3.5"></script>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-        <script>
-            $(document).ready(function () {
-                //$('#BiometricTable').DataTable();
-                new DataTable('#BiometricTable');
-            });
+        
+       
+       
+       <script>
+        $(document).ready(function() {
+             //$('#BiometricTable').DataTable();
+             new DataTable('#BiometricTable');
 
-        </script>
+            $('#missing-biometric-button').click(function(event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                var date = $('#to_date').val(); // Get the date from the Blade variable
+                //alert(date);
+                $.ajax({
+                    url: base_url+'/biometric/missing_logs',
+                    method: 'GET',
+                    data: {
+                        date: date
+                    },
+                    success: function(response) {
+                        // Handle success - display the data in the placeholder div
+                        console.log(response);
+                        $('#missing-biometric-data').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });
+        </script>   
+        
         
         
 

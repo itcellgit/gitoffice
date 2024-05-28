@@ -8,120 +8,101 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\staff;
 
-
 class BiometricController extends Controller
 {
     public function biometric_data(Request $request)
     {
-        $currentMonth="";
-        $currentYear="";
-        $date="";
-        if ($request->filled('date'))
-         {
-            $date=$request->date;
-          $currentMonth=Carbon::parse($date)->month;
-          $currentYear=Carbon::parse($date)->year;
-
-         }
-         else
-         {
+        $currentMonth = "";
+        $currentYear = "";
+        $date = "";
+        
+        if ($request->filled('date')) {
+            $date = $request->date;
+            $currentMonth = Carbon::parse($date)->month;
+            $currentYear = Carbon::parse($date)->year;
+        } else {
             $currentMonth = date('n');
             $currentYear = date('Y');
-            $date=Carbon::now()->format('Y-m-d');
-           // dd($date);
-         }
-        // Get current month and year
+            $date = Carbon::now()->format('Y-m-d');
+        }
 
         // Retrieve data from the 'staff' table in the 'mysql' connection
         $staffData = staff::with('activedepartments')->get();
 
-
-   
-
-            // Retrieve data from the 'employees' table in the 'mysql2' connection
-            $employeesData = DB::connection('mysql2')->table('employees')->get();
+        // Retrieve data from the 'employees' table in the 'mysql2' connection
+        $employeesData = DB::connection('mysql2')->table('employees')->get();
 
         // Perform the join operation in PHP code
-            $biometricData = [];
+        $biometricData = [];
+        foreach ($staffData as $staff) {
+            foreach ($employeesData as $employee) {
+                if ($staff->EmployeeCode === $employee->EmployeeCode) {
+                    $biometricData[] = [
+                        'id' => $staff->id,
+                        'full_name' => $staff->fname . ' ' . $staff->mname . ' ' . $staff->lname,
+                        'EmployeeCode' => $employee->EmployeeCode,
+                        'EmployeeName' => $employee->EmployeeName
+                    ];
+                    // No need to break here, as there might be multiple matches
+                }
+            }
+        }
+
+        // Retrieve data from the 'mysql2' database
+        $externalData = DB::connection('mysql2')
+            ->table('DeviceLogs_' . $currentMonth . '_' . $currentYear)
+            ->select(
+                'DeviceLogs_' . $currentMonth . '_' . $currentYear . '.logDate as logDate',
+                'devices.DeviceFname as DeviceName',
+                'employees.EmployeeName as EmployeeName',
+                'employees.EmployeeCode as EmployeeCode'
+            )
+            ->join('devices', 'DeviceLogs_' . $currentMonth . '_' . $currentYear . '.DeviceId', '=', 'devices.DeviceId')
+            ->join('employees', 'DeviceLogs_' . $currentMonth . '_' . $currentYear . '.EmployeeCode', '=', 'employees.EmployeeCode')
+            ->orderBy('DeviceLogs_' . $currentMonth . '_' . $currentYear . '.logDate', 'desc')
+            ->orderBy('employees.EmployeeName')
+            ->get();
+
+        // Joining data in PHP
+        $combinedData = [];
+        foreach ($externalData as $data) {
+            // Check if the employee code exists in staff data
+            $matched = false;
+
             foreach ($staffData as $staff) {
-                foreach ($employeesData as $employee) {
-                    if ($staff->EmployeeCode === $employee->EmployeeCode) {
-                        $biometricData[] = [
-                            'id' => $staff->id,
-                            'full_name' => $staff->fname . ' ' . $staff->mname . ' ' . $staff->lname,
-                            'EmployeeCode' => $employee->EmployeeCode,
-                            'EmployeeName' => $employee->EmployeeName
-                        ];
-                        // No need to break here, as there might be multiple matches
+                if ($data->EmployeeCode === $staff->EmployeeCode) {
+                    $data->id = $staff->id;
+                    $data->EmployeeName = $staff->fname . ' ' . $staff->mname . ' ' . $staff->lname; // Concatenate fname, mname, and lname as EmployeeName
+                    $data->DepartmentName = "";
+                    foreach ($staff->activedepartments as $dept) {
+                        $data->DepartmentName .= $dept->dept_shortname . ',';
                     }
-                }
-            }
-
-            // Retrieve data from the 'mysql' database (default connection) if 'staff' table is there
-            $staffData = staff::with('activedepartments')->get();
-
-                // Retrieve data from the 'mysql2' database
-                $externalData = DB::connection('mysql2')
-                    ->table('DeviceLogs_' . $currentMonth . '_' . $currentYear)
-                    ->select(
-                        'DeviceLogs_' . $currentMonth . '_' . $currentYear . '.logDate as logDate',
-                        'devices.DeviceFname as DeviceName',
-                        'employees.EmployeeName as EmployeeName',
-                        'employees.EmployeeCode as EmployeeCode'
-                    )
-                    ->join('devices', 'DeviceLogs_' . $currentMonth . '_' . $currentYear . '.DeviceId', '=', 'devices.DeviceId')
-                    ->join('employees', 'DeviceLogs_' . $currentMonth . '_' . $currentYear . '.EmployeeCode', '=', 'employees.EmployeeCode')
-                    ->orderBy('DeviceLogs_' . $currentMonth . '_' . $currentYear . '.logDate', 'desc')
-                    ->orderBy('employees.EmployeeName')
-                    ->get();
-
-            // Joining data in PHP
-            $combinedData = [];
-            foreach ($externalData as $data) {
-                // Check if the employee code exists in staff data
-                $matched = false;
-
-                foreach ($staffData as $staff) {
-                    if ($data->EmployeeCode === $staff->EmployeeCode) {
-                        $data->id = $staff->id;
-                        $data->EmployeeName = $staff->fname . ' ' . $staff->mname . ' ' . $staff->lname; // Concatenate fname, mname, and lname as EmployeeName
-                      $data->DepartmentName="";
-                      
-                        foreach($staff->activedepartments as $dept)
-                        {
-                           
-                            $data->DepartmentName .= $dept->dept_shortname.',';
-                            
-                        }
-                        $combinedData[] = $data;
-                        $matched = true;
-                        break;
-                    }
-                }
-               
-                // If no match is found, add the data as it is
-                if (!$matched) {
                     $combinedData[] = $data;
+                    $matched = true;
+                    break;
                 }
             }
-           // dd($combinedData);
 
-           //missing punch data
-           $missingEmployeesBio = staff::where('EmployeeCode', 0)
-                ->select('id', DB::raw("CONCAT(fname, ' ', COALESCE(mname, ''), ' ', lname) AS full_name"))
-                ->get();
-         
-           
+            // If no match is found, add the data as it is
+            if (!$matched) {
+                $combinedData[] = $data;
+            }
+        }
+
+        // missing punch data
+        $missingEmployeesBio = staff::where('EmployeeCode', 0)
+            ->select('id', DB::raw("CONCAT(fname, ' ', COALESCE(mname, ''), ' ', lname) AS full_name"))
+            ->get();
+
         // Filter entry and exit logs
-            $entry_exit = $this->filterEntryExitLogs($currentMonth, $currentYear, $date, $externalData);
-            $employeePunchLogs = $entry_exit['employeePunchLogs']; 
+        $entry_exit = $this->filterEntryExitLogs($currentMonth, $currentYear, $date, $externalData);
+        //dd($entry_exit);
+        $employeePunchLogs = $entry_exit['employeePunchLogs'];
+         
 
-        // dd($employeePunchLogs[728][0]->LogDate);
-            // Return the view with the retrieved data
-            return view('ESTB.Biometric.biometric_data', compact('combinedData', 'entry_exit', 'employeePunchLogs','missingEmployeesBio'));
+        // Return the view with the retrieved data
+        return view('ESTB.Biometric.biometric_data', compact('combinedData', 'entry_exit', 'employeePunchLogs', 'missingEmployeesBio','date'));
     }
-
-   
 
     public function filterEntryExitLogs($currentMonth, $currentYear, $logDate, $externalData)
     {
@@ -137,7 +118,7 @@ class BiometricController extends Controller
             ->orderBy("$tableName.EmployeeCode")
             ->orderBy("$tableName.logDate", 'asc')
             ->get();
-
+       // dd($logs);
         // Initialize arrays for entry and exit logs
         $entryLogs = [];
         $exitLogs = [];
@@ -150,15 +131,11 @@ class BiometricController extends Controller
         foreach ($logsByEmployee as $employeeCode => $employeeLogs) {
             // Store logs directly without wrapping in an extra array
             $employeePunchLogs[$employeeCode] = $employeeLogs;
-        
-        
-           //dd($employeePunchLogs);
 
             // Sort employee logs by log date
             $sortedLogs = $employeeLogs->sortBy('LogDate');
-            
-            // Set the first log as the entry log and the last log as the exit log
 
+            // Set the first log as the entry log and the last log as the exit log
             $entryLogs[$employeeCode] = $sortedLogs->first();
             $exitLogs[$employeeCode] = $sortedLogs->last();
 
@@ -167,9 +144,8 @@ class BiometricController extends Controller
                 $exitLogs[$employeeCode] = null;
             }
         }
-      //  dd($employeePunchLogs);
-      
 
+      
         
         $durations = [];
         $totalDurations = [];
@@ -218,11 +194,6 @@ class BiometricController extends Controller
             $totalDurations[$employeeCode] = $formattedTotalDuration;
         }
 
-        // Now $durations contains individual durations for each employee,
-
-
-
-
         // Calculate punch counts for each employee
         $punchCounts = $logsByEmployee->map->count();
 
@@ -231,8 +202,36 @@ class BiometricController extends Controller
             'exitLogs' => $exitLogs,
             'punchcounts' => $punchCounts,
             'durations' => $durations,
-            'employeePunchLogs' => $employeePunchLogs
+            'employeePunchLogs' => $employeePunchLogs,
+            
         ];
     }
-    
+
+    public function missingLogEntries(Request $request)
+    {
+        $date = $request->input('date');
+        //dd($date);
+        // Get the current month and year
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+
+        // Retrieve log entries from the database for the specified date
+        $logs = DB::connection('mysql2')
+            ->table('DeviceLogs_' . $currentMonth . '_' . $currentYear)
+            ->where('LogDate_Date', $date)
+            ->select('EmployeeCode')
+            ->distinct()
+            ->pluck('EmployeeCode')
+            ->toArray();
+
+
+        // Retrieve EmployeeCodes from the Staff table in the mysql connection
+        $staffData = staff::whereNotIn('EmployeeCode', $logs)
+        ->select('id', 'EmployeeCode', DB::raw("CONCAT(fname, ' ', COALESCE(mname, ''), ' ', lname) AS full_name"))
+        ->get();
+        //dd($staffData);
+        // Return the data to the view
+        return response()->json($staffData);
+    }
+
 }
