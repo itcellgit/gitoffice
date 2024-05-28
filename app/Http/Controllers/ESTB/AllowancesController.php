@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\ESTB;
 
-use App\Models\allowances;
+use App\Models\allowance;
 use App\Http\Requests\StoreallowancesRequest;
 use App\Http\Requests\UpdateallowancesRequest;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +18,7 @@ class AllowancesController extends Controller
     public function index()
     {
         //
-        $allowances=allowances::with('designations')->where('status','active')->get();
+        $allowances=allowance::with('designations')->where('status','active')->get();
         $designations=designation::where('status','active')->get();
         return view('ESTB.payscales.allowances.index',compact(['allowances','designations']));
     }
@@ -36,7 +36,7 @@ class AllowancesController extends Controller
      */
     public function store(StoreallowancesRequest $request)
     {
-        $allowances=new allowances();
+        $allowances=new allowance();
         $allowances->title=$request->title;
         $allowances->value=$request->value;
         $allowances->value_type=$request->value_type;
@@ -55,7 +55,7 @@ class AllowancesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(allowances $allowances)
+    public function show(allowance $allowances)
     {
         //
     }
@@ -63,7 +63,7 @@ class AllowancesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(allowances $allowances)
+    public function edit(allowance $allowances)
     {
         //
     }
@@ -71,7 +71,7 @@ class AllowancesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateallowancesRequest $request, allowances $allowances)
+    public function update(UpdateallowancesRequest $request, allowance $allowances)
     {
         $allowances->title=$request->title;
         $allowances->value=$request->value;
@@ -89,7 +89,7 @@ class AllowancesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(allowances $allowances)
+    public function destroy(allowance $allowances)
     {
         $allowances->status='inactive';
         $allowances->end_date=Carbon::Now();

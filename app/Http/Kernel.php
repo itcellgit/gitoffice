@@ -67,4 +67,15 @@ class Kernel extends HttpKernel
         'cors'          => \App\Http\Middleware\Cors::class, 
         'prevent-back-history' => \App\Http\Middleware\PreventBackHistory::class,
     ];
+
+
+
+     // app/Http/Kernel.php
+     protected $routeMiddleware = [
+        // Other middleware...
+        'impersonate' => \App\Http\Middleware\ImpersonationMiddleware::class,
+    ];
+
+
+    
 }

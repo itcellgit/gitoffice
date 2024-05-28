@@ -41,9 +41,7 @@
                         <div class="box-header flex justify-between items-center">
                             <h5 class="box-title">Ticket Status:&nbsp;&nbsp;
                                 <span style="@if($ticket->status =='Open') color: red; @elseif($ticket->status =='Pending') color: Orange; @elseif($ticket->status =='Resolved') color: green; @endif">{{$ticket->status}}</span>
-                                
-
-                            </h5>
+                             </h5>
                             <form action="{{ route('ticket.reply.update', $ticket->id) }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 @method('patch')
@@ -108,11 +106,15 @@
                                                     <div id="descriptionError" class="error text-red-700"></div>
 
                                                 </div>
-                                                <div class="max-w-sm space-y-3 pb-6">
+                                                {{-- <div class="max-w-sm space-y-3 pb-6">
                                                     <label for="" class="ti-form-label">Attachment :</label>
                                                     <input type="file" name="attachment" class="ti-form-input"  placeholder="attachment" id="attachment">
-                                                    {{-- <div id="attachmentError" class="error text-red-700"></div> --}}
-
+                                                </div> --}}
+                                                <div class="max-w-sm space-y-3 pb-6">
+                                                    <label for="postAttachment" class="ti-form-label">Attachment:</label>
+                                                    <input type="file" name="post_attachment[]" id="post_attachment" class="ti-form-input" accept="image/*" multiple placeholder="Choose images">
+                                                    <h3>Select multiple images</h3>
+                                                    
                                                 </div>
                                             </div>
                                             <div class="ti-modal-footer">
@@ -191,54 +193,82 @@
                             <div class="flex flex-row">
                                 <div class="mx-auto relative">
                                     <div class="h-full w-6 flex items-center justify-center">
-                                        <div class="h-full w-[3px] bg-gray-100 dark:bg-black/20 pointer-events-none"></div>
+                                        <div class="h-full w-[3px] bg-gray-100 dark:bg-black/20 pointer-events-none">
+                                        </div>
                                     </div>
                                     <div class="avatar avatar-xs absolute top-0 rounded-full bg-gray-200 shadow text-center ltr:-left-[4px] rtl:-right-[4px]">
                                         <img src="{{asset('build/assets/img/users/avtar1.jpg')}}" class="rounded-full" alt="timeline-img">
+                                       
+
                                     </div>
                                 </div>
                                 <div class="flex w-full pb-8">
                                     <div class="ltr:ml-5 rtl:mr-5 rounded-sm ltr:mr-auto rtl:ml-auto my-auto w-full space-y-3">
                                         <div class="sm:flex">
-                                            <h3 class="my-auto text-gray-500 dark:text-white/70"><span class="text-dark dark:text-white">My Issue: {{$ticket->title}}</span></h3>
+                                            <h3 class="my-auto text-gray-500 dark:text-white/70">
+                                                <span class="text-dark dark:text-white">My Issue: {{$ticket->title}}</span>
+                                            </h3>
                                             <p class="my-auto ltr:ml-auto rtl:mr-auto text-gray-500 dark:text-white/70 text-xs">
                                                 {{$ticket->created_at}}
                                             </p>
                                         </div>
-                                        <div class="flex flex-col rtl:flex-row -space-y-2 rtl:space-x-reverse" style="margin-top: 10px;">
+                                        <div class="flex flex-col space-y-4">
                                             <span class="text-dark dark:text-white">Description: {{$ticket->description}}</span>
-                                            <img src="{{ asset('attachment/'.$ticket->attachment)}}" alt="NoImage" onclick="showLargeImage('{{ asset('attachment/'.$ticket->attachment)}}')" style="width: 50px; height: 50px;">
+                                            @if(!empty($ticket->attachment))
+                                                @php
+                                                    $attachments = is_array(json_decode($ticket->attachment, true)) ? json_decode($ticket->attachment, true) : [$ticket->attachment];
+                                                @endphp
+                                    
+                                                <div class="flex flex-wrap space-x-4 rtl:space-x-reverse">
+                                                    @foreach($attachments as $at)
+                                                        <img src="{{ asset('storage/attachment/'.$at)}}" alt="NoImage" onclick="showLargeImage('{{ asset('storage/attachment/'.$at)}}')" class="h-32 w-32 mb-4">
+                                                    @endforeach
+                                                </div>
+                                            @else
+                                                <p class="text-dark dark:text-white">No attachments available.</p>
+                                            @endif
                                         </div>
                                     </div>
-                                </div>
+                                  </div>
                             </div>
-                            <!-- Display additional tickets -->
-                            @foreach($postticket as $pt)
-                            <div class="flex flex-row">
-                                <div class="mx-auto relative">
-                                    <div class="h-full w-6 flex items-center justify-center">
-                                        <div class="h-full w-[3px] bg-gray-100 dark:bg-black/20 pointer-events-none"></div>
-                                    </div>
-                                    <div class="avatar avatar-xs absolute top-0 rounded-full bg-gray-200 shadow text-center ltr:-left-[4px] rtl:-right-[4px]">
-                                        <img src="{{asset('build/assets/img/users/avtar1.jpg')}}" class="rounded-full" alt="timeline-img">
-                                    </div>
-                                </div>
-                                <div class="flex w-full pb-8">
-                                    <div class="ltr:ml-5 rtl:mr-5 rounded-sm ltr:mr-auto rtl:ml-auto my-auto w-full space-y-3">
-                                        <div class="sm:flex">
-                                            <h3 class="my-auto text-gray-500 dark:text-white/70"><span class="text-dark dark:text-white">My Issue: {{$pt->title}}</span></h3>
-                                            <p class="my-auto ltr:ml-auto rtl:mr-auto text-gray-500 dark:text-white/70 text-xs">
-                                                {{$pt->created_at}}
-                                            </p>
-                                        </div>
-                                        <div class="flex flex-col rtl:flex-row -space-y-2 rtl:space-x-reverse" style="margin-top: 10px;">
-                                            <span class="text-dark dark:text-white">Description: {{$pt->description}}</span>
-                                            <img src="{{ asset('attachment/'.$pt->attachment)}}" alt="NoImage" onclick="showLargeImage('{{ asset('attachment/'.$pt->attachment)}}')" style="width: 50px; height: 50px;">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
+                             <!-- Display additional tickets -->
+                             @foreach($postticket as $pt)
+                             <div class="flex flex-row">
+                                 <div class="mx-auto relative">
+                                     <div class="h-full w-6 flex items-center justify-center">
+                                         <div class="h-full w-[3px] bg-gray-100 dark:bg-black/20 pointer-events-none"></div>
+                                     </div>
+                                     <div class="avatar avatar-xs absolute top-0 rounded-full bg-gray-200 shadow text-center ltr:-left-[4px] rtl:-right-[4px]">
+                                         <img src="{{asset('build/assets/img/users/avtar1.jpg')}}" class="rounded-full" alt="timeline-img">
+                                     </div>
+                                 </div>
+                                 <div class="flex w-full pb-8">
+                                     <div class="ltr:ml-5 rtl:mr-5 rounded-sm ltr:mr-auto rtl:ml-auto my-auto w-full space-y-3">
+                                         <div class="sm:flex">
+                                             <h3 class="my-auto text-gray-500 dark:text-white/70"><span class="text-dark dark:text-white">My Issue: {{$pt->title}}</span></h3>
+                                             <p class="my-auto ltr:ml-auto rtl:mr-auto text-gray-500 dark:text-white/70 text-xs">
+                                                 {{$pt->created_at}}
+                                             </p>
+                                         </div>
+                                         <div class="flex flex-col rtl:flex-row -space-y-2 rtl:space-x-reverse" style="margin-top: 10px;">
+                                             <span class="text-dark dark:text-white">Description: {{$pt->description}}</span>
+                                             @if(!empty($pt->post_attachment))
+                                                 @php
+                                                     $attachments = is_array(json_decode($pt->post_attachment, true)) ? json_decode($pt->post_attachment, true) : [$pt->post_attachment];
+                                                 @endphp
+                                                 <div class="flex flex-wrap space-x-4 rtl:space-x-reverse">
+                                                     @foreach($attachments as $attachment)
+                                                     <img src="{{ asset('storage/post_attachment/'.$attachment)}}" onclick="showLargeImage('{{ asset('storage/post_attachment/'.$attachment)}}')" class="h-32 w-32 mb-4">
+                                                     @endforeach
+                                                 </div>
+                                             @else
+                                                 <p class="text-dark dark:text-white">No attachments available.</p>
+                                             @endif
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                             @endforeach
                         </div>
                     </div>
                 </div>

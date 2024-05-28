@@ -14,7 +14,8 @@ class allowance extends Model
     }
     public function staff():BelongsToMany
     {
-        return $this->belongsToMany(staff::class)->withPivot('id','staff_id','allowance_id','year','month','status');
+        return $this->belongsToMany(staff::class,'allowance_staff')
+                    ->withPivot('id','staff_id','allowance_id','year','month','status');
     }
 
 }

@@ -164,10 +164,7 @@
                                                         </div>
                                                     </td>
                                                     <td><span>{{$ticket->description}}</span></td>
-                                                   
-                                                   
-                                                    
-                                                    <td class="font-medium space-x-2 rtl:space-x-reverse">
+                                                   {{-- <td class="font-medium space-x-2 rtl:space-x-reverse">
                                                         <div class="hs-tooltip ti-main-tooltip">
                                                             @if ($ticket->attachment)
                                                                 <a href="#" onclick="showLargeImage('{{ asset('attachment/'.$ticket->attachment)}}')">
@@ -180,6 +177,49 @@
                                                             <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm" role="tooltip">
                                                                 attachment
                                                             </span>
+                                                        </div>
+                                                    </td> --}}
+                                                    <td class="font-medium space-x-2 rtl:space-x-reverse">
+                                                        <div class="hs-tooltip ti-main-tooltip text-center">
+                                                            <button data-hs-overlay="#image_view_modal{{$i}}"
+                                                                class="hs-dropdown-toggle m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary">
+                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M14 13.5V8C14 5.79086 12.2091 4 10 4C7.79086 4 6 5.79086 6 8V13.5C6 17.0899 8.91015 20 12.5 20C16.0899 20 19 17.0899 19 13.5V4H21V13.5C21 18.1944 17.1944 22 12.5 22C7.80558 22 4 18.1944 4 13.5V8C4 4.68629 6.68629 2 10 2C13.3137 2 16 4.68629 16 8V13.5C16 15.433 14.433 17 12.5 17C10.567 17 9 15.433 9 13.5V8H11V13.5C11 14.3284 11.6716 15 12.5 15C13.3284 15 14 14.3284 14 13.5Z"></path></svg>
+                                                                <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700" role="tooltip">Attachment</span>
+                                                            </button>
+                                                                <div id="image_view_modal{{$i}}" class="hs-overlay hidden ti-modal">
+                                                                    <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out lg:!max-w-4xl lg:w-full m-3 md:mx-auto">
+                                                                        <div class="ti-modal-content">
+                                                                            <div class="ti-modal-header">
+                                                                                Attachment
+                                                                            </div>
+                                                                                <div class="ti-modal-body">
+                                                                                    @if(!empty($ticket->attachment))
+                                                                                    @php
+                                                                                        $attachments = is_array(json_decode($ticket->attachment, true)) ? json_decode($ticket->attachment, true) : [$ticket->attachment];
+                                                                                    @endphp
+                                                                            
+                                                                                    {{-- @foreach($attachments as $at)
+                                                                                        <img src="{{ asset('storage/attachment/' . $at) }}" alt="No Image" class="mb-2">
+                                                                                    @endforeach --}}
+
+                                                                                   
+                                                                                    @foreach($attachments as $key => $at)
+                                                                                        <div class="mb-4">
+                                                                                            <h3 class="mb-2">Image {{ $key + 1 }}</h3>
+                                                                                            <img src="{{ asset('storage/attachment/' . $at) }}" alt="No Image" class="mb-2">
+                                                                                        </div>
+                                                                                    @endforeach
+
+                                                                                @else
+                                                                                    <p>No attachments available.</p>
+                                                                                @endif
+                                                                                
+                                                                                    {{-- <img src="{{ asset('attachment/' .$ticket->attachment) }}" alt="No Image"> --}}
+                                                                                </div>
+                                                                                                                                    
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                         </div>
                                                     </td>
                                                     

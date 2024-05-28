@@ -7,7 +7,9 @@
         <link rel="stylesheet" href="{{asset('build/assets/libs/flatpickr/flatpickr.min.css')}}">
         {{-- datatables css --}}
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.tailwindcss.min.css">
-
+        <script>
+            var base_url = "{{URL::to('/')}}";
+        </script>
 @endsection
 
 @section('content')
@@ -29,11 +31,13 @@
                                   BIOMETRIC
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12.1717 12.0005L9.34326 9.17203L10.7575 7.75781L15.0001 12.0005L10.7575 16.2431L9.34326 14.8289L12.1717 12.0005Z"></path></svg>
                             </a>
+                           
                         </li>
 
                     </ol>
                 </div>
                 <!-- Page Header Close -->
+
                 
                 <!-- Start::row-5 -->
                 <div class="grid grid-cols-12 gap-x-6">
@@ -54,58 +58,66 @@
                                     header("refresh: 3");
                                 @endphp
                         @endif
+                         <div class="box">
+                                <div class="col-span-12 xl:col-span-12">
+                                    <button id="publication_btn" data-hs-overlay="#add_publicaitons" class="hs-dropdown-toggle ti-btn ti-btn-primary absolute top-0 right-0 mt-4 mr-4" style="background-color: #ef4444; color: white;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M17 19H19V11H13V19H15V13H17V19ZM3 19V4C3 3.44772 3.44772 3 4 3H18C18.5523 3 19 3.44772 19 4V9H21V19H22V21H2V19H3ZM7 11V13H9V11H7ZM7 15V17H9V15H7ZM7 7V9H9V7H7Z" fill="rgba(255,255,255,1)"></path></svg>
+                                        Missing Employee Bio
+                                    </button>
 
-
-
-                        {{-- chart --}}
-                        <div class="col-span-12 xxl:col-span-6">
-                            <div class="box">
-                                <div class="box-header">
-                                    <div class="sm:flex justify-between sm:space-y-0 space-y-2">
-                                        <h5 class="box-title my-auto">Biometric Overview</h5>
-                                        <div class="inline-flex rounded-md shadow-sm">
-                                            <button type="button" class="ti-btn-group text-xs !border-0 py-2 px-3 ti-btn-soft-primary">
-                                            1D
-                                            </button>
-                                            <button type="button" class="ti-btn-group text-xs !border-0 py-2 px-3 ti-btn-soft-primary">
-                                            1W
-                                            </button>
-                                            <button type="button" class="ti-btn-group text-xs !border-0 py-2 px-3 ti-btn-soft-primary">
-                                            1M
-                                            </button>
-                                            <button type="button" class="ti-btn-group text-xs !border-0 py-2 px-3 ti-btn-soft-primary">
-                                            3M
-                                            </button>
-                                            <button type="button" class="ti-btn-group text-xs !border-0 py-2 px-3 ti-btn-soft-primary">
-                                            6M
-                                            </button>
-                                            <button type="button" class="ti-btn-group text-xs !border-0 py-2 px-3 ti-btn-primary">
-                                            1Y
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="box-body">
-                                    <div id="performanceReport"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="box">
-                            <div class="col-span-12 xl:col-span-12">
-                                <form method="POST" action="{{ route('biometric_data') }}">
-                                    @csrf
-                                    <div class="grid gap-1 space-y-2 lg:grid-cols-1 lg:space-y-0">
-                                        <div style="display: flex; flex-direction: column; margin-left: 10px;">
-                                            <label for="to_date" class="ti-form-label font-bold mx-2 mt-2">Date:<span class="text-red-500">*</span></label>
-                                            <div class="flex items-center">
-                                                <input type="date" id="to_date" name="date" class="mx-2 px-1 py-1 text-sm w-36 h-8" placeholder="To Date">
-                                                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md focus:outline-none">Search</button>
+                                     <!-- Modal -->
+                                    <div id="add_publicaitons" class="hs-overlay hidden ti-modal">
+                                        <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out lg:!max-w-4xl lg:w-full m-3 md:mx-auto">
+                                            <div class="ti-modal-content">
+                                                <form  method="get" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div class="ti-modal-body">
+                                                        <div class="table-responsive">
+                                                        <p style="color: red;"><b>Biometric registration pending or Biometric EmployeeCode not Found</b></p>
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="font-bold px-4 py-2">ID</th>
+                                                                        <th class="font-bold px-4 py-2">Name</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach($missingEmployeesBio as $employee)
+                                                                    <tr>
+                                                                        <td class="px-4 py-2">{{ $employee->id }}</td>
+                                                                        <td class="px-4 py-2">{{ $employee->full_name }}</td>
+                                                                    </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ti-modal-footer">
+                                                        <button type="button" class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10" data-hs-overlay="#add_publicaitons">Close</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
-                                        
-                                </form>
-                                <div class="box">
+                                    <!-- End Modal -->
+                                    <form method="POST" action="{{ route('biometric_data') }}">
+                                    @csrf
+                                        <div class="grid gap-1 space-y-2 lg:grid-cols-1 lg:space-y-0">
+                                            <div style="display: flex; flex-direction: column; margin-left: 10px;">
+                                                <div style="display: flex; flex-direction: row; align-items: center; margin-left: 10px;">
+                                                    <label for="to_date" class="ti-form-label font-bold mx-2 mt-2">Date:<span class="text-red-500">*</span></label>
+                                                    <input type="date" id="to_date" name="date" class="mx-2 px-1 py-1 text-sm w-36 h-8" placeholder="To Date">
+                                                    <button type="submit" class="text-white px-4 py-2 focus:outline-none" style="background-color: #818cf8;">Search</button>&nbsp &nbsp
+                                                    
+
+                                                    <button id="missing-biometric-button" class="text-white px-4 py-2 focus:outline-none" style="background-color: Skyblue">Missing Biometric</button>
+                                                   
+
+                                                    
+                                                </div>                                               
+                                            </div>
+                                        </div>
+                                    </form>
                                     <div class="box-body">
                                         <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
                                             <table id="BiometricTable" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
@@ -113,23 +125,24 @@
                                                     <tr class="">
                                                         <th scope="col" class="dark:text-white/80 font-bold  ">S.No</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">Employee Name</th>
+                                                        <th scope="col" class="dark:text-white/80 font-bold  ">Department</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">PunchIn</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">DeviceIn</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">PunchOut</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">DeviceOut</th>
-                                                      
                                                         <th scope="col" class="dark:text-white/80 font-bold ">No.of.Punches</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">Duration</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold ">Action</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody>  
                                                     @php
                                                         $i=1;
                                                     @endphp
                                                     @foreach ($combinedData as $data)
                                                         @php
                                                             $employeeCode = $data->EmployeeCode;
+
                                                             $hasEntryLog = isset($entry_exit['entryLogs'][$employeeCode]);
                                                             $hasExitLog = isset($entry_exit['exitLogs'][$employeeCode]);
                                                         @endphp
@@ -137,7 +150,13 @@
                                                             <tr>
                                                                 <td>{{ $loop->iteration }}</td>
                                                                 @if ($hasEntryLog)
-                                                                    <td>{{ $entry_exit['entryLogs'][$employeeCode]->EmployeeName }}</td>
+                                                                    <td>{{$data->EmployeeName}}</td>
+                                                                    
+                                                                    @if(isset($data->DepartmentName))
+                                                                        <td>{{$data->DepartmentName}}</td>
+                                                                    @else
+                                                                        <td></td>
+                                                                    @endif
                                                                     <td>{{ $entry_exit['entryLogs'][$employeeCode]->LogDate }}</td>
                                                                     <td>{{ $entry_exit['entryLogs'][$employeeCode]->DeviceFName }}</td>
                                                                 @else
@@ -186,11 +205,17 @@
                                                                                         <h3>
                                                                                             <b style="display: flex; justify-content: space-between;">
                                                                                                 <span>
-                                                                                                    Employee Name: {{$entry_exit['entryLogs'][$employeeCode]->EmployeeName}}
+                                                                                                    Employee Name: {{$data->EmployeeName}}
+                                                                                                
+                                                                                                    @if(isset($data->id))
+                                                                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                                                      
+                                                                                                        Staff ID: {{$data->id}}
+                                                                                                    @endif
                                                                                                 </span>
                                                                                                 <span style="display: flex; align-items: center;">
                                                                                                     <span style="margin-right: 10px;">Employee Code: {{$entry_exit['entryLogs'][$employeeCode]->EmployeeCode}}</span>
-                                                                                                    <span>STAFF ID:{{$data->id}}</span>
+                                                                                                    
                                                                                                 </span>
                                                                                             </b>
                                                                                         </h3>
@@ -279,14 +304,41 @@
         <script href="https://cdn.tailwindcss.com/3.3.5"></script>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-        <script>
-            $(document).ready(function () {
-                //$('#BiometricTable').DataTable();
-                new DataTable('#BiometricTable');
+        
+       
+       
+       <script>
+        $(document).ready(function() {
+             //$('#BiometricTable').DataTable();
+             new DataTable('#BiometricTable');
+
+            $('#missing-biometric-button').click(function(event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                var date = $('#to_date').val(); // Get the date from the Blade variable
+                //alert(date);
+                $.ajax({
+                    url: base_url+'/biometric/missing_logs',
+                    method: 'GET',
+                    data: {
+                        date: date
+                    },
+                    success: function(response) {
+                        // Handle success - display the data in the placeholder div
+                        console.log(response);
+                        $('#missing-biometric-data').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error
+                        console.error('Error:', error);
+                    }
+                });
             });
-
-        </script>
-
+        });
+        </script>   
+        
+        
+        
 
 
 

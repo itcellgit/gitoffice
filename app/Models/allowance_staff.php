@@ -9,4 +9,14 @@ class allowance_staff extends Model
 {
     use HasFactory;
     protected $fillable=['staff_id'];
+
+    public function staff()
+    {
+        return $this->belongsTo(staff::class);
+    }
+
+    public function allowance()
+    {
+        return $this->belongsTo(allowance::class);
+    }
 }

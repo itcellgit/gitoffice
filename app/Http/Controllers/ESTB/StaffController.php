@@ -550,7 +550,79 @@ class StaffController extends Controller
         return view('ESTB.staff.staffinformation', compact(['staff','staffCount','religions','associations','departments','qualifications','filter','designations','teachingDesignations','nonteachingDesignations']));
     }
 
-
-
+ //code for generate statistics information
+  public function statistics_information(Request $request)
+    {
+        
+            $filter="";
+            $religions =religion::where('status','active')->get();
+            $designations=designation::where('status','active')->get();
+            //To fetch Designation As per Employee type
+            $teachingDesignations = designation::where('status', 'active')
+                                ->where('emp_type', 'Teaching')
+                                ->where('isadditional', 0)
+                                ->orderBy('design_name')
+                                ->get();
+    
+            $nonteachingDesignations = designation::where('status', 'active')
+                                ->where('emp_type', 'Non-teaching')
+                                ->where('isadditional', 0)
+                                ->orderBy('design_name')
+                                ->get();
+            
+            $designation_id = $request->input('designations');
+            $castecategories = $request->input('castecategory_id');
+            $religion = $request->input('religion_id');
+            $gender = $request->input('gender');
+            $employee_type = $request->input('employee_type');
+    
+            $query = Staff::query();
+    
+          
+    
+            $query->join('designation_staff', function ($join) {
+                $join->on('designation_staff.staff_id', '=', 'staff.id')
+                    ->where('designation_staff.status', 'active');
+            });
+    
+            $query->join('designations', 'designations.id', '=', 'designation_staff.designation_id');
+    
+            $query->join('religions', 'religions.id', '=', 'staff.religion_id')
+                ->join('employee_types', 'employee_types.staff_id', '=', 'staff.id');
+    
+           
+    
+            if ($designation_id) {
+                $query->whereIn('designations.id', $designation_id);
+            }
+    
+            if ($religion !== 'all') {
+                $query->where('religions.id', $religion)
+                    ->select('staff.*', 'religions.religion_name');
+            }
+    
+            if ($employee_type !== 'all') {
+                $query->where('employee_types.employee_type', $employee_type)
+                    ->select('staff.*', 'employee_types.employee_type');
+            }
+    
+            if ($gender !== 'all') {
+                $query->where('staff.gender', $gender);
+            }
+    
+           
+    
+            //$staff = $query->take(10)->get();
+            //dd($staff);
+            $staff = $query->get();
+    
+           // dd($staff);
+           $staffCount = $staff->count();
+    
+            // return view('ESTB.staff.staffinformation', compact(['staff','staffCount','religions','associations','departments','qualifications','filter','designations','teachingDesignations','nonteachingDesignations']));
+        
+    
+        return view('ESTB.staff.generatestatistics');
+    }
 
 }

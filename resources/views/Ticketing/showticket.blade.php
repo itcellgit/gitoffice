@@ -33,17 +33,21 @@
                         <div class="box-header flex justify-between items-center">
                             <h5 class="box-title">Ticket Status:&nbsp;&nbsp;
                                 <span style="@if($ticket->status =='Open') color: red; @elseif($ticket->status =='Pending') color: Orange; @elseif($ticket->status =='Resolved') color: green; @endif">{{$ticket->status}}</span>
-                                
-
                             </h5>
                             @if($ticket->status != 'Resolved')
-                                    <button type="button" class="hs-dropdown-toggle ti-btn ti-btn-primary" data-hs-overlay="#hs-medium-modal">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                                            <path d="M11 20L1 12L11 4V9C16.5228 9 21 13.4772 21 19C21 19.2729 20.9891 19.5433 20.9676 19.8107C19.4605 16.9502 16.458 15 13 15H11V20Z"></path>
-                                        </svg>
-                                        Reply
-                                    </button>
+                                <button type="button" class="hs-dropdown-toggle ti-btn ti-btn-primary" data-hs-overlay="#hs-medium-modal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path d="M11 20L1 12L11 4V9C16.5228 9 21 13.4772 21 19C21 19.2729 20.9891 19.5433 20.9676 19.8107C19.4605 16.9502 16.458 15 13 15H11V20Z"></path>
+                                    </svg>
+                                    Reply
+                                </button>
                             @endif
+                            {{-- <button type="button" class="hs-dropdown-toggle ti-btn ti-btn-primary" data-hs-overlay="#hs-medium-modal">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                    <path d="M11 20L1 12L11 4V9C16.5228 9 21 13.4772 21 19C21 19.2729 20.9891 19.5433 20.9676 19.8107C19.4605 16.9502 16.458 15 13 15H11V20Z"></path>
+                                </svg>
+                                Reply
+                            </button> --}}
                         
                             <div id="hs-medium-modal" class="hs-overlay hidden ti-modal">
                                 <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out md:!max-w-2xl md:w-full m-3 md:mx-auto">
@@ -83,9 +87,10 @@
                                                     <div id="attachmentError" class="error text-red-700"></div>
                                                 </div> --}}
                                                 <div class="max-w-sm space-y-3 pb-6">
-                                                    <label for="attachment" class="ti-form-label">Attachment:</label>
-                                                    <input type="file" name="attachment[]" id="attachment" class="ti-form-input" accept="image/*" multiple placeholder="Choose images">
-                                                    <h3>select multiple images</h3>
+                                                    <label for="postAttachment" class="ti-form-label">Attachment:</label>
+                                                    <input type="file" name="post_attachment[]" id="post_attachment" class="ti-form-input" accept="image/*" multiple placeholder="Choose images">
+                                                    <h3>Select multiple images</h3>
+                                                    
                                                 </div>
                                             </div>
                                             <div class="ti-modal-footer">
@@ -108,48 +113,41 @@
                             <div class="flex flex-row">
                                 <div class="mx-auto relative">
                                     <div class="h-full w-6 flex items-center justify-center">
-                                        <div class="h-full w-[3px] bg-gray-100 dark:bg-black/20 pointer-events-none">
-                                        </div>
+                                        <div class="h-full w-[3px] bg-gray-100 dark:bg-black/20 pointer-events-none"></div>
                                     </div>
                                     <div class="avatar avatar-xs absolute top-0 rounded-full bg-gray-200 shadow text-center ltr:-left-[4px] rtl:-right-[4px]">
                                         <img src="{{asset('build/assets/img/users/avtar1.jpg')}}" class="rounded-full" alt="timeline-img">
-                                       
-
                                     </div>
                                 </div>
                                 <div class="flex w-full pb-8">
                                     <div class="ltr:ml-5 rtl:mr-5 rounded-sm ltr:mr-auto rtl:ml-auto my-auto w-full space-y-3">
                                         <div class="sm:flex">
-                                            <h3 class="my-auto text-gray-500 dark:text-white/70">
-                                                <span class="text-dark dark:text-white">My Issue: {{$ticket->title}}</span>
-                                            </h3>
+                                            <h3 class="my-auto text-gray-500 dark:text-white/70"><span class="text-dark dark:text-white">My Issue: {{$ticket->title}}</span></h3>
                                             <p class="my-auto ltr:ml-auto rtl:mr-auto text-gray-500 dark:text-white/70 text-xs">
                                                 {{$ticket->created_at}}
                                             </p>
                                         </div>
-                                        <div class="flex flex-col space-y-4">
+                                        <div class="flex flex-col rtl:flex-row -space-y-2 rtl:space-x-reverse" style="margin-top: 10px;">
                                             <span class="text-dark dark:text-white">Description: {{$ticket->description}}</span>
+                                            {{-- <img src="{{ asset('attachment/'.$ticket->attachment)}}" alt="NoImage" onclick="showLargeImage('{{ asset('attachment/'.$ticket->attachment)}}')" style="width: 50px; height: 50px;"> --}}
                                             @if(!empty($ticket->attachment))
                                                 @php
                                                     $attachments = is_array(json_decode($ticket->attachment, true)) ? json_decode($ticket->attachment, true) : [$ticket->attachment];
                                                 @endphp
-                                    
                                                 <div class="flex flex-wrap space-x-4 rtl:space-x-reverse">
-                                                    @foreach($attachments as $at)
-                                                        <img src="{{ asset('storage/attachment/'.$at)}}" alt="NoImage" onclick="showLargeImage('{{ asset('storage/attachment/'.$at)}}')" class="h-32 w-32 mb-4">
+                                                    @foreach($attachments as $attachment)
+                                                    <img src="{{ asset('storage/attachment/'.$attachment)}}"  onclick="showLargeImage('{{ asset('storage/attachment/'.$attachment)}}')" class="h-32 w-32 mb-4">
                                                     @endforeach
                                                 </div>
-                                            @else
+                                                @else
                                                 <p class="text-dark dark:text-white">No attachments available.</p>
                                             @endif
                                         </div>
                                     </div>
-                                    
-                                    
                                 </div>
                             </div>
             
-                            <!-- Display additional tickets -->
+                           <!-- Display additional tickets -->
                             @foreach($postticket as $pt)
                             <div class="flex flex-row">
                                 <div class="mx-auto relative">
@@ -170,22 +168,18 @@
                                         </div>
                                         <div class="flex flex-col rtl:flex-row -space-y-2 rtl:space-x-reverse" style="margin-top: 10px;">
                                             <span class="text-dark dark:text-white">Description: {{$pt->description}}</span>
-                                            <img src="{{ asset('attachment/'.$pt->attachment)}}" alt="NoImage" onclick="showLargeImage('{{ asset('attachment/'.$pt->attachment)}}')" style="width: 50px; height: 50px;">
-                                            {{-- <img src="{{ asset('attachment/'.$pt)}}" alt="NoImage" onclick="showLargeImage('{{ asset('attachment/'.$pt)}}')" class="h-32 w-32 mb-4"> --}}
-
-                                            {{-- @if(!empty($postticket->attachment))
-                                            @php
-                                                $attachments = is_array(json_decode($postticket->attachment, true)) ? json_decode($postticket->attachment, true) : [$postticket->attachment];
-                                            @endphp
-                                
-                                            <div class="flex flex-wrap space-x-4 rtl:space-x-reverse">
-                                                @foreach($attachments as $pt)
-                                                    <img src="{{ asset('storage/attachment/'.$pt)}}" alt="NoImage" onclick="showLargeImage('{{ asset('storage/attachment/'.$pt)}}')" class="h-32 w-32 mb-4">
-                                                @endforeach
-                                            </div>
-                                        @else
-                                            <p class="text-dark dark:text-white">No attachments available.</p>
-                                        @endif --}}
+                                            @if(!empty($pt->post_attachment))
+                                                @php
+                                                    $attachments = is_array(json_decode($pt->post_attachment, true)) ? json_decode($pt->post_attachment, true) : [$pt->post_attachment];
+                                                @endphp
+                                                <div class="flex flex-wrap space-x-4 rtl:space-x-reverse">
+                                                    @foreach($attachments as $attachment)
+                                                    <img src="{{ asset('storage/post_attachment/'.$attachment)}}" onclick="showLargeImage('{{ asset('storage/post_attachment/'.$attachment)}}')" class="h-32 w-32 mb-4">
+                                                    @endforeach
+                                                </div>
+                                            @else
+                                                <p class="text-dark dark:text-white">No attachments available.</p>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -219,6 +213,7 @@
            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
+        
         <script>
             $(document).ready(function(){
                //alert('Hello from jquery');
@@ -230,7 +225,7 @@
                   $(document).on('click', '#reply_store_add_btn', function (e) {
                     var myissue = $('#myissue').val();
                     var description = $('#description').val();
-                    var attachment = $('#attachment')[0].files[0]; // Get the selected file
+                   // var attachment = $('#attachment')[0].files[0]; // Get the selected file
                     var flag = false;
 
                     if (myissue.trim() === '') {
@@ -247,22 +242,18 @@
                         $('#descriptionError').text(''); 
                     }
 
-                    if (!attachment) {
-                        $('#attachmentError').text('Please choose a file');
-                        flag = true;
-                    }
+                    // if (!attachment) {
+                    //     $('#attachmentError').text('Please choose a file');
+                    //     flag = true;
+                    // }
 
                     if (flag == true) {
                         e.preventDefault();
                     }
                 });
 
-               
-
-
             });   
         </script>
-
 
 
         <!-- JavaScript to show large image in modal -->
@@ -296,29 +287,29 @@
             }
         </script>
 
-        <script>
-            document.getElementById('updateStatusBtn').addEventListener('click', function() {
-                var status = document.getElementById('ticketStatus').value;
+<script>
+    document.getElementById('updateStatusBtn').addEventListener('click', function() {
+        var status = document.getElementById('ticketStatus').value;
 
-                var formData = new FormData();
-                formData.append('status', status);
-                
-                fetch("{{ route('ticket.reply.update', $ticket->id) }}", {
-                    method: 'PATCH',
-                    headers: {
-                        'X-CSRF-Token': '{{ csrf_token() }}',
-                    },
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Handle response, maybe show a success message or update UI
-                    console.log(data);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-            });
-        </script>
+        var formData = new FormData();
+        formData.append('status', status);
+        
+        fetch("{{ route('ticket.reply.update', $ticket->id) }}", {
+            method: 'PATCH',
+            headers: {
+                'X-CSRF-Token': '{{ csrf_token() }}',
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle response, maybe show a success message or update UI
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>
 
 @endsection

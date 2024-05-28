@@ -59,6 +59,13 @@ class urlcontroller extends Controller
 
     //annualincrement
 
+    public function qualification(staff $staff)
+    {
+        $qualifications =DB::table('qualifications')->where('status','active')->get();
+       
+        return view('/Teaching/staff/qualifications',compact(['staff','qualifications']));
+    }
+
     public function  annual_increment(staff $staff){
         //dd($staff);
        //$festivaladvance = DB::table('festival_advance')->where('status','active')->get();

@@ -72,10 +72,6 @@
                             <div class="grid grid-cols-12 gap-x-6">
                                 <div class="col-span-12">
                                     <!--For filtering the data as per requirement-->
-                                    {{-- <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('ESTB.staff.staffinformation')}}">
-                                        Staff Filter
-                                    </a> --}}
-
                                     <!--Filtering the data Ends-->
                                     <div class="box">
                                         <div class="box-header">
@@ -86,6 +82,11 @@
                                                 </h5>
                                                 
                                                 <div class=" block ltr:ml-auto rtl:mr-auto my-auto">
+                                                     <!--For filtering the data as per requirement-->
+                                                     <button type="button" class="hs-dropdown-toggle ti-btn bg-green-500 hover:bg-green-600 text-white rounded-full px-4 py-2" onclick="location.href='{{ route('ESTB.staff.generatestatistics') }}'">
+                                                        Generate Statistics
+                                                    </button>
+                                                    
                                                     <!--For filtering the data as per requirement-->
                                                     <button type="button" class="hs-dropdown-toggle ti-btn bg-green-500 hover:bg-green-600 text-white rounded-full px-4 py-2" onclick="location.href='{{ route('ESTB.staff.staffinformation') }}'">
                                                         Staff Filter

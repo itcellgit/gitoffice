@@ -39,7 +39,7 @@ use App\Http\Controllers\PRINCIPAL\PrincipalController;
 
 
 
-
+use App\Http\Controllers\ESTB\StaffPayscaleController;
 use App\Http\Controllers\ESTB\ReligionController;
 use App\Http\Controllers\ESTB\CastecategoryController;
 use App\Http\Controllers\ESTB\DesignationController;
@@ -132,6 +132,9 @@ use App\Http\Controllers\Teaching\ReviewerEditorController;
 //Non-teaching professional activity
 use App\Http\Controllers\NonTeaching\NT_ProfessionalActivityAttendeeController;
 use App\Http\Controllers\NonTeaching\NT_ProfessionalActivityConductedController;
+use App\Http\Controllers\NonTeaching\NT_ExamSectionIssuesController;
+use App\Http\Controllers\NonTeaching\NT_IssueTimelineController;
+use App\Http\Controllers\NonTeaching\StaffStudentIssueController;
 
 //Deanrnd
 use App\Http\Controllers\Deanrnd\DeanRndController;
@@ -149,6 +152,10 @@ use App\Http\Controllers\HOD\HodEventController;
 use App\Http\Controllers\HOD\HodNoticeboardController;
 use App\Http\Controllers\HOD\GrievienceCategoryController;
 use App\Http\Controllers\HOD\HODLeaveController;
+use App\Http\Controllers\HOD\ExamSectionIssuesController;
+use App\Http\Controllers\HOD\IssueTimelineController;
+use App\Http\Controllers\HOD\HodStudentIssueController;
+
 
 //Biometric
 use App\Http\Controllers\ESTB\BiometricController;
@@ -172,9 +179,19 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\LeaveStaffApplicationsController;
 
+//super_admin_events
+use App\Http\Controllers\Admin\AdminEventController;
+
+//super_admin notice
+use App\Http\Controllers\Admin\AdminNoticeController;
+
+
+
 //grievience
 
 use App\Http\Controllers\grievience\ExamOfficeController;
+use App\Http\Controllers\StudentIssueController;
+
 
 
 use App\Http\Controllers\MSSqlController;
@@ -195,9 +212,6 @@ Route::get('/biometric', function () {
     $biometric=DB::connection('mysql2')->table('devicelogs_4_2024')->get();
     dd($biometric);
 });
-Route::post('/biometric_data', [biometricController::class, 'biometric_data'])->name('biometric_data');
-
-
 
 
 Route::get('/send-welcome-email', [EmailController::class, 'sendWelcomeEmail']);
@@ -207,7 +221,10 @@ Route::middleware(['cors','auth','role:'.UserRoles::SU->value,'middleware' => 'p
     Route::get('/Admin/users',[AdminController::class,'users'])->name('Admin.users');
 
     Route::get('/Admin/tickets/dashboard',[AdminTicketController::class,'dashboard'])->name('Admin.tickets.dashboard');
-  });
+});
+
+
+
 //Teaching staff related routes (teaching staff Logins)
 Route::middleware(['cors','auth','role:'.UserRoles::TEACHING->value, 'prevent-back-history'])->group(function(){
 
@@ -217,6 +234,17 @@ Route::middleware(['cors','auth','role:'.UserRoles::TEACHING->value, 'prevent-ba
   Route::get('/Teaching/departments',[TeachingController::class,'departments'])->name('Teaching.departments');
   Route::get('/Teaching/associations',[TeachingController::class,'associations'])->name('Teaching.associations');
   Route::get('/Teaching/designations',[TeachingController::class,'designations'])->name('Teaching.designations');
+
+  //staff qualification routes
+  Route::get('/Teaching/qualifications',[TeachingController::class,'qualifications'])->name('Teaching.qualifications');
+  // Route::get('/Teaching/staff/{staff}/qualifications',[urlcontroller::class,'qualification'])->name('Teaching.qualifications');
+   //updating qualification of the staff.
+   Route::post('/Teaching/staff/qualifications/create/',[TeachingController::class,'store'])->name('Teaching.staff.qualification.store');
+   Route::patch('/Teaching/staff/qualifications/update/{qualification}',[TeachingController::class,'update_qualification'])->name('Teaching.staff.qualification.update');
+  //for deleting the staff qualification details when want to change the qualification with the condition being duration of the staff in that perticular department is within 1 month
+   Route::delete('/Teaching/staff/qualification/destroy/{qualification}',[TeachingController::class,'destroy'])->name('Teaching.staff.qualification.destroy');
+
+
 
   Route::get('/Teaching/construction',[TeachingController::class,'index'])->name('construction');
 
@@ -348,6 +376,15 @@ Route::middleware(['cors','auth','role:'.UserRoles::NONTEACHING->value, 'prevent
   Route::get('/Non-Teaching/associations',[NonTeachingController::class,'associations'])->name('Non-Teaching.associations');
 
 
+  //staff qualification routes
+  Route::get('/Non-Teaching/ntqualification',[NonTeachingController::class,'qualifications'])->name('Non-Teaching.ntqualification');
+  // Route::get('/Non-Teaching/staff/{staff}/qualifications',[urlcontroller::class,'qualification'])->name('Teaching.qualifications');
+   //updating qualification of the staff.
+   Route::post('/Non-Teaching/staff/qualifications/create/',[NonTeachingController::class,'store'])->name('Non-Teaching.staff.qualification.store');
+   Route::patch('/Non-Teaching/staff/qualifications/update/{qualification}',[NonTeachingController::class,'update_qualification'])->name('Non-Teaching.staff.qualification.update');
+   Route::delete('/Non-Teaching/staff/qualification/destroy/{qualification}',[NonTeachingController::class,'destroy'])->name('Non-Teaching.staff.qualification.destroy');
+
+
   //Route for Update the staff personal information
   Route::get('/Staff/Non-Teaching/ntupdateprofile/{staff}',[NonTeachingController::class,'update_staff_information'])->name('Staff.Non-Teaching.ntupdateprofile');
   Route::patch('/Staff/Non-Teaching/ntupdateprofile/{staff}',[NonTeachingController::class,'update'])->name('Staff.Non-Teaching.update');
@@ -371,6 +408,17 @@ Route::middleware(['cors','auth','role:'.UserRoles::NONTEACHING->value, 'prevent
   Route::delete('/Non-Teaching/professionalactivities/conducted/destory/{professional_activity_conducted}', [NT_ProfessionalActivityConductedController::class, 'destroy'])->name('Non-Teaching.professionalactivities.conducted.destroy');
 
   Route::get('/Non-Teaching/construction',[NonTeachingController::class,'index'])->name('construction');
+
+  Route::get('/Staff/Non-Teaching/examsectionissues',[NT_ExamSectionIssuesController::class,'index'])->name('Staff.Non-Teaching.examsectionissues');
+  Route::post('/Staff/Non-Teaching/examsectionissues/create',[NT_ExamSectionIssuesController::class,'store'])->name('Staff.Non-Teaching.examsectionissues.store');
+  Route::patch('/Staff/Non-Teaching/examsectionissues/update/{examSectionIssues}',[NT_ExamSectionIssuesController::class,'update'])->name('Staff.Non-Teaching.examsectionissues.update');
+  Route::delete('/Staff/Non-Teaching/examsectionissues/destory/{examSectionIssues}', [NT_ExamSectionIssuesController::class, 'destroy'])->name('Staff.Non-Teaching.examsectionissues.destroy');
+
+  Route::get('/Staff/Non-Teaching/issue_timeline',[NT_IssueTimelineController::class,'index'])->name('Staff.Non-Teaching.issue_timeline.index');
+  Route::post('/Staff/Non-Teaching/viewstudentissues/{student_issue}/issue_timeline/create',[NT_IssueTimelineController::class,'store'])->name('Staff.Non-Teaching.issue_timeline.store');
+  Route::get('/Staff/Non-Teaching/viewstudentissues', [StaffStudentIssueController::class, 'index'])->name('Staff.Non-Teaching.view');
+  Route::get('/Staff/Non-Teaching/viewstudentissues/{student_issue}/show',[StaffStudentIssueController::class,'show'])->name('Staff.Non-Teaching.issue_timeline.show');
+
 });
 
 Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-history'])->group(function(){
@@ -381,6 +429,10 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
 
     //biometric
     Route::get('/ESTB/Biometric/Biometric_data', [BiometricController::class, 'biometric_data'])->name('ESTB.Biometric.Biometric_data');
+    Route::post('/biometric_data', [biometricController::class, 'biometric_data'])->name('biometric_data');
+    // Route for missingLogEntries method
+    Route::get('/biometric/missing_logs', [BiometricController::class, 'missingLogEntries'])->name('biometric.missing_logs');
+
 
 
     //departments controller
@@ -441,11 +493,11 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     // Grading routes
     Route::get('/ESTB/autonomous_allowance',[AllowanceStaffController::class,'index'])->name('ESTB.autonomous_allowance');
     Route::post('/ESTB/autonomous_allowance',[AllowanceStaffController::class,'create'])->name('ESTB.autonomous_allowance.create');
-    Route::post('/ESTB/autonomous_allowance/create', [AllowanceStaffController::class, 'store'])->name('import.excel');
+    Route::post('/ESTB/autonomous_allowance/create', [AllowanceStaffController::class, 'store'])->name('ESTB.autonomous_allowance.import');
 
     // Generate annual increment list controller
     Route::get('/ESTB/Generateannualincrement', [GenetareAnnualIncrementListController::class, 'index'])->name('aanualincrement.staff.index');
-
+    Route::post('/import-excel', [GenetareAnnualIncrementListController::class, 'importExcel'])->name('import.excel');
     //Assocations Controllers
 
     Route::get('/ESTB/associations',[AssociationController::class,'index'])->name('ESTB.associations');
@@ -482,6 +534,11 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::patch('/ESTB/payscales/allowances/update/{allowances}',[AllowancesController::class,'update'])->name('ESTB.payscales.allowances.update');
     Route::delete('/ESTB/payscales/allowances/destory/{allowances}',[AllowancesController::class,'destroy'])->name('ESTB.payscales.allowances.destroy');
 
+
+    //staffpayscale
+    Route::get('/staff-payscale', [StaffPayscaleController::class, 'index']);
+
+
     //Staff Routes
     Route::get('/ESTB/staff',[StaffController::class,'index'])->name('ESTB.staff');
 
@@ -498,6 +555,11 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
 
     //route for staff searching , sorting and filtering
     Route::get('/ESTB/staff/indexfiltering', [StaffFilteringController::class,'indexFiltering'])->name('ESTB.staff.indexfiltering');
+
+    //route to generate statistics filter
+    Route::get('/ESTB/staff/generatestatistics',[StaffController::class,'statistics_information'])->name('ESTB.staff.generatestatistics');
+
+
 
     /**************** */
     Route::get('/ESTB/staff/{staff}/qualifications',[urlcontroller::class,'qualifications'])->name('ESTB.staff.qualifications');
@@ -587,18 +649,16 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     // End of leave management related routes.
 
     //REnumerations Controllers
-     Route::get('/ESTB/renumerations',[RenumerationheadsController::class,'index'])->name('ESTB.renumerations');
-     Route::post('/ESTB/renumerations/create',[RenumerationheadsController::class,'store'])->name('ESTB.renumerations.store');
-     Route::patch('/ESTB/renumerations/update/{renumeration}',[RenumerationheadsController::class,'update'])->name('ESTB.renumerations.update');
-     Route::delete('/ESTB/renumerations/destory/{renumeration}', [RenumerationheadsController::class, 'destroy'])->name('ESTB.renumerations.destroy');
+    Route::get('/ESTB/renumerations',[RenumerationheadsController::class,'index'])->name('ESTB.renumerations');
+    // Route::post('/ESTB/renumerations/create',[RenumerationheadsController::class,'store'])->name('ESTB.renumerations.store');
+    // Route::patch('/ESTB/renumerations/update/{renumeration}',[RenumerationheadsController::class,'update'])->name('ESTB.renumerations.update');
+    // Route::delete('/ESTB/renumerations/destory/{renumeration}', [RenumerationheadsController::class, 'destroy'])->name('ESTB.renumerations.destroy');
+    Route::post('/import-excel', [RenumerationheadsController::class, 'importExcel'])->name('import.excel');
 
-     Route::post('/import-excel', [RenumerationheadsController::class, 'importExcel'])->name('import.excel');
+    //Route to fetch renumeration for perticular staff using Filter
+   Route::get('/ESTB/renumerations/renumedetails',[RenumerationheadsController::class,'filterrenume_information'])->name('ESTB.renumerations.renumedetails');
+   Route::get('/ESTB/renumerations/indexfiltering', [RenumerationheadsController::class,'indexFiltering'])->name('ESTB.renumerations.indexfiltering');
 
-      //Route to fetch renumeration for perticular staff using Filter
-    Route::get('/ESTB/renumerations/renumedetails',[RenumerationheadsController::class,'filterrenume_information'])->name('ESTB.renumerations.renumedetails');
-
-    //route for staff searching , sorting and filtering
-    Route::get('/ESTB/renumerations/indexfiltering', [RenumeFilterController::class,'indexFiltering'])->name('ESTB.renumerations.indexfiltering');
 
     Route::get('/ESTB/salaryheads',[SalaryHeadsController::class,'index'])->name('ESTB.salaryheads');
     Route::post('/ESTB/salaryheads/create',[SalaryHeadsController::class,'store'])->name('ESTB.salaryheads.store');
@@ -802,6 +862,15 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
      Route::patch('/HOD/grievancecategory/update/{grievience_category}',[GrievienceCategoryController::class,'update'])->name('HOD.grievancecategory.update');
      Route::delete('/HOD/grievancecategory/destory/{grievience_category}', [GrievienceCategoryController::class, 'destroy'])->name('HOD.grievancecategory.destroy');
 
+     Route::get('/HOD/examsectionissues',[ExamSectionIssuesController::class,'index'])->name('HOD.examsectionissues.index');
+     Route::post('/HOD/examsectionissues/create',[ExamSectionIssuesController::class,'store'])->name('HOD.examsectionissues.store');
+     Route::patch('/HOD/examsectionissues/update/{examSectionIssues}',[ExamSectionIssuesController::class,'update'])->name('HOD.examsectionissues.update');
+     Route::delete('/HOD/examsectionissues/destory/{examSectionIssues}', [ExamSectionIssuesController::class, 'destroy'])->name('HOD.examsectionissues.destroy');
+
+     Route::get('/HOD/issue_timeline',[IssueTimelineController::class,'index'])->name('HOD.issue_timeline.index');
+     Route::post('/HOD/viewstudentissues/{student_issue}/issue_timeline/create',[IssueTimelineController::class,'store'])->name('HOD.issue_timeline.store');
+     Route::get('/HOD/viewstudentissues', [HodStudentIssueController::class, 'index'])->name('HOD.view');
+      Route::get('/HOD/viewstudentissues/{student_issue}/show',[HodStudentIssueController::class,'show'])->name('HOD.issue_timeline.show');
 
   });
 
@@ -920,6 +989,13 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
       Route::get('/PRINCIPAL/leaves_management/fetchholidayrhevents',[PrincipalController::class,'fetchholidayrhevents'])->name('fetchholidayrhevents');
       Route::get('/PRINCIPAL/leaves_management/fetchleaveevents',[PrincipalController::class,'fetchleaveevents'])->name('fetchmyleaveevents');
 
+      //Approve and Reject Leaves Routes in Principal login
+      Route::get('/PRINCIPAL/leaves_management/approve_leave',[PrincipalController::class,'approve_leave'])->name('PRINCIPAL.leaves_management.approve_leave');
+      Route::get('/PRINCIPAL/leaves_management/reject_leave',[PrincipalController::class,'reject_leave'])->name('PRINCIPAL.leaves_management.reject_leave');
+
+
+
+
 
 
       Route::get('/PRINCIPAL/staff/index',[PrincipalController::class,'staff_view'])->name('PRINCIPAL.staff');
@@ -988,19 +1064,45 @@ Route::patch('ticket/{ticket}reply/update',[ReplyController::class,'update'])->n
 
 
 //Routes for admin ticketiing  system
-Route::middleware(['cors','auth','role:'.UserRoles::SU->value])->group(function()
+// Route::middleware(['cors','auth','role:'.UserRoles::SU->value])->group(function()
+Route::middleware(['cors','auth','role:' . UserRoles::SU->value, 'middleware' => 'prevent-back-history', 'impersonate'])->group(function ()
 {
   Route::get('/Admin/dashboard',[AdminController::class,'dashboard'])->name('Admin.dashboard');
   Route::get('/Admin/tickets/adminticket',[AdminTicketController::class,'index'])->name('Admin.tickets.adminticket');
   Route::post('Admin/tickets/adminticket/create', [AdminTicketController::class, 'store'])->name('Admin.tickets.adminticket.store');
- // Route::patch('Admin/tickets/adminticket/update/{ticket}', [AdminTicketController::class, 'update'])->name('Admin.tickets.adminticket.update');
-  // Route::delete('Admin/tickets/adminticket/destroy/{ticket}',[AdminTicketController::class, 'destroy'])->name('Admin.tickets.adminticket.destroy');
   Route::get('Admin/tickets/adminshowticket/show/{ticket}', [AdminTicketController::class, 'show'])->name('Admin.tickets.adminshowticket.show');
- // Route::patch('ticket/update/{postticket}', [ReplyController::class, 'update'])->name('ticket.reply.update');
-  //Route::patch('Admin/tickets/adminticket/update/{ticket}', [AdminTicketController::class, 'status_update'])->name('Admin.tickets.adminticket.update');
+ // Route::patch('Admin/tickets/adminticket/update/{ticket}', [AdminTicketController::class, 'update'])->name('Admin.tickets.adminticket.update');
+// Route::delete('Admin/tickets/adminticket/destroy/{ticket}',[AdminTicketController::class, 'destroy'])->name('Admin.tickets.adminticket.destroy');
+// Route::patch('ticket/update/{postticket}', [ReplyController::class, 'update'])->name('ticket.reply.update');
+//Route::patch('Admin/tickets/adminticket/update/{ticket}', [AdminTicketController::class, 'status_update'])->name('Admin.tickets.adminticket.update');
+
+
+ //super_admin events
+ Route::get('/Admin/adminevents',[AdminEventController::class,'index'])->name('Admin.adminevents.index');
+ Route::post('/Admin/adminevents/create',[AdminEventController::class,'store'])->name('Admin.adminevents.store');
+ Route::patch('/Admin/adminevents/update/{event}',[AdminEventController::class,'update'])->name('Admin.adminevents.update');
+ Route::delete('/Admin/adminevents/destory/{event}', [AdminEventController::class, 'destroy'])->name('Admin.adminevents.destroy');
+
+  //super_admin notice board
+Route::get('/Admin/adminnotice',[AdminNoticeController::class,'index'])->name('Admin.adminnotice.index');
+Route::post('/Admin/adminnotice/create',[AdminNoticeController::class,'store'])->name('Admin.adminnotice.store');
+Route::patch('/Admin/adminnotice/update/{notice}',[AdminNoticeController::class,'update'])->name('Admin.adminnotice.update');
+Route::delete('/Admin/adminnotice/destory/{notice}', [AdminNoticeController::class, 'destroy'])->name('Admin.adminnotice.destroy');
+
+
+
+
+  Route::get('/Admin/users', [AdminController::class, 'users'])->name('Admin.users');
+
+  // Route for starting impersonation
+  Route::get('admin/impersonate/{user}', [AdminController::class, 'startImpersonation'])->name('admin.start_impersonation');
+  Route::get('admin/stop-impersonation', [AdminController::class, 'stopImpersonation'])->name('admin.stop_impersonation');
 
 });
 
+Route::get('/student-issues', [StudentIssueController::class,'index'])->name('student-issues.index');
+Route::post('/student-issues', [StudentIssueController::class,'store'])->name('student-issues.store');
+Route::get('/student-issues/{student_issue}', [StudentIssueController::class, 'show'])->name('student-issues.show');
 
 
 

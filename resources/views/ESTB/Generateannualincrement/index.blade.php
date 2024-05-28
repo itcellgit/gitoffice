@@ -123,7 +123,7 @@
                                         </div>
                                     </div>
                 
-                                    {{-- <div class="box-body">
+                                    <div class="box-body">
                                             <div class="flex justify-end space-x-4 items-center">
                                                 <form action="{{ route('import.excel') }}" method="POST" enctype="multipart/form-data" class="flex items-center space-x-2">
                                                     @csrf
@@ -134,8 +134,8 @@
                                                 </form>
                                                 <button id="exportToExcel" class="bg-green-500 text-white px-4 py-2 text-xs rounded-md focus:outline-none hover:bg-green-600 focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 whitespace-nowrap">Export to Excel</button>
                                             </div>
-                                        </div> --}}
-                                    <!-- </div> -->
+                                        </div>
+                                     </div>
                     {{-- <form id="generateannualincrementForm" method="POST" action="{{ route('generateannualincrement.staff.update') }}">
                          @csrf --}}
                         <div class="flex justify-end my-4">
@@ -159,37 +159,12 @@
                                         <th scope="col" class="dark:text-white/80">Incentive earned up to 30.06.2015</th>
                                         <th scope="col" class="dark:text-white/80">Autonomous allowance</th>
                                         <th scope="col" class="dark:text-white/80">Gross salary</th>
+                                        <th scope="col" class="dark:text-white/80">Actions</th>
 
                                     </tr>
                                 </thead>
-                                {{-- <tbody>
-                                    @php
-                                        $i = 1;
-                                    @endphp
-                                    @foreach($increment as $incrementStaff)
-                                        <tr>
-                                            <td><span>{{ $i++ }}</span></td>
-                                            <td class="border border-gray-300 px-4 py-2"><span>{{ $incrementStaff->staff_id }}</span></td>
-                                            <td class="border border-gray-300 px-4 py-2"><span>{{ $incrementStaff->staff->fname}} {{ $gradingStaff->staff->mname}} {{$gradingStaff->staff->lname}}</span></td>
-                                            <td class="border border-gray-300 px-4 py-2"><span>{{ $incrementStaff->staff->departments->first()->dept_shortname }}</span></td>
-                                            <td class="border border-gray-300 px-4 py-2"><span>{{ $incrementStaff->year }}</span></td>
-                                            <td class="border border-gray-300 px-4 py-2"><span>{{ $incrementStaff->month }}</span></td>
-                                            <td class="border border-gray-300 px-4 py-2"><span>{{ $incrementStaff->status }}</span></td>
-                                            <td>
-                                            <div class="hs-tooltip ti-main-tooltip">
-                                                        <button type="button" data-id="{{ $gradingStaff->id }}" class="edit-btn hs-dropdown-toggle m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M16.7574 2.99666L14.7574 4.99666H5V18.9967H19V9.2393L21 7.2393V19.9967C21 20.5489 20.5523 20.9967 20 20.9967H4C3.44772 20.9967 3 20.5489 3 19.9967V3.99666C3 3.44438 3.44772 2.99666 4 2.99666H16.7574ZM20.4853 2.09717L21.8995 3.51138L12.7071 12.7038L11.2954 12.7062L11.2929 11.2896L20.4853 2.09717Z"></path></svg>
-                                                    <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700" role="tooltip">
-                                                        Edit
-                                                    </span>
-                                                </button>
-                                                <button type="submit" class="bg-blue-500 text-white px-4 py-2 text-xs rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 whitespace-nowrap submit-btn hidden">Submit</button>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody> --}}
-                                                    <tbody class="">
+
+                                                <tbody class="">
 
                                                         @php
                                                             $i = 1;
@@ -198,25 +173,23 @@
                                                         @forelse($staff as $st)
 
                                                         <tr class="bg-red-700">
-                                                            <td rowspan="5">{{ $i++ }}</td>
+                                                            <td >{{ $i++ }}</td>
                                                             <td>
-                                                                <tr>
-                                                                    <td>
-                                                                        <div class="flex space-x-3 rtl:space-x-reverse w-full min-w-[200px]">
+                                                                <ul>
+                                                                    <li> <div class="flex space-x-3 rtl:space-x-reverse w-full min-w-[200px]">
                                                                             <div class="block w-full my-auto">
 
                                                                                 {{$st->fname.' '.$st->mname.' '.$st->lname}}
                                                                             </div>
                                                                         </div>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
+                                                                    </li>
+                                                                
+                                                                {{-- <tr>
                                                                     <td>
                                                                         <span>{{$st->latest_employee_type()->first()->employee_type}}</span>
                                                                     </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
+                                                                </tr> --}}
+                                                                <li>
                                                                         <span>
                                                                             @foreach ($st->departments as $dept)
                                                                                 @if($dept->pivot->status == 'active')
@@ -224,10 +197,9 @@
                                                                                 @endif
                                                                             @endforeach
                                                                         </span>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr> 
-                                                                    <td >
+                                                                    </li>
+                                                                
+                                                                    <li >
                                                                         <span class="w-3/4">
 
                                                                             @foreach ($st->designations as $design)
@@ -237,28 +209,63 @@
                                                                             @endforeach
 
                                                                         </span>
-                                                                    </td>
-                                                                </tr>
+                                                                    </li>
                                                             
-                                                                <tr>
+                                                                
                                                             
-                                                                    <td><span>
+                                                                    <li><span>
                                                                         @foreach ($st->qualifications as $st_quli)
                                                                             @if($st_quli->pivot->status=='active')
                                                                                 {{$st_quli->qual_shortname}}
                                                                             @endif
                                                                         @endforeach
                                                                         </span>
-                                                                    </td>
-                                                                </tr>
+                                                                    </li>
                                                             </td>
-                                                            <td rowspan="5" class="border border-gray-300 px-4 py-2"><span>{{ $st->dob }}</span></td>
-                                                            <td rowspan="5" class="border border-gray-300 px-4 py-2"><span>{{ $st->doj }}</span></td>
-                                                            <td rowspan="5" class="border border-gray-300 px-4 py-2"><span>{{ $st->date_of_increment}}</span></td>
-                                                            
-                                                           <td rowspan="5" class="border border-gray-300 px-4 py-2"><span>{{ $st->basic}}</span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{ $st->dob }}</span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{ $st->doj }}</span></td>
+                                                            <td class=""><span>
+                                                            @foreach($st->associations as $st_asso)
+                                                            {{$st_asso->asso_name}}
+                                                            @endforeach
+                                                            </td>
+                                                            <td class="">
+                                                            <span>
+                                                            @foreach($st->teaching_payscale as $st_pay)
+                                                                {{$st_pay->basepay.'-'.$st_pay->maxpay}}
+                                                                         {{$st_pay->agp}}
+                                                            @endforeach
+                                                                {{-- @if(count()) --}}
 
-                                                            <td rowspan="5" class="font-medium space-x-2 rtl:space-x-reverse">
+                                                            </td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>@foreach($st->annualIncrement as $st_ai)
+                                                                        {{$st_ai->basic}}
+                                                                        @endforeach
+                                                                           @foreach($st->teaching_payscale as $st_pay)
+                                                                         {{$st_pay->agp}}
+                                                                          @endforeach</span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{$data[$st->id]['total']}}</span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{$data[$st->id]['incremente_value']}}</span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>
+                                                            @foreach($st->annualIncrement as $st_ai)
+                                                            {{$st_ai->wef}}
+                                                             @endforeach
+                                                            
+                                                            </span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{$st->date_of_increment}}</span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{$data[$st->id]['basic']."-".$data[$st->id]['incremente_value']."= ".$data[$st->id]['basic_agp_incremented_value']}}</span></td>
+                                                    
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{$data[$st->id]['basic_agp_incremented_value']}}</span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>0</span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>
+                                                            @foreach($st->allowance as $st_ai)
+                                                            {{$st_ai->value}}
+                                                             @endforeach
+                                                            
+                                                            </span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{$data[$st->id]['gross_value']}}</span></td>
+                                                            
+                                                            <td  class="font-medium space-x-2 rtl:space-x-reverse">
                                                                 <div class="hs-tooltip ti-main-tooltip">
                                                                     <button
                                                                         class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary">

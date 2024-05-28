@@ -195,7 +195,7 @@
 
                                                                         <th scope="col" class="dark:text-white/80 font-bold">#</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">Leave Type</th>
-                                                                        <th scope="col" class="dark:text-white/80 font-bold">Staff on Leave</th>
+                                                                        <th scope="col" class="dark:text-white/80 font-bold">Staff</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">Dept</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">From Date</th>
                                                                         <th scope="col" class="dark:text-white/80 font-bold">To Date</th>
@@ -540,8 +540,10 @@
                     },
                     eventClick: function(info) {
                         ///alert('Event: ' + info.event.start);
-                        //console.log(info.event.start);
+                        //console.log(info.event.extendedProps.leave_id);
                         var Clickeddate = info.event.start;
+                        var leave_name = info.event.extendedProps.leave_name;
+                        //console.log(leave_name);
                         $('#view_leave_modal').trigger('click');
                         // $('.event_title').html(info.event.title+' on '+ Clickeddate.getDate()+"/"+Clickeddate.getMonth()+"/"+Clickeddate.getFullYear());
                         // $('#view_leave').css('z-index', 9999);
@@ -563,6 +565,7 @@
                             method: 'GET',
                             data: {
                                 date: clicked_date,
+                              
                                 _token : '{{csrf_token()}}' // Pass the clicked date to the server
                             },
                             success: function(response) {
@@ -596,6 +599,7 @@
                             method: 'GET',
                             data: {
                                 date: clicked_date,
+                                leave_name: leave_name,
                                 _token : '{{csrf_token()}}' // Pass the clicked date to the server
                             },
                             success: function(response) {
@@ -622,10 +626,10 @@
 
                                     $('#leave_application_list').append('<tr class="'+ bg_color_setting +'">'
                                                                 +'<td >'+value.Application_id+ '</td>'
+                                                                +'<td>'+value.title+ '</td>'
                                                                 +'<td >'+value.staff_name+ '</td>'
                                                                 +'<td >'+value.shortname+ '</td>'
-                                                                +'<td>'+value.title+ '</td>'
-                                                                +'<td>'+value.start+ '</td>'
+                                                                 +'<td>'+value.start+ '</td>'
                                                                 +'<td>'+value.end+ '</td>'
                                                                 +'<td>'+value.reason+ '</td>'
                                                                 +'<td>'+value.alternate_staff+ '</td>'

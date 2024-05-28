@@ -123,7 +123,7 @@
                                                         <th>Entitled</th>
                                                         @foreach ($staff_leave_entitlements as $staff_leave)
 
-                                                                    <td>{{$staff_leave->entitled_curr_year}}</td>
+                                                                    <td>{{$staff_leave->entitled_curr_year+$staff_leave->accumulated}}</td>
 
                                                         @endforeach
                                                         <td></td>
@@ -973,17 +973,17 @@
                    },
                    dateClick: function(info) {
 
-                       console.log(info);
+                       //console.log(info);
                      //   alert('Current view: ' + info.view.type);
 
                         $('#leave_apply_modal').trigger('click');
                         //alert('leave modal active');
-                        // $('#from_date').val(info.dateStr);
-                        // flatpickr('#from_date', {
-                        //     "minDate": new Date(info.dateStr),
-                        //     "maxDate": new Date(info.dateStr),
+                         $('#from_date').val(info.dateStr);
+                        flatpickr('#from_date', {
+                            "minDate": new Date(info.dateStr),
+                            "maxDate": new Date(info.dateStr),
 
-                        // });
+                        });
                         $('#type').focus();
                         flatpickr('#to_date', {
                             "minDate": new Date(info.dateStr),

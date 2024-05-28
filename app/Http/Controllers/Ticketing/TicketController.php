@@ -91,7 +91,9 @@ class TicketController extends Controller
             'attachment' => count($file_data) === 1 ? $file_data[0] : json_encode($file_data)
         ]);
         }
-            return redirect('ticket/dashboard');
+
+    
+        return redirect('ticket/dashboard');
     }
    
 
@@ -156,6 +158,7 @@ class TicketController extends Controller
         'attachment' => count($file_data) === 1 ? $file_data[0] : json_encode($file_data)
     ]);
     }
+    
       
         return redirect(route('ticket.dashboard'));
     }

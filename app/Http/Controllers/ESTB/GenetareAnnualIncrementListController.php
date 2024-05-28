@@ -16,7 +16,7 @@ use App\Models\designation;
 use App\Models\annual_increment;
 use App\Models\department;
 use App\Models\employee_type;
-
+use App\Models\allowance;
 use App\Models\association;
 use App\Models\teaching_payscale;
 use App\Models\ntpayscale;
@@ -37,45 +37,141 @@ class GenetareAnnualIncrementListController extends Controller
     {
         $filter="";
        // dd($staff1);
-       $staff=staff::with('designations')
-        ->with('associations')
-        ->with('qualifications')
-        ->with('annualIncrement')
-       ->with('departments')
-       ->with('teaching_payscale')
-       ->with('ntpayscale')
-       ->with('ntcpayscale')
-       ->with('consolidated_teaching_pay')
-       ->with('fixed_nt_pay')
-       ->with('latest_employee_type')
-       ->whereRaw('month(date_of_increment)=?',[8])
-       ->orderBy('fname')->get();
+       $staff=staff::
+      with('designations')
+     ->with(['associations'=>function($q){
+             $q->wherePivot('status','active');
+    }])
+     ->with('qualifications')
+    ->with(['annualIncrement'=>function($q){
+       $q->orderBy('wef','desc')->get();
+      }])
+      ->with(['allowance'=>function($q){
+        $q->wherePivot('status','active');
+        
+}])
+     ->with(['departments'=>function($q){
+        $q->wherePivot('status','active');
+      }])
+     ->with(['teaching_payscale'=>function($q){
+         $q->wherePivot('status','active');
+       }]) 
+      ->with(['ntpayscale'=>function($q){
+        $q->wherePivot('status','active');
+      }])
+     ->with(['ntcpayscale'=>function($q){
+        $q->wherePivot('status','active');
+      }])
+    ->with('consolidated_teaching_pay')
+        ->with('fixed_nt_pay')
+    ->with(['latest_employee_type'=>function($q){
+        $q->where('status','active');
+    }])
+      ->whereRaw('month(date_of_increment)=?',[8])
+       ->orderBy('fname')->
+       whereIn('staff.id',function($q){
+            $q->select('association_staff.staff_id')
+            ->from('association_staff')
+            ->join('employee_types','employee_types.staff_id','=','association_staff.staff_id')
+            ->where('association_id',function($q1){
+                $q1->select('id')
+                ->from('associations')
+                ->where('asso_name','Confirmed');
+            })->where('employee_type','Teaching');
+       })->take(5)->get();
 
-       //dd($staff);
+       
+        // DB::raw('(annual_increments.basic + teaching_payscales.agp + ((annual_increments.basic + teaching_payscales.agp) * 0.20) + ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.da/100) + ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.hra/100) + teaching_payscales.cca + allowances.value) as gross_salary')
+ 
+    
 
-       //$staff = DB::table('staff')->with('designations')->with('associations')->orderBy('id')->paginate(15);
-       // $caste_categories = castecategory::where('status','active')->get();
-       // $religions =religion::where('status','active')->get();
-        // $associations = association::where('status','active')->get();
-        // $departments = DB::table('departments')->where('status','active')->get();
-        // $qualifications =DB::table('qualifications')->where('status','active')->get();
-        // $designations=designation::where('status','active')->get();
-        // //To fetch Designation As per Employee type
-        // $teachingDesignations = designation::where('status', 'active')
-        //                     ->where('emp_type', 'Teaching')
-        //                     ->where('isadditional', 0)
-        //                     ->orderBy('design_name')
-        //                     ->get();
+      //dd($staff);
+      $data = [];
+foreach($staff as $st)
+{
+    $staffId = $st->id;
+    $data[$staffId] = [
+        'basic' => 0,
+        'agp' => 0,
+        'total' => 0,
+        'incremente_value'=>0,
+       'incremented_total'=>0,
+       'basic_agp_incremented_value'=>0,
+       'gross_value' =>0
+    ];
+    foreach($st->annualIncrement as $increment) {
+    $staffId = $st->id;
+    $data[$staffId] ['basic']=$increment->basic;
 
-        // $nonteachingDesignations = designation::where('status', 'active')
-        //                     ->where('emp_type', 'Non-teaching')
-        //                     ->where('isadditional', 0)
-        //                     ->orderBy('design_name')
-        //                     ->get();
+    foreach($st->allowance as $al) {
+        $staffId = $st->id;
+        $data[$staffId] ['value']=$al->value;
+    
 
-        //$payscales = teaching::
-        return view('ESTB.Generateannualincrement.index',compact(['staff']));
+    foreach($st->teaching_payscale as $payscale) {
+      // Ensure the pay scale entry belongs to the current staff member
+            $data[$staffId]['agp'] = $payscale->agp;
+            
+           
+            $data[$staffId]['cca'] = $payscale->cca;
+            // Calculate the total amount by adding basic and agp
+            $data[$staffId]['total'] = $increment->basic + $payscale->agp;
+            // $incremented_total = $total + ($total * 0.03);
+            //dd($staffId." ".$data[$staffId]['total'].' '.$data[$staffId]['total']*0.03);
+        
+            $data[$staffId]['incremente_value'] = ($data[$staffId]['total']* 0.03);
+            $data[$staffId]['incremented_total'] = $data[$staffId]['basic'] +
+            $data[$staffId]['incremente_value'];
+//   dd($staffId." ".$data[$staffId]['incremented_total_after'].' '.$data[$staffId]['basic']+
+  //$data[$staffId]['incremented_total']);
+  $data[$staffId]['basic_agp_incremented_value']= $data[$staffId]['incremented_total']+ $data[$staffId]['agp'];
+//   dd($staffId." ".$data[$staffId]['incremented_total_after_increment'].' '.$data[$staffId]['incremented_total_after']+
+//   $data[$staffId]['agp']); 
+$data[$staffId]['gross_value']=$data[$st->id]['basic_agp_incremented_value']*195/100+$data[$staffId]['cca']+$data[$staffId] ['value'];
+
     }
+  }
+    }
+
+}
+
+    //dd($data['31']['total']);
+
+
+        return view('ESTB.Generateannualincrement.index',compact(['staff','data']));
+    }
+
+    public function importExcel(Request $request)
+    {
+        // Validate the uploaded file
+        $request->validate([
+            'excel_file' => 'required|file|mimes:xlsx,xls'
+        ]);
+    
+        // Process the uploaded file
+        $file = $request->file('excel_file');
+        $spreadsheet = IOFactory::load($file);
+        $sheet = $spreadsheet->getActiveSheet();
+    
+        // Get the highest row number
+        $highestRow = $sheet->getHighestRow();
+    
+        // Iterate through each row to read and store grade data
+       
+                
+                    // Create a new record
+                    Annualincrement::create([
+                        'staff_id' => $staffId,
+                        
+                        'date_of_disbursement' => $date_of_disbursement,
+                        'amount' => $amount
+                    ]);
+             
+            
+        
+    
+                return redirect()->back()->with('success', 'Excel file imported successfully');
+  }   
 
     /**
      * Show the form for creating a new resource.
@@ -91,18 +187,7 @@ class GenetareAnnualIncrementListController extends Controller
     public function store(StorestaffRequest $request)
     {
 
-        //dd('Hello and welcome to store function');
-        //dd($request);
-        //users table entry
-    //     $user_details=new User();
-    //     $user_details->email=$request->email."@git.edu";
-    //     $user_details->password=Hash::make('password');
-    //     if($request->employee_type == "Teaching"){
-    //         $user_details->role=UserRoles::TEACHING->value;
-    //     }else{
-    //         $user_details->role=UserRoles::NONTEACHING->value;
-    //     }
-    //    $uresult= $user_details->save();
+      
 
         // staff table details entry
         $staff_details=new staff();
@@ -180,7 +265,7 @@ class GenetareAnnualIncrementListController extends Controller
             $status=1;
         }
         else{
-            DB::rollBack();
+            //DB::rollBack();
             $status=0;
         }
         return redirect('ESTB/staff')->with('status',$status);

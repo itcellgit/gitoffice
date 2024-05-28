@@ -24,13 +24,6 @@ class TeachingPayscaleController extends Controller
         return view('ESTB.payscales.teaching.index',compact(['teaching_payscale','design']));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -63,6 +56,15 @@ class TeachingPayscaleController extends Controller
         return redirect('/ESTB/payscales/teaching')->with('status',$status);
     }
 
+    
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+    
     /**
      * Display the specified resource.
      */

@@ -28,7 +28,7 @@ class Storepost_ticketRequest extends FormRequest
         [
             'title'=>['required','string'],
             'description'=>['required','string'],
-            'attachment.*'=>['sometimes','file','mimes:jpg,jpeg,png,pdf'],
+            'post_attachment.*'=>['sometimes','file','mimes:jpg,jpeg,png,pdf'],
             
         ];
     }

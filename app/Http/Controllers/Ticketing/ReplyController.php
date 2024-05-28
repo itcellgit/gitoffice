@@ -38,30 +38,55 @@ class ReplyController extends Controller
         $postticket->description = $request->description;
 
         // Update attachment if provided
-        if($request->file('attachment'))
-        {
-            $extension=$request->file('attachment')->extension();
-            $contents=file_get_contents($request->file('attachment'));
-           // $filename=Str::random(25);
-            $filename = Str::random(25) . '.' . $extension;
-             $path = $request->file('attachment')->storeAs('attachment', $filename, 'public');
-            //$path="attachment/$filename.$text";
-            Storage::disk('public')->put($path,$contents);
-            $request->file('attachment')->move(public_path('attachment'), $filename);
-            //$ticket->update(['attachment'=>$filename]);
-            $postticket->attachment = $filename;
+
+        // if($request->file('attachment'))
+        // {
+        //     $extension=$request->file('attachment')->extension();
+        //     $contents=file_get_contents($request->file('attachment'));
+        //    // $filename=Str::random(25);
+        //     $filename = Str::random(25) . '.' . $extension;
+        //      $path = $request->file('attachment')->storeAs('attachment', $filename, 'public');
+        //     //$path="attachment/$filename.$text";
+        //     Storage::disk('public')->put($path,$contents);
+        //     $request->file('attachment')->move(public_path('attachment'), $filename);
+        //     //$ticket->update(['attachment'=>$filename]);
+        //     $postticket->attachment = $filename;
+        // }
+
+        // multiple images
+    
+        $attachments = $request->file('post_attachment');
+        if ($attachments) {
+            $file_data = [];
+        // Ensure $attachments is always an array
+            $attachments = is_array($attachments) ? $attachments : [$attachments];
+        
+            foreach ($attachments as $attachment)
+             {
+                $extension = $attachment->extension();
+                $filename = Str::random(25) . '.' . $extension;
+                $path = "post_attachment/$filename"; // Updated path to post_attachment
+                Storage::disk('public')->put($path, file_get_contents($attachment));
+                $file_data[] = $filename;
+            }
+        
+            
+            $postticket->post_attachment = count($file_data) === 1 ? $file_data[0] : json_encode($file_data); 
         }
-             $postticket->save();
-
-             return redirect()->route('ticket.show', ['ticket' => $ticket->id])
-             ->with('success', 'Ticket post saved successfully.');
-
+        
+            $postticket->save();
+        
+        return redirect()->route('ticket.show', ['ticket' => $ticket->id])
+         ->with('success', 'postticket saved successfully.');
+    }
+        
+    
         //      $postticket = post_ticket::where('ticket_id', $ticket->id)->get();
 
             
         //  return view('Ticketing.showticket',compact('ticket','postticket'));
 
-    }
+    
 
     public function update(Updatepost_ticketRequest $request, ticket $ticket)
     {

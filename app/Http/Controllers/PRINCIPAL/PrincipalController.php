@@ -12,6 +12,8 @@ use Illuminate\Support\Carbon;
 use App\Models\holidayrh;
 use App\Http\Controllers\ScheduledJobs;
 use App\Models\leave_staff_applications;
+use App\Models\leave_staff_entitlements;
+
 
 use App\Models\designation;
 use App\Models\department;
@@ -153,39 +155,42 @@ class PrincipalController extends Controller
         //['message' => 'Date clicked: ' . $date]
     }
 
+
+
+    // Filter to show only leaves of 5 days or more
     public function fetchleaveevents(Request $request){
         $date = $request->input('date');
-        //dd($date);
-        // $user = Auth::user();
-        // $staff = staff::where('user_id','=',$user->id)->first();
-        // dd($staff);
+    
         // Process the date as needed (e.g., save to database, perform calculations)
         $leave_events = leave_staff_applications::join('leaves', 'leaves.id','=','leave_staff_applications.leave_id')
-        ->join('staff AS s1','s1.id','=','leave_staff_applications.staff_id')
-        ->join('staff AS s2','s2.id','=','leave_staff_applications.alternate')
-        ->leftJoin('staff AS s3','s3.id','=','leave_staff_applications.additional_alternate')
-        ->join('department_staff AS dept_staff', 'dept_staff.staff_id', '=', 'leave_staff_applications.staff_id')
-        ->join('departments AS dept', 'dept.id', '=', 'dept_staff.department_id')//->where('leave_staff_applications.staff_id',$staff->id)
-
-        ->whereDate('leave_staff_applications.start' , '<=', $date)
-        ->whereDate('leave_staff_applications.end','>=',$date)
-        ->select(DB::raw("CONCAT(s1.fname,' ',s1.mname,' ',s1.lname) AS staff_name"),
-                DB::raw("CONCAT(s2.fname,' ',s2.mname,' ',s2.lname) AS alternate_staff"),
-                DB::raw("CONCAT(s3.fname,' ',s3.mname,' ',s3.lname) AS additional_alternate_staff"),
-                DB::raw('(CASE WHEN leave_staff_applications.cl_type="Morning" THEN "-Morning" WHEN leave_staff_applications.cl_type="Afternoon" THEN "-Afternoon" ELSE "" END) as cl_type'),
-                DB::raw("CONCAT(leaves.shortname,' ',cl_type)  AS title"),
-                'leave_staff_applications.start AS start',
-                'leave_staff_applications.end AS end', 'leave_staff_applications.leave_id AS leave_id',
-                'leave_staff_applications.appl_status AS appl_status',
-                'leave_staff_applications.id AS Application_id',
-                'leave_staff_applications.reason AS reason',
-                'leaves.shortname AS leave_name',
-                'dept.dept_shortname as shortname')->get();
-        //dd($leave_events);
+            ->join('staff AS s1','s1.id','=','leave_staff_applications.staff_id')
+            ->join('staff AS s2','s2.id','=','leave_staff_applications.alternate')
+            ->leftJoin('staff AS s3','s3.id','=','leave_staff_applications.additional_alternate')
+            ->join('department_staff AS dept_staff', 'dept_staff.staff_id', '=', 'leave_staff_applications.staff_id')
+            ->join('departments AS dept', 'dept.id', '=', 'dept_staff.department_id')
+            ->whereDate('leave_staff_applications.start' , '<=', $date)
+            ->whereDate('leave_staff_applications.end','>=',$date)
+            ->select(DB::raw("CONCAT(s1.fname,' ',s1.mname,' ',s1.lname) AS staff_name"),
+                    DB::raw("CONCAT(s2.fname,' ',s2.mname,' ',s2.lname) AS alternate_staff"),
+                    DB::raw("CONCAT(s3.fname,' ',s3.mname,' ',s3.lname) AS additional_alternate_staff"),
+                    DB::raw('(CASE WHEN leave_staff_applications.cl_type="Morning" THEN "-Morning" WHEN leave_staff_applications.cl_type="Afternoon" THEN "-Afternoon" ELSE "" END) as cl_type'),
+                    DB::raw("CONCAT(leaves.shortname,' ',cl_type)  AS title"),
+                    'leave_staff_applications.start AS start',
+                    'leave_staff_applications.end AS end', 
+                    'leave_staff_applications.leave_id AS leave_id',
+                    'leave_staff_applications.appl_status AS appl_status',
+                    'leave_staff_applications.id AS Application_id',
+                    'leave_staff_applications.reason AS reason',
+                    'leaves.shortname AS leave_name',
+                    'dept.dept_shortname as shortname',
+                    DB::raw("DATEDIFF(leave_staff_applications.end, leave_staff_applications.start) + 1 AS duration")) 
+            ->having('duration', '>=', 5) 
+            ->get();
+    
         // Return a response (optional)
-          return response()->json($leave_events);
-        //return response()->json(['message' => 'Date clicked: ' . $date]);
+        return response()->json($leave_events);
     }
+    
     
    
 
@@ -309,6 +314,114 @@ class PrincipalController extends Controller
         $qualifications =DB::table('qualifications')->where('status','active')->get();
         return view('PRINCIPAL.staff.staffview', compact(['staff','user','payscales','castecategories','religions','associations','qualifications','departments','designations','add_designations','confirmationdate']));
     }
+
+
+
+
+    //Approve leave function 
+    public function approve_leave(Request $request){
+
+        $application_id = $request->input('application_id');
+        //dd($application_id);
+
+        //for updating the leave enititlement
+        $staff_details_of_leave_application = DB::table('leave_staff_applications')
+                                        ->where('id','=',$application_id)
+                                        ->first();
+
+                
+        $staff_id = $staff_details_of_leave_application->staff_id;
+        $leave_id = $staff_details_of_leave_application->leave_id;
+        $today = Carbon::now();
+        $year = $today->year;
+        $no_of_days = $staff_details_of_leave_application->no_of_days;
+        $leave_staff_entitlement=leave_staff_entitlements::where('staff_id',$staff_id)->where('leave_id',$leave_id)->where('year', $year)->first();
+
+        if($staff_details_of_leave_application->appl_status == 'rejected'){
+            if($leave_staff_entitlement!=null)
+            {
+                $leave_staff_entitlement->consumed_curr_year= $leave_staff_entitlement->consumed_curr_year+$no_of_days;
+                //   dd($leave_staff_entitlement->consumed_curr_year);
+                $leave_staff_entitlement->update();
+            }
+        }
+
+
+
+        $result = DB::table('leave_staff_applications')
+            ->where('id', $application_id)
+            ->update(['appl_status' => "approved"]);
+            //$leave_staff_applications->appl_status = "recommended";
+
+        if($result){
+            $return_html = "<div class='bg-white border dark:bg-bgdark border-success alert text-success' role='alert'>
+                                <span class='font-bold'>Result</span> Leave Approved
+                            </div>";
+        }else{
+            $return_html = "<div class='bg-white border dark:bg-bgdark border-danger alert text-danger' role='alert'>
+
+                                  <span class='font-bold'>Result</span> 
+        </div>
+
+                                <span class='font-bold'>Result</span> Unable to Approve
+                            </div>";
+
+        }
+        return $return_html;
+
+    }
+
+
+
+     //function for reject leaves
+    public function reject_leave(Request $request){
+
+        $application_id = $request->input('application_id');
+        //dd($application_id);
+
+        //for updating the leave enititlement
+        $staff_details_of_leave_application = DB::table('leave_staff_applications')
+                                        ->where('id','=',$application_id)
+                                        ->first();
+
+                
+        $staff_id = $staff_details_of_leave_application->staff_id;
+        $leave_id = $staff_details_of_leave_application->leave_id;
+        $today = Carbon::now();
+        $year = $today->year;
+        $no_of_days = $staff_details_of_leave_application->no_of_days;
+        $leave_staff_entitlement=leave_staff_entitlements::where('staff_id',$staff_id)->where('leave_id',$leave_id)->where('year', $year)->first();
+
+        if($leave_staff_entitlement!=null)
+        {
+            $leave_staff_entitlement->consumed_curr_year= $leave_staff_entitlement->consumed_curr_year-$no_of_days;
+            //   dd($leave_staff_entitlement->consumed_curr_year);
+            $leave_staff_entitlement->update();
+        }
+       // dd($leave_staff_entitlement);                                
+
+        $result = DB::table('leave_staff_applications')
+            ->where('id', $application_id)
+            ->update(['appl_status' => "rejected"]);
+            //$leave_staff_applications->appl_status = "recommended";
+
+        //dd($result);
+        if($result && $leave_staff_entitlement){
+            $return_html = "<div class='bg-white border dark:bg-bgdark border-warning alert text-warning' role='alert'>
+                                <span class='font-bold'>Result</span> Leave Rejected
+                            </div>";
+        }else{
+            $return_html = "<div class='bg-white border dark:bg-bgdark border-danger alert text-danger' role='alert'>
+
+                                  <span class='font-bold'>Result</span> {{ session('return_data')['result'] }}
+        </div>
+
+                                <span class='font-bold'>Result</span> Unable to reject
+                            </div>";
+
+        }
+    }
+
 
 
 }

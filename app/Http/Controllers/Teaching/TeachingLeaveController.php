@@ -23,6 +23,7 @@ class TeachingLeaveController extends Controller
     
     public function index()
     {
+        
         $user = Auth::user();
         $year=Carbon::now()->year;
         $holidayrh=holidayrh::orderBy('start')->get();
@@ -55,21 +56,26 @@ class TeachingLeaveController extends Controller
                 if($addtnl_design->isvacational=="Non-Vacational")
                 {
                     $leaves=DB::table('leaves')->join('leave_rules','leave_rules.leave_id','=','leaves.id')
+                                            ->where('leave_rules.status','active')
                                            -> whereNull('leave_rules.max_time_allowed')
                                            ->where('vacation_type','Non-vacational')
                                            ->where('leaves.status','active')
                                            ->orderBy('leaves.shortname')
+                                           ->distinct()
                                             ->get();
-                           
+                           break;
                 }
                 else
                 {
                     $leaves=DB::table('leaves')->join('leave_rules','leave_rules.leave_id','=','leaves.id')
+                                            ->where('leave_rules.status','active')
                                            ->whereNull('leave_rules.max_time_allowed')
                                            ->where('vacation_type','vacational')
                                            ->where('leaves.status','active')
                                            ->orderBy('leaves.shortname')
+                                           ->distinct()
                                             ->get();
+                                            
                 }
             }
              
@@ -80,23 +86,27 @@ class TeachingLeaveController extends Controller
             if($staff->latest_employee_type[0]->employee_type=="Teaching" && ($staff->latestassociation()->first()->asso_name=='Confirmed'||$staff->latestassociation()->first()->asso_name=='Promotional Probationary'))
             {
                 $leaves=DB::table('leaves')->join('leave_rules','leave_rules.leave_id','=','leaves.id')
+                ->where('leave_rules.status','active')  
                                            ->whereNull('leave_rules.max_time_allowed')
                                            ->where('vacation_type','vacational')
                                            ->where('leaves.status','active')
                                            ->orderBy('leaves.shortname')
+                                           ->distinct()
                                             ->get();
             }
             else
             {
                 $leaves=DB::table('leaves')->join('leave_rules','leave_rules.leave_id','=','leaves.id')
+                ->where('leave_rules.status','active')
                                            -> whereNull('leave_rules.max_time_allowed')
                                            ->where('vacation_type','Non-vacational')
                                            ->where('leaves.status','active')
                                            ->orderBy('leaves.shortname')
+                                           ->distinct()
                                             ->get();
             }
         }
-                    //dd($dept_staff);
+                   
         return view('Staff.Teaching.leaves',compact(['staff_leave_entitlements','holidayrh','dept_staff','leaves']));
 
     }

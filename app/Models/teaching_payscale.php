@@ -17,4 +17,8 @@ class teaching_payscale extends Model
     {
         return $this->belongsToMany(staff::class)->withPivot('start_date','end_date','status');
     }
+    public function staffTeachingPayscale()
+    {
+        return $this->hasMany(StaffTeachingPayscale::class);
+    }
 }

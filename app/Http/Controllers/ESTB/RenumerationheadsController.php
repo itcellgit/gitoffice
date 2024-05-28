@@ -23,7 +23,6 @@ class RenumerationheadsController extends Controller
      */
     public function index()
     {
-        
         $filter="";
        // dd($staff1);
        $staff=staff::with('designations')
@@ -31,7 +30,7 @@ class RenumerationheadsController extends Controller
        ->with('latest_employee_type')
        ->orderBy('fname')->get();
 
-       $departments = DB::table('departments')->where('status','active')->get();
+       $departments = Department::where('status', 'active')->get();
 
        $designations=designation::where('status','active')->get();
         //To fetch Designation As per Employee type
@@ -71,6 +70,7 @@ class RenumerationheadsController extends Controller
         ->distinct()
         ->get();
         
+        
          //dd($renumerationheads);
         
         return view('ESTB.renumerations.index', compact('renumerationheads','departments','filter','designations','teachingDesignations','nonteachingDesignations'));
@@ -78,8 +78,8 @@ class RenumerationheadsController extends Controller
 
 public function importExcel(Request $request)
 {
-     // Validate the uploaded file
-     $request->validate([
+    // Validate the uploaded file
+    $request->validate([
         'excel_file' => 'required|file|mimes:xlsx,xls'
     ]);
 
@@ -93,28 +93,41 @@ public function importExcel(Request $request)
 
     // Iterate through each row to read and store grade data
     for ($row = 2; $row <= $highestRow; $row++) {
-            $staffId = $sheet->getCell('A' . $row)->getValue();
-            $renumeration_head = $sheet->getCell('B' . $row)->getValue();
-            $date_number_from_excel = $sheet->getCell('C' . $row)->getValue();
-            // Convert Excel date to PHP date
-            $date = ($date_number_from_excel - 25569) * 86400;
-            $date_of_disbursement = gmdate("Y-m-d", $date);
-            $amount = $sheet->getCell('D' . $row)->getValue();
+        $staffId = $sheet->getCell('A' . $row)->getValue();
+        $renumeration_head = $sheet->getCell('C' . $row)->getValue();
+        $date_number_from_excel = $sheet->getCell('D' . $row)->getValue();
+        
+        // Convert Excel date to PHP date
+        $date = ($date_number_from_excel - 25569) * 86400;
+        $date_of_disbursement = gmdate("d-m-Y", $date);  // Convert to d-m-Y format
+        $amount = $sheet->getCell('E' . $row)->getValue();
 
-            // Check if the staff exists in the database
-            $staff = Staff::find($staffId);
-            if ($staff) {
-                // Update or create renumeration head
-                    Renumerationheads::updateOrCreate(
-                        ['staff_id' => $staffId],
-                        [
-                            'renumeration_head' => $renumeration_head,
-                            'date_of_disbursement' => $date_of_disbursement,
-                            'amount' => $amount
-                        ]
-                    );
-                }
+        // Check if the staff exists in the database
+        $staff = Staff::find($staffId);
+        if ($staff) {
+            // Check if a renumeration head with the same staff_id and date_of_disbursement exists
+            $existingRenumerationHead = Renumerationheads::where('staff_id', $staffId)
+                ->where('date_of_disbursement', $date_of_disbursement)
+                ->first();
+
+            if ($existingRenumerationHead) {
+                // Update the existing record
+                $existingRenumerationHead->update([
+                    'renumeration_head' => $renumeration_head,
+                    'amount' => $amount
+                ]);
+            } else {
+                // Create a new record
+                Renumerationheads::create([
+                    'staff_id' => $staffId,
+                    'renumeration_head' => $renumeration_head,
+                    'date_of_disbursement' => $date_of_disbursement,
+                    'amount' => $amount
+                ]);
             }
+        }
+    }
+
             return redirect()->back()->with('success', 'Excel file imported successfully');
         }
     /**
@@ -198,10 +211,11 @@ public function importExcel(Request $request)
 
         // Use GROUP_CONCAT to fetch multiple departments as a single entry
         $query->select(
-            'staff.id',
+            'staff.id as staffid',
             'staff.fname',
             'staff.mname',
             'staff.lname',
+            'departments.dept_shortname',
 
             DB::raw('GROUP_CONCAT(DISTINCT departments.dept_shortname ORDER BY departments.dept_shortname SEPARATOR ", ") AS departments_list'),
             DB::raw('GROUP_CONCAT(DISTINCT designations.design_name ORDER BY designations.design_name SEPARATOR ", ") AS designations_list'),
@@ -213,6 +227,7 @@ public function importExcel(Request $request)
             'staff.mname',
             'staff.lname',
             'employee_types.employee_type',
+            'departments.dept_shortname',
         );
         //$staff = $query->take(10)->get();
         //dd($staff);
@@ -221,7 +236,40 @@ public function importExcel(Request $request)
        // dd($staff);
        $staffCount =$renumerationheads->count();
 
-        return view('ESTB.renumerations.renumedetails', compact(['staffCount','departments','filter','designations','teachingDesignations','nonteachingDesignations','renumerationheads']));
+
+    return view('ESTB.renumerations.index', compact('renumerationheads','filter', 'departments', 'designations', 'teachingDesignations', 'nonteachingDesignations'));
+
+    }
+
+    public function indexFiltering(Request $request)
+    {
+        $filter = $request->query('filter');
+
+    $designations = Designation::where('status', 'active')->get();
+    $departments = Department::where('status', 'active')->get();
+
+    $query = Staff::query();
+
+    if (!empty($filter)) {
+        $query->where('fname', 'like', '%' . $filter . '%')
+        ->orWhere('mname', 'like', '%' . $filter . '%')
+        ->orWhere('lname', 'like', '%' . $filter . '%')
+        ->orWhereHas('latest_employee_type', function ($q) use ($filter) {
+            $q->where('employee_types.employee_type', 'like', '%' . $filter . '%'); // Specify table name for id column
+        });
+    }
+
+    $query->select(
+        'staff.id as staffid', // Alias 'staffid' for 'id' column
+        'staff.fname',
+        'staff.mname',
+        'staff.lname',
+        'departments.dept_shortname'
+    );
+    $renumerationheads = $query->sortable()->orderBy('employee_type')->orderBy('fname')->paginate();
+
+    return view('ESTB.renumerations.index', compact('renumerationheads', 'filter', 'departments', 'designations'));
+
     }
 
     /**

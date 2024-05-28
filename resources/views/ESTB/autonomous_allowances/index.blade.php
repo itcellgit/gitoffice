@@ -106,7 +106,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <input type="submit" id="submitData" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10 float-right" value="Add"/>
+                                                    <input type="submit" id="submitData" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10 float-right" value="Generate Excel Template"/>
                                                 </form>
                                             </div>
                                         </div>
@@ -116,7 +116,7 @@
 
 
                             <div class="flex justify-end space-x-4 items-center">
-                                <form action="{{ route('import.excel') }}" method="POST" enctype="multipart/form-data" class="flex items-center space-x-2">
+                                <form action="{{ route('ESTB.autonomous_allowance.import') }}" method="POST" enctype="multipart/form-data" class="flex items-center space-x-2">
                                     @csrf
                                     <div class="space-y-8 font-[sans-serif] max-w-md mx-auto">
                                         <input type="file" class="w-full text-gray-500 font-medium text-sm bg-blue-100 cursor-pointer py-2 px-4 mr-4 hover:bg-blue-500 hover:text-white rounded-lg rounded-md border-blue-300" name="excel_file"/>
@@ -155,15 +155,19 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @php
+                                                @php 
                                                     $i = 1;
                                                 @endphp
-                                                @foreach($grade_array as $gradingStaff)
+                                                @foreach($grading as $gradingStaff)
                                                     <tr>
                                                         <td><span>{{ $i++ }}</span></td>
                                                         <td class="border border-gray-300 px-4 py-2"><span>{{ $gradingStaff->staff_id }}</span></td>
-                                                        <td class="border border-gray-300 px-4 py-2"><span>{{ $gradingStaff->staff->fname}} {{ $gradingStaff->staff->mname}} {{$gradingStaff->staff->lname}}</span></td>
-                                                        <td class="border border-gray-300 px-4 py-2"><span>{{ $gradingStaff->staff->departments->first()->dept_shortname }}</span></td>
+                                                        <td class="border border-gray-300 px-4 py-2"><span>{{ $gradingStaff->fname.' '.$gradingStaff->staff->mname.' '.$gradingStaff->staff->lname}}</span></td>
+                                                        <td class="border border-gray-300 px-4 py-2"><span>
+                                                            @foreach($gradingStaff->activedepartments as $dept)
+                                                            {{ $dept->dept_shortname }}
+                                                            @endforeach
+                                                        </span></td>
                                                         <td class="border border-gray-300 px-4 py-2"><span>{{ $gradingStaff->year }}</span></td>
                                                         <td class="border border-gray-300 px-4 py-2"><span>{{ $gradingStaff->month }}</span></td>
                                                         <td class="border border-gray-300 px-4 py-2">
@@ -232,6 +236,11 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script href="https://cdn.tailwindcss.com/3.3.5"></script>
         <script>
+            $(document).ready(function() {
+                $('#submitData').on('click',function(){
+                    $('#downloadTemp').modal('toggle');
+                })
+            });
             </script>
 
 @endsection
