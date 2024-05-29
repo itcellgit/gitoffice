@@ -20,7 +20,6 @@
                     <!-- Start::main-content -->
                     <div class="main-content">
 
-                        <!-- Page Header -->
                          <!-- Page Header -->
                          <div class="block justify-between page-header sm:flex">
                             <div>
@@ -41,8 +40,6 @@
                                 </li>
                             </ol>
                         </div>
-                        <!-- Page Header Close -->
-
                         <!-- Page Header Close -->
                         <div class="grid grid-cols-12 gap-x-6">
                             <div class="col-span-6">
@@ -76,73 +73,6 @@
                                         <div class="box-body searchForm">
                                             <form action="{{ route('ESTB.staff.generatestatistics') }}" method="GET" id="searchForm">
                                                 <div class="grid gap-1 space-y-2 lg:grid-cols-3 lg:space-y-0">
-                                                    <!--Dropdown multiselect checkbox For Department-->
-                                                    <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0 border border-gray-300 rounded p-4">
-                                                        <label class="ti-form-label mb-0 font-bold">Department <span class="text-red-500">*</span></label>
-                                                        <div class="space-y-2" style="max-height: 100px; overflow-y: auto;">
-                                                            @php
-                                                                $checked = "";
-
-                                                            @endphp
-
-
-                                                            @php
-                                                                $defaultDepartmentIds = range(1, 30);
-                                                            @endphp
-
-                                                            <div class="flex">
-                                                                <input type="checkbox" class="ti-form-checkbox mt-0.5 select-all">
-                                                                <label for="select-all" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Select All</label>
-                                                            </div>
-
-
-                                                            {{-- @foreach ($departments as $department)
-
-                                                                <div class="flex">
-                                                                    <input type="checkbox" name="departments[]" value="{{ $department->id }}" {{ $checked }} class="ti-form-checkbox mt-0.5 hs-checkbox-group-{{ $department->id }}">
-                                                                    <label class="hs-checkbox-group-{{ $department->id }} text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">{{ $department->dept_name }}</label>
-                                                                </div>
-                                                            @endforeach --}}
-
-
-
-                                                        </div>
-                                                    </div>
-
-
-
-
-                                                    <!--Department multi select dropdown--->
-
-                                                    <!--Association Multi select dropdown -->
-                                                    <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0 border border-gray-300 rounded p-4">
-                                                        <label class="ti-form-label mb-0 font-bold">Association <span class="text-red-500">*</span></label>
-                                                        <div class="space-y-2" style="max-height: 100px; overflow-y: auto;">
-                                                            @php
-                                                                $checked = "";
-                                                            @endphp
-
-                                                            @php
-                                                                $defaultAssociationIds = range(1, 30);
-                                                            @endphp
-
-                                                            <div class="flex">
-                                                                <input type="checkbox" class="ti-form-checkbox mt-0.5 select-all-association">
-                                                                <label for="select-all-association" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Select All</label>
-                                                            </div>
-
-
-                                                            {{-- @foreach ($associations as $association)
-
-                                                                <div class="flex">
-                                                                    <input type="checkbox" name="associations[]" value="{{ $association->id }}" {{ $checked }} class="ti-form-checkbox mt-0.5 hs-checkbox-group-{{ $association->id }}">
-                                                                    <label class="hs-checkbox-group-{{ $association->id }} text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">{{ $association->asso_name }}</label>
-                                                                </div>
-                                                            @endforeach  --}}
-                                                        </div>
-                                                    </div>
-                                                    <!--Association multi select dropdown End-->
-
                                                     <!-- Designation multi select dropdown start -->
                                                     <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0 border border-gray-300 rounded p-4">
                                                         <label class="ti-form-label mb-0 font-bold">Designations <span class="text-red-500">*</span></label>
@@ -156,16 +86,16 @@
 
                                                             <!-- Teaching Designations -->
                                                             <h3 class="font-bold text-lg text-gray-800">Teaching</h3>
-                                                            {{-- @foreach ($designations->where('emp_type', 'Teaching')->where('isadditional', 0) as $designation)
+                                                            @foreach ($designations->where('emp_type', 'Teaching')->where('isadditional', 0) as $designation)
                                                                 <div class="flex">
                                                                     <input type="checkbox" name="designations[]" value="{{ $designation->id }}" {{ $checked }} class="ti-form-checkbox mt-0.5 hs-checkbox-group-{{ $designation->id }}">
                                                                     <label class="hs-checkbox-group-{{ $designation->id }} text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">{{ $designation->design_name }}</label>
                                                                 </div>
-                                                            @endforeach --}}
+                                                            @endforeach
 
                                                             <!-- Non-Teaching Designations -->
-                                                            <h3 class="font-bold text-lg text-gray-800">Non-Teaching</h3>
-                                                            {{-- @foreach ($designations->where('emp_type', 'Non-Teaching')->where('isadditional', 0) as $designation)
+                                                            {{-- <h3 class="font-bold text-lg text-gray-800">Non-Teaching</h3>
+                                                            @foreach ($designations->where('emp_type', 'Non-Teaching')->where('isadditional', 0) as $designation)
                                                                 <div class="flex">
                                                                     <input type="checkbox" name="designations[]" value="{{ $designation->id }}" {{ $checked }} class="ti-form-checkbox mt-0.5 hs-checkbox-group-{{ $designation->id }}">
                                                                     <label class="hs-checkbox-group-{{ $designation->id }} text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">{{ $designation->design_name }}</label>
@@ -174,18 +104,80 @@
                                                         </div>
                                                     </div>
                                                     <!-- Designation multi select dropdown End -->
+                                                    <!--payscale dropdown start--->
+                                                    <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0 border border-gray-300 rounded p-4">
+                                                        <label class="ti-form-label mb-0 font-bold">Payscale <span class="text-red-500">*</span></label>
+                                                        <div class="space-y-2" style="max-height: 100px; overflow-y: auto;">
+                                                            @php $checked = ""; @endphp
+                                                            @php $defaultpayscaleIds = range(1, 30); @endphp
+                                                            <div class="flex">
+                                                                <input type="checkbox" class="ti-form-checkbox mt-0.5 select-all-designation">
+                                                                <label for="select-all-designation" class="text-sm text-gray-800 ltr:ml-2 rtl:mr-2 dark:text-white/70">Select All</label>
+                                                            </div>
+
+                                                            <!-- Teaching payscale -->
+                                                            <h3 class="font-bold text-lg text-gray-800">Teaching Payscale</h3>
+                                                            @foreach ($payscales as $payscale)
+                                                                    <div class="flex">
+                                                                        <input type="checkbox" name="payscales[]" value="{{ $payscale->id }}" {{ old('payscales') && in_array($payscale->id, old('payscales')) ? 'checked' : '' }} class="ti-form-checkbox mt-0.5 hs-checkbox-group-{{ $payscale->id }}">
+                                                                        <label class="hs-checkbox-group-{{ $payscale->id }} text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">{{ $payscale->payscale_title }}</label>
+                                                                    </div>
+                                                            @endforeach
+     
+                                                            <!-- Non-Teaching payscale -->
+                                                            {{-- <h3 class="font-bold text-lg text-gray-800">Non-Teaching Payscale</h3>
+                                                            @foreach ($nonteaching_payscales as $payscale)
+                                                                <div class="flex">
+                                                                    <input type="checkbox" name="nonteaching_payscales[]" value="{{ $payscale->id }}" {{ old('nonteaching_payscales') && in_array($payscale->id, old('nonteaching_payscales')) ? 'checked' : '' }} class="ti-form-checkbox mt-0.5 hs-checkbox-group-{{ $payscale->id }}">
+                                                                    <label class="hs-checkbox-group-{{ $payscale->id }} text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">{{ $payscale->title }}</label>
+                                                                </div>
+                                                            @endforeach --}}
+                                                            <!--non teachinh consoliated payscale--->
+                                                            {{-- <h3 class="font-bold text-lg text-gray-800">Non-Teaching Consoliated Payscale</h3>
+                                                            @foreach ($ntcpayscales as $payscale)
+                                                                <div class="flex">
+                                                                    <input type="checkbox" name="ntc_payscales[]" value="{{ $payscale->id }}" {{ old('nonteaching_payscales') && in_array($payscale->id, old('nonteaching_payscales')) ? 'checked' : '' }} class="ti-form-checkbox mt-0.5 hs-checkbox-group-{{ $payscale->id }}">
+                                                                    <label class="hs-checkbox-group-{{ $payscale->id }} text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">{{ $payscale->basepay }}</label>
+                                                                </div>
+                                                            @endforeach --}}
+                                                        </div>
+                                                    </div>
+                                                    <!---payscale dropdown end--->
+                                                    {{-- <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0 border border-gray-300 rounded p-4">
+                                                        <label class="ti-form-label mb-0 font-bold">Vactional <span class="text-red-500">*</span></label>
+                                                        <div class="space-y-2" style="max-height: 100px; overflow-y: auto;">
+                                                         <!-- Add your existing code for designations here -->
+
+                                                            <!-- Is Vacational? -->
+                                                            <label for="isvacational" class="ti-form-label font-bold">Is Vacational ?</label>
+                                                            <div class="flex pb-6">
+                                                                <input type="radio" name="isvacational" class="ti-form-radio" id="isvacational1" value="Vacational" required>
+                                                                <label for="isvacational1" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70 pr-4 font-bold">Vacational</label>
+                                                                <input type="radio" name="isvacational" class="ti-form-radio" id="isvacational2" value="Non-vacational" required>
+                                                                <label for="isvacational2" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70 font-bold">Non-vacational</label>
+                                                            </div>
+
+                                                            <!-- Is it Additional Designation? -->
+                                                            <label for="isadditional" class="ti-form-label font-bold">Is it Additional Designation?</label>
+                                                            <div class="flex pb-6">
+                                                                <input type="radio" name="isadditional" class="ti-form-radio" id="isadditional1" value="1" required>
+                                                                <label for="isadditional1" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70 pr-4 font-bold">Yes</label>
+                                                                <input type="radio" name="isadditional" class="ti-form-radio" id="isadditional2" value="0" required>
+                                                                <label for="isadditional2" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70 pr-4 font-bold">No</label>
+                                                            </div>
+                                                        </div>
+                                                    </div> --}}
                                                 </div>
 
-
-                                                <div class="grid gap-1 space-y-2 lg:grid-cols-3 lg:space-y-0 mt-6">
+                                                    <div class="grid gap-1 space-y-2 lg:grid-cols-3 lg:space-y-0 mt-6">
                                                     <!-- Religion select -->
                                                     <div class="space-y-2">
                                                         <label class="ti-form-label mb-0 font-bold">Religion<span class="text-red-500">*</span></label>
                                                         <select class="ti-form-select religion_id" name="religion_id">
                                                             <option value="all">Choose a Religion</option>
-                                                            {{-- @foreach ($religions as $religion)
+                                                            @foreach ($religions as $religion)
                                                             <option value="{{$religion->id}}">{{$religion->religion_name}}</option>
-                                                            @endforeach --}}
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                     <!-- Religion select End -->
@@ -251,96 +243,62 @@
                                 </div>
                             </div>
 
-
                             <!--Filtering the data Ends-->
                             <div class="box">
                                 <div class="box-body">
-                                    {{-- <p class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate">Total Staff: {{ $staffCount }}</p> --}}
-                                    {{-- <p class="flex items-center font-semibold font-bold text-primary hover:text-primary dark:text-primary truncate">
+                                  
+                                    <p class="flex items-center font-semibold font-bold text-primary hover:text-primary dark:text-primary truncate">
                                         Total Staff : <span class="text-black  text-lg">{{ $staffCount }}</span>
-                                    </p> --}}
+                                    </p>
                                     
-
-                                    <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
+                                     <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
                                         <div class="box">
                                             <div class="flex justify-end mt-4">
                                                 <button id="exportToExcel" class="bg-green-500 text-white px-4 py-2 rounded-md focus:outline-none">Export to Excel</button>
                                             </div>
-                                            <table id="staff_information" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
+                                            <table id="statistics" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                                 <thead class="bg-gray-50 dark:bg-black/20">
-                                                    <tr class="">
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">S.No</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">Staff Name</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">Employee Type</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">Department Short Name</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">Association</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">Religion</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">Designation</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">Gender</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">Date of Birth</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">Date of Joining</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">Date Of Superannution</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">Date Of Confirmation</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">Date Of Increment</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">Blood Group</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">PAN Card No:</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">Adhar Card No:</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">Contact No:</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">AICTE ID:</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">VTU ID:</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">Local Address</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">Permanant Address</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">Emergency No</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">Emergency Name</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold ">Action</th>
-
+                                                    <tr>
+                                                        <th scope="col" class="dark:text-white/80 font-bold">S.No</th>
+                                                        <th scope="col" class="dark:text-white/80 font-bold">Designation Name</th>
+                                                         {{-- <th scope="col" class="dark:text-white/80 font-bold">Is Additional Designation</th>
+                                                        <th scope="col" class="dark:text-white/80 font-bold">Is Vactional</th> --}}
+                                                        <th scope="col" class="dark:text-white/80 font-bold">Gender</th> 
+                                                        <th scope="col" class="dark:text-white/80 font-bold">Employee Type</th>
+                                                        <th scope="col" class="dark:text-white/80 font-bold">Religion</th>
+                                                        <th scope="col" class="dark:text-white/80 font-bold">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @php
-                                                        $i=1;
+                                                        $i = 1;
                                                     @endphp
-                                                        {{-- @foreach ($staff as $st)
-                                                            <tr class="">
-                                                                <td>{{ $i++ }}</td>
-                                                                <td>{{ $st->fname.' '.$st->mname.' '.$st->lname. ' ' }}</td>
-                                                                <td>{{ $st->employee_type }}</td>
-                                                                {{-- <td>{{ $st->latet_employee_type->employee_type }}</td> --}}
-                                                                {{-- <td>{{ $st->departments_list }}</td>
-                                                                <td>{{ $st->asso_name }}</td>
-                                                                <td>{{ $st->religion_name }}</td>
-                                                                <td>{{ $st->designations_list }}</td>
-                                                                <td>{{ $st->gender }}</td>
-                                                                <td>{{ $st->dob }}</td>
-                                                                <td>{{ $st->doj }}</td>
-                                                                <td>{{ $st->date_of_superanuation }}</td>
-                                                                <td>{{ $st->date_of_confirmation }}</td>
-                                                                <td>{{ $st->date_of_increment }}</td>
-                                                                <td>{{ $st->bloodgroup }}</td>
-                                                                <td>{{ $st->pan_card }}</td>
-                                                                <td>{{ $st->adhar_card }}</td>
-                                                                <td>{{ $st->contactno }}</td>
-                                                                <td>{{ $st->aicte_id }}</td>
-                                                                <td>{{ $st->vtu_id }}</td>
-                                                                <td>{{ $st->local_address }}</td>
-                                                                <td>{{ $st->permanent_address }}</td>
-                                                                <td>{{ $st->emergency_no }}</td>
-                                                                <td>{{ $st->emergency_name }}</td>
-                                                                <td class="font-medium space-x-2 rtl:space-x-reverse">
-
-                                                                    <a href="{{route('ESTB.staff.show',$st->id)}}"
-                                                                        data-hs-overlay="#staff_information{{$i}}"
-                                                                        class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary">
-                                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M16.7574 2.99666L14.7574 4.99666H5V18.9967H19V9.2393L21 7.2393V19.9967C21 20.5489 20.5523 20.9967 20 20.9967H4C3.44772 20.9967 3 20.5489 3 19.9967V3.99666C3 3.44438 3.44772 2.99666 4 2.99666H16.7574ZM20.4853 2.09717L21.8995 3.51138L12.7071 12.7038L11.2954 12.7062L11.2929 11.2896L20.4853 2.09717Z"></path></svg>
-                                                                         <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700" role="tooltip">
-                                                                             View
-                                                                         </span>
-                                                                    </a>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach  --}}
+                                                    @foreach ($staff as $st)
+                                                        <tr>
+                                                            <td>{{ $i++ }}</td>
+                                                            <td>{{ $st->designation->design_name ?? '' }}</td>
+                                                            {{-- <td><span>{{ $st->designation->isadditional == 0 ? 'No' : 'Yes' }}</span></td>
+                                                            <td><span>{{ $st->designation->isvacational ?? '' }}</span></td> --}}
+                                                            <td>{{ $st->gender }}</td>
+                                                            <td>{{ $st->employee_type }}</td>
+                                                            <td>{{ $st->religion_name }}</td>
+                                                            <td class="font-medium space-x-2 rtl:space-x-reverse">
+                                                                <a href="{{ route('ESTB.staff.show', $st->id) }}"
+                                                                   data-hs-overlay="#staff_information{{ $i }}"
+                                                                   class="hs-dropdown-toggle m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+                                                                        <path d="M16.7574 2.99666L14.7574 4.99666H5V18.9967H19V9.2393L21 7.2393V19.9967C21 20.5489 20.5523 20.9967 20 20.9967H4C3.44772 20.9967 3 20.5489 3 19.9967V3.99666C3 3.44438 3.44772 2.99666 4 2.99666H16.7574ZM20.4853 2.09717L21.8995 3.51138L12.7071 12.7038L11.2954 12.7062L11.2929 11.2896L20.4853 2.09717Z"></path>
+                                                                    </svg>
+                                                                    <span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700" role="tooltip">
+                                                                        View
+                                                                    </span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -434,28 +392,6 @@
 
 
 
-                // $('#filterBtn').click(function() {
-                //     var formData = $('#searchForm').serialize();
-                //     //console.log('123');
-                //     //alert("Search button clicked!");
-
-                //     // Send AJAX request to server
-                //     $.ajax({
-                //         type: 'get',
-                //         url: 'ESTB/staff/staffinformation',
-                //         //url: 'staff/staffinformation',
-
-                //         data: formData,
-                //         success: function(response) {
-                //             $('#staff_table').html(response);
-                //         },
-
-                //         error: function(xhr, status, error) {
-                //             console.error(xhr.responseText);
-                //             //alert("An error occurred. Please try again.");
-                //         }
-                //     });
-                // });
                 
 
                 // To Select multiple values from dropdown to Filter the staff information
@@ -476,7 +412,7 @@
                 });
 
 
-                new DataTable('#staff_information');
+                new DataTable('#statistics');
                 $('#exportToExcel').on('click', function () {
                     var table = $('#staff_information').clone();
 

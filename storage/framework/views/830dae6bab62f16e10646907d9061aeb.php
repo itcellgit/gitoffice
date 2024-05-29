@@ -229,6 +229,7 @@
                                                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                                                                             </select>
+                                                                            <span class="text-red-400" id="type_error"></span>
                                                                         </div>
                                                                         <div id="cl_type_block">
 
@@ -264,6 +265,7 @@
                                                                                 <input type="text" name="from_date"
                                                                                     class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
                                                                                     id="from_date" required placeholder="Choose date" >
+                                                                                    <span class="text-red-400" id="from_date_error"></span>
                                                                         </div>
                                                                         <div class="flex max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">TO Date:<span class="text-red-500">*</span></label>
@@ -275,16 +277,19 @@
                                                                             <input  type="text" name="to_date"
                                                                                 class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
                                                                                     id="to_date" required placeholder="Choose date">
+                                                                                    <span class="text-red-400" id="to_date_error"></span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-4 lg:space-y-0">
                                                                         <div class="flex max-w-sm space-y-4 pb-6 content-center">
                                                                             <p class="font-bold">No. of Days :</p>
                                                                             <input type="text" class="ti-form-input text-green-500" required name="no_of_days" id="no_of_days_count" readonly value=""/>
+                                                                            <span class="text-red-400" id="no_of_days_error"></span>
                                                                         </div>
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Leave Reason:<span class="text-red-500">*</span></label>
                                                                             <textarea class="ti-form-input" required name="leave_reason" id="leave_reason" placeholder="Leave Reason"></textarea>
+                                                                            <span class="text-red-400" id="reason_error"></span>
                                                                         </div>
                                                                     </div>
 
@@ -302,6 +307,7 @@
                                                                                 </optgroup>
                                                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                             </select>
+                                                                            <span class="text-red-400" id="alternate_error"></span>
                                                                         </div>
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Additional Alternate:</label>
@@ -316,6 +322,7 @@
                                                                                 </optgroup>
                                                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                             </select>
+                                                                            <span class="text-red-400" id="add_alternate_error"></span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -598,8 +605,38 @@
                $('#cl_type_block').hide();
                new DataTable('#leaves');
                     //
+                    //alert($('#add_leaveform').hasClass('open'));
+                    $(document).on('click','#leave_apply_modal',function(){
+                        setTimeout(
+                            function() 
+                            {
+                                //do something special
+                            }, 5000);
+                        //alert($('#add_leaveform').hasClass('open'));
+                        if($('#add_leaveform').hasClass('open')){
+                            alert('inside if');
+                                alert('modal is open');
+                                var leave_type = $('#type').val();
+                                var from_date = $('#from_date').val();
+                                var to_date = $('#to_date').val();
+                                var no_of_days_count = $('#no_of_days_count').val();
+                                var leave_reason = $('#leave_reason').val();
+                                var alternate = $('#alternate').val();
+                                var add_alternate = $('#add_alternate').val();
 
-            });
+                                if(leave_type == '#' || from_date == '' || to_date == ''|| no_of_days_count == 0 || no_of_days_count == '' || leave_reason == '' || alternate == '#'){
+                                    //alert('Leave type not selected');
+                                    $('#leave_apply_btn').hide(); //.attr('disabled','disabled');
+                                }else{
+                                    $('#leave_apply_btn').show(); //.removeAttr('disabled');
+                                }
+
+                        }
+                    });
+                    
+                   
+
+           
             //for changing the things for 1/2 CL related stuff.
             $("input[name='cl_type']").change(function(e){
                 if($(this).val() == 'Morning' || $(this).val()=='Afternoon') {
@@ -759,7 +796,7 @@
                 var comfirmation_status =  confirm("Are you sure ? Want to cancel your leave.? (Application ID = "+application_id+")");
                 if(comfirmation_status){
                     $.ajax({
-                                url: base_url+'/cancel_myleave',
+                                url: base_url+'/Teaching/cancel_myleave',
                                     method: 'GET',
                                     data: {
                                         application_id : application_id,
@@ -844,7 +881,7 @@
                         });
             });
 
-          
+        });
           
              //Calender javscript Starts here.
 
@@ -872,7 +909,7 @@
                     eventSources: [
                     {
                             //for loading the RH and Holiday
-                        url: base_url+'/holidayrhevents',
+                        url: base_url+'/Teaching/holidayrhevents',
                         method: 'GET',
                         success:function(data){
 
@@ -889,7 +926,7 @@
                     },
                     //for loading the leave events
                     {
-                        url: base_url+'/myleaveevents',
+                        url: base_url+'/Teaching/myleaveevents',
                         method: 'GET',
                         success:function(data){
 
@@ -1003,7 +1040,7 @@
                         //ajax call for loading the Holiday and RH Events on the modal.
                         $.ajax({
 
-                                url: base_url+'/fetchholidayrhevents',
+                                url: base_url+'/Teaching/fetchholidayrhevents',
                                 method: 'GET',
                                 data: {
                                     date: info.dateStr,
@@ -1039,7 +1076,7 @@
                         //ajax call for checking the leave events
                         $.ajax({
 
-                            url: base_url+'/checkhasleaveEvent',
+                            url: base_url+'/Teaching/checkhasleaveEvent',
                             method: 'GET',
                             data: {
                                 date: info.dateStr,
@@ -1072,7 +1109,7 @@
                         //ajax call for checking if any other person is on leave on the same day.
                         $.ajax({
 
-                            url: base_url+'/checkanydeptpersononleave',
+                            url: base_url+'/Teaching/checkanydeptpersononleave',
                             method: 'GET',
                             data: {
                                 date: info.dateStr,
@@ -1121,7 +1158,7 @@
                         //for checking if the clicked date is RH or NO.
                         $.ajax({
 
-                        url: base_url+'/checkhasRH',
+                        url: base_url+'/Teaching/checkhasRH',
                         method: 'GET',
                         data: {
                             date: info.dateStr,
@@ -1180,7 +1217,7 @@
                         //ajax call for loading the leave events on calender
                         $.ajax({
 
-                                url: base_url+'/fetchmyleaveevents',
+                                url: base_url+'/Teaching/fetchmyleaveevents',
                                 method: 'GET',
                                 data: {
                                     date: clicked_date,

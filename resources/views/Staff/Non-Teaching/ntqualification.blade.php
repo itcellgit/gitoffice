@@ -317,22 +317,38 @@
         src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
         <script>
            $(document).ready(function () {
 
-            new DataTable('#staff_qual');
-            
-            $('.status_type').change(function () {
-                if ($(this).val() === 'Completed') {
-                    $('.yop').show();
-                    $('.grade').show();
+                new DataTable('#staff_qual');
+                
+                // $('.status_type').change(function () {
+                //     if ($(this).val() === 'Completed') {
+                //         $('.yop').show();
+                //         $('.grade').show();
 
-                } else {
-                    $('.yop').hide();
-                    $('.grade').hide();
+                //     } else {
+                //         $('.yop').hide();
+                //         $('.grade').hide();
 
-                }
+                //     }
+                // });
             });
-        });
+
+            $(document).ready(function() {
+                $(".status_type").change(function() {
+                    if ($(this).val() == "Completed") {
+                    $(".yop, .grade").show();
+                    } else {
+                    $(".yop, .grade").hide();
+                    }
+                }).trigger("change");
+            });
+
         </script>
 @endsection

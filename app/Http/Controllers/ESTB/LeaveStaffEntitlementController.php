@@ -28,10 +28,8 @@ class LeaveStaffEntitlementController extends Controller
         // $staff=DB::select($query);
         // $leave_types_balance = leave::select('shortname')->distinct('shortname')->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();// $query="select * from staff s, leaves l, leave_staff_entitlements lse where s.id=lse.staff_id and l.id=lse.leave_id and lse.status='active' and year=$year";
 
-        $staff=staff::with('leave_staff_entitlements')->with('teaching_employee')->get();
-
+       $staff=staff::with('leave_staff_entitlements')->get();
         return view('ESTB.leaves.leave_entitlement.index',compact(['staff','leave_types','leave_types_taken','year'])); //,compact(['Leave_rules','filter']
-
     }
 
     /**

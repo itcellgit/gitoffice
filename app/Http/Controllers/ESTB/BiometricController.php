@@ -207,31 +207,123 @@ class BiometricController extends Controller
         ];
     }
 
-    public function missingLogEntries(Request $request)
-    {
-        $date = $request->input('date');
-        //dd($date);
-        // Get the current month and year
-        $currentMonth = Carbon::now()->month;
-        $currentYear = Carbon::now()->year;
+    // public function missingLogEntries(Request $request)
+    // {
+    //     if($request->input('date')==null)
+    //     {
+    //         $date=Carbon::now()->format('Y-m-d');
+           
+    //     }
+    //     else
+    //     {
+    //         $date = $request->input('date');
+    //     }
+    //     //dd($date);
+    //     // Get the current month and year
+    //     $currentMonth = Carbon::now()->month;
+    //     $currentYear = Carbon::now()->year;
 
-        // Retrieve log entries from the database for the specified date
-        $logs = DB::connection('mysql2')
-            ->table('DeviceLogs_' . $currentMonth . '_' . $currentYear)
-            ->where('LogDate_Date', $date)
-            ->select('EmployeeCode')
-            ->distinct()
-            ->pluck('EmployeeCode')
-            ->toArray();
+    //     // Retrieve log entries from the database for the specified date
+    //     // $logs = DB::connection('mysql2')
+    //     //     ->table('DeviceLogs_' . $currentMonth . '_' . $currentYear)
+    //     //     ->where('LogDate_Date', $date)
+    //     //     ->select('EmployeeCode')
+    //     //     ->distinct()
+    //     //     ->groupBy('EmployeeCode')
+    //     //     ->pluck('EmployeeCode')
+    //     //     ->toArray();
+    //     //     $logs = implode(',', $logs); // Convert the array to a comma-separated string
+    //     //     $logs = is_array($logs) ? $logs : [$logs];
+    //    // dd($logs);
 
 
-        // Retrieve EmployeeCodes from the Staff table in the mysql connection
-        $staffData = staff::whereNotIn('EmployeeCode', $logs)
-        ->select('id', 'EmployeeCode', DB::raw("CONCAT(fname, ' ', COALESCE(mname, ''), ' ', lname) AS full_name"))
-        ->get();
-        //dd($staffData);
-        // Return the data to the view
-        return response()->json($staffData);
-    }
+       
 
+    //         // Retrieve EmployeeCodes from the Staff table in the mysql connection
+    //         $staffData = DB::table('Staff')
+    //         ->whereNotIn('EmployeeCode',$logs)
+    //         ->select('id', 'EmployeeCode', DB::raw("CONCAT(fname, ' ', COALESCE(mname, ''), ' ', lname) AS full_name"))
+    //         ->get();
+    //             //dd($staffData);
+    //             // Return the data to the view
+    //             return response()->json($staffData);
+    // }
+    // public function missingLogEntries(Request $request)
+    // {
+    //     if($request->input('date')==null)
+    //     {
+    //         $date=Carbon::now()->format('Y-m-d');
+           
+    //     }
+    //     else
+    //     {
+    //         $date = $request->input('date');
+    //     }
+
+    //     // Get the current month and year
+    //     $currentMonth = Carbon::now()->month;
+    //     $currentYear = Carbon::now()->year;
+    //     $logs = DB::connection('mysql2')
+    //         ->table('DeviceLogs_' . $currentMonth . '_' . $currentYear)
+    //         ->where('LogDate_Date', $date)
+    //         ->select('EmployeeCode')
+    //         ->groupBy('EmployeeCode')
+    //         ->pluck('EmployeeCode')
+    //         ->toArray();
+    //         $logs = implode(',', $logs); // Convert the array to a comma-separated string
+        
+
+    //         $staff = DB::connection('mysql')->table('Staff')->get();
+
+            
+    //         $staffData = [];
+    //         foreach($logs as $l){
+    //             foreach($staff as $s){
+    //                 if($s->EmployeeCode==$l){
+    //                     whereNotIn('EmployeeCode',$logs)
+    //                     ->select('id', 'EmployeeCode', DB::raw("CONCAT(fname, ' ', COALESCE(mname, ''), ' ', lname) AS full_name"))
+    //                     ->get();  
+    //             }
+    //         }
+    //     }
+    //     return response()->json($staffData);
+     
+    // }
+
+
+        public function missingLogEntries(Request $request)
+        {
+            // Set the date to the current date if not provided
+            $date = $request->input('date') ?? Carbon::now()->format('Y-m-d');
+
+            // Get the current month and year
+            $currentMonth = Carbon::now()->month;
+            $currentYear = Carbon::now()->year;
+
+            // Fetch the employee codes with logs on the specified date
+            $logs = DB::connection('mysql2')
+                ->table('DeviceLogs_' . $currentMonth . '_' . $currentYear)
+                ->where('LogDate_Date', $date)
+                ->pluck('EmployeeCode')
+                ->toArray();
+
+            // Fetch all staff records
+            $staffData = DB::connection('mysql')->table('Staff')
+                ->join('department_staff','department_staff.staff_id','=','staff.id')
+                ->join('departments','departments.id','=','department_staff.department_id')
+                ->whereNotIn('EmployeeCode', $logs)
+                ->select('staff.id','departments.dept_shortname', 'EmployeeCode', DB::raw("CONCAT(fname, ' ', COALESCE(mname, ''), ' ', lname) AS full_name"))
+                ->distinct('staff.id')
+                ->orderBy('department_staff.department_id')->orderBy('staff.fname')
+                ->get();
+
+            return response()->json($staffData);
+        }
 }
+
+
+
+
+    
+
+

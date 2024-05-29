@@ -125,7 +125,7 @@
                                                   {{ $issue->issues . ', ' . $issue->remarks }}
                                               </option>
                                           @endforeach
-                                          <option value="0">Other</option>
+                                          <option value="">Other</option>
                                       </select>
                                   </div>
                                   
@@ -143,7 +143,7 @@
                                           var selectBox = document.getElementById("issue");
                                           var otherIssueField = document.getElementById("otherIssueField");
                                   
-                                          if (selectBox.value === "0") {
+                                          if (selectBox.value === "") {
                                               otherIssueField.style.display = "block";
                                           } else {
                                               otherIssueField.style.display = "none";

@@ -116,7 +116,7 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        <input type="submit" id="submitData" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10 float-right" value="Add"/>
+                                                        <input type="submit" id="submitData" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10 float-right" value="Generate Excel Template"/>
                                                     </form>
                                                 </div>
                                             </div>
@@ -125,13 +125,13 @@
                 
                                     <div class="box-body">
                                             <div class="flex justify-end space-x-4 items-center">
-                                                <form action="{{ route('import.excel') }}" method="POST" enctype="multipart/form-data" class="flex items-center space-x-2">
+                                                {{-- <form action="{{ route('import.excel') }}" method="POST" enctype="multipart/form-data" class="flex items-center space-x-2">
                                                     @csrf
                                                     <div class="space-y-8 font-[sans-serif] max-w-md mx-auto">
                                                         <input type="file" class="w-full text-gray-500 font-medium text-sm bg-blue-100 cursor-pointer py-2 px-4 mr-4 hover:bg-blue-500 hover:text-white rounded-lg rounded-md border-blue-300" name="excel_file"/>
                                                     </div>
                                                     <button type="submit" class="bg-blue-500 text-white px-4 py-2 text-xs rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 whitespace-nowrap">Upload Excel</button>
-                                                </form>
+                                                </form> --}}
                                                 <button id="exportToExcel" class="bg-green-500 text-white px-4 py-2 text-xs rounded-md focus:outline-none hover:bg-green-600 focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 whitespace-nowrap">Export to Excel</button>
                                             </div>
                                         </div>
@@ -140,7 +140,7 @@
                          @csrf --}}
                         <div class="flex justify-end my-4">
                         <div id="basic-table" class="ti-custom-table ti-striped-table ti-custom-table-hover table-bordered rounded-sm overflow-auto">
-                            <table id="Grade_template_table" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
+                            <table id="annualincrement_template_table" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                 <thead class="bg-gray-50 dark:bg-black/20">
                                     <tr>
                                         <th scope="col" class="dark:text-white/80">S.no</th>
@@ -222,48 +222,67 @@
                                                                         </span>
                                                                     </li>
                                                             </td>
-                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{ $st->dob }}</span></td>
-                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{ $st->doj }}</span></td>
-                                                            <td class=""><span>
+                                                            {{-- <td  class="border border-gray-300 px-4 py-2"><span>{{ $st->dob }}</span></td> --}}
+                                                            <td><span>{{\Carbon\Carbon::parse($st->dob)->format('d-M-Y') }}</span></td>
+                                                            <td><span>{{\Carbon\Carbon::parse( $st->doj)->format('d-M-Y') }}</span></td>
+                                                            {{-- <td  class="border border-gray-300 px-4 py-2"><span>{{ $st->doj }}</span></td> --}}
+                                                            <td class="">
+                                                            <ul>
+                                                            <li>
+                                                            <span>
                                                             @foreach($st->associations as $st_asso)
                                                             {{$st_asso->asso_name}}
                                                             @endforeach
+                                                            </span>
+                                                            </li>
+                                                             <li>
+                                                            <span>
+                                                            @foreach($st->associations as $st_asso)
+                                                            {{$st_asso->pivot->gcr}}
+                                                            @endforeach
+                                                            </span>
+                                                            </li>
+                                                            </ul>
+                                                    
                                                             </td>
                                                             <td class="">
                                                             <span>
                                                             @foreach($st->teaching_payscale as $st_pay)
-                                                                {{$st_pay->basepay.'-'.$st_pay->maxpay}}
-                                                                         {{$st_pay->agp}}
+                                                                {{'₹'.number_format($st_pay->basepay).'-'.'₹'.number_format($st_pay->maxpay).'+AGP'}}
+                                                                         {{'₹'.number_format($st_pay->agp)}}
                                                             @endforeach
                                                                 {{-- @if(count()) --}}
 
                                                             </td>
                                                             <td  class="border border-gray-300 px-4 py-2"><span>@foreach($st->annualIncrement as $st_ai)
-                                                                        {{$st_ai->basic}}
+                                                                        {{'₹'.number_format($st_ai->basic).'+'}}
                                                                         @endforeach
                                                                            @foreach($st->teaching_payscale as $st_pay)
-                                                                         {{$st_pay->agp}}
+                                                                         {{'₹'.number_format($st_pay->agp)}}
                                                                           @endforeach</span></td>
-                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{$data[$st->id]['total']}}</span></td>
-                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{$data[$st->id]['incremente_value']}}</span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{'₹'.number_format($data[$st->id]['total'])}}</span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{'₹'.number_format($data[$st->id]['incremente_value'])}}</span></td>
                                                             <td  class="border border-gray-300 px-4 py-2"><span>
                                                             @foreach($st->annualIncrement as $st_ai)
-                                                            {{$st_ai->wef}}
+                                                            {{\Carbon\Carbon::parse($st_ai->wef)->format('d-M-Y')}}
                                                              @endforeach
                                                             
                                                             </span></td>
-                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{$st->date_of_increment}}</span></td>
-                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{$data[$st->id]['basic']."-".$data[$st->id]['incremente_value']."= ".$data[$st->id]['basic_agp_incremented_value']}}</span></td>
+                                                            <td><span>{{\Carbon\Carbon::parse( $st->date_of_increment)->format('d-M-Y') }}</span></td>
+                                                            {{-- <td  class="border border-gray-300 px-4 py-2"><span>{{$st->date_of_increment}}</span></td> --}}
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{'₹'.$data[$st->id]['basic']."+".'₹'.$data[$st->id]['incremente_value']."+ ".'₹'.$data[$st->id]['agp'].'='.'₹'.$data[$st->id]['basic_agp_incremented_value']}}</span></td>
                                                     
-                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{$data[$st->id]['basic_agp_incremented_value']}}</span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{'₹'.number_format($data[$st->id]['basic_agp_incremented_value'])}}</span></td>
                                                             <td  class="border border-gray-300 px-4 py-2"><span>0</span></td>
-                                                            <td  class="border border-gray-300 px-4 py-2"><span>
+                                                            {{-- <td  class="border border-gray-300 px-4 py-2"><span>
                                                             @foreach($st->allowance as $st_ai)
-                                                            {{$st_ai->value}}
+                                                            {{'₹'.number_format($st_ai->value)}}
                                                              @endforeach
                                                             
-                                                            </span></td>
-                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{$data[$st->id]['gross_value']}}</span></td>
+                                                            </span></td> --}}
+                                                           
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{$data[$st->id]['value']}}</span></td>
+                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{'₹'.number_format($data[$st->id]['gross_value'])}}</span></td>
                                                             
                                                             <td  class="font-medium space-x-2 rtl:space-x-reverse">
                                                                 <div class="hs-tooltip ti-main-tooltip">
@@ -313,5 +332,73 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+
+        <!-- APEX CHARTS JS -->
+        <script src="{{asset('build/assets/libs/apexcharts/apexcharts.min.js')}}"></script>
+
+        <!-- FLATPICKR JS -->
+        <script src="{{asset('build/assets/libs/flatpickr/flatpickr.min.js')}}"></script>
+        @vite('resources/assets/js/flatpickr.js')
+
+        <!-- INDEX JS -->
+        @vite('resources/assets/js/index-8.js')
+
+        <script
+        src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
+
+        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/dataTables.tailwindcss.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script href="https://cdn.tailwindcss.com/3.3.5"></script>
+        <script href="https://cdn.tailwindcss.com/3.3.5"></script>
+        <script>
+            $(document).ready(function(){
+               //alert('Hello from jquery');
+
+               new DataTable('#annualincrement_template_table');
+           
+               $('#exportToExcel').on('click', function () {
+                    var table = $('#annualincrement_template_table').clone();
+                    //table.find('th:nth-child(1),th:nth-child(4)').remove();
+                    //table.find('td:nth-child(1),td:nth-child(4)').remove();
+                    // Ensure each cell has proper formatting
+                    table.find('td').css({
+                        'border': '1px solid #000',
+                        'padding': '6px'
+                    });
+                    table.find('th, td').each(function () {
+                        $(this).css('width', 'auto');
+                    });
+
+                    // Create a Blob containing the modified table data
+                    var blob = new Blob([table[0].outerHTML], { type: 'application/vnd.ms-excel;charset=utf-8' });
+
+                    // Check for Internet Explorer and Edge
+                    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                        window.navigator.msSaveOrOpenBlob(blob, 'annualincrement_staff.xls');
+                    } else {
+                        var link = $('<a>', {
+                            href: URL.createObjectURL(blob),
+                            download: 'annualincrement_staff.xls'
+                        });
+                        // Trigger the click to download
+                        link[0].click();
+                    }
+                    setTimeout(function() {
+                        window.location.href="{{url('ESTB/Generateannualincrement')}}"; // Update this URL to your actual route
+                    }, 1000);
+                });
+            });
+            </script>
+        
 @endsection
 

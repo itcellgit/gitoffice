@@ -233,10 +233,10 @@ class TeachingController extends Controller
     
         // Attach qualifications to the authenticated user's staff
         $result = $user->staff->qualifications()->attach($request->qualification_id, [
-            'qualification_name' => $request->qualification_name,
             'board_university' => $request->board_university,
             'grade' => $request->grade,
             'yop' => $request->yop,
+            'status' =>$request->status,
            
         ]);
     

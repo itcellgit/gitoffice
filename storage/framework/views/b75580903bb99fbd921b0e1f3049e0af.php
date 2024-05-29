@@ -105,7 +105,7 @@
                                         <div class="h-full w-[3px] bg-gray-100 dark:bg-black/20 pointer-events-none"></div>
                                     </div>
                                     <div class="avatar avatar-xs absolute top-0 rounded-full bg-gray-200 shadow text-center ltr:-left-[4px] rtl:-right-[4px]">
-                                        <img src="<?php echo e(asset('build/assets/img/users/avtar1.jpg')); ?>" class="rounded-full" alt="timeline-img">
+                                        <img src="<?php echo e(asset('build/assets/img/users/avtar.jpeg')); ?>" class="rounded-full" alt="timeline-img">
                                     </div>
                                 </div>
                                 <div class="flex w-full pb-8">
@@ -145,7 +145,7 @@
                                         <div class="h-full w-[3px] bg-gray-100 dark:bg-black/20 pointer-events-none"></div>
                                     </div>
                                     <div class="avatar avatar-xs absolute top-0 rounded-full bg-gray-200 shadow text-center ltr:-left-[4px] rtl:-right-[4px]">
-                                        <img src="<?php echo e(asset('build/assets/img/users/avtar1.jpg')); ?>" class="rounded-full" alt="timeline-img">
+                                        <img src="<?php echo e(asset('build/assets/img/users/avtar.jpeg')); ?>" class="rounded-full" alt="timeline-img">
                                     </div>
                                 </div>
                                 <div class="flex w-full pb-8">

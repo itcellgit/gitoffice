@@ -36,6 +36,9 @@ use App\Http\Controllers\ESTB\AnnualIncrementController;
 
 //Principal Related
 use App\Http\Controllers\PRINCIPAL\PrincipalController;
+use App\Http\Controllers\PRINCIPAL\Pl_ExamSectionIssuesController;
+use App\Http\Controllers\PRINCIPAL\Pl_IssueTimelineController;
+use App\Http\Controllers\PRINCIPAL\PrincipalStudentIssueController;
 
 
 
@@ -139,7 +142,6 @@ use App\Http\Controllers\NonTeaching\StaffStudentIssueController;
 //Deanrnd
 use App\Http\Controllers\Deanrnd\DeanRndController;
 use App\Http\Controllers\Deanrnd\DeanrndResearchController;
-
 //Egovadmin
 use App\Http\Controllers\egov\EgovAdminController;
 use App\Http\Controllers\egov\EgovResearchController;
@@ -152,17 +154,9 @@ use App\Http\Controllers\HOD\HodEventController;
 use App\Http\Controllers\HOD\HodNoticeboardController;
 use App\Http\Controllers\HOD\GrievienceCategoryController;
 use App\Http\Controllers\HOD\HODLeaveController;
-use App\Http\Controllers\HOD\ExamSectionIssuesController;
-use App\Http\Controllers\HOD\IssueTimelineController;
-use App\Http\Controllers\HOD\HodStudentIssueController;
-
 
 //Biometric
 use App\Http\Controllers\ESTB\BiometricController;
-
-
-
-
 
 
 //Ticketing
@@ -216,12 +210,13 @@ Route::get('/biometric', function () {
 
 Route::get('/send-welcome-email', [EmailController::class, 'sendWelcomeEmail']);
 // Route::get('', [Controller::class, 'index']);
-Route::middleware(['cors','auth','role:'.UserRoles::SU->value,'middleware' => 'prevent-back-history'])->group(function(){
-    Route::get('/Admin/dashboard',[AdminController::class,'dashboard'])->name('Admin.dashboard');
-    Route::get('/Admin/users',[AdminController::class,'users'])->name('Admin.users');
 
-    Route::get('/Admin/tickets/dashboard',[AdminTicketController::class,'dashboard'])->name('Admin.tickets.dashboard');
-});
+// Route::middleware(['cors','auth','role:'.UserRoles::SU->value,'middleware' => 'prevent-back-history'])->group(function(){
+//     Route::get('/Admin/dashboard',[AdminController::class,'dashboard'])->name('Admin.dashboard');
+//     Route::get('/Admin/users',[AdminController::class,'users'])->name('Admin.users');
+
+//     Route::get('/Admin/tickets/dashboard',[AdminTicketController::class,'dashboard'])->name('Admin.tickets.dashboard');
+// });
 
 
 
@@ -246,7 +241,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::TEACHING->value, 'prevent-ba
 
   
 
-  Route::get('/Teaching/construction',[TeachingController::class,'index'])->name('construction');
+  Route::get('/Teaching/construction1',[TeachingController::class,'index'])->name('Teaching.construction1');
 
   //Route for Update the staff personal information
     Route::get('/Staff/Teaching/updateprofile/{staff}',[TeachingController::class,'update_staff_information'])->name('Staff.Teaching.updateprofile');
@@ -346,18 +341,18 @@ Route::delete('/Teaching/research/revieweditor/destory/{reviewer_editor}', [Revi
 
 //Teaching Leave  Routes
 Route::get('/Teaching/leaves',[LeaveStaffApplicationsController::class,'index'])->name('Teaching.leaves');
-Route::get('/holidayrhevents',[LeaveStaffApplicationsController::class,'hollidayrh_events'])->name('hollidayrh_events');
-Route::get('/myleaveevents',[LeaveStaffApplicationsController::class,'myleaveevents'])->name('myleaveevents');
-Route::get('/checkhasleaveEvent',[LeaveStaffApplicationsController::class,'checkhasleaveEvent'])->name('checkhasleaveEvent');
-Route::get('/checkanydeptpersononleave',[LeaveStaffApplicationsController::class,'checkanydeptpersononleave'])->name('checkanydeptpersononleave');
-Route::get('/checkhasRH',[LeaveStaffApplicationsController::class,'checkhasRH'])->name('checkhasRH');
+Route::get('/Teaching/holidayrhevents',[LeaveStaffApplicationsController::class,'hollidayrh_events']);
+Route::get('/Teaching/myleaveevents',[LeaveStaffApplicationsController::class,'myleaveevents']);
+Route::get('/Teaching/checkhasleaveEvent',[LeaveStaffApplicationsController::class,'checkhasleaveEvent']);
+Route::get('/Teaching/checkanydeptpersononleave',[LeaveStaffApplicationsController::class,'checkanydeptpersononleave']);
+Route::get('/Teaching/checkhasRH',[LeaveStaffApplicationsController::class,'checkhasRH']);
 
 
 //for fetching events of specific date (clicked) using AJAX
-Route::get('/fetchholidayrhevents',[LeaveStaffApplicationsController::class,'fetchholidayrhevents'])->name('fetchholidayrhevents');
-Route::get('/fetchmyleaveevents',[LeaveStaffApplicationsController::class,'fetchmyleaveevents'])->name('fetchmyleaveevents');
+Route::get('/Teaching/fetchholidayrhevents',[LeaveStaffApplicationsController::class,'fetchholidayrhevents']);
+Route::get('/Teaching/fetchmyleaveevents',[LeaveStaffApplicationsController::class,'fetchmyleaveevents']);
 
-Route::get('/cancel_myleave',[LeaveStaffApplicationsController::class,'cancel_myleave'])->name('cancel_myleave');
+Route::get('/Teaching/cancel_myleave',[LeaveStaffApplicationsController::class,'cancel_myleave']);
 Route::get('/Teaching/edit_myleave',[LeaveStaffApplicationsController::class,'edit_myleave'])->name('Teaching.leaves.edit');
 // Route::delete('/ESTB/leaves/leaves_rules/{leave_rules}',[LeaveRulesController::class,'destroy'])->name('ESTB.leaves.leave_rules.destroy');
 
@@ -407,7 +402,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::NONTEACHING->value, 'prevent
   Route::patch('/Non-Teaching/professionalactivities/conducted/update/{professional_activity_conducted}',[NT_ProfessionalActivityConductedController::class,'update'])->name('Non-Teaching.professionalactivities.conducted.update');
   Route::delete('/Non-Teaching/professionalactivities/conducted/destory/{professional_activity_conducted}', [NT_ProfessionalActivityConductedController::class, 'destroy'])->name('Non-Teaching.professionalactivities.conducted.destroy');
 
-  Route::get('/Non-Teaching/construction',[NonTeachingController::class,'index'])->name('construction');
+  Route::get('/Non-Teaching/construction1',[NonTeachingController::class,'index'])->name('Non-Teaching.construction');
 
   Route::get('/Staff/Non-Teaching/examsectionissues',[NT_ExamSectionIssuesController::class,'index'])->name('Staff.Non-Teaching.examsectionissues');
   Route::post('/Staff/Non-Teaching/examsectionissues/create',[NT_ExamSectionIssuesController::class,'store'])->name('Staff.Non-Teaching.examsectionissues.store');
@@ -510,6 +505,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     // Generate annual increment list controller
     Route::get('/ESTB/Generateannualincrement', [GenetareAnnualIncrementListController::class, 'index'])->name('aanualincrement.staff.index');
     Route::post('/import-excel', [GenetareAnnualIncrementListController::class, 'importExcel'])->name('import.excel');
+    
     //Assocations Controllers
 
     Route::get('/ESTB/associations',[AssociationController::class,'index'])->name('ESTB.associations');
@@ -548,7 +544,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
 
 
     //staffpayscale
-    Route::get('/staff-payscale', [StaffPayscaleController::class, 'index']);
+    Route::get('/ESTB/salaries/staffpayscale', [StaffPayscaleController::class, 'index'])->name('ESTB.salaries.staffpayscale');
 
 
     //Staff Routes
@@ -678,7 +674,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::delete('/ESTB/salaryheads/destory/{salaryhead}', [SalaryHeadsController::class, 'destroy'])->name('ESTB.salaryheads.destroy');
 
     //under construction
-    Route::get('/ESTB/construction',[TdsheadsController::class,'index'])->name('construction');
+    Route::get('/ESTB/construction',[TdsheadsController::class,'index'])->name('ESTB.construction');
 
 
      //qualifications controllers
@@ -909,19 +905,19 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
       //Dean_Admin Leave Management Routes
       Route::get('/Dean_admin/dashboard',[DeanadminController::class,'dashboard'])->name('Dean_Admin.dashboard');
       Route::get('/Dean_admin/leaves_management/daleaves',[DeanadminController::class,'leaves_lest'])->name('Dean_Admin.leaves_management.leaves');
-      Route::get('/Dean_admin/leaves_management/daleaves_entitlement',[DeanadminController::class,'da_leaves_entitlement'])->name('Dean_Admin.leaves_management');
-      Route::get('/Dean_admin/leaves_management/daholiday_rh_list',[DeanadminController::class,'da_holiday_rh_list'])->name('Dean_Admin.leaves_management');
+      Route::get('/Dean_admin/leaves_management/daleaves_entitlement',[DeanadminController::class,'da_leaves_entitlement'])->name('Dean_Admin.leaves_management_entitlement');
+      Route::get('/Dean_admin/leaves_management/daholiday_rh_list',[DeanadminController::class,'da_holiday_rh_list'])->name('Dean_Admin.leaves_management_holidayrh');
 
       //Dean_admin calender Routes
-      Route::get('/Dean_admin/leaves_management/daleaves_calender',[DeanadminController::class,'da_calender_view'])->name('Dean_Admin.leaves_management');
+      Route::get('/Dean_admin/leaves_management/daleaves_calender',[DeanadminController::class,'da_calender_view'])->name('Dean_Admin.leaves_management_daleaves_calender');
       Route::get('/Dean_admin/leaves_management/hollidayrh_events',[DeanadminController::class,'hollidayrh_events'])->name('Dean_Admin.leaves_management.hollidayrh_events');
       Route::get('/Dean_admin/leaves_management/fetchAllleaveevents',[DeanadminController::class,'fetchAllleaveevents'])->name('Dean_Admin.leaves_management.fetchAllleaveevents');
       Route::get('/Dean_admin/leaves_management/approve_leave',[DeanadminController::class,'approve_leave'])->name('Dean_Admin.leaves_management.approve_leave');
       Route::get('/Dean_admin/leaves_management/reject_leave',[DeanadminController::class,'reject_leave'])->name('Dean_Admin.leaves_management.reject_leave');
 
       // //for fetching events of specific date (clicked) using AJAX
-      Route::get('/Dean_admin/leaves_management/fetchholidayrhevents',[DeanadminController::class,'fetchholidayrhevents'])->name('fetchholidayrhevents');
-      Route::get('/Dean_admin/leaves_management/fetchleaveevents',[DeanadminController::class,'fetchleaveevents'])->name('fetchmyleaveevents');
+      Route::get('/Dean_admin/leaves_management/fetchholidayrhevents',[DeanadminController::class,'fetchholidayrhevents'])->name('Dean_admin.leaves_management.fetchholidayrhevents');
+      Route::get('/Dean_admin/leaves_management/fetchleaveevents',[DeanadminController::class,'fetchleaveevents'])->name('Dean_admin.leaves_management.fetchmyleaveevents');
 
 
 
@@ -989,17 +985,17 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
 
       //All Leave Management routes
       Route::get('/PRINCIPAL/leaves_management/principal_leaves',[PrincipalController::class,'leaves_lest'])->name('PRINCIPAL.leaves_management.leaves');
-      Route::get('/PRINCIPAL/leaves_management/principal_entitlement',[PrincipalController::class,'leaves_entitlement'])->name('PRINCIPAL.leaves_management');
-      Route::get('/PRINCIPAL/leaves_management/principal_holiday_rh',[PrincipalController::class,'holiday_rh'])->name('PRINCIPAL.leaves_management');
+      Route::get('/PRINCIPAL/leaves_management/principal_entitlement',[PrincipalController::class,'leaves_entitlement'])->name('PRINCIPAL.leaves_management.principal_entitlement');
+      Route::get('/PRINCIPAL/leaves_management/principal_holiday_rh',[PrincipalController::class,'holiday_rh'])->name('PRINCIPAL.leaves_management.principal_holiday_rh');
 
       //Dean_admin calender Routes
-      Route::get('/PRINCIPAL/leaves_management/principal_leaves_calender',[PrincipalController::class,'calender_view'])->name('PRINCIPAL.leaves_management');
+      Route::get('/PRINCIPAL/leaves_management/principal_leaves_calender',[PrincipalController::class,'calender_view'])->name('PRINCIPAL.leaves_management.principal_leaves_calender');
       Route::get('/PRINCIPAL/leaves_management/hollidayrh_events',[PrincipalController::class,'hollidayrh_events'])->name('PRINCIPAL.leaves_management.hollidayrh_events');
       Route::get('/PRINCIPAL/leaves_management/fetchAllleaveevents',[PrincipalController::class,'fetchAllleaveevents'])->name('PRINCIPAL.leaves_management.fetchAllleaveevents');
 
       // //for fetching events of specific date (clicked) using AJAX
-      Route::get('/PRINCIPAL/leaves_management/fetchholidayrhevents',[PrincipalController::class,'fetchholidayrhevents'])->name('fetchholidayrhevents');
-      Route::get('/PRINCIPAL/leaves_management/fetchleaveevents',[PrincipalController::class,'fetchleaveevents'])->name('fetchmyleaveevents');
+      Route::get('/PRINCIPAL/leaves_management/fetchholidayrhevents',[PrincipalController::class,'fetchholidayrhevents'])->name('PRINCIPAL.leaves_management.fetchholidayrhevents');
+      Route::get('/PRINCIPAL/leaves_management/fetchleaveevents',[PrincipalController::class,'fetchleaveevents'])->name('PRINCIPAL.leaves_management.fetchleaveevents');
 
       //Approve and Reject Leaves Routes in Principal login
       Route::get('/PRINCIPAL/leaves_management/approve_leave',[PrincipalController::class,'approve_leave'])->name('PRINCIPAL.leaves_management.approve_leave');
@@ -1013,14 +1009,23 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
       Route::get('/PRINCIPAL/staff/index',[PrincipalController::class,'staff_view'])->name('PRINCIPAL.staff');
       Route::get('/PRINCIPAL/staff/staffview/{staff}',[PrincipalController::class,'show_staff_details'])->name('PRINCIPAL.staff.staffview');
 
-      Route::get('/PRINCIPAL/staff/departments',[PrincipalController::class,'update'])->name('PRINCIPAL.staff.departments');
+      Route::get('/PRINCIPAL/staff/departments',[PrincipalController::class,'update'])->name('PRINCIPAL.staff.departments.update');
 
 
       Route::get('/PRINCIPAL/staff/{staff}/qualifications',[urlcontroller::class,'principal_qualifications'])->name('PRINCIPAL.staff.qualifications');
       Route::get('/PRINCIPAL/staff/{staff}/associations',[urlcontroller::class,'principal_assocaitons'])->name('PRINCIPAL.staff.associations');
-      Route::get('/PRINCIPAL/staff/{staff}/departments',[urlcontroller::class,'principal_departments'])->name('PRINCIPAL.staff.departments');
+      Route::get('/PRINCIPAL/staff/{staff}/departments',[urlcontroller::class,'principal_departments'])->name('PRINCIPAL.staff.departments.principal_departments');
       Route::get('/PRINCIPAL/staff/{staff}/designationpayscales',[urlcontroller::class,'principal_designationpayscales'])->name('PRINCIPAL.staff.designationpayscales');
 
+      Route::get('/PRINCIPAL/examsectionissues',[Pl_ExamSectionIssuesController::class,'index'])->name('PRINCIPAL.examsectionissues.index');
+     Route::post('/PRINCIPAL/examsectionissues/create',[Pl_ExamSectionIssuesController::class,'store'])->name('PRINCIPAL.examsectionissues.store');
+     Route::patch('/PRINCIPAL/examsectionissues/update/{examSectionIssues}',[Pl_ExamSectionIssuesController::class,'update'])->name('PRINCIPAL.examsectionissues.update');
+     Route::delete('/PRINCIPAL/examsectionissues/destory/{examSectionIssues}', [Pl_ExamSectionIssuesController::class, 'destroy'])->name('PRINCIPAL.examsectionissues.destroy');
+
+     Route::get('/PRINCIPAL/issue_timeline',[Pl_IssueTimelineController::class,'index'])->name('PRINCIPAL.issue_timeline.index');
+     Route::post('/PRINCIPAL/viewstudentissues/{student_issue}/issue_timeline/create',[Pl_IssueTimelineController::class,'store'])->name('PRINCIPAL.issue_timeline.store');
+     Route::get('/PRINCIPAL/viewstudentissues', [PrincipalStudentIssueController::class, 'index'])->name('PRINCIPAL.view');
+      Route::get('/PRINCIPAL/viewstudentissues/{student_issue}/show',[PrincipalStudentIssueController::class,'show'])->name('PRINCIPAL.issue_timeline.show');
 
 
     });
@@ -1041,7 +1046,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
 
 Route::get('dashboard', [MyAuthController::class, 'dashboard']);
 Route::get('login', [MyAuthController::class, 'index'])->name('login');
-Route::get('/', [MyAuthController::class, 'index'])->name('login');
+Route::get('/', [MyAuthController::class, 'index']);
 Route::post('validate', [MyAuthController::class, 'customLogin'])->name('login.custom');
 Route::get('registration', [MyAuthController::class, 'registration'])->name('register-user');
 Route::post('custom-registration', [MyAuthController::class, 'customRegistration'])->name('register.custom');
@@ -1080,31 +1085,29 @@ Route::patch('ticket/{ticket}reply/update',[ReplyController::class,'update'])->n
 Route::middleware(['cors','auth','role:' . UserRoles::SU->value, 'middleware' => 'prevent-back-history', 'impersonate'])->group(function () 
 {
   Route::get('/Admin/dashboard',[AdminController::class,'dashboard'])->name('Admin.dashboard');
+  Route::get('/Admin/users', [AdminController::class, 'users'])->name('Admin.users');
+
+
   Route::get('/Admin/tickets/adminticket',[AdminTicketController::class,'index'])->name('Admin.tickets.adminticket');
   Route::post('Admin/tickets/adminticket/create', [AdminTicketController::class, 'store'])->name('Admin.tickets.adminticket.store');
   Route::get('Admin/tickets/adminshowticket/show/{ticket}', [AdminTicketController::class, 'show'])->name('Admin.tickets.adminshowticket.show');
- // Route::patch('Admin/tickets/adminticket/update/{ticket}', [AdminTicketController::class, 'update'])->name('Admin.tickets.adminticket.update');
-// Route::delete('Admin/tickets/adminticket/destroy/{ticket}',[AdminTicketController::class, 'destroy'])->name('Admin.tickets.adminticket.destroy');
-// Route::patch('ticket/update/{postticket}', [ReplyController::class, 'update'])->name('ticket.reply.update');
-//Route::patch('Admin/tickets/adminticket/update/{ticket}', [AdminTicketController::class, 'status_update'])->name('Admin.tickets.adminticket.update');
+  // Route::patch('Admin/tickets/adminticket/update/{ticket}', [AdminTicketController::class, 'update'])->name('Admin.tickets.adminticket.update');
+  // Route::delete('Admin/tickets/adminticket/destroy/{ticket}',[AdminTicketController::class, 'destroy'])->name('Admin.tickets.adminticket.destroy');
+  // Route::patch('ticket/update/{postticket}', [ReplyController::class, 'update'])->name('ticket.reply.update');
+  //Route::patch('Admin/tickets/adminticket/update/{ticket}', [AdminTicketController::class, 'status_update'])->name('Admin.tickets.adminticket.update');
 
 
- //super_admin events
- Route::get('/Admin/adminevents',[AdminEventController::class,'index'])->name('Admin.adminevents.index');
- Route::post('/Admin/adminevents/create',[AdminEventController::class,'store'])->name('Admin.adminevents.store');
- Route::patch('/Admin/adminevents/update/{event}',[AdminEventController::class,'update'])->name('Admin.adminevents.update');
- Route::delete('/Admin/adminevents/destory/{event}', [AdminEventController::class, 'destroy'])->name('Admin.adminevents.destroy');
+  //super_admin events
+  Route::get('/Admin/adminevents',[AdminEventController::class,'index'])->name('Admin.adminevents.index');
+  Route::post('/Admin/adminevents/create',[AdminEventController::class,'store'])->name('Admin.adminevents.store');
+  Route::patch('/Admin/adminevents/update/{event}',[AdminEventController::class,'update'])->name('Admin.adminevents.update');
+  Route::delete('/Admin/adminevents/destory/{event}', [AdminEventController::class, 'destroy'])->name('Admin.adminevents.destroy');
 
   //super_admin notice board
-Route::get('/Admin/adminnotice',[AdminNoticeController::class,'index'])->name('Admin.adminnotice.index');
-Route::post('/Admin/adminnotice/create',[AdminNoticeController::class,'store'])->name('Admin.adminnotice.store');
-Route::patch('/Admin/adminnotice/update/{notice}',[AdminNoticeController::class,'update'])->name('Admin.adminnotice.update');
-Route::delete('/Admin/adminnotice/destory/{notice}', [AdminNoticeController::class, 'destroy'])->name('Admin.adminnotice.destroy');
-
-
-
-
-  Route::get('/Admin/users', [AdminController::class, 'users'])->name('Admin.users');
+  Route::get('/Admin/adminnotice',[AdminNoticeController::class,'index'])->name('Admin.adminnotice.index');
+  Route::post('/Admin/adminnotice/create',[AdminNoticeController::class,'store'])->name('Admin.adminnotice.store');
+  Route::patch('/Admin/adminnotice/update/{notice}',[AdminNoticeController::class,'update'])->name('Admin.adminnotice.update');
+  Route::delete('/Admin/adminnotice/destory/{notice}', [AdminNoticeController::class, 'destroy'])->name('Admin.adminnotice.destroy');
 
   // Route for starting impersonation
   Route::get('admin/impersonate/{user}', [AdminController::class, 'startImpersonation'])->name('admin.start_impersonation');

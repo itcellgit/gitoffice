@@ -23,7 +23,9 @@ use App\Models\ntpayscale;
 use App\Models\ntcpayscale;
 use App\Models\consolidated_teaching_pay;
 use App\Models\users;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use App\Models\fixed_nt_pay;
+
 use Session;
 
 
@@ -35,10 +37,15 @@ class GenetareAnnualIncrementListController extends Controller
      */
     public function index()
     {
+        $year = request('year');
+        $month = request('month');
+        
         $filter="";
        // dd($staff1);
        $staff=staff::
-      with('designations')
+      with(['designations'=>function($q){
+        $q->wherePivot('status','active');
+        }])
      ->with(['associations'=>function($q){
              $q->wherePivot('status','active');
     }])
@@ -78,7 +85,7 @@ class GenetareAnnualIncrementListController extends Controller
                 ->from('associations')
                 ->where('asso_name','Confirmed');
             })->where('employee_type','Teaching');
-       })->take(5)->get();
+       })->get();
 
        
         // DB::raw('(annual_increments.basic + teaching_payscales.agp + ((annual_increments.basic + teaching_payscales.agp) * 0.20) + ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.da/100) + ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.hra/100) + teaching_payscales.cca + allowances.value) as gross_salary')
@@ -99,13 +106,13 @@ foreach($staff as $st)
        'basic_agp_incremented_value'=>0,
        'gross_value' =>0
     ];
+    
+    
+        
     foreach($st->annualIncrement as $increment) {
-    $staffId = $st->id;
-    $data[$staffId] ['basic']=$increment->basic;
-
-    foreach($st->allowance as $al) {
-        $staffId = $st->id;
-        $data[$staffId] ['value']=$al->value;
+         
+            $data[$staffId] ['basic']=$increment->basic;
+    }
     
 
     foreach($st->teaching_payscale as $payscale) {
@@ -124,14 +131,48 @@ foreach($staff as $st)
             $data[$staffId]['incremente_value'];
 //   dd($staffId." ".$data[$staffId]['incremented_total_after'].' '.$data[$staffId]['basic']+
   //$data[$staffId]['incremented_total']);
-  $data[$staffId]['basic_agp_incremented_value']= $data[$staffId]['incremented_total']+ $data[$staffId]['agp'];
+  $data[$staffId]['basic_agp_incremented_value']= $data[$staffId]['basic']+ $data[$staffId]['incremente_value']+  $data[$staffId]['agp'];
 //   dd($staffId." ".$data[$staffId]['incremented_total_after_increment'].' '.$data[$staffId]['incremented_total_after']+
 //   $data[$staffId]['agp']); 
-$data[$staffId]['gross_value']=$data[$st->id]['basic_agp_incremented_value']*195/100+$data[$staffId]['cca']+$data[$staffId] ['value'];
 
+    
+  
     }
-  }
+    $data[$staffId]['value']=0;
+    
+    if(count($st->designations)==1)
+    {
+        foreach($st->allowance as $al) {
+            $data[$staffId] ['value']=$al->value;
+        }
     }
+    else
+    {
+        
+        foreach($st->designations as $design)
+        {
+            
+            if($design->isadditional==1)
+            {
+                //dd($design);
+                $fetchallowance=allowance::where('designations_id',$design->id)->first();
+                //dd($fetchallowance->value_type." ".$st->id." ".$design->id);
+                if($fetchallowance->value_type=="flat")
+                {
+                    //dd(161);
+                    $data[$staffId]['value']=$fetchallowance->value;
+            
+                }
+                else
+                {
+                    $data[$staffId]['value']=$data[$staffId]['total']*$fetchallowance/100;
+                }
+                break;
+            }
+        }
+    }
+    
+    $data[$staffId]['gross_value']=ceil(($data[$st->id]['basic_agp_incremented_value']*195/100)+$data[$staffId]['cca']+$data[$staffId] ['value']);
 
 }
 
@@ -141,37 +182,37 @@ $data[$staffId]['gross_value']=$data[$st->id]['basic_agp_incremented_value']*195
         return view('ESTB.Generateannualincrement.index',compact(['staff','data']));
     }
 
-    public function importExcel(Request $request)
-    {
-        // Validate the uploaded file
-        $request->validate([
-            'excel_file' => 'required|file|mimes:xlsx,xls'
-        ]);
+//     public function importExcel(Request $request)
+//     {
+//         // Validate the uploaded file
+//         $request->validate([
+//             'excel_file' => 'required|file|mimes:xlsx,xls'
+//         ]);
     
-        // Process the uploaded file
-        $file = $request->file('excel_file');
-        $spreadsheet = IOFactory::load($file);
-        $sheet = $spreadsheet->getActiveSheet();
+//         // Process the uploaded file
+//         $file = $request->file('excel_file');
+//         $spreadsheet = IOFactory::load($file);
+//         $sheet = $spreadsheet->getActiveSheet();
     
-        // Get the highest row number
-        $highestRow = $sheet->getHighestRow();
+//         // Get the highest row number
+//         $highestRow = $sheet->getHighestRow();
     
-        // Iterate through each row to read and store grade data
+//         // Iterate through each row to read and store grade data
        
                 
-                    // Create a new record
-                    Annualincrement::create([
-                        'staff_id' => $staffId,
+//                     // // Create a new record
+//                     // Annualincrement::create([
+//                     //     'staff_id' => $staffId,
                         
-                        'date_of_disbursement' => $date_of_disbursement,
-                        'amount' => $amount
-                    ]);
+//                     //     'date_of_disbursement' => $date_of_disbursement,
+//                     //     'amount' => $amount
+//                     // ]);
              
             
         
     
-                return redirect()->back()->with('success', 'Excel file imported successfully');
-  }   
+//                 return redirect()->back()->with('success', 'Excel file imported successfully');
+//   }   
 
     /**
      * Show the form for creating a new resource.

@@ -143,18 +143,17 @@
                 <button id="dropdown-profile" type="button"
                     class="hs-dropdown-toggle ti-dropdown-toggle gap-2 p-0 flex-shrink-0 h-8 w-8 rounded-full shadow-none focus:ring-gray-400 text-xs dark:focus:ring-white/10">
                     <img class="inline-block rounded-full ring-2 ring-white dark:ring-white/10"
-                        src="{{asset('build/assets/img/users/13.jpg')}}" alt="Image Description">
+                        src="{{asset('build/assets/img/users/avtar.jpeg')}}" alt="Image Description">
                 </button>
 
                 <div class="hs-dropdown-menu ti-dropdown-menu border-0 w-[20rem]" aria-labelledby="dropdown-profile">
                 <div class="ti-dropdown-header !bg-primary flex">
                     <div class="ltr:mr-3 rtl:ml-3">
                     <img class="avatar shadow-none rounded-full !ring-transparent"
-                        src="{{asset('build/assets/img/users/13.jpg')}}" alt="profile-img">
+                        src="{{asset('build/assets/img/users/avtar.jpeg')}}" alt="profile-img">
                     </div>
                     <div>
                     <p class="ti-dropdown-header-title !text-white">{{Auth::user()->role}}</p>
-                        {{-- <p class="ti-dropdown-header-content !text-white/50">Establishment Section</p> --}}
                     </div>
                 </div>
                 <div class="mt-2 ti-dropdown-divider">
@@ -169,7 +168,6 @@
                             Profile
                         </a>
                     @else
-                        {{-- <p>Error: $staff is not an instance of Staff model</p> --}}
                     @endif
 
                     <a id="change_pwd_btn" data-hs-overlay="#change_password_btn" class="ti-dropdown-item">

@@ -143,18 +143,18 @@
                 <button id="dropdown-profile" type="button"
                     class="hs-dropdown-toggle ti-dropdown-toggle gap-2 p-0 flex-shrink-0 h-8 w-8 rounded-full shadow-none focus:ring-gray-400 text-xs dark:focus:ring-white/10">
                     <img class="inline-block rounded-full ring-2 ring-white dark:ring-white/10"
-                        src="{{asset('build/assets/img/users/12.jpg')}}" alt="Image Description">
+                        src="{{asset('build/assets/img/users/avtar.jpeg')}}" alt="Image Description">
                 </button>
 
                 <div class="hs-dropdown-menu ti-dropdown-menu border-0 w-[20rem]" aria-labelledby="dropdown-profile">
                 <div class="ti-dropdown-header !bg-primary flex">
                     <div class="ltr:mr-3 rtl:ml-3">
                     <img class="avatar shadow-none rounded-full !ring-transparent"
-                        src="{{asset('build/assets/img/users/12.jpg')}}" alt="profile-img">
+                        src="{{asset('build/assets/img/users/avtar.jpeg')}}" alt="profile-img">
                     </div>
                     <div>
                     <p class="ti-dropdown-header-title !text-white">{{Auth::user()->role}}</p>
-                        {{-- <p class="ti-dropdown-header-content !text-white/50">Establishment Section</p> --}}
+                        
                     </div>
                 </div>
                 <div class="mt-2 ti-dropdown-divider">
@@ -163,16 +163,21 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM6 15V17H18V15H6ZM6 7V13H12V7H6ZM14 7V9H18V7H14ZM14 11V13H18V11H14ZM8 9H10V11H8V9Z"></path></svg>
                             Profile
                     </a> --}}
+                    
+                    {{-- @if (auth()->check())
+                        @php
+                            $user = auth()->user();
+                        @endphp
+                    
+                        @if ($user && $user->id)
+                            <a href="{{ url('Staff/Non-Teaching/ntupdateprofile/' . $user->id) }}" class="ti-dropdown-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM6 15V17H18V15H6ZM6 7V13H12V7H6ZM14 7V9H18V7H14ZM14 11V13H18V11H14ZM8 9H10V11H8V9Z"></path></svg>
+                                Profile
+                            </a>
+                        @endif
+                    @endif --}}
 
-                    @if ($staff instanceof \App\Models\staff)
-                        <a href="{{ url('Staff/Non-Teaching/ntupdateprofile/' . $staff->id) }}" class="ti-dropdown-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM6 15V17H18V15H6ZM6 7V13H12V7H6ZM14 7V9H18V7H14ZM14 11V13H18V11H14ZM8 9H10V11H8V9Z"></path></svg>
-                            Profile
-                        </a>
-                    @else
-                        {{-- <p>Error: $staff is not an instance of Staff model</p> --}}
-                    @endif
-
+                   
                     
                    
                     <a id="change_pwd_btn" data-hs-overlay="#change_password_btn" class="ti-dropdown-item">

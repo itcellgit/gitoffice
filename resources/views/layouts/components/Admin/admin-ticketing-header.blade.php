@@ -72,7 +72,7 @@
                         <div class="ti-dropdown-item relative header-box">
                             <a href="{{url('mail-inbox')}}" class="flex space-x-3 rtl:space-x-reverse">
                             <div class="ltr:mr-2 rtl:ml-2 avatar rounded-full ring-0">
-                                <img src="{{asset('build/assets/img/users/17.jpg')}}" alt="img" class="rounded-sm">
+                                <img src="{{asset('build/assets/img/users/avtar.jpeg')}}" alt="img" class="rounded-sm">
                             </div>
                             <div class="relative w-full">
                                 <h5 class="text-sm text-gray-800 dark:text-white font-semibold mb-1">Elon Isk</h5>
@@ -87,7 +87,7 @@
                         <div class="ti-dropdown-item relative header-box">
                             <a href="{{url('mail-inbox')}}" class="flex items-center space-x-3 rtl:space-x-reverse">
                             <div class="ltr:mr-2 rtl:ml-2 avatar rounded-full ring-0">
-                                <img src="{{asset('build/assets/img/users/2.jpg')}}" alt="img" class="rounded-sm">
+                                <img src="{{asset('build/assets/img/users/avtar.jpeg')}}" alt="img" class="rounded-sm">
                             </div>
                             <div class="relative w-full">
                                 <h5 class="text-sm text-gray-800 dark:text-white font-semibold mb-1">Shakira Sen</h5>
@@ -102,7 +102,7 @@
                         <div class="ti-dropdown-item relative header-box">
                             <a href="{{url('mail-inbox')}}" class="flex items-center space-x-3 rtl:space-x-reverse">
                             <div class="ltr:mr-2 rtl:ml-2 avatar rounded-full ring-0">
-                                <img src="{{asset('build/assets/img/users/21.jpg')}}" alt="img" class="rounded-sm">
+                                <img src="{{asset('build/assets/img/users/avtar.jpeg')}}" alt="img" class="rounded-sm">
                             </div>
                             <div class="relative w-full">
                                 <h5 class="text-sm text-gray-800 dark:text-white font-semibold mb-1">Sebastian</h5>
@@ -117,7 +117,7 @@
                         <div class="ti-dropdown-item relative header-box">
                             <a href="{{url('mail-inbox')}}" class="flex items-center space-x-3 rtl:space-x-reverse">
                             <div class="ltr:mr-2 rtl:ml-2 avatar rounded-full ring-0">
-                                <img src="{{asset('build/assets/img/users/11.jpg')}}" alt="img" class="rounded-sm">
+                                <img src="{{asset('build/assets/img/users/avtar.jpeg')}}" alt="img" class="rounded-sm">
                             </div>
                             <div class="relative w-full">
                                 <h5 class="text-sm text-gray-800 dark:text-white font-semibold mb-1">Charlie Davieson</h5>
@@ -143,14 +143,14 @@
                 <button id="dropdown-profile" type="button"
                     class="hs-dropdown-toggle ti-dropdown-toggle gap-2 p-0 flex-shrink-0 h-8 w-8 rounded-full shadow-none focus:ring-gray-400 text-xs dark:focus:ring-white/10">
                     <img class="inline-block rounded-full ring-2 ring-white dark:ring-white/10"
-                        src="{{asset('build/assets/img/users/avtar1.jpg')}}" alt="Image Description">
+                        src="{{asset('build/assets/img/users/avtar.jpeg')}}" alt="Image Description">
                 </button>
 
                 <div class="hs-dropdown-menu ti-dropdown-menu border-0 w-[20rem]" aria-labelledby="dropdown-profile">
                 <div class="ti-dropdown-header !bg-primary flex">
                     <div class="ltr:mr-3 rtl:ml-3">
                     <img class="avatar shadow-none rounded-full !ring-transparent"
-                        src="{{asset('build/assets/img/users/avtar1.jpg')}}" alt="profile-img">
+                        src="{{asset('build/assets/img/users/avtar.jpeg')}}" alt="profile-img">
                     </div>
                     <div>
                     <p class="ti-dropdown-header-title !text-white">{{Auth::user()->role}}</p>

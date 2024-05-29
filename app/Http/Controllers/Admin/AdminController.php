@@ -96,6 +96,8 @@ class AdminController extends Controller
                     return redirect()->route('Principaloffice.podashboard');
                 case 'Exam_section':
                     return redirect()->route('Examoffice.dashboard');
+                case 'Principal':
+                    return redirect()->route('PRINCIPAL.dashboard');
             }
 
         }

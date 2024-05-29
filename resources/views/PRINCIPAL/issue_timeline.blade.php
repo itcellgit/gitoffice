@@ -1,5 +1,6 @@
-{{-- @extends('layouts.components.internship.master-internship') --}}
-@extends('layouts.components.HOD.master-hod')
+
+@extends('layouts.components.PRINCIPAL.master-principal')
+
 
 @section('styles')
 
@@ -24,7 +25,7 @@
                 <ol class="flex items-center whitespace-nowrap min-w-0">
                     <li class="text-sm">
                         <a class="flex items-center font-bold text-primary hover:text-primary dark:text-primary truncate"
-                            href="/HOD/viewstudentissues" style="color: red;">
+                            href="/Staff/Non-Teaching/viewstudentissues" style="color: red;">
                             Back
                             <i
                                 class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
@@ -33,105 +34,7 @@
 
                 </ol>
             </div>
-            <!-- Page Header Close -->
 
-            <!-- Start::row-1 -->
-            {{-- <div class="grid grid-cols-12 gap-x-5"> --}}
-            {{-- <div class="col-span-12 md:col-span-6 xxl:col-span-3">   
-            <div class="box">
-                <div class="box-body">
-                    <div class="flex">
-                        <div class="ltr:mr-3 rtl:ml-3">
-                            <div class="avatar rounded-sm text-primary p-2.5 bg-primary/20 ">
-                                <i class="ti ti-users text-2xl leading-none"></i>
-                            </div>
-                        </div>
-                        <div class="flex-1">
-                                            <p class="text-sm font-bold"> Total Issue Raised </p>
-                            <div class="flex justify-between items-center">
-                                            <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">{{5}} </h5>
-                                            <span class="text-success badge bg-success/20 rounded-sm p-1"><i
-                                                class="ti ti-trending-up leading-none"></i>  +1.03%</span>
-                            </div>
-                                            <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="#">
-                                                   view 
-                                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-            {{-- <div class="col-span-12 md:col-span-6 xxl:col-span-3">
-            <div class="box">
-                <div class="box-body">
-                    <div class="flex">
-                        <div class="ltr:mr-3 rtl:ml-3">
-                            <div class="avatar rounded-sm text-secondary p-2.5 bg-secondary/20"><i
-                                                class="ti ti-users-minus text-2xl leading-none"></i>
-                            </div>
-                        </div>
-                        <div class="flex-1">
-                                            <p class="text-sm font-bold"> Total Issue recived</p>
-                                            <div class="flex justify-between items-center">
-                                            <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white"> {{5}}</h5>
-                                            <span class="text-success badge bg-success/20 rounded-sm p-1"><i
-                                                class="ti ti-trending-up leading-none"></i> +0.36%</span>
-                                            </div>
-                                            <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="#">
-                                            </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-            {{-- <div class="col-span-12 md:col-span-6 xxl:col-span-3">
-        <div class="box">
-            <div class="box-body">
-                <div class="flex">
-                    <div class="ltr:mr-3 rtl:ml-3">
-                        <div class="avatar rounded-sm text-warning p-2.5 bg-warning/20 "><i
-                                                class="ti ti-briefcase text-2xl leading-none"></i>
-                        </div>
-                    </div>
-                    <div class="flex-1">
-                                            <p class="text-sm font-bold">Total Issue resolved </p>
-                                            <div class="flex justify-between items-center">
-                                            <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white"> {{5}}</h5>
-                                            <span class="text-danger badge bg-danger/20 rounded-sm p-1"><i
-                                                class="ti ti-trending-down leading-none"></i> -1.28%</span>
-                                            </div>
-                                            <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="#">
-                                                view
-                                            </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> --}}
-            {{-- <div class="col-span-12 md:col-span-6 xxl:col-span-3">
-    <div class="box">
-        <div class="box-body">
-            <div class="flex">
-                <div class="ltr:mr-3 rtl:ml-3">
-                    <div class="avatar rounded-sm text-success p-2.5 bg-success/20 "><i
-                                                class="ti ti-chart-bar text-2xl leading-none"></i>
-                    </div>
-                </div>
-                <div class="flex-1">
-                                            <p class="text-sm font-bold">  Status  </p>
-                                            <div class="flex justify-between items-center">
-                                            <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">{{5}}</h5>
-                                            <span class="text-success badge bg-success/20 rounded-sm p-1"><i
-                                                class="ti ti-trending-down leading-none"></i>+0.25% </span>
-                                            </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> --}}
-            {{-- </div> --}}
-            <!-- End::row-1 -->
-            <!-- Start::row-2 -->
             <div>
                 <div class="box">
                     <div class="box-body">
@@ -145,7 +48,8 @@
                                                 d="M22 21H2V19H3V4C3 3.44772 3.44772 3 4 3H18C18.5523 3 19 3.44772 19 4V9H21V19H22V21ZM17 19H19V11H13V19H15V13H17V19ZM17 9V5H5V19H11V9H17ZM7 11H9V13H7V11ZM7 15H9V17H7V15ZM7 7H9V9H7V7Z">
                                             </path>
                                         </svg>
-                                        Issue Interaction Details
+                                        Issue Interaction Details of - <b
+                                            style="color: red; font-size:18px">{{ $student_issue->usn }}</b>
                                     </h5>
 
                                     <div class=" block ltr:ml-auto rtl:mr-auto my-auto">
@@ -188,7 +92,7 @@
                                                     </div>
 
                                                     <form
-                                                        action="{{ route('HOD.issue_timeline.store', $student_issue->id) }}"
+                                                        action="{{ route('PRINCIPAL.issue_timeline.store', $student_issue->id) }}"
                                                         method="post">
                                                         @csrf
                                                         <div class="ti-modal-body">
@@ -274,40 +178,14 @@
                                                                     required>
                                                                     <option value="" disabled selected>Select status
                                                                     </option>
-                                                                    <option value="open">Open</option>
+                                                                    {{-- <option value="open">Open</option> --}}
                                                                     <option value="followup">Follow-up</option>
                                                                     <option value="resolved">Resolved</option>
                                                                 </select>
                                                             </div>
 
 
-                                                            {{-- <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
-                                                                    <div class="space-y-2">
-                                                                        <label for="" class="ti-form-label mb-0 font-bold">Status Updated Date :<span class="text-red-500">*</span></label>
-                                                                            <div class="flex shadow-sm max-w-sm space-y-3 pb-6">
-                                                                                
-                                                                                <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
-                                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M9 1V3H15V1H17V3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H7V1H9ZM20 11H4V19H20V11ZM7 5H4V9H20V5H17V7H15V5H9V7H7V5Z"></path></svg>
-                                                                                </div>
-                                
-                                                                                <input type="date" name="status_updated_date"
-                                                                                    class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
-                                                                                    id="udate" placeholder="status_updated_date" value="">
-                                                                            </div>
-                                                                    </div>
-                                                                </div>
 
-                                                                <div class="max-w-sm space-y-3 pb-6">
-                                                                    <label for="" class="ti-form-label mb-0 font-bold">Status Updated By:</label>
-                                                                    <input type="text" name="status_updated_by" class="ti-form-input" 
-                                                                           value=""  required placeholder="status updated by">
-                                                                </div>
-                                                                
-                                                                <div class="max-w-sm space-y-3 pb-6">
-                                                                    <label for="" class="ti-form-label mb-0 font-bold">Student Issue:</label>
-                                                                    <input type="text" name="student_issue_id" class="ti-form-input" 
-                                                                           value="" placeholder="student issue" required>
-                                                                </div>                                                                 --}}
 
 
                                                             <div class="ti-modal-footer">
@@ -375,7 +253,7 @@
                                                                             class="text-xs text-gray-500 dark:text-white/70">
                                                                             {{ $student_issue->description }}</p>
                                                                         {{-- @else
-                                            <h6 class="font-semibold text-base mb-2">No student issue found</h6> --}}
+                                                                             <h6 class="font-semibold text-base mb-2">No student issue found</h6> --}}
                                                                         {{-- @endforeach --}}
                                                                         {{-- <h6 class="font-semibold text-base mb-2">Marsha Mellow updated his status</h6> --}}
                                                                         {{-- <p class="text-xs text-gray-500 dark:text-white/70">Nonumy erat nonumy dolores duo ea sit, ipsum sed amet aliquyam magna kasd at. Dolor erat sit sed sea et dolor, justo dolor ipsum dolore voluptua. Sed ipsum sed.</p> --}}
@@ -416,7 +294,7 @@
                                                                             <div
                                                                                 class="space-x-0 sm:space-x-2 sm:text-end flex">
                                                                                 {{-- <a href="javascript:void(0);" class="text-xs leading-[0] text-gray-500 dark:text-white/70 space-x-2 rtl:space-x-reverse rounded-full bg-gray-100 px-3 py-1 font-normal hover:bg-gray-300 focus:bg-gary-800 dark:bg-black/20 dark:hover:bg-bgdark inline-flex"><i class="text-xs ri ri-heart-line"></i><span class="my-2">30</span></a>
-                                        <a href="javascript:void(0);" class="text-xs leading-[0] text-gray-500 dark:text-white/70 space-x-2 rtl:space-x-reverse rounded-full bg-gray-100 px-3 py-1 font-normal hover:bg-gray-300 focus:bg-gary-800 dark:bg-black/20 dark:hover:bg-bgdark inline-flex"><i class="text-xs ri ri-thumb-up-line"></i><span class="my-2">25k</span></a> --}}
+                                                                                    <a href="javascript:void(0);" class="text-xs leading-[0] text-gray-500 dark:text-white/70 space-x-2 rtl:space-x-reverse rounded-full bg-gray-100 px-3 py-1 font-normal hover:bg-gray-300 focus:bg-gary-800 dark:bg-black/20 dark:hover:bg-bgdark inline-flex"><i class="text-xs ri ri-thumb-up-line"></i><span class="my-2">25k</span></a> --}}
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -450,21 +328,9 @@
                                                                                     class="text-xs text-gray-500 dark:text-white/70">
                                                                                     {{ $timeline->interaction ?? '' }}
                                                                                 </p>
-                                                                                {{-- <h6 class="font-semibold text-base mb-2">
-                                            @if ($student_issue->issue_timeline)
-                                                {{ $student_issue->issue_timeline->status ?? ''}} <br>
-                                                {{ $student_issue->issue_timeline->followup_date ?? '' }}
-                                                    
-                                            
-                                            @endif
-                                        </h6>
-                                        <p class="text-xs text-gray-500 dark:text-white/70">
-                                            @if ($student_issue->issue_timeline)
-                                                {{ $student_issue->issue_timeline->interaction ?? '' }}
-                                            @endif
-                                        </p> --}}
+
                                                                                 {{-- <h6 class="font-semibold text-base mb-2"></h6>
-                                    <p class="text-xs text-gray-500 dark:text-white/70">Invidunt dolor justo gubergren sit voluptua ipsum lorem sanctus, justo dolores dolor dolore stet justo dolor. Eos ipsum rebum diam..</p> --}}
+                                                                                    <p class="text-xs text-gray-500 dark:text-white/70">Invidunt dolor justo gubergren sit voluptua ipsum lorem sanctus, justo dolores dolor dolore stet justo dolor. Eos ipsum rebum diam..</p> --}}
                                                                             </div>
                                                                             <div class="box-footer bg-transparent p-4">
                                                                                 <div
@@ -483,18 +349,12 @@
                                                                                                     {{ $timeline->user->role == 'Head of Department' ? $timeline->user->role : $timeline->user->email }}
                                                                                                 @endif
                                                                                                 {{-- Anderson Itumay --}}
-                                                                                                {{-- @if ($student_issue->issue_timeline && $student_issue->issue_timeline->user)
-                                                {{ $student_issue->issue_timeline->user->role == "Head of Department" ? $student_issue->issue_timeline->user->role : $student_issue->issue_timeline->user->email }}
-                                            @endif --}}
 
                                                                                             </p>
                                                                                             <p
                                                                                                 class="text-xs text-gray-500 dark:text-white/70">
                                                                                                 {{-- 11 Dec 2022 --}}
-                                                                                                {{-- {{ $student_issue->issue_timeline->date_of_interaction ?? '' }} --}}
-                                                                                                {{-- @if ($student_issue->issue_timeline)
-                                                {{ $student_issue->issue_timeline->date_of_interaction ?? '' }}
-                                            @endif --}}
+
                                                                                                 {{ $timeline->date_of_interaction ?? '' }}
                                                                                             </p>
                                                                                         </div>
@@ -502,7 +362,7 @@
                                                                                     <div
                                                                                         class="space-x-0 sm:space-x-2 sm:text-end flex">
                                                                                         {{-- <a href="javascript:void(0);" class="text-xs leading-[0] text-gray-500 dark:text-white/70 space-x-2 rtl:space-x-reverse rounded-full bg-gray-100 px-3 py-1 font-normal hover:bg-gray-300 focus:bg-gary-800 dark:bg-black/20 dark:hover:bg-bgdark inline-flex"><i class="text-xs ri ri-heart-line"></i><span class="my-2">30</span></a>
-                                        <a href="javascript:void(0);" class="text-xs leading-[0] text-gray-500 dark:text-white/70 space-x-2 rtl:space-x-reverse rounded-full bg-gray-100 px-3 py-1 font-normal hover:bg-gray-300 focus:bg-gary-800 dark:bg-black/20 dark:hover:bg-bgdark inline-flex"><i class="text-xs ri ri-thumb-up-line"></i><span class="my-2">25k</span></a> --}}
+                                                                                             <a href="javascript:void(0);" class="text-xs leading-[0] text-gray-500 dark:text-white/70 space-x-2 rtl:space-x-reverse rounded-full bg-gray-100 px-3 py-1 font-normal hover:bg-gray-300 focus:bg-gary-800 dark:bg-black/20 dark:hover:bg-bgdark inline-flex"><i class="text-xs ri ri-thumb-up-line"></i><span class="my-2">25k</span></a> --}}
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -513,99 +373,15 @@
                                                                 <div class="bg-secondary text-white timeline-icon">
                                                                     <i class="ri-mail-line text-lg leading-none"></i>
                                                                     {{-- <div class="{{ $index % 2 == 0 ? 'bg-warning' : 'bg-secondary' }} text-white timeline-icon">
-                                    <i class="ri {{ $index % 2 == 0 ? 'ri-mail-line' : 'ri-briefcase-4-line' }} text-lg leading-none"></i>
-                                </div> --}}
+                                                                        <i class="ri {{ $index % 2 == 0 ? 'ri-mail-line' : 'ri-briefcase-4-line' }} text-lg leading-none"></i>
+                                                                    </div> --}}
                                                                 </div>
                                                             </div>
                                                         @endfor
                                                     @endif
                                                 </div>
                                             </div>
-                                            {{-- <div class="timeline">
-                            <div class="timeline-main">
-                            <div class="timeline-left">
-                                <div class="timeline-body">
-                                <div class="box">
-                                    <div class="box-body p-4">
-                                    <h6 class="font-semibold text-base mb-2">
-                                        Clark Kent posted on timeline
-                                        @if ($student_issue->issue_timeline)
-                                            {{ $student_issue->issue_timeline->status ?? ''}}
 
-                                        @endif
-                                    </h6>
-                                    <p class="text-xs text-gray-500 dark:text-white/70">
-                                        Accusam et et stet invidunt at duo, ipsum no takimata est eos magna dolore sed, amet diam sea no diam.
-                                        
-                                    </p>
-                                    </div>
-                                    <div class="box-footer bg-transparent p-4">
-                                    <div class="sm:space-y-0 space-y-2 sm:flex items-center justify-between">
-                                        <div class="sm:flex items-center sm:space-x-3 space-x-0 sm:space-y-0 space-y-2 rtl:space-x-reverse">
-                                        <div class="flex">
-                                            <img class="avatar avatar-sm ring-0 rounded-full" src="{{asset('build/assets/img/users/21.jpg')}}" alt="avatar">
-                                        </div>
-                                        <div>
-                                            <p class="text-slate-700 font-semibold text-sm dark:text-white">
-                                            Harvey Mattos
-                                            </p>
-                                            <p class="text-xs text-gray-500 dark:text-white/70">
-                                            11 Dec 2022
-                                            </p>
-                                        </div>
-                                        </div>
-                                        <div class="space-x-0 sm:space-x-2 sm:text-end flex">
-                                        <a href="javascript:void(0);" class="text-xs leading-[0] text-gray-500 dark:text-white/70 space-x-2 rtl:space-x-reverse rounded-full bg-gray-100 px-3 py-1 font-normal hover:bg-gray-300 focus:bg-gary-800 dark:bg-black/20 dark:hover:bg-bgdark inline-flex"><i class="text-xs ri ri-heart-line"></i><span class="my-2">30</span></a>
-                                        <a href="javascript:void(0);" class="text-xs leading-[0] text-gray-500 dark:text-white/70 space-x-2 rtl:space-x-reverse rounded-full bg-gray-100 px-3 py-1 font-normal hover:bg-gray-300 focus:bg-gary-800 dark:bg-black/20 dark:hover:bg-bgdark inline-flex"><i class="text-xs ri ri-thumb-up-line"></i><span class="my-2">25k</span></a>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="bg-danger text-white timeline-icon">
-                                <span class="text-lg leading-none">HM</span>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="timeline">
-                            <div class="timeline-main">
-                            <div class="timeline-right">
-                                <div class="timeline-body">
-                                <div class="box">
-                                    <div class="box-body p-4">
-                                    <h6 class="font-semibold text-base mb-2">Shady Tree send you a post</h6>
-                                    <p class="text-xs text-gray-500 dark:text-white/70">Dolore justo lorem vero sed et takimata sit no dolore dolores, elitr eos et dolor consetetur sed sanctus. Ipsum amet elitr lorem clita et dolor. Kasd diam ea dolor sit accusam gubergren no kasd. Ea amet et sed takimata kasd,.</p>
-                                    </div>
-                                    <div class="box-footer bg-transparent p-4">
-                                    <div class="sm:space-y-0 space-y-2 sm:flex items-center justify-between">
-                                        <div class="sm:flex items-center sm:space-x-3 space-x-0 sm:space-y-0 space-y-2 rtl:space-x-reverse">
-                                        <div class="flex">
-                                            <img class="avatar ring-0 rounded-full" src="{{asset('build/assets/img/users/15.jpg')}}" alt="avatar">
-                                        </div>
-                                        <div>
-                                            <p class="text-slate-700 font-semibold text-sm dark:text-white">
-                                            Anesthesia
-                                            </p>
-                                            <p class="text-xs text-gray-500 dark:text-white/70">
-                                            9 Dec 2022
-                                            </p>
-                                        </div>
-                                        </div>
-                                        <div class="space-x-0 sm:space-x-2 sm:text-end flex">
-                                        <a href="javascript:void(0);" class="text-xs leading-[0] text-gray-500 dark:text-white/70 space-x-2 rtl:space-x-reverse rounded-full bg-gray-100 px-3 py-1 font-normal hover:bg-gray-300 focus:bg-gary-800 dark:bg-black/20 dark:hover:bg-bgdark inline-flex"><i class="text-xs ri ri-heart-line"></i><span class="my-2">30</span></a>
-                                        <a href="javascript:void(0);" class="text-xs leading-[0] text-gray-500 dark:text-white/70 space-x-2 rtl:space-x-reverse rounded-full bg-gray-100 px-3 py-1 font-normal hover:bg-gray-300 focus:bg-gary-800 dark:bg-black/20 dark:hover:bg-bgdark inline-flex"><i class="text-xs ri ri-thumb-up-line"></i><span class="my-2">25k</span></a>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="bg-danger text-white timeline-icon">
-                                <img class="avatar ring-0 rounded-full" src="{{asset('build/assets/img/users/15.jpg')}}" alt="avatar">
-                            </div>
-                            </div>
-                        </div> --}}
                                             <div class="timeline-end"></div>
                                         </div>
                                     </div>
@@ -618,13 +394,17 @@
                 </div>
 
             </div>
+            
+
+
+
         </div>
         <!-- End::row-5 -->
 
     </div>
     <!-- End::main-content -->
 
-    </div>
+</div>
 
 @endsection
 

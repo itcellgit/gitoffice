@@ -130,6 +130,7 @@
                                     <li class="slide"><a href="{{url('ESTB/autonomous_allowance')}}" class="side-menu__item">Autonomous Grading</a></li>
                                     <li class="slide"><a href="javascript:void(0);" class="side-menu__item">Leaves Encashment</a></li>
                                     <li class="slide"><a href="{{url('ESTB/Generateannualincrement/')}}" class="side-menu__item">Generate Annual Increment List </a></li>
+                                    <li class="slide"><a href="{{url('ESTB/salaries/staffpayscale')}}" class="side-menu__item">Salary</a></li>
                                 </ul>
                             </li>
                             <li class="slide">

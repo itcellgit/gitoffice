@@ -99,6 +99,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    
                                     <!-- End Modal -->
                                     <form method="POST" action="{{ route('biometric_data') }}">
                                     @csrf
@@ -110,9 +111,73 @@
                                                     <button type="submit" class="text-white px-4 py-2 focus:outline-none" style="background-color: #818cf8;">Search</button>&nbsp &nbsp
                                                     
 
-                                                    <button id="missing-biometric-button" class="text-white px-4 py-2 focus:outline-none" style="background-color: Skyblue">Missing Biometric</button>
-                                                   
-
+                                                    <button data-hs-overlay="#missing-biometric-modal"  id="missing-biometric-button" type="submit" class="text-white px-4 py-2 focus:outline-none" style="background-color: Skyblue">Missing Biometric</button>
+                                                    <!-- Modal -->
+                                                    {{-- <div id="missing-biometric-modal" class="hs-overlay hidden ti-modal">
+                                                        <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out lg:!max-w-4xl lg:w-full m-3 md:mx-auto">
+                                                            <div class="ti-modal-content">
+                                                                <form method="get" enctype="multipart/form-data">
+                                                                    @csrf
+                                                                    <div class="ti-modal-body">
+                                                                        <div class="table-responsive">
+                                                                            <p style="color: rgb(32, 195, 241);"><b>Biometric Entry not found / On leave</b></p>
+                                                                            <table id="missing-biometric-data" class="table table-bordered">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th class="font-bold px-4 py-2">ID</th>
+                                                                                        <th class="font-bold px-4 py-2">Employee Code</th>
+                                                                                        <th class="font-bold px-4 py-2">Full Name</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <!-- Data will be dynamically populated here -->
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ti-modal-footer">
+                                                                        <button type="button" class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10" data-hs-overlay="#missing-biometric-modal">Close</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div> --}}
+                                                    <div id="missing-biometric-modal" class="hs-overlay hidden ti-modal">
+                                                        <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out lg:!max-w-4xl lg:w-full m-3 md:mx-auto">
+                                                            <div class="ti-modal-content">
+                                                                <form method="get" enctype="multipart/form-data">
+                                                                    @csrf
+                                                                    <div class="ti-modal-body">
+                                                                        <div class="table-responsive">
+                                                                            <p style="color: rgb(32, 195, 241);"><b>Biometric Entry not found / On leave</b></p>
+                                                                            <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
+                                                                                <table  class="ti-custom-table ti-custom-table-head whitespace-nowrap">
+                                                                                    <thead class="bg-gray-50 dark:bg-black/20">
+                                                                                        <tr>
+                                                                                            <th class="dark:text-white/80 font-bold px-4 py-2">ID</th>
+                                                                                            <th class="dark:text-white/80 font-bold px-4 py-2">Employee Code</th>
+                                                                                            <th class="dark:text-white/80 font-bold px-4 py-2">Full Name</th>
+                                                                                            <th class="dark:text-white/80 font-bold px-4 py-2">Department Name</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody id="missing-biometric-data">
+                                                                                        <!-- Data will be dynamically populated here -->
+                                                                                        
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ti-modal-footer">
+                                                                        <button type="button" class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10" data-hs-overlay="#missing-biometric-modal">Close</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    
+                                                    <!-- End Modal -->
                                                     
                                                 </div>                                               
                                             </div>
@@ -305,9 +370,7 @@
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
         
-       
-       
-       <script>
+    <script>
         $(document).ready(function() {
              //$('#BiometricTable').DataTable();
              new DataTable('#BiometricTable');
@@ -316,7 +379,7 @@
                 event.preventDefault(); // Prevent the default form submission
 
                 var date = $('#to_date').val(); // Get the date from the Blade variable
-                //alert(date);
+                alert(date);
                 $.ajax({
                     url: base_url+'/biometric/missing_logs',
                     method: 'GET',
@@ -326,19 +389,46 @@
                     success: function(response) {
                         // Handle success - display the data in the placeholder div
                         console.log(response);
-                        $('#missing-biometric-data').html(response);
-                    },
+                        $('#missing-biometric-data').empty();
+                        if (response.length != 0) {
+                            $.each(response, function(key, value) {
+                                console.log('Inside each');
+                                $('#missing-biometric-data').append(
+                                    '<tr>' +
+                                        '<td>' + value.id + '</td>' +
+                                        '<td>' + value.EmployeeCode + '</td>' +
+                                        '<td>' + value.full_name + '</td>' +
+                                        '<td>' + value.dept_shortname + '</td>' +
+
+                                    '</tr>'
+                                );
+                            });
+                        } else {
+                            $('#missing-biometric-data').append(
+                                '<tr class="text-red-400">' +
+                                    '<td colspan="3" align="center">No Missing Biometric Logs</td>' +
+                                '</tr>'
+                            );
+                        }
+                    }, 
                     error: function(xhr, status, error) {
                         // Handle error
                         console.error('Error:', error);
                     }
                 });
             });
+            // Click event handler to close the modal
+                    $('.hs-overlay-open').click(function(event) {
+                        $('#missing-biometric-modal').addClass('hidden');
+                    });
         });
-        </script>   
+        </script>
+   
         
         
         
+
+
 
 
 

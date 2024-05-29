@@ -15,6 +15,9 @@ use App\Models\Ticketing\ticket;
 use App\Enums\UserRoles;
 use App\Http\Models\HOD\issue_timeline;
 use App\Http\Models\Non_Teaching\ntissue_timeline;
+use Impersonate;
+
+// use Lab404\Impersonate\Models\Impersonate;
 
 class User extends Authenticatable
 {

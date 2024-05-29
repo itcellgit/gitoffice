@@ -132,13 +132,19 @@
                                                                             @if($lse->shortname == $l_type->shortname)
                                                                                 
                                                                                 <td scope="col" class="dark:text-white/80 font-bold">{{$lse->pivot->entitled_curr_year}}</td>
-                                                                                
+                                                                               
                                                                             @endif
                                                                         @endforeach
                                                                     @endforeach
-                                                                {{-- @endforeach --}}
-                                                                
-                                                                <td></td>
+                                                                    @foreach ($leave_types as $l_type)
+                                                                   
+                                                                        @foreach($st->leave_staff_entitlements as $lse)
+                                                                    
+                                                                            @if($lse->shortname == $l_type->shortname)
+                                                                                <td scope="col" class="dark:text-white/80 font-bold">{{$lse->pivot->consumed_curr_year}}</td>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    @endforeach
                                                                 <td></td>
                                                                 <td></td>
                                                                 <td></td>
