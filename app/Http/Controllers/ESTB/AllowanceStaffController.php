@@ -35,7 +35,11 @@ class AllowanceStaffController extends Controller
             ->from('allowance_staff')
             ->where('year',$year)->where('month',$month);
         })->get();
-        
+                $staff=staff::join('allowance_staff','allowance_staff.staff_id','=','staff.id')
+        ->where('year',$year)
+        ->where('month',$month)
+        ->get();
+        dd($staff);
         if($grading!=null)
         {
             $staff = Staff::with(['departments' => function ($query) {
@@ -86,7 +90,7 @@ class AllowanceStaffController extends Controller
             $temp_file = tempnam(sys_get_temp_dir(), 'grading_template_'.$year.' '.$month);
             $writer->save($temp_file);
         }
-        
+
 
         // Return download response
         return response()->download($temp_file, 'grading_template_'.$year.' '.$month.'.xlsx')->deleteFileAfterSend(true);
@@ -125,14 +129,14 @@ class AllowanceStaffController extends Controller
         // Get the highest row number
         $highestRow = $sheet->getHighestRow();
         //create an array to display to user.
-        
+
         // Iterate through each row to read and store grade data
         for ($row = 2; $row <= $highestRow; $row++) {
             $staffId = $sheet->getCell('B' . $row)->getValue();
             $year=$sheet->getCell('E'.$row)->getValue();
             $month=$sheet->getCell('F'.$row)->getValue();
             $grade = $sheet->getCell('G' . $row)->getValue(); // Assuming grade is in column G
-           
+
             $staff_designation=DB::table('designation_staff')->where('staff_id',$staffId)->whereIn('designation_id',function($q){
                 $q->select('designations.id')
                 ->from('designations')

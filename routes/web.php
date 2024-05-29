@@ -239,7 +239,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::TEACHING->value, 'prevent-ba
   //for deleting the staff qualification details when want to change the qualification with the condition being duration of the staff in that perticular department is within 1 month
    Route::delete('/Teaching/staff/qualification/destroy/{qualification}',[TeachingController::class,'destroy'])->name('Teaching.staff.qualification.destroy');
 
-  
+
 
   Route::get('/Teaching/construction1',[TeachingController::class,'index'])->name('Teaching.construction1');
 
@@ -427,8 +427,8 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::post('/biometric_data', [biometricController::class, 'biometric_data'])->name('biometric_data');
     // Route for missingLogEntries method
     Route::get('/biometric/missing_logs', [BiometricController::class, 'missingLogEntries'])->name('biometric.missing_logs');
-    
-    
+
+
 
     //departments controller
     Route::get('/ESTB/departments',[DepartmentController::class,'index'])->name('ESTB.departments.index');
@@ -444,7 +444,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
 
 
 
-//festival advance controller
+    //festival advance controller
     //Route::get('/ESTB/FestivalAdvance',[festivaladvanceController::class,'index'])->name('ESTB.festivaladvance.index');
     Route::post('/ESTB/staff/{staff}/festival_advances/create',[festivaladvanceController::class,'store'])->name('ESTB.staff.festivaladvance.store');
     Route::patch('/ESTB/staff/{staff}/festival_advances/{festival_advance}/update',[festivaladvanceController::class,'update'])->name('ESTB.festivaladvance.update');
@@ -486,21 +486,9 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     //Route::get('/ESTB/designation-filtering',[DesignationController::class,'designationsDataSource']);
 
     // Grading routes
-
-    Route::get('ESTB/Grading/autonomous_a_grading', [GradeMappingController::class, 'index'])->name('ESTB.Grading.autonomous_a_grading');
-    Route::post('ESTB/Grading/autonomous_a_grading/create', [GradeMappingController::class, 'store'])->name('ESTB.Grading.autonomous_a_grading.store');
-    Route::delete('ESTB/Grading/autonomous_a_grading/{grade_mapping}',[GradeMappingController::class,'destroy'])->name('ESTB.Grading.autonomous_a_grading.destroy');
-    Route::patch('ESTB/Grading/autonomous_a_grading/{grade_mapping}',[GradeMappingController::class, 'update'])->name('ESTB.Grading.autonomous_a_grading.update');
-
-    Route::get('ESTB/autonomous_allowance',[AllowanceStaffController::class,'index'])->name('ESTB.autonomous_allowance');
-    Route::post('ESTB/autonomous_allowance',[AllowanceStaffController::class,'create'])->name('ESTB.autonomous_allowance.create');
+    Route::get('/ESTB/autonomous_allowance',[AllowanceStaffController::class,'index'])->name('ESTB.autonomous_allowance');
+    Route::post('/ESTB/autonomous_allowance',[AllowanceStaffController::class,'create'])->name('ESTB.autonomous_allowance.create');
     Route::post('/ESTB/autonomous_allowance/create', [AllowanceStaffController::class, 'store'])->name('ESTB.autonomous_allowance.import');
-
-    Route::post('grading-staff', [GradingStaffController::class, 'index'])->name('grading.staff.index');
-    Route::post('/grading-staff/store', [GradingStaffController::class, 'store'])->name('grading.staff.store');
-    Route::get('ESTB/Grading/gradetemplate', [GradingStaffController::class, 'showGradeTemplate'])->name('ESTB.Grading.gradetemplate');
-    Route::post('/grading-staff/update', [GradingStaffController::class, 'update'])->name('grading.staff.update');
-
 
     // Generate annual increment list controller
     Route::get('/ESTB/Generateannualincrement', [GenetareAnnualIncrementListController::class, 'index'])->name('aanualincrement.staff.index');
@@ -562,11 +550,11 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::get('/ESTB/staff/staffinformation',[StaffController::class,'filterstaff_information'])->name('ESTB.staff.staffinformation');
 
     //route for staff searching , sorting and filtering
-    Route::get('/ESTB/staff/indexfiltering', [StaffFilteringController::class,'indexFiltering'])->name('ESTB.staff.indexfiltering');  
+    Route::get('/ESTB/staff/indexfiltering', [StaffFilteringController::class,'indexFiltering'])->name('ESTB.staff.indexfiltering');
 
     //route to generate statistics filter
     Route::get('/ESTB/staff/generatestatistics',[StaffController::class,'statistics_information'])->name('ESTB.staff.generatestatistics');
-    
+
 
 
     /**************** */
@@ -662,12 +650,12 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     // Route::patch('/ESTB/renumerations/update/{renumeration}',[RenumerationheadsController::class,'update'])->name('ESTB.renumerations.update');
     // Route::delete('/ESTB/renumerations/destory/{renumeration}', [RenumerationheadsController::class, 'destroy'])->name('ESTB.renumerations.destroy');
     Route::post('/import-excel', [RenumerationheadsController::class, 'importExcel'])->name('import.excel');
-   
+
     //Route to fetch renumeration for perticular staff using Filter
    Route::get('/ESTB/renumerations/renumedetails',[RenumerationheadsController::class,'filterrenume_information'])->name('ESTB.renumerations.renumedetails');
    Route::get('/ESTB/renumerations/indexfiltering', [RenumerationheadsController::class,'indexFiltering'])->name('ESTB.renumerations.indexfiltering');
 
-   
+
     Route::get('/ESTB/salaryheads',[SalaryHeadsController::class,'index'])->name('ESTB.salaryheads');
     Route::post('/ESTB/salaryheads/create',[SalaryHeadsController::class,'store'])->name('ESTB.salaryheads.store');
     Route::patch('/ESTB/salaryheads/update/{salaryhead}',[SalaryHeadsController::class,'update'])->name('ESTB.salaryheads.update');
@@ -1003,7 +991,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
 
 
 
-     
+
 
 
       Route::get('/PRINCIPAL/staff/index',[PrincipalController::class,'staff_view'])->name('PRINCIPAL.staff');
@@ -1082,7 +1070,7 @@ Route::patch('ticket/{ticket}reply/update',[ReplyController::class,'update'])->n
 
 //Routes for admin ticketiing  system
 // Route::middleware(['cors','auth','role:'.UserRoles::SU->value])->group(function()
-Route::middleware(['cors','auth','role:' . UserRoles::SU->value, 'middleware' => 'prevent-back-history', 'impersonate'])->group(function () 
+Route::middleware(['cors','auth','role:' . UserRoles::SU->value, 'middleware' => 'prevent-back-history', 'impersonate'])->group(function ()
 {
   Route::get('/Admin/dashboard',[AdminController::class,'dashboard'])->name('Admin.dashboard');
   Route::get('/Admin/users', [AdminController::class, 'users'])->name('Admin.users');

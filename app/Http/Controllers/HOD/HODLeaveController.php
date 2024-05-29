@@ -35,6 +35,7 @@ class HODLeaveController extends Controller
     }
 
     public function fetchDeptleaveevents(Request $request){
+
         $date = $request->input('date');
 
         $user = Auth::user();
@@ -43,26 +44,39 @@ class HODLeaveController extends Controller
 
         // Process the date as needed (e.g., save to database, perform calculations)
 
-        $leave_events = leave_staff_applications::join('leaves', 'leaves.id','=','leave_staff_applications.leave_id')
-        ->join('staff AS s1','s1.id','=','leave_staff_applications.staff_id')
-        ->join('staff AS s2','s2.id','=','leave_staff_applications.alternate')
-        ->leftJoin('staff AS s3','s3.id','=','leave_staff_applications.additional_alternate')
-        ->leftJoin('daywise__leaves AS daywise', 'leave_staff_applications.id', '=', 'daywise.leave_staff_applications_id')
-        ->join('department_staff AS ds','ds.staff_id','=','leave_staff_applications.staff_id')
-        ->where('ds.department_id','=', $department_id)
-        //->groupBy('leave_staff_applications.leave_id', 'leave_staff_applications.start' )
-        ->select(DB::raw("CONCAT(s1.fname,' ',s1.mname,' ',s1.lname) AS staff_name"),
-                DB::raw("CONCAT(s2.fname,' ',s2.mname,' ',s2.lname) AS alternate_staff"),
-                DB::raw("CONCAT(s3.fname,' ',s3.mname,' ',s3.lname) AS additional_alternate_staff"),
-                DB::raw("case when leaves.shortname='CL' then concat(leaves.shortname,'-',leave_staff_applications.cl_type) else leaves.shortname end AS title"),'daywise.start AS start',
-                 DB::raw("date_add(daywise.start, INTERVAL 1 day)  AS end"),
-                 'leave_staff_applications.leave_id AS leave_id',
-                 'leave_staff_applications.appl_status AS appl_status',
-                 'leaves.shortname AS leave_name',
-                 'leave_staff_applications.id')
-                 
-                 
-        ->get();
+        $leave_events = DB::table('daywise__leaves as daywise')
+                        ->join('leave_staff_applications','daywise.leave_staff_applications_id','=','leave_staff_applications.id')
+                    ->join('leaves as l','l.id','=','daywise.leave_id')
+                    ->select(
+                        DB::raw('CONCAT(l.shortname, "-", COUNT(daywise.leave_id)) AS title'),
+                        'leave_staff_applications.id as leave_id',
+                        'daywise.start AS start',
+                        DB::raw('DATE_ADD(daywise.start, INTERVAL 1 DAY) AS end')
+                    )
+                    ->groupBy("daywise.leave_id",'daywise.start','l.shortname','leave_staff_applications.id')
+                    ->get();
+
+
+        // leave_staff_applications::join('leaves', 'leaves.id','=','leave_staff_applications.leave_id')
+        // ->join('staff AS s1','s1.id','=','leave_staff_applications.staff_id')
+        // ->join('staff AS s2','s2.id','=','leave_staff_applications.alternate')
+        // ->leftJoin('staff AS s3','s3.id','=','leave_staff_applications.additional_alternate')
+        // ->leftJoin('daywise__leaves AS daywise', 'leave_staff_applications.id', '=', 'daywise.leave_staff_applications_id')
+        // ->join('department_staff AS ds','ds.staff_id','=','leave_staff_applications.staff_id')
+        // ->where('ds.department_id','=', $department_id)
+        // //->groupBy('leave_staff_applications.leave_id', 'leave_staff_applications.start' )
+        // ->select(DB::raw("CONCAT(s1.fname,' ',s1.mname,' ',s1.lname) AS staff_name"),
+        //         DB::raw("CONCAT(s2.fname,' ',s2.mname,' ',s2.lname) AS alternate_staff"),
+        //         DB::raw("CONCAT(s3.fname,' ',s3.mname,' ',s3.lname) AS additional_alternate_staff"),
+        //         DB::raw("case when leaves.shortname='CL' then concat(leaves.shortname,'-',leave_staff_applications.cl_type) else leaves.shortname end AS title"),'daywise.start AS start',
+        //          DB::raw("date_add(daywise.start, INTERVAL 1 day)  AS end"),
+        //          'leave_staff_applications.leave_id AS leave_id',
+        //          'leave_staff_applications.appl_status AS appl_status',
+        //          'leaves.shortname AS leave_name',
+        //          'leave_staff_applications.id')
+
+
+        // ->get();
           return response()->json($leave_events);
         //return response()->json(['message' => 'Date clicked: ' . $date]);
     }
@@ -70,6 +84,7 @@ class HODLeaveController extends Controller
     //for fetching the leave details date-wise in the HoD Login.
 
     function fetchdatewisedeptleaveevents(Request $request){
+        dd("here");
         $date = $request->input('date');
         //dd($date);
         $user = Auth::user();
@@ -84,6 +99,7 @@ class HODLeaveController extends Controller
         ->leftJoin('staff AS s3','s3.id','=','leave_staff_applications.additional_alternate')
         ->leftjoin('daywise__leaves AS daywise', 'leave_staff_applications.id', '=', 'daywise.leave_staff_applications_id')
         ->join('department_staff AS dept_staff','dept_staff.staff_id','=','leave_staff_applications.staff_id')
+
         ->where('leave_staff_applications.leave_id','=',$leave_type_id)
         ->where('dept_staff.department_id','=',$department_id)
         ->where('daywise.start' , '=', $date)
@@ -113,7 +129,7 @@ class HODLeaveController extends Controller
                                         ->where('id','=',$application_id)
                                         ->first();
 
-                
+
         $staff_id = $staff_details_of_leave_application->staff_id;
         $leave_id = $staff_details_of_leave_application->leave_id;
         $today = Carbon::now();
@@ -164,7 +180,7 @@ class HODLeaveController extends Controller
                                         ->where('id','=',$application_id)
                                         ->first();
 
-                
+
         $staff_id = $staff_details_of_leave_application->staff_id;
         $leave_id = $staff_details_of_leave_application->leave_id;
         $today = Carbon::now();
@@ -178,7 +194,7 @@ class HODLeaveController extends Controller
             //   dd($leave_staff_entitlement->consumed_curr_year);
             $leave_staff_entitlement->update();
         }
-       // dd($leave_staff_entitlement);                                
+       // dd($leave_staff_entitlement);
 
         $result = DB::table('leave_staff_applications')
             ->where('id', $application_id)
