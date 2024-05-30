@@ -501,12 +501,12 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::get('/ESTB/autonomous_allowance',[AllowanceStaffController::class,'index'])->name('ESTB.autonomous_allowance');
     Route::post('/ESTB/autonomous_allowance',[AllowanceStaffController::class,'create'])->name('ESTB.autonomous_allowance.create');
     Route::post('/ESTB/autonomous_allowance/create', [AllowanceStaffController::class, 'store'])->name('ESTB.autonomous_allowance.import');
-
+    Route::patch('/ESTB/autonomous_allowance/{autonomous_allowance}/update',[AllowanceStaffController::class,'update'])->name('grading.staff.update');
     // Generate annual increment list controller
     Route::get('/ESTB/Generateannualincrement', [GenetareAnnualIncrementListController::class, 'index'])->name('aanualincrement.staff.index');
     Route::post('/ESTB/Generateannualincrement/create',[GenetareAnnualIncrementListController::class,'create'])->name('ESTB.annualincrement.create');
     Route::post('/import-excel', [GenetareAnnualIncrementListController::class, 'importExcel'])->name('import.excel');
-    
+
     //Assocations Controllers
 
     Route::get('/ESTB/associations',[AssociationController::class,'index'])->name('ESTB.associations');
@@ -655,7 +655,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::get('/ESTB/leaves_calender/hollidayrh_events',[LeaveController::class,'hollidayrh_events'])->name('ESTB.leaves.hollidayrh_events');
     Route::get('/ESTB/leaves_calender/fetchAllleaveevents',[LeaveController::class,'fetchAllleaveevents'])->name('ESTB.leaves.fetchAllleaveevents');
     Route::get('/ESTB/leaves_management/fetchholidayrhevents',[LeaveController::class,'fetchholidayrhevents'])->name('ESTB.leaves_management.fetchholidayrhevents');
-    
+
     Route::get('/ESTB/leaves_management/fetchleaveevents',[LeaveController::class,'fetchleaveevents'])->name('ESTB.leaves_management.fetchleaveevents');
     // End of leave management related routes.
 

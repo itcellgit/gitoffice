@@ -100,10 +100,10 @@
                                                             @if($errors->has('year'))
                                                                 <div class="text-red-700">{{ $errors->first('year') }}</div>
                                                                 @endif
-                                                            <div id="year_error" class="error text-red-700"></div> 
+                                                            <div id="year_error" class="error text-red-700"></div>
                                                         </div>
 
-                                                        
+
                                                         <div class="max-w-sm space-y-2 text-center">
                                                             <label for="month" class="ti-form-label mb-0 font-bold">Month</label>
                                                             <select class="ti-form-select type" id="month" name="month">
@@ -141,8 +141,8 @@
                                     </ul>
                                 </div>
                             @endif
-                                @if(isset($grade_array))
-                                <form id="gradingForm" method="POST" action="{{ route('grading.staff.update') }}">
+                                @if(isset($grading))
+
                                     @csrf
                                     <div class="flex justify-end my-4">
                                     <div id="basic-table" class="ti-custom-table ti-striped-table ti-custom-table-hover table-bordered rounded-sm overflow-auto">
@@ -161,22 +161,23 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @php 
+                                                @php
                                                     $i = 1;
                                                 @endphp
                                                 @foreach($grading as $gradingStaff)
                                                     <tr>
                                                         <td><span>{{ $i++ }}</span></td>
-                                                        <td class="border border-gray-300 px-4 py-2"><span>{{ $gradingStaff->staff_id }}</span></td>
-                                                        <td class="border border-gray-300 px-4 py-2"><span>{{ $gradingStaff->fname.' '.$gradingStaff->staff->mname.' '.$gradingStaff->staff->lname}}</span></td>
+                                                        <td class="border border-gray-300 px-4 py-2"><span>{{ $gradingStaff->id }}</span></td>
+                                                        <td class="border border-gray-300 px-4 py-2"><span>{{ $gradingStaff->name}}</span></td>
                                                         <td class="border border-gray-300 px-4 py-2"><span>
-                                                            @foreach($gradingStaff->activedepartments as $dept)
-                                                            {{ $dept->dept_shortname }}
-                                                            @endforeach
+
+                                                            {{ $gradingStaff->dept }}
+
                                                         </span></td>
                                                         <td class="border border-gray-300 px-4 py-2"><span>{{ $gradingStaff->year }}</span></td>
                                                         <td class="border border-gray-300 px-4 py-2"><span>{{ $gradingStaff->month }}</span></td>
-                                                        <td class="border border-gray-300 px-4 py-2">
+                                                        <td class="border border-gray-300 px-4 py-2"><span>{{ $gradingStaff->value }}</span></td>
+                                                        {{-- <td class="border border-gray-300 px-4 py-2">
                                                             <span class="grade-span">{{ $gradingStaff->grade ? $gradingStaff->grade : ' ' }}</span>
                                                             <select name="grade[{{ $gradingStaff->id }}]" id="grade_{{ $gradingStaff->id }}" data-staff-id="{{ $gradingStaff->id }}" class="grade-select hidden">
                                                                 <option value=""></option>
@@ -184,7 +185,7 @@
                                                                     <option value="{{ $gradeOption }}" {{ $gradingStaff->grade == $gradeOption ? 'selected' : '' }}>{{ $gradeOption }}</option>
                                                                 @endforeach
                                                             </select>
-                                                        </td>
+                                                        </td> --}}
                                                         <td class="border border-gray-300 px-4 py-2"><span>{{ $gradingStaff->status }}</span></td>
                                                         <td>
                                                         <div class="hs-tooltip ti-main-tooltip">
@@ -245,11 +246,11 @@
             document.addEventListener('DOMContentLoaded', function() {
                 var yearInput = document.getElementById('year');
                 var yearError = document.getElementById('year_error');
-        
+
                 yearInput.addEventListener('input', function() {
                     var yearPattern = /^\d{4}$/;
                     var yearValue = yearInput.value;
-        
+
                     if (!yearPattern.test(yearValue)) {
                         yearError.textContent = 'Please enter a valid 4-digit year.';
                         yearInput.classList.add('border-red-500');
@@ -260,7 +261,7 @@
                 });
             });
         </script>
-        
+
         <script>
             $(document).ready(function() {
                 $('#submitData').on('click',function(){

@@ -162,12 +162,12 @@ class staff extends Model
         /**Staff Qualification **/
     public function qualifications():BelongsToMany
     {
-        return $this->belongsToMany(qualification::class)->withPivot('id','board_university','grade','yop','status')->orderByPivot('yop','desc');
+        return $this->belongsToMany(qualification::class)->withPivot('id','qualification_id','board_university','grade','yop','status')->orderByPivot('yop','desc');
     }
 
-    
-    
-   
+
+
+
 
     /* professional activity attended*/
     public function professional_activity_attendee():BelongsToMany
@@ -322,5 +322,3 @@ class staff extends Model
         return $this->belongsTo(ntissue_timeline::class);
     }
 }
-
-

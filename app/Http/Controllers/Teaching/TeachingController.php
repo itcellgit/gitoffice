@@ -141,7 +141,7 @@ class TeachingController extends Controller
         //dd($staff);
         $user = Auth::user();
         $staff=staff::where('staff.id',$staff)->first();
-        
+
         $religions =religion::where('status','active')->get();
         $castecategories=DB::table('castecategories')->where('status','active')->get();
 
@@ -166,7 +166,7 @@ class TeachingController extends Controller
         //dd($request);
         //$user = Auth::user();
         //$staff=staff::where('staff.id',$staff)->first();
-      
+
         $staff->fname=$request->fname;
         $staff->mname=$request->mname;
         $staff->lname=$request->lname;
@@ -211,59 +211,66 @@ class TeachingController extends Controller
 
 
 
-    //staff qualification 
+    //staff qualification
     public function qualifications(){
 
         $user = Auth::user();
         //$qualifications =qualification::where('status','active')->get();
         $qualifications = qualification::where('status', 'active')->orderBy('qual_shortname')->get();
 
-        
+
         $staff=staff::with('qualifications')->where('user_id','=',$user->id)->get();
 
         return view('Staff.Teaching.qualifications',compact('staff','qualifications'));
 
     }
 
-  
-    
+
+
 
     public function store(Request $request)
     {
         // Get the authenticated user
         $user = Auth::user();
-    
+
         // Attach qualifications to the authenticated user's staff
         $result = $user->staff->qualifications()->attach($request->qualification_id, [
             'board_university' => $request->board_university,
             'grade' => $request->grade,
             'yop' => $request->yop,
             'status' =>$request->status,
-           
+
         ]);
-    
+
         // Redirect back with success message
         return redirect('/Teaching/qualifications')->with('status', 'Qualifications added successfully.');
     }
-    
-   
+
+
 
     /**
      * Update the specified resource in storage.
      */
-    
-    public function update_qualification(Request $request, staff $staff,$squal)
+
+    public function update_qualification(Request $request, staff $staff, $squal)
     {
 
-        dd($request);
+       //dd($request);
         $user = Auth::user();
         $staff= staff::where('user_id',$user->id)->first();
         //$updateresult=true;
         //dd($squal);
-        
-        //dd($staff);
-        $updateresult= $staff->qualifications()->updateExistingPivot($squal,['yop'=>$request->yop,'board_university'=>$request->board_university,'grade'=>$request->grade,'status'=>$request->status]);
-        //dd($updateresult);
+        $staff_qual=staff::with(['qualifications'=>function($q)use($squal){
+            $q->where('qualifications.id',$squal);
+        }])->where('staff.id',$staff->id)->first();
+        $qualification=$staff_qual->qualifications->first();
+        $qualification->pivot->qualification_id=$request->qualification_name;
+        $qualification->pivot->status=$request->status;
+        $qualification->pivot->yop=$request->yop;
+        $qualification->pivot->board_university=$request->board_university;
+        $qualification->pivot->grade=$request->grade;
+        $updateresult=$qualification->pivot->update();
+
         if($updateresult)
         {
             //dd('success');
@@ -276,7 +283,7 @@ class TeachingController extends Controller
         return redirect('/Teaching/qualifications/')->with('status',$status);
     }
 
-    
+
 
 
     /**
