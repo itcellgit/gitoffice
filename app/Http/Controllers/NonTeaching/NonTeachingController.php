@@ -149,7 +149,8 @@ class NonTeachingController extends Controller
     {
 
         //dd($request);
-        
+        $user = Auth::user();
+        $staff= staff::where('user_id',$user->id)->first();
         $staff->fname=$request->fname;
         $staff->mname=$request->mname;
         $staff->lname=$request->lname;
@@ -185,9 +186,12 @@ class NonTeachingController extends Controller
 
 
         //check if designation has changed
-        return redirect('/Staff/Non-Teaching/ntupdateprofile/'.$staff->id)->with('status',$status);
+        // return redirect('/Staff/Non-Teaching/ntupdateprofile/'.$staff->id)->with('status',$status);
 
-        //return redirect('Staff.Teaching.updateprofile'.$staff->id)->with('status',$status);
+        return redirect('/Staff/Non-Teaching/ntupdateprofile/')->with('status',$status);
+
+
+       
 
 
     }

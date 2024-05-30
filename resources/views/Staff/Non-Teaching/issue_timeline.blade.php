@@ -142,7 +142,7 @@
                                                                 </label>
                                                                 <input type="text" name="interaction"
                                                                     class="ti-form-input" required
-                                                                    placeholder="Interaction">
+                                                                    placeholder="Interaction" pattern="^[A-Za-z\s]+$">
                                                             </div>
 
                                                             <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">

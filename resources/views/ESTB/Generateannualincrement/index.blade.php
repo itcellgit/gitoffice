@@ -80,7 +80,7 @@
                                     <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out md:!max-w-2xl md:w-full m-3 md:mx-auto">
                                             <div class="ti-modal-content">
                                                 <div class="ti-modal-header">
-                                                    <h3 class="ti-modal-title">Add Year & month for Template</h3>
+                                                    <h3 class="ti-modal-title">Addmonth for Template</h3>
                                                     <button type="button" class="hs-dropdown-toggle ti-modal-close-btn" data-hs-overlay="#downloadTemp">
                                                         <span class="sr-only">Close</span>
                                                         <svg class="w-3.5 h-3.5" width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -89,29 +89,26 @@
                                                     </button>
                                                 </div>
                                                 <div class="ti-modal-body">
-                                                    <form id="annualincrementStaffForm" action="{{ route('aanualincrement.staff.index') }}" method="POST">
+                                                    <form id="annualincrementStaffForm" action="/ESTB/Generateannualincrement/create" method="post">
                                                         @csrf
                                                         <div class="flex justify-center space-x-4 text-center">
                                                         <h1 class="font-bold">Generate Annual Increment For</h1>
-                                                            <div class="max-w-sm space-y-2">
-                                                                <label for="year" class="ti-form-label mb-0 font-bold">Year</label>
-                                                                <input type="text" class="my-auto ti-form-input" id="year" name="year">
-                                                            </div>
+                                                            
                                                             <div class="max-w-sm space-y-2 text-center">
                                                                 <label for="month" class="ti-form-label mb-0 font-bold">Month</label>
                                                                 <select class="ti-form-select type" id="month" name="month">
-                                                                    <option value="Jan">January</option>
-                                                                    <option value="Jul">February</option>
-                                                                    <option value="Jul">March</option>
-                                                                    <option value="Jul">April</option>
-                                                                    <option value="Jul">May</option>
-                                                                    <option value="Jul">June</option>
-                                                                    <option value="Jul">July</option>
-                                                                    <option value="Jul">August</option>
-                                                                    <option value="Jul">September</option>
-                                                                    <option value="Jul">October</option>
-                                                                    <option value="Jul">November</option>
-                                                                    <option value="Jul">December</option>
+                                                                    <option value="1">January</option>
+                                                                    <option value="2">February</option>
+                                                                    <option value="3">March</option>
+                                                                    <option value="4">April</option>
+                                                                    <option value="5">May</option>
+                                                                    <option value="6">June</option>
+                                                                    <option value="7">July</option>
+                                                                    <option value="8">August</option>
+                                                                    <option value="9">September</option>
+                                                                    <option value="10">October</option>
+                                                                    <option value="11">November</option>
+                                                                    <option value="12">December</option>
 
                                                                 </select>
                                                             </div>

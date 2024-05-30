@@ -22,8 +22,10 @@
             <!-- Page Header -->
                 <div class="block justify-between page-header sm:flex">
                     <div>
+                    
                         <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium"> Establishment Section</h3>
                     </div>
+                    
                     <ol class="flex items-center whitespace-nowrap min-w-0">
                         <li class="text-sm">
                             <a class="flex items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="javascript:void(0);">
@@ -106,12 +108,50 @@
                                         <div class="grid gap-1 space-y-2 lg:grid-cols-1 lg:space-y-0">
                                             <div style="display: flex; flex-direction: column; margin-left: 10px;">
                                                 <div style="display: flex; flex-direction: row; align-items: center; margin-left: 10px;">
-                                                    <label for="to_date" class="ti-form-label font-bold mx-2 mt-2">Date:<span class="text-red-500">*</span></label>
-                                                    <input type="date" id="to_date" name="date" class="mx-2 px-1 py-1 text-sm w-36 h-8" placeholder="To Date">
-                                                    <button type="submit" class="text-white px-4 py-2 focus:outline-none" style="background-color: #818cf8;">Search</button>&nbsp &nbsp
+                                                    {{-- <label for="to_date" class="ti-form-label font-bold mx-2 mt-2">Date:<span class="text-red-500">*</span></label>
+                                                    <input type="date" id="to_date" name="date" class="mx-2 px-1 py-1 text-sm w-36 h-8" placeholder="To Date"> --}}
+                                                    {{-- <div class="flex max-w-sm pb-6 space-y-3">
+                                                        <label for="" class="font-bold ti-form-label"> Date: <span class="text-red-500">*</span></label>
+                                                        <div class="inline-flex items-center px-4 border border-gray-200 min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm ltr:border-r-0 rtl:border-l-0 bg-gray-50 dark:bg-black/20 dark:border-white/10">
+                                                            <span class="text-sm text-gray-500 dark:text-white/70"><i
+                                                                    class="ri ri-calendar-line"></i></span>
+                                                        </div>
+                                                
+                                                        <input type="date" name="date"
+                                                            class="rounded-l-none ti-form-input focus:z-10 flatpickr-input date attended_from_date"
+                                                            id="to_date" placeholder="Choose date">
+                                                        </div>
+
+                                                
+                                                        <button type="submit" class="text-white px-4 py-2 focus:outline-none" style="background-color: #818cf8;">Search</button>&nbsp &nbsp
+                                                        
+                                                        <div class="flex justify-end mt-4">
+                                                        <button type="submit" id="missing-biometric-button" data-hs-overlay="#missing-biometric-modal" class="px-4 py-2 text-white bg-green-500 rounded-md focus:outline-none hover:bg-green-600">Missing Biometric</button>
+                                                    </div> --}}
+
+                                                    <div class="grid gap-1 space-y-2 lg:grid-cols-1 lg:space-y-0">
+                                                        <div class="flex flex-col lg:flex-row items-start lg:items-center justify-start lg:justify-between ml-10">
+                                                            <div class="flex flex-col lg:flex-row items-start lg:items-center">
+                                                                <label for="to_date" class="font-bold ti-form-label mt-2 lg:mt-0">Date:<span class="text-red-500">*</span></label>
+                                                                <div class="inline-flex items-center px-4 border border-gray-200 min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm ltr:border-r-0 rtl:border-l-0 bg-gray-50 dark:bg-black/20 dark:border-white/10">
+                                                                    <span class="text-sm text-gray-500 dark:text-white/70"><i class="ri ri-calendar-line"></i></span>
+                                                                </div>
+                                                                <input type="date" name="date" class="rounded-l-none ti-form-input focus:z-10 flatpickr-input date attended_from_date" id="to_date" placeholder="Choose date">
+                                                            </div>
+                                                    
+                                                            <div class="flex items-center mt-2 lg:mt-0 ml-0 lg:ml-4">
+                                                                <button type="submit" class="text-white px-4 mx-4 py-2 rounded-full focus:outline-none" style="background-color: #818cf8;">Search</button>
+                                                                <div class="ml-2">
+                                                                    <button type="submit" id="missing-biometric-button" data-hs-overlay="#missing-biometric-modal" class="px-4 py-2 text-white bg-green-500 rounded-md focus:outline-none hover:bg-green-600">Missing Biometric</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     
 
-                                                    <button data-hs-overlay="#missing-biometric-modal"  id="missing-biometric-button" type="submit" class="text-white px-4 py-2 focus:outline-none" style="background-color: Skyblue">Missing Biometric</button>
+                                                    {{-- <button data-hs-overlay="#missing-biometric-modal"  id="missing-biometric-button" type="submit" class="text-white px-4 py-2 focus:outline-none" style="background-color: Skyblue">Missing Biometric</button> --}}
+                                                   
+                                                   
                                                     <!-- Modal -->
                                                     {{-- <div id="missing-biometric-modal" class="hs-overlay hidden ti-modal">
                                                         <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out lg:!max-w-4xl lg:w-full m-3 md:mx-auto">

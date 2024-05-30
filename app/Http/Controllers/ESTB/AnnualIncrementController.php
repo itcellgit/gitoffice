@@ -42,7 +42,7 @@ class AnnualIncrementController extends Controller
         $annualIncrement->reason=$request->reason;
         $annualIncrement->basic=$request->basic;
         $annualIncrement->additional_days_type=$request->additional_days_type;
-        dd($staff->date_of_increment);
+        //dd($staff->date_of_increment);
         if($annualIncrement->additional_days_type=="Permanent")
         {
              $date_of_next_increment=Carbon::parse($staff->date_of_increment)->addDays(365+inval($request->additional_days))->format('Y-m-d');
@@ -51,7 +51,7 @@ class AnnualIncrementController extends Controller
         {
             $date_of_next_increment=Carbon::parse($staff->date_of_increment)->addDays(intval($request->additional_days))->format('Y-m-d');
         }
-        dd($date_of_next_increment);
+        //dd($date_of_next_increment);
         $staff->date_of_increment = $date_of_next_increment;
         $staff->update(); 
         $annualIncrement->save();

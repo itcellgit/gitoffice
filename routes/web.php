@@ -154,6 +154,10 @@ use App\Http\Controllers\HOD\HodEventController;
 use App\Http\Controllers\HOD\HodNoticeboardController;
 use App\Http\Controllers\HOD\GrievienceCategoryController;
 use App\Http\Controllers\HOD\HODLeaveController;
+use App\Http\Controllers\HOD\ExamSectionIssuesController;
+use App\Http\Controllers\HOD\IssueTimelineController;
+use App\Http\Controllers\HOD\HodStudentIssueController;
+
 
 //Biometric
 use App\Http\Controllers\ESTB\BiometricController;
@@ -402,7 +406,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::NONTEACHING->value, 'prevent
   Route::patch('/Non-Teaching/professionalactivities/conducted/update/{professional_activity_conducted}',[NT_ProfessionalActivityConductedController::class,'update'])->name('Non-Teaching.professionalactivities.conducted.update');
   Route::delete('/Non-Teaching/professionalactivities/conducted/destory/{professional_activity_conducted}', [NT_ProfessionalActivityConductedController::class, 'destroy'])->name('Non-Teaching.professionalactivities.conducted.destroy');
 
-  Route::get('/Non-Teaching/construction1',[NonTeachingController::class,'index'])->name('Non-Teaching.construction');
+  // Route::get('/Non-Teaching/construction1',[NonTeachingController::class,'index'])->name('Non-Teaching.construction');
 
   Route::get('/Staff/Non-Teaching/examsectionissues',[NT_ExamSectionIssuesController::class,'index'])->name('Staff.Non-Teaching.examsectionissues');
   Route::post('/Staff/Non-Teaching/examsectionissues/create',[NT_ExamSectionIssuesController::class,'store'])->name('Staff.Non-Teaching.examsectionissues.store');
@@ -413,6 +417,14 @@ Route::middleware(['cors','auth','role:'.UserRoles::NONTEACHING->value, 'prevent
   Route::post('/Staff/Non-Teaching/viewstudentissues/{student_issue}/issue_timeline/create',[NT_IssueTimelineController::class,'store'])->name('Staff.Non-Teaching.issue_timeline.store');
   Route::get('/Staff/Non-Teaching/viewstudentissues', [StaffStudentIssueController::class, 'index'])->name('Staff.Non-Teaching.view');
   Route::get('/Staff/Non-Teaching/viewstudentissues/{student_issue}/show',[StaffStudentIssueController::class,'show'])->name('Staff.Non-Teaching.issue_timeline.show');
+
+
+
+  //Non-Teaching Leave  Routes
+  Route::get('/Staf/Non-Teaching/ntleaves',[LeaveStaffApplicationsController::class,'nt_leaves_index'])->name('Staff.Non-Teaching.ntleaves');
+
+
+
 
 });
 
@@ -492,6 +504,7 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
 
     // Generate annual increment list controller
     Route::get('/ESTB/Generateannualincrement', [GenetareAnnualIncrementListController::class, 'index'])->name('aanualincrement.staff.index');
+    Route::post('/ESTB/Generateannualincrement/create',[GenetareAnnualIncrementListController::class,'create'])->name('ESTB.annualincrement.create');
     Route::post('/import-excel', [GenetareAnnualIncrementListController::class, 'importExcel'])->name('import.excel');
     
     //Assocations Controllers
@@ -641,7 +654,9 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::get('/ESTB/leaves_calender/',[LeaveController::class,'calender_view'])->name('ESTB.leaves.calender_view');
     Route::get('/ESTB/leaves_calender/hollidayrh_events',[LeaveController::class,'hollidayrh_events'])->name('ESTB.leaves.hollidayrh_events');
     Route::get('/ESTB/leaves_calender/fetchAllleaveevents',[LeaveController::class,'fetchAllleaveevents'])->name('ESTB.leaves.fetchAllleaveevents');
-
+    Route::get('/ESTB/leaves_management/fetchholidayrhevents',[LeaveController::class,'fetchholidayrhevents'])->name('ESTB.leaves_management.fetchholidayrhevents');
+    
+    Route::get('/ESTB/leaves_management/fetchleaveevents',[LeaveController::class,'fetchleaveevents'])->name('ESTB.leaves_management.fetchleaveevents');
     // End of leave management related routes.
 
     //REnumerations Controllers

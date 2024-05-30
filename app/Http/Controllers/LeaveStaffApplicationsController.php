@@ -352,7 +352,11 @@ class LeaveStaffApplicationsController extends Controller
     {
 
         $result="";
-        $leave=leave::with('combine_leave')->with('leave_rules')->where('id',$request->type)->first();
+        $leave=leave::with(['combine_leave'=>function($q){
+            $q->wherePivot('status','active');
+        }])->with(['leave_rules'=>function($q){
+            $q->where('leave_rules.status','active');
+        }])->where('id',$request->type)->first();
 
         //dd($staff_leaves_applications);
         //Rules to check
@@ -874,4 +878,15 @@ class LeaveStaffApplicationsController extends Controller
         return $checkrhresult;
     }
 
+
+
+
+
+
+    //All function for Non-Teaching Leave Application
+    public function nt_leaves_index()
+    {
+
+       return view('Non-Teaching.ntleaves');
+   }
 }

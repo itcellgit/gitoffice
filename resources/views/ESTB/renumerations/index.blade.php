@@ -166,7 +166,7 @@
                                                 <form action="{{ route('import.excel') }}" method="POST" enctype="multipart/form-data" class="flex items-center space-x-2">
                                                     @csrf
                                                     <div class="space-y-8 font-[sans-serif] max-w-md mx-auto">
-                                                        <input type="file" class="w-full text-gray-500 font-medium text-sm bg-blue-100 cursor-pointer py-2 px-4 mr-4 hover:bg-blue-500 hover:text-white rounded-lg rounded-md border-blue-300" name="excel_file"/>
+                                                        <input type="file" class="w-full text-gray-500 font-medium text-sm bg-blue-100 cursor-pointer py-2 px-4 mr-4 hover:bg-blue-500 hover:text-white rounded-lg rounded-md border-blue-300" name="excel_file" required/>
                                                     </div>
                                                     <button type="submit" class="bg-blue-500 text-white px-4 py-2 text-xs rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 whitespace-nowrap">Upload Excel</button>
                                                 </form>
@@ -200,7 +200,7 @@
                                                     <td class="border border-gray-300 px-4 py-2"><span>{{ $renume->dept_shortname }}</span></td>
                                                     <td class="border border-gray-300 px-4 py-2"><span>{{ $renume->renumeration_head }}</span></td>
                                                     <td class="border border-gray-300 px-4 py-2"><span>{{ $renume->date_of_disbursement }}</span></td>
-                                                    <td class="border border-gray-300 px-4 py-2"><span>{{ $renume->amount }}</span></td>
+                                                    <td class="border border-gray-300 px-4 py-2"><span>{{ '₹'.$renume->amount }}</span></td>
                                                 </tr>
                                             @endforeach
                                             </tbody>

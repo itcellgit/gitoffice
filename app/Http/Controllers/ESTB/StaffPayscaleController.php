@@ -17,13 +17,14 @@ class StaffpayscaleController extends Controller
     public function index()
     { 
         $staffWithPayscaleAndAllowances = Staff::select(
-            'staff.id', 'staff.fname', 'staff.mname', 'staff.lname',
+            'staff.id', 'staff.fname', 'staff.mname', 'staff.lname','staff.doj','staff.un_no','staff.PF',
             'designations.design_name', 'teaching_payscales.payscale_title',
             'staff_teaching_payscale.start_date', 'staff_teaching_payscale.end_date',
             'allowances.title as allowance_title', 'allowances.value as allowance_value',
             'annual_increments.basic as payband','teaching_payscales.cca','teaching_payscales.agp',
             DB::raw('(annual_increments.basic + teaching_payscales.agp) as basic'),
             DB::raw('(annual_increments.basic + teaching_payscales.agp) as rate'),
+            DB::raw('((annual_increments.basic + teaching_payscales.agp) * 0.20) as special_incen'),
             DB::raw('((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.da / 100) as da'),
             DB::raw('((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.hra / 100) as hra'),
             DB::raw('(annual_increments.basic + teaching_payscales.agp + ((annual_increments.basic + teaching_payscales.agp) * 0.20) + ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.da/100) + ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.hra/100) + teaching_payscales.cca + allowances.value
@@ -41,6 +42,32 @@ class StaffpayscaleController extends Controller
                         END as pf_tax_status'),
             DB::raw('25 as vidyaganapati'),
             DB::raw('300 as GSLI'),
+            DB::raw('(CASE 
+                WHEN annual_increments.basic > 15000 THEN 1800 
+                ELSE (annual_increments.basic + teaching_payscales.agp) * 0.12 
+                END
+            ) as pf_deduction'),
+    DB::raw('CASE
+                WHEN (
+                    annual_increments.basic + teaching_payscales.agp + ((annual_increments.basic + teaching_payscales.agp) * 0.20) + ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.da / 100) + ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.hra / 100) + teaching_payscales.cca + allowances.value
+                ) > 25000 THEN 200
+                ELSE 0
+                END as pf_tax_status'),
+    DB::raw('25 as vidyaganapati'),
+    DB::raw('300 as GSLI'),
+    DB::raw('(
+                CASE 
+                    WHEN annual_increments.basic > 15000 THEN 1800 
+                    ELSE (annual_increments.basic + teaching_payscales.agp) * 0.12 
+                END 
+                + 25 
+                + 300 
+                + CASE
+                    WHEN (annual_increments.basic + teaching_payscales.agp + ((annual_increments.basic + teaching_payscales.agp) * 0.20) + ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.da / 100) + ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.hra / 100) + teaching_payscales.cca + allowances.value
+                ) > 25000 THEN 200
+                    ELSE 0
+                END
+            ) as total_deductions'),
             DB::raw('((annual_increments.basic + teaching_payscales.agp + 
                         ((annual_increments.basic + teaching_payscales.agp) * 0.20) + 
                         ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.da / 100) + 

@@ -62,7 +62,7 @@ public function update(UpdateGrading_staffRequest $request, allowance_staff $gra
     }
     return redirect()->back()->with('success', 'Grades updated successfully');
 
-    dd($request->all());
+    // dd($request->all());
 }
 
 public function importExcel(Request $request)

@@ -299,7 +299,7 @@
                                         </div>
                                     
                                         <div class="box-footer">
-                                            <!-- Pagination-->
+                                            {{-- <!-- Pagination-->
                                             <div class="sm:flex items-center">
                                                 <div class="">
                                                     showing {{$qualification->firstItem()}} to {{$qualification->lastItem()}} of {{$qualification->total()}}
@@ -341,7 +341,7 @@
                                                         </a>
                                                     </nav>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                         
                                     </div>

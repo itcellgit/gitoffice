@@ -108,7 +108,7 @@ class LeaveRulesController extends Controller
      */
     public function update(Updateleave_rulesRequest $request,  $Leaves,$lr)
     {
-        //
+       
       // fetch the leave and leave_rule object to perform the update
        $Leaves=leave::find($Leaves);
        $leave_rules=leave_rules::find($lr);
@@ -150,6 +150,7 @@ class LeaveRulesController extends Controller
         }
         else
         {
+          //  dd(153);
             $leave_rules->cf_closing_date=$request->cf_closing_date;
             $leave_rules->cf_closing_gcr=$request->cf_closing_gcr;
             $leave_rules->enc_closing_date =$request->enc_closing_date ;
@@ -159,6 +160,7 @@ class LeaveRulesController extends Controller
 
             $leave_rules->created_at=Carbon::Now();
             $leave_rules->status='inactive';
+            $leave_rules->update();
             $leave_rules=$Leaves->leave_rules()->createMany(
                 [
                     [

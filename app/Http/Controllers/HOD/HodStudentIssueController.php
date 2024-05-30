@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\staff;
 use App\Models\student_issue;
 use App\Models\HOD\exam_section_issue;
+use DB;
 
 use Auth;
 
@@ -56,10 +57,11 @@ class HodStudentIssueController extends Controller
         ->orderBy('student_issues.created_at','desc')
         ->select('student_issues.*','exam_section_issues.category_name')
             ->get();
-            // dd($student_issues);
+       // dd($student_issues->issue_timeline.user);
         // Sort issues: "regular" first, "unusual" later
      //   $sorted_issues = $student_issues->orderBy('category_name');
         
+            //dd($student_issue_count);
         
         // sortBy(function ($issue) {
         //     return $issue->exam_section_issue && $issue->exam_section_issue->category_name === 'regular' ? 0 : 1;

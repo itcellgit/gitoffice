@@ -39,7 +39,7 @@ class AllowanceStaffController extends Controller
         ->where('year',$year)
         ->where('month',$month)
         ->get();
-        dd($staff);
+        // dd($staff);
         if($grading!=null)
         {
             $staff = Staff::with(['departments' => function ($query) {
@@ -70,7 +70,7 @@ class AllowanceStaffController extends Controller
             $sheet->setCellValue('C1', 'Name');
             $sheet->setCellValue('D1','Dept');
             $sheet->setCellValue('E1','Year');
-            $sheet->setCellValue('F1','Month');
+            $sheet->setCellValue('F1','Month');   
             $sheet->setCellValue('G1','Grade(A/B/C)');
             $cellno=2;
             foreach($staff as $s)

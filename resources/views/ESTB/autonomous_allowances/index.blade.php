@@ -96,8 +96,14 @@
                                                     <h1 class="font-bold">Autonomous Grading For</h1>
                                                         <div class="max-w-sm space-y-2">
                                                             <label for="year" class="ti-form-label mb-0 font-bold">Year</label>
-                                                            <input type="text" class="my-auto ti-form-input" id="year" name="year">
+                                                            <input type="text" class="my-auto ti-form-input"  id="year" name="year" required>
+                                                            @if($errors->has('year'))
+                                                                <div class="text-red-700">{{ $errors->first('year') }}</div>
+                                                                @endif
+                                                            <div id="year_error" class="error text-red-700"></div> 
                                                         </div>
+
+                                                        
                                                         <div class="max-w-sm space-y-2 text-center">
                                                             <label for="month" class="ti-form-label mb-0 font-bold">Month</label>
                                                             <select class="ti-form-select type" id="month" name="month">
@@ -236,11 +242,57 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script href="https://cdn.tailwindcss.com/3.3.5"></script>
         <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var yearInput = document.getElementById('year');
+                var yearError = document.getElementById('year_error');
+        
+                yearInput.addEventListener('input', function() {
+                    var yearPattern = /^\d{4}$/;
+                    var yearValue = yearInput.value;
+        
+                    if (!yearPattern.test(yearValue)) {
+                        yearError.textContent = 'Please enter a valid 4-digit year.';
+                        yearInput.classList.add('border-red-500');
+                    } else {
+                        yearError.textContent = '';
+                        yearInput.classList.remove('border-red-500');
+                    }
+                });
+            });
+        </script>
+        
+        <script>
             $(document).ready(function() {
                 $('#submitData').on('click',function(){
                     $('#downloadTemp').modal('toggle');
                 })
+
+                $(document).on('click','#submitData',function(e){
+
+
+var year = $('#year').val();
+
+
+var flag = false;
+
+
+if (year !== '') {
+    if (!/^[0-9]*$/.test(year)) {
+        $('#year_error').text('');
+    }
+
+} else {
+    // The field is optional and empty, no validation need
+}
+
+if(flag == true){
+    e.preventDefault();
+}
+
+
+});
             });
+
             </script>
 
 @endsection

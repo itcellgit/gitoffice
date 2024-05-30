@@ -165,11 +165,7 @@ class staff extends Model
         return $this->belongsToMany(qualification::class)->withPivot('id','board_university','grade','yop','status')->orderByPivot('yop','desc');
     }
 
-    // public function qualification_staff():BelongsToMany
-    // {
-    //     return $this->belongsToMany(qualification_staff::class);
-    // }
-
+    
     
    
 

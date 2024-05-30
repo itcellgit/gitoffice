@@ -215,7 +215,9 @@ class TeachingController extends Controller
     public function qualifications(){
 
         $user = Auth::user();
-        $qualifications =qualification::where('status','active')->get();
+        //$qualifications =qualification::where('status','active')->get();
+        $qualifications = qualification::where('status', 'active')->orderBy('qual_shortname')->get();
+
         
         $staff=staff::with('qualifications')->where('user_id','=',$user->id)->get();
 
@@ -252,17 +254,17 @@ class TeachingController extends Controller
     
     public function update_qualification(Request $request, staff $staff,$squal)
     {
+
+        dd($request);
         $user = Auth::user();
         $staff= staff::where('user_id',$user->id)->first();
-        $updateresult=true;
+        //$updateresult=true;
         //dd($squal);
-         //check if there are changes in currently working and the assigned in the UI
-         //update exisiting entry of the staff qualification
-        // dd($staff);
-         $updateresult= $staff->qualifications()->updateExistingPivot($squal,['yop'=>$request->yop,'board_university'=>$request->board_university,'grade'=>$request->grade,'status'=>$request->status]);
-         
-         //dd($updateresult);
-         if($updateresult)
+        
+        //dd($staff);
+        $updateresult= $staff->qualifications()->updateExistingPivot($squal,['yop'=>$request->yop,'board_university'=>$request->board_university,'grade'=>$request->grade,'status'=>$request->status]);
+        //dd($updateresult);
+        if($updateresult)
         {
             //dd('success');
             $status=1;
@@ -273,6 +275,9 @@ class TeachingController extends Controller
         }
         return redirect('/Teaching/qualifications/')->with('status',$status);
     }
+
+    
+
 
     /**
      * Remove the specified resource from storage.

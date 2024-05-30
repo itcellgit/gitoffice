@@ -143,7 +143,7 @@
                                                         </div>
                                                     </div>
                                                     <!---payscale dropdown end--->
-                                                    {{-- <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0 border border-gray-300 rounded p-4">
+                                                    <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0 border border-gray-300 rounded p-4">
                                                         <label class="ti-form-label mb-0 font-bold">Vactional <span class="text-red-500">*</span></label>
                                                         <div class="space-y-2" style="max-height: 100px; overflow-y: auto;">
                                                          <!-- Add your existing code for designations here -->
@@ -166,7 +166,7 @@
                                                                 <label for="isadditional2" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70 pr-4 font-bold">No</label>
                                                             </div>
                                                         </div>
-                                                    </div> --}}
+                                                    </div>
                                                 </div>
 
                                                     <div class="grid gap-1 space-y-2 lg:grid-cols-3 lg:space-y-0 mt-6">
@@ -256,20 +256,20 @@
                                             <div class="flex justify-end mt-4">
                                                 <button id="exportToExcel" class="bg-green-500 text-white px-4 py-2 rounded-md focus:outline-none">Export to Excel</button>
                                             </div>
-                                            <table id="statistics" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
+                                            {{-- <table id="statistics" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                                 <thead class="bg-gray-50 dark:bg-black/20">
                                                     <tr>
                                                         <th scope="col" class="dark:text-white/80 font-bold">S.No</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold">Designation Name</th>
-                                                         {{-- <th scope="col" class="dark:text-white/80 font-bold">Is Additional Designation</th>
-                                                        <th scope="col" class="dark:text-white/80 font-bold">Is Vactional</th> --}}
+                                                        <th scope="col" class="dark:text-white/80 font-bold">Is Additional Designation</th>
+                                                        <th scope="col" class="dark:text-white/80 font-bold">Is Vactional</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold">Gender</th> 
                                                         <th scope="col" class="dark:text-white/80 font-bold">Employee Type</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold">Religion</th>
                                                         <th scope="col" class="dark:text-white/80 font-bold">Action</th>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
+                                                    </thead>
+                                                    <tbody>
                                                     @php
                                                         $i = 1;
                                                     @endphp
@@ -277,8 +277,8 @@
                                                         <tr>
                                                             <td>{{ $i++ }}</td>
                                                             <td>{{ $st->designation->design_name ?? '' }}</td>
-                                                            {{-- <td><span>{{ $st->designation->isadditional == 0 ? 'No' : 'Yes' }}</span></td>
-                                                            <td><span>{{ $st->designation->isvacational ?? '' }}</span></td> --}}
+                                                            <td><span>{{ $st->designation->isadditional == 0 ? 'No' : 'Yes' }}</span></td>
+                                                            <td><span>{{ $st->designation->isvacational ?? '' }}</span></td>
                                                             <td>{{ $st->gender }}</td>
                                                             <td>{{ $st->employee_type }}</td>
                                                             <td>{{ $st->religion_name }}</td>
@@ -297,7 +297,7 @@
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
-                                            </table>
+                                            </table> --}}
                                             
                                         </div>
                                     </div>

@@ -549,86 +549,102 @@ class StaffController extends Controller
 
         return view('ESTB.staff.staffinformation', compact(['staff','staffCount','religions','associations','departments','qualifications','filter','designations','teachingDesignations','nonteachingDesignations']));
     }
+ 
+    //code for generate statistics information
+ public function statistics_information(Request $request)
+ {
+     
+     $filter="";
+     // $designation=new designation();
+     // $designation->isadditional=$request->isadditional;
+     // $designation->isvacational=$request->isvacational;
 
- //code for generate statistics information
-    public function statistics_information(Request $request)
-    {
+     $religions =religion::where('status','active')->get();
+     $designations=designation::where('status','active')->get();
+     $payscales=DB::table('teaching_payscales')->where('status','active')->get();
+     // $ntpayscales=DB::table('ntpayscales')->where('status','active')->get();
+     // $ntcpayscales=DB::table('ntcpayscales')->where('status','active')->get();
+
+     //To fetch Designation As per Employee type
+     $teachingDesignations = designation::where('status', 'active')
+                             ->where('emp_type', 'Teaching')
+                             ->where('isadditional', 0)
+                             ->orderBy('design_name')
+                             ->get();
+ 
+     // $nonteachingDesignations = designation::where('status', 'active')
+     //                     ->where('emp_type', 'Non-teaching')
+     //                     ->where('isadditional', 0)
+     //                     ->orderBy('design_name')
+     //                     ->get();
+      //to fetch payscale as per employee type
+      $teaching_payscales = teaching_payscale::where('status', 'active')
+                             ->orderBy('payscale_title')
+                             ->get();
+
+     // $nonteaching_payscales = ntpayscale::where('status', 'active')
+     //                         ->orderBy('title')
+     //                         ->get();
+     // $ntc_payscale=ntcpayscale::where('status','active')
+     //                 ->orderBy('basepay')
+     //                 ->get();
+         $designation_id = $request->input('designations');
+         $castecategories = $request->input('castecategory_id');
+         $religion = $request->input('religion_id');
+         $gender = $request->input('gender');
+         $employee_type = $request->input('employee_type');
         
-        $filter="";
-        $religions =religion::where('status','active')->get();
-        $designations=designation::where('status','active')->get();
-        $payscales=DB::table('teaching_payscales')->where('status','active')->get();
-        // $ntpayscales=DB::table('ntpayscales')->where('status','active')->get();
-        // $ntcpayscales=DB::table('ntcpayscales')->where('status','active')->get();
+         $query = staff::query();
+         $query->join('designation_staff', function ($join) {
+             $join->on('designation_staff.staff_id', '=', 'staff.id')
+                 ->where('designation_staff.status', 'active');
+         });
+ 
+         $query->join('designations', 'designations.id', '=', 'designation_staff.designation_id');
 
-        //To fetch Designation As per Employee type
-        $teachingDesignations = designation::where('status', 'active')
-                                ->where('emp_type', 'Teaching')
-                                ->where('isadditional', 0)
-                                ->orderBy('design_name')
-                                ->get();
     
-        // $nonteachingDesignations = designation::where('status', 'active')
-        //                     ->where('emp_type', 'Non-teaching')
-        //                     ->where('isadditional', 0)
-        //                     ->orderBy('design_name')
-        //                     ->get();
-         //to fetch payscale as per employee type
-         $teaching_payscales = teaching_payscale::where('status', 'active')
-                                ->orderBy('payscale_title')
-                                ->get();
+ 
+         $query->join('religions', 'religions.id', '=', 'staff.religion_id')
+             ->join('employee_types', 'employee_types.staff_id', '=', 'staff.id');
+ 
+         if ($designation_id) {
+             $query->whereIn('designations.id', $designation_id);
+         }
+ 
+         if ($religion !== 'all') {
+             $query->where('religions.id', $religion)
+                 ->select('staff.*', 'religions.religion_name');
+         }
+ 
+         if ($employee_type !== 'all') {
+             $query->where('employee_types.employee_type', $employee_type)
+                 ->select('staff.*', 'employee_types.employee_type');
+         }
+ 
+         if ($gender !== 'all') {
+             $query->where('staff.gender', $gender);
+         }
+ 
 
-        // $nonteaching_payscales = ntpayscale::where('status', 'active')
-        //                         ->orderBy('title')
-        //                         ->get();
-        // $ntc_payscale=ntcpayscale::where('status','active')
-        //                 ->orderBy('basepay')
-        //                 ->get();
-            $designation_id = $request->input('designations');
-            $castecategories = $request->input('castecategory_id');
-            $religion = $request->input('religion_id');
-            $gender = $request->input('gender');
-            $employee_type = $request->input('employee_type');
-           
-            $query = staff::query();
-            $query->join('designation_staff', function ($join) {
-                $join->on('designation_staff.staff_id', '=', 'staff.id')
-                    ->where('designation_staff.status', 'active');
-            });
-    
-            $query->join('designations', 'designations.id', '=', 'designation_staff.designation_id');
 
-       
-    
-            $query->join('religions', 'religions.id', '=', 'staff.religion_id')
-                ->join('employee_types', 'employee_types.staff_id', '=', 'staff.id');
-    
-            if ($designation_id) {
-                $query->whereIn('designations.id', $designation_id);
-            }
-    
-            if ($religion !== 'all') {
-                $query->where('religions.id', $religion)
-                    ->select('staff.*', 'religions.religion_name');
-            }
-    
-            if ($employee_type !== 'all') {
-                $query->where('employee_types.employee_type', $employee_type)
-                    ->select('staff.*', 'employee_types.employee_type');
-            }
-    
-            if ($gender !== 'all') {
-                $query->where('staff.gender', $gender);
-            }
-    
-           $staff = $query->get();
-    
-           // dd($staff);
-           $staffCount = $staff->count();
-    
-        
+         // Get the count of staff grouped by religion and gender
+ // $religioncount = $query->selectRaw('religions.religion_name, staff.gender, COUNT(*) as count')
+ //                      ->groupBy('religions.religion_name', 'staff.gender')
+ //                      ->get();
 
-        return view('ESTB.staff.generatestatistics',compact('staff','designations','religions','teachingDesignations','staffCount','payscales','teaching_payscales'));
-    }
+ // Process the results for easy use in the view
+ // $staffCountData = [];
+ // foreach ($staffCounts as $count) {
+ //     $staffCountData[$count->religion_name][$count->gender] = $count->count;
+ // }
+
+ $staff = $query->get();
+ $staffCount = $staff->count();
+ 
+     
+
+     return view('ESTB.staff.generatestatistics',compact('staff','designations','religions','teachingDesignations','staffCount','payscales','teaching_payscales'));
+ }
+
 
 }

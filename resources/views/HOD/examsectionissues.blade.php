@@ -90,17 +90,17 @@
                                                                     
                                                                     <div class="max-w-sm space-y-3 pb-6">
                                                                         <label for="with-corner-hint" class="ti-form-label font-bold">Issues:<span class="text-red-500">*</span></label>
-                                                                        <input type="text" name="issues" class="ti-form-input" placeholder="Enter Issues">
+                                                                        <input type="text" name="issues" class="ti-form-input" placeholder="Enter Issues" pattern="^[A-Za-z\s]+$">
                                                                     </div>
                                                                     <div class="max-w-sm space-y-3 pb-6">
                                                                         <label for="with-corner-hint" class="ti-form-label font-bold">Remarks:<span class="text-red-500">*</span></label>
-                                                                        <input type="text" name="remarks" class="ti-form-input" placeholder="Enter Remarks">
+                                                                        <input type="text" name="remarks" class="ti-form-input" placeholder="Enter Remarks" pattern="^[A-Za-z\s]+$">
                                                                     </div>
                                                                     <div class="max-w-sm space-y-3 pb-6">
                                                                         <label for="regular">Category Name:<span class="text-red-500">*</span></label><br>
-                                                                        <input type="radio" id="regular" name="category_name"  value="regular">
+                                                                        <input type="radio" id="regular" name="category_name"  value="regular" required>
                                                                         <label for="regular">Regular</label><br>
-                                                                        <input type="radio" id="unusual" name="category_name"  value="unusual">
+                                                                        <input type="radio" id="unusual" name="category_name"  value="unusual" required>
                                                                         <label for="unusual">Unusual</label>
                                                                     </div>
                                                                     
@@ -110,7 +110,7 @@
                                                                     </div> -->
                                                                     <div class="max-w-sm space-y-3 pb-6">
                                                                         <label for="with-corner-hint" class="ti-form-label font-bold">Staff Incharge:<span class="text-red-500">*</span></label>
-                                                                        <select name="staff_id" class="ti-form-input">
+                                                                        <select name="staff_id" class="ti-form-input" required>
                                                                             <option value="">Select Staff Incharge</option>
                                                                             @foreach($staff as $staffMember)
                                                                                 <!-- <option value="{{ $staffMember->id }}">{{ $staffMember->fname }}</option> -->
@@ -221,12 +221,12 @@
                                                                                                 
                                                                                                 <div class="max-w-sm space-y-3 pb-6">
                                                                                                     <label for="with-corner-hint" class="ti-form-label font-bold">Issues:<span class="text-red-500">*</span></label>
-                                                                                                    <input type="text" name="issues" class="ti-form-input" placeholder="Issues" value="{{$es->issues}}">
+                                                                                                    <input type="text" name="issues" class="ti-form-input" placeholder="Issues" value="{{$es->issues}}" pattern="^[A-Za-z\s]+$">
                                                                                                 </div>
 
                                                                                                 <div class="max-w-sm space-y-3 pb-6">
                                                                                                     <label for="with-corner-hint" class="ti-form-label font-bold">Remarks:<span class="text-red-500">*</span></label>
-                                                                                                    <input type="text" name="remarks" class="ti-form-input" placeholder="Remarks" value="{{$es->remarks}}">
+                                                                                                    <input type="text" name="remarks" class="ti-form-input" placeholder="Remarks" value="{{$es->remarks}}" pattern="^[A-Za-z\s]+$">
                                                                                                 
                                                                                                 </div>
 

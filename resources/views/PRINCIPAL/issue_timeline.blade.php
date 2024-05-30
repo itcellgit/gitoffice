@@ -25,7 +25,7 @@
                 <ol class="flex items-center whitespace-nowrap min-w-0">
                     <li class="text-sm">
                         <a class="flex items-center font-bold text-primary hover:text-primary dark:text-primary truncate"
-                            href="/Staff/Non-Teaching/viewstudentissues" style="color: red;">
+                            href="/PRINCIPAL/viewstudentissues" style="color: red;">
                             Back
                             <i
                                 class="ti ti-chevrons-right flex-shrink-0 mx-3 overflow-visible text-gray-300 dark:text-gray-300 rtl:rotate-180"></i>
@@ -142,7 +142,7 @@
                                                                 </label>
                                                                 <input type="text" name="interaction"
                                                                     class="ti-form-input" required
-                                                                    placeholder="Interaction">
+                                                                    placeholder="Interaction" pattern="^[A-Za-z\s]+$">
                                                             </div>
 
                                                             <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">

@@ -459,7 +459,7 @@
                         url: base_url+'/Dean_admin/leaves_management/fetchAllleaveevents',
                         method: 'GET',
                         success:function(data){
-                           console.log(data);
+                           //console.log(data);
                         },
                         failure: function(data) {
                             //alert(data);

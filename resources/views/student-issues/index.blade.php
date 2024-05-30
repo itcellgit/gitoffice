@@ -11,100 +11,21 @@
 @endsection
 
 @section('content')
-<div class="content">
+<!-- <div class="content">
     <div class="main-content">
       <div class="box">
         <div class="box-header">
           <div class="flex">
 
-        <div class="grid grid-cols-12 gap-x-6"> 
-          <div class="col-span-12">
+        <div class="grid grid-cols-12 gap-x-6">  -->
+        <div class="content flex  items-center">
+        <div class="main-content w-md">
+            <div class="box p-4 bg-white rounded-xl shadow-xl">
+                <div class="box-header mb-4">
+                    <div class="flex item-center justify-center">
 
+                        <div class="grid grid-cols-2 gap-x-6 w-lg">
 
-            @if(session('return_data'))
-                                @if (session('return_data')['status'] == "success")
-                                    <div class='bg-white dark:bg-bgdark border border-success alert text-success' role='alert'>
-                                        <span class='font-bold'>Result</span> Successful
-                                    </div>
-                                    @php 
-                                        Illuminate\Support\Facades\Session::forget('status');  
-                                        header("refresh: 3"); 
-                                    @endphp
-                                @else
-                                    <div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
-                                        <span class='font-bold'>Result</span> {{session('return_data')['status']}} 
-                                    </div>
-                                    {{-- <input type="text" id="start_date" value="{{session('return_data')['staff_name']}}"/> --}}
-                                    {{-- <input type="hidden" id="leave_type" value="{{session('return_data')['leave_type']}}"/>
-                                    <input type="hidden" id="reason" value="{{session('return_data')['reason']}}"/>
-                                    <input type="hidden" id="alternative" value="{{session('return_data')['alternative']}}"/>
-                             --}}
-                                    {{-- <script>
-                                      $(document).ready(function(){
-                                        $('#std_issues').trigger('click');//css('disply','block');
-                                        $('#type').val($('#leave_type').val());
-                                        $('#from_date').val($('#start_date').val());
-                                        $('#leave_reason').val($('#reason').val());
-                                        //alert();
-                                        $('#alternate').val($('#alternative').val());
-                                      });
-                                        
-                                       
-                                    </script> --}}
-                                    
-                                    {{-- @php 
-                                      Illuminate\Support\Facades\Session::forget('status');  
-                                      header("refresh: 3"); 
-                                    @endphp --}}
-                                @endif
-                                
-                            @endif
-
-
-
-            
-            {{-- @if(session('status'))
-                {{session('status')}}
-                    @if (session('status') == 1)
-                    <div class='bg-white dark:bg-bgdark border border-success alert text-success' role='alert'>
-                        <span class='font-bold'>Result</span> Issue Submitted Successful
-                    </div>
-                    @elseif(session('status') == 0)
-                    <div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
-                        <span class='font-bold'>Result</span> Error in Database transaction
-                    </div>
-                
-                    @endif
-                    @php 
-                        Illuminate\Support\Facades\Session::forget('status');  
-                        header("refresh: 3"); 
-                    @endphp
-            @endif --}}
-
-
-
-            {{-- @if(session('status'))
-            {{ session('status') }}
-            @if (session('status') == 1)
-                <div class='bg-white dark:bg-bgdark border border-success alert text-success' role='alert'>
-                    <span class='font-bold'>Result</span> Database transaction successful for {{ session('staff_name') }}
-                </div>
-            @elseif(session('status') == 0)
-                <div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
-                    <span class='font-bold'>Result</span> Error in database transaction for {{ session('staff_name') }}
-                </div>
-            @endif
-            @php 
-                Illuminate\Support\Facades\Session::forget('status');  
-                header("refresh: 3"); 
-            @endphp
-        @endif --}}
-        
-          </div>    
-          {{-- @if($studentIssue!=null)                    
-            @forelse($studentIssues as $si) --}}
-
-            
                     <form action="{{route('student-issues.store')}}" method="post">
                         @csrf
                         
@@ -112,7 +33,8 @@
                                 
                                     <div class="space-y-3 pb-6" style="width: 300px;">
                                         <label for="with-corner-hint" class="ti-form-label font-bold">USN:<span class="text-red-500">*</span></label>
-                                        <input type="text" name="usn" class="ti-form-input" placeholder="Enter USN" required>
+                                        <input type="text" name="usn" class="ti-form-input" placeholder="Eg:2GI22MC109"
+                                             pattern="^\d{1}[A-Z]{2}\d{2}[A-Z]{2}\d{3}$" required>
                                     </div>
                                 
 
@@ -161,7 +83,7 @@
                         <div class="ti-modal-footer">
                             
                             {{-- <input type="submit" class="ti-btn  bg-warning text-white hover:bg-warning  focus:ring-primary  dark:focus:ring-offset-white/10" value="Submit Issue"/> --}}
-                            <input type="submit" id="std_issues" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="submit"/>
+                            <input type="submit" id="std_issues" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="submit">
                             
                         </div>
                     </form>
