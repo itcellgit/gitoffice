@@ -214,7 +214,6 @@
                                                             </div>
                                                             <form  action="{{route('Teaching.leaves.apply',$staff->id)}}" method="post">
                                                                 @csrf
-
                                                                 <div class="leave_form_div" id="leave_form" >
 
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pt-6 pb-6">

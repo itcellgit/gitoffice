@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit879f4a50abb526d6ae103e9889c63b51
+class ComposerStaticInit54fbf64f4a723dbb604008ab21ab94cc
 {
     public static $files = array (
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
@@ -789,6 +789,7 @@ class ComposerStaticInit879f4a50abb526d6ae103e9889c63b51
         'App\\Http\\Controllers\\ESTB\\SalaryheadsController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/SalaryheadsController.php',
         'App\\Http\\Controllers\\ESTB\\StaffController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/StaffController.php',
         'App\\Http\\Controllers\\ESTB\\StaffFilteringController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/StaffFilteringController.php',
+        'App\\Http\\Controllers\\ESTB\\StaffpayscaleController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/StaffpayscaleController.php',
         'App\\Http\\Controllers\\ESTB\\TaxHeadsController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/TaxHeadsController.php',
         'App\\Http\\Controllers\\ESTB\\TaxSlabController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/TaxSlabController.php',
         'App\\Http\\Controllers\\ESTB\\TdsheadsController' => __DIR__ . '/../..' . '/app/Http/Controllers/ESTB/TdsheadsController.php',
@@ -1106,6 +1107,8 @@ class ComposerStaticInit879f4a50abb526d6ae103e9889c63b51
         'Aws\\Account\\Exception\\AccountException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Account/Exception/AccountException.php',
         'Aws\\Acm\\AcmClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Acm/AcmClient.php',
         'Aws\\Acm\\Exception\\AcmException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Acm/Exception/AcmException.php',
+        'Aws\\AlexaForBusiness\\AlexaForBusinessClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/AlexaForBusiness/AlexaForBusinessClient.php',
+        'Aws\\AlexaForBusiness\\Exception\\AlexaForBusinessException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/AlexaForBusiness/Exception/AlexaForBusinessException.php',
         'Aws\\AmplifyBackend\\AmplifyBackendClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/AmplifyBackend/AmplifyBackendClient.php',
         'Aws\\AmplifyBackend\\Exception\\AmplifyBackendException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/AmplifyBackend/Exception/AmplifyBackendException.php',
         'Aws\\AmplifyUIBuilder\\AmplifyUIBuilderClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/AmplifyUIBuilder/AmplifyUIBuilderClient.php',
@@ -1610,6 +1613,8 @@ class ComposerStaticInit879f4a50abb526d6ae103e9889c63b51
         'Aws\\Health\\Exception\\HealthException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Health/Exception/HealthException.php',
         'Aws\\Health\\HealthClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Health/HealthClient.php',
         'Aws\\History' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/History.php',
+        'Aws\\Honeycode\\Exception\\HoneycodeException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Honeycode/Exception/HoneycodeException.php',
+        'Aws\\Honeycode\\HoneycodeClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Honeycode/HoneycodeClient.php',
         'Aws\\IVSRealTime\\Exception\\IVSRealTimeException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/IVSRealTime/Exception/IVSRealTimeException.php',
         'Aws\\IVSRealTime\\IVSRealTimeClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/IVSRealTime/IVSRealTimeClient.php',
         'Aws\\IVS\\Exception\\IVSException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/IVS/Exception/IVSException.php',
@@ -1732,8 +1737,6 @@ class ComposerStaticInit879f4a50abb526d6ae103e9889c63b51
         'Aws\\MachineLearning\\MachineLearningClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/MachineLearning/MachineLearningClient.php',
         'Aws\\Macie2\\Exception\\Macie2Exception' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Macie2/Exception/Macie2Exception.php',
         'Aws\\Macie2\\Macie2Client' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Macie2/Macie2Client.php',
-        'Aws\\MailManager\\Exception\\MailManagerException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/MailManager/Exception/MailManagerException.php',
-        'Aws\\MailManager\\MailManagerClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/MailManager/MailManagerClient.php',
         'Aws\\MainframeModernization\\Exception\\MainframeModernizationException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/MainframeModernization/Exception/MainframeModernizationException.php',
         'Aws\\MainframeModernization\\MainframeModernizationClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/MainframeModernization/MainframeModernizationClient.php',
         'Aws\\ManagedBlockchainQuery\\Exception\\ManagedBlockchainQueryException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/ManagedBlockchainQuery/Exception/ManagedBlockchainQueryException.php',
@@ -5398,7 +5401,6 @@ class ComposerStaticInit879f4a50abb526d6ae103e9889c63b51
         'MailerSend\\Endpoints\\EmailVerification' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/EmailVerification.php',
         'MailerSend\\Endpoints\\HardBounce' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/HardBounce.php',
         'MailerSend\\Endpoints\\Inbound' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/Inbound.php',
-        'MailerSend\\Endpoints\\Invite' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/Invite.php',
         'MailerSend\\Endpoints\\Message' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/Message.php',
         'MailerSend\\Endpoints\\OnHoldList' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/OnHoldList.php',
         'MailerSend\\Endpoints\\Recipient' => __DIR__ . '/..' . '/mailersend/mailersend/src/Endpoints/Recipient.php',
@@ -9470,9 +9472,9 @@ class ComposerStaticInit879f4a50abb526d6ae103e9889c63b51
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit879f4a50abb526d6ae103e9889c63b51::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit879f4a50abb526d6ae103e9889c63b51::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit879f4a50abb526d6ae103e9889c63b51::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit54fbf64f4a723dbb604008ab21ab94cc::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit54fbf64f4a723dbb604008ab21ab94cc::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit54fbf64f4a723dbb604008ab21ab94cc::$classMap;
 
         }, null, ClassLoader::class);
     }

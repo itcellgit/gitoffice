@@ -886,7 +886,120 @@ class LeaveStaffApplicationsController extends Controller
     //All function for Non-Teaching Leave Application
     public function nt_leaves_index()
     {
+        //
+        
+        $user = Auth::user();
+        $staff_id_from_user = staff::where('user_id','=',$user->id)->first();
+        $year=Carbon::now()->year;
+        $holidayrh=holidayrh::orderBy('start')->get();
+        //concerned to leaves///
+        $leave_types=leave::select('shortname')->distinct('shortname')->where('max_entitlement','>',0)->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();
+        // $leave_types_taken = leave::select('id','shortname')->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();// $query="select * from staff s, leaves l, leave_staff_entitlements lse where s.id=lse.staff_id and l.id=lse.leave_id and lse.status='active' and year=$year";
+        // $leave_types_distinct = leave::select('shortname')->distinct('shortname')->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();// $query="select * from staff s, leaves l, leave_staff_entitlements lse where s.id=lse.staff_id and l.id=lse.leave_id and lse.status='active' and year=$year";
+        
+        $staff_leave_entitlements=staff::join('leave_staff_entitlements','staff_id','=','staff.id')
+                                        ->join('leaves','leaves.id','=','leave_staff_entitlements.leave_id')
+                                        ->where('user_id',$user->id)
+                                        ->where('leave_staff_entitlements.year','=',$year)
+                                        ->where('leave_staff_entitlements.status','=','active')
+                                        ->where('leaves.status','=','active')
+                                        ->orderby('leaves.shortname')
+                                        ->get();
+               // dd($staff_leave_entitlements);
+        $staff_active_dept=staff::with('activedepartments')->where('user_id',$user->id)->first();
+        $dept_ids=array();
+       //dd($staff_leave_entitlements);
+        foreach($staff_active_dept->activedepartments as $depts)
+        {
+            array_push( $dept_ids,$depts->id);
+        }
+        $staff_emp_type=staff::join('employee_types','employee_types.staff_id','=','staff.id')
+                            ->where('staff_id',$staff_id_from_user->id)->first();
 
-       return view('Non-Teaching.ntleaves');
-   }
+        //fetch the staff members of the department teaching staff - teaching data and
+        // non-teaching staff- non-teaching data for alternate arrangement
+        $dept_staff=department::with(['staff'=>function($q) use ( $staff_id_from_user,$staff_emp_type){
+            $q->where('staff.id','<>',$staff_id_from_user->id)
+            ->where('department_staff.status','active')
+
+            ->whereIn('staff.id',function($subquery)use($staff_emp_type){
+                $subquery->select('staff_id')
+                ->from('employee_types')
+                ->where('employee_types.employee_type',$staff_emp_type->employee_type);
+
+            })
+            ->select('staff.id','staff.fname','staff.mname','staff.lname');
+        }])->whereIn('id',$dept_ids)->orderBy('dept_name')->get();
+
+
+        //fetch college level staff data for additional alternate arrangement
+        $additional_alternate_staff =department::with(['staff'=>function($q) use ( $staff_id_from_user,$staff_emp_type){
+            $q->where('staff.id','<>',$staff_id_from_user->id)
+            ->where('department_staff.status','active')
+
+            ->whereIn('staff.id',function($subquery)use($staff_emp_type){
+                $subquery->select('staff_id')
+                ->from('employee_types')
+                ->where('employee_types.employee_type',$staff_emp_type->employee_type);
+
+            })
+            ->select('staff.id','staff.fname','staff.mname','staff.lname');
+        }])->orderBy('dept_name')->get();
+                                        //dd($additional_alternate_staff);
+        $staff=staff::with('latest_employee_type')->with('latestassociation')->with('latest_additional_designation')->where('user_id',$user->id)->first();
+       //dd($staff);
+        if(count($staff->latest_additional_designation)>0)
+        {
+            foreach($staff->latest_additional_designation as $addtnl_design)
+            {
+
+                if($addtnl_design->isvacational=="Non-Vacational")
+                {
+                    $leaves=DB::table('leaves')->join('leave_rules','leave_rules.leave_id','=','leaves.id')
+                                           -> whereNull('leave_rules.max_time_allowed')
+                                           ->where('vacation_type','Non-vacational')
+                                           ->where('leaves.status','active')
+                                           ->orderBy('leaves.shortname')
+                                            ->get();
+
+                }
+                else
+                {
+                    $leaves=DB::table('leaves')->join('leave_rules','leave_rules.leave_id','=','leaves.id')
+                                           ->whereNull('leave_rules.max_time_allowed')
+                                           ->where('vacation_type','vacational')
+                                           ->where('leaves.status','active')
+                                           ->orderBy('leaves.shortname')
+                                            ->get();
+                }
+            }
+
+        }
+        else
+        {
+            //dd($staff->latestassociation()->first()->asso_name=='Confirmed');
+            if($staff->latest_employee_type[0]->employee_type=="Teaching" && ($staff->latestassociation()->first()->asso_name=='Confirmed'||$staff->latestassociation()->first()->asso_name=='Promotional Probationary'))
+            {
+                $leaves=DB::table('leaves')->join('leave_rules','leave_rules.leave_id','=','leaves.id')
+                                           ->whereNull('leave_rules.max_time_allowed')
+                                           ->where('vacation_type','vacational')
+                                           ->where('leaves.status','active')
+                                           ->orderBy('leaves.shortname')
+                                            ->get();
+            }
+            else
+            {
+                $leaves=DB::table('leaves')->join('leave_rules','leave_rules.leave_id','=','leaves.id')
+                                           -> whereNull('leave_rules.max_time_allowed')
+                                           ->where('vacation_type','Non-vacational')
+                                           ->where('leaves.status','active')
+                                           ->orderBy('leaves.shortname')
+                                            ->get();
+            }
+        }
+       // dd($leave_types_taken);
+        return view('Staff.Non-Teaching.ntleaves',compact(['staff_leave_entitlements','holidayrh','dept_staff','leaves','staff','leave_types','additional_alternate_staff']));
+
+
+    }
 }
