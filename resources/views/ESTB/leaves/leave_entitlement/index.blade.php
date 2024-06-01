@@ -40,13 +40,13 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12.1717 12.0005L9.34326 9.17203L10.7575 7.75781L15.0001 12.0005L10.7575 16.2431L9.34326 14.8289L12.1717 12.0005Z"></path></svg>
                                     </a>
                                     </li>
-                            
+
                                 </ol>
                             </div>
                             <!-- Page Header Close -->
 
-            
-                          
+
+
 
                             <!-- Start::row-5 -->
                             <div class="grid grid-cols-12 gap-x-6">
@@ -60,11 +60,11 @@
                                         <div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
                                             <span class='font-bold'>Result</span> Error in Database transaction
                                         </div>
-                                    
+
                                         @endif
-                                        @php 
-                                            Illuminate\Support\Facades\Session::forget('status');  
-                                            header("refresh: 3"); 
+                                        @php
+                                            Illuminate\Support\Facades\Session::forget('status');
+                                            header("refresh: 3");
                                         @endphp
                                     @endif
                                     <div class="box">
@@ -74,11 +74,11 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M11 6V14H19C19 18.4183 15.4183 22 11 22C6.58172 22 3 18.4183 3 14C3 9.66509 6.58 6 11 6ZM21 2V4L15.6726 10H21V12H13V10L18.3256 4H13V2H21Z"></path></svg>
                                                     Leave Entitlement
                                                 </h5>
-                                                
+
                                             </div>
                                         </div>
                                         <div class="box-body">
-                                               
+
                                             <div class=" rounded-sm     ">
                                                 <table id="entitlement_table" class="stripe row-border order-column">
                                                     <thead class="bg-neutral-50 dark:bg-black/20" >
@@ -86,16 +86,16 @@
                                                             <th scope="col" class="dark:text-white/80 font-bold" rowspan="2">Sl. No</th>
                                                             <th scope="col" class="dark:text-white/80 font-bold" rowspan="2">Emp. ID</th>
                                                             <th scope="col" class="dark:text-white/80 font-bold" rowspan="2" >Employee Name</th>
-                                                            <th scope="col" class="dark:text-white/80 font-bold text-center"  colspan="{{count($leave_types)}}" data-dt-order="disable"> Entitled</th> 
-                                                           
+                                                            <th scope="col" class="dark:text-white/80 font-bold text-center"  colspan="{{count($leave_types)}}" data-dt-order="disable"> Entitled</th>
+
                                                             <th scope="col" class="dark:text-white/80 font-bold text-center"   colspan="{{count($leave_types_taken)}}" data-dt-order="disable"> Taken </th>
-                                                                                 
+
                                                             <th scope="col" class="dark:text-white/80 font-bold text-center"  colspan="{{count($leave_types)}}" data-dt-order="disable"> Balance</th>
-                                                            
+
                                                             <th scope="col" class="dark:text-white/80 font-bold" rowspan="2" >Actions</th>
                                                         </tr>
                                                         <tr>
-                                                      
+
                                                         <!--For Displaying Entitle menu options in header-->
                                                             @foreach ($leave_types as $l_type)
                                                                 <th scope="col" class="dark:text-white/80 font-bold">{{$l_type->shortname}}</th>
@@ -108,69 +108,62 @@
                                                             @foreach ($leave_types as $l_type)
                                                             <th scope="col" class="dark:text-white/80 font-bold">{{$l_type->shortname}}</th>
                                                             @endforeach
-                                                           
+
                                                         </tr>
                                                     </thead>
                                                     @php
                                                         $i=1;
-                                                        
+
                                                     @endphp
                                                     <tbody class="">
 
-                                                        @foreach ($staff as $st)
+                                                        @foreach ($data as $st)
                                                             <tr>
-                                                                <td>{{$i++}}</td>
-                                                                <td>{{$st->id}}</td>
-                                                                <td>{{$st->fname." ".$st->mname." ".$st->lname }}</td>
-                                                                    
+                                                                <td class="dark:text-white/80 font-bold items-center !important">{{$i++}}</td>
+                                                                <td class="dark:text-white/80 font-bold text-center !important">{{$st['id']}}</td>
+                                                                <td>{{$st['name'] }}</td>
+
                                                                 {{-- @foreach ($st as ) --}}
-                                                                           
-                                                                    @foreach ($leave_types as $l_type)
-                                                                   
-                                                                        @foreach($st->leave_staff_entitlements as $lse)
-                                                                        
-                                                                            @if($lse->shortname == $l_type->shortname)
-                                                                                
-                                                                                <td scope="col" class="dark:text-white/80 font-bold">{{$lse->pivot->entitled_curr_year}}</td>
-                                                                               
-                                                                            @endif
-                                                                        @endforeach
+
+                                                                @foreach ($leave_types as $l_type)
+                                                                @if(isset($st[$l_type->shortname]))
+                                                                    <td scope="col" class="dark:text-white/80 px-4 py-2 font-bold text-center !important">{{$st[$l_type->shortname]['entitled']}}</td>
+                                                                @else
+                                                                <td class="dark:text-white/80 px-4 py-2 font-bold text-center !important">0</td>
+                                                                @endif
                                                                     @endforeach
-                                                                    @foreach ($leave_types as $l_type)
-                                                                   
-                                                                        @foreach($st->leave_staff_entitlements as $lse)
-                                                                    
-                                                                            @if($lse->shortname == $l_type->shortname)
-                                                                                <td scope="col" class="dark:text-white/80 font-bold">{{$lse->pivot->consumed_curr_year}}</td>
-                                                                            @endif
-                                                                        @endforeach
-                                                                    @endforeach
+                                                                @foreach ($leave_types_taken as $l_type)
+                                                                @if(isset($st[$l_type->shortname]))
+                                                                <td scope="col" class="dark:text-white/80 font-bold">{{$st[$l_type->shortname]['availed']}}</td>
+                                                                @else
+                                                                <td class="dark:text-white/80 font-bold" style="text-align: center;">0</td>
+                                                                @endif
+                                                                @endforeach
+                                                                @foreach ($leave_types as $l_type)
+                                                                @if(isset($st[$l_type->shortname]))
+                                                                <td  scope="col" class="dark:text-white/80 font-bold">{{$st[$l_type->shortname]['balance']}}</td>
+                                                                @else
+                                                                <td class="dark:text-white/80 font-bold text-center">0</td>
+                                                                @endif
+                                                                @endforeach
                                                                 <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                
-                                                             
-                                                                <td></td>
-                                                                <td></td>
-                                                               
-                                                                
-                                                                
+
+
+
+
+
+
+
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
-                                                  
+
                                                 </table>
                                             </div>
-                                           
+
                                         </div>
                                         <div class="box-footer">
-                                                    
+
                                         </div>
                                     </div>
                                 </div>
@@ -192,17 +185,17 @@
         <!-- FLATPICKR JS -->
         <script src="{{asset('build/assets/libs/flatpickr/flatpickr.min.js')}}"></script>
         @vite('resources/assets/js/flatpickr.js')
-       
+
         <!-- Include the latest jQuery -->
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
         <!-- Include the latest DataTables -->
         <script src="https://cdn.datatables.net/2.0.1/js/dataTables.min.js"></script>
 
-       
-       
+
+
        <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
-      
+
 
       <script src=" https://cdn.datatables.net/fixedcolumns/5.0.0/js/dataTables.fixedColumns.js"></script>
       <script src="https://cdn.datatables.net/fixedcolumns/5.0.0/js/fixedColumns.dataTables.js"></script>
@@ -210,12 +203,12 @@
             $(document).ready(function(){
                 //new DataTable('#entitlement_table');
                 new DataTable('#entitlement_table', {
-                    
+
                     fixedColumns: true,
                     fixedColumns: {
                         left: 3
                     },
-                  
+
                     responsive: true,
                     paging: true,
                     scrollCollapse: true,
@@ -226,16 +219,16 @@
                                 "targets": "_all",
                             },
                             { targets: 1, width: '90px' },
-                           
+
                         ]
                 });
             });
-        </script> 
+        </script>
 
-       
+
 
         <!-- INDEX JS -->
         @vite('resources/assets/js/index-8.js')
-        
+
 
 @endsection
