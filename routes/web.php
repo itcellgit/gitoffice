@@ -421,7 +421,12 @@ Route::middleware(['cors','auth','role:'.UserRoles::NONTEACHING->value, 'prevent
 
 
   //Non-Teaching Leave  Routes
-  Route::get('/Staf/Non-Teaching/ntleaves',[LeaveStaffApplicationsController::class,'nt_leaves_index'])->name('Staff.Non-Teaching.ntleaves');
+  Route::get('/Staff/Non-Teaching/ntleaves',[LeaveStaffApplicationsController::class,'nt_leaves_index'])->name('Staff.Non-Teaching.ntleaves');
+  // Route::get('/Teaching/holidayrhevents',[LeaveStaffApplicationsController::class,'hollidayrh_events']);
+  // Route::get('/Teaching/myleaveevents',[LeaveStaffApplicationsController::class,'myleaveevents']);
+  // Route::get('/Teaching/checkhasleaveEvent',[LeaveStaffApplicationsController::class,'checkhasleaveEvent']);
+  // Route::get('/Teaching/checkanydeptpersononleave',[LeaveStaffApplicationsController::class,'checkanydeptpersononleave']);
+  // Route::get('/Teaching/checkhasRH',[LeaveStaffApplicationsController::class,'checkhasRH']);
 
 
 
@@ -939,10 +944,10 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
 
 
       //updating qualification of the staff.
-      Route::post('/Dean_admin/staff/{staff}/qualifications/create',[StaffQualificationController::class,'store'])->name('Dean_admin.staff.qualification.store');
-      Route::patch('/Dean_admin/staff/{staff}/qualifications/update/{qualification}',[StaffQualificationController::class,'update'])->name('Dean_admin.staff.qualification.update');
+      Route::post('/Dean_admin/staff/{staff}/qualifications/create',[QualificationStaffController::class,'store'])->name('Dean_admin.staff.qualification.store');
+      Route::patch('/Dean_admin/staff/{staff}/qualifications/update/{qualification}',[QualificationStaffController::class,'update'])->name('Dean_admin.staff.qualification.update');
       //for deleting the staff qualification details when want to change the qualification with the condition being duration of the staff in that perticular department is within 1 month
-      Route::delete('/Dean_admin/staff/{staff}/qualification/destroy/{qualification}',[StaffQualificationController::class,'destroy'])->name('Dean_admin.staff.qualification.destroy');
+      Route::delete('/Dean_admin/staff/{staff}/qualification/destroy/{qualification}',[QualificationStaffController::class,'destroy'])->name('Dean_admin.staff.qualification.destroy');
 
 
 

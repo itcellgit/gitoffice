@@ -39,6 +39,7 @@ class MyAuthController extends Controller
         $credentials = $request->only('email', 'password');
         //dd($credentials);
         if (Auth::attempt($credentials)) {
+            dd('inside if');
             $request->session()->regenerate();
             //dd(Auth::user()->role===UserRoles);
             if(Auth::user()->role === UserRoles::SU->value){

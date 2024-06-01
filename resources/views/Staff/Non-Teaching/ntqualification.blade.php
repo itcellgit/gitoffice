@@ -128,7 +128,7 @@
                                                     <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                         <div class="max-w-sm space-y-3 pb-6 grade">
                                                             <label for="" class="ti-form-label mb-0 font-bold">Grade(CGP)</label>
-                                                            <input type="text" name="grade" class="ti-form-input" value="" placeholder="Enter Your CGP Grade"/>
+                                                            <input type="text" name="grade" class="ti-form-input" value="" placeholder="Enter Your CGP Grade Number"/>
                                                         </div>
                                                     </div>
                                                 </div>    
@@ -266,7 +266,7 @@
                                                                                     <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                                                         <div class="max-w-sm space-y-3 pb-6 grade">
                                                                                             <label for="" class="ti-form-label mb-0 font-bold">Grade(CGPA)</label>
-                                                                                            <input type="text" name="grade" class="ti-form-input" value="{{$qualification->pivot->grade}}" placeholder="Enter Your CGP Grade"/>
+                                                                                            <input type="text" name="grade" class="ti-form-input" value="{{$qualification->pivot->grade}}" placeholder="Enter Your CGP Grade Number"/>
                                                                                         </div> 
                                                                                     </div>
                                                                                 </div>    
