@@ -16,10 +16,10 @@ class Kernel extends ConsoleKernel
 
         //for running scheduled job of adding the leave entitlements yearly once for (teaching vacational and teaching non vacational)
 
-        $schedule->call('\App\Http\Controllers\ScheduledJobs@yearly_leave_entitlements')->yearlyOn(12,28,'00:00')->timezone('Asia/Kolkata');
-        $schedule->call('\App\Http\Controllers\ScheduledJobs@inactivate_previous_year')->yearlyOn(01,01,'00:00')->timezone('Asia/Kolkata');
-        $schedule->call('\App\Http\Controllers\ScheduledJobs@monthly_leave_entitlements')->monthlyOn(28,'00:00')->timezone('Asia/Kolkata');
-        $schedule->call('\App\Http\Controllers\ScheduledJobs@daily_Non_Vacational_EL')->daily()->timezone('Asia/Kolkata');
+        $schedule->call('\App\Http\Controllers\ScheduledJobs@yearly_leave_entitlements')->yearlyOn(6,1,'17:59')->timezone('Asia/Kolkata');
+        $schedule->call('\App\Http\Controllers\ScheduledJobs@inactivate_previous_year')->yearlyOn(06,01,'18:11')->timezone('Asia/Kolkata');
+        $schedule->call('\App\Http\Controllers\ScheduledJobs@monthly_leave_entitlements')->monthlyOn(01,'00:00')->timezone('Asia/Kolkata');
+        $schedule->call('\App\Http\Controllers\ScheduledJobs@daily_Non_Vacational_EL')->daily('00:00')->timezone('Asia/Kolkata');
         $schedule->call('\App\Http\Controllers\ScheduledJobs@halfyearlyEL')->yearlyOn(06,28,'00:00')->timezone('Asia/Kolkata');
     }
 

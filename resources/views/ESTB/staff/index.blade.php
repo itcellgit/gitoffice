@@ -80,19 +80,19 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M11 14.0619V20H13V14.0619C16.9463 14.554 20 17.9204 20 22H4C4 17.9204 7.05369 14.554 11 14.0619ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13Z" fill="rgba(0,0,0,1)"></path></svg>
                                                     Staff List
                                                 </h5>
-                                                
+
                                                 <div class=" block ltr:ml-auto rtl:mr-auto my-auto">
                                                      <!--For filtering the data as per requirement-->
                                                      <button type="button" class="hs-dropdown-toggle ti-btn bg-green-500 hover:bg-green-600 text-white rounded-full px-4 py-2" onclick="location.href='{{ route('ESTB.staff.generatestatistics') }}'">
                                                         Generate Statistics
                                                     </button>
-                                                    
+
                                                     <!--For filtering the data as per requirement-->
                                                     <button type="button" class="hs-dropdown-toggle ti-btn bg-green-500 hover:bg-green-600 text-white rounded-full px-4 py-2" onclick="location.href='{{ route('ESTB.staff.staffinformation') }}'">
                                                         Staff Filter
                                                     </button>
-                                                    
-                                                    
+
+
                                                     <button type="button" id="add_staff_btn" data-hs-overlay="#add_staff" class="hs-dropdown-toggle ti-btn ti-btn-primary rounded-full">
                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M4 3H20C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM5 5V19H19V5H5ZM11 11V7H13V11H17V13H13V17H11V13H7V11H11Z" fill="rgba(255,255,255,1)"></path></svg>
                                                         Add Staff
@@ -229,7 +229,7 @@
                                                                             <div class="space-y-2 pr-4">
                                                                                 <label class="ti-form-label mb-0">Pay Type<span class="text-red-500">*</span></label>
                                                                                 <div class="flex gap-x-6">
-                                                                                    <div class="flex hidden" id="Consolidated">
+                                                                                    <div class="flex" id="Consolidated">
                                                                                         <input type="radio" name="pay_type" value="Consolidated"  class="ti-form-radio" id="hs-radio-group-1 pay_type">
                                                                                         <label for="hs-radio-group-1" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Consolidated</label>
 
@@ -479,7 +479,7 @@
                                         </div>
                                         <div class="box-body">
                                             <div id="basic-table" class="ti-custom-table ti-striped-table ti-custom-table-hover table-bordered rounded-sm  overflow-auto">
-                                                <table id="staff_table" class="ti-custom-table ti-custom-table-head  max-w-8 overflow-auto relative">
+                                                <table id="staff_table" class="ti-custom-table ti-custom-table-head  max-w-8 overflow-auto text-wrap relative">
                                                     <thead class="bg-gray-50 dark:bg-black/20">
                                                         <tr class="">
                                                             <!--<th scope="col" class="dark:text-white/80">S.no</th>

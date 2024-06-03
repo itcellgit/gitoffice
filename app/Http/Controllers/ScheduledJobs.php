@@ -30,6 +30,7 @@ class ScheduledJobs extends Controller
               AND designation_staff.status = 'active'
         )
           AND employee_types.employee_type = 'teaching'
+          AND employee_types.status='active'
           AND association_staff.association_id IN (
             SELECT id
             FROM associations
@@ -37,11 +38,11 @@ class ScheduledJobs extends Controller
         )
           AND association_staff.status = 'active'
     ";
-    
+
     $staff = DB::select($statement);
         $leaves=leave::with('leave_rules')->where('vacation_type','Vacational')->where('max_entitlement','>',0)->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();
 
-        $year=Carbon::now()->year;
+       $year=Carbon::now()->year;
        // $year=intval($year)+1;
         foreach($staff as $st)
         {
@@ -69,7 +70,7 @@ class ScheduledJobs extends Controller
                             $first_of_jan=Carbon::parse($year.'-01-01');
                             $no_of_days_remaining= floatval($retirement_date->diffInDays($first_of_jan));
                             $max_entitlement_full=ceil($no_of_days_remaining*$l->max_entitlement/365);
-                            
+
                             if($max_entitlement_full>ceil($l->max_entitlement/2))
                             {
                                 $max_entitlement=ceil($l->max_entitlement/2);
@@ -77,13 +78,13 @@ class ScheduledJobs extends Controller
                             else
                             {
                                 $max_entitlement=$max_entitlement_full;
-                            }                    
+                            }
                         }
                         else
                         {
                              $max_entitlement=ceil($l->max_entitlement/2); //flooring is use if incase no. of el are odd. In july use ceil.
                         }
-                       
+
                     }
                     else
                     {
@@ -138,9 +139,13 @@ class ScheduledJobs extends Controller
         }
         logger("Teaching non-vacational running");
         //Teaching Non Vacational
-        $statement="SELECT s.id FROM `staff` s, designation_staff, designations
-        where s.id=designation_staff.staff_id and designation_staff.designation_id=designations.id
-        and designations.isadditional=1 and designations.isvacational='Non-Vacational' and designation_staff.status='active'";
+        $statement="SELECT s.id
+                        FROM `staff` s, designation_staff, designations
+                        where s.id=designation_staff.staff_id and
+                        designation_staff.designation_id=designations.id and
+                        designations.isadditional=1 and
+                        designations.isvacational='Non-Vacational' and
+                        designation_staff.status='active'";
         $staff=DB::select($statement);
         $leaves=leave::with('leave_rules')->where('vacation_type','Non-Vacational')->where('max_entitlement','>',0)->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();
         foreach($staff as $st)
@@ -148,8 +153,12 @@ class ScheduledJobs extends Controller
             foreach($leaves as $l)
             {
                 //fetch the current staff's previous year leave status from leave_staff_entitlement table
-                    $query="select * from leave_staff_entitlements where staff_id=".$st->id." and leave_id=".$l->id." and year=".$year-1;
-                    $pre_year_entltm=DB::select($query);
+                   // $query="select * from leave_staff_entitlements where staff_id=".$st->id." and leave_id=".$l->id." and year=".$year-1;
+                    $pre_year_entltm=DB::table('leave_staff_entitlements')
+                                        ->where('staff_id',$st->id)
+                                        ->where('leave_id',$l->id)
+                                        ->where('year',$year-1)
+                                        ->first();
 
                     if($pre_year_entltm==null)
                     {
@@ -168,12 +177,13 @@ class ScheduledJobs extends Controller
                     }
                     else
                     {
-                        $pre_year_entltm=$pre_year_entltm[0];
+                        //$pre_year_entltm=$pre_year_entltm[0];
                         if($l->leave_rules[0]->carry_forwardable=='Yes')
                         {
                             if($pre_year_entltm->accumulated<($l->leave_rules[0]->max_cf-$l->max_entitlement))
                             {
                                 $accumulated=$pre_year_entltm->accumulated+$pre_year_entltm->entitled_curr_year-$pre_year_entltm->consumed_curr_year;
+
                             }
                             elseif($pre_year_entltm->accumulated<$l->leave_rules[0]->max_cf)
                             {
@@ -181,7 +191,7 @@ class ScheduledJobs extends Controller
                             }
                             else
                             {
-                                $accumulated=0;
+                                $accumulated=$pre_year_entltm->accumulated;
                             }
 
                         }
@@ -199,13 +209,12 @@ class ScheduledJobs extends Controller
                         }
                         if($l->shortname=='EL')
                         {
-
-                             $staff_entitlement=$st->leave_entitlements()->attach($l->id,['year'=>$year,'entitled_curr_year'=>0,'accumulated'=>$accumulated,'total_encashed'=> $total_encashable,'wef'=>$year.'01-01']);
+                            $staff_entitlement=$l->leave_staff_entitlements()->attach($st->id,['year'=>$year,'entitled_curr_year'=>0,'accumulated'=>$accumulated,'total_encashed'=> $total_encashable,'wef'=>$year.'-01-01']);
                         }
                         else
                         {
 
-                            $staff_entitlement=$st->leave_entitlements()->attach($l->id,['year'=>$year,'entitled_curr_year'=>$l->max_entitlement,'accumulated'=>$accumulated,'total_encashed'=> $total_encashable,'wef'=>$year.'01-01']);
+                            $staff_entitlement=$l->leave_staff_entitlements()->attach($st->id,['year'=>$year,'entitled_curr_year'=>$l->max_entitlement,'accumulated'=>$accumulated,'total_encashed'=> $total_encashable,'wef'=>$year.'-01-01']);
                         }
 
                     }
@@ -220,6 +229,7 @@ class ScheduledJobs extends Controller
                ->where('association_staff.status','=','active')
                 ->where('association_staff.association_id','=',6)
                 ->orWhere('association_staff.association_id','=',12)
+
                 ->select('staff.*')->get();
 
 
@@ -257,7 +267,7 @@ class ScheduledJobs extends Controller
                             {
                                 $total_encashable=0;
                             }
-                            $staff_entitlement=$st->leave_entitlements()->attach($l->id,['year'=>$year,'entitled_curr_year'=>$l->max_entitlement,'accumulated'=>$accumulated,'total_encashed'=>$pre_year_entltm->total_encashed,'wef'=>$year.'-01-01']);
+                            $staff_entitlement=$st->leave_staff_entitlements()->attach($l->id,['year'=>$year,'entitled_curr_year'=>$l->max_entitlement,'accumulated'=>$accumulated,'total_encashed'=>$pre_year_entltm->total_encashed,'wef'=>$year.'-01-01']);
                         }
 
                     }
@@ -276,11 +286,19 @@ class ScheduledJobs extends Controller
 
 
         //fetch the staff details who are not confirmed or not on promotional probationary
-        $statement="select staff.*, association_staff.start_date as as_start_date from staff, employee_types, association_staff where
-        employee_types.staff_id=staff.id and association_staff.staff_id=staff.id and
-        association_staff.association_id!=6 and association_staff.association_id!=12 and association_staff.status='active' and staff.id not in
-        (select staff_id from leave_staff_entitlements WHERE year!=$year)";
+        $statement="select staff.*, association_staff.start_date as as_start_date
+                    from staff, employee_types, association_staff
+                    where
+                    employee_types.staff_id=staff.id and
+                    association_staff.staff_id=staff.id and
+                    association_staff.status='active' and
+                    association_staff.association_id in
+                                                    (select id
+                                                            from associations
+                                                            where asso_name like '%Contractual%' or
+                                                            asso_name like '%Temporary%')";
 
+       // logger($statement);
        $staff=DB::select($statement);
         //write the eloquent data access for the above raw query.
        foreach($staff as $st)
@@ -292,6 +310,7 @@ class ScheduledJobs extends Controller
             $doa=Carbon::createFromFormat('Y-m-d', $st->as_start_date);
             //convert the days to float value for further calcuations
             $no_of_days=floatval($doa->diffInDays($current));
+            logger($no_of_days);
             //compute the number of days to be given as entitlement
             $leave_entitlement=floor(fmod($no_of_days,365)/22.5);
 
@@ -333,6 +352,7 @@ class ScheduledJobs extends Controller
                     }
                     else
                     {
+
                         if($l->shortname=='CL')
                         {
                             $st_entitlement_previous_year=$st_entitlement[0]->entitled_curr_year-$st_entitlement[0]->consumed_curr_year;
@@ -342,6 +362,7 @@ class ScheduledJobs extends Controller
                         else if($l->shortname=='RH')
                         {
                             $staff_entitlement=$leaves->leave_staff_entitlements()->attach($st->id,['year'=>$year,'entitled_curr_year'=>$l->max_entitlement,'wef'=>$year.'-01-01']);
+                            logger('RH given to '.$st->id);
                         }
                         else
                         {
@@ -352,6 +373,11 @@ class ScheduledJobs extends Controller
             }
             else
             {
+                if($leave_entitlement>$l->max_entitlement)
+                {
+                    //applying correction factor if leave_entitlements computed is going to 16
+                    $leave_entitlement=$l->max_entitlement;
+                }
                 foreach($leaves as $l)
                 {
                     $statement="select * from leave_staff_entitlements where year=$year and staff_id=$st->id and leave_id=$l->id";
