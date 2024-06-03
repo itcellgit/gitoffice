@@ -421,12 +421,26 @@ Route::middleware(['cors','auth','role:'.UserRoles::NONTEACHING->value, 'prevent
 
 
   //Non-Teaching Leave  Routes
-  Route::get('/Staff/Non-Teaching/ntleaves',[LeaveStaffApplicationsController::class,'nt_leaves_index'])->name('Staff.Non-Teaching.ntleaves');
-  // Route::get('/Teaching/holidayrhevents',[LeaveStaffApplicationsController::class,'hollidayrh_events']);
-  // Route::get('/Teaching/myleaveevents',[LeaveStaffApplicationsController::class,'myleaveevents']);
-  // Route::get('/Teaching/checkhasleaveEvent',[LeaveStaffApplicationsController::class,'checkhasleaveEvent']);
-  // Route::get('/Teaching/checkanydeptpersononleave',[LeaveStaffApplicationsController::class,'checkanydeptpersononleave']);
-  // Route::get('/Teaching/checkhasRH',[LeaveStaffApplicationsController::class,'checkhasRH']);
+  Route::get('/Non-Teaching/ntleaves',[LeaveStaffApplicationsController::class,'nt_leaves_index'])->name('Non-Teaching.ntleaves');
+  Route::get('/Non-Teaching/nt_leave_hollidayrh_events',[LeaveStaffApplicationsController::class,'nt_leave_hollidayrh_events']);
+  Route::get('/Non-Teaching/nt_leave_myleaveevents',[LeaveStaffApplicationsController::class,'nt_leave_myleaveevents']);
+  Route::get('/Non-Teaching/nt_leave_checkhasleaveEvent',[LeaveStaffApplicationsController::class,'nt_leave_checkhasleaveEvent']);
+  Route::get('/Non-Teaching/nt_leave_checkanydeptpersononleave',[LeaveStaffApplicationsController::class,'nt_leave_checkanydeptpersononleave']);
+  Route::get('/Non-Teaching/nt_leave_checkhasRH',[LeaveStaffApplicationsController::class,'nt_leave_checkhasRH']);
+  
+  
+  //for fetching events of specific date (clicked) using AJAX
+  Route::get('/Non-Teaching/nt_leave_fetchholidayrhevents',[LeaveStaffApplicationsController::class,'nt_leave_fetchholidayrhevents']);
+  Route::get('/Non-Teaching/nt_leave_fetchmyleaveevents',[LeaveStaffApplicationsController::class,'nt_leave_fetchmyleaveevents']);
+  
+  Route::get('/Non-Teaching/nt_leave_cancel_myleave',[LeaveStaffApplicationsController::class,'nt_leave_cancel_myleave']);
+  Route::get('/Non-Teaching/nt_leave_edit_myleave',[LeaveStaffApplicationsController::class,'nt_leave_edit_myleave'])->name('Non-Teaching.leaves.edit');
+  // Route::delete('/ESTB/leaves/leaves_rules/{leave_rules}',[LeaveRulesController::class,'destroy'])->name('ESTB.leaves.leave_rules.destroy');
+  
+  //Leave Application Management routes
+  Route::post('/Non-Teaching/{staff}/leave/create',[LeaveStaffApplicationsController::class,'nt_leave_store'])->name('Non-Teaching.leaves.apply');
+  Route::patch('/Non-Teaching/{staff}/leave/application/update',[LeaveStaffApplicationsController::class,'nt_leave_update'])->name('Non-Teaching.leave_application.update');
+  Route::post('/Non-Teaching/{staff}/validate_leave_appln',[LeaveStaffApplicationsController::class,'nt_leave_validateleave']);
 
 
 

@@ -25,8 +25,8 @@ class Updatequalification_staffRequest extends FormRequest
             
             'qualification_name'=>['required','string', 'max:255'],
             'board_university'=>['required','string', 'max:255'],
-            'grade'=>['required','string', 'max:255'],
-            'yop'=>['required','date']
+            'grade'=>['string', 'max:255'],
+            'yop'=>['date']
          ];
     }
 }

@@ -188,14 +188,11 @@ class NonTeachingController extends Controller
         //check if designation has changed
         // return redirect('/Staff/Non-Teaching/ntupdateprofile/'.$staff->id)->with('status',$status);
 
-        return redirect('/Staff/Non-Teaching/ntupdateprofile/')->with('status',$status);
-
-
-       
-
+        return redirect('/Staff/Non-Teaching/ntupdateprofile')->with('status',$status);
 
     }
 
+    
 
 
 
@@ -241,17 +238,23 @@ class NonTeachingController extends Controller
     
     public function update_qualification(Request $request, staff $staff,$squal)
     {
+        //dd($request);
         $user = Auth::user();
         $staff= staff::where('user_id',$user->id)->first();
-        $updateresult=true;
+        //$updateresult=true;
         //dd($squal);
-         //check if there are changes in currently working and the assigned in the UI
-         //update exisiting entry of the staff qualification
-        // dd($staff);
-         $updateresult= $staff->qualifications()->updateExistingPivot($squal,['yop'=>$request->yop,'board_university'=>$request->board_university,'grade'=>$request->grade,'status'=>$request->status]);
-         
-         //dd($updateresult);
-         if($updateresult)
+        $staff_qual=staff::with(['qualifications'=>function($q)use($squal){
+            $q->where('qualifications.id',$squal);
+        }])->where('staff.id',$staff->id)->first();
+        $qualification=$staff_qual->qualifications->first();
+        $qualification->pivot->qualification_id=$request->qualification_name;
+        $qualification->pivot->status=$request->status;
+        $qualification->pivot->yop=$request->yop;
+        $qualification->pivot->board_university=$request->board_university;
+        $qualification->pivot->grade=$request->grade;
+        $updateresult=$qualification->pivot->update();
+
+        if($updateresult)
         {
             //dd('success');
             $status=1;
@@ -262,6 +265,8 @@ class NonTeachingController extends Controller
         }
         return redirect('/Non-Teaching/ntqualification/')->with('status',$status);
     }
+
+
 
     /**
      * Remove the specified resource from storage.

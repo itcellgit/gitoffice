@@ -96,20 +96,22 @@
                                                     <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
                                                         <div class="max-w-sm space-y-3 pb-6">
                                                             <label class="ti-form-label mb-0 font-bold">Qualification Name</label>
-                                                            <select class="ti-form-select" name="qualification_id">
+                                                            <select class="ti-form-select" name="qualification_id" id="qualname" required>
                                                                 <option value="#">Choose Qualification</option>
                                                                 @foreach ($qualifications as $qualification)
                                                                 <option value="{{$qualification->id}}" >{{$qualification->qual_name}}</option>
                                                                 @endforeach
                                                             </select>
+                                                            <div id="qualificationError" class="error text-red-700"></div>
                                                         </div>
                                                         <div class="max-w-sm space-y-3 pb-6">
                                                             <label for="" class="ti-form-label mb-0 font-bold">Status</label>
-                                                            <select class="ti-form-select status_type" name="status" id="status">
+                                                            <select class="ti-form-select status_type" name="status" id="status" required>
                                                                 <option value="#">Choose One</option>
                                                                 <option value="Persuing">Persuing</option>
                                                                 <option value="Completed">Completed</option>
                                                             </select>
+                                                            <div id="statusError" class="error text-red-700"></div>
                                                         </div>
                                                     </div> 
                                                     <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
@@ -123,10 +125,12 @@
                                                                     class="ti-form-input rounded-l-none focus:z-10 flatpickr-input date"
                                                                     id="date" placeholder="Choose Date" value="">
                                                             </div>
+                                                            <div id="yopError" class="error text-red-700"></div>
                                                         </div>
                                                         <div class="max-w-sm space-y-3 pb-6">
-                                                                <label for="" class="ti-form-label mb-0 font-bold">Board Or University</label>
-                                                                <input type="text" name="board_university" class="ti-form-input" value="" placeholder="Enter Board or University"/>
+                                                            <label for="" class="ti-form-label mb-0 font-bold">Board Or University</label>
+                                                            <input type="text" name="board_university" id="boarduniverty" required class="ti-form-input" value="" placeholder="Enter Board or University"/>
+                                                            <div id="boardunivertyError" class="error text-red-700"></div>
                                                         </div>
                                                     </div>
                                                     <div class="grid lg:grid-cols-2 gap-1 space-y-2 lg:space-y-0">
@@ -142,7 +146,7 @@
                                                         data-hs-overlay="#change_qualification">
                                                             Close
                                                     </button>
-                                                    <input type="submit" class="ti-btn  bg-primary text-white hover:bg-warning  focus:ring-primary  dark:focus:ring-offset-white/10" value="ADD"/>
+                                                    <input type="submit" id="Qualification_add_btn" class="ti-btn  bg-primary text-white hover:bg-warning  focus:ring-primary  dark:focus:ring-offset-white/10" value="ADD"/>
                                                 </div>
                                             </form>  
                                         </div>
@@ -348,7 +352,45 @@
             $(document).ready(function () {
 
                 new DataTable('#staff_qual');
-                
+
+                $(document).on('click','#Qualification_add_btn',function(e){
+
+                    var qualname = $('#qualname').val();
+                    var status =$('#status').val();
+                    var date=$('#date').val();
+                    var boarduniverty =$('boarduniverty').val();
+                    var percentage=$('#percentage').val();
+
+
+
+                    var flag = false;
+
+                    if(date.trim() === ''){
+                        $('#yopError').text('Please Select a proper date');
+                        flag = true;
+                    }
+                    if(qualname =='#'){
+                        $('#qualificationError').text('Please Choose a correct option.');
+                        flag = true;
+                    }
+
+                    if(status =='#'){
+                        $('#statusError').text('Please Choose a correct option.');
+                        flag = true;
+                    }
+
+                    if (boarduniverty.trim() === '') {
+                        $('#boardunivertyError').text('Board or University is missing');
+                        flag = true;
+                    } else {
+                        $('#boardunivertyError').text(''); 
+                    }
+
+                    if(flag == true){
+                        e.preventDefault();
+                    }
+
+                    });
                
             });
 

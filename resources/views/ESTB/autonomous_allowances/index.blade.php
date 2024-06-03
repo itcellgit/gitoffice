@@ -271,27 +271,27 @@
                 $(document).on('click','#submitData',function(e){
 
 
-var year = $('#year').val();
+                var year = $('#year').val();
 
 
-var flag = false;
+                var flag = false;
 
 
-if (year !== '') {
-    if (!/^[0-9]*$/.test(year)) {
-        $('#year_error').text('');
-    }
+                if (year !== '') {
+                    if (!/^[0-9]*$/.test(year)) {
+                        $('#year_error').text('');
+                    }
 
-} else {
-    // The field is optional and empty, no validation need
-}
+                } else {
+                    // The field is optional and empty, no validation need
+                }
 
-if(flag == true){
-    e.preventDefault();
-}
+                if(flag == true){
+                    e.preventDefault();
+                }
 
 
-});
+                });
             });
 
             </script>

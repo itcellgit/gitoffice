@@ -80,6 +80,7 @@
 
                                                     <div>
                                                         <form action="{{route('Staff.Non-Teaching.update',$staff->id)}}" method="post">
+                                                            
                                                             @csrf
                                                             @method('patch')
                                                             <div class="grid lg:grid-cols-3 gap-3 space-y-2 lg:space-y-0 pb-4">

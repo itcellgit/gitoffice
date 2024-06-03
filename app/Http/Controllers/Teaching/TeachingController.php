@@ -158,6 +158,7 @@ class TeachingController extends Controller
 
     }
 
+   
 
     //code for update the staff personal information
     public function update(Request $request, staff $staff)

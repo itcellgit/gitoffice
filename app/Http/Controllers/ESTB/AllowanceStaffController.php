@@ -30,7 +30,8 @@ class AllowanceStaffController extends Controller
     {
         $year = request('year');
         $month = request('month');
-        //query to fetch departments of all staff with multiple departments as comma separated list
+
+        // Query to fetch departments of all staff with multiple departments as comma-separated list
         $departmentsSubquery = DB::table('department_staff')
             ->join('departments', 'departments.id', '=', 'department_staff.department_id')
             ->where('department_staff.status', 'active')
@@ -40,19 +41,26 @@ class AllowanceStaffController extends Controller
             )
             ->groupBy('department_staff.staff_id');
 
-        $grading=staff::leftJoinSub($departmentsSubquery, 'grouped_depts', function($join) {
-            $join->on('grouped_depts.staff_id', '=', 'staff.id');
-        })
-        ->join('allowance_staff','allowance_staff.staff_id','=','staff.id')
-        ->join('allowances','allowances.id','=','allowance_staff.allowance_id')
-        ->where('year',$year)->where('month',$month)
+        // Main query to fetch staff grading
+        $grading = staff::leftJoinSub($departmentsSubquery, 'grouped_depts', function ($join) {
+                $join->on('grouped_depts.staff_id', '=', 'staff.id');
+            })
+            ->join('allowance_staff', 'allowance_staff.staff_id', '=', 'staff.id')
+            ->join('allowances', 'allowances.id', '=', 'allowance_staff.allowance_id')
+            ->where('allowance_staff.year', $year)
+            ->where('allowance_staff.month', $month)
+            ->select(
+                'staff.id as id',
+                DB::raw("CONCAT(staff.fname, '-', staff.mname, '-', staff.lname) as name"),
+                'grouped_depts.dept_shortname as dept',
+                'allowances.value as value',
+                'allowance_staff.year as year',
+                'allowance_staff.month as month',
+                'allowance_staff.status as status'
+            )
+            ->orderBy('dept')
+            ->get();
 
-        ->select('staff.id as id',
-        DB::raw("concat(staff.fname, '-',staff.mname,'-',staff.lname) as name"),
-        'grouped_depts.dept_shortname as dept',
-        'allowances.value as value','allowance_staff.year as year','allowance_staff.month as month','allowance_staff.status as status')
-        -> orderBy('dept')
-        ->get();
        //dd($grading);
         // $staff=staff::join('allowance_staff','allowance_staff.staff_id','=','staff.id')
         // ->where('year',$year)

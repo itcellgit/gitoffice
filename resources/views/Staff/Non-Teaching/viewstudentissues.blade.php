@@ -65,6 +65,7 @@
                                     <tr>
                                         <th scope="col" class="dark:text-white/80">USN</th>
                                         <th scope="col" class="dark:text-white/80">Issue</th>
+                                        <th scope="col" class="dark:text-white/80">Category</th>
                                         <th scope="col" class="dark:text-white/80">Description</th>
                                         <th scope="col" class="dark:text-white/80">Staff Incharge</th>
                                         <th scope="col" class="dark:text-white/80">Action</th>
@@ -73,16 +74,23 @@
                                 <tbody>
                                     @foreach ($student_issues as $issue)
                                         <tr>
-                                            <td class="font-medium space-x-2 rtl:space-x-reverse">{{ $issue->usn }}</td>
-                                            <td class="font-medium space-x-2 rtl:space-x-reverse">
+                                            <td class="font-medium space-x-2 rtl:space-x-reverse {{(count($issue->issue_timeline)>0)?'':'bg-red-300'}}">{{ $issue->usn }}</td>
+                                            <td class="font-medium space-x-2 rtl:space-x-reverse {{(count($issue->issue_timeline)>0)?'':'bg-red-300'}}">
                                                 @if ($issue->exam_section_issue)
                                                     {{ $issue->exam_section_issue->issues ?? '' }} - {{ $issue->exam_section_issue->remarks ?? '' }}
                                                 @else
                                                     Other - {{ $issue->other_issue ?? '-' }}
                                                 @endif
                                             </td>
-                                            <td class="font-medium space-x-2 rtl:space-x-reverse">{{ $issue->description }}</td>
-                                            <td class="font-medium space-x-2 rtl:space-x-reverse">
+                                            <td class="font-medium space-x-2 rtl:space-x-reverse {{(count($issue->issue_timeline)>0)?'':'bg-red-300'}}">
+                                                @if ($issue->exam_section_issue)
+                                                    {{ $issue->exam_section_issue->category_name ?? '' }} 
+                                                @elseif($issue->exam_section_issue==null)
+                                                    unusual
+                                                @endif  
+                                            </td>
+                                            <td class="font-medium space-x-2 rtl:space-x-reverse {{(count($issue->issue_timeline)>0)?'':'bg-red-300'}}">{{ $issue->description }}</td>
+                                            <td class="font-medium space-x-2 rtl:space-x-reverse {{(count($issue->issue_timeline)>0)?'':'bg-red-300'}}">
                                                 @if ($issue->exam_section_issue && $issue->exam_section_issue->staff)
                                                     {{ $issue->exam_section_issue->staff->fname }}
                                                     {{ $issue->exam_section_issue->staff->mname }}
@@ -91,7 +99,7 @@
                                                     Sudhindra T Kulkarni
                                                 @endif
                                             </td>
-                                            <td class="font-medium space-x-2 rtl:space-x-reverse">
+                                            <td class="font-medium space-x-2 rtl:space-x-reverse {{(count($issue->issue_timeline)>0)?'':'bg-red-300'}}">
                                                 <div class="hs-tooltip ti-main-tooltip">
                                                     <a href="{{ route('Staff.Non-Teaching.issue_timeline.show', $issue->id) }}"
                                                        class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-primary">
