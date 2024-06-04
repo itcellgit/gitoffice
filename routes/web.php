@@ -14,6 +14,9 @@ use App\Http\Controllers\IconsController;
 use App\Http\Controllers\MapsController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\WidgetsController;
+
+//use App\Http\Controllers\NotificationsController;
+
 use App\Http\Controllers\Auth1\MyAuthController;
 use App\Enums\UserRoles;
 use App\Http\Controllers\Admin\AdminController;
@@ -77,6 +80,11 @@ use App\Http\Controllers\ESTB\ajax\GetTeachingPayscaleController;
 use App\Http\Controllers\ESTB\ajax\GetNTPayscaleListController;
 use App\Http\Controllers\ESTB\ajax\GetNTCPayscaleListController;
 use App\Http\Controllers\ESTB\ajax\GetStaffPay_list;
+
+
+//statistic information
+use App\Http\Controllers\ESTB\StatisticInformationController;
+
 
 
 // use App\Http\Controllers\Controller;
@@ -189,6 +197,16 @@ use App\Http\Controllers\Admin\AdminNoticeController;
 
 use App\Http\Controllers\grievience\ExamOfficeController;
 use App\Http\Controllers\StudentIssueController;
+
+
+                //internship
+use App\Http\Controllers\internship\InternshipController;
+use App\Http\Controllers\internship\StudentController;
+use App\Http\Controllers\internship\IndustryController;
+use App\Http\Controllers\internship\SpocController;
+use App\Http\Controllers\internship\StudentinternshipController;
+use App\Http\Controllers\internship\StudentStudentinternshipController;
+use App\Http\Controllers\internship\InteractionController;
 
 
 
@@ -364,6 +382,68 @@ Route::get('/Teaching/edit_myleave',[LeaveStaffApplicationsController::class,'ed
 Route::post('/Teaching/{staff}/leave/create',[LeaveStaffApplicationsController::class,'store'])->name('Teaching.leaves.apply');
 Route::patch('/Teaching/{staff}/leave/application/update',[LeaveStaffApplicationsController::class,'update'])->name('Teaching.leave_application.update');
 Route::post('/Teaching/{staff}/validate_leave_appln',[LeaveStaffApplicationsController::class,'validateleave']);
+
+
+ //Routes for internship tracking
+
+ Route::get('/Teaching/internship/dashboard', [InternshipController::class, 'index'])->name('internship.dashboard');
+
+ //Student table
+Route::get('/Teaching/internship/student',[StudentController::class,'index'])->name('internship.student');
+Route::post('/Teaching/internship/student/create', [StudentController::class, 'store'])->name('internship.student.store');
+//Route::post('/Teaching/internship/student/{student}/show', [StudentController::class, 'show'])->name('internship.student.show');
+Route::patch('/Teaching/internship/student/update/{student}', [StudentController::class, 'update'])->name('internship.student.update');
+Route::delete('/Teaching/internship/student/destroy/{student}',[StudentController::class, 'destroy'])->name('internship.student.destroy');
+Route::get('Teaching/internship/student/show/{student}', [StudentController::class, 'show'])->name('internship.student.interaction.show');
+
+
+        //interaction table
+Route::post('/Teaching/internship/student/{student}/interaction/create', [InteractionController::class, 'store'])->name('internship.student.interaction.store');
+Route::patch('/Teaching/internship/student/{student}/interaction/update/{interaction}', [InteractionController::class, 'update'])->name('internship.student.interaction.update');
+Route::get('Teaching/internship/file/download/{file}', [InteractionController::class, 'downloadFile'])->name('internship.file.download');
+
+
+
+
+
+  //industry table
+Route::get('Teaching/internship/industry',[IndustryController::class,'index'])->name('internship.industry');
+Route::post('/Teaching/internship/industry/create', [IndustryController::class, 'store'])->name('internship.industry.store');
+//Route::post('/Teaching/internship/industry/store', [IndustryController::class, 'show'])->name('internship.industry.show');
+Route::patch('/Teaching/internship/industry/update/{industry}', [IndustryController::class, 'update'])->name('internship.industry.update');
+Route::delete('/Teaching/internship/industry/destroy/{industry}',[IndustryController::class, 'destroy'])->name('internship.industry.destroy');
+Route::get('/Teaching/internship/industry/show/{industry}', [IndustryController::class, 'show'])->name('internship.industry.show');
+
+    //spoc table
+Route::get('Teaching/internship/spoc',[SpocController::class,'index'])->name('internship.spoc');
+Route::post('/Teaching/internship/spoc/create', [SpocController::class, 'store'])->name('internship.spoc.store');
+//Route::post('/Teaching/internship/spoc/store', [SpocController::class, 'show'])->name('internship.spoc.show');
+Route::patch('/Teaching/internship/spoc/update/{spoc}', [SpocController::class, 'update'])->name('internship.spoc.update');
+Route::delete('/Teaching/internship/spoc/destroy/{spoc}',[SpocController::class, 'destroy'])->name('internship.spoc.destroy');
+Route::get('/Teaching/internship/spoc/show/{spoc}', [SpocController::class, 'show'])->name('internship.spoc.show');
+
+    //studentinternship table
+Route::get('Teaching/internship/studentinternship',[StudentinternshipController::class,'index'])->name('internship.studentinternship');
+Route::post('/Teaching/internship/studentinternship/create', [StudentinternshipController::class, 'store'])->name('internship.studentinternship.store');
+//Route::post('/Teaching/internship/studentinternship/store', [StudentinternshipController::class, 'show'])->name('internship.studentinternship.show');
+Route::patch('/Teaching/internship/studentinternship/update/{studentinternship}', [StudentinternshipController::class, 'update'])->name('internship.studentinternship.update');
+Route::delete('/Teaching/internship/studentinternship/destroy/{studentinternship}',[StudentinternshipController::class, 'destroy'])->name('internship.studentinternship.destroy');
+Route::get('/Teaching/internship/studentinternship/{studentinternship}/show', [StudentinternshipController::class, 'show'])->name('internship.showinternship.show');
+//Route::get('/Teaching/internship/studentinternship/show/{studentinternship}', [StudentinternshipController::class, 'show'])->name('internship.studentinternship.show');
+
+Route::get('/Teaching/internship/studentinternship/get-spocs/{industry_id}', [StudentinternshipController::class, 'getSpocs'])->name('get.spocs');
+
+  //student_studentinternship table
+Route::post('/Teaching/internship/{studentinternship}/student_studentinternship/create',[StudentStudentinternshipController::class,'store'])->name('internship.studentinternship.student_studentinternship.store');
+Route::delete('/Teaching/internship/{studentinternship}/student_studentinternship/{student_studentinternship}/destroy',[StudentStudentinternshipController::class, 'destroy'])->name('internship.student_studentinternship.destroy');
+//Route::post('/Teaching/internship/student_studentinternship/create', [StudentStudentinternshipController::class, 'store'])->name('internship.showinternship.store');
+//Route::post('/Teaching/internship/studentinternship/{studentinternship}/student_studentinternship/store', [StudentStudentinternshipController::class, 'show'])->name('internship.showinternship.show');
+//Route::patch('/Teaching/internship/studentinternship/update/{studentinternship}', [StudentinternshipController::class, 'update'])->name('internship.studentinternship.update');
+//Route::delete('/Teaching/internship/studentinternship/destroy/{studentinternship}',[StudentinternshipController::class, 'destroy'])->name('internship.studentinternship.destroy');
+//Route::get('/Teaching/internship/studentinternship/show/{studentinternship}', [StudentinternshipController::class, 'show'])->name('internship.studentinternship.show');
+
+
+
 });
 
 
@@ -441,6 +521,13 @@ Route::middleware(['cors','auth','role:'.UserRoles::NONTEACHING->value, 'prevent
   Route::post('/Non-Teaching/{staff}/leave/create',[LeaveStaffApplicationsController::class,'nt_leave_store'])->name('Non-Teaching.leaves.apply');
   Route::patch('/Non-Teaching/{staff}/leave/application/update',[LeaveStaffApplicationsController::class,'nt_leave_update'])->name('Non-Teaching.leave_application.update');
   Route::post('/Non-Teaching/{staff}/validate_leave_appln',[LeaveStaffApplicationsController::class,'nt_leave_validateleave']);
+
+
+
+  //Route::get('/Non-Teaching/notifications',[NotificationsController::class,'notification_index'])->name('Non-Teaching.notifications');
+  //Route::post('/Non-Teaching/notifications/create',[NotificationsController::class,'store'])->name('Non-Teaching.notification.store');
+  // Route::patch('/Non-Teaching/notifications/update/{notification}',[NotificationsController::class,'update'])->name('Non-Teaching.notification.update');
+  // Route::delete('/Non-Teaching/notifications/destory/{notification}', [NotificationsController::class, 'destroy'])->name('Non-Teaching.notification.destroy');
 
 
 
@@ -566,6 +653,10 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     //staffpayscale
     Route::get('/ESTB/salaries/staffpayscale', [StaffPayscaleController::class, 'index'])->name('ESTB.salaries.staffpayscale');
 
+    // Route for submitting the form to calculate net salary
+    Route::post('/staffpayscale/{staffId}/calculate-salary', [StaffpayscaleController::class, 'calculateSalary'])->name('staffpayscale.calculateSalary');
+
+
 
     //Staff Routes
     Route::get('/ESTB/staff',[StaffController::class,'index'])->name('ESTB.staff');
@@ -579,13 +670,16 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::patch('/ESTB/staff/update/{staff}',[StaffController::class,'update'])->name('ESTB.staff.update');
 
     //Route to fetch staff data using Filter
-    Route::get('/ESTB/staff/staffinformation',[StaffController::class,'filterstaff_information'])->name('ESTB.staff.staffinformation');
+     Route::get('/ESTB/staff/staffinformation',[StaffController::class,'filterstaff_information'])->name('ESTB.staff.staffinformation');
 
     //route for staff searching , sorting and filtering
     Route::get('/ESTB/staff/indexfiltering', [StaffFilteringController::class,'indexFiltering'])->name('ESTB.staff.indexfiltering');
 
     //route to generate statistics filter
-    Route::get('/ESTB/staff/generatestatistics',[StaffController::class,'statistics_information'])->name('ESTB.staff.generatestatistics');
+    // Route::get('/ESTB/staff/generatestatistics',[StaffController::class,'statistics_information'])->name('ESTB.staff.generatestatistics');
+    
+    Route::get('/ESTB/staff/generatestatistics',[StatisticInformationController::class,'statistic_information'])->name('ESTB.staff.generatestatistics');
+
 
 
 

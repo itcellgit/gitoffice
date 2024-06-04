@@ -86,7 +86,7 @@ class HodNoticeboardController extends Controller
     }
     public function update(UpdatenoticeRequest $request, notice $notice)
     {
-        dd($request);
+        //dd($request);
         $notice->title=$request->e_title;
         $notice->date=$request->e_date;
         $notice->description=$request->e_description;

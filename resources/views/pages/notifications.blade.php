@@ -67,12 +67,12 @@
                             </div>
                             <div class="col-span-12 lg:col-span-3">
                                 <div class="box">
-                                <div class="box-header">
-                                    <h5 class="box-title">PopUp Notification</h5>
-                                </div>
-                                <div class="box-body text-center">
-                                    <button type="button" class="ti-btn ti-btn-primary" id="popup">Notification</button>
-                                </div>
+                                    <div class="box-header">
+                                        <h5 class="box-title">PopUp Notification</h5>
+                                    </div>
+                                    <div class="box-body text-center">
+                                        <button type="button" class="ti-btn ti-btn-primary" id="popup">Notification</button>
+                                    </div>
                                 </div>
                             </div>
                             </div>

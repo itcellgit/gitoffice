@@ -606,33 +606,33 @@
                new DataTable('#leaves');
                     //
                     //alert($('#add_leaveform').hasClass('open'));
-                    $(document).on('click','#leave_apply_modal',function(){
-                        setTimeout(
-                            function() 
-                            {
-                                //do something special
-                            }, 5000);
-                        //alert($('#add_leaveform').hasClass('open'));
-                        if($('#add_leaveform').hasClass('open')){
-                            alert('inside if');
-                                alert('modal is open');
-                                var leave_type = $('#type').val();
-                                var from_date = $('#from_date').val();
-                                var to_date = $('#to_date').val();
-                                var no_of_days_count = $('#no_of_days_count').val();
-                                var leave_reason = $('#leave_reason').val();
-                                var alternate = $('#alternate').val();
-                                var add_alternate = $('#add_alternate').val();
+                    // $(document).on('click','#leave_apply_modal',function(){
+                    //     setTimeout(
+                    //         function() 
+                    //         {
+                    //             //do something special
+                    //         }, 5000);
+                    //     //alert($('#add_leaveform').hasClass('open'));
+                    //     if($('#add_leaveform').hasClass('open')){
+                    //         alert('inside if');
+                    //             alert('modal is open');
+                    //             var leave_type = $('#type').val();
+                    //             var from_date = $('#from_date').val();
+                    //             var to_date = $('#to_date').val();
+                    //             var no_of_days_count = $('#no_of_days_count').val();
+                    //             var leave_reason = $('#leave_reason').val();
+                    //             var alternate = $('#alternate').val();
+                    //             var add_alternate = $('#add_alternate').val();
 
-                                if(leave_type == '#' || from_date == '' || to_date == ''|| no_of_days_count == 0 || no_of_days_count == '' || leave_reason == '' || alternate == '#'){
-                                    //alert('Leave type not selected');
-                                    $('#leave_apply_btn').hide(); //.attr('disabled','disabled');
-                                }else{
-                                    $('#leave_apply_btn').show(); //.removeAttr('disabled');
-                                }
+                    //             if(leave_type == '#' || from_date == '' || to_date == ''|| no_of_days_count == 0 || no_of_days_count == '' || leave_reason == '' || alternate == '#'){
+                    //                 //alert('Leave type not selected');
+                    //                 $('#leave_apply_btn').hide(); //.attr('disabled','disabled');
+                    //             }else{
+                    //                 $('#leave_apply_btn').show(); //.removeAttr('disabled');
+                    //             }
 
-                        }
-                    });
+                    //     }
+                    // });
                     
                    
 
@@ -894,8 +894,7 @@
                 const calendarEl = document.getElementById('calendar2')
                 //import tableViewPlugin from 'js/table_view.js';
                 const calendar = new FullCalendar.Calendar(calendarEl, {
-                    
-                    //plugins: [ tableViewPlugin ],
+                   
                     initialView: 'dayGridMonth',
                     headerToolbar: {
                         center: 'dayGridMonth, listYear', // buttons for switching between views
@@ -903,7 +902,7 @@
                     },
                     buttonText : {
                             month:    'Month View',
-                            list:     'Leaves List',
+                            list:     'Leaves List'
                         },
                     height: 650,
                     eventSources: [
@@ -912,7 +911,7 @@
                         url: base_url+'/Teaching/holidayrhevents',
                         method: 'GET',
                         success:function(data){
-
+                            //console.log(data);
                         },
                         failure: function(data) {
                            // alert(data);
@@ -929,7 +928,7 @@
                         url: base_url+'/Teaching/myleaveevents',
                         method: 'GET',
                         success:function(data){
-
+                           // console.log(data);
                         },
                         failure: function(data) {
                            // alert(data);
@@ -945,6 +944,22 @@
 
 
                     ],
+                    // eventContent: function (args, createElement)
+                    //     {
+                    //         const text = args.event._def.title + '<button id="dropdown-notification" type="button"'
+                    //                                             +'class="hs-dropdown-toggle ti-dropdown-toggle p-0 border-0 flex-shrink-0 h-[2.375rem] w-[2.375rem] rounded-full shadow-none focus:ring-gray-400 text-xs dark:focus:ring-white/10">'
+                                                                    
+                    //                                             +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M20 17H22V19H2V17H4V10C4 5.58172 7.58172 2 12 2C16.4183 2 20 5.58172 20 10V17ZM9 21H15V23H9V21Z"></path></svg>'
+                    //                                             +'<span class="flex absolute h-5 w-5 top-0 ltr:right-0 rtl:left-0 -mt-1 ltr:-mr-1 rtl:-ml-1">
+                    //                                               +'  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success/80 opacity-75"></span>'
+                    //                                                 +'<span'
+                    //                                                 +'class="relative inline-flex rounded-full h-5 w-5 bg-success text-white justify-center items-center" id="notify-data"></span>'
+                    //                                             +'</span>'
+                    //                                         +'</button>';
+                    //         return {
+                    //         html: text
+                    //     };
+                    // },
                     eventDidMount: function (info) {
                         info.el.onclick = "disabled";
                       // console.log(info.event);

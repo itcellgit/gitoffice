@@ -39,7 +39,9 @@ class GenetareAnnualIncrementListController extends Controller
     {
         // $year = request('year');
         $month = request('month');
-    
+        $year=Carbon::now()->year;
+    $previous_year_date=($year-1).'-'.(6).'-01';
+        $current_year_date=Carbon::createFromDate($year,6)->endOfMonth()->format('yy-m-d');
         $filter="";
        // dd($staff1);
        $staff=staff::
@@ -74,6 +76,7 @@ class GenetareAnnualIncrementListController extends Controller
     ->with(['latest_employee_type'=>function($q){
         $q->where('status','active');
     }])
+    
       ->whereRaw('month(date_of_increment)=?',[8])
        ->orderBy('fname')->
        whereIn('staff.id',function($q){
@@ -106,7 +109,20 @@ foreach($staff as $st)
        'basic_agp_incremented_value'=>0,
        'gross_value' =>0
     ];
-    
+    $no_of_days_lwp=DB::table('leave_staff_applications')
+    ->whereIn('leave_id',function($q){
+        $q->select('id')
+        ->from('leaves')
+        ->where('shortname','like','%lwp%');
+    })
+   ->where('appl_status','!=','rejected')
+    ->where('start','>=',$previous_year_date)
+    ->Where('start','<=',$current_year_date)
+    ->where('staff_id',$st->id)
+    ->select(DB::raw('sum(no_of_days) as total_leave_days'))
+    ->groupBy('leave_id')->first();
+//dd($no_of_days_lwp->total_leave_days);
+
     
         
     foreach($st->annualIncrement as $increment) {
@@ -310,6 +326,8 @@ foreach($staff as $st)
          
             $data[$staffId] ['basic']=$increment->basic;
     }
+
+    
     
 
     foreach($st->teaching_payscale as $payscale) {

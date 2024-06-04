@@ -46,56 +46,107 @@
                         <!-- Page Header Close -->
 
 
-                        @if(session('return_data'))
-                                @if (session('return_data')['result'] == "success")
-                                    <div class='bg-white dark:bg-bgdark border border-success alert text-success' role='alert'>
-                                        <span class='font-bold'>Result</span> Successful
-                                    </div>
-                                    @php
-                                        Illuminate\Support\Facades\Session::forget('status');
-                                        header("refresh: 3");
-                                    @endphp
-                                @else
-                                    <div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
-                                        <span class='font-bold'>Result</span> {{session('return_data')['result']}}
-                                    </div>
-                                    <input type="hidden" id="start_date" value="{{session('return_data')['start_date']}}"/>
-                                    <input type="hidden" id="leave_type" value="{{session('return_data')['leave_type']}}"/>
-                                    <input type="hidden" id="reason" value="{{session('return_data')['reason']}}"/>
-                                    <input type="hidden" id="alternative" value="{{session('return_data')['alternative']}}"/>
+                        {{-- @if(session('return_data'))
+                            @if (session('return_data')['result'] == "success")
+                                <div class='bg-white dark:bg-bgdark border border-success alert text-success' role='alert'>
+                                    <span class='font-bold'>Result</span> Successful
+                                </div>
+                                @php
+                                    Illuminate\Support\Facades\Session::forget('status');
+                                    header("refresh: 3");
+                                @endphp
+                            @else
+                                <div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
+                                    <span class='font-bold'>Result</span> {{session('return_data')['result']}}
+                                </div>
+                                <input type="hidden" id="start_date" value="{{session('return_data')['start_date']}}"/>
+                                <input type="hidden" id="leave_type" value="{{session('return_data')['leave_type']}}"/>
+                                <input type="hidden" id="reason" value="{{session('return_data')['reason']}}"/>
+                                <input type="hidden" id="alternative" value="{{session('return_data')['alternative']}}"/>
 
-                                    @if(session('return_data')['appl_edit'] == 0)
-                                        <script>
-                                        $(document).ready(function(){
-                                            $('#leave_apply_modal').trigger('click');//css('disply','block');
-                                            $('#type').val($('#leave_type').val());
-                                            $('#from_date').val($('#start_date').val());
-                                            $('#leave_reason').val($('#reason').val());
-                                            //alert();
-                                            $('#alternate').val($('#alternative').val());
-                                        });
-                                        
-
-
-                                        </script>
-                                    @else   
+                                @if(session('return_data')['appl_edit'] == 0)
                                     <script>
-                                        $(document).ready(function(){
-                                            $('#view_leave').trigger('click');//css('disply','block');
-                                            // $('#type').val($('#leave_type').val());
-                                            // $('#from_date').val($('#start_date').val());
-                                            // $('#leave_reason').val($('#reason').val());
-                                            // //alert();
-                                            // $('#alternate').val($('#alternative').val());
-                                        });
-                                        
+                                    $(document).ready(function(){
+                                        $('#leave_apply_modal').trigger('click');//css('disply','block');
+                                        $('#type').val($('#leave_type').val());
+                                        $('#from_date').val($('#start_date').val());
+                                        $('#leave_reason').val($('#reason').val());
+                                        //alert();
+                                        $('#alternate').val($('#alternative').val());
+                                    });
+                                    
 
 
-                                        </script>
-                                    @endif
+                                    </script>
+                                @else   
+                                <script>
+                                    $(document).ready(function(){
+                                        $('#view_leave').trigger('click');//css('disply','block');
+                                        // $('#type').val($('#leave_type').val());
+                                        // $('#from_date').val($('#start_date').val());
+                                        // $('#leave_reason').val($('#reason').val());
+                                        // //alert();
+                                        // $('#alternate').val($('#alternative').val());
+                                    });
+                                    
+
+
+                                    </script>
                                 @endif
-
                             @endif
+
+                        @endif --}}
+
+                        @if(session('return_data'))
+                            @if (isset(session('return_data')['result']) && session('return_data')['result'] == "success")
+                                <div class='bg-white dark:bg-bgdark border border-success alert text-success' role='alert'>
+                                    <span class='font-bold'>Result</span> Successful
+                                </div>
+                                @php
+                                    Illuminate\Support\Facades\Session::forget('status');
+                                    header("refresh: 3");
+                                @endphp
+                            @elseif (isset(session('return_data')['result']))
+                                <div class='bg-white dark:bg-bgdark border border-danger alert text-danger' role='alert'>
+                                    <span class='font-bold'>Result</span> {{session('return_data')['result']}}
+                                </div>
+                                <input type="hidden" id="start_date" value="{{session('return_data')['start_date']}}"/>
+                                <input type="hidden" id="leave_type" value="{{session('return_data')['leave_type']}}"/>
+                                <input type="hidden" id="reason" value="{{session('return_data')['reason']}}"/>
+                                <input type="hidden" id="alternative" value="{{session('return_data')['alternative']}}"/>
+
+                                @if(session('return_data')['appl_edit'] == 0)
+                                    <script>
+                                    $(document).ready(function(){
+                                        $('#leave_apply_modal').trigger('click');//css('disply','block');
+                                        $('#type').val($('#leave_type').val());
+                                        $('#from_date').val($('#start_date').val());
+                                        $('#leave_reason').val($('#reason').val());
+                                        //alert();
+                                        $('#alternate').val($('#alternative').val());
+                                    });
+                                    
+
+
+                                    </script>
+                                @else   
+                                <script>
+                                    $(document).ready(function(){
+                                        $('#view_leave').trigger('click');//css('disply','block');
+                                        // $('#type').val($('#leave_type').val());
+                                        // $('#from_date').val($('#start_date').val());
+                                        // $('#leave_reason').val($('#reason').val());
+                                        // //alert();
+                                        // $('#alternate').val($('#alternative').val());
+                                    });
+                                    
+
+
+                                    </script>
+                                @endif
+                            @endif
+
+                        @endif
                     </div>
                     <div class="grid grid-cols-12 gap-x-6">
                         <div class="col-span-12 xl:col-span-12">

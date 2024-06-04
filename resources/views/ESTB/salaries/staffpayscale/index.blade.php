@@ -56,132 +56,113 @@
                                                         </div>
                                                     </div> 
                                 
-                                                    <div class="box-body">
-                                                            <div class="flex justify-end space-x-4 items-center">
-                                                                <form action="{{ route('import.excel') }}" method="POST" enctype="multipart/form-data" class="flex items-center space-x-2">
-                                                                    @csrf
-                                                                    <div class="space-y-8 font-[sans-serif] max-w-md mx-auto">
-                                                                        <input type="file" class="w-full text-gray-500 font-medium text-sm bg-blue-100 cursor-pointer py-2 px-4 mr-4 hover:bg-blue-500 hover:text-white rounded-lg rounded-md border-blue-300" name="excel_file" required/>
-                                                                    </div>
-                                                                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 text-xs rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 whitespace-nowrap">Upload Excel</button>
-                                                                </form>
-                                                                <button id="exportToExcel" class="bg-green-500 text-white px-4 py-2 text-xs rounded-md focus:outline-none hover:bg-green-600 focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 whitespace-nowrap">Export to Excel</button>
-                                                            </div>
+                                        <div class="box-body">
+                                                <div class="flex justify-end space-x-4 items-center">
+                                                    <form action="{{ route('import.excel') }}" method="POST" enctype="multipart/form-data" class="flex items-center space-x-2">
+                                                        @csrf
+                                                        <div class="space-y-8 font-[sans-serif] max-w-md mx-auto">
+                                                            <input type="file" class="w-full text-gray-500 font-medium text-sm bg-blue-100 cursor-pointer py-2 px-4 mr-4 hover:bg-blue-500 hover:text-white rounded-lg rounded-md border-blue-300" name="excel_file" required/>
                                                         </div>
-                                                    </div>
+                                                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 text-xs rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 whitespace-nowrap">Upload Excel</button>
+                                                    </form>
+                                                    <button id="exportToExcel" class="bg-green-500 text-white px-4 py-2 text-xs rounded-md focus:outline-none hover:bg-green-600 focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 whitespace-nowrap">Export to Excel</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     {{-- <form id="generateannualincrementForm" method="POST" action="{{ route('generateannualincrement.staff.update') }}">
                                         @csrf --}}
+                                        <form id="salaryForm">
                                         <div class="flex justify-end my-4">
-                        <div id="basic-table" class="ti-custom-table ti-striped-table ti-custom-table-hover table-bordered rounded-sm overflow-auto">
-                            <table id="salary" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
-                                <thead class="bg-gray-50 dark:bg-black/20">
-                                    <tr>
-                                        <th scope="col" class="dark:text-white/80">S.no</th>
-                                        <th scope="col" class="dark:text-white/80">Staff Information</th>
-                                        <th scope="col" class="dark:text-white/80">DoJ</th>
-                                        <th scope="col" class="dark:text-white/80">UAN.no</th>
-                                        <th scope="col" class="dark:text-white/80">PF.no</th>
-                                        <th scope="col" class="dark:text-white/80">LWP</th>
-                                        <th scope="col" class="dark:text-white/80">Pay in Pay Band</th>
-                                        <th scope="col" class="dark:text-white/80">AGP</th>
-                                        <th scope="col" class="dark:text-white/80">Rate</th>
-                                        <th scope="col" class="dark:text-white/80">Basic</th>
-                                        <th scope="col" class="dark:text-white/80">DA</th>
-                                        <th scope="col" class="dark:text-white/80">HRA</th>
-                                        <th scope="col" class="dark:text-white/80">CCA</th>
-                                        <th scope="col" class="dark:text-white/80">20%Special<div> Incentive</th>
-                                        <th scope="col" class="dark:text-white/80">Salary Arrears</th>
-                                        <th scope="col" class="dark:text-white/80">Special <div>Allowances</th>
-                                        <th scope="col" class="dark:text-white/80">Allowance<div> Value</th>
-                                        <th scope="col" class="dark:text-white/80">Gross Salary</th>
-                                        <th scope="col" class="dark:text-white/80">PROVIDENT FUND</th>
-                                        <th scope="col" class="dark:text-white/80">PF Arrears</th>
-                                        <th scope="col" class="dark:text-white/80">Income Tax</th>
-                                        <th scope="col" class="dark:text-white/80">PROFESSIONAL <div>TAX</th>
-                                        <th scope="col" class="dark:text-white/80">LIFE INSURANCE<div> CORPORATION OF INDIA</th>
-                                        <th scope="col" class="dark:text-white/80">GSLI</th>
-                                        <th scope="col" class="dark:text-white/80">Bank Loan</th>
-                                        <th scope="col" class="dark:text-white/80">CREDIT SOCIETY<div> SHARES</th>
-                                        <th scope="col" class="dark:text-white/80">CREDIT SOCIETY<div> Loan</th>
-                                        <th scope="col" class="dark:text-white/80">vidya<div> ganapati<div>temple</th>
-                                        <th scope="col" class="dark:text-white/80">Forward Charges</th>
-                                        <th scope="col" class="dark:text-white/80">Salary Recovery</th>
-                                        <th scope="col" class="dark:text-white/80">IR & 20%ADVANCE<div>RECOVERY</th>
-                                        <th scope="col" class="dark:text-white/80">HRA Recovery</th>
-                                        <th scope="col" class="dark:text-white/80">LAPTOP/<div>COMPUTER ADVANCE</th>
-                                        <th scope="col" class="dark:text-white/80">TOTAL <div>DEDUCTIONS</th>
-                                        <th scope="col" class="dark:text-white/80">Net Salary</th>
-                                        <th scope="col" class="dark:text-white/80">Action</th>
-
-
-                                    </tr>
-                                </thead>
-                                            <tbody>
-                                    @foreach($staffWithPayscaleAndAllowances as $index => $staff)
-                                        <tr>
-                                        <td class="border border-gray-300 px-4 py-2"><span>{{ $index + 1 }}</span></td>
-                                        <td class="border border-gray-300 px-4 py-2"><span><ul class="list-none">
-                                                <li>{{ $staff->id }}, {{ $staff->fname }} {{ $staff->mname }} {{ $staff->lname }}</li>
-                                                <li>{{ $staff->design_name }}</li>
-                                            </ul></span></td>
-                                            <!-- <td>{{ $staff->payscale_title }}</td> -->
-                                            <td>{{ $staff->doj }}</td>
-                                            <td>{{ $staff->un_no }}</td>
-                                            <td>{{ $staff->PF }}</td>
-                                            <td></td>
-                                            <td>{{'₹'.number_format($staff->payband ,2)}}</td>
-                                            <td>{{'₹'.number_format($staff->agp,2) }}</td>
-                                            <td>{{'₹'.number_format($staff->rate,2) }}</td>
-                                            <td>{{'₹'.number_format($staff->basic,2) }}</td>
-                                            <!-- <td class="py-2 px-4 border-b">
-                                            ₹<input type="number" name="basic[{{ $staff->id }}]" value="{{ old('basic.' . $staff->id, $staff->basic) }}" class="border border-gray-300 rounded-md px-1 py-1 w-24 focus:outline-none focus:border-blue-500">
-                                            </td> -->
-                                            <td>{{'₹'.number_format( $staff->da,2) }}</td>
-                                            <td>{{'₹'.number_format($staff->hra,2) }}</td>
-                                            <td>{{'₹'.number_format( $staff->cca,2) }}</td>
-                                            <td>{{'₹'.number_format( $staff->special_incen,2) }}</td>
-                                            <td>
-                                            ₹<input type="number" name="manual[{{ $staff->id }}][salary_arrears]" value="{{ old('manual.' . $staff->id . '.salary_arrears', 0) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24" value="0">
-                                            </td>
-                                            <td>
-                                            ₹<input type="number" name="manual[{{ $staff->id }}][special_allowances]" value="{{ old('manual.' . $staff->id . '.special_allowances', 0) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24" value="0">
-                                            </td>
-                                            <td>{{ '₹'.number_format($staff->allowance_value,2) }}</td>
-                                            <td>{{ '₹'.number_format($staff->gross_salary, 2) }}</td>
-                                            <td>{{ '₹'.number_format($staff->pf_deduction, 2) }}</td>
-                                            <td>
-                                            ₹<input type="number" name="manual[{{ $staff->id }}][pf_arrears]" value="{{ old('manual.' . $staff->id . '.pf_arrears', 0) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24" value="0">
-                                            </td>
-                                            <td></td>
-                                            <td>{{'₹'.number_format($staff->pf_tax_status, 2) }}</td>
-                                            <td></td>
-                                            <td>{{'₹'.number_format( $staff->GSLI,2) }}</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>{{'₹'.number_format( $staff->vidyaganapati,2) }}</td>
-                                            <td>
-                                            ₹<input type="number" name="manual[{{ $staff->id }}][forward_charges]" value="{{ old('manual.' . $staff->id . '.forward_charges', 0) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24" value="0">
-                                            </td>
-                                            <td>
-                                            ₹<input type="number" name="manual[{{ $staff->id }}][salary_recovery]" value="{{ old('manual.' . $staff->id . '.salary_recovery', 0) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24" value="0">
-                                            </td>
-                                            <td>
-                                            ₹<input type="number" name="manual[{{ $staff->id }}][ir]" value="{{ old('manual.' . $staff->id . '.ir', 0) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24" value="0">
-                                            </td>
-                                            <td>
-                                            ₹<input type="number" name="manual[{{ $staff->id }}][hra_recovery]" value="{{ old('manual.' . $staff->id . '.hra_recovery', 0) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24" value="0">
-                                            </td>
-                                            <td></td>
-                                            <td>{{ '₹'.number_format($staff->total_deductions, 2) }}</td>
-                                            <td>{{ '₹'.number_format($staff->net_salary, 2) }}</td>
-                                            <td></td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-
-                                            <button id="submit" class="ti-btn bg-primary text-white px-4 py-2 rounded-md hover:bg-primary focus:ring-primary dark:focus:ring-offset-white/10">Submit</button>
+                                            <div id="basic-table" class="ti-custom-table ti-striped-table ti-custom-table-hover table-bordered rounded-sm overflow-auto">
+                                                <table id="salary" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
+                                                    <thead class="bg-gray-50 dark:bg-black/20">
+                                                        <tr>
+                                                            <th scope="col" class="dark:text-white/80">S.no</th>
+                                                            <th scope="col" class="dark:text-white/80">Staff Information</th>
+                                                            <th scope="col" class="dark:text-white/80">DoJ</th>
+                                                            <th scope="col" class="dark:text-white/80">UAN.no</th>
+                                                            <th scope="col" class="dark:text-white/80">PF.no</th>
+                                                            <th scope="col" class="dark:text-white/80">LWP</th>
+                                                            <th scope="col" class="dark:text-white/80">Pay in Pay Band</th>
+                                                            <th scope="col" class="dark:text-white/80">AGP</th>
+                                                            <th scope="col" class="dark:text-white/80">Rate</th>
+                                                            <th scope="col" class="dark:text-white/80">Basic</th>
+                                                            <th scope="col" class="dark:text-white/80">DA</th>
+                                                            <th scope="col" class="dark:text-white/80">HRA</th>
+                                                            <th scope="col" class="dark:text-white/80">CCA</th>
+                                                            <th scope="col" class="dark:text-white/80">20%Special<div> Incentive</th>
+                                                            <th scope="col" class="dark:text-white/80">Salary Arrears</th>
+                                                            <th scope="col" class="dark:text-white/80">Special <div>Allowances</th>
+                                                            <th scope="col" class="dark:text-white/80">Allowance<div> Value</th>
+                                                            <th scope="col" class="dark:text-white/80">Gross Salary</th>
+                                                            <th scope="col" class="dark:text-white/80">PROVIDENT FUND</th>
+                                                            <th scope="col" class="dark:text-white/80">PF Arrears</th>
+                                                            <th scope="col" class="dark:text-white/80">Income Tax</th>
+                                                            <th scope="col" class="dark:text-white/80">PROFESSIONAL <div>TAX</th>
+                                                            <th scope="col" class="dark:text-white/80">LIFE INSURANCE<div> CORPORATION OF INDIA</th>
+                                                            <th scope="col" class="dark:text-white/80">GSLI</th>
+                                                            <th scope="col" class="dark:text-white/80">Bank Loan</th>
+                                                            <th scope="col" class="dark:text-white/80">CREDIT SOCIETY<div> SHARES</th>
+                                                            <th scope="col" class="dark:text-white/80">CREDIT SOCIETY<div> Loan</th>
+                                                            <th scope="col" class="dark:text-white/80">vidya<div> ganapati<div>temple</th>
+                                                            <th scope="col" class="dark:text-white/80">Forward Charges</th>
+                                                            <th scope="col" class="dark:text-white/80">Salary Recovery</th>
+                                                            <th scope="col" class="dark:text-white/80">IR & 20%ADVANCE<div>RECOVERY</th>
+                                                            <th scope="col" class="dark:text-white/80">HRA Recovery</th>
+                                                            <th scope="col" class="dark:text-white/80">LAPTOP/<div>COMPUTER ADVANCE</th>
+                                                            <th scope="col" class="dark:text-white/80">TOTAL <div>DEDUCTIONS</th>
+                                                            <th scope="col" class="dark:text-white/80">Net Salary</th>
+                                                            <th scope="col" class="dark:text-white/80">SIGNATURE</th>
+                                                            <th scope="col" class="dark:text-white/80">Remarks</th>
+                                                            <th scope="col" class="dark:text-white/80">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($staffWithPayscaleAndAllowances as $index => $staff)
+                                                            <tr>
+                                                                <td>{{$index + 1}}</td>
+                                                                <td>{{ $staff->id }}, {{ $staff->fname }} {{ $staff->mname }} {{ $staff->lname }}<br>{{ $staff->design_name }}</td>
+                                                                <td>{{ $staff->doj }}</td>
+                                                                <td>{{ $staff->un_no }}</td>
+                                                                <td>{{ $staff->PF }}</td>
+                                                                <td></td>
+                                                                <td><input type="text" value="{{ '₹'.number_format($staff->payband ,2) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24" readonly></td>
+                                                                <td><input type="text" value="{{ '₹'.number_format($staff->agp,2) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24" readonly></td>
+                                                                <td><input type="text" value="{{ '₹'.number_format($staff->rate,2) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-28" readonly></td>
+                                                                <td><input type="text" value="{{ '₹'.number_format($staff->basic,2) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-28" readonly></td>
+                                                                <td><input type="text" value="{{ '₹'.number_format($staff->da,2) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24" readonly></td>
+                                                                <td><input type="text" value="{{ '₹'.number_format($staff->hra,2) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24" readonly></td>
+                                                                <td><input type="text" value="{{ '₹'.number_format($staff->cca,2) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24" readonly></td>
+                                                                <td><input type="text" value="{{ '₹'.number_format($staff->special_incen,2) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24" readonly></td>
+                                                                <td><input type="text" name="manual[{{ $staff->id }}][salary_arrears]" value="{{ old('manual.' . $staff->id . '.salary_arrears', 0) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24"></td>
+                                                                <td><input type="text" name="manual[{{ $staff->id }}][special_allowances]" value="{{ old('manual.' . $staff->id . '.special_allowances', 0) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24"></td>
+                                                                <td><input type="text" value="{{ '₹'.number_format($staff->allowance_value,2) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24" readonly></td>
+                                                                <td><input type="text" value="{{ '₹'.number_format($staff->gross_salary, 2) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-28" readonly></td>
+                                                                <td><input type="text" value="{{ '₹'.number_format($staff->pf_deduction, 2) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24" readonly></td>
+                                                                <td><input type="text" name="manual[{{ $staff->id }}][pf_arrears]" value="{{ old('manual.' . $staff->id . '.pf_arrears', 0) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24"></td>
+                                                                <td></td>
+                                                                <td><input type="text" value="{{ '₹'.number_format($staff->pf_tax_status, 2) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24" readonly></td>
+                                                                <td></td>
+                                                                <td><input type="text" value="{{ '₹'.number_format($staff->GSLI,2) }}" class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24" readonly></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td><input type="text" value="{{ '₹'.number_format($staff->vidyaganapati,2) }}"class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24" readonly></td>
+                                                                <td><input type="text" name="manual[{{ $staff->id }}][forward_charges]" value="{{ old('manual.' . $staff->id . '.forward_charges', 0) }}"class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24"></td>
+                                                                <td><input type="text" name="manual[{{ $staff->id }}][salary_recovery]" value="{{ old('manual.' . $staff->id . '.salary_recovery', 0) }}"class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24"></td>
+                                                                <td><input type="text" name="manual[{{ $staff->id }}][ir]" value="{{ old('manual.' . $staff->id . '.ir', 0) }}"class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24"></td>
+                                                                <td><input type="text" name="manual[{{ $staff->id }}][hra_recovery]" value="{{ old('manual.' . $staff->id . '.hra_recovery', 0) }}"class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24"></td>
+                                                                <td></td>
+                                                                <td><input type="text" value="{{ '₹'.number_format($staff->total_deductions, 2) }}"class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-28" readonly></td>
+                                                                <td><input type="text" value="{{ '₹'.number_format($staff->net_salary, 2) }}"class="border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-28" readonly></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td><button type="button" class="ti-btn bg-primary text-white px-4 py-2 rounded-md hover:bg-primary focus:ring-primary dark:focus:ring-offset-white/10" onclick="calculateAndSubmit()">Submit</button></td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            <!-- <button id="submit" class="ti-btn bg-primary text-white px-4 py-2 rounded-md hover:bg-primary focus:ring-primary dark:focus:ring-offset-white/10">Submit</button> -->
                                         </div>
                                         </div>
                                     </form>
@@ -221,15 +202,12 @@
         <script href="https://cdn.tailwindcss.com/3.3.5"></script>
         <script>
             $(document).ready(function(){
-               //alert('Hello from jquery');
-
                new DataTable('#salary');
-            // });
+
             $('#exportToExcel').on('click', function () {
                     var table = $('#salary').clone();
-                    // table.find('th:nth-child(1),th:nth-child(4)').remove();
-                    // table.find('td:nth-child(1),td:nth-child(4)').remove();
-                    // Ensure each cell has proper formatting
+                    table.find('th:nth-child(38)').remove();
+                    table.find('td:nth-child(38)').remove();
                     table.find('td').css({
                         'border': '1px solid #000',
                         'padding': '6px'
@@ -252,40 +230,41 @@
                         // Trigger the click to download
                         link[0].click();
                     }
-                    // setTimeout(function() {
-                    //     window.location.href="{{url('ESTB/renumerations')}}"; // Update this URL to your actual route
-                    // }, 1000);
                 });
             });
-            </script>
 
-<!-- <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('form').forEach(form => {
-                form.addEventListener('submit', function (event) {
-                    event.preventDefault();
-                    const formData = new FormData(form);
-                    const action = form.action;
+</script>
+<script>
+    // document.addEventListener('DOMContentLoaded', (event) => {
+    //     document.querySelectorAll('#salaryForm button').forEach(button => {
+    //         button.addEventListener('click', (e) => {
+    //             e.preventDefault(); // Prevent form submission
+    //             const row = e.target.closest('tr');
+    //             row.querySelectorAll('input[type="text"]').forEach(input => {
+    //                 const value = input.value;
+    //                 const span = document.createElement('span');
+    //                 span.textContent = value;
+    //                 input.parentNode.replaceChild(span, input);
+    //             });
+    //             // Optionally, disable the button after submission to prevent re-submission
+    //             e.target.disabled = true;
+    //         });
+    //     });
+    // });
+    function calculateAndSubmit() { // Iterate through each row in the table 
+        document.querySelectorAll("#salary tbody tr").forEach(row => { // Get all input fields in the row 
+            const inputs = row.querySelectorAll("input[type='text']"); // Perform calculations 
 
-                    fetch(action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                        }
-                    }).then(response => response.json()).then(data => {
-                        if (data.success) {
-                            form.querySelectorAll('input[type="number"]').forEach(input => {
-                                const staffId = input.name.match(/\d+/)[0];
-                                const newValue = input.value;
-                                input.parentElement.innerHTML = newValue;
-                            });
-                        }
-                    }).catch(error => console.error('Error:', error));
-                });
-            });
-        });
-    </script> -->
+            const salary_arrears = inputs[15].value === '' ? 0 : parseFloat(inputs[15].value.replace('₹', '').replace(',', '')); 
+            const special_allowances = inputs[16].value === '' ? 0 : parseFloat(inputs[16].value.replace('₹', '').replace(',', '')); 
 
-        
+            const gross_salary = salary_arrears + special_allowances + allowance_value; 
+            const net_salary = gross_salary - total_deductions; // Update corresponding input fields 
+            inputs[18].value = '₹' + gross_salary.toFixed(2); 
+            inputs[34].value = '₹' + total_deductions.toFixed(2); 
+            inputs[35].value = '₹' + net_salary.toFixed(2); 
+            }); 
+            }
+</script>
+
 @endsection

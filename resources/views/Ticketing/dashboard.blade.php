@@ -19,7 +19,42 @@
                     <!-- Page Header -->
                     <div class="block justify-between page-header sm:flex">
                         <div>
-                            <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium"> Welcome <span class="text-primary">{{$staff->fname.' '.$staff->mname.' '.$staff->lname}}</span></h3>
+                            {{-- <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium"> Welcome <span class="text-primary">{{$staff->fname.' '.$staff->mname.' '.$staff->lname}}</span></h3> --}}
+                            <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium">
+                                <span class="text-primary">
+                                    @if(session('deptid') == 8)
+                                        Welcome HOD Civil Engineering
+                                    @elseif(session('deptid') == 5)
+                                        Welcome HOD Computer Science and Engineering
+                                    @elseif(session('deptid') == 17)
+                                        Welcome HOD Architecture
+                                    @elseif(session('deptid') == 9)
+                                        Welcome HOD Aeronautical Engineering
+                                    @elseif(session('deptid') == 2)
+                                        Welcome HOD Electronics and Communication Engineering
+                                    @elseif(session('deptid') == 7)
+                                        Welcome HOD Electrtical and Electronics Engineering
+                                    @elseif(session('deptid') == 6)
+                                        Welcome HOD Information Science & Engineering
+                                    @elseif(session('deptid') == 1)
+                                        Welcome HOD Mechanical Engineering
+                                    @elseif(session('deptid') == 24)
+                                        Welcome HOD Master of Business Administration
+                                    @elseif(session('deptid') == 3)
+                                        Welcome HOD Master of Computer Applications
+                                    @elseif(session('deptid') == 13)
+                                        Welcome HOD Physics
+                                    @elseif(session('deptid') == 12)
+                                        Welcome HOD Mathematics
+                                    @elseif(session('deptid') == 14)
+                                        Welcome HOD Chemistry
+                                    @else
+                                        Welcome {{$staff->fname.' '.$staff->mname.' '.$staff->lname}}                                    @endif 
+                                </span>
+                            </h3>
+                            
+ 
+
                             
                         </div>
                         <div>

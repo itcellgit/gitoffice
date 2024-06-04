@@ -48,19 +48,19 @@ class staff extends Model
     //fetch staff designations
     public function designations(): BelongsToMany
     {
-        return $this->belongsToMany(designation::class)->withPivot('id','start_date','end_date','dept_id','reason','gcr','status')->orderByPivot('start_date','desc');
+        return $this->belongsToMany(designation::class)->withPivot('id','start_date','end_date','dept_id','allowance_status','reason','gcr','status')->orderByPivot('start_date','desc');
     }
 
     //fetch only currently active designation
     public function latestDesignation():BelongsToMany
     {
-        return $this->belongsToMany(designation::class)->wherePivot('status','active')->withPivot('id','start_date','end_date','dept_id','reason','gcr','status');
+        return $this->belongsToMany(designation::class)->wherePivot('status','active')->withPivot('id','start_date','end_date','allowance_status','dept_id','reason','gcr','status');
     }
 
     //fetch currently assigned additional designation
     public function latest_additional_designation():BelongsToMany
     {
-        return $this->belongsToMany(designation::class)->where('isadditional','1')->wherePivot('status','active')->withPivot('id','start_date','end_date','dept_id','reason','gcr','status');
+        return $this->belongsToMany(designation::class)->where('isadditional','1')->wherePivot('status','active')->withPivot('id','start_date','end_date','dept_id','allowance_status','reason','gcr','status');
     }
 
     //getch staff associations

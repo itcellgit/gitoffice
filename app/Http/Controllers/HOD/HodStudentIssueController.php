@@ -47,25 +47,44 @@ class HodStudentIssueController extends Controller
 
 
 
+    //     $user = Auth::user();
+    //     $staff = staff::all();
+
+    //     // Fetch student issues with necessary relationships
+    //     $student_issues = student_issue::with(['issue_timeline.user', 'exam_section_issue.staff'])
+    //     ->leftJoin('exam_section_issues','exam_section_issues.id','=','student_issues.exam_section_issue_id')
+    //     ->orderBy('category_name','desc')
+    //     ->orderBy('student_issues.created_at','desc')
+    //     ->select('student_issues.*','exam_section_issues.category_name')
+    //         ->get();
+    //    // dd($student_issues->issue_timeline.user);
+    //     // Sort issues: "regular" first, "unusual" later
+    //  //   $sorted_issues = $student_issues->orderBy('category_name');
+        
+    //         //dd($student_issue_count);
+        
+    //     // sortBy(function ($issue) {
+    //     //     return $issue->exam_section_issue && $issue->exam_section_issue->category_name === 'regular' ? 0 : 1;
+    //     // });
+
+    //     $examSectionIssues = exam_section_issue::all();
+
+    //     return view('HOD.viewstudentissues', compact('student_issues', 'staff', 'examSectionIssues'));
+
+
+
         $user = Auth::user();
         $staff = staff::all();
 
-        // Fetch student issues with necessary relationships
+        // Fetch student issues with necessary relationships and conditional ordering
         $student_issues = student_issue::with(['issue_timeline.user', 'exam_section_issue.staff'])
-        ->leftJoin('exam_section_issues','exam_section_issues.id','=','student_issues.exam_section_issue_id')
-        ->orderBy('category_name','desc')
-        ->orderBy('student_issues.created_at','desc')
-        ->select('student_issues.*','exam_section_issues.category_name')
+            ->leftJoin('exam_section_issues', 'exam_section_issues.id', '=', 'student_issues.exam_section_issue_id')
+            ->orderByRaw("CASE 
+                WHEN exam_section_issues.category_name IS NULL THEN 0
+                ELSE 1
+            END, exam_section_issues.category_name DESC, student_issues.created_at DESC")
+            ->select('student_issues.*', 'exam_section_issues.category_name')
             ->get();
-       // dd($student_issues->issue_timeline.user);
-        // Sort issues: "regular" first, "unusual" later
-     //   $sorted_issues = $student_issues->orderBy('category_name');
-        
-            //dd($student_issue_count);
-        
-        // sortBy(function ($issue) {
-        //     return $issue->exam_section_issue && $issue->exam_section_issue->category_name === 'regular' ? 0 : 1;
-        // });
 
         $examSectionIssues = exam_section_issue::all();
 

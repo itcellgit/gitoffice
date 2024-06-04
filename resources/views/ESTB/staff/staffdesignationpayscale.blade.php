@@ -2282,6 +2282,7 @@
                         <th scope="col" class="dark:text-white/80 font-bold">Department</th>
                         <th scope="col" class="dark:text-white/80 text-center font-bold">Start Date</th>
                         <th scope="col" class="dark:text-white/80 text-center font-bold">End Date</th>
+                        <th scope="col" class="dark:text-white/80 text-center font-bold">Allowance Status<br/>(Incase of 2 designations)</th>
                         <th scope="col" class="dark:text-white/80 text-center font-bold">Duration</th>
                         <th scope="col" class="dark:text-white/80 text-center font-bold">GCR</th>
                         <th scope="col" class="dark:text-white/80 text-center font-bold">Status</th>
@@ -2311,6 +2312,7 @@
                             <td>{{$add_designaions->pivot->dept_id==null?'---NA---':$dept}}</td>
                             <td>{{\Carbon\Carbon::parse($add_designaions->pivot->start_date)->format('d-M-Y') }}</td>
                             <td>{{$add_designaions->pivot->end_date==null?'--NA--':\Carbon\Carbon::parse($add_designaions->pivot->end_date)->format('d-M-Y') }}</td>
+                            <td>{{$add_designaions->pivot->allowance_status==null?'--NA--':$add_designaions->pivot->allowance_status}}</td>
                             <td><span>
                                 @php
                                             $sdate=new DateTime($add_designaions->pivot->start_date);
@@ -2400,6 +2402,15 @@
                                                             <input type="text" name="gcr" class="ti-form-input" value="{{$add_designaions->pivot->gcr}}"/>
                                                         </div>
 
+                                                    </div>
+                                                    <div class="space-y-2" id="allowance_status">
+                                                        <label class="ti-form-label mb-0 font-bold">Allowance Status(Incase of two additional designations)</label>
+                                                        <select class="ti-form-select" name="allowance_status">
+                                                            <option value="0">Choose an allowance Status</option>
+                                                                
+                                                            <option value="max" {{$add_designaions->pivot->allowance_status =='Max' ?'selected':''}}>Max of  two</option>
+                                                            <option value="both" {{$add_designaions->pivot->allowance_status =='Both' ?'selected':''}}>Both allowances</option>
+                                                        </select>
                                                     </div>
                                                     <p class="text-red-400">Note : Additional designation can be closed by filling the below information</p>
                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">

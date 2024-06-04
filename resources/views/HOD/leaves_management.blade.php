@@ -638,9 +638,49 @@
                         selectable: false,
                         // a non-ajax option
                     }
+                    // {
+                    //     url: base_url+'/HOD/leaves_management/getpendingleavecounts',
+                    //     method: 'GET',
+                    //     success:function(data){
+                    //        //console.log(data);
+                    //     },
+                    //     failure: function(data) {
+                    //        // alert(data);
+                    //        // console.log(data);
+                    //     },
+                    //     allDay:true,
+                    //     eventTextColor:'red',
+                    //     titleFormat: 'dd-MM-YYYY',
+                    //     display: 'block',
+                    //     selectable: false,
+                    //     // a non-ajax option
+                    // }
                     
                                             
                     ],
+                    // eventContent: function (args, createElement)
+                    //     {
+                    //         console.log(args.event)
+                    //        // if(args.event.extendedProps.appl_status=="pending"){
+                    //             const text = args.event._def.title + '<button id="dropdown-notification" type="button"'
+                    //                                             +'class="hs-dropdown-toggle ti-dropdown-toggle p-0 border-0 flex-shrink-0 h-[2.375rem] w-[2.375rem] rounded-full shadow-none focus:ring-gray-400 text-xs dark:focus:ring-white/10">'
+                                                                    
+                    //                                             +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M20 17H22V19H2V17H4V10C4 5.58172 7.58172 2 12 2C16.4183 2 20 5.58172 20 10V17ZM9 21H15V23H9V21Z"></path></svg>'
+                    //                                             +'<span class="flex absolute h-5 w-5 top-0 ltr:right-0 rtl:left-0 -mt-1 ltr:-mr-1 rtl:-ml-1">'
+                    //                                               +'  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success/80 opacity-75"></span>'
+                    //                                                 +'<span'
+                    //                                                 +'class="relative inline-flex rounded-full h-5 w-5 bg-success text-white justify-center items-center" id="notify-data"></span>'
+                    //                                             +'</span>'
+                    //                                         +'</button>';
+                    //         return {
+                    //         html: text
+                    //     };
+                    // // }else{
+                    // //      return {};
+                    // // }
+                           
+                    // },
+                    
                     eventDidMount: function (info) {
                         info.el.onclick = "disabled";
                        //console.log(info.event.extendedProps.type);
@@ -707,11 +747,11 @@
             
                     },
                     eventClick: function(info) {
-                        //console.log(info.event.extendedProps.leave_id);
+                        //console.log(info.event.extendedProps.leave_name);
                         //$('.event_title').html(info.event.title+' on '+ Clickeddate.getDate()+"/"+Clickeddate.getMonth()+"/"+Clickeddate.getFullYear());
                         //alert('Event: ' + info.event.start);
                         Clickeddate = info.event.start;
-                        var clicked_leave_leave_type = info.event.extendedProps.leave_id;
+                        var clicked_leave_leave_type = info.event.extendedProps.leave_name;
                         $('#view_leave_modal').trigger('click');
                         //alert('view modal active');
                         var clicked_date = Clickeddate.getFullYear()+"-"+(Clickeddate.getMonth()+1)+"-"+Clickeddate.getDate();
@@ -730,7 +770,7 @@
                                 },
                                 success: function(response) {
                                     // Handle the response from the server
-                                    //console.log(response);
+                                    console.log(response);
                                     $('#Date_wise_leave__list').empty();
                                     if(response.length !=0){
                                         $.each(response, function(key, value) {

@@ -16,7 +16,7 @@ class notice extends Model
     {
         return $this->belongsToMany(department::class);
     }
-     public function user(): HasMany
+    public function user(): HasMany
     {
         return $this->hasMany(user::class);
     }

@@ -40,6 +40,11 @@ class PrincipalStudentIssueController extends Controller
 
     //     return view('PRINCIPAL.viewstudentissues', compact('student_issues', 'staff', 'examSectionIssues'));
 
+        $student_issues_count= student_issue::count();
+        $issue_timeline_count=issue_timeline::count();
+        $issue_timeline=issue_timeline::count();
+
+        // $student_issues_countr=student_issue::count('regular');
 
         $user = Auth::user();
         $staff = staff::all();
@@ -56,7 +61,7 @@ class PrincipalStudentIssueController extends Controller
 
         $examSectionIssues = exam_section_issue::all();
 
-        return view('PRINCIPAL.viewstudentissues', compact('student_issues', 'staff', 'examSectionIssues'));
+        return view('PRINCIPAL.viewstudentissues', compact('student_issues', 'staff', 'examSectionIssues','student_issues_count','issue_timeline','issue_timeline_count'));
 
 
     }
@@ -64,6 +69,7 @@ class PrincipalStudentIssueController extends Controller
 
     public function show(student_issue $student_issue)
     {
+        $
         $student_issue=student_issue::with('issue_timeline.user')->where('student_issues.id',$student_issue->id)->first();
         //dd($student_issue);
         return view('PRINCIPAL.issue_timeline',compact('student_issue'));

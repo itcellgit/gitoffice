@@ -67,6 +67,27 @@
                         <p class="ti-dropdown-header-title !text-white font-semibold">Notifications</p>
                         <a href="javascript:void(0)" class="badge bg-black/20 text-white rounded-sm">Mark All Read</a>
                     </div>
+                    <div class="col-span-12 lg:col-span-3">
+                        <div class="box">
+                            <div class="box-header">
+                                <h5 class="box-title">My Notification</h5>
+                            </div>
+                            <div class="box-body text-center">
+                                <button type="button" class="ti-btn ti-btn-primary" id="popup">Notification</button>
+                                <div id="notification-container">
+                                    <!-- Loop through notifications and display them -->
+                                    {{-- @foreach($notifications as $notification)
+                                        <p>{{ $notification->notification_title }}</p>
+                                        <p>{{ $notification->description }}</p>
+                                        <hr>
+                                    @endforeach --}}
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
                     <!--<div class="ti-dropdown-divider divide-y divide-gray-200 dark:divide-white/10">
                         <div class="py-2 first:pt-0 last:pb-0" id="allNotifyContainer">
                         <div class="ti-dropdown-item relative header-box">

@@ -6,6 +6,8 @@ use App\Http\Requests\Storeleave_staff_applicationsRequest;
 use App\Http\Requests\Updateleave_staff_applicationsRequest;
 use Auth;
 use App\Models\staff;
+use App\Models\users;
+use App\Models\notifications;
 use App\Models\leave;
 use App\Models\user;
 use App\Models\holidayrh;
@@ -17,7 +19,6 @@ use App\Models\leave_staff_entitlements;
 use App\Models\Daywise_Leave;
 use Carbon\CarbonPeriod;
 use Session;
-
 
 class LeaveStaffApplicationsController extends Controller
 {
@@ -62,7 +63,7 @@ class LeaveStaffApplicationsController extends Controller
             $q->where('staff.id','<>',$staff_id_from_user->id)
             ->where('department_staff.status','active')
 
-            ->whereIn('staff.id',function($subquery)use($staff_emp_type){
+            ->whereIn('staff.id',function($subquery)use($staff_emp_type){{{  }}
                 $subquery->select('staff_id')
                 ->from('employee_types')
                 ->where('employee_types.employee_type',$staff_emp_type->employee_type);
@@ -255,6 +256,8 @@ class LeaveStaffApplicationsController extends Controller
        return redirect('/Teaching/leaves/')->with('return_data', $return_data);
 
     }
+    
+    
     //for updating the leave application (Editing)
     public function update(Updateleave_staff_applicationsRequest $request)
     {
@@ -1004,31 +1007,159 @@ class LeaveStaffApplicationsController extends Controller
 
     }
 
+    
+
 
 
     //Store function for Non-Teaching
+    // public function nt_leave_store(Storeleave_staff_applicationsRequest $request)
+    // {
+    //     //
+    //    //calling the validate leave function to validate the leave
+    //    // dd($request);
+    //     $user = Auth::User();
+    //     $staff=staff::where('user_id','=',$user->id)->first();
+    //     $result=$this->validateleave($request,$staff);
+    //     // $staff_dept = staff::with('departments')->where('user_id','=',$user->id)->first();
+
+    //     // dd($staff_dept);
+
+    //    // dd($result);
+    //     $status=false;
+    //     //dd($result);
+    //     $leave_appn_id = 0;
+    //     if($result === "success")
+    //     {
+    //         $leave_application =  new leave_staff_applications();
+    //         $leave_application->leave_id = $request->type;
+    //         $leave_application->cl_type=$request->cl_type;
+    //         $from_year=Carbon::parse($request->from_date)->year;
+
+    //         $leave_application->start = $request->from_date;
+    //         $leave_application->end = $request->to_date;
+    //         $leave_application->reason = $request->leave_reason;
+    //         $leave_application->staff_id = $staff->id;
+    //         $leave_application->recommender = 3; // hard-coded
+    //         $leave_application->approver = 2; //hard-coded
+    //         $leave_application->no_of_days = $request->no_of_days;
+
+    //         if($request->additional_alternate!='#')
+    //         {
+    //             $leave_application->additional_alternate = $request->additional_alternate;
+    //         }
+    //         $leave_application->alternate = $request->alternate;
+
+    //         $leave_application->appl_status = 'pending';
+    //         $leave_application->leave_status = 'awaiting';
+    //         $leave_application->year = Carbon::parse($request->to_date)->year;
+
+    //         $leave_appn_id = $leave_application->save();
+
+    //         //Daywise leave entry
+    //         //dd($leave_appn_id);
+    //         $period = CarbonPeriod::create($request->from_date, $request->to_date);
+    //         $daywise_leave_result = false;
+
+
+    //         foreach ($period as $dt) {
+
+    //             $day_wise_leave = new Daywise_Leave();
+    //             $day_wise_leave->leave_staff_applications_id = $leave_application->id;
+    //             $day_wise_leave->leave_id = $request->type;
+    //             $day_wise_leave->start = $dt->format('Y-m-d');
+    //             //dd($dt->format('Y-m-d'));
+    //             $daywise_leave_result = $day_wise_leave->save();
+
+    //         }
+
+
+    //         //dd($leave_appn_id);
+
+    //        // update the leave_staff_entitlement table consumed value for the perticular leave, perticular staff
+    //         $leave_staff_entitlement=leave_staff_entitlements::where('staff_id',$staff->id)->where('leave_id',$request->type)->where('year', $from_year)->first();
+
+    //         if($leave_staff_entitlement!=null)
+    //         {
+    //             $leave_staff_entitlement->consumed_curr_year= $leave_staff_entitlement->consumed_curr_year+$request->no_of_days;
+    //          //   dd($leave_staff_entitlement->consumed_curr_year);
+    //             $leave_staff_entitlement->update();
+    //         }
+    //         else
+    //         {
+    //            // $leaves=leave::
+
+    //            //for leaves other than entitled given, check if the entry for this leave is already present.
+    //             //if present, then perform updated query else perform insert query
+    //         }
+
+
+    //     }
+
+    //     if($leave_appn_id && $daywise_leave_result && $result){
+    //         $status = 1;
+    //     }else{
+    //         $status = $result;
+    //     }
+    //     $return_data = [
+    //         'status' => $status,
+    //         'result' => $result,
+    //         'start_date'=>$request->from_date,
+    //         'leave_type'=>$request->type,
+    //         'appl_edit'=>0,
+    //         'reason'=>$request->leave_reason,
+    //         'alternative'=>$request->alternate
+    //     ];
+    //     //dd($return_data);
+    //    return redirect('/Non-Teaching/ntleaves/')->with('return_data', $return_data);
+
+    // }
+
     public function nt_leave_store(Storeleave_staff_applicationsRequest $request)
     {
         //
-       //calling the validate leave function to validate the leave
-       // dd($request);
+
         $user = Auth::User();
-        $staff=staff::where('user_id','=',$user->id)->first();
-        $result=$this->validateleave($request,$staff);
-        // $staff_dept = staff::with('departments')->where('user_id','=',$user->id)->first();
+        $staff = staff::where('user_id','=',$user->id)->first();
+        $result = $this->validateleave($request,$staff);
+        $userId = User::where('id', function($query)use($staff) {
+            $query->select('user_id')
+                  ->from('staff')
+                  ->where('staff.id', function($query)use($staff) {
+                      $query->select('staff_id')
+                            ->from('designation_staff')
+                            ->where('designation_id', 1)
+                            ->where('status', 'active')
+                            ->where('dept_id', function($q1)use($staff){
+                                $q1->select('department_id')
+                                ->from('department_staff')
+                                ->where('staff_id',$staff->id);
+                                // ->where('dept_id', '!=', function($query)use($staff) {
+                                // $query->select('dept_id')
+                                //       ->from('designation_staff')
+                                //       ->where('staff_id', $staff->id)
+                                //       ->whereNotNull('dept_id')
+                                //       ->where('status', 'active');
+                           // });
+                        });
+                  });
 
-        // dd($staff_dept);
+                 
+        })->first();
 
-       // dd($result);
-        $status=false;
+    
+        
+        dd($userId);
+        //calling the validate leave function to validate the leave
+     
         //dd($result);
+        $status = false;
         $leave_appn_id = 0;
         if($result === "success")
         {
             $leave_application =  new leave_staff_applications();
             $leave_application->leave_id = $request->type;
-            $leave_application->cl_type=$request->cl_type;
-            $from_year=Carbon::parse($request->from_date)->year;
+            $leave_application->cl_type = $request->cl_type;
+            $from_year = Carbon::parse($request->from_date)->year;
 
             $leave_application->start = $request->from_date;
             $leave_application->end = $request->to_date;
@@ -1051,43 +1182,65 @@ class LeaveStaffApplicationsController extends Controller
             $leave_appn_id = $leave_application->save();
 
             //Daywise leave entry
-            //dd($leave_appn_id);
             $period = CarbonPeriod::create($request->from_date, $request->to_date);
             $daywise_leave_result = false;
 
-
             foreach ($period as $dt) {
-
                 $day_wise_leave = new Daywise_Leave();
                 $day_wise_leave->leave_staff_applications_id = $leave_application->id;
                 $day_wise_leave->leave_id = $request->type;
                 $day_wise_leave->start = $dt->format('Y-m-d');
-                //dd($dt->format('Y-m-d'));
                 $daywise_leave_result = $day_wise_leave->save();
-
             }
 
-
-            //dd($leave_appn_id);
-
-           // update the leave_staff_entitlement table consumed value for the perticular leave, perticular staff
-            $leave_staff_entitlement=leave_staff_entitlements::where('staff_id',$staff->id)->where('leave_id',$request->type)->where('year', $from_year)->first();
+            // update the leave_staff_entitlement table consumed value for the perticular leave, perticular staff
+            $leave_staff_entitlement = leave_staff_entitlements::where('staff_id',$staff->id)->where('leave_id',$request->type)->where('year', $from_year)->first();
 
             if($leave_staff_entitlement!=null)
             {
-                $leave_staff_entitlement->consumed_curr_year= $leave_staff_entitlement->consumed_curr_year+$request->no_of_days;
-             //   dd($leave_staff_entitlement->consumed_curr_year);
+                $leave_staff_entitlement->consumed_curr_year = $leave_staff_entitlement->consumed_curr_year+$request->no_of_days;
                 $leave_staff_entitlement->update();
             }
             else
             {
-               // $leaves=leave::
-
-               //for leaves other than entitled given, check if the entry for this leave is already present.
-                //if present, then perform updated query else perform insert query
+                // handle the case where the entitlement is not found
             }
 
+            // Send notifications to HOD and alternate staff
+            // $hod = staff::
+            //         join('department_staff', 'department_staff.staff_id', '=', 'staff.id')
+            //         ->join('users', 'users.id', '=', 'staff.user_id')
+            //         ->where('department_staff.department_id', $staff->department_id)
+            //         ->where('users.role', 'Head Of Department')
+            //         ->first();
+           // dd($staff);
+          
 
+            $alternate_staff = staff::find($request->alternate);
+            //dd($alternate_staff);
+
+            if($hod && $alternate_staff) {
+                // Send notification to HOD
+                $hod_notification = new notifications();
+                $hod_notification->notification_title = 'Leave Application';
+                $hod_notification->notification_type = 'Leave';
+                $hod_notification->date = now(); 
+                $hod_notification->description = 'A leave application has been submitted by '. $staff->fname. ' for your approval.';
+                $hod_notification->save();
+
+                //dd($hod_notification);
+            
+                //Send notification to alternate staff
+                $alternate_notification = new notifications();
+                $alternate_notification->notification_title = 'Leave Assignment';
+                $alternate_notification->notification_type = 'leave';
+                $alternate_notification->date = now();
+                $alternate_notification->description = 'You have been assigned as an alternate for a leave application submitted by '. $staff->fname;
+                $alternate_notification->save();
+
+                //dd($alternate_notification);
+            }
+            
         }
 
         if($leave_appn_id && $daywise_leave_result && $result){
@@ -1104,15 +1257,14 @@ class LeaveStaffApplicationsController extends Controller
             'reason'=>$request->leave_reason,
             'alternative'=>$request->alternate
         ];
-        //dd($return_data);
-       return redirect('/Non-Teaching/ntleaves/')->with('return_data', $return_data);
-
+        return redirect('/Non-Teaching/ntleaves/')->with('return_data', $return_data);
     }
+    
 
 
-     //for updating the leave application in Non-Teaching (Editing)
-     public function nt_leave_update(Updateleave_staff_applicationsRequest $request)
-     {
+    //for updating the leave application in Non-Teaching (Editing)
+    public function nt_leave_update(Updateleave_staff_applicationsRequest $request)
+    {
          $user = Auth::User();
          $staff=staff::where('user_id','=',$user->id)->first();
          $result=$this->validateleave($request,$staff);

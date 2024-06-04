@@ -23,6 +23,7 @@ class StaffDesignationsController extends Controller
      */
     public function editdesignation(request $request,staff $staff,$design_id)
     {
+        
         if($request->status=="active")
         {
             //$updateresult= $staff->designations()->updateExistingPivot($design_id,['end_date'=>null,'status'=>'active']);
@@ -54,7 +55,8 @@ class StaffDesignationsController extends Controller
                 }
                  $staff_latest_design->pivot->start_date=$request->start_date;
             }
-
+          
+          
             $staff_latest_design->pivot->reason=$request->reason;
             $staff_latest_design->pivot->gcr=$request->gcr;
            $updateresult= $staff_latest_design->pivot->update();
@@ -1424,6 +1426,7 @@ class StaffDesignationsController extends Controller
     //
     public function update_additional_desig(Request $request, staff $staff, $design_id)
     {
+        
         $additional_design=$staff->designations->where('pivot.id','=',$design_id);
         foreach($additional_design as $design){
         //dd($design->pivot);
@@ -1437,7 +1440,15 @@ class StaffDesignationsController extends Controller
                     $design->pivot->status='inactive';
 
             }
-
+            if($design->pivot->allowance_status!=$request->allowance_status)
+            {
+               $all_additional_designations=$staff->latest_additional_designation()->get();
+               foreach($all_additional_designations as $additional_design)
+               {
+                    $additional_design->pivot->allowance_status=$request->allowance_status;
+                    $additional_design->pivot->update();
+               }
+            }
             $design->pivot->designation_id=$request->designation_id;
             $design->pivot->start_date=$request->start_date;
             $design->pivot->dept_id=$request->dept_id;

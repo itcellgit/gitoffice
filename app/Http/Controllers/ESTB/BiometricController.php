@@ -27,8 +27,47 @@ class BiometricController extends Controller
         }
 
         // Retrieve data from the 'staff' table in the 'mysql' connection
-        $staffData = staff::with('activedepartments')->get();
+        // $staffData = staff::with('activedepartments')->with(['leave_staff_applications'=>function($q)use($date){
+        //     wherePivot('start','>=',$date)->wherePivot('end','<=',$date)->where('appl_status','!=','rejected');
+        // }])->whereIn('staff.id',function($q){
+        //     $q->select('staff_id')
+        //     ->from('staff_association')
+        //     ->where('status','active')
+        //     ->whereIn('association_id',function($q1){
+        //         $q1->select('id')
+        //         ->from('associations')
+        //         ->where('Confirmed')
+        //         ->whereOr('Probationary')
+        //         ->whereOr('Contractual')
+        //         ->whereOr('Promotional Probationary')
+        //         ->whereOr('Temporary (non teaching)');
+        //     });
+        // });
+        // dd($staffData);
+        // ->get();
 
+
+        $staffData = Staff::with('activedepartments')
+    
+    ->whereIn('id', function($q) {
+        $q->select('staff_id')
+          ->from('association_staff')
+          ->where('status', 'active')
+          ->whereIn('association_id', function($q1) {
+              $q1->select('id')
+                 ->from('associations')
+                 ->where('asso_name', 'Confirmed')
+                 ->orWhere('asso_name', 'Probationary')
+                 ->orWhere('asso_name', 'Contractual')
+                 ->orWhere('asso_name', 'Promotional Probationary')
+                 ->orWhere('asso_name', 'Temporary (non teaching)');
+          });
+    })->get();
+    //dd($staffData); 
+   // ->get();
+
+  
+        
         // Retrieve data from the 'employees' table in the 'mysql2' connection
         $employeesData = DB::connection('mysql2')->table('employees')->get();
 
@@ -297,8 +336,11 @@ class BiometricController extends Controller
             $date = $request->input('date') ?? Carbon::now()->format('Y-m-d');
 
             // Get the current month and year
-            $currentMonth = Carbon::now()->month;
-            $currentYear = Carbon::now()->year;
+           
+                // Parse the provided date to get the correct month and year
+                $parsedDate = Carbon::parse($date);
+                $currentMonth = $parsedDate->month;
+                $currentYear = $parsedDate->year;
 
             // Fetch the employee codes with logs on the specified date
             $logs = DB::connection('mysql2')
@@ -308,15 +350,35 @@ class BiometricController extends Controller
                 ->toArray();
 
             // Fetch all staff records
-            $staffData = DB::connection('mysql')->table('Staff')
-                ->join('department_staff','department_staff.staff_id','=','staff.id')
-                ->join('departments','departments.id','=','department_staff.department_id')
-                ->whereNotIn('EmployeeCode', $logs)
-                ->select('staff.id','departments.dept_shortname', 'EmployeeCode', DB::raw("CONCAT(fname, ' ', COALESCE(mname, ''), ' ', lname) AS full_name"))
+            $staffData =staff:: join('department_staff','department_staff.staff_id','=','staff.id')
+                 ->join('departments','departments.id','=','department_staff.department_id')
+                 ->where('department_staff.status','active')
+                 ->with(['leave_staff_applications'=>function($q)use($date){
+                            $q->wherePivot('start', '<=', $date)
+                            ->wherePivot('end', '>=', $date)
+                            ->wherePivot('appl_status', '!=', 'rejected');
+                        }])
+                        ->whereNotIn('EmployeeCode', $logs)
+                        ->select('staff.id','departments.dept_shortname', 'EmployeeCode', DB::raw("CONCAT(fname, ' ', COALESCE(mname, ''), ' ', lname) AS full_name"))
                 ->distinct('staff.id')
                 ->orderBy('department_staff.department_id')->orderBy('staff.fname')
                 ->get();
-
+            
+            //dd($staffData);
+            // DB::connection('mysql')->table('staff')
+            //    
+            //     ->leftJoin('leave_staff_applications','leave_staff_applications.staff_id','=','staff.id')
+            //     ->leftJoin('leaves','leaves.id','=','leave_staff_applications.leave_id')
+            //     ->where('leave_staff_applications.start', '>=', $date)
+            //     ->where('leave_staff_applications.end', '<=', $date)
+            //     ->where('appl_status', '!=', 'rejected')
+                
+            //     ->whereNotIn('EmployeeCode', $logs)
+            //     ->select('staff.id','departments.dept_shortname', 'EmployeeCode', DB::raw("CONCAT(fname, ' ', COALESCE(mname, ''), ' ', lname) AS full_name"))
+            //     ->distinct('staff.id')
+            //     ->orderBy('department_staff.department_id')->orderBy('staff.fname')
+            //     ->get();
+            
             return response()->json($staffData);
         }
 }

@@ -124,10 +124,8 @@
                                                 {{ $student_issue->exam_section_issue->staff->mname }}
                                                 {{ $student_issue->exam_section_issue->staff->lname }}
                                             @else
-                                                @if ($student_issue->exam_section_issue_id == '0')
+                                                @if ($student_issue->exam_section_issue_id == '')
                                                     Sudhindra T Kulkarni
-                                                @else
-                                                    No staff assigned
                                                 @endif
                                             @endif
                                         </span>
