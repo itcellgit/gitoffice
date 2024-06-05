@@ -247,6 +247,13 @@ class staff extends Model
     {
         return $this->belongsToMany(leave::class,'leave_staff_applications')->withPivot('id','leave_id','cl_type','start','end','no_of_days');
     }
+    //function to compute the sum of no_of_days of leave for each leave type foreach staff with year filter
+    public function leave_staff_applications_sum()
+    {
+        return $this->belongsToMany(Leave::class, 'leave_staff_applications')
+                    ->select('staff_id', 'leave_id', \DB::raw('SUM(no_of_days) as total_days'))
+                    ->groupBy('year','staff_id', 'leave_id')->get(); 
+    }
      public function leaves():BelongsToMany
      {
          return $this->belongsToMany(leave::class,'leave_staff_application');
@@ -321,4 +328,14 @@ class staff extends Model
     {
         return $this->belongsTo(ntissue_timeline::class);
     }
+
+    public function stafflics():HasMany
+     {
+        return $this->hasMany(stafflic::class);
+     }
+
+     public function lic():HasMany
+     {
+        return $this->hasMany(lic::class);
+     }
 }

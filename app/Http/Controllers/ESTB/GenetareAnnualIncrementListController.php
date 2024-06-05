@@ -40,46 +40,45 @@ class GenetareAnnualIncrementListController extends Controller
         // $year = request('year');
         $month = request('month');
         $year=Carbon::now()->year;
-    $previous_year_date=($year-1).'-'.(6).'-01';
+        $previous_year_date=($year-1).'-'.(6).'-01';
         $current_year_date=Carbon::createFromDate($year,6)->endOfMonth()->format('yy-m-d');
         $filter="";
        // dd($staff1);
-       $staff=staff::
-      with(['designations'=>function($q){
-        $q->wherePivot('status','active');
-        }])
-     ->with(['associations'=>function($q){
-             $q->wherePivot('status','active');
-    }])
-     ->with('qualifications')
-    ->with(['annualIncrement'=>function($q){
-       $q->orderBy('wef','desc')->get();
-      }])
-      ->with(['allowance'=>function($q){
-        $q->wherePivot('status','active');
+       $staff=staff::with(['designations'=>function($q){
+                        $q->wherePivot('status','active');
+                    }])
+                    ->with(['associations'=>function($q){
+                            $q->wherePivot('status','active');
+                    }])
+                    ->with('qualifications')
+                    ->with(['annualIncrement'=>function($q)use($year){
+                        $q->whereYear('wef',$year-1)->orderBy('wef','desc');
+                    }])
+                    ->with(['allowance'=>function($q){
+                        $q->wherePivot('status','active');
         
-}])
-     ->with(['departments'=>function($q){
-        $q->wherePivot('status','active');
-      }])
-     ->with(['teaching_payscale'=>function($q){
-         $q->wherePivot('status','active');
-       }]) 
-      ->with(['ntpayscale'=>function($q){
-        $q->wherePivot('status','active');
-      }])
-     ->with(['ntcpayscale'=>function($q){
-        $q->wherePivot('status','active');
-      }])
-    ->with('consolidated_teaching_pay')
-        ->with('fixed_nt_pay')
-    ->with(['latest_employee_type'=>function($q){
-        $q->where('status','active');
-    }])
+                    }])
+                    ->with(['departments'=>function($q){
+                        $q->wherePivot('status','active');
+                    }])
+                    ->with(['teaching_payscale'=>function($q){
+                        $q->wherePivot('status','active');
+                    }]) 
+                    ->with(['ntpayscale'=>function($q){
+                        $q->wherePivot('status','active');
+                    }])
+                    ->with(['ntcpayscale'=>function($q){
+                        $q->wherePivot('status','active');
+                    }])
+                    ->with('consolidated_teaching_pay')
+                    ->with('fixed_nt_pay')
+                    ->with(['latest_employee_type'=>function($q){
+                        $q->where('status','active');
+                    }])
     
-      ->whereRaw('month(date_of_increment)=?',[8])
-       ->orderBy('fname')->
-       whereIn('staff.id',function($q){
+                    ->whereRaw('month(date_of_increment)=?',[8])
+                    ->orderBy('fname')->
+                    whereIn('staff.id',function($q){
             $q->select('association_staff.staff_id')
             ->from('association_staff')
             ->join('employee_types','employee_types.staff_id','=','association_staff.staff_id')
@@ -97,8 +96,8 @@ class GenetareAnnualIncrementListController extends Controller
 
       //dd($staff);
       $data = [];
-foreach($staff as $st)
-{
+    foreach($staff as $st)
+    {
     $staffId = $st->id;
     $data[$staffId] = [
         'basic' => 0,
@@ -110,24 +109,39 @@ foreach($staff as $st)
        'gross_value' =>0
     ];
     $no_of_days_lwp=DB::table('leave_staff_applications')
-    ->whereIn('leave_id',function($q){
-        $q->select('id')
-        ->from('leaves')
-        ->where('shortname','like','%lwp%');
-    })
-   ->where('appl_status','!=','rejected')
-    ->where('start','>=',$previous_year_date)
-    ->Where('start','<=',$current_year_date)
-    ->where('staff_id',$st->id)
-    ->select(DB::raw('sum(no_of_days) as total_leave_days'))
-    ->groupBy('leave_id')->first();
+                        ->whereIn('leave_id',function($q){
+                            $q->select('id')
+                            ->from('leaves')
+                            ->where('shortname','like','%lwp%');
+                        })
+                    ->where('appl_status','!=','rejected')
+                        ->where('start','>=',$previous_year_date)
+                        ->Where('start','<=',$current_year_date)
+                        ->where('staff_id',$st->id)
+                        ->select(DB::raw('sum(no_of_days) as total_leave_days'))
+                        ->groupBy('leave_id')->first();
 //dd($no_of_days_lwp->total_leave_days);
+
+   
 
     
         
     foreach($st->annualIncrement as $increment) {
          
             $data[$staffId] ['basic']=$increment->basic;
+            if($no_of_days_lwp!=null&&$no_of_days_lwp->total_leave_days>0 )
+            {
+                
+                $data[$staffId]['wef'] = Carbon::parse($st->date_of_increment);
+                $data[$staffId]['wef']->addDays($no_of_days_lwp->total_leave_days)->format('d-M-Y');
+            
+            }
+            else
+            {
+                $data[$staffId]['wef']=Carbon::parse($increment->wef)->format('d-M-Y');
+                
+            }
+          
     }
     
 
@@ -165,18 +179,15 @@ foreach($staff as $st)
     }
     else
     {
-     
+        $data[$staffId]['value']=0;
         foreach($st->designations as $design )
         {
             //dd($design->isadditional===1 && $design->isvacational=='Non-Vacational');
-            if($design->isadditional===1 && $design->isvacational=='Non-Vacational')
+            if($design->isadditional===1 && $design->isvacational=='Non-Vacational' && $design->pivot->allowance_status==true)
             {
                 
                 $additional_design_allowance=allowance::where('designations_id',$design->id)->first();
-               if($additional_design_allowance==null)
-               {
-                dd($st->id.' '.$design->id);
-               }
+              
                
                 // dd($fetchallowance->value_type=="flat");
               //$loop[$st->id][$design->id][]=$additional_design_allowance;
@@ -184,12 +195,12 @@ foreach($staff as $st)
                 if( $additional_design_allowance->value_type=='flat')
                 {
                    
-                    $data[$staffId]['value']=$additional_design_allowance->value;
+                    $data[$staffId]['value']= $data[$staffId]['value']+$additional_design_allowance->value;
             
                 }
                 else
                 {
-                    $data[$staffId]['value']=$data[$staffId]['total']*$additional_design_allowance/100;
+                    $data[$staffId]['value']= $data[$staffId]['value']+$data[$staffId]['total']*$additional_design_allowance/100;
                 }
                 break;
             }
@@ -264,7 +275,7 @@ foreach($staff as $st)
     }])
      ->with('qualifications')
     ->with(['annualIncrement'=>function($q){
-       $q->orderBy('wef','desc')->get();
+       $q->orderBy('wef','desc');
       }])
       ->with(['allowance'=>function($q){
         $q->wherePivot('status','active');
@@ -364,18 +375,14 @@ foreach($staff as $st)
     }
     else
     {
-     
+        $data[$staffId]['value']=0;
         foreach($st->designations as $design )
         {
             //dd($design->isadditional===1 && $design->isvacational=='Non-Vacational');
-            if($design->isadditional===1 && $design->isvacational=='Non-Vacational')
+            if($design->isadditional===1 && $design->isvacational=='Non-Vacational' && $deisgn->pivot->allowance_status==1)
             {
                 
                 $additional_design_allowance=allowance::where('designations_id',$design->id)->first();
-               if($additional_design_allowance==null)
-               {
-                dd($st->id.' '.$design->id);
-               }
                
                 // dd($fetchallowance->value_type=="flat");
               //$loop[$st->id][$design->id][]=$additional_design_allowance;
@@ -383,12 +390,12 @@ foreach($staff as $st)
                 if( $additional_design_allowance->value_type=='flat')
                 {
                    
-                    $data[$staffId]['value']=$additional_design_allowance->value;
+                    $data[$staffId]['value']= $data[$staffId]['value']+$additional_design_allowance->value;
             
                 }
                 else
                 {
-                    $data[$staffId]['value']=$data[$staffId]['total']*$additional_design_allowance/100;
+                    $data[$staffId]['value']= $data[$staffId]['value']+$data[$staffId]['total']*$additional_design_allowance/100;
                 }
                 break;
             }

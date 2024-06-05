@@ -360,7 +360,7 @@
                                                             <div class="timeline-body">
                                                                 <div class="box">
                                                                     <div class="box-body p-4">
-                                                                        {{-- @foreach ($student_issues as $issue) --}}
+                                                                        
                                                                         <h6 class="font-semibold text-base mb-2">
                                                                             @if ($student_issue->exam_section_issue)
                                                                                 {{ $student_issue->exam_section_issue->issues ?? '' }}
@@ -374,11 +374,6 @@
                                                                         <p
                                                                             class="text-xs text-gray-500 dark:text-white/70">
                                                                             {{ $student_issue->description }}</p>
-                                                                        {{-- @else
-                                            <h6 class="font-semibold text-base mb-2">No student issue found</h6> --}}
-                                                                        {{-- @endforeach --}}
-                                                                        {{-- <h6 class="font-semibold text-base mb-2">Marsha Mellow updated his status</h6> --}}
-                                                                        {{-- <p class="text-xs text-gray-500 dark:text-white/70">Nonumy erat nonumy dolores duo ea sit, ipsum sed amet aliquyam magna kasd at. Dolor erat sit sed sea et dolor, justo dolor ipsum dolore voluptua. Sed ipsum sed.</p> --}}
                                                                     </div>
                                                                     <div class="box-footer bg-transparent p-4">
                                                                         <div
@@ -391,8 +386,7 @@
                                                                                         alt="avatar">
                                                                                 </div>
                                                                                 <div>
-                                                                                    <p
-                                                                                        class="text-slate-700 font-semibold text-sm dark:text-white">
+                                                                                    <p class="text-slate-700 font-semibold text-sm dark:text-white">
                                                                                         @if ($student_issue->exam_section_issue && $student_issue->exam_section_issue->staff)
                                                                                             {{ $student_issue->exam_section_issue->staff->fname }}
                                                                                             {{ $student_issue->exam_section_issue->staff->mname }}
@@ -404,19 +398,17 @@
                                                                                                 No staff assigned
                                                                                             @endif
                                                                                         @endif
-                                                                                        {{-- Json Taylor --}}
+                                                                                        
                                                                                     </p>
                                                                                     <p
                                                                                         class="text-xs text-gray-500 dark:text-white/70">
-                                                                                        {{-- 20 min ago --}}
+                                                                                       
                                                                                         {{ $student_issue->created_at->diffForHumans() }}
                                                                                     </p>
                                                                                 </div>
                                                                             </div>
                                                                             <div
                                                                                 class="space-x-0 sm:space-x-2 sm:text-end flex">
-                                                                                {{-- <a href="javascript:void(0);" class="text-xs leading-[0] text-gray-500 dark:text-white/70 space-x-2 rtl:space-x-reverse rounded-full bg-gray-100 px-3 py-1 font-normal hover:bg-gray-300 focus:bg-gary-800 dark:bg-black/20 dark:hover:bg-bgdark inline-flex"><i class="text-xs ri ri-heart-line"></i><span class="my-2">30</span></a>
-                                        <a href="javascript:void(0);" class="text-xs leading-[0] text-gray-500 dark:text-white/70 space-x-2 rtl:space-x-reverse rounded-full bg-gray-100 px-3 py-1 font-normal hover:bg-gray-300 focus:bg-gary-800 dark:bg-black/20 dark:hover:bg-bgdark inline-flex"><i class="text-xs ri ri-thumb-up-line"></i><span class="my-2">25k</span></a> --}}
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -424,7 +416,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="bg-warning text-white timeline-icon">
-                                                            <i class="ri ri-briefcase-4-line text-lg leading-none"></i>
+                                                            <!-- <i class="ri ri-briefcase-4-line text-lg leading-none"></i> -->
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M14 14.252V22H4C4 17.5817 7.58172 14 12 14C12.6906 14 13.3608 14.0875 14 14.252ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM18.5858 17L16.7574 15.1716L18.1716 13.7574L22.4142 18L18.1716 22.2426L16.7574 20.8284L18.5858 19H15V17H18.5858Z"></path></svg>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -450,21 +443,8 @@
                                                                                     class="text-xs text-gray-500 dark:text-white/70">
                                                                                     {{ $timeline->interaction ?? '' }}
                                                                                 </p>
-                                                                                {{-- <h6 class="font-semibold text-base mb-2">
-                                            @if ($student_issue->issue_timeline)
-                                                {{ $student_issue->issue_timeline->status ?? ''}} <br>
-                                                {{ $student_issue->issue_timeline->followup_date ?? '' }}
-                                                    
-                                            
-                                            @endif
-                                        </h6>
-                                        <p class="text-xs text-gray-500 dark:text-white/70">
-                                            @if ($student_issue->issue_timeline)
-                                                {{ $student_issue->issue_timeline->interaction ?? '' }}
-                                            @endif
-                                        </p> --}}
-                                                                                {{-- <h6 class="font-semibold text-base mb-2"></h6>
-                                    <p class="text-xs text-gray-500 dark:text-white/70">Invidunt dolor justo gubergren sit voluptua ipsum lorem sanctus, justo dolores dolor dolore stet justo dolor. Eos ipsum rebum diam..</p> --}}
+                                                                                
+                                                                                
                                                                             </div>
                                                                             <div class="box-footer bg-transparent p-4">
                                                                                 <div
@@ -483,26 +463,21 @@
                                                                                                     {{ $timeline->user->role == 'Head of Department' ? $timeline->user->role : $timeline->user->email }}
                                                                                                 @endif
                                                                                                 {{-- Anderson Itumay --}}
-                                                                                                {{-- @if ($student_issue->issue_timeline && $student_issue->issue_timeline->user)
-                                                {{ $student_issue->issue_timeline->user->role == "Head of Department" ? $student_issue->issue_timeline->user->role : $student_issue->issue_timeline->user->email }}
-                                            @endif --}}
-
+                                                                                               
                                                                                             </p>
                                                                                             <p
                                                                                                 class="text-xs text-gray-500 dark:text-white/70">
                                                                                                 {{-- 11 Dec 2022 --}}
-                                                                                                {{-- {{ $student_issue->issue_timeline->date_of_interaction ?? '' }} --}}
-                                                                                                {{-- @if ($student_issue->issue_timeline)
-                                                {{ $student_issue->issue_timeline->date_of_interaction ?? '' }}
-                                            @endif --}}
                                                                                                 {{ $timeline->date_of_interaction ?? '' }}
                                                                                             </p>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div
                                                                                         class="space-x-0 sm:space-x-2 sm:text-end flex">
-                                                                                        {{-- <a href="javascript:void(0);" class="text-xs leading-[0] text-gray-500 dark:text-white/70 space-x-2 rtl:space-x-reverse rounded-full bg-gray-100 px-3 py-1 font-normal hover:bg-gray-300 focus:bg-gary-800 dark:bg-black/20 dark:hover:bg-bgdark inline-flex"><i class="text-xs ri ri-heart-line"></i><span class="my-2">30</span></a>
-                                        <a href="javascript:void(0);" class="text-xs leading-[0] text-gray-500 dark:text-white/70 space-x-2 rtl:space-x-reverse rounded-full bg-gray-100 px-3 py-1 font-normal hover:bg-gray-300 focus:bg-gary-800 dark:bg-black/20 dark:hover:bg-bgdark inline-flex"><i class="text-xs ri ri-thumb-up-line"></i><span class="my-2">25k</span></a> --}}
+                                                                                        {{-- <a href="javascript:void(0);" class="text-xs leading-[0] text-gray-500 dark:text-white/70 space-x-2 rtl:space-x-reverse rounded-full bg-gray-100 px-3 py-1 font-normal hover:bg-gray-300 focus:bg-gary-800 dark:bg-black/20 dark:hover:bg-bgdark inline-flex"><i class="text-xs ri ri-heart-line">
+                                                                                        </i><span class="my-2">30</span></a>
+                                                                                            <a href="javascript:void(0);" class="text-xs leading-[0] text-gray-500 dark:text-white/70 space-x-2 rtl:space-x-reverse rounded-full bg-gray-100 px-3 py-1 font-normal hover:bg-gray-300 focus:bg-gary-800 dark:bg-black/20 dark:hover:bg-bgdark inline-flex">
+                                                                                                <i class="text-xs ri ri-thumb-up-line"></i><span class="my-2">25k</span></a> --}}
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -511,101 +486,16 @@
                                                                 </div>
 
                                                                 <div class="bg-secondary text-white timeline-icon">
-                                                                    <i class="ri-mail-line text-lg leading-none"></i>
-                                                                    {{-- <div class="{{ $index % 2 == 0 ? 'bg-warning' : 'bg-secondary' }} text-white timeline-icon">
-                                    <i class="ri {{ $index % 2 == 0 ? 'ri-mail-line' : 'ri-briefcase-4-line' }} text-lg leading-none"></i>
-                                </div> --}}
+                                                                    <!-- <i class="ri-mail-line text-lg leading-none"></i> -->
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M6.45455 19L2 22.5V4C2 3.44772 2.44772 3 3 3H21C21.5523 3 22 3.44772 22 4V18C22 18.5523 21.5523 19 21 19H6.45455ZM5.76282 17H20V5H4V18.3851L5.76282 17ZM8 10H16V12H8V10Z"></path></svg>
+                                                                    
                                                                 </div>
                                                             </div>
                                                         @endfor
                                                     @endif
                                                 </div>
                                             </div>
-                                            {{-- <div class="timeline">
-                            <div class="timeline-main">
-                            <div class="timeline-left">
-                                <div class="timeline-body">
-                                <div class="box">
-                                    <div class="box-body p-4">
-                                    <h6 class="font-semibold text-base mb-2">
-                                        Clark Kent posted on timeline
-                                        @if ($student_issue->issue_timeline)
-                                            {{ $student_issue->issue_timeline->status ?? ''}}
-
-                                        @endif
-                                    </h6>
-                                    <p class="text-xs text-gray-500 dark:text-white/70">
-                                        Accusam et et stet invidunt at duo, ipsum no takimata est eos magna dolore sed, amet diam sea no diam.
-                                        
-                                    </p>
-                                    </div>
-                                    <div class="box-footer bg-transparent p-4">
-                                    <div class="sm:space-y-0 space-y-2 sm:flex items-center justify-between">
-                                        <div class="sm:flex items-center sm:space-x-3 space-x-0 sm:space-y-0 space-y-2 rtl:space-x-reverse">
-                                        <div class="flex">
-                                            <img class="avatar avatar-sm ring-0 rounded-full" src="{{asset('build/assets/img/users/21.jpg')}}" alt="avatar">
-                                        </div>
-                                        <div>
-                                            <p class="text-slate-700 font-semibold text-sm dark:text-white">
-                                            Harvey Mattos
-                                            </p>
-                                            <p class="text-xs text-gray-500 dark:text-white/70">
-                                            11 Dec 2022
-                                            </p>
-                                        </div>
-                                        </div>
-                                        <div class="space-x-0 sm:space-x-2 sm:text-end flex">
-                                        <a href="javascript:void(0);" class="text-xs leading-[0] text-gray-500 dark:text-white/70 space-x-2 rtl:space-x-reverse rounded-full bg-gray-100 px-3 py-1 font-normal hover:bg-gray-300 focus:bg-gary-800 dark:bg-black/20 dark:hover:bg-bgdark inline-flex"><i class="text-xs ri ri-heart-line"></i><span class="my-2">30</span></a>
-                                        <a href="javascript:void(0);" class="text-xs leading-[0] text-gray-500 dark:text-white/70 space-x-2 rtl:space-x-reverse rounded-full bg-gray-100 px-3 py-1 font-normal hover:bg-gray-300 focus:bg-gary-800 dark:bg-black/20 dark:hover:bg-bgdark inline-flex"><i class="text-xs ri ri-thumb-up-line"></i><span class="my-2">25k</span></a>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="bg-danger text-white timeline-icon">
-                                <span class="text-lg leading-none">HM</span>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="timeline">
-                            <div class="timeline-main">
-                            <div class="timeline-right">
-                                <div class="timeline-body">
-                                <div class="box">
-                                    <div class="box-body p-4">
-                                    <h6 class="font-semibold text-base mb-2">Shady Tree send you a post</h6>
-                                    <p class="text-xs text-gray-500 dark:text-white/70">Dolore justo lorem vero sed et takimata sit no dolore dolores, elitr eos et dolor consetetur sed sanctus. Ipsum amet elitr lorem clita et dolor. Kasd diam ea dolor sit accusam gubergren no kasd. Ea amet et sed takimata kasd,.</p>
-                                    </div>
-                                    <div class="box-footer bg-transparent p-4">
-                                    <div class="sm:space-y-0 space-y-2 sm:flex items-center justify-between">
-                                        <div class="sm:flex items-center sm:space-x-3 space-x-0 sm:space-y-0 space-y-2 rtl:space-x-reverse">
-                                        <div class="flex">
-                                            <img class="avatar ring-0 rounded-full" src="{{asset('build/assets/img/users/15.jpg')}}" alt="avatar">
-                                        </div>
-                                        <div>
-                                            <p class="text-slate-700 font-semibold text-sm dark:text-white">
-                                            Anesthesia
-                                            </p>
-                                            <p class="text-xs text-gray-500 dark:text-white/70">
-                                            9 Dec 2022
-                                            </p>
-                                        </div>
-                                        </div>
-                                        <div class="space-x-0 sm:space-x-2 sm:text-end flex">
-                                        <a href="javascript:void(0);" class="text-xs leading-[0] text-gray-500 dark:text-white/70 space-x-2 rtl:space-x-reverse rounded-full bg-gray-100 px-3 py-1 font-normal hover:bg-gray-300 focus:bg-gary-800 dark:bg-black/20 dark:hover:bg-bgdark inline-flex"><i class="text-xs ri ri-heart-line"></i><span class="my-2">30</span></a>
-                                        <a href="javascript:void(0);" class="text-xs leading-[0] text-gray-500 dark:text-white/70 space-x-2 rtl:space-x-reverse rounded-full bg-gray-100 px-3 py-1 font-normal hover:bg-gray-300 focus:bg-gary-800 dark:bg-black/20 dark:hover:bg-bgdark inline-flex"><i class="text-xs ri ri-thumb-up-line"></i><span class="my-2">25k</span></a>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="bg-danger text-white timeline-icon">
-                                <img class="avatar ring-0 rounded-full" src="{{asset('build/assets/img/users/15.jpg')}}" alt="avatar">
-                            </div>
-                            </div>
-                        </div> --}}
+                                         
                                             <div class="timeline-end"></div>
                                         </div>
                                     </div>

@@ -26,25 +26,7 @@ class BiometricController extends Controller
             $date = Carbon::now()->format('Y-m-d');
         }
 
-        // Retrieve data from the 'staff' table in the 'mysql' connection
-        // $staffData = staff::with('activedepartments')->with(['leave_staff_applications'=>function($q)use($date){
-        //     wherePivot('start','>=',$date)->wherePivot('end','<=',$date)->where('appl_status','!=','rejected');
-        // }])->whereIn('staff.id',function($q){
-        //     $q->select('staff_id')
-        //     ->from('staff_association')
-        //     ->where('status','active')
-        //     ->whereIn('association_id',function($q1){
-        //         $q1->select('id')
-        //         ->from('associations')
-        //         ->where('Confirmed')
-        //         ->whereOr('Probationary')
-        //         ->whereOr('Contractual')
-        //         ->whereOr('Promotional Probationary')
-        //         ->whereOr('Temporary (non teaching)');
-        //     });
-        // });
-        // dd($staffData);
-        // ->get();
+       
 
 
         $staffData = Staff::with('activedepartments')
@@ -233,6 +215,7 @@ class BiometricController extends Controller
             $totalDurations[$employeeCode] = $formattedTotalDuration;
         }
 
+
         // Calculate punch counts for each employee
         $punchCounts = $logsByEmployee->map->count();
 
@@ -246,88 +229,7 @@ class BiometricController extends Controller
         ];
     }
 
-    // public function missingLogEntries(Request $request)
-    // {
-    //     if($request->input('date')==null)
-    //     {
-    //         $date=Carbon::now()->format('Y-m-d');
-           
-    //     }
-    //     else
-    //     {
-    //         $date = $request->input('date');
-    //     }
-    //     //dd($date);
-    //     // Get the current month and year
-    //     $currentMonth = Carbon::now()->month;
-    //     $currentYear = Carbon::now()->year;
-
-    //     // Retrieve log entries from the database for the specified date
-    //     // $logs = DB::connection('mysql2')
-    //     //     ->table('DeviceLogs_' . $currentMonth . '_' . $currentYear)
-    //     //     ->where('LogDate_Date', $date)
-    //     //     ->select('EmployeeCode')
-    //     //     ->distinct()
-    //     //     ->groupBy('EmployeeCode')
-    //     //     ->pluck('EmployeeCode')
-    //     //     ->toArray();
-    //     //     $logs = implode(',', $logs); // Convert the array to a comma-separated string
-    //     //     $logs = is_array($logs) ? $logs : [$logs];
-    //    // dd($logs);
-
-
-       
-
-    //         // Retrieve EmployeeCodes from the Staff table in the mysql connection
-    //         $staffData = DB::table('Staff')
-    //         ->whereNotIn('EmployeeCode',$logs)
-    //         ->select('id', 'EmployeeCode', DB::raw("CONCAT(fname, ' ', COALESCE(mname, ''), ' ', lname) AS full_name"))
-    //         ->get();
-    //             //dd($staffData);
-    //             // Return the data to the view
-    //             return response()->json($staffData);
-    // }
-    // public function missingLogEntries(Request $request)
-    // {
-    //     if($request->input('date')==null)
-    //     {
-    //         $date=Carbon::now()->format('Y-m-d');
-           
-    //     }
-    //     else
-    //     {
-    //         $date = $request->input('date');
-    //     }
-
-    //     // Get the current month and year
-    //     $currentMonth = Carbon::now()->month;
-    //     $currentYear = Carbon::now()->year;
-    //     $logs = DB::connection('mysql2')
-    //         ->table('DeviceLogs_' . $currentMonth . '_' . $currentYear)
-    //         ->where('LogDate_Date', $date)
-    //         ->select('EmployeeCode')
-    //         ->groupBy('EmployeeCode')
-    //         ->pluck('EmployeeCode')
-    //         ->toArray();
-    //         $logs = implode(',', $logs); // Convert the array to a comma-separated string
-        
-
-    //         $staff = DB::connection('mysql')->table('Staff')->get();
-
-            
-    //         $staffData = [];
-    //         foreach($logs as $l){
-    //             foreach($staff as $s){
-    //                 if($s->EmployeeCode==$l){
-    //                     whereNotIn('EmployeeCode',$logs)
-    //                     ->select('id', 'EmployeeCode', DB::raw("CONCAT(fname, ' ', COALESCE(mname, ''), ' ', lname) AS full_name"))
-    //                     ->get();  
-    //             }
-    //         }
-    //     }
-    //     return response()->json($staffData);
-     
-    // }
+    
 
 
         public function missingLogEntries(Request $request)
@@ -364,20 +266,7 @@ class BiometricController extends Controller
                 ->orderBy('department_staff.department_id')->orderBy('staff.fname')
                 ->get();
             
-            //dd($staffData);
-            // DB::connection('mysql')->table('staff')
-            //    
-            //     ->leftJoin('leave_staff_applications','leave_staff_applications.staff_id','=','staff.id')
-            //     ->leftJoin('leaves','leaves.id','=','leave_staff_applications.leave_id')
-            //     ->where('leave_staff_applications.start', '>=', $date)
-            //     ->where('leave_staff_applications.end', '<=', $date)
-            //     ->where('appl_status', '!=', 'rejected')
-                
-            //     ->whereNotIn('EmployeeCode', $logs)
-            //     ->select('staff.id','departments.dept_shortname', 'EmployeeCode', DB::raw("CONCAT(fname, ' ', COALESCE(mname, ''), ' ', lname) AS full_name"))
-            //     ->distinct('staff.id')
-            //     ->orderBy('department_staff.department_id')->orderBy('staff.fname')
-            //     ->get();
+            
             
             return response()->json($staffData);
         }

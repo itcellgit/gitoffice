@@ -39,38 +39,57 @@ class StudentStudentinternshipController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    
-    public function store(Storestudent_studentinternshipRequest $request,studentinternship $studentinternship)
+
+
+     public function store(Storestudent_studentinternshipRequest $request, studentinternship $studentinternship)
     {
-       // dd($studentinternship);
-    
-        foreach($request->student_id as $student)
-        {
-            $student=student::find($student);
-            $student_studentinternship=new student_studentinternship(); 
-            $student_studentinternship->studentinternship_id=$studentinternship->id;
-            $student_studentinternship->student_id=$student->id;
-            $student_studentinternship->save();
-             //dd($student);
-        //dd($studentinternship);
-           // $result=$studentinternship->student()->attach($student->id);
-            //dd($student_studentinternship);
+        // Iterate over each student_id in the request
+        foreach ($request->student_id as $studentId) {
+            // Check if the student is already associated with the internship
+            if (!$studentinternship->student->contains($studentId)) {
+                // Create a new relationship record
+                $student_studentinternship = new student_studentinternship();
+                $student_studentinternship->studentinternship_id = $studentinternship->id;
+                $student_studentinternship->student_id = $studentId;
+                $student_studentinternship->save();
+            }
         }
 
-        //$students=Student::get();
+        // Redirect after all students have been processed
+        return redirect('/Teaching/internship/studentinternship/'.$studentinternship->id.'/show');
+    }
+    
+    // public function store(Storestudent_studentinternshipRequest $request,studentinternship $studentinternship)
+    // {
+    //    // dd($studentinternship);
+    
+    //     foreach($request->student_id as $student)
+    //     {
+    //         $student=student::find($student);
+    //         $student_studentinternship=new student_studentinternship(); 
+    //         $student_studentinternship->studentinternship_id=$studentinternship->id;
+    //         $student_studentinternship->student_id=$student->id;
+    //         $student_studentinternship->save();
+    //          //dd($student);
+    //     //dd($studentinternship);
+    //        // $result=$studentinternship->student()->attach($student->id);
+    //         //dd($student_studentinternship);
+    //     }
+
+    //     //$students=Student::get();
    
-        // $studentinternship->student()->attach($student_id);
-         //$student_internship= new Student_studentinternship();
-        // $student_internships->student_id=$request->student_id;
-         //$student_internship->studentinternship_id=$studentinternship_id;
-        // $student_studentinternship->save();
+    //     // $studentinternship->student()->attach($student_id);
+    //      //$student_internship= new Student_studentinternship();
+    //     // $student_internships->student_id=$request->student_id;
+    //      //$student_internship->studentinternship_id=$studentinternship_id;
+    //     // $student_studentinternship->save();
     
  
-        // $student_internships->save();
-        return redirect('/Teaching/internship/studentinternship/'.$studentinternship->id.'/show');
+    //     // $student_internships->save();
+    //     return redirect('/Teaching/internship/studentinternship/'.$studentinternship->id.'/show');
 
 
-    }
+    // }
 
     /**
      * Display the specified resource.

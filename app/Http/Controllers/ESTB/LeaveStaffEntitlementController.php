@@ -37,27 +37,28 @@ class LeaveStaffEntitlementController extends Controller
                     ->select('staff_id', 'leaves.shortname',DB::raw("sum(no_of_days) as total_days"))
                     ->groupBy('leave_staff_applications.staff_id',
                               'leave_staff_applications.leave_id',
-                              'leaves.shortname')
-
-                             ->get()->toArray();
-
-       $staff=staff::with(['leave_staff_entitlements'=>function($q){
-                            $q->wherePivot('status','active');
-                    }])
-                    ->whereIn('staff.id',function($q){
-                       $q ->select('staff_id')
-                        ->from('association_staff')
-                        ->whereIn('association_id',function($q1){
-                           $q1 ->select('id')
-                            ->from('associations')
-                            ->where('asso_name','like','%Confirmed%')
-                            ->whereOr('asso_name','like','%Contractual%')
-                            ->whereOr('asso_name','like','%Probationary%')
-                            ->whereOr('asso_name','like','%Temporary%');
-                        });
-                    })
-                    ->get();
-
+                              'leaves.shortname')->get();
+      
+    $staff = Staff::with(['leave_staff_entitlements' => function ($q) {
+        $q->wherePivot('status', 'active');
+    }])->whereIn('id', function ($q) {
+        $q->select('staff_id')
+            ->from('association_staff')
+            ->whereIn('association_id', function ($q1) {
+                $q1->select('id')
+                    ->from('associations')
+                    ->where('asso_name', 'like', '%Confirmed%')
+                    ->orWhere('asso_name', 'like', '%Contractual%')
+                    ->orWhere('asso_name', 'like', '%Probationary%')
+                    ->orWhere('asso_name', 'like', '%Temporary%');
+            });
+    })
+    ->get();
+                   
+                  
+                               
+                
+                  //  dd($staff);
 
                     $data=[];
                     foreach($staff as $st)

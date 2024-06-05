@@ -46,7 +46,7 @@
                                                     <div class="flex-1">
                                                         <p class="text-sm">Total Unusual Issues</p>
                                                         <div class="flex justify-between items-center">
-                                                            <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">1,238</h5>
+                                                            <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">{{ $counts['total_unusual_issues'] }}</h5>
                                                             <span class="text-success badge bg-success/20 rounded-sm p-1"><i
                                                                 class="ti ti-trending-up leading-none"></i> +1.03%</span>
                                                         </div>
@@ -68,7 +68,7 @@
                                                     <div class="flex-1">
                                                         <p class="text-sm">Total Regular Issues</p>
                                                         <div class="flex justify-between items-center">
-                                                            <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">116</h5>
+                                                            <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">{{ $counts['total_regular_issues'] }}</h5>
                                                             <span class="text-success badge bg-success/20 rounded-sm p-1"><i
                                                                 class="ti ti-trending-up leading-none"></i> +0.36%</span>
                                                         </div>
@@ -90,7 +90,7 @@
                                                     <div class="flex-1">
                                                         <p class="text-sm">Resolved Unusual Issues</p>
                                                         <div class="flex justify-between items-center">
-                                                            <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">2,159</h5>
+                                                            <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">{{ $counts['resolved_unusual_issues'] }}</h5>
                                                             <span class="text-danger badge bg-danger/20 rounded-sm p-1"><i
                                                                 class="ti ti-trending-down leading-none"></i> -1.28%</span>
                                                         </div>
@@ -112,7 +112,7 @@
                                                     <div class="flex-1">
                                                         <p class="text-sm">Resolved Regular Issues</p>
                                                         <div class="flex justify-between items-center">
-                                                            <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">773</h5>
+                                                            <h5 class="mb-0 text-2xl font-semibold text-gray-800 dark:text-white">{{ $counts['resolved_regular_issues'] }}</h5>
                                                             <span class="text-success badge bg-success/20 rounded-sm p-1"><i
                                                                 class="ti ti-trending-down leading-none"></i>+4.25%</span>
                                                         </div>
@@ -185,28 +185,25 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($student_issues as $issue)
-                                       
-                                      
-                                    
                                         <tr class="">
                                             
-                                            <td class="font-medium space-x-2 {{(count($issue->issue_timeline)>0)?'':'bg-red-300'}}">{{ $issue->usn }}</td>
-                                            <td class="font-medium space-x-2 {{(count($issue->issue_timeline)>0)?'':'bg-red-300'}}">
+                                            <td class="font-medium space-x-2 {{ (count($issue->issue_timeline) > 0 && $issue->issue_timeline->last()->status == 'resolved') ? 'bg-green-500' : ((count($issue->issue_timeline) > 0) ? '' : 'bg-red-300') }}">{{ $issue->usn }}</td>
+                                            <td class="font-medium space-x-2 {{ (count($issue->issue_timeline) > 0 && $issue->issue_timeline->last()->status == 'resolved') ? 'bg-green-500' : ((count($issue->issue_timeline) > 0) ? '' : 'bg-red-300') }}">
                                                 @if ($issue->exam_section_issue)
                                                     {{ $issue->exam_section_issue->issues ?? '' }} - {{ $issue->exam_section_issue->remarks ?? '' }}
                                                 @else
                                                     Other - {{ $issue->other_issue ?? '-' }}
                                                 @endif
                                             </td>
-                                            <td class="font-medium space-x-2 {{(count($issue->issue_timeline)>0)?'':'bg-red-300'}}">
+                                            <td class="font-medium space-x-2 {{ (count($issue->issue_timeline) > 0 && $issue->issue_timeline->last()->status == 'resolved') ? 'bg-green-500' : ((count($issue->issue_timeline) > 0) ? '' : 'bg-red-300') }}">
                                                 @if ($issue->exam_section_issue)
                                                     {{ $issue->exam_section_issue->category_name ?? '' }} 
                                                 @elseif($issue->exam_section_issue==null)
                                                     Unusual
                                                 @endif  
                                             </td>
-                                            <td class="font-medium space-x-2 {{(count($issue->issue_timeline)>0)?'':'bg-red-300'}}">{{ $issue->description }}</td>
-                                            <td class="font-medium space-x-2 {{(count($issue->issue_timeline)>0)?'':'bg-red-300'}}">
+                                            <td class="font-medium space-x-2 {{ (count($issue->issue_timeline) > 0 && $issue->issue_timeline->last()->status == 'resolved') ? 'bg-green-500' : ((count($issue->issue_timeline) > 0) ? '' : 'bg-red-300') }}">{{ $issue->description }}</td>
+                                            <td class="font-medium space-x-2 {{ (count($issue->issue_timeline) > 0 && $issue->issue_timeline->last()->status == 'resolved') ? 'bg-green-500' : ((count($issue->issue_timeline) > 0) ? '' : 'bg-red-300') }}">
                                                 @if ($issue->exam_section_issue && $issue->exam_section_issue->staff)
                                                     {{ $issue->exam_section_issue->staff->fname }}
                                                     {{ $issue->exam_section_issue->staff->mname }}
@@ -215,7 +212,7 @@
                                                     Sudhindra T Kulkarni
                                                 @endif
                                             </td>
-                                            <td class="font-medium space-x-2 {{(count($issue->issue_timeline)>0)?'':'bg-red-300'}}">
+                                            <td class="font-medium space-x-2 {{ (count($issue->issue_timeline) > 0 && $issue->issue_timeline->last()->status == 'resolved') ? 'bg-green-500' : ((count($issue->issue_timeline) > 0) ? '' : 'bg-red-300') }}">
                                                 <div class="hs-tooltip ti-main-tooltip">
                                                     <a href="{{ route('HOD.issue_timeline.show',$issue->id) }}"
                                                        class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-primary">

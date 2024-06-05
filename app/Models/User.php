@@ -99,5 +99,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(ntissue_timeline::class, 'status_updated_by');
     }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
    
 }

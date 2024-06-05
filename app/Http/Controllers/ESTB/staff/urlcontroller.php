@@ -176,9 +176,7 @@ class urlcontroller extends Controller
             $fixed_nt_pay=fixed_nt_pay::where('staff_id',$staff->id)->orderBy('id','desc')->get();
             
             $departments = DB::table('departments')->where('status','active')->get();
-        
-
-        
+       
        return view('/PRINCIPAL/staff/staffdesignations',compact(['staff','designations','add_designations','payscales','ntpayscales','consolidated_teaching_pay','ntcpayscales','fixed_nt_pay','departments']));
        
     } 
@@ -188,6 +186,13 @@ class urlcontroller extends Controller
         $qualifications =DB::table('qualifications')->where('status','active')->get();
        
         return view('/PRINCIPAL/staff/staffqualifications',compact(['staff','qualifications']));
+    }
+
+    
+    public function stafflics(staff $staff)
+    {
+        $staff=staff::with('stafflics')->where('id',$staff->id)->first();
+        return view('/ESTB/staff/stafflics',compact('staff'));
     }
 
 }

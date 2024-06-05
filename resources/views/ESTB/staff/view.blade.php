@@ -137,6 +137,10 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12.0004 16C14.2095 16 16.0004 14.2091 16.0004 12 16.0004 9.79086 14.2095 8 12.0004 8 9.79123 8 8.00037 9.79086 8.00037 12 8.00037 14.2091 9.79123 16 12.0004 16ZM21.0049 4.00293H3.00488C2.4526 4.00293 2.00488 4.45064 2.00488 5.00293V19.0029C2.00488 19.5552 2.4526 20.0029 3.00488 20.0029H21.0049C21.5572 20.0029 22.0049 19.5552 22.0049 19.0029V5.00293C22.0049 4.45064 21.5572 4.00293 21.0049 4.00293ZM4.00488 15.6463V8.35371C5.13065 8.017 6.01836 7.12892 6.35455 6.00293H17.6462C17.9833 7.13193 18.8748 8.02175 20.0049 8.3564V15.6436C18.8729 15.9788 17.9802 16.8711 17.6444 18.0029H6.3563C6.02144 16.8742 5.13261 15.9836 4.00488 15.6463Z" fill="rgba(255,255,255,1)"></path></svg>
                                              Laptop Loan
                                         </button>
+                                        <button type="button" class="hs-tab-active:bg-primary hs-tab-active:border-primary hs-tab-active:text-white dark:hs-tab-active:bg-primary dark:hs-tab-active:border-primary dark:hs-tab-active:text-white -mr-px py-3 px-3 inline-flex items-center gap-2 bg-gray-50 text-sm font-medium text-center border text-gray-500 rounded-sm hover:text-gray-700 dark:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-gray-300" id="lic" data-hs-tab="#lic-tab" aria-controls="lic-tab" role="tab">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M17 15.2454V22.1169C17 22.393 16.7761 22.617 16.5 22.617C16.4094 22.617 16.3205 22.5923 16.2428 22.5457L12 20L7.75725 22.5457C7.52046 22.6877 7.21333 22.6109 7.07125 22.3742C7.02463 22.2964 7 22.2075 7 22.1169V15.2454C5.17107 13.7793 4 11.5264 4 9C4 4.58172 7.58172 1 12 1C16.4183 1 20 4.58172 20 9C20 11.5264 18.8289 13.7793 17 15.2454ZM12 15C15.3137 15 18 12.3137 18 9C18 5.68629 15.3137 3 12 3C8.68629 3 6 5.68629 6 9C6 12.3137 8.68629 15 12 15ZM12 13C9.79086 13 8 11.2091 8 9C8 6.79086 9.79086 5 12 5C14.2091 5 16 6.79086 16 9C16 11.2091 14.2091 13 12 13Z" fill="rgba(255,255,255,1)"></path></svg>
+                                             LIC Management
+                                        </button>
                                         </nav>
                                     </div>
                                 </div>
@@ -411,6 +415,8 @@
                                         </div>
                                         <div id="profile-settings-8" class="hidden" role="tabpanel" aria-labelledby="profile-settings-item-8">
                                             
+                                        </div>
+                                        <div id="lic-tab" class="hidden" role="tabpanel" aria-labelledby="lic">
                                         </div>
                                     </div>
                                     <div class="box-footer text-end space-x-3 rtl:space-x-reverse">
@@ -1029,6 +1035,26 @@
                                     }
                                 });
                 });
+
+                $(document).on('click','#lic',function(){
+                    //alert('Ajax calling');
+                    var staff=$('#staff').val();
+                    var url=base_url+'/ESTB/staff/'+staff+'/stafflics';
+                    //alert(url);
+                    $.ajax({
+                                url:url,
+                                method:'GET',
+                               // data:{'staff':staff},
+                                success:function(data) {
+                                    console.log(data);
+                                    $('#lic-tab').html(data).addClass('active');
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            });
+                });
+
 
         });
 

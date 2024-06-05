@@ -105,7 +105,7 @@
                                                                 </b></label>
                                                         </div>
 
-                                                        <div class="max-w-sm space-y-3 pb-6">
+                                                        {{-- <div class="max-w-sm space-y-3 pb-6">
                                                             <label for="" class="ti-form-label">Students : </label>
                                                             <div class="ti-form-checkbox-group">
                                                                 @foreach ($students as $student)
@@ -122,7 +122,22 @@
                                                                 @endforeach
 
                                                             </div>
+                                                        </div> --}}
+                                                         <div class="max-w-sm space-y-3 pb-6">
+                                                        <label for="" class="ti-form-label">Students : </label>
+                                                        <div class="ti-form-checkbox-group">
+                                                            @foreach ($students as $student)
+                                                                <div class="ti-form-checkbox-item">
+                                                                    <input type="checkbox" name="student_id[]"
+                                                                        value="{{ $student->id }}"
+                                                                        id="student{{ $student->id }}"
+                                                                        class="form-checkbox"
+                                                                        {{ $studentinternship->student->contains($student) ? 'checked disabled' : '' }}>
+                                                                    {{ $student->name }}
+                                                                </div>
+                                                            @endforeach
                                                         </div>
+                                                    </div>
 
 
                                                         

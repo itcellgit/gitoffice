@@ -67,6 +67,54 @@
                         <p class="ti-dropdown-header-title !text-white font-semibold">Notifications</p>
                         <a href="javascript:void(0)" class="badge bg-black/20 text-white rounded-sm">Mark All Read</a>
                     </div>
+                    {{-- <div class="col-span-12 lg:col-span-3">
+                        <div class="box">
+                            <div class="box-body text-center">
+                                <button type="button" class="ti-btn ti-btn-primary" id="popup">Notification</button>
+                                <div id="notification-container" style="display: none;">
+                                    @php
+                                        $hod_notifications = session()->get('hod_notifications', []);
+                                    @endphp
+                                    @if(!empty($hod_notifications))
+                                        @foreach($hod_notifications as $hod_notification)
+                                            <p class="text-red-500">{{ $hod_notification['notification_title'] }}</p>
+                                            <p>{{ $hod_notification['notification_type'] }}</p>
+                                            <p>{{ $hod_notification['description'] }}</p>
+                                            <p>{{ $hod_notification['date'] }}</p>
+                                        @endforeach
+                                    @else
+                                        <p>No notifications</p>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
+
+                    <div class="col-span-12 lg:col-span-3">
+                        <div class="box">
+                            <div class="box-body text-center">
+                                <button type="button" class="ti-btn ti-btn-primary" id="popup">Notification</button>
+                                <div id="notification-container" style="display: none;">
+                                    <!-- Loop through notifications and display them -->
+                                    @php
+                                        $hod_notifications = session()->get('hod_notifications');
+                                    @endphp
+                                    @if(session()->has('hod_notifications') && is_array($hod_notifications) && count($hod_notifications) > 0)
+                                        @foreach($hod_notifications as $hod_notifications)
+                                            <p class="text-red-500">{{ $hod_notifications->notification_title }}</p>
+                                            <p>{{ $hod_notifications->notification_type }}</p>
+                                            <p class="text-blue-500">{{ $hod_notifications->description }}</p>
+                                            <p>{{ $hod_notifications->date }}</p>
+                                        @endforeach
+                                    @else
+                                        <p>No notifications</p>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    
                     <!--<div class="ti-dropdown-divider divide-y divide-gray-200 dark:divide-white/10">
                         <div class="py-2 first:pt-0 last:pb-0" id="allNotifyContainer">
                         <div class="ti-dropdown-item relative header-box">
@@ -198,3 +246,13 @@
     </nav>
 </header>
 
+<script>
+    document.getElementById('popup').addEventListener('click', function() {
+        var notificationContainer = document.getElementById('notification-container');
+        if (notificationContainer.style.display === 'none' || notificationContainer.style.display === '') {
+            notificationContainer.style.display = 'block';
+        } else {
+            notificationContainer.style.display = 'none';
+        }
+    });
+</script>

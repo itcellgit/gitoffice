@@ -265,8 +265,9 @@
                                                              @endforeach
                                                             
                                                             </span></td>
-                                                            <td><span>{{\Carbon\Carbon::parse( $st->date_of_increment)->format('d-M-Y') }}</span></td>
-                                                            {{-- <td  class="border border-gray-300 px-4 py-2"><span>{{$st->date_of_increment}}</span></td> --}}
+                                                            <td><span>{{ Carbon\Carbon::parse($data[$st->id]['wef'])->format('d-M-Y') }}</span></td>
+                                                            
+                                                             {{-- <td  class="border border-gray-300 px-4 py-2"><span>{{$st->date_of_increment}}</span></td> --}}
                                                             <td  class="border border-gray-300 px-4 py-2"><span>{{'₹'.$data[$st->id]['basic']."+".'₹'.$data[$st->id]['incremente_value']."+ ".'₹'.$data[$st->id]['agp'].'='.'₹'.$data[$st->id]['basic_agp_incremented_value']}}</span></td>
                                                     
                                                             <td  class="border border-gray-300 px-4 py-2"><span>{{'₹'.number_format($data[$st->id]['basic_agp_incremented_value'])}}</span></td>

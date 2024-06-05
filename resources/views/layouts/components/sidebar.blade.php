@@ -123,9 +123,31 @@
                                     <i class="ri ri-arrow-right-s-line side-menu__angle"></i>
                                 </a>
                                 <ul class="slide-menu child1">
-                                    <li class="slide"><a href="javascript:void(0);" class="side-menu__item">Salary Types</a></li>
+
+                                    <li class="slide">
+                                        <a href="{{url('ESTB/payscales')}}" class="side-menu__item">
+                                            Salary Types
+                                        </a>
+                                    </li>
+                                    <li class="slide">
+                                        <a href="{{url('ESTB/salaries/salarygroups')}}" class="side-menu__item">
+                                            Salaryhead Groups
+                                        </a>
+                                    </li>
+                                    <li class="slide">
+                                        <a href="{{url('ESTB/salaries/salaryheads')}}" class="side-menu__item">
+                                            Salary Heads
+                                        </a>
+                                    </li>
+                                    <li class="slide">
+                                        <a href="{{url('ESTB/salaries/lics')}}" class="side-menu__item">
+                                            LIC Management
+                                        </a>
+                                    </li>
+                                    
+                                    {{-- <li class="slide"><a href="javascript:void(0);" class="side-menu__item">Salary Types</a></li>
                                     <li class="slide"><a href="javascript:void(0);" class="side-menu__item">Salary Head Groups</a></li>
-                                    <li class="slide"><a href="javascript:void(0);" class="side-menu__item">Salary Heads</a></li>
+                                    <li class="slide"><a href="javascript:void(0);" class="side-menu__item">Salary Heads</a></li> --}}
                                     <li class="slide"><a href="javascript:void(0);" class="side-menu__item">Monthwise Salary</a></li>
                                     <li class="slide"><a href="{{url('ESTB/autonomous_allowance')}}" class="side-menu__item">Autonomous Grading</a></li>
                                     <li class="slide"><a href="javascript:void(0);" class="side-menu__item">Leaves Encashment</a></li>
@@ -156,6 +178,15 @@
                                      Biometric
                                </a>
                            </li>
+                           <ul class="slide-menu child1">
+                            <li class="slide side-menu__label1"><a href="javascript:void(0)">Co-operative Society</a></li>
+                            <li class="slide">
+                                <a href="{{url('ESTB/shares')}}" class="side-menu__item">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M11 14.0619V20H13V14.0619C16.9463 14.554 20 17.9204 20 22H4C4 17.9204 7.05369 14.554 11 14.0619ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13Z" fill="rgba(255,255,255,1)"></path></svg>
+                                    Shares
+                                </a>
+                            </li>
+                        </ul>
 
                             {{-- <li class="slide">
                                 <a href="{{url('ESTB/tedheads')}}" class="side-menu__item">

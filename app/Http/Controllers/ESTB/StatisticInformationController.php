@@ -361,83 +361,127 @@ $isadditional = $request->input('isadditional');
 }
 public function statistic_information(Request $request)
 {
-    // $emp_type = employeeType::where('employee_type', $request->employee_type)->first();
    // dd($request);
-    $designation=DB::table('designations')
-    ->join('designation_staff','designation_id','=','designations.id')
-    ->join('staff','staff.id','=','designation_staff.staff_id')
-    ->join('employee_types','employee_types.staff_id','=','staff.id')
-    ->where('employee_types.employee_type','=','Teaching')
-    ->select('designations.*','design_name')
-    ->get();
+  
 
-    $teaching_payscales = teaching_payscale::where('status', 'active')
-    ->orderBy('payscale_title')
-    ->get();
+    $activeDesignations = designation::where('status', 'active')->get();
+    $activeTeachingPayscales = DB::table('teaching_payscales')->where('status', 'active')->get();
+    $religions =religion::where('status','active')->get();
+    $caste_categories = castecategory::where('status','active')->get();
 
-    $religions = DB::table('religions')
-    ->join('castecategories', 'religions.id', '=', 'castecategories.religion_id')
-    ->join('staff', 'staff.religion_id', '=', 'religions.id')
-    ->where('religions.status', 'active')
+
+    //dd($activeDesignations);
+
+    $staffQuery = staff::query()
+        ->join('designation_staff', 'designation_staff.staff_id', '=', 'staff.id')
+        ->join('designations', 'designations.id', '=', 'designation_staff.designation_id')
+        ->join('teaching_payscales', 'teaching_payscales.id', '=', 'designations.id')
+        ->select(
+            'staff.id',
+            'designations.design_name',
+            'designations.isvacational',
+            DB::raw("CASE WHEN designations.isvacational = 1 THEN 'Vacational' ELSE 'Non-Vacational' END AS designation_type"),
+            'teaching_payscales.payscale_title'
+        )
+        ->where('designations.isvacational', 1)
+        ->get();
+        //dd($staffQuery);
+
+        $religioncounts = staff::query()
+    ->join('religions', 'staff.religion_id', '=', 'religions.id')
+    ->join('castecategories', 'staff.castecategory_id', '=', 'castecategories.id')
     ->select(
-        'religions.religion_name as religion',
-        // 'castecategories.name as castecategory',
-        DB::raw('COUNT(CASE WHEN staff.gender = "M" THEN 1 ELSE NULL END) as male_count'),
-        DB::raw('COUNT(CASE WHEN staff.gender = "F" THEN 1 ELSE NULL END) as female_count')
+        'religions.religion_name',
+        'castecategories.caste_name AS castecategory_name',
+        DB::raw('SUM(CASE WHEN staff.gender = "Male" THEN 1 ELSE 0 END) AS male_count'),
+        DB::raw('SUM(CASE WHEN staff.gender = "Female" THEN 1 ELSE 0 END) AS female_count')
     )
-    ->groupBy('religions.religion_name', )
+    ->where('religions.status', 'active')
+    ->where('castecategories.status', 'active')
+    ->groupBy('religions.religion_name', 'castecategories.caste_name')
     ->get();
-    
 
-    $designation_id = $request->input('designations');
-    $castecategories = $request->input('castecategory_id');
-$religion = $request->input('religion_id');
-$gender = $request->input('gender');
-$payscale_id = $request->input('payscale_id');
 
-    $query = Staff::query();
-$query->join('designation_staff', function ($join) {
-            $join->on('designation_staff.staff_id', '=', 'staff.id')
-                ->where('designation_staff.status', 'active');
-        });
+        //dd($counts);
+        $staffCount = $staffQuery->count();
 
-$query->join('designations', 'designations.id', '=', 'designation_staff.designation_id');
 
-        $query->join('religions', 'religions.id', '=', 'staff.religion_id')
-            ->join('employee_types', 'employee_types.staff_id', '=', 'staff.id');
-
-     $query->join('teaching_payscales', 'teaching_payscales.id', '=', 'designations.id')
-            ->where('teaching_payscales.status', 'active');
-            
-    
-
-            if ($designation_id) {
-                $query->whereIn('designations.id', $designation_id);
-            }
-    
-            if ($religion !== 'all') {
-                $query->where('religions.id', $religion)
-                    ->select('staff.*', 'religions.religion_name');
-            }
-            if ($gender !== 'all') {
-                $query->where('staff.gender', $gender);
-            }
-
-            if ($payscale_id) {
-                $query->whereIn('teaching_payscales.id', $payscale_id);
-            }
-
-           
-            $staff = $query->get();
-           
-            
-
-           $staffCount = $staff->count();
-
+       
    
-    return view('ESTB.staff.generatestatistics', compact('staff','staffCount','designation', 'teaching_payscales','religions'));
+    // return view('ESTB.staff.generatestatistics', compact('groupedData', 'staffCount', 'designation', 'teaching_payscales', 'religions'));
+    return view('ESTB.staff.generatestatistics', compact('activeDesignations', 'activeTeachingPayscales', 'staffQuery', 'religions', 'caste_categories','religioncounts'));
 
 }
+
+
+
+
+
+// public function statistic_information(Request $request)
+// {
+//     $activeDesignations = designation::where('status', 'active')->get();
+//     $activeTeachingPayscales = DB::table('teaching_payscales')->where('status', 'active')->get();
+//     $religions = religion::where('status', 'active')->get();
+//     $caste_categories = castecategory::where('status', 'active')->get();
+
+//     $staffQuery = staff::query()
+//         ->join('designation_staff', 'designation_staff.staff_id', '=', 'staff.id')
+//         ->join('designations', 'designations.id', '=', 'designation_staff.designation_id')
+//         ->join('teaching_payscales', 'teaching_payscales.id', '=', 'designations.id')
+//         ->select(
+//             'designations.design_name',
+//             'teaching_payscales.payscale_title',
+//             'staff.gender',
+//             'staff.castecategory_id'
+//         )
+//         ->where('designations.isvacational', 1)
+//         ->get();
+
+//     $groupedData = [];
+//     foreach ($staffQuery as $staff) {
+//         $key = $staff->design_name . '|' . $staff->payscale_title;
+//         if (!isset($groupedData[$key])) {
+//             $groupedData[$key] = [
+//                 'GM' => ['M' => 0, 'F' => 0],
+//                 'SC' => ['M' => 0, 'F' => 0],
+//                 'ST' => ['M' => 0, 'F' => 0],
+//                 'OBC' => ['M' => 0, 'F' => 0],
+//                 'total' => ['M' => 0, 'F' => 0]
+//             ];
+//         }
+//         $category = match ($staff->castecategory_id) {
+//             1 => 'GM',
+//             2 => 'SC',
+//             3 => 'ST',
+//             4 => 'OBC',
+//             default => 'Others'
+//         };
+//         $gender = $staff->gender == 'Male' ? 'M' : 'F';
+//         // $groupedData[$key][$category][$gender]++;
+//         $groupedData[$key]['total'][$gender]++;
+//     }
+
+//     $totals = [
+//         'GM' => ['M' => 0, 'F' => 0],
+//         'SC' => ['M' => 0, 'F' => 0],
+//         'ST' => ['M' => 0, 'F' => 0],
+//         'OBC' => ['M' => 0, 'F' => 0],
+//         'total' => ['M' => 0, 'F' => 0]
+//     ];
+
+//     foreach ($groupedData as $data) {
+//         foreach (['GM', 'SC', 'ST', 'OBC'] as $category) {
+//             $totals[$category]['M'] += $data[$category]['M'];
+//             $totals[$category]['F'] += $data[$category]['F'];
+//         }
+//         $totals['total']['M'] += $data['total']['M'];
+//         $totals['total']['F'] += $data['total']['F'];
+//     }
+
+//     return view('ESTB.staff.generatestatistics', compact('groupedData', 'totals'));
+// }
+
+
 
 
 }

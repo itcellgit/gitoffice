@@ -55,6 +55,11 @@ use App\Http\Controllers\ESTB\RenumerationheadsController;
 use App\Http\Controllers\ESTB\NTpayscaleController;
 use App\Http\Controllers\ESTB\NtcpayscaleController;
 use App\Http\Controllers\ESTB\SalaryHeadsController;
+use App\Http\Controllers\ESTB\SalaryHeadController;
+use App\Http\Controllers\ESTB\SalaryGroupController;
+use App\Http\Controllers\ESTB\LicController;
+use App\Http\Controllers\ESTB\ShareController;
+use App\Http\Controllers\ESTB\PayscaleSalaryHeadController;
 use App\Http\Controllers\ESTB\TdsheadsController;
 use App\Http\Controllers\ESTB\TaxSlabController;
 use App\Http\Controllers\ESTB\TaxHeadsController;
@@ -65,6 +70,8 @@ use App\Http\Controllers\ESTB\staff\StaffDesignationsController;
 use App\Http\Controllers\ESTB\staff\StaffAssociationsController;
 use App\Http\Controllers\ESTB\staff\StaffDepartmentController;
 use App\Http\Controllers\ESTB\staff\QualificationStaffController;
+use App\Http\Controllers\ESTB\staff\StaffLicController;
+use App\Http\Controllers\ESTB\StafflicTransactionController;
 use App\Http\Controllers\ESTB\staff\urlcontroller;
 //filtering (searching controllers)
 use App\Http\Controllers\ESTB\DesignationFilteringController;
@@ -522,8 +529,9 @@ Route::middleware(['cors','auth','role:'.UserRoles::NONTEACHING->value, 'prevent
   Route::patch('/Non-Teaching/{staff}/leave/application/update',[LeaveStaffApplicationsController::class,'nt_leave_update'])->name('Non-Teaching.leave_application.update');
   Route::post('/Non-Teaching/{staff}/validate_leave_appln',[LeaveStaffApplicationsController::class,'nt_leave_validateleave']);
 
+  Route::post('/notifications',[LeaveStaffApplicationsController::class,'fetchNotifications'])->name('notifications.fetch');
 
-
+  
   //Route::get('/Non-Teaching/notifications',[NotificationsController::class,'notification_index'])->name('Non-Teaching.notifications');
   //Route::post('/Non-Teaching/notifications/create',[NotificationsController::class,'store'])->name('Non-Teaching.notification.store');
   // Route::patch('/Non-Teaching/notifications/update/{notification}',[NotificationsController::class,'update'])->name('Non-Teaching.notification.update');
@@ -691,6 +699,9 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     Route::get('/ESTB/staff/{staff}/festivaladvance',[urlcontroller::class,'festival_advance'])->name('ESTB.staff.festival_advance');
     Route::get('/ESTB/staff/{staff}/laptoploan',[urlcontroller::class,'laptoploan'])->name('ESTB.staff.laptoploan');
     Route::get('/ESTB/staff/{staff}/annualincrement',[urlcontroller::class,'annual_increment'])->name('ESTB.staff.annualIncrement');
+    Route::get('/ESTB/staff/{staff}/stafflics',[urlcontroller::class,'stafflics'])->name('ESTB.staff.stafflics');
+    Route::get('/ESTB/staff/{staff}/stafflics/{stafflic}/stafflic_transactions',[urlcontroller::class,'stafflic_transactions'])->name('ESTB.staff.stafflics.stafflic_transactions');
+   
 
     /****************** */
 
@@ -743,6 +754,18 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
     // Route::get('/ESTB/staff/getNTCpayscale_list',[GetNTCPayscaleListController::class,'getNTCPayscaleList'])->name('ESTB.staff.getNTCpayscale_list');
     Route::get('/ESTB/staff/getstaffpay_list',[GetStaffPay_list::class,'getstaffpays'])->name('ESTB.staff.getstaffpay.list');
 
+    //staff LIC Controller
+    Route::post('/ESTB/staff/{staff}/stafflics/create',[StaffLicController::class,'store'])->name('ESTB.staff.stafflics.store');
+    Route::get('/ESTB/staff/{staff}/stafflics/show',[StaffLicController::class,'show'])->name('ESTB.stafflic_transactions.show');
+    Route::patch('/ESTB/staff/{staff}/stafflics/{stafflic}/update',[StaffLicController::class,'update'])->name('ESTB.staff.stafflics.update');
+    Route::delete('/ESTB/staff/{staff}/stafflics/{stafflic}/destroy',[StaffLicController::class,'destroy'])->name('ESTB.staff.stafflics.destroy');
+   
+    //staff LIC Controller
+    //Route::get('ESTB/staff/{staff}/stafflic_transactions',[StafflicTransactionController::class,'index'])->name('ESTB.Staff.Stafflics.stafflic_transactions');
+    Route::post('/ESTB/staff/stafflics/stafflic_transactions/create',[StafflicTransactionController::class,'store'])->name('ESTB.staff.stafflics.stafflic_transactions.store');
+    Route::patch('/ESTB/staff/{staff}/stafflics/{stafflic}/stafflic_transactions/update',[StafflicTransactionController::class,'update'])->name('ESTB.staff.stafflics.stafflic_transactions.update');
+    Route::delete('/ESTB/staff/{staff}/stafflics/{stafflic}/stafflic_transactions/destroy',[StafflicTransactionController::class,'destroy'])->name('ESTB.staff.stafflics.stafflic_transactions.destroy');
+   
     //leave routs
     //<1!-- Leave rules routes-->
     Route::get('/ESTB/leaves',[LeaveController::class,'index'])->name('ESTB.leaves.index');
@@ -783,6 +806,43 @@ Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-h
    Route::get('/ESTB/renumerations/renumedetails',[RenumerationheadsController::class,'filterrenume_information'])->name('ESTB.renumerations.renumedetails');
    Route::get('/ESTB/renumerations/indexfiltering', [RenumerationheadsController::class,'indexFiltering'])->name('ESTB.renumerations.indexfiltering');
 
+   //Payscales-Salarytypes Controllers
+   Route::get('/ESTB/payscales',[PayscaleController::class,'index'])->name('ESTB.payscales');
+   Route::post('/ESTB/payscale/create',[PayscaleController::class,'store'])->name('ESTB.payscales.store');
+   Route::get('/ESTB/payscale/{payscale}/show',[PayscaleController::class,'show'])->name('ESTB.payscale.payscalesalaryheads.show');
+   Route::patch('/ESTB/payscale/{payscales}/update',[PayscaleController::class,'update'])->name('ESTB.payscales.update');
+   Route::delete('/ESTB/payscale/{payscales}/destroy', [PayscaleController::class, 'destroy'])->name('ESTB.payscales.destroy');
+   
+   //Salarygroup controller
+   Route::get('/ESTB/salaries/salarygroups',[SalaryGroupController::class,'index'])->name('ESTB.salaries.salarygroups');
+   Route::post('/ESTB/salaries/salarygroups/create',[SalaryGroupController::class,'store'])->name('ESTB.salaries.salarygroups.store');
+   Route::patch('/ESTB/salaries/salarygroups/{salary_groups}/update',[SalaryGroupController::class,'update'])->name('ESTB.salaries.salarygroups.update');
+   Route::delete('/ESTB/salaries/salarygroups/{salary_groups}/destroy', [SalaryGroupController::class, 'destroy'])->name('ESTB.salaries.salarygroups.destroy');
+
+   
+   //Salaryheads controller
+   Route::get('/ESTB/salaries/salaryheads',[SalaryHeadController::class,'index'])->name('ESTB.salaries.salaryheads');
+   Route::post('/ESTB/salaries/salaryheads/create',[SalaryHeadController::class,'store'])->name('ESTB.salaries.salaryheads.store');
+   Route::patch('/ESTB/salaries/salaryheads/{salary_heads}/update',[SalaryHeadController::class,'update'])->name('ESTB.salaries.salaryheads.update');
+   Route::delete('/ESTB/salaries/salaryheads/{salary_heads}/destroy', [SalaryHeadController::class, 'destroy'])->name('ESTB.salaries.salaryheads.destroy');
+   
+   //Mapping of Salaryheads controller
+   Route::post('/ESTB/payscale/{payscale}/payscalesalaryheads/create',[PayscaleSalaryHeadController::class,'store'])->name('ESTB.payscale.payscalesalaryheads.store');
+   Route::patch('/ESTB/payscale/{payscale}/payscalesalaryheads/update',[PayscaleSalaryHeadController::class,'update'])->name('ESTB.payscale.payscalesalaryheads.update');
+   Route::delete('/ESTB/payscale/{payscale}/payscalesalaryheads/destroy',[PayscaleSalaryHeadController::class,'destroy'])->name('ESTB.payscale.payscalesalaryheads.destroy'); 
+
+   //LIC Controller
+   Route::get('/ESTB/salaries/lics',[LicController::class,'index'])->name('ESTB.salaries.lics');
+   Route::post('/ESTB/salaries/lics/create',[LicController::class,'store'])->name('ESTB.salaries.lics.store');
+   Route::patch('/ESTB/salaries/lics/{lic}/update',[LicController::class,'update'])->name('ESTB.salaries.lics.update');
+   Route::delete('/ESTB/salaries/lics/{lic}/destroy',[LicController::class,'destroy'])->name('ESTB.salaries.lics.destroy');
+   
+   //Shares Controller
+   Route::get('/ESTB/shares',[ShareController::class,'index'])->name('ESTB.shares');
+   Route::post('/ESTB/shares/create',[ShareController::class,'store'])->name('ESTB.shares.store');
+   Route::patch('/ESTB/shares/{share}/update',[ShareController::class,'update'])->name('ESTB.shares.update');
+   Route::delete('/ESTB/shares/{share}/destroy',[ShareController::class,'destroy'])->name('ESTB.shares.destroy');
+  
 
     Route::get('/ESTB/salaryheads',[SalaryHeadsController::class,'index'])->name('ESTB.salaryheads');
     Route::post('/ESTB/salaryheads/create',[SalaryHeadsController::class,'store'])->name('ESTB.salaryheads.store');

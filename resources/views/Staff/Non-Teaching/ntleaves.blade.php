@@ -130,23 +130,20 @@
 
                                     </script>
                                 @else   
-                                <script>
-                                    $(document).ready(function(){
-                                        $('#view_leave').trigger('click');//css('disply','block');
-                                        // $('#type').val($('#leave_type').val());
-                                        // $('#from_date').val($('#start_date').val());
-                                        // $('#leave_reason').val($('#reason').val());
-                                        // //alert();
-                                        // $('#alternate').val($('#alternative').val());
-                                    });
-                                    
-
-
+                                    <script>
+                                        $(document).ready(function(){
+                                            $('#view_leave').trigger('click');//css('disply','block');
+                                            // $('#type').val($('#leave_type').val());
+                                            // $('#from_date').val($('#start_date').val());
+                                            // $('#leave_reason').val($('#reason').val());
+                                            // //alert();
+                                            // $('#alternate').val($('#alternative').val());
+                                        });
                                     </script>
                                 @endif
                             @endif
-
                         @endif
+
                     </div>
                     <div class="grid grid-cols-12 gap-x-6">
                         <div class="col-span-12 xl:col-span-12">

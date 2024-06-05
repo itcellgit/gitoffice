@@ -238,7 +238,7 @@
                                                             <div class="timeline-body">
                                                                 <div class="box">
                                                                     <div class="box-body p-4">
-                                                                        {{-- @foreach ($student_issues as $issue) --}}
+                                                                        
                                                                         <h6 class="font-semibold text-base mb-2">
                                                                             @if ($student_issue->exam_section_issue)
                                                                                 {{ $student_issue->exam_section_issue->issues ?? '' }}
@@ -252,11 +252,7 @@
                                                                         <p
                                                                             class="text-xs text-gray-500 dark:text-white/70">
                                                                             {{ $student_issue->description }}</p>
-                                                                        {{-- @else
-                                                                             <h6 class="font-semibold text-base mb-2">No student issue found</h6> --}}
-                                                                        {{-- @endforeach --}}
-                                                                        {{-- <h6 class="font-semibold text-base mb-2">Marsha Mellow updated his status</h6> --}}
-                                                                        {{-- <p class="text-xs text-gray-500 dark:text-white/70">Nonumy erat nonumy dolores duo ea sit, ipsum sed amet aliquyam magna kasd at. Dolor erat sit sed sea et dolor, justo dolor ipsum dolore voluptua. Sed ipsum sed.</p> --}}
+                                                                    
                                                                     </div>
                                                                     <div class="box-footer bg-transparent p-4">
                                                                         <div
@@ -276,17 +272,15 @@
                                                                                             {{ $student_issue->exam_section_issue->staff->mname }}
                                                                                             {{ $student_issue->exam_section_issue->staff->lname }}
                                                                                         @else
-                                                                                            @if ($student_issue->exam_section_issue_id == '0')
+                                                                                            @if ($student_issue->exam_section_issue_id == '')
                                                                                                 Sudhindra T Kulkarni
-                                                                                            @else
-                                                                                                No staff assigned
                                                                                             @endif
                                                                                         @endif
-                                                                                        {{-- Json Taylor --}}
+                                                                                        
                                                                                     </p>
                                                                                     <p
                                                                                         class="text-xs text-gray-500 dark:text-white/70">
-                                                                                        {{-- 20 min ago --}}
+                                                                                        
                                                                                         {{ $student_issue->created_at->diffForHumans() }}
                                                                                     </p>
                                                                                 </div>
@@ -302,13 +296,15 @@
                                                             </div>
                                                         </div>
                                                         <div class="bg-warning text-white timeline-icon">
-                                                            <i class="ri ri-briefcase-4-line text-lg leading-none"></i>
+                                                            <!-- <i class="ri ri-briefcase-4-line text-lg leading-none"></i> -->
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M14 14.252V22H4C4 17.5817 7.58172 14 12 14C12.6906 14 13.3608 14.0875 14 14.252ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM18.5858 17L16.7574 15.1716L18.1716 13.7574L22.4142 18L18.1716 22.2426L16.7574 20.8284L18.5858 19H15V17H18.5858Z"></path></svg>
+
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="timeline">
                                                     @if ($student_issue->issue_timeline && $student_issue->issue_timeline->count() > 0)
-                                                        {{-- @foreach ($student_issue->issue_timelines as $index => $timeline) --}}
+                                                        
                                                         @for ($index = 0; $index < count($student_issue->issue_timeline); $index++)
                                                             @php
                                                                 $timeline = $student_issue->issue_timeline[$index];
@@ -328,9 +324,6 @@
                                                                                     class="text-xs text-gray-500 dark:text-white/70">
                                                                                     {{ $timeline->interaction ?? '' }}
                                                                                 </p>
-
-                                                                                {{-- <h6 class="font-semibold text-base mb-2"></h6>
-                                                                                    <p class="text-xs text-gray-500 dark:text-white/70">Invidunt dolor justo gubergren sit voluptua ipsum lorem sanctus, justo dolores dolor dolore stet justo dolor. Eos ipsum rebum diam..</p> --}}
                                                                             </div>
                                                                             <div class="box-footer bg-transparent p-4">
                                                                                 <div
@@ -348,13 +341,11 @@
                                                                                                 @if ($timeline->user && $timeline)
                                                                                                     {{ $timeline->user->role == 'Head of Department' ? $timeline->user->role : $timeline->user->email }}
                                                                                                 @endif
-                                                                                                {{-- Anderson Itumay --}}
+                                                                                                
 
                                                                                             </p>
                                                                                             <p
                                                                                                 class="text-xs text-gray-500 dark:text-white/70">
-                                                                                                {{-- 11 Dec 2022 --}}
-
                                                                                                 {{ $timeline->date_of_interaction ?? '' }}
                                                                                             </p>
                                                                                         </div>
@@ -371,10 +362,9 @@
                                                                 </div>
 
                                                                 <div class="bg-secondary text-white timeline-icon">
-                                                                    <i class="ri-mail-line text-lg leading-none"></i>
-                                                                    {{-- <div class="{{ $index % 2 == 0 ? 'bg-warning' : 'bg-secondary' }} text-white timeline-icon">
-                                                                        <i class="ri {{ $index % 2 == 0 ? 'ri-mail-line' : 'ri-briefcase-4-line' }} text-lg leading-none"></i>
-                                                                    </div> --}}
+                                                                    <!-- <i class="ri-mail-line text-lg leading-none"></i> -->
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M6.45455 19L2 22.5V4C2 3.44772 2.44772 3 3 3H21C21.5523 3 22 3.44772 22 4V18C22 18.5523 21.5523 19 21 19H6.45455ZM5.76282 17H20V5H4V18.3851L5.76282 17ZM8 10H16V12H8V10Z"></path></svg>
+                                                                   
                                                                 </div>
                                                             </div>
                                                         @endfor

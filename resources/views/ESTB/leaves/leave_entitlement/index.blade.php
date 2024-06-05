@@ -134,16 +134,16 @@
                                                                     @endforeach
                                                                 @foreach ($leave_types_taken as $l_type)
                                                                 @if(isset($st[$l_type->shortname]))
-                                                                <td scope="col" class="dark:text-white/80 font-bold">{{$st[$l_type->shortname]['availed']}}</td>
+                                                                <td scope="col" class="dark:text-white/80 font-bold text-center !important">{{$st[$l_type->shortname]['availed']}}</td>
                                                                 @else
-                                                                <td class="dark:text-white/80 font-bold" style="text-align: center;">0</td>
+                                                                <td class="dark:text-white/80 font-bold text-center !important" >0</td>
                                                                 @endif
                                                                 @endforeach
                                                                 @foreach ($leave_types as $l_type)
                                                                 @if(isset($st[$l_type->shortname]))
-                                                                <td  scope="col" class="dark:text-white/80 font-bold">{{$st[$l_type->shortname]['balance']}}</td>
+                                                                <td  scope="col" class="dark:text-white/80 font-bold text-center !important">{{$st[$l_type->shortname]['balance']}}</td>
                                                                 @else
-                                                                <td class="dark:text-white/80 font-bold text-center">0</td>
+                                                                <td class="dark:text-white/80 font-bold text-center  !important">0</td>
                                                                 @endif
                                                                 @endforeach
                                                                 <td></td>

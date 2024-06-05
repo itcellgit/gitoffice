@@ -65,7 +65,7 @@
                         <div class="col-span-12 xl:col-span-12 mt-10">
                             <!--For filtering the data as per requirement-->
                            <div class="col-span-2 xl:col-span-2">
-                                <div class="box box-sm">
+                                {{-- <div class="box box-sm">
                                     <div style="display: flex; align-items: center;">
                                         <div style="display: flex; flex-direction: column;">
                                             <label for="start_date" class="ti-form-label font-bold mx-3 mt-3">Start Date:</label>
@@ -75,11 +75,13 @@
                                             <label for="end_date" class="ti-form-label font-bold mx-3 mt-3">End Date:</label>
                                             <input type="date" id="end_date" class="mx-2" placeholder="To Date" >
                                         </div>
+
+                                        
                                         <!-- Search button -->
                                         <div class="flex">
                                             <button id="filterBtn" class="bg-blue-500 text-white px-4 mt-10 py-2 rounded-md focus:outline-none hover:bg-blue-700">Search</button>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     
                                 </div>
                                
@@ -88,22 +90,22 @@
                              <!--Filtering the data Ends-->
                             <div class="box">
                                 <div class="box-body">
-                                        <p class="flex items-center font-semibold font-bold text-primary hover:text-primary dark:text-primary truncate">
+                                        {{-- <p class="flex items-center font-bold text-primary hover:text-primary dark:text-primary truncate">
                                             Total Staff : <span class="text-black  text-lg">{{ $staffCount }}</span>
-                                        </p>
+                                        </p> --}}
                                     <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
                                         <div class="box">
                                             <div class="flex justify-end mt-4">
                                                 <button id="exportToExcel" class="bg-green-500 text-white px-4 py-2 rounded-md focus:outline-none">Export to Excel</button>
                                             </div>
                                             
-                                            <table  id="staff_information"class="ti-custom-table ti-custom-table-head whitespace-nowrap">
+                                            <table class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                                 <thead>
                                                     <tr>
                                                         <th>SI. No.</th>
                                                         <th>Designation</th>
-                                                        <th>Scale of Pay</th>
                                                         <th>Vac.</th>
+                                                        <th>Scale of Pay</th>
                                                         <th colspan="2">GM</th>
                                                         <th colspan="2">SC</th>
                                                         <th colspan="2">ST</th>
@@ -128,46 +130,61 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach($staff as $index => $member)
+                                                    @foreach($staffQuery as $index => $member)
                                                         <tr>
                                                             <td>{{ $index + 1 }}</td>
-                                                            <td>{{ $member->designation->design_name }}</td>
-                                                            <td>{{ $member->teaching_payscales->payscale_title }}</td>
+                                                            <td>{{ $member->design_name }}</td>
                                                             <td>{{ $member->is_vacational ? 'Yes' : 'No' }}</td>
-                                                            <td>{{ $member->where('caste', 'GM')->where('gender', 'M')->count() }}</td>
-                                                            <td>{{ $member->where('caste', 'GM')->where('gender', 'F')->count() }}</td>
-                                                            <td>{{ $member->where('caste', 'SC')->where('gender', 'M')->count() }}</td>
-                                                            <td>{{ $member->where('caste', 'SC')->where('gender', 'F')->count() }}</td>
-                                                            <td>{{ $member->where('caste', 'ST')->where('gender', 'M')->count() }}</td>
-                                                            <td>{{ $member->where('caste', 'ST')->where('gender', 'F')->count() }}</td>
-                                                            <td>{{ $member->where('caste', 'OBC')->where('gender', 'M')->count() }}</td>
-                                                            <td>{{ $member->where('caste', 'OBC')->where('gender', 'F')->count() }}</td>
-                                                            <td>{{ $member->whereIn('caste', ['GM', 'SC', 'ST', 'OBC'])->where('gender', 'M')->count() }}</td>
-                                                            <td>{{ $member->whereIn('caste', ['GM', 'SC', 'ST', 'OBC'])->where('gender', 'F')->count() }}</td>
-                                                        </tr>
+                                                            <td>{{ $member->payscale_title }}</td>
                                                     @endforeach
-                                                </tbody>
-                                                {{-- <tfoot>
+                                                    {{-- {{$religioncounts}} --}}
+                                                        {{-- @foreach($counts as $index => $member)
+
+                                                            <td>{{ $counts[$member->castecategory_id]['M'] ?? 0 }}</td>
+                                                            <td>{{ $counts[$member->castecategory_id]['F'] ?? 0 }}</td>
+                                                            <td>{{ $counts[$member->castecategory_id]['M'] ?? 0 }}</td>
+                                                            <td>{{ $counts[$member->castecategory_id]['F'] ?? 0 }}</td>
+                                                            <td>{{ $counts[$member->castecategory_id]['M'] ?? 0 }}</td>
+                                                            <td>{{ $counts[$member->castecategory_id]['F'] ?? 0 }}</td>
+                                                            <td>{{ $counts[$member->castecategory_id]['M'] ?? 0 }}</td>
+                                                            <td>{{ $counts[$member->castecategory_id]['F'] ?? 0 }}</td>
+                                                            <td>{{ array_sum(array_column($counts[$member->castecategory_id], 'M')) }}</td>
+                                                            <td>{{ array_sum(array_column($counts[$member->castecategory_id], 'F')) }}</td>
+                                                        @endforeach --}}
+                                                        
+                                                    {{-- @foreach($religioncounts as $cn)
+                                                        <td>{{ $cn->male_count }}</td>
+                                                        <td>{{ $cn->female_count }}</td>
+                                                        <td>{{ $cn->male_count }}</td>
+                                                        <td>{{ $cn->female_count }}</td>
+                                                        <td>{{ $cn->male_count }}</td>
+                                                        <td>{{ $cn->female_count }}</td>
+                                                        <td>{{ $cn->male_count }}</td>
+                                                        <td>{{ $cn->female_count }}</td>
+                                                        <td>{{ $cn->male_count }}</td>
+                                                        <td>{{ $cn->female_count }}</td>
+                                                    @endforeach --}}
+                                                    @foreach($religioncounts as $row)
                                                     <tr>
-                                                        <td></td>
-                                                        <td>Total</td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td>{{ $staff->where('gender', 'M')->count() }}</td>
-                                                        <td>{{ $staff->where('gender', 'F')->count() }}</td>
-                                                        <td>{{ $staff->where('caste', 'SC')->where('gender', 'M')->count() }}</td>
-                                                        <td>{{ $staff->where('caste', 'SC')->where('gender', 'F')->count() }}</td>
-                                                        <td>{{ $staff->where('caste', 'ST')->where('gender', 'M')->count() }}</td>
-                                                        <td>{{ $staff->where('caste', 'ST')->where('gender', 'F')->count() }}</td>
-                                                        <td>{{ $staff->where('caste', 'OBC')->where('gender', 'M')->count() }}</td>
-                                                        <td>{{ $staff->where('caste', 'OBC')->where('gender', 'F')->count() }}</td>
-                                                        <td>{{ $staff->whereIn('caste', ['GM', 'SC', 'ST', 'OBC'])->where('gender', 'M')->count() }}</td>
-                                                        <td>{{ $staff->whereIn('caste', ['GM', 'SC', 'ST', 'OBC'])->where('gender', 'F')->count() }}</td>
+                                                        
+                                                        <td colspan="2">{{ $row->gm_male_count }}</td>
+                                                        <td colspan="2">{{ $row->gm_female_count }}</td>
+                                                        <td colspan="2">{{ $row->sc_male_count }}</td>
+                                                        <td colspan="2">{{ $row->sc_female_count }}</td>
+                                                        <td colspan="2">{{ $row->st_male_count }}</td>
+                                                        <td colspan="2">{{ $row->st_female_count }}</td>
+                                                        <td colspan="2">{{ $row->obc_male_count }}</td>
+                                                        <td colspan="2">{{ $row->obc_female_count }}</td>
+                                                        <td colspan="2">{{ $row->total_male_count }}</td>
+                                                        <td colspan="2">{{ $row->total_female_count }}</td>
                                                     </tr>
-                                                </tfoot> --}}
+                                                @endforeach
+                                                     </tr>
+                                                  
+                                                </tbody>
                                             </table>
-                                            
-                                         </div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -203,77 +220,11 @@
         <link rel="stylesheet" href="chosen.css">
         <script src="jquery.js"></script>
         <script src="chosen.jquery.js"></script>
-
+{{-- 
         <script>
-
-            $(document).ready(function ()
-            {
-
-                $(document).on('change','.religion_id',function(){
-                    //alert('Changed');
-                    var religion_id = $(this).val();
-                    $.ajax({
-                        url:base_url+'/ESTB/staff/getcastecategory_list',
-                        method:'GET',
-                        data:{'r_id':religion_id},
-                        success:function(data) {
-                             console.log(data);
-                            var castecategoriesDropdown = $('.castecategory_list');
-                            castecategoriesDropdown.empty(); // Clear existing options
-                            data.forEach(function(item) {
-                                castecategoriesDropdown.append($('<option>').text(item['caste_name']+"-"+item['subcastes_name']+"-"+item['category']+"-"+item['category_no']).attr('value', item['id']));
-                            });
-                                // $.each(data, function (key, value) {
-                                //     console.log(value);
-                                //
-                                // });
-                            //$("#castecategory_list").html(data);
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        }
-                    });
-
-                });
-
-
-                //Code for Designation list designation dropdown
-                $.ajax({
-                    url: base_url + '/ESTB/staff/getdesignations_list',
-                    method: 'GET',
-                    success: function(data) {
-                        console.log(data);
-                        var designationsDropdown = $('#fiter_designation_id');
-                        designationsDropdown.empty(); // Clear existing options
-
-                        // Iterate through the data and append options directly to the dropdown
-                        data.forEach(function(item) {
-                            var option = $('<option>').text(item['design_name']).attr('value', item['id']);
-                            designationsDropdown.append(option);
-                        });
-                    },
-                    error: function(error) {
-                        console.log(error);
-                    }
-                });
-
-             // To Select multiple values from dropdown to Filter the staff information
-               
-                $('.select-all-designation').change(function () {
-                    $('input[name="designations[]"]').prop('checked', this.checked);
-                });
-                $('.select-all-teaching_payscale').change(function () {
-                    $('input[name="teaching_payscale[]"]').prop('checked', this.checked);
-                });
-
-
-                $('.select-all-religion').change(function () {
-                    $('input[name="religions[]"]').prop('checked', this.checked);
-                });
-
-                new DataTable('#staff_information');
+              new DataTable('#stats_information');
                 $('#exportToExcel').on('click', function () {
-                    var table = $('#staff_information').clone();
+                    var table = $('#stats_information').clone();
 
                     // Ensure each cell has proper formatting
                     table.find('td').css({
@@ -286,22 +237,18 @@
 
                     // Check for Internet Explorer and Edge
                     if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                        window.navigator.msSaveOrOpenBlob(blob, 'staff_information_data.xls');
+                        window.navigator.msSaveOrOpenBlob(blob, 'stats_information_data.xls');
                     } else {
                         var link = $('<a>', {
                             href: URL.createObjectURL(blob),
-                            download: 'staff_information_data.xls'
+                            download: 'stats_information_data.xls'
                         });
 
                         // Trigger the click to download
                         link[0].click();
                     }
                 });
+    </script> --}}
 
-            });
-        </script>
-
-
-
-
+       
 @endsection

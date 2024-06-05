@@ -69,24 +69,52 @@
                     </div>
                     <div class="col-span-12 lg:col-span-3">
                         <div class="box">
-                            <div class="box-header">
-                                <h5 class="box-title">My Notification</h5>
-                            </div>
                             <div class="box-body text-center">
                                 <button type="button" class="ti-btn ti-btn-primary" id="popup">Notification</button>
-                                <div id="notification-container">
+                                <div id="notification-container" style="display: none;">
                                     <!-- Loop through notifications and display them -->
-                                    {{-- @foreach($notifications as $notification)
-                                        <p>{{ $notification->notification_title }}</p>
-                                        <p>{{ $notification->description }}</p>
-                                        <hr>
-                                    @endforeach --}}
-                                    
+                                    @php
+                                        $alternate_notifications = session()->get('alternate_notifications');
+                                    @endphp
+                                    @if(session()->has('alternate_notifications') && is_array($alternate_notifications) && count($alternate_notifications) > 0)
+                                        @foreach($alternate_notifications as $alternate_notification)
+                                            <p class="text-red-500">{{ $alternate_notification->notification_title }}</p>
+                                            <p>{{ $alternate_notification->notification_type }}</p>
+                                            <p class="text-blue-500">{{ $alternate_notification->description }}</p>
+                                            <p>{{ $alternate_notification->date }}</p>
+                                        @endforeach
+                                    @else
+                                        <p>No notifications</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
+
+                    <div class="col-span-12 lg:col-span-3">
+                        <div class="box">
+                            <div class="box-body text-center">
+                                <button type="button" class="ti-btn ti-btn-primary" id="popup">Notification</button>
+                                <div id="notification-container" style="display: none;">
+                                    <!-- Loop through notifications and display them -->
+                                    @php
+                                        $user_notifications = session()->get('user_notifications');
+                                    @endphp
+                                    @if(session()->has('user_notifications') && is_array($user_notifications) && count($user_notifications) > 0)
+                                        @foreach($user_notifications as $user_notification)
+                                            <p class="text-red-500">{{ $user_notification->notification_title }}</p>
+                                            <p>{{ $user_notification->notification_type }}</p>
+                                            <p class="text-blue-500">{{ $user_notification->description }}</p>
+                                            <p>{{ $user_notification->date }}</p>
+                                        @endforeach
+                                    @else
+                                        <p>No notifications</p>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
                     <!--<div class="ti-dropdown-divider divide-y divide-gray-200 dark:divide-white/10">
                         <div class="py-2 first:pt-0 last:pb-0" id="allNotifyContainer">
@@ -220,4 +248,15 @@
     </div>
     </nav>
 </header>
+
+<script>
+    document.getElementById('popup').addEventListener('click', function() {
+        var notificationContainer = document.getElementById('notification-container');
+        if (notificationContainer.style.display === 'none' || notificationContainer.style.display === '') {
+            notificationContainer.style.display = 'block';
+        } else {
+            notificationContainer.style.display = 'none';
+        }
+    });
+</script>
 

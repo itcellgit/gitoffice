@@ -59,8 +59,6 @@
 
                                                         @if($designation->emp_type =="Non-Teaching")
 
-
-
                                                             <option value="{{$designation->id}}" {{($designation->id == $staff->designations[0]->id?'selected':'')}}>{{$designation->design_name}}</option>
                                                         @endif
 
@@ -2259,6 +2257,12 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="space-y-2" id="allowance_status">
+                            <label class="ti-form-label mb-0 font-bold">Allowance Status</label>
+                            <input class="ti-form-input pr-4" type='checkbox' name="allowance_status" value='true'> With Allowance
+                            <input class="ti-form-input pr-4 pl-4" type='checkbox' name="allowance_status" value='false'>Without Allowance
+                            
+                        </div>
                         <div class="ti-modal-footer">
                             <button type="button"
                             class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
@@ -2312,7 +2316,7 @@
                             <td>{{$add_designaions->pivot->dept_id==null?'---NA---':$dept}}</td>
                             <td>{{\Carbon\Carbon::parse($add_designaions->pivot->start_date)->format('d-M-Y') }}</td>
                             <td>{{$add_designaions->pivot->end_date==null?'--NA--':\Carbon\Carbon::parse($add_designaions->pivot->end_date)->format('d-M-Y') }}</td>
-                            <td>{{$add_designaions->pivot->allowance_status==null?'--NA--':$add_designaions->pivot->allowance_status}}</td>
+                            <td>{{$add_designaions->pivot->allowance_status==true?'With Allowance':'Without Allowance'}}</td>
                             <td><span>
                                 @php
                                             $sdate=new DateTime($add_designaions->pivot->start_date);
@@ -2403,14 +2407,17 @@
                                                         </div>
 
                                                     </div>
-                                                    <div class="space-y-2" id="allowance_status">
-                                                        <label class="ti-form-label mb-0 font-bold">Allowance Status(Incase of two additional designations)</label>
-                                                        <select class="ti-form-select" name="allowance_status">
-                                                            <option value="0">Choose an allowance Status</option>
-                                                                
-                                                            <option value="max" {{$add_designaions->pivot->allowance_status =='Max' ?'selected':''}}>Max of  two</option>
-                                                            <option value="both" {{$add_designaions->pivot->allowance_status =='Both' ?'selected':''}}>Both allowances</option>
-                                                        </select>
+                                                    <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                                        <div class="space-y-2" id="allowance_status">
+                                                            <label class="ti-form-label mb-0 font-bold">Allowance Status</label>
+                                                            <input class="pr-4" type='checkbox' name="allowance_status" value='true'> With Allowance
+                                                            
+                                                        </div>
+                                                        <div class="space-y-2" id="allowance_status">
+                                                            <label class="ti-form-label mb-0 font-bold">Allowance Status</label>
+                                                            <input class="pr-4" type='checkbox' name="allowance_status" value='false'> Without Allowance
+                                                            
+                                                        </div>
                                                     </div>
                                                     <p class="text-red-400">Note : Additional designation can be closed by filling the below information</p>
                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">

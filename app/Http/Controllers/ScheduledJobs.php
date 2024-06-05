@@ -131,7 +131,7 @@ class ScheduledJobs extends Controller
                     {
                         $max_entitlement=$l->max_entitlement;
                     }
-                    $staff_entitlement=$st->leave_entitlements()->attach($l->id,['year'=>$year,'entitled_curr_year'=>$max_entitlement,'accumulated'=>$accumulated,'total_encashed'=> $total_encashable,'wef'=>$year.'-01-01']);
+                    $staff_entitlement=$st->leave_staff_entitlements()->attach($l->id,['year'=>$year,'entitled_curr_year'=>$max_entitlement,'accumulated'=>$accumulated,'total_encashed'=> $total_encashable,'wef'=>$year.'-01-01']);
                 }
 
             }
