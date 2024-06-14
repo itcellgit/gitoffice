@@ -81,10 +81,11 @@
 
 
                                                         </div>
-                                                        <form action="{{route('ESTB.TDS.TdsHeads.store2')}}" method="post">
+                                                        <form action="{{route('ESTB.TDS.InvestmentCategory.store')}}" method="post">
                                                             @csrf
                                                             <div class="ti-modal-body">
                                                                 <div class="max-w-sm space-y-3">
+                                                                    <input type="hidden" name="tds_id" value="{{$tdshead->id}}">
                                                                     <label for="with-corner-hint" class="ti-form-label">Category : </label>
                                                                     <input type="text" id="investment_type" name="investment_type" class="ti-form-input" placeholder="investment category">
                                                                     @if($errors->has('investment_type'))
@@ -92,6 +93,14 @@
                                                                     @endif
                                                                     <div id="sectionNameError" class="error text-red-700"></div>
                                                                 </div>
+                                                                {{-- <div class="max-w-sm space-y-3">
+                                                                    <label for="with-corner-hint" class="ti-form-label">Status : </label>
+                                                                    <input type="text" id="status" name="status" class="ti-form-input" placeholder="Status">
+                                                                    @if($errors->has('status'))
+                                                                        <div class="text-red-700">{{ $errors->first('status')}}</div>
+                                                                    @endif
+                                                                    <div id="sectionNameError" class="error text-red-700"></div>
+                                                                </div> --}}
                                                             </div>
                                                             <div class="ti-modal-footer">
                                                                 <button type="button"
@@ -166,7 +175,7 @@
                                                                                 <div class="ti-modal-content">
                                                                                 <div class="ti-modal-header">
                                                                                     <h3 class="ti-modal-title">
-                                                                                        Edit Religion
+                                                                                        Edit Category
                                                                                     </h3>
                                                                                     <button type="button" class="hs-dropdown-toggle ti-modal-close-btn"
                                                                                         data-hs-overlay="#hs-medium-modal">
@@ -189,19 +198,20 @@
                                                                                         </script>
                                                                                     @endif
                                                                                 </div>
-                                                                                <form  action="{{route('ESTB.TDS.TdsHeads.update',$tdshead->id)}}" method="post">
+                                                                                <form  action="{{route('ESTB.TDS.InvestmentCategory.update',[$tdshead->id])}}" method="post">
                                                                                     @csrf
                                                                                     @method('patch')
                                                                                     <div class="ti-modal-body">
                 
                                                                                        <input type='hidden' name='religion_modal_no' class='religion_modal_no' value={{old('religion_modal_no')}}/>
+                                                                                       <input type='hidden' name ='edit_section_name' value="{{$tdshead->id}}">
                                                                                         <div class="max-w-sm space-y-3">
                                                                                             <label for="with-corner-hint" class="ti-form-label">Category Name : </label>
-                                                                                            <input type="text" name="edit_religion_name" class="ti-form-input" placeholder="Category name" value="{{$category->investment_type}}">
-                                                                                            @if($errors->has('edit_religion_name'))
-                                                                                                <div class="text-red-700">{{ $errors->first('edit_religion_name')}}</div>
+                                                                                            <input type="text" name="edit_category_name" lass="ti-form-input" placeholder="Category name" value="{{$category->investment_type}}">
+                                                                                            @if($errors->has('edit_category_name'))
+                                                                                                <div class="text-red-700">{{ $errors->first('edit_category_name')}}</div>
                                                                                             @endif
-                                                                                            <div id="religionNameError" class="error text-red-700"></div>
+                                                                                            <div id="categoryNameError" class="error text-red-700"></div>
                                                                                         </div>
                                                                                         @if($tdshead->status == 'inactive')
                                                                                         <br/>
@@ -228,7 +238,7 @@
                                                                         </div>
                                                                 </div>
                                                                 <div class="hs-tooltip ti-main-tooltip">
-                                                                    <form action="{{ route('ESTB.TDS.TdsHeads.delete',$tdshead->id) }}" method="post">
+                                                                    <form action="{{ route('ESTB.TDS.InvestmentCategory.delete',$tdshead->id) }}" method="post">
                                                                        
                                                                        <button onclick="return confirm('Are you Sure')"
                                                                         class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">

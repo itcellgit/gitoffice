@@ -468,6 +468,20 @@
                     
                                             
                     ],
+                    eventContent: function (args, createElement)
+                        {
+                            console.log(args.event.extendedProps.recommended_count);
+                            if(args.event.extendedProps.recommended_count>0){
+                                const text = args.event._def.title  +'<span class="flex absolute h-5 w-5 top-0 ltr:right-0 rtl:left-0 -mt-1 ltr:-mr-1 rtl:-ml-1">'
+                                                                    +'  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success/80 opacity-75"></span>'
+                                                                        +'<span'
+                                                                        +'class="relative inline-flex rounded-full h-5 w-5 bg-success text-white justify-center items-center" id="notify-data">'+args.event.extendedProps.pending_count+'</span>'
+                                                                    +'</span>';
+                                return {
+                                html: text
+                            };
+                         }
+                        },
                     eventDidMount: function (info) {
                         info.el.onclick = "disabled";
                     //console.log(info.event.extendedProps.type);
@@ -479,7 +493,7 @@
                     var dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
                                             .toISOString()
                                             .split("T")[0];
-                    console.log(date.getDate()+1);
+                    //console.log(date.getDate()+1);
                     //for styling the Holiday and RH events
                     if (info.event.extendedProps.type=="Holiday") {
                         info.el.style.background = "red";//info.event.extendedProps.background;
@@ -535,6 +549,8 @@
                         ///alert('Event: ' + info.event.start);
                         //console.log(info.event.start);
                         var Clickeddate = info.event.start;
+                        var leave_name = info.event.extendedProps.leave_name;
+
                         $('#view_leave_modal').trigger('click');
                         // $('.event_title').html(info.event.title+' on '+ Clickeddate.getDate()+"/"+Clickeddate.getMonth()+"/"+Clickeddate.getFullYear());
                         // $('#view_leave').css('z-index', 9999);
@@ -590,6 +606,7 @@
                             method: 'GET',
                             data: {
                                 date: clicked_date,
+                                leave_name: leave_name,
                                 _token : '{{csrf_token()}}' // Pass the clicked date to the server
                             },
 
@@ -627,12 +644,22 @@
                                                                 +'<td>'+value.alternate_staff+ '</td>'
                                                                 +'<td>'+(value.additional_alternate_staff == null ? '-NA-':value.additional_alternate_staff)+ '</td>'
                                                                 +'<td>'
-                                                                    +'<button class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-success approve_leave '+(value.appl_status != "recommended"?"hidden":"")+'" data_val="'+value.Application_id+'" appl_details = "'+value.staff_name+'-'+ value.title+'" title="Approve">'
+                                                                    +'<div class="hs-tooltip ti-main-tooltip">'
+                                                                        +'<button class="hs-dropdown-toggle m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-success approve_leave '+((value.appl_status == "recommended" && value.duration > 5)?"":"hidden")+'" data_val="'+value.Application_id+'" appl_details = "'+value.staff_name+'-'+ value.title+'">'
                                                                                 +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z"></path></svg>'
-                                                                                +'</button>'
-                                                                            +'<button class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger reject_leave"  data_val="'+value.Application_id+'" appl_details = "'+value.staff_name+'-'+ value.title+'" title="Reject">'
-                                                                                +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M11.9997 10.5865L16.9495 5.63672L18.3637 7.05093L13.4139 12.0007L18.3637 16.9504L16.9495 18.3646L11.9997 13.4149L7.04996 18.3646L5.63574 16.9504L10.5855 12.0007L5.63574 7.05093L7.04996 5.63672L11.9997 10.5865Z"></path></svg>'
+                                                                                +'<span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700" role="tooltip">'
+                                                                                 +'For your aproval, because its more than 5 days.'
+                                                                                   +'</span>'
+                                                                                    
                                                                             +'</button>'
+                                                                            +'</div>'
+                                                                            +'<div class="hs-tooltip ti-main-tooltip">'
+                                                                                +'<button class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger reject_leave"  data_val="'+value.Application_id+'" appl_details = "'+value.staff_name+'-'+ value.title+'" title="Reject">'
+                                                                                +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M11.9997 10.5865L16.9495 5.63672L18.3637 7.05093L13.4139 12.0007L18.3637 16.9504L16.9495 18.3646L11.9997 13.4149L7.04996 18.3646L5.63574 16.9504L10.5855 12.0007L5.63574 7.05093L7.04996 5.63672L11.9997 10.5865Z"></path></svg>'
+                                                                            +'<span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700" role="tooltip">'
+                                                                                 +'You can reject'
+                                                                                   +'</span>'
+                                                                                +'</button> </div>'
                                                                 +'</td>'
                                                                 +'</tr>');
                                     });

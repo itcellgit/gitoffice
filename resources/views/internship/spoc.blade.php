@@ -201,9 +201,9 @@
                                                                 <select name="industry_id" id="industry_id"
                                                                     class="form-control" class="ti-form-input" required>
                                                                     <option value="" disabled selected>Select Industry Name</option>
-                                                                    @foreach ($industries as $id)
-                                                                        <option value="{{ $id->id }}">
-                                                                            {{ $id->name }}
+                                                                    @foreach ($industries as $ind)
+                                                                        <option value="{{ $ind->id }}">
+                                                                            {{ $ind->name }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>

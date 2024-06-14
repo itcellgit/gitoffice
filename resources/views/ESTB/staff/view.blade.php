@@ -111,8 +111,6 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M17 15.2454V22.1169C17 22.393 16.7761 22.617 16.5 22.617C16.4094 22.617 16.3205 22.5923 16.2428 22.5457L12 20L7.75725 22.5457C7.52046 22.6877 7.21333 22.6109 7.07125 22.3742C7.02463 22.2964 7 22.2075 7 22.1169V15.2454C5.17107 13.7793 4 11.5264 4 9C4 4.58172 7.58172 1 12 1C16.4183 1 20 4.58172 20 9C20 11.5264 18.8289 13.7793 17 15.2454ZM12 15C15.3137 15 18 12.3137 18 9C18 5.68629 15.3137 3 12 3C8.68629 3 6 5.68629 6 9C6 12.3137 8.68629 15 12 15ZM12 13C9.79086 13 8 11.2091 8 9C8 6.79086 9.79086 5 12 5C14.2091 5 16 6.79086 16 9C16 11.2091 14.2091 13 12 13Z" fill="rgba(255,255,255,1)"></path></svg>
                                               Designation & Payscale
                                         </button>
-
-
                                         <button type="button" class="hs-tab-active:bg-primary hs-tab-active:border-primary hs-tab-active:text-white dark:hs-tab-active:bg-primary dark:hs-tab-active:border-primary dark:hs-tab-active:text-white -mr-px py-3 px-3 inline-flex items-center gap-2 bg-gray-50 text-sm font-medium text-center border text-gray-500 rounded-sm hover:text-gray-700 dark:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-gray-300" id="profile-settings-item-5" data-hs-tab="#profile-settings-5" aria-controls="profile-settings-5" role="tab">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M11 6V14H19C19 18.4183 15.4183 22 11 22C6.58172 22 3 18.4183 3 14C3 9.66509 6.58 6 11 6ZM21 2V4L15.6726 10H21V12H13V10L18.3256 4H13V2H21Z" fill="rgba(255,255,255,1)"></path></svg>
                                              Leaves
@@ -120,6 +118,10 @@
                                         <button type="button" class="hs-tab-active:bg-primary hs-tab-active:border-primary hs-tab-active:text-white dark:hs-tab-active:bg-primary dark:hs-tab-active:border-primary dark:hs-tab-active:text-white -mr-px py-3 px-3 inline-flex items-center gap-2 bg-gray-50 text-sm font-medium text-center border text-gray-500 rounded-sm hover:text-gray-700 dark:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-gray-300" id="salary" data-hs-tab="#salary-tab" aria-controls="salary-tab" role="tab">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12.0004 16C14.2095 16 16.0004 14.2091 16.0004 12 16.0004 9.79086 14.2095 8 12.0004 8 9.79123 8 8.00037 9.79086 8.00037 12 8.00037 14.2091 9.79123 16 12.0004 16ZM21.0049 4.00293H3.00488C2.4526 4.00293 2.00488 4.45064 2.00488 5.00293V19.0029C2.00488 19.5552 2.4526 20.0029 3.00488 20.0029H21.0049C21.5572 20.0029 22.0049 19.5552 22.0049 19.0029V5.00293C22.0049 4.45064 21.5572 4.00293 21.0049 4.00293ZM4.00488 15.6463V8.35371C5.13065 8.017 6.01836 7.12892 6.35455 6.00293H17.6462C17.9833 7.13193 18.8748 8.02175 20.0049 8.3564V15.6436C18.8729 15.9788 17.9802 16.8711 17.6444 18.0029H6.3563C6.02144 16.8742 5.13261 15.9836 4.00488 15.6463Z" fill="rgba(255,255,255,1)"></path></svg>
                                              Salary
+                                        </button>
+                                        <button type="button" class="hs-tab-active:bg-primary hs-tab-active:border-primary hs-tab-active:text-white dark:hs-tab-active:bg-primary dark:hs-tab-active:border-primary dark:hs-tab-active:text-white -mr-px py-3 px-3 inline-flex items-center gap-2 bg-gray-50 text-sm font-medium text-center border text-gray-500 rounded-sm hover:text-gray-700 dark:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-gray-300" id="salary" data-hs-tab="#salary-tab" aria-controls="salary-tab" role="tab">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12.0004 16C14.2095 16 16.0004 14.2091 16.0004 12 16.0004 9.79086 14.2095 8 12.0004 8 9.79123 8 8.00037 9.79086 8.00037 12 8.00037 14.2091 9.79123 16 12.0004 16ZM21.0049 4.00293H3.00488C2.4526 4.00293 2.00488 4.45064 2.00488 5.00293V19.0029C2.00488 19.5552 2.4526 20.0029 3.00488 20.0029H21.0049C21.5572 20.0029 22.0049 19.5552 22.0049 19.0029V5.00293C22.0049 4.45064 21.5572 4.00293 21.0049 4.00293ZM4.00488 15.6463V8.35371C5.13065 8.017 6.01836 7.12892 6.35455 6.00293H17.6462C17.9833 7.13193 18.8748 8.02175 20.0049 8.3564V15.6436C18.8729 15.9788 17.9802 16.8711 17.6444 18.0029H6.3563C6.02144 16.8742 5.13261 15.9836 4.00488 15.6463Z" fill="rgba(255,255,255,1)"></path></svg>
+                                             Form 16
                                         </button>
                                         @if($staff->latest_employee_type[0]->employee_type=='Teaching' || $staff->latestassociation[0]->asso_name=='Contractual')
                                             <button type="button" class="hs-tab-active:bg-primary hs-tab-active:border-primary hs-tab-active:text-white dark:hs-tab-active:bg-primary dark:hs-tab-active:border-primary dark:hs-tab-active:text-white -mr-px py-3 px-3 inline-flex items-center gap-2 bg-gray-50 text-sm font-medium text-center border text-gray-500 rounded-sm hover:text-gray-700 dark:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-gray-300" id="profile-settings-item-9" data-hs-tab="#profile-settings-9" aria-controls="profile-settings-9" role="tab">
@@ -129,7 +131,7 @@
                                         @endif
                                         @if($staff->latest_employee_type[0]->employee_type=='Non-Teaching')
                                          <button type="button" class="hs-tab-active:bg-primary hs-tab-active:border-primary hs-tab-active:text-white dark:hs-tab-active:bg-primary dark:hs-tab-active:border-primary dark:hs-tab-active:text-white -mr-px py-3 px-3 inline-flex items-center gap-2 bg-gray-50 text-sm font-medium text-center border text-gray-500 rounded-sm hover:text-gray-700 dark:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-gray-300" id="profile-settings-item-7" data-hs-tab="#profile-settings-7" aria-controls="profile-settings-7" role="tab">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12.0004 16C14.2095 16 16.0004 14.2091 16.0004 12 16.0004 9.79086 14.2095 8 12.0004 8 9.79123 8 8.00037 9.79086 8.00037 12 8.00037 14.2091 9.79123 16 12.0004 16ZM21.0049 4.00293H3.00488C2.4526 4.00293 2.00488 4.45064 2.00488 5.00293V19.0029C2.00488 19.5552 2.4526 20.0029 3.00488 20.0029H21.0049C21.5572 20.0029 22.0049 19.5552 22.0049 19.0029V5.00293C22.0049 4.45064 21.5572 4.00293 21.0049 4.00293ZM4.00488 15.6463V8.35371C5.13065 8.017 6.01836 7.12892 6.35455 6.00293H17.6462C17.9833 7.13193 18.8748 8.02175 20.0049 8.3564V15.6436C18.8729 15.9788 17.9802 16.8711 17.6444 18.0029H6.3563C6.02144 16.8742 5.13261 15.9836 4.00488 15.6463Z" fill="rgba(255,255,255,1)"></path></svg>
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12.0004 16C14.2095 16 16.0004 14.2091 16.0004 12 16.0004 9.79086 14.2095 8 12.0004 8 9.79123 8 8.00037 9.79086 8.00037 12 8.00037 14.2091 9.79123 16 12.0004 16ZM21.0049 4.00293H3.00488C2.4526 4.00293 2.00488 4.45064 2.00488 5.00293V19.0029C2.00488 19.5552 2.4526 20.0029 3.00488 20.0029H21.0049C21.5572 20.0029 22.0049 19.5552 22.0049 19.0029V5.00293C22.0049 4.45064 21.5572 4.00293 21.0049 4.00293ZM4.00488 15.6463V8.35371C5.13065 8.017 6.01836 7.12892 6.35455 6.00293H17.6462C17.9833 7.13193 18.8748 8.02175 20.0049 8.3564V15.6436C18.8729 15.9788 17.9802 16.8711 17.6444 18.0029H6.3563C6.02144 16.8742 5.13261 15.9836 4.00488 15.6463Z" fill="rgba(255,255,255,1)"></path></svg>
                                              Festival Advance
                                         </button>
                                          @endif
@@ -140,6 +142,18 @@
                                         <button type="button" class="hs-tab-active:bg-primary hs-tab-active:border-primary hs-tab-active:text-white dark:hs-tab-active:bg-primary dark:hs-tab-active:border-primary dark:hs-tab-active:text-white -mr-px py-3 px-3 inline-flex items-center gap-2 bg-gray-50 text-sm font-medium text-center border text-gray-500 rounded-sm hover:text-gray-700 dark:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-gray-300" id="lic" data-hs-tab="#lic-tab" aria-controls="lic-tab" role="tab">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M17 15.2454V22.1169C17 22.393 16.7761 22.617 16.5 22.617C16.4094 22.617 16.3205 22.5923 16.2428 22.5457L12 20L7.75725 22.5457C7.52046 22.6877 7.21333 22.6109 7.07125 22.3742C7.02463 22.2964 7 22.2075 7 22.1169V15.2454C5.17107 13.7793 4 11.5264 4 9C4 4.58172 7.58172 1 12 1C16.4183 1 20 4.58172 20 9C20 11.5264 18.8289 13.7793 17 15.2454ZM12 15C15.3137 15 18 12.3137 18 9C18 5.68629 15.3137 3 12 3C8.68629 3 6 5.68629 6 9C6 12.3137 8.68629 15 12 15ZM12 13C9.79086 13 8 11.2091 8 9C8 6.79086 9.79086 5 12 5C14.2091 5 16 6.79086 16 9C16 11.2091 14.2091 13 12 13Z" fill="rgba(255,255,255,1)"></path></svg>
                                              LIC Management
+                                        </button>
+                                        <button type="button" class="hs-tab-active:bg-primary hs-tab-active:border-primary hs-tab-active:text-white dark:hs-tab-active:bg-primary dark:hs-tab-active:border-primary dark:hs-tab-active:text-white -mr-px py-3 px-3 inline-flex items-center gap-2 bg-gray-50 text-sm font-medium text-center border text-gray-500 rounded-sm hover:text-gray-700 dark:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-gray-300" id="share" data-hs-tab="#share-tab" aria-controls="share-tab" role="tab">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M17 15.2454V22.1169C17 22.393 16.7761 22.617 16.5 22.617C16.4094 22.617 16.3205 22.5923 16.2428 22.5457L12 20L7.75725 22.5457C7.52046 22.6877 7.21333 22.6109 7.07125 22.3742C7.02463 22.2964 7 22.2075 7 22.1169V15.2454C5.17107 13.7793 4 11.5264 4 9C4 4.58172 7.58172 1 12 1C16.4183 1 20 4.58172 20 9C20 11.5264 18.8289 13.7793 17 15.2454ZM12 15C15.3137 15 18 12.3137 18 9C18 5.68629 15.3137 3 12 3C8.68629 3 6 5.68629 6 9C6 12.3137 8.68629 15 12 15ZM12 13C9.79086 13 8 11.2091 8 9C8 6.79086 9.79086 5 12 5C14.2091 5 16 6.79086 16 9C16 11.2091 14.2091 13 12 13Z" fill="rgba(255,255,255,1)"></path></svg>
+                                             Society Share
+                                        </button>
+                                        <button type="button" class="hs-tab-active:bg-primary hs-tab-active:border-primary hs-tab-active:text-white dark:hs-tab-active:bg-primary dark:hs-tab-active:border-primary dark:hs-tab-active:text-white -mr-px py-3 px-3 inline-flex items-center gap-2 bg-gray-50 text-sm font-medium text-center border text-gray-500 rounded-sm hover:text-gray-700 dark:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-gray-300" id="loan" data-hs-tab="#loan-tab" aria-controls="loan-tab" role="tab">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M17 15.2454V22.1169C17 22.393 16.7761 22.617 16.5 22.617C16.4094 22.617 16.3205 22.5923 16.2428 22.5457L12 20L7.75725 22.5457C7.52046 22.6877 7.21333 22.6109 7.07125 22.3742C7.02463 22.2964 7 22.2075 7 22.1169V15.2454C5.17107 13.7793 4 11.5264 4 9C4 4.58172 7.58172 1 12 1C16.4183 1 20 4.58172 20 9C20 11.5264 18.8289 13.7793 17 15.2454ZM12 15C15.3137 15 18 12.3137 18 9C18 5.68629 15.3137 3 12 3C8.68629 3 6 5.68629 6 9C6 12.3137 8.68629 15 12 15ZM12 13C9.79086 13 8 11.2091 8 9C8 6.79086 9.79086 5 12 5C14.2091 5 16 6.79086 16 9C16 11.2091 14.2091 13 12 13Z" fill="rgba(255,255,255,1)"></path></svg>
+                                             Society Loans
+                                        </button>
+                                        <button type="button" class="hs-tab-active:bg-primary hs-tab-active:border-primary hs-tab-active:text-white dark:hs-tab-active:bg-primary dark:hs-tab-active:border-primary dark:hs-tab-active:text-white -mr-px py-3 px-3 inline-flex items-center gap-2 bg-gray-50 text-sm font-medium text-center border text-gray-500 rounded-sm hover:text-gray-700 dark:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-gray-300" id="taxregime" data-hs-tab="#taxregime-tab" aria-controls="taxregime-tab" role="tab">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M17 15.2454V22.1169C17 22.393 16.7761 22.617 16.5 22.617C16.4094 22.617 16.3205 22.5923 16.2428 22.5457L12 20L7.75725 22.5457C7.52046 22.6877 7.21333 22.6109 7.07125 22.3742C7.02463 22.2964 7 22.2075 7 22.1169V15.2454C5.17107 13.7793 4 11.5264 4 9C4 4.58172 7.58172 1 12 1C16.4183 1 20 4.58172 20 9C20 11.5264 18.8289 13.7793 17 15.2454ZM12 15C15.3137 15 18 12.3137 18 9C18 5.68629 15.3137 3 12 3C8.68629 3 6 5.68629 6 9C6 12.3137 8.68629 15 12 15ZM12 13C9.79086 13 8 11.2091 8 9C8 6.79086 9.79086 5 12 5C14.2091 5 16 6.79086 16 9C16 11.2091 14.2091 13 12 13Z" fill="rgba(255,255,255,1)"></path></svg>
+                                             Tax Regime
                                         </button>
                                         </nav>
                                     </div>
@@ -155,7 +169,7 @@
                                                 </div>
                                                 <div class="box-body">
                                                     <div>
-                                                        <form action="{{route('ESTB.staff.update',$staff->id)}}" method="post">
+                                                        <form action="{{route('ESTB.staff.update',$staff->id)}}" method="post" enctype="multipart/form-data">
                                                             @csrf
                                                             @method('patch')
                                                             <div class="grid lg:grid-cols-3 gap-3 space-y-2 lg:space-y-0 pb-4">
@@ -291,6 +305,23 @@
                                                                         <input type="text" name="pan_card" class="my-auto ti-form-input"
                                                                             placeholder="XXXXX XXXXX" value="{{$staff->pan_card}}">
                                                                     </div>
+                                                                </div>    
+                                                                    <div class="grid lg:grid-cols-1 gap-2 space-y-1 lg:space-y-0 pb-4">
+                                                                        <div class="space-y-2">
+                                                                            <label for="" class="ti-form-label pt-4 font-bold">Form-16:<span class="text-red-500">* PDF files up to 500 KB in size are accepted.</span></label>
+                                                                            upload form-16 file here:<span class="text-red-500">{{$staff->document}} </span>
+                                                                            <input type="file" accept="application/pdf" name="document" id="conf_att_document" class="block w-full text-sm text-gray-500 dark:text-white/70 focus:outline-0
+                                                                            ltr:file:mr-4 rtl:file:ml-4 file:py-2 file:px-4
+                                                                            file:rounded-sm file:border-0
+                                                                            file:text-sm file:font-semibold
+                                                                            file:bg-primary file:text-white
+                                                                            hover:file:bg-primary focus-visible:outline-none doc" value="">
+                                                                            @if($errors->has('document'))
+                                                                                <div class="text-red-700">{{ $errors->first('document') }}</div>
+                                                                            @endif
+                                                                        </div>
+                                                                    </div>
+                                                                <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pb-4">    
                                                                     <div class="space-y-2">
                                                                         <label class="ti-form-label mb-0 font-bold">Adhar Card No:</label>
                                                                         <input type="text" name="adhar_card" class="my-auto ti-form-input"
@@ -326,6 +357,7 @@
                                                                 </div>
                                                                 @endif
                                                             </div>
+                                                            
                                                             <div class="my-5">
                                                                 <div class="space-y-2">
                                                                     <label class="ti-form-label mb-0 font-bold">Local Address</label>
@@ -338,7 +370,7 @@
                                                                     <input type="text" name="permanent_address" class="my-auto ti-form-input" value="{{$staff->permanent_address}}" placeholder="Permenant Address">
                                                                 </div>
                                                             </div>
-                                                            <div class="grid lg:grid-cols-3 gap-3 space-y-2 lg:space-y-0">
+                                                            {{-- <div class="grid lg:grid-cols-3 gap-3 space-y-2 lg:space-y-0">
                                                                 <div class="space-y-2">
                                                                     <label class="ti-form-label mb-0 font-bold">Emergency No</label>
                                                                     <input type="text" name="emergency_no" class="ti-form-input" value="{{$staff->emergency_no}}" placeholder="emergency no">
@@ -349,8 +381,22 @@
                                                                 </div>
 
 
+                                                            </div> --}}
+                                                            <div class="grid lg:grid-cols-2 gap-3">
+                                                                <div class="space-y-2">
+                                                                    <label class="ti-form-label mb-0 font-bold">Emergency No</label>
+                                                                    <input type="text" name="emergency_no" class="ti-form-input" value="{{$staff->emergency_no}}" placeholder="emergency no">
+                                                                </div>
+                                                                <div class="space-y-2">
+                                                                    <label class="ti-form-label mb-0 font-bold">Emergency Name</label>
+                                                                    <input type="text" name="emergency_name" class="ti-form-input" value="{{$staff->emergency_name}}" placeholder="emergency name">
+                                                                </div>
+                                                                
+    
+                                                                
                                                             </div>
-                                                            <div class="pt-6 pl-48">
+
+                                                            <div class="pt-6">
                                                                 <button type="submit" class="ti-btn m-0 ti-btn-soft-primary text-right">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M5.46257 4.43262C7.21556 2.91688 9.5007 2 12 2C17.5228 2 22 6.47715 22 12C22 14.1361 21.3302 16.1158 20.1892 17.7406L17 12H20C20 7.58172 16.4183 4 12 4C9.84982 4 7.89777 4.84827 6.46023 6.22842L5.46257 4.43262ZM18.5374 19.5674C16.7844 21.0831 14.4993 22 12 22C6.47715 22 2 17.5228 2 12C2 9.86386 2.66979 7.88416 3.8108 6.25944L7 12H4C4 16.4183 7.58172 20 12 20C14.1502 20 16.1022 19.1517 17.5398 17.7716L18.5374 19.5674Z"></path></svg>
                                                                     Update
@@ -383,16 +429,13 @@
                                         <div id="profile-settings-4" class="hidden" role="tabpanel" aria-labelledby="profile-settings-item-4">
 
                                         </div>
+                                        <!--Leave Staff-->
                                         <div id="profile-settings-5" class="hidden" role="tabpanel" aria-labelledby="profile-settings-item-5">
-                                            <div class="box border-0 shadow-none mb-0">
-                                                <div class="box-header">
-                                                    <h5 class="box-title leading-none flex"><i class="ri ri-notification-4-line ltr:mr-2 rtl:ml-2"></i> Leaves History</h5>
-                                                </div>
-                                                <div class="box-body">
+                                            
 
-                                                </div>
-                                            </div>
+                                            
                                         </div>
+
                                         <div id="salary-tab" class="hidden" role="tabpanel" aria-labelledby="salary">
                                             <div class="box border-0 shadow-none mb-0">
                                                 <div class="box-header">
@@ -418,9 +461,14 @@
                                         </div>
                                         <div id="lic-tab" class="hidden" role="tabpanel" aria-labelledby="lic">
                                         </div>
+                                        <div id="share-tab" class="hidden" role="tabpanel" aria-labelledby="share">
+                                        </div>
+                                        <div id="loan-tab" class="hidden" role="tabpanel" aria-labelledby="loan">
+                                        </div>
+                                        <div id="taxregime-tab" class="hidden" role="tabpanel" aria-labelledby="taxregime">
+                                        </div>
                                     </div>
-                                    <div class="box-footer text-end space-x-3 rtl:space-x-reverse">
-                                    </div>
+                                    
                                 </div>
                             </div>
                     </div>
@@ -532,7 +580,7 @@
 
                 $(document).on('change','#designation_id',function(){
                     //alert('changed');
-                    if($(this).val()==1){
+                    if($(this).val()==1 || $(this).val()== 69 || $(this).val()==60 ||$(this).val()==59 || $(this).val()==58 || $(this).val()==55 || $(this).val()==62){
                         $('#dept_div').show();
                     }else{
                         $('#dept_div'). hide();
@@ -907,6 +955,51 @@
                                 });
                 });
 
+
+                 //ajax loading of ESTB of leave Entitlement
+                $(document).on('click','#profile-settings-item-5',function(){
+                    //alert('Ajax calling');
+                    var staff=$('#staff').val();
+                    var url=base_url+'/ESTB/staff/'+staff+'/leave_entitlement';
+                    //alert(url);
+                    $.ajax({
+                        url:url,
+                        method:'GET',
+                        data:{'staff':staff},
+                        success:function(data) {
+                        // console.log(data);
+                            $('#profile-settings-5').html(data).addClass('active');
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                });
+
+                // //ajax loading of ESTB of leave History
+                // $(document).on('click','#profile-settings-item-5',function(){
+                //     //alert('Ajax calling');
+                //     var staff=$('#staff').val();
+                //     alert(staff);
+                //     var url=base_url+'/ESTB/staff/'+staff+'/fetch_leave_history';
+                //     //alert(url);
+                //     $.ajax({
+                //         url:url,
+                //         method:'GET',
+                //         data:{'staff':staff},
+                //         success:function(data) {
+                //             //console.log(data);
+                //             $('#profile-settings-5').html(data).addClass('active');
+                //         },
+                //         error: function (error) {
+                //             console.log(error);
+                //             }
+                //     });
+                // });
+
+
+               
+
                 //Ajax loading of associations.
                 $(document).on('click','#profile-settings-item-3',function(){
                     //alert('Ajax calling');
@@ -992,9 +1085,9 @@
                 });
 
 
-         //Ajax loading of festival Advance
-                 $(document).on('click','#profile-settings-item-7',function(){
-               //alert('Ajax calling');
+                //Ajax loading of festival Advance
+                $(document).on('click','#profile-settings-item-7',function(){
+                //alert('Ajax calling');
                 var staff=$('#staff').val();
                 //alert(staff);
                 var url=base_url+'/ESTB/staff/'+staff+'/festivaladvance';
@@ -1048,6 +1141,83 @@
                                 success:function(data) {
                                     console.log(data);
                                     $('#lic-tab').html(data).addClass('active');
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            });
+                });
+                $(document).on('click','#share',function(){
+                    //alert('Ajax calling');
+                    var staff=$('#staff').val();
+                    var url=base_url+'/ESTB/staff/'+staff+'/staffshares';
+                    //alert(url);
+                    $.ajax({
+                                url:url,
+                                method:'GET',
+                               // data:{'staff':staff},
+                                success:function(data) {
+                                    console.log(data);
+                                    $('#share-tab').html(data).addClass('active');
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            });
+                });
+
+                $(document).on('click','#share',function(){
+                    //alert('Ajax calling');
+                    var staff=$('#staff').val();
+                    var url=base_url+'/ESTB/staff/'+staff+'/staffshares';
+                    //alert(url);
+                    $.ajax({
+                                url:url,
+                                method:'GET',
+                               // data:{'staff':staff},
+                                success:function(data) {
+                                    console.log(data);
+                                    $('#share-tab').html(data).addClass('active');
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            });
+                });
+
+
+                $(document).on('click','#loan',function(){
+                    //alert('Ajax calling');
+                    var staff=$('#staff').val();
+                    var url=base_url+'/ESTB/staff/'+staff+'/staffloans';
+                    //alert(url);
+                    $.ajax({
+                                url:url,
+                                method:'GET',
+                               // data:{'staff':staff},
+                                success:function(data) {
+                                    console.log(data);
+                                    $('#loan-tab').html(data).addClass('active');
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+                            });
+                });
+
+                //Ajax loading of staff tax regime
+                $(document).on('click','#taxregime',function(){
+                    //alert('Ajax calling');
+                    var staff=$('#staff').val();
+                    var url=base_url+'/ESTB/staff/'+staff+'/stafftaxregime';
+                    //alert(url);
+                    $.ajax({
+                                url:url,
+                                method:'GET',
+                               // data:{'staff':staff},
+                                success:function(data) {
+                                    console.log(data);
+                                    $('#taxregime-tab').html(data).addClass('active');
                                 },
                                 error: function (error) {
                                     console.log(error);

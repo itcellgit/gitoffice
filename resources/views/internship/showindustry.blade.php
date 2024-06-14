@@ -1,6 +1,6 @@
 
 
-@extends('layouts.components.internship.master-internship')
+@extends('layouts.components.HOD.internship.master-internship')
 
 
 @section('styles')
@@ -103,9 +103,6 @@
 
                         </div>
                     </div>
-                    <div>
-                    <a href="/Teaching/internship/industry" class="ti-btn bg-primary text-white hover:bg-primary focus:ring-primary dark:focus:ring-offset-white/10" >Back</a>
-            </div>
 
     </div>
 @endsection

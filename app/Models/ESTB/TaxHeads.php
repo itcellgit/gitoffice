@@ -17,6 +17,9 @@ class TaxHeads extends Model
 
     public function staff()
     {
-        return $this->belongsToMany(staff::class, 'staff_taxregime');
+        // return $this->belongsToMany(staff::class, 'staff_taxregime');
+        return $this->belongsToMany(Staff::class, 'staff_taxregime')
+                    ->withPivot('year', 'status')
+                    ->withTimestamps();
     }
 }

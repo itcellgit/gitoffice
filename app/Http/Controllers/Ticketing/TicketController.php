@@ -10,6 +10,7 @@ use App\Http\Requests\StoreticketRequest;
 use App\Http\Requests\UpdateticketRequest;
 use App\Models\post_ticket;
 use Illuminate\Support\Facades\DB;
+use App\Enums\UserRoles;
 
 class TicketController extends Controller
 {
@@ -19,10 +20,21 @@ class TicketController extends Controller
     public function index()
     {
         $user=auth()->user();
+        $user_id = $user->id;
         $tickets=$user->isAdmin?ticket::latest()->get():$user->tickets;
         $staff = $user->staff;
-        return view('Ticketing.dashboard',compact('tickets','staff'));
+
+        $tickets_count = DB::table('tickets')
+        ->select(
+            DB::raw('COUNT(CASE WHEN status = "New" THEN 1 END) as new_count'),
+            DB::raw('COUNT(CASE WHEN status = "Pending" THEN 1 END) as pending_count'),
+            DB::raw('COUNT(CASE WHEN status = "Resolved" THEN 1 END) as resolved_count')
+        )
+        ->where('user_id', $user_id)
+        ->first();
+        return view('Ticketing.dashboard',compact('tickets','staff','tickets_count'));
     }
+   
 
     /**
      * Show the form for creating a new resource.

@@ -24,8 +24,8 @@ class StoredesignationRequest extends FormRequest
     {
         return [
             //
-            'design_name' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
-            'isvactional' => ['required'],
+            'design_name' => ['required'],
+            'isvacational' => ['required'],
             'isadditional' => ['required'],
             'emp_type' => ['required'],
         ];
@@ -35,7 +35,7 @@ class StoredesignationRequest extends FormRequest
         return
         [
             'design_name.required'=>'Designation Name is required field',
-            'design_name.regex'=>'Designation Name should contain  characters and letters only',
+            //'design_name.regex'=>'Designation Name should contain  characters and letters only',
             'isvactional.required' => 'The isvactional field is required.',
             'isadditional.required' => 'The isadditional field is required.',
             'emp_type.required' => 'The employee type field is required.',

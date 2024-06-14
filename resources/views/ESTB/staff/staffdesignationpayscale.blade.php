@@ -2259,8 +2259,10 @@
                         </div>
                         <div class="space-y-2" id="allowance_status">
                             <label class="ti-form-label mb-0 font-bold">Allowance Status</label>
-                            <input class="ti-form-input pr-4" type='checkbox' name="allowance_status" value='true'> With Allowance
-                            <input class="ti-form-input pr-4 pl-4" type='checkbox' name="allowance_status" value='false'>Without Allowance
+                            &nbsp;
+                            <input class="ti-form-radio pr-4" type='radio' name="allowance_status" value='1'> With Allowance
+                            &nbsp;
+                            <input class="ti-form-radio pr-4" type='radio' name="allowance_status" value='0'>Without Allowance
                             
                         </div>
                         <div class="ti-modal-footer">
@@ -2316,7 +2318,7 @@
                             <td>{{$add_designaions->pivot->dept_id==null?'---NA---':$dept}}</td>
                             <td>{{\Carbon\Carbon::parse($add_designaions->pivot->start_date)->format('d-M-Y') }}</td>
                             <td>{{$add_designaions->pivot->end_date==null?'--NA--':\Carbon\Carbon::parse($add_designaions->pivot->end_date)->format('d-M-Y') }}</td>
-                            <td>{{$add_designaions->pivot->allowance_status==true?'With Allowance':'Without Allowance'}}</td>
+                            <td>{{$add_designaions->pivot->allowance_status==1?'With Allowance':'Without Allowance'}}</td>
                             <td><span>
                                 @php
                                             $sdate=new DateTime($add_designaions->pivot->start_date);
@@ -2407,17 +2409,14 @@
                                                         </div>
 
                                                     </div>
-                                                    <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
-                                                        <div class="space-y-2" id="allowance_status">
-                                                            <label class="ti-form-label mb-0 font-bold">Allowance Status</label>
-                                                            <input class="pr-4" type='checkbox' name="allowance_status" value='true'> With Allowance
-                                                            
-                                                        </div>
-                                                        <div class="space-y-2" id="allowance_status">
-                                                            <label class="ti-form-label mb-0 font-bold">Allowance Status</label>
-                                                            <input class="pr-4" type='checkbox' name="allowance_status" value='false'> Without Allowance
-                                                            
-                                                        </div>
+                                                    
+                                                    <div class="space-y-2" id="allowance_status">
+                                                        <label class="ti-form-label mb-0 font-bold">Allowance Status</label>
+                                                        &nbsp;
+                                                        <input class="ti-form-radio pr-4" type='radio' name="allowance_status" value='1'  {{$add_designaions->pivot->allowance_status==1?'checked':''}}> With Allowance
+                                                        &nbsp;
+                                                        <input class="ti-form-radio pr-4" type='radio' name="allowance_status" value='0'  {{$add_designaions->pivot->allowance_status==0?'checked':''}}>Without Allowance
+                                                        
                                                     </div>
                                                     <p class="text-red-400">Note : Additional designation can be closed by filling the below information</p>
                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">

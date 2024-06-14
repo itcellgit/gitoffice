@@ -126,21 +126,21 @@
                                                                 {{-- @foreach ($st as ) --}}
 
                                                                 @foreach ($leave_types as $l_type)
-                                                                @if(isset($st[$l_type->shortname]))
+                                                                @if(isset($st[$l_type->shortname]['entitled']))
                                                                     <td scope="col" class="dark:text-white/80 px-4 py-2 font-bold text-center !important">{{$st[$l_type->shortname]['entitled']}}</td>
                                                                 @else
                                                                 <td class="dark:text-white/80 px-4 py-2 font-bold text-center !important">0</td>
                                                                 @endif
                                                                     @endforeach
                                                                 @foreach ($leave_types_taken as $l_type)
-                                                                @if(isset($st[$l_type->shortname]))
+                                                                @if(isset($st[$l_type->shortname]['availed']))
                                                                 <td scope="col" class="dark:text-white/80 font-bold text-center !important">{{$st[$l_type->shortname]['availed']}}</td>
                                                                 @else
                                                                 <td class="dark:text-white/80 font-bold text-center !important" >0</td>
                                                                 @endif
                                                                 @endforeach
                                                                 @foreach ($leave_types as $l_type)
-                                                                @if(isset($st[$l_type->shortname]))
+                                                                @if(isset($st[$l_type->shortname]['balance']))
                                                                 <td  scope="col" class="dark:text-white/80 font-bold text-center !important">{{$st[$l_type->shortname]['balance']}}</td>
                                                                 @else
                                                                 <td class="dark:text-white/80 font-bold text-center  !important">0</td>

@@ -109,7 +109,7 @@
                                                                 <div class="ti-modal-body">
                                                                     <form id="allowance_form" action="{{route('ESTB.payscales.allowances.store')}}" method="post" onsubmit="return validateForm()">
                                                                         @csrf
-                                                                        
+                                                                        <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-6 pb-6">
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold">Allowance Title : </label>
                                                                                 <input type="text" name="title" class="ti-form-input" required placeholder="Allowance Name">
@@ -122,6 +122,8 @@
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold">Value : </label>
                                                                                 <input type="text" name="value" class="ti-form-input" required placeholder="Amount Pay">
                                                                             </div>
+                                                                        </div>    
+                                                                        <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                             <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold">Value Type </label>
                                                                                 <input type="radio" name="value_type"  value="flat" class="pr-4  ti-form-radio mt-0.5" id="hs-checkbox-group-1" required>
@@ -131,33 +133,46 @@
                                                                                 <label for="hs-checkbox-group-1" class=" text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Percentage</label>
                                                                                         
                                                                             </div>
-                                                                            <label for="" class="ti-form-label font-bold">Designations Applicable for :</label>
-                                                                            <div class="space-y-2">
+                                                                            <div class="max-w-sm space-y-3 pb-6">
+                                                                                    <label for="" class="ti-form-label font-bold">Employee Type :</label>
+                                                                            
+                                                                                    
+                                                                                        <input type="radio" name="employee_type"  value="Teaching" class="ti-form-radio mt-0.5" id="hs-checkbox-group-1" required>
+                                                                                        <label for="hs-checkbox-group-1" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Teaching</label>
+                                                                                        <input type="radio" name="employee_type"  value="Non-Teaching" class="ti-form-radio mt-0.5" id="hs-checkbox-group-1" required>
+                                                                                        <label for="hs-checkbox-group-1" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Non Teaching</label>
+                                                                            </div>          
+                                                                        </div>    
+                                                                        <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                                                             <div class="space-y-2">
                                                                                 <div class=" gap-x-8 max-w-md space-y-3 pb-6">
-                                                                                @foreach($designations as $des)
-                                                                                
-                                                                                        <div class="flex">
-                                                                                            <input type="radio" name="designations_id"  value="{{$des->id}}" class="ti-form-radio mt-0.5" id="hs-checkbox-group-1" required>
-                                                                                            <label for="hs-checkbox-group-1" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">{{$des->design_name}}</label>
-                                                                                        </div>
-                                                                                
-                                                                                @endforeach
+                                                                                    <label for="" class="ti-form-label font-bold">Designations Applicable for :</label>
+                                                                           
+                                                                                    <select class="ti-form-select" name="designations_id" id="">
+                                                                                        <option value='#'>Select designation</option>
+                                                                                        @foreach($designations as $des)
+                                                                                            <option value="{{$des->id}}">{{$des->design_name}}</option>
+                                                                                        @endforeach
+                                                                                        </select>
                                                                                 </div>
                                                                             </div> 
-                                                                                <label for="" class="ti-form-label font-bold">Effect from Date :</label>
-                                                                                <div class="flex shadow-sm max-w-sm space-y-3 pb-6">
-                                                                                    
-                                                                                    <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
-                                                                                        <span class="text-sm text-gray-500 dark:text-white/70"><i
-                                                                                                class="ri ri-calendar-line"></i></span>
+                                                                                <div class="space-y-2">
+                                                                                    <div class=" gap-x-8 max-w-md space-y-3 pb-6">
+                                                                                        <label for="" class="ti-form-label font-bold">Effect from Date :</label>
+                                                                                        <div class="flex shadow-sm max-w-sm space-y-3 pb-6">
+                                                                                            
+                                                                                            <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
+                                                                                                <span class="text-sm text-gray-500 dark:text-white/70"><i
+                                                                                                        class="ri ri-calendar-line"></i></span>
+                                                                                            </div>
+                                            
+                                                                                            <input type="text" name="wef"
+                                                                                                class="ti-form-input rounded-l-none focus:z-10 flatpickr-input"
+                                                                                                id="date" required placeholder="Choose date" readonly>
+                                                                                        </div>
                                                                                     </div>
-                                    
-                                                                                    <input type="text" name="wef"
-                                                                                        class="ti-form-input rounded-l-none focus:z-10 flatpickr-input"
-                                                                                        id="date" required placeholder="Choose date" readonly>
                                                                                 </div>
-                                                                           
-                                                                        
+                                                                            </div>
                                                                         </div>
                                                                         <div class="ti-modal-footer">
                                                                             <button type="button" id="add_designation_close"
@@ -187,7 +202,7 @@
                                                 <th scope="col" class="dark:text-white/80 ">Value</th>
                                                 <th scope="col" class="dark:text-white/80 ">Value Type</th>
                                                 <th scope="col" class="dark:text-white/80 ">Designation</th>
-                                                
+                                                <th scope="col" class="dark:text-white/80 ">Employee Type</th>
                                                 <th scope="col" class="dark:text-white/80 ">With Effect From</th>
                                                 <th scope="col" class="dark:text-white/80 ">Closed On</th>
                                                 <th scope="col" class="dark:text-white/80 ">Status</th>
@@ -214,11 +229,14 @@
                                                 <td><span>{{$all->value_type}}</span></td>
                                                 <td><span>
                                                    
-                                                    @if($all->designations->status=='active')
+                                                    @if($all->designations !=null && $all->designations->status=='active')
                                                     {{$all->designations->design_name}}
+                                                    @else
+                                                        --NA--
                                                     @endif
                                             </span></td>
-                                                <td><span>{{$all->wef}}</span></td>
+                                                <td><span>{{$all->employee_type}}</span></td>
+                                                <td><span>{{date('d-M-Y', strtotime($all->wef))}}</span></td>
                                                 <td><span>{{$all->closedon}}</span></td>
                                                 <td><span>{{$all->status}}</span></td>
                                                                                          
@@ -269,7 +287,10 @@
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold">Value : </label>
                                                                                 <input type="text" name="value" value="{{$all->value}}" class="ti-form-input" required placeholder="Value">
                                                                             </div>
-                                                                            <div class="max-w-sm space-y-3 space-x-3 pb-6">
+                                                                        </div>
+                                                                        <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                                                               
+                                                                            <div class="max-w-sm space-y-3 space-x-3 pl-6 pb-6">
                                                                                 <label for="with-corner-hint" class="ti-form-label font-bold">Value Type </label>
 
                                                                                 <input type="radio" name="value_type"  value="flat" required {{(($all->value_type=='flat')?'checked':'')}} class="ti-form-radio mt-0.5 pr-2" id="hs-checkbox-group-1">
@@ -279,31 +300,47 @@
                                                                                 <label for="hs-checkbox-group-1" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Percentage</label>
                                                                                         
                                                                             </div>
-                                                                            <br/>
-                                                                            <label for="" class="ti-form-label font-bold">Designations Applicable for :</label>
-                                                                            <br/>
+                                                                            <div class="max-w-sm space-y-3 pb-6">
+                                                                                <label for="" class="ti-form-label font-bold">Employee Type :</label>
+                                                                                
+                                                                                
+                                                                                    <input type="radio" name="employee_type"  value="{{$all->employee_type}}" class="ti-form-radio mt-0.5" id="hs-checkbox-group-1" {{(($all->employee_type=='Teaching')?'checked':'')}} required>
+                                                                                    <label for="hs-checkbox-group-1" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Teaching</label>
+                                                                                    <input type="radio" name="employee_type"  value="{{$all->employee_type}}" class="ti-form-radio mt-0.5" id="hs-checkbox-group-1" {{(($all->employee_type=='Non-Teaching')?'checked':'')}} required>
+                                                                                    <label for="hs-checkbox-group-1" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Non Teaching</label>
+                                                                            </div>   
+                                                                        </div>
+                                                                        <div class="grid lg:grid-cols-1 gap-2 space-y-2 lg:space-y-0">
+                                                                           
+                                                                            
                                                                             <div class="space-y-2">
-                                                                                <div class="gap-x-8 max-w-md space-y-3 pb-6">
+                                                                                <div class="gap-x-8 max-w-md space-y-3 pl-6 pb-6">
+                                                                                    <label for="" class="ti-form-label font-bold">Designations Applicable for :</label>
+                                                                                    <select class="ti-form-select" name="designations_id" id="">
+                                                                                        <option>--None--</option>
                                                                                     @foreach($designations as $des)
                                                                                         @php
-                                                                                            $checked="";
+                                                                                            $selected="";
                                                                                         @endphp
                                                                                         @if($all->designations_id==$des->id)
                                                                                                 @php
-                                                                                                    $checked="checked";
+                                                                                                    $selected="selected";
                                                                                                     @endphp
                                                                                                 @endif
                                                                                               
-                                                                                        <div class="flex">
+                                                                                        {{-- <div class="flex">
                                                                                             
-                                                                                            <input type="radio" name="designations_id"  value="{{$des->id}}"{{$checked}} class="ti-form-radio mt-0.5" id="hs-checkbox-group-1" required>
+                                                                                            <input type="radio" name="designations_id"  value="{{$des->id}}" class="ti-form-radio mt-0.5" id="hs-checkbox-group-1">
                                                                                             <label for="hs-checkbox-group-1" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">{{$des->design_name}}</label>
-                                                                                        </div>
-                                                                                
+                                                                                        </div> --}}
+                                                                                        <option value="{{$des->id}}" {{$selected}}>{{$des->design_name}}</option>
                                                                                     @endforeach
+                                                                                    </select>
                                                                                 </div>
                                                                             </div>
-                                                                            <br/>
+                                                                        </div>
+                                                                        <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
+                                                                            <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Effect from Date :</label>
                                                                                 <br/>
                                                                                 <div class="flex shadow-sm max-w-sm space-y-3 pb-6 ">
@@ -317,9 +354,10 @@
                                                                                         class="ti-form-input rounded-l-none focus:z-10 flatpickr-input"
                                                                                         id="date" required placeholder="Choose date" readonly>
                                                                                 </div>
-                                                                                <br/>
+                                                                            </div>
+                                                                            <div class="max-w-sm space-y-3 pb-6">
                                                                                 <label for="" class="ti-form-label font-bold">Closed On :</label>
-                                                                                <br/>
+                                                                              
                                                                                 <div class="flex shadow-sm max-w-sm space-y-3 pb-6">
                                                                                   
                                                                                     <div class="px-4 inline-flex items-center min-w-fit ltr:rounded-l-sm rtl:rounded-r-sm border ltr:border-r-0 rtl:border-l-0 border-gray-200 bg-gray-50 dark:bg-black/20 dark:border-white/10">
@@ -330,7 +368,7 @@
                                                                                         class="ti-form-input rounded-l-none focus:z-10 flatpickr-input"
                                                                                         id="date" required placeholder="Choose date" value="{{$all->end_date}}">
                                                                                 </div>
-                                                                        
+                                                                            </div>
                                                                         </div>
                                                                         <div class="ti-modal-footer">
                                                                             <button type="button" id="edit_teaching_payscale"

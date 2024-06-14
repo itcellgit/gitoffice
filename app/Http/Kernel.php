@@ -68,13 +68,13 @@ class Kernel extends HttpKernel
         'prevent-back-history' => \App\Http\Middleware\PreventBackHistory::class,
     ];
 
-
+    
 
      // app/Http/Kernel.php
-     protected $routeMiddleware = [
-        // Other middleware...
-        'impersonate' => \App\Http\Middleware\ImpersonationMiddleware::class,
-    ];
+    //  protected $routeMiddleware = [
+    //     // Other middleware...
+    //     'impersonate' => \App\Http\Middleware\ImpersonationMiddleware::class,
+    // ];
 
 
     

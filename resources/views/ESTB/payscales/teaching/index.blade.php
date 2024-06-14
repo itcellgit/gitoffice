@@ -250,6 +250,7 @@
                                                 <th scope="col" class="dark:text-white/80 ">HRA</th>
                                                 <th scope="col" class="dark:text-white/80 ">CCA</th>
                                                 <th scope="col" class="dark:text-white/80 ">Status</th>
+                                                <th scope='col' class="dark:text-white/80 ">View Salary Heads</th>
                                                 <th scope="col" class="dark:text-white/80 ">Actions</th>
                                                 
                                             </tr>
@@ -259,16 +260,43 @@
                                                 $i = 1;
                                             @endphp
                                             @forelse($teaching_payscale as $tp)
-                            
                                             <tr class="bg-red-700">
-                                                <td>{{ $i++ }}</td>
-                                                <td>
-                                                <div class="flex space-x-3 rtl:space-x-reverse w-full min-w-[200px]">
-                                                    <div class="block w-full my-auto">
-                                                        {{$tp->payscale_title}}
-                                                    </div>
-                                                </div>
-                                                </td>
+                                               @if($i==1)
+                                                @php
+                                                    $tp_title=$tp->payscale_title;
+                                                    $tp_cnt=1;
+                                                   
+                                                @endphp
+                                                    <td rowspan={{$tp_cnt}}>{{ $i++ }}</td>
+                                                    <td rowspan={{$tp_cnt}}>
+                                                        
+                                                                {{$tp->payscale_title}}
+                                                          
+                                                    </td>
+                                               @else
+                                                    @if($tp_title==$tp->payscale_title)
+                                                        @php
+                                                            $tp_cnt++;
+                                                        @endphp
+                                                        <td></td>
+                                                        <td></td>
+                                                    @else
+                                                        @php
+                                                            $tp_title=$tp->payscale_title;
+                                                            $tp_cnt=1;
+                                                        @endphp
+                                                        <td rowspan={{$tp_cnt}}>{{ $i++ }}</td>
+                                                        
+                                                        <td rowspan={{$tp_cnt}}>
+                                                            
+                                                                    {{$tp->payscale_title}}
+                                                               
+                                                        </td>
+                                                    @endif
+                                               @endif
+                                           
+                                               
+                                                
                                                 <td><span>{{$tp->basepay}}</span></td>
                                                 <td><span>{{$tp->maxpay}}</span></td>
                                                 <td><span>
@@ -276,13 +304,13 @@
                                                     @if($tp->designations->status=='active')
                                                     {{$tp->designations->design_name}}
                                                     @endif
-                                            </span></td>
+                                                </span></td>
                                                 <td><span>Rs.{{$tp->agp}}</span></td>
                                                 <td><span>{{$tp->da}}</span> %</td>
                                                 <td><span>{{$tp->hra}}</span> %</td>
                                                 <td><span>Rs.{{$tp->cca}}</span></td>
                                                 <td><span>{{$tp->status}}</span></td>
-                                                                                         
+                                                                                       
                                                 <td class="font-medium space-x-2 rtl:space-x-reverse">
                                                 <div class="hs-tooltip ti-main-tooltip">
                                                     <button data-hs-overlay="#teaching_payscale_edit_modal{{$i}}" id="btn{{$i}}" btn-val={{$i}}
@@ -482,48 +510,8 @@
                                     </div>
                                     <div class="box-footer">
                                         <!-- Pagination-->
-                                        <div class="sm:flex items-center">
-                                            <div class="">
-                                                showing {{$teaching_payscale->firstItem()}} to {{$teaching_payscale->lastItem()}} of {{$teaching_payscale->total()}}
-                                            </div>
-                                            <div class="ltr:ml-auto rtl:mr-auto">
-                                                <nav class="flex justify-center items-center space-x-2 rtl:space-x-reverse">
-                                                    <a class="text-gray-500 hover:text-primary e py-1 px-2 leading-none inline-flex items-center gap-2 rounded-sm" href="{{$teaching_payscale->previousPageUrl()}}">
-                                                        <span aria-hidden="true">Prev</span>
-                                                        <span class="sr-only">Previous</span>
-                                                    </a>
-                                                    @php
-                                                        if (isset ($_GET['page']) ) {  
-                                                            $page = $_GET['page'];
-                                                            $url_page = $_GET['page'];
-                                                        } else {  
-                                                            $page = 1; 
-                                                            $url_page = 1;
-                                                        }  
-                                                        $per_page_count = $teaching_payscale->perPage();
-                                                        $total_result = $teaching_payscale->total();
-                                                        $page_first_result = ($page-1) * $per_page_count; 
-                                                        
-                                                        $number_of_page = ceil ($total_result / $per_page_count);  
-                                                    @endphp
-                                                    
-                                                    @for ($page = 1; $page<= $number_of_page; $page++)
-                                                        @if ($page == $url_page)
-                                                            <a class="bg-primary text-white py-1 px-2 leading-none inline-flex items-center text-sm font-medium rounded-sm" href="{{$teaching_payscale->url($page)}}" aria-current="page">{{$page}}</a>
-                                                        @else
-                                                                <a class="text-gray-500 hover:text-primary e py-1 px-2 leading-none inline-flex items-center text-sm font-medium rounded-sm" href="{{$teaching_payscale->url($page)}}">{{$page}}</a>
-                                                        @endif
-                                                    @endfor
-                                                    <!--a class="bg-primary text-white py-1 px-2 leading-none inline-flex items-center text-sm font-medium rounded-sm" href="javascript:void(0);" aria-current="page">1</a>
-                                                    <a class="text-gray-500 hover:text-primary e py-1 px-2 leading-none inline-flex items-center text-sm font-medium rounded-sm" href="javascript:void(0);">2</a>
-                                                    <a class="text-gray-500 hover:text-primary e py-1 px-2 leading-none inline-flex items-center text-sm font-medium rounded-sm" href="javascript:void(0);">3</a-->
-                                                    <a class="text-gray-500 hover:text-primary e py-1 px-2 leading-none inline-flex items-center gap-2 rounded-sm" href="{{ $teaching_payscale->nextPageUrl() }} ">
-                                                        <span class="sr-only">Next</span>
-                                                        <span aria-hidden="true">Next</span>
-                                                    </a>
-                                                </nav>
-                                            </div>
-                                        </div>
+                                        
+                                       
                                     </div>
                                 </div> 
                                    

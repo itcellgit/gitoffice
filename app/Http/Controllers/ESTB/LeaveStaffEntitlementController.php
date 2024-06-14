@@ -27,11 +27,11 @@ class LeaveStaffEntitlementController extends Controller
         $leave_types_taken = leave::select('shortname')->distinct('shortname')->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();// $query="select * from staff s, leaves l, leave_staff_entitlements lse where s.id=lse.staff_id and l.id=lse.leave_id and lse.status='active' and year=$year";
         // $staff=DB::select($query);
         // $leave_types_balance = leave::select('shortname')->distinct('shortname')->where('shortname','not like','SML%')->where('shortname','not like','ML')->where('status','active')->get();// $query="select * from staff s, leaves l, leave_staff_entitlements lse where s.id=lse.staff_id and l.id=lse.leave_id and lse.status='active' and year=$year";
-     // Create the subquery for concatenating departments.
+        // Create the subquery for concatenating departments.
 
 
-     //compute the sum of no_of_days for each leave type for each staff
-     $sum_days=DB::table('leave_staff_applications')
+                //compute the sum of no_of_days for each leave type for each staff
+                $sum_days=DB::table('leave_staff_applications')
                     ->join('leaves','leaves.id','=','leave_staff_applications.leave_id')
                     ->where('leave_staff_applications.appl_status','!=','rejected')
                     ->select('staff_id', 'leaves.shortname',DB::raw("sum(no_of_days) as total_days"))
@@ -39,21 +39,22 @@ class LeaveStaffEntitlementController extends Controller
                               'leave_staff_applications.leave_id',
                               'leaves.shortname')->get();
       
-    $staff = Staff::with(['leave_staff_entitlements' => function ($q) {
-        $q->wherePivot('status', 'active');
-    }])->whereIn('id', function ($q) {
-        $q->select('staff_id')
-            ->from('association_staff')
-            ->whereIn('association_id', function ($q1) {
-                $q1->select('id')
-                    ->from('associations')
-                    ->where('asso_name', 'like', '%Confirmed%')
-                    ->orWhere('asso_name', 'like', '%Contractual%')
-                    ->orWhere('asso_name', 'like', '%Probationary%')
-                    ->orWhere('asso_name', 'like', '%Temporary%');
-            });
-    })
-    ->get();
+                    $staff = Staff::with(['leave_staff_entitlements' => function ($q) {
+                        $q->wherePivot('status', 'active');
+                    }])->whereIn('id', function ($q) {
+                        $q->select('staff_id')
+                            ->from('association_staff')
+                            ->whereIn('association_id', function ($q1) {
+                                $q1->select('id')
+                                    ->from('associations')
+                                    ->where('asso_name', 'like', '%Confirmed%')
+                                    ->orWhere('asso_name', 'like', '%Contractual%')
+                                    ->orWhere('asso_name', 'like', '%Probationary%')
+                                    ->orWhere('asso_name', 'like', '%Temporary (non teaching)%')
+                                    ->orWhere('asso_name', 'like', '%Promotional Probationary%');
+                            });
+                    })
+                    ->get();
                    
                   
                                
@@ -147,4 +148,13 @@ class LeaveStaffEntitlementController extends Controller
     {
         //
     }
+
+
+
+
+
+
+
+
+   
 }

@@ -18,16 +18,8 @@ class TdsheadsController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        // $tdsheads = DB::table("tdsheads")
-        // ->join("investment_categories","tdsheads.id","=","investment_categories.tds_id")
-        // ->get();
-        // $tdshesds = tdsheads::with('InvestmentCategory')->get();
-        // $investmentCategory = with('tdshead')->get();
-        // return view('ESTB.TDS.TdsHeads.index', compact('tdshesds','investment_categories'));
-        //  return view("ESTB.TDS.TdsHeads.index");  //compact('tdsheads')
+    { 
          $tdshead = tdshead1::all();
-        //  $invest_category = InvestmentCategory::all();
          return view('ESTB.TDS.TdsHeads.index', compact('tdshead'));
     }
 
@@ -55,22 +47,20 @@ class TdsheadsController extends Controller
         $tdshead->description = $request['description'];
         $tdshead->status = $request['status'];
         $tdshead->save();
-        return redirect()->route('ESTB.TDS.TdsHeads.index');
-
-        
+        return redirect()->route('ESTB.TDS.TdsHeads.index');  
     }
     
     public function store2(StoreInvestmentCategoryRequest $request)
     {   
-        $request->validate([
-        "investment_type"=> "required"
-        ]);
-        $invest_category = new InvestmentCategory();
-        $tdsheads = new tdshead1();
-        $invest_category->investment_type = $request['investment_type'];
-        $invest_category->tds_id= $request['tds_id'];
-        $invest_category->save();
-        return redirect()->route('ESTB.TDS.TdsHeads.show', ['tdsheads' => $tdsheads->id]);
+        // $request->validate([
+        // "investment_type"=> "required"
+        // ]);
+        // $invest_category = new InvestmentCategory();
+        // $tdsheads = new tdshead1();
+        // $invest_category->investment_type = $request['investment_type'];
+        // $invest_category->tds_id= $request['tds_id'];
+        // $invest_category->save();
+        // return redirect()->route('ESTB.TDS.TdsHeads.show', ['tdsheads' => $tdsheads->id]);
     }
 
     /**
@@ -80,8 +70,9 @@ class TdsheadsController extends Controller
      public function show(tdshead1 $tdsheads)
 {   
     $tdshead = tdshead1::find($tdsheads->id);
-    // $invest_category = InvestmentCategory::find($tdsheads->id);
-    $invest_category = InvestmentCategory::where('tds_id', $tdshead->id)->get();
+    $invest_category = InvestmentCategory::where('tds_id', '=', $tdshead->id)
+    ->orderBy('id')
+    ->get();
     return view('ESTB.TDS.TdsHeads.update', compact('tdshead','invest_category'));          
 }
 
@@ -123,7 +114,17 @@ class TdsheadsController extends Controller
      */
     public function destroy(tdshead1 $tdsheads)
     {
-        $tdshead = tdshead1::find( $tdsheads->id);
+        // dd($tdsheads);
+        // $tdshead = tdshead1::find( $tdsheads->id);
+        // $tdshead->delete();
+        // dd($tdsheads); // Debug incoming request
+    
+        $tdshead = tdshead1::find($tdsheads->id);
+        if (!$tdshead) {
+            return redirect()->route('ESTB.TDS.TdsHeads.index')->with('error', 'Record not found.');
+        }
+
         $tdshead->delete();
+        return redirect()->route('ESTB.TDS.TdsHeads.index')->with('success', 'Record deleted successfully.');
     }
 }

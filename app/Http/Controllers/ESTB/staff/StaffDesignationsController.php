@@ -1269,11 +1269,12 @@ class StaffDesignationsController extends Controller
 
         if($request->dept_id==0)
         {
-            $sddesigresult=$staff->designations()->attach($request->designation_id,['start_date'=>$request->start_date,'gcr'=>$request->gcr]);
+            $sddesigresult=$staff->designations()->attach($request->designation_id,['start_date'=>$request->start_date,'gcr'=>$request->gcr,'allowance_status'=>$request->allowance_status]);
         }
         else
         {
-           $sddesigresult=$staff->designations()->attach($request->designation_id,['start_date'=>$request->start_date,'gcr'=>$request->gcr,'dept_id'=>$request->dept_id]);
+            
+           $sddesigresult=$staff->designations()->attach($request->designation_id,['start_date'=>$request->start_date,'gcr'=>$request->gcr,'dept_id'=>$request->dept_id,'allowance_status'=>$request->allowance_status]);
             $sdept=$staff->departments()->attach($request->dept_id,['start_date'=>$request->start_date,'gcr'=>$request->gcr]);
         }
 
@@ -1427,20 +1428,34 @@ class StaffDesignationsController extends Controller
     public function update_additional_desig(Request $request, staff $staff, $design_id)
     {
         
-        $additional_design=$staff->designations->where('pivot.id','=',$design_id);
-        foreach($additional_design as $design){
+        $additional_design=$staff->designations->where('pivot.id','=',$design_id)->first();
+       // dd($additional_design);
+        
         //dd($design->pivot);
         //section to close additional desigantion
         if($request->end_date!=null){
             //when closing an additional designation the non-vacational leaves must be made inactive
             // and vacational leaves must be added.
                     $this->create_vacational_leaves($request,$staff,$design_id);
-                    $design->pivot->end_date=$request->end_date;
+                    $additional_design->pivot->end_date=$request->end_date;
                     //mark the additional designation status as inactive.
-                    $design->pivot->status='inactive';
+                    $additional_design->pivot->status='inactive';
+                   // dd($additional_design);
+                    if($additional_design->pivot->dept_id!=null)
+                    {
+                        $dept_staff=staff::with(['departments'=>function($q)use($additional_design){
+                            $q->where('departments.id','=',$additional_design->pivot->dept_id)
+                                ->wherePivot('start_date',$additional_design->pivot->start_date)
+                                ->wherePivot('status','active');
+                        }])->where('id',$staff->id)->first();
+                        $dept=$staff->departments[0];
+                        $dept->pivot->end_date=$request->end_date;
+                        $dept->pivot->status='inactive';
+                        $dept->pivot->update();
+                    }
 
             }
-            if($design->pivot->allowance_status!=$request->allowance_status)
+            if($additional_design->pivot->allowance_status!=$request->allowance_status)
             {
                $all_additional_designations=$staff->latest_additional_designation()->get();
                foreach($all_additional_designations as $additional_design)
@@ -1448,12 +1463,12 @@ class StaffDesignationsController extends Controller
                     $additional_design->pivot->allowance_status=$request->allowance_status;
                     $additional_design->pivot->update();
                }
-            }
-            $design->pivot->designation_id=$request->designation_id;
-            $design->pivot->start_date=$request->start_date;
-            $design->pivot->dept_id=$request->dept_id;
-            $design->pivot->gcr=$request->gcr;
-            $design->pivot->gcr_close=$request->gcr_close;
+            
+            $additional_design->pivot->designation_id=$request->designation_id;
+            $additional_design->pivot->start_date=$request->start_date;
+            $additional_design->pivot->dept_id=$request->dept_id;
+            $additional_design->pivot->gcr=$request->gcr;
+            $additional_design->pivot->gcr_close=$request->gcr_close;
             $update_add_design_result=  $design->pivot->update();
             if($update_add_design_result){
                     $status=1;
@@ -1585,24 +1600,27 @@ class StaffDesignationsController extends Controller
                                 {
                                     $curr_year_leave->pivot->delete();
                                 }
+                                
                                 $vacational_entitlement=ceil($vl->max_entitlement/2); //EL in jan 1/2 and july 1/2 is given. Ceil if max_entitlement is odd.
                                 $wef=$curr_year."-01-01";
                             }
                             else
                             {
                                 $vacational_entitlement=$vl->max_entitlement-floor(($diffdays*$vl->max_entitlement)/365);
+                               
                                 $end_month=Carbon::parse($request->end_date)->month;
                                 if($end_month<7)
                                 {
-                                    $vacational_entitlement=$vacational_entitlement-5; //5 EL will be given in July.
+                                    $vacational_entitlement=$vacational_entitlement-floor($vl->max_entitlement/2); //5 EL will be given in July.
+                                    //dd($vacational_entitlement);
                                 }
                             }
-
-                            $staff_entitlement=$staff->leave_staff_entitlements()->attach($vl->id,['year'=>$curr_year,
-                                                                                                'entitled_curr_year'=>$vacational_entitlement,
-                                                                                                'accumulated'=>$accumulated,
-                                                                                                'consumed_curr_year'=>0,
-                                                                                                'total_encashed'=>$encashed,'wef'=>$wef]);
+                           // dd('year='.$curr_year.' entitled_curr_year='.$vacational_entitlement.' accumulated='.$accumulated.' consumed_curr_year=0 total_encashed='.$encashed.' wef='.$wef);
+                            // $staff_entitlement=$staff->leave_staff_entitlements()->attach($vl->id,['year'=>$curr_year,
+                            //                                                                     'entitled_curr_year'=>$vacational_entitlement,
+                            //                                                                     'accumulated'=>$accumulated,
+                            //                                                                     'consumed_curr_year'=>0,
+                            //                                                                     'total_encashed'=>$encashed,'wef'=>$wef]);
                         }
 
 

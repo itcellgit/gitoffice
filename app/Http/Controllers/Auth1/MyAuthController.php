@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Auth1;
 
 use App\Http\Controllers\Controller;
@@ -17,6 +16,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\WelcomeMail;
 use App\Mail\ResetPasswordMail;
 use App\Models\passwordreset;
+use App\Models\notifications;    
 
 
 
@@ -29,8 +29,10 @@ class MyAuthController extends Controller
         return view('auth.login');
     }  
       
+
     public function customLogin(Request $request)
     {
+        
         $request->validate([
             'email' => 'required',
             'password' => 'required',
@@ -39,8 +41,12 @@ class MyAuthController extends Controller
         $credentials = $request->only('email', 'password');
         //dd($credentials);
         if (Auth::attempt($credentials)) {
-            //dd('inside if');
-            $request->session()->regenerate();
+            $user = Auth::user();
+            // $notifications = notifications::where('user_id', $user->id)->get();
+            // //dd($notifications);
+            // $request->session()->regenerate();
+            // session(['notifications' => $notifications]);
+
             //dd(Auth::user()->role===UserRoles);
             if(Auth::user()->role === UserRoles::SU->value){
                 return redirect()->intended('/Admin/dashboard');
@@ -161,6 +167,7 @@ class MyAuthController extends Controller
             return redirect()->intended('/PRINCIPAL/dashboard');
         
             }
+            
             //Exam section
             // elseif(Auth::user()->role == UserRoles::EXAM_SECTION->value && Auth::user()->email=="coeoffice@git.edu"){
             

@@ -73,6 +73,7 @@ class StaffAssociationsController extends Controller
             case 9: //Retired
             case 10: //Resigned
             case 11: //Terminated
+            case 13: //Deputed to VTU
                 // for all above three cases set end_date for department, designation, payscales & association
                 
                 $closeall_status=$this->closeall($request,$staff);

@@ -39,7 +39,7 @@
                         <div class="grid grid-cols-12 gap-x-6">
                             <div class="col-span-6">
                                  <!-- For Checking whether status is set or no-->
-                                 @if(session('return_data'))
+                                @if(session('return_data'))
                                     @if (Session::get('return_data')['status'] == 1)
                                         <div class='bg-white dark:bg-bgdark border border-success alert text-success' role='alert'>
                                             <span class='font-bold'>Result: </span> Database transaction Successful
@@ -61,7 +61,6 @@
                                         header("refresh: 2");
                                     @endphp
                                 @endif
-
                             </div>
                         </div>
                         <!-- Start::row-1 -->

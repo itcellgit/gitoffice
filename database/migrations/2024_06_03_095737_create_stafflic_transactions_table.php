@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('stafflic_transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('stafflic_id');
-            $table->foreignId('lic_id');
             $table->string('month');
+            $table->year('years');
             $table->date('dop');
+            $table->float('gst');
             $table->timestamps();
         });
     }

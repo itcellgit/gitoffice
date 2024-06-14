@@ -180,6 +180,7 @@
                             <table id="unusual-issues-table" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                 <thead class="bg-gray-50 dark:bg-black/20">
                                     <tr>
+                                        <th scope="col" class="dark:text-white/80">S.no</th>
                                         <th scope="col" class="dark:text-white/80">USN</th>
                                         <th scope="col" class="dark:text-white/80">Issue</th>
                                         <th scope="col" class="dark:text-white/80">Category</th>
@@ -189,9 +190,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                @php
+                                    $i = 1;
+                                @endphp
                                 @foreach ($student_issues as $issue)
                                         @if ($issue->exam_section_issue && $issue->exam_section_issue->category_name == 'unusual')
                                             <tr>
+                                                <td class="font-medium space-x-2 rtl:space-x-reverse {{ (count($issue->issue_timeline) > 0 && $issue->issue_timeline->last()->status == 'resolved') ? 'bg-green-500' : ((count($issue->issue_timeline) > 0) ? '' : 'bg-red-300') }} ">{{ $i++ }}</td>
                                                 <td class="font-medium space-x-2 rtl:space-x-reverse {{ (count($issue->issue_timeline) > 0 && $issue->issue_timeline->last()->status == 'resolved') ? 'bg-green-500' : ((count($issue->issue_timeline) > 0) ? '' : 'bg-red-300') }}">{{ $issue->usn }}</td>
                                                 <td class="font-medium space-x-2 rtl:space-x-reverse {{ (count($issue->issue_timeline) > 0 && $issue->issue_timeline->last()->status == 'resolved') ? 'bg-green-500' : ((count($issue->issue_timeline) > 0) ? '' : 'bg-red-300') }}">
                                                     {{ $issue->exam_section_issue->issues ?? '' }} - {{ $issue->exam_section_issue->remarks ?? '' }}
@@ -225,6 +230,7 @@
                                             </tr>
                                         @elseif ($issue->exam_section_issue == null)
                                             <tr>
+                                                <td class="font-medium space-x-2 rtl:space-x-reverse {{ (count($issue->issue_timeline) > 0 && $issue->issue_timeline->last()->status == 'resolved') ? 'bg-green-500' : ((count($issue->issue_timeline) > 0) ? '' : 'bg-red-300') }} ">{{ $i++ }}</td>
                                                 <td class="font-medium space-x-2 rtl:space-x-reverse {{ (count($issue->issue_timeline) > 0 && $issue->issue_timeline->last()->status == 'resolved') ? 'bg-green-500' : ((count($issue->issue_timeline) > 0) ? '' : 'bg-red-300') }}">{{ $issue->usn }}</td>
                                                 <td class="font-medium space-x-2 rtl:space-x-reverse {{ (count($issue->issue_timeline) > 0 && $issue->issue_timeline->last()->status == 'resolved') ? 'bg-green-500' : ((count($issue->issue_timeline) > 0) ? '' : 'bg-red-300') }}">
                                                     Other - {{ $issue->other_issue ?? '-' }}
@@ -262,6 +268,7 @@
                             <table id="regular-issues-table" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                 <thead class="bg-gray-50 dark:bg-black/20">
                                     <tr>
+                                        <th scope="col" class="dark:text-white/80">S.no</th>
                                         <th scope="col" class="dark:text-white/80">USN</th>
                                         <th scope="col" class="dark:text-white/80">Issue</th>
                                         <th scope="col" class="dark:text-white/80">Category</th>
@@ -271,9 +278,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $i = 1;
+                                    @endphp
                                     @foreach ($student_issues as $issue)
                                         @if ($issue->exam_section_issue && $issue->exam_section_issue->category_name == 'regular')
                                             <tr>
+                                            <td class="font-medium space-x-2 rtl:space-x-reverse {{ (count($issue->issue_timeline) > 0 && $issue->issue_timeline->last()->status == 'resolved') ? 'bg-green-500' : ((count($issue->issue_timeline) > 0) ? '' : 'bg-red-300') }} ">{{ $i++ }}</td>
                                                 <td class="font-medium space-x-2 rtl:space-x-reverse {{ (count($issue->issue_timeline) > 0 && $issue->issue_timeline->last()->status == 'resolved') ? 'bg-green-500' : ((count($issue->issue_timeline) > 0) ? '' : 'bg-red-300') }} ">{{ $issue->usn }}</td>
     
                                                 <td class="font-medium space-x-2 rtl:space-x-reverse {{ (count($issue->issue_timeline) > 0 && $issue->issue_timeline->last()->status == 'resolved') ? 'bg-green-500' : ((count($issue->issue_timeline) > 0) ? '' : 'bg-red-300') }}">

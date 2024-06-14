@@ -18,7 +18,7 @@ use Session;
 
 class HODLeaveController extends Controller
 {
-    //
+    
      public function index(){
 
         $leaves=leave::with('combine_leave')->with('leave_rules')->orderby('vacation_type')->orderBy('longname')->get();
@@ -51,31 +51,36 @@ class HODLeaveController extends Controller
                      'leaves.shortname as leave_name',
             'daywise.start as start',
             DB::raw('DATE_ADD(daywise.start, INTERVAL 1 DAY) AS end'),
-            //'leave_staff_applications.appl_status',
-            //DB::raw('COUNT(leave_staff_applications.appl_status) AS appl_status_count'),
+           
+           
+            DB::raw('SUM(case when leave_staff_applications.appl_status="pending" then 1 else 0 end) as pending_count'),
+    
+            //DB::raw("COUNT(leave_staff_applications.appl_status) AS pending_count"), 
         )
         ->join('leave_staff_applications', 'leave_staff_applications.id', '=', 'daywise.leave_staff_applications_id')
         ->join('leaves', 'leaves.id', '=', 'leave_staff_applications.leave_id')
         ->whereIn('leave_staff_applications.staff_id',function($q)use($department_id){
-            $q->select('staff_id')->from('department_staff')->where('department_id','=',$department_id);
+            $q->select('staff_id')->from('department_staff')
+            ->where('department_id','=',$department_id)
+            ->where('status','active');
         })
         ->groupBy('daywise.start','leaves.shortname')
         ->get();
 
 
-        //to get the count of leaves which are in pending status.
-        $pending_leave_count = DB::table('daywise__leaves as daywise')
-        ->select(
-            'leave_staff_applications.appl_status',
-            DB::raw('COUNT(leave_staff_applications.appl_status) AS appl_status_count'),
-        )
-        ->join('leave_staff_applications', 'leave_staff_applications.id', '=', 'daywise.leave_staff_applications_id')
-        ->join('leaves', 'leaves.id', '=', 'leave_staff_applications.leave_id')
-        ->whereIn('leave_staff_applications.staff_id',function($q)use($department_id){
-            $q->select('staff_id')->from('department_staff')->where('department_id','=',$department_id);
-        })
-        ->groupBy('daywise.start','leaves.shortname','leave_staff_applications.appl_status')
-        ->get();
+        // //to get the count of leaves which are in pending status.
+        // $pending_leave_count = DB::table('daywise__leaves as daywise')
+        // ->select(
+        //     'leave_staff_applications.appl_status',
+        //     DB::raw('COUNT(leave_staff_applications.appl_status) AS appl_status_count'),
+        // )
+        // ->join('leave_staff_applications', 'leave_staff_applications.id', '=', 'daywise.leave_staff_applications_id')
+        // ->join('leaves', 'leaves.id', '=', 'leave_staff_applications.leave_id')
+        // ->whereIn('leave_staff_applications.staff_id',function($q)use($department_id){
+        //     $q->select('staff_id')->from('department_staff')->where('department_id','=',$department_id);
+        // })
+        // ->groupBy('daywise.start','leaves.shortname','leave_staff_applications.appl_status')
+        // ->get();
 
 
        // $leave_events_json = $leave_events->toArray();
@@ -122,12 +127,12 @@ class HODLeaveController extends Controller
     function fetchdatewisedeptleaveevents(Request $request){
         //dd("here");
         $date = $request->input('date');
-        //dd($date);
+       // dd($date);
         $user = Auth::user();
         $department_id=Session::get('deptid');
 
         $leave_type_id = $request->input('leave_type');
-
+        //dd($leave_type_id);
         // Process the date as needed (e.g., save to database, perform calculations)
       
     
@@ -140,7 +145,8 @@ class HODLeaveController extends Controller
     ->whereIn('s1.id',function($q)use($department_id){
         $q->select('staff_id')
         ->from('department_staff')
-        ->where('department_id',$department_id);
+        ->where('department_id',$department_id)
+        ->where('status','active');
     })
     ->whereDate('leave_staff_applications.start', '<=', $date)
     ->whereDate('leave_staff_applications.end', '>=', $date)
@@ -177,7 +183,7 @@ class HODLeaveController extends Controller
         //'grouped_depts.dept_shortname'
     )
     ->get();     
-   // dd( $datewiseleave_events);
+   //dd( $datewiseleave_events);
 
         // Return a response (optional)
         return response()->json($datewiseleave_events);

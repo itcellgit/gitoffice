@@ -77,9 +77,9 @@
                                                                 <td><span>{{ $i++ }}</span></td>
                                                                 <td><a href="mailto:{{ $user->email }}" class="text-blue-600">{{ $user->email }}</a></td>
                                                                 
-                                                                <td>
+                                                                {{-- <td>
                                                                     <a href="{{ route('admin.start_impersonation', $user->id) }}" class="bg-green-400 text-white px-4 py-2 rounded-full">Login</a>
-                                                                </td>
+                                                                </td> --}}
                                                                 
                                                             </tr>
                                                         @endforeach
@@ -99,9 +99,9 @@
 
                                                     </tbody>
                                                 </table>
-                                                @if(session('original_user_id'))
+                                                {{-- @if(session('original_user_id'))
                                                     <a href="{{ route('admin.stop_impersonation') }}">Stop Login</a>
-                                                @endif
+                                                @endif --}}
                                             </div>
                                         </div>
                                     </div>

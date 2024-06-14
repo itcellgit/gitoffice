@@ -26,8 +26,20 @@ class StoreallowancesRequest extends FormRequest
             'title'=>['required','string','max:255'],
             'value'=>['required','int'],
             'value_type'=>['required','string','max:255'],
-            'designations_id'=>['required',Rule::exists('designations', 'id')],
+            'employee_type'=>['required'],
+           'designations_id'=>['sometimes'],
             'wef'=>['required','date']
+        ];
+    }
+    public function messages():array
+    {
+        return[
+            'title.required'=>'title is required field',
+          
+            'value.required'=>'value name is required filed',
+            
+            'deisgnations_id.sometimes'=>'designation Name is required',
+          
         ];
     }
 }

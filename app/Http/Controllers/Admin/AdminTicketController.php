@@ -11,19 +11,39 @@ use App\Http\Requests\StoreticketRequest;
 use App\Http\Requests\UpdateticketRequest;
 use Illuminate\Http\Request;
 use App\Models\post_ticket;
+use App\Models\staff;
+use Illuminate\Support\Facades\DB;
+
+
 
 class AdminTicketController extends Controller
 {
     public function index()
     {
         $user=auth()->user();
-        $tickets=ticket::with('user')->latest()->get();
+         $tickets=ticket::with('user')->orderBy('status')->get();
+        // $tickets = ticket::with(['user', 'staff'])->orderBy('status')->get();
+        $admin_tickets_count = DB::table('tickets')
+        ->select(
+            DB::raw('COUNT(CASE WHEN status = "New" THEN 1 END) as new_count'),
+            DB::raw('COUNT(CASE WHEN status = "Pending" THEN 1 END) as pending_count'),
+            DB::raw('COUNT(CASE WHEN status = "Resolved" THEN 1 END) as resolved_count')
+        )
         
+        ->first();
+
+        // $staffticket = ticket::join('staff', 'tickets.staff_id', '=', 'staff.id')
+        // ->with('user') // Assuming there's a relationship with users
         
-        return view('Admin.tickets.adminticket',compact('tickets'));
+        // ->first(['tickets.*','fname','staff.id as staff_id','mname','lname',]);
 
+    //     $staffticket = ticket::join('staff', 'tickets.staff_id', '=', 'staff.id')
+    // ->join('users', 'staff.user_id', '=', 'users.id')
+    // ->with('user')
+    // ->select('tickets.*', 'staff.fname', 'staff.mname', 'staff.lname',  'users.role')
+    // ->first();
 
-
+        return view('Admin.tickets.adminticket',compact('tickets','admin_tickets_count'));
     }
 
     /**

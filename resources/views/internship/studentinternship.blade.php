@@ -146,12 +146,23 @@
                         <div class="box-header">
                             <div class="flex">
                                 <h5 class="box-title my-auto">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32"
+                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32"
                                         height="32">
                                         <path
                                             d="M22 21H2V19H3V4C3 3.44772 3.44772 3 4 3H18C18.5523 3 19 3.44772 19 4V9H21V19H22V21ZM17 19H19V11H13V19H15V13H17V19ZM17 9V5H5V19H11V9H17ZM7 11H9V13H7V11ZM7 15H9V17H7V15ZM7 7H9V9H7V7Z">
                                         </path>
                                     </svg>
+
+
+
+
+
+                                    {{-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32"
+                                        height="32">
+                                        <path
+                                            d="M22 21H2V19H3V4C3 3.44772 3.44772 3 4 3H18C18.5523 3 19 3.44772 19 4V9H21V19H22V21ZM17 19H19V11H13V19H15V13H17V19ZM17 9V5H5V19H11V9H17ZM7 11H9V13H7V11ZM7 15H9V17H7V15ZM7 7H9V9H7V7Z">
+                                        </path>
+                                    </svg> --}}
                                     Internship Details
                                 </h5>
 
@@ -255,6 +266,11 @@
                                                             </select>
                                                         </div>
 
+                                                        <div class="max-w-sm space-y-3 pb-6">
+                                                            <label for="" class="ti-form-label">Stipend (if any):</label>
+                                                            <input type="number" name="stipend" class="ti-form-input" placeholder="Enter stipend amount" value="0" min="0">
+                                                        </div>
+
 
                                                         <div class="ti-modal-footer">
                                                             <button type="button"
@@ -295,6 +311,8 @@
                                     <th scope="col" class="dark:text-white/80">@sortablelink('edate', 'End Date')</th>
                                     <th scope="col" class="dark:text-white/80">@sortablelink('id', 'industry name')</th>
                                     <th scope="col" class="dark:text-white/80">@sortablelink('id', 'industry-advisor name')</th>
+                                    <th scope="col" class="dark:text-white/80">@sortablelink('stipend', 'Stipend')</th>
+
                                 </tr>
                             </thead>
 
@@ -326,6 +344,9 @@
                                                 {{ $studentinternship->spoc->name }}
 
                                             </td>
+
+                                            <td><span>{{ $studentinternship->stipend }}</span></td>
+
 
 
                                             <td class="font-medium space-x-2 rtl:space-x-reverse">
@@ -484,6 +505,15 @@
 
                                                                         </div>
 
+                                                                        <div class="max-w-sm space-y-3 pb-6">
+                                                                            <label for=""
+                                                                                class="ti-form-label">Stipend :
+                                                                            </label>
+                                                                            <input type="number" name="stipend"
+                                                                                class="ti-form-input"
+                                                                                value="{{ $studentinternship->stipend }}">
+                                                                        </div>
+
                                                                         @if ($studentinternship->status == 'inactive')
                                                                             <br />
                                                                             <div class="flex">
@@ -544,7 +574,7 @@
                                             </td>
                                         </tr>
                                         @empty
-                                        <p class="text-dark"><b>No Industry-Advisor Added.</b></p>
+                                        <p class="text-dark"><b>No Internships Added.</b></p>
                                     @endforelse
                                 @endif
                             </tbody>
@@ -680,12 +710,7 @@
             }
         }
 
-        // Initial load
-        // var initialIndustryId = $('.industry_id').val();
-        //var initialSpocId = {{ $studentinternship->spoc ? $studentinternship->spoc->id : 'null' }};
-        //fetchSpocs(initialIndustryId, initialSpocId);
-
-        // On change
+       
         $('.industry_id').change(function() {
             var industryId = $(this).val();
             fetchSpocs(industryId);

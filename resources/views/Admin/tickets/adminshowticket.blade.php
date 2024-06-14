@@ -16,7 +16,7 @@
         <!-- Page Header -->
             <div class="justify-between block page-header sm:flex">
                 <div>
-                    <h3 class="text-primary hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium"> Welcome Super Admin </h3>
+                    {{-- <h3 class="text-primary hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium"> Welcome Super Admin </h3> --}}
                     <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('Admin.tickets.adminticket')}}">
                         Back
                    </a>
@@ -25,8 +25,8 @@
                 <ol class="flex items-center min-w-0 whitespace-nowrap">
                     <li class="text-sm">
                         <a class="flex items-center font-semibold truncate text-primary hover:text-primary dark:text-primary"
-                            href="javascript:void(0);">
-                            My Dashboard-tickets
+                           href="{{route('Admin.tickets.adminticket')}}">
+                            My Dashboard- View Tickets
                             <i class="flex-shrink-0 mx-3 overflow-visible text-gray-300 ti ti-chevrons-right dark:text-gray-300 rtl:rotate-180"></i>
                         </a>
                     </li>
@@ -40,7 +40,7 @@
                     <div class="box">
                         <div class="box-header flex justify-between items-center">
                             <h5 class="box-title">Ticket Status:&nbsp;&nbsp;
-                                <span style="@if($ticket->status =='Open') color: red; @elseif($ticket->status =='Pending') color: Orange; @elseif($ticket->status =='Resolved') color: green; @endif">{{$ticket->status}}</span>
+                                <span style="@if($ticket->status =='New') color: red; @elseif($ticket->status =='Pending') color: Orange; @elseif($ticket->status =='Resolved') color: green; @endif">{{$ticket->status}}</span>
                              </h5>
                             <form action="{{ route('ticket.reply.update', $ticket->id) }}" method="post" enctype="multipart/form-data">
                                 @csrf
@@ -50,16 +50,15 @@
                                         <label for="with-corner-hint" class="ti-form-label">Ticket status:</label>
                                        <select class="ti-form-select role" name="status">
                                             <option value="#">Choose One</option>
-                                            <option value="Open" {{$ticket->status=='Open'? 'selected': ''}}>Open</option>
+                                            <option value="New" {{$ticket->status=='New'? 'selected': ''}}>New</option>
                                             <option value="Pending" {{$ticket->status=='Pending'?'selected':''}}>Pending</option>
                                             <option value="Resolved" {{$ticket->status=='Resolved'?'selected':''}}>Resolved</option>
                                         </select>
                                     </div>
-                                    <div class="ti-modal-footer">
-                             
-                                        <input type="submit" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="UpdateStatus" {{ $ticket->status == 'Resolved' ? 'disabled' : '' }}/>
-
+                                   <div class="ti-modal-footer">
+                                        <input type="submit" class="ti-btn bg-yellow-500 text-white hover:bg-yellow-600 focus:ring-yellow-500 dark:focus:ring-offset-white/10" value="Update Status" {{ $ticket->status == 'Resolved' ? 'disabled' : '' }}/>
                                     </div>
+                                    
                                 </div>
                             </form>
                             <button type="button" class="hs-dropdown-toggle ti-btn ti-btn-primary" data-hs-overlay="#hs-medium-modal">
@@ -93,39 +92,37 @@
                                         </div>
                                         <form action="{{ route('ticket.reply.store', $ticket->id) }}" method="post" enctype="multipart/form-data">
                                             @csrf
-                                            <div class="ti-modal-body">
-                                                <div class="max-w-sm space-y-3 pb-6">
-                                                    <label for="with-corner-hint" class="ti-form-label">My Issue : </label>
-                                                    <input type="text" name="title" class="ti-form-input" required placeholder="title" id="myissue">
+                                            <div class="ti-modal-body space-y-6">
+                                                <div class="max-w-2xl space-y-3 pb-6">
+                                                    <label for="myissue" class="ti-form-label font-bold block">Issue Title:<span class="text-red-500">*</span></label>
+                                                    <input type="text" name="title" class="ti-form-input w-full border border-gray-300 rounded-md p-2" required placeholder="Write/copy your issue" id="myissue" value="{{ old('title') }}">
                                                     <div id="myissueError" class="error text-red-700"></div>
-
                                                 </div>
-                                                <div class="max-w-sm space-y-3 pb-6">
-                                                    <label for="" class="ti-form-label">Description:</label>
-                                                    <textarea name="description" class="ti-form-input" required placeholder="Please Describe the issue here..." style="width: 100%; height: 150px;" id="description"></textarea>
+                                                
+                                                <div class="max-w-2xl space-y-3 pb-6">
+                                                    <label for="description" class="ti-form-label font-bold block">Description:<span class="text-red-500">*</span></label>
+                                                    <textarea name="description" class="ti-form-input w-full border border-gray-300 rounded-md p-2" required placeholder="Please describe the issue here..." style="width: 100%; height: 150px;" id="description">{{ old('description') }}</textarea>
                                                     <div id="descriptionError" class="error text-red-700"></div>
-
                                                 </div>
-                                                {{-- <div class="max-w-sm space-y-3 pb-6">
-                                                    <label for="" class="ti-form-label">Attachment :</label>
-                                                    <input type="file" name="attachment" class="ti-form-input"  placeholder="attachment" id="attachment">
+                                                {{-- <div class="max-w-2xl space-y-3 pb-6">
+                                                    <label for="attachment" class="ti-form-label font-bold block">Attachment:</label>
+                                                    <input type="file" name="attachment[]" id="attachment" class="ti-form-input w-full border border-gray-300 rounded-md p-2" accept="image/*" multiple>
                                                 </div> --}}
-                                                <div class="max-w-sm space-y-3 pb-6">
-                                                    <label for="postAttachment" class="ti-form-label">Attachment:</label>
-                                                    <input type="file" name="post_attachment[]" id="post_attachment" class="ti-form-input" accept="image/*" multiple placeholder="Choose images">
-                                                    <h3>Select multiple images</h3>
-                                                    
+                                                <div class="max-w-2xl space-y-3 pb-6">
+                                                    <label for="postAttachment" class="ti-form-label font-bold block">Attachment:</label>
+                                                    <input type="file" name="post_attachment[]" id="post_attachment" class="ti-form-input w-full border border-gray-300 rounded-md p-2" accept="image/*" multiple>
                                                 </div>
-                                            </div>
-                                            <div class="ti-modal-footer">
-                                                <button type="button"
-                                                    class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
-                                                    data-hs-overlay="#hs-medium-modal">
-                                                        Close
-                                                </button>
-                                                    <input type="submit" id="reply_store_add_btn" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Save"/>
-                                            </div>
-                                        </form> 
+                                                <div class="ti-modal-footer flex justify-end space-x-3">
+                                                    <button type="button"
+                                                            class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
+                                                            data-hs-overlay="#hs-medium-modal">
+                                                            Close
+                                                        </button>
+
+                                                    <input type="submit" id="reply_store_add_btn" class="ti-btn bg-primary text-white hover:bg-primary focus:ring-primary dark:focus:ring-offset-white/10 px-4 py-2 rounded-md" value="Add">
+                                                </div>
+                                        </div>
+                                       </form> 
                                     </div>
                                     {{-- </div> --}}
                                 </div>
@@ -312,7 +309,7 @@
                     var flag = false;
 
                     if (myissue.trim() === '') {
-                        $('#myissueError').text('My Issue is missing');
+                        $('#myissueError').text('My Issue  title is missing');
                         flag = true;
                     } else {
                         $('#myissueError').text(''); 

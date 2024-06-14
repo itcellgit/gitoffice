@@ -48,89 +48,89 @@ class AdminController extends Controller
     }
    
 
-    public function users()
-    {
+    // public function users()
+    // {
 
-        $users = user::all();
-
-
-        return view('admin.users', compact('users'));
-    }
+    //     $users = user::all();
 
 
-
-    public function startImpersonation(User $user)
-    {
-        if (Auth::user()->isSuperAdmin()) {
-            // Store the original user's ID for reverting later
-            session(['original_user_id' => Auth::id()]);
-
-            // Start impersonating the selected user
-            Auth::login($user);
-
-            // Update the impersonation flags
-            $impersonatedUser = Auth::user();
-            $impersonatedUser->is_impersonating = true;
-            $impersonatedUser->impersonator_id = session('original_user_id');
-            $impersonatedUser->save();
-
-            //return redirect()->route('Admin.dashboard');
-            switch ($impersonatedUser->role) {
-                case 'Super Admin':
-                    return redirect()->route('Admin.dashboard');
-                case 'non-teaching':
-                    return redirect()->route('Non-Teaching.dashboard');
-                case 'teaching':
-                    return redirect()->route('Teaching.dashboard');
-                case 'Establishment':
-                    return redirect()->route('ESTB.dashboard');
-                case 'Principal':
-                    return redirect()->route('PRINCIPAL.dashboard');
-                case 'Head of Department':
-                    return redirect()->route('HOD.dashboard');
-                case 'Deanrnd':
-                    return redirect()->route('Deanrnd.dashboard');
-                case 'egov_admin':
-                    return redirect()->route('egov.dashboard');
-                case 'principal_office':
-                    return redirect()->route('Principaloffice.podashboard');
-                case 'Exam_section':
-                    return redirect()->route('Examoffice.dashboard');
-                case 'Principal':
-                    return redirect()->route('PRINCIPAL.dashboard');
-            }
-
-        }
-
-        return redirect()->route('login')->with('error', 'Unauthorized access');
-    }
+    //     return view('admin.users', compact('users'));
+    // }
 
 
 
+    // public function startImpersonation(User $user)
+    // {
+    //     if (Auth::user()->isSuperAdmin()) {
+    //         // Store the original user's ID for reverting later
+    //         session(['original_user_id' => Auth::id()]);
+
+    //         // Start impersonating the selected user
+    //         Auth::login($user);
+
+    //         // Update the impersonation flags
+    //         $impersonatedUser = Auth::user();
+    //         $impersonatedUser->is_impersonating = true;
+    //         $impersonatedUser->impersonator_id = session('original_user_id');
+    //         $impersonatedUser->save();
+
+    //         //return redirect()->route('Admin.dashboard');
+    //         switch ($impersonatedUser->role) {
+    //             case 'Super Admin':
+    //                 return redirect()->route('Admin.dashboard');
+    //             case 'non-teaching':
+    //                 return redirect()->route('Non-Teaching.dashboard');
+    //             case 'teaching':
+    //                 return redirect()->route('Teaching.dashboard');
+    //             case 'Establishment':
+    //                 return redirect()->route('ESTB.dashboard');
+    //             case 'Principal':
+    //                 return redirect()->route('PRINCIPAL.dashboard');
+    //             case 'Head of Department':
+    //                 return redirect()->route('HOD.dashboard');
+    //             case 'Deanrnd':
+    //                 return redirect()->route('Deanrnd.dashboard');
+    //             case 'egov_admin':
+    //                 return redirect()->route('egov.dashboard');
+    //             case 'principal_office':
+    //                 return redirect()->route('Principaloffice.podashboard');
+    //             case 'Exam_section':
+    //                 return redirect()->route('Examoffice.dashboard');
+    //             case 'Principal':
+    //                 return redirect()->route('PRINCIPAL.dashboard');
+    //         }
+
+    //     }
+
+    //     return redirect()->route('login')->with('error', 'Unauthorized access');
+    // }
 
 
-    public function stopImpersonation()
-    {
-        //dd('stopImpersonation method called');
-        if (session()->has('original_user_id')) {
-            // Revert to the original user
-            $originalUser = User::find(session('original_user_id'));
-            Auth::login($originalUser);
 
-            // Clear the impersonation flags
-            $impersonatedUser = Auth::user();
-            $impersonatedUser->is_impersonating = false;
-            $impersonatedUser->impersonator_id = null;
-            $impersonatedUser->save();
 
-            // Forget the original user ID from the session
-            session()->forget('original_user_id');
 
-            return redirect()->route('Admin.dashboard');
-        }
+    // public function stopImpersonation()
+    // {
+    //     //dd('stopImpersonation method called');
+    //     if (session()->has('original_user_id')) {
+    //         // Revert to the original user
+    //         $originalUser = User::find(session('original_user_id'));
+    //         Auth::login($originalUser);
 
-        return redirect()->route('login')->with('error', 'No impersonation session found');
-    }
+    //         // Clear the impersonation flags
+    //         $impersonatedUser = Auth::user();
+    //         $impersonatedUser->is_impersonating = false;
+    //         $impersonatedUser->impersonator_id = null;
+    //         $impersonatedUser->save();
+
+    //         // Forget the original user ID from the session
+    //         session()->forget('original_user_id');
+
+    //         return redirect()->route('Admin.dashboard');
+    //     }
+
+    //     return redirect()->route('login')->with('error', 'No impersonation session found');
+    // }
 
 
 }

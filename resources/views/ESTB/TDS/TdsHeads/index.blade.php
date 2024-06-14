@@ -223,19 +223,21 @@
                                                                     </button>
 
                                                                     <div class="hs-tooltip ti-main-tooltip">
-                                                                        <!--form action="#" method="post">
-
-                                                                        <button onclick="return confirm('Are you Sure')"
-                                                                            class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>
-
-                                                                            <span
-                                                                                class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700"
-                                                                                role="tooltip">
-                                                                                Delete
-                                                                            </span>
-                                                                            </button>
-                                                                        </form-->
+                                                                        <form action="{{ route('ESTB.TDS.TdsHeads.delete',$tdshead->first()->id)}}" method="post">
+                                                                        
+                                                                            <button onclick="return confirm('Are you Sure')"
+                                                                                class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>
+                                                                               
+                                                                                {{method_field('delete')}}
+                                                                                @csrf
+                                                                                <span
+                                                                                    class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700"
+                                                                                    role="tooltip">
+                                                                                    Delete
+                                                                                </span>
+                                                                                </button>
+                                                                            </form>
                                                                     </div>
                                                                 </div>
                                                             </td>

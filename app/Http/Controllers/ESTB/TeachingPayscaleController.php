@@ -18,7 +18,9 @@ class TeachingPayscaleController extends Controller
     public function index()
     {
         //
-        $teaching_payscale=teaching_payscale::with('designations')->where('teaching_payscales.status','active')->orderBy('payscale_title')->paginate(10);
+        $teaching_payscale=teaching_payscale::with('designations')
+                                            ->where('teaching_payscales.status','active')
+                                            ->orderBy('payscale_title')->get();
         $design=DB::table('designations')->where('emp_type','Teaching')->where('isadditional',0)->get();
         //dd($teaching_payscale);
         return view('ESTB.payscales.teaching.index',compact(['teaching_payscale','design']));

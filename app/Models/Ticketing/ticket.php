@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 
 use App\Models\post_ticket;
+use App\Models\staff;
 
 
 
@@ -28,4 +29,8 @@ class ticket extends Model
         return $this->hasmany(post_ticket::class, 'ticket_id','id');
 
     }
+    // public function staff()
+    // {
+    //     return $this->belongsTo(staff::class);
+    // }
 }

@@ -62,129 +62,72 @@
                         class="relative inline-flex rounded-full h-5 w-5 bg-success text-white justify-center items-center" id="notify-data"></span>
                     </span>
                 </button>
+
                 <div class="hs-dropdown-menu ti-dropdown-menu w-[20rem] border-0" aria-labelledby="dropdown-notification">
                     <div class="ti-dropdown-header !bg-primary border-b dark:border-white/10 flex justify-between items-center">
                         <p class="ti-dropdown-header-title !text-white font-semibold">Notifications</p>
-                        <a href="javascript:void(0)" class="badge bg-black/20 text-white rounded-sm">Mark All Read</a>
+                        <a href="javascript:void(0)" id="mark-all-read" class="badge bg-black/20 text-white rounded-sm">Mark All Read</a>
                     </div>
-                    {{-- <div class="col-span-12 lg:col-span-3">
-                        <div class="box">
-                            <div class="box-body text-center">
-                                <button type="button" class="ti-btn ti-btn-primary" id="popup">Notification</button>
-                                <div id="notification-container" style="display: none;">
-                                    @php
-                                        $hod_notifications = session()->get('hod_notifications', []);
-                                    @endphp
-                                    @if(!empty($hod_notifications))
-                                        @foreach($hod_notifications as $hod_notification)
-                                            <p class="text-red-500">{{ $hod_notification['notification_title'] }}</p>
-                                            <p>{{ $hod_notification['notification_type'] }}</p>
-                                            <p>{{ $hod_notification['description'] }}</p>
-                                            <p>{{ $hod_notification['date'] }}</p>
-                                        @endforeach
-                                    @else
-                                        <p>No notifications</p>
-                                    @endif
+                    <div class="ti-dropdown-divider divide-y divide-gray-200 dark:divide-white/10">
+                        <div class="py-2 first:pt-0 last:pb-0" id="allNotifyContainer" style="max-height: 300px; overflow-y: auto;">
+                            {{-- @if(session()->has('notifications'))
+                                @foreach(session('notifications') as $notification)
+                                    <div class="ti-dropdown-item relative header-box">
+                                        <a class="flex space-x-3 rtl:space-x-reverse">
+                                            <div class="ltr:mr-2 rtl:ml-2 avatar rounded-full ring-0">
+                                                <img src="{{asset('build/assets/img/users/avtar.jpeg')}}" alt="img" class="rounded-sm">
+                                            </div>
+                                            <div class="relative w-full">
+                                                <h5 class="text-sm text-gray-800 dark:text-white font-semibold mb-1 notification-type">{{ $notification['notification_type'] }}</h5>
+                                                <p class="text-xs mb-1 text-black-400 font-bold">{{ $notification['description'] }}</p>
+                                                <p class="text-xs text-black">{{ $notification['date'] }}</p>
+                                                
+                                            </div>
+                                        </a>
+                                        <a aria-label="anchor" href="javascript:void(0);" class="header-remove-btn ltr:ml-auto rtl:mr-auto text-lg text-gray-500/20 dark:text-white/20 hover:text-gray-800 dark:hover:text-white">
+                                            <i class="ri-close-circle-line"></i>
+                                        </a>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="ti-dropdown-item relative header-box">
+                                    <p class="text-sm text-gray-800 dark:text-white">No notifications available.</p>
                                 </div>
-                            </div>
-                        </div>
-                    </div> --}}
+                            @endif --}}
 
-                    <div class="col-span-12 lg:col-span-3">
-                        <div class="box">
-                            <div class="box-body text-center">
-                                <button type="button" class="ti-btn ti-btn-primary" id="popup">Notification</button>
-                                <div id="notification-container" style="display: none;">
-                                    <!-- Loop through notifications and display them -->
-                                    @php
-                                        $hod_notifications = session()->get('hod_notifications');
-                                    @endphp
-                                    @if(session()->has('hod_notifications') && is_array($hod_notifications) && count($hod_notifications) > 0)
-                                        @foreach($hod_notifications as $hod_notifications)
-                                            <p class="text-red-500">{{ $hod_notifications->notification_title }}</p>
-                                            <p>{{ $hod_notifications->notification_type }}</p>
-                                            <p class="text-blue-500">{{ $hod_notifications->description }}</p>
-                                            <p>{{ $hod_notifications->date }}</p>
-                                        @endforeach
-                                    @else
-                                        <p>No notifications</p>
-                                    @endif
+
+                            @if(session()->has('notifications'))
+                                @foreach(session('notifications') as $notification)
+                                    <div class="ti-dropdown-item relative header-box">
+                                        <a class="flex space-x-3 rtl:space-x-reverse">
+                                            <div class="ltr:mr-2 rtl:ml-2 avatar rounded-full ring-0">
+                                                <img src="{{ asset('build/assets/img/users/avtar.jpeg') }}" alt="img" class="rounded-sm">
+                                            </div>
+                                            <div class="relative w-full">
+                                                <h5 class="text-sm text-gray-800 dark:text-white font-semibold mb-1 notification-type">{{ $notification['notification_type'] }}</h5>
+                                                @if(!empty($notification['event_name']))
+                                                    <p class="text-xs mb-1 text-black-400 font-bold notification-type">{{ $notification['event_name'] }}</p>
+                                                @endif
+                                                <p class="text-xs mb-1 text-black-400 font-bold">{{ $notification['description'] }}</p>
+                                                <p class="text-xs text-black">{{ $notification['date'] }}</p>
+                                            </div>
+                                        </a>
+                                        <a aria-label="anchor" href="javascript:void(0);" class="header-remove-btn ltr:ml-auto rtl:mr-auto text-lg text-gray-500/20 dark:text-white/20 hover:text-gray-800 dark:hover:text-white">
+                                            <i class="ri-close-circle-line"></i>
+                                        </a>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="ti-dropdown-item relative header-box">
+                                    <p class="text-sm text-gray-800 dark:text-white">No notifications available.</p>
                                 </div>
-                            </div>
+                            @endif
+                        
                         </div>
                     </div>
-                   
-                    
-                    <!--<div class="ti-dropdown-divider divide-y divide-gray-200 dark:divide-white/10">
-                        <div class="py-2 first:pt-0 last:pb-0" id="allNotifyContainer">
-                        <div class="ti-dropdown-item relative header-box">
-                            <a href="{{url('mail-inbox')}}" class="flex space-x-3 rtl:space-x-reverse">
-                            <div class="ltr:mr-2 rtl:ml-2 avatar rounded-full ring-0">
-                                <img src="{{asset('build/assets/img/users/17.jpg')}}" alt="img" class="rounded-sm">
-                            </div>
-                            <div class="relative w-full">
-                                <h5 class="text-sm text-gray-800 dark:text-white font-semibold mb-1">Elon Isk</h5>
-                                <p class="text-xs mb-1 max-w-[200px] truncate">Hello there! How are you doing? Call me when...</p>
-                                <p class="text-xs text-gray-400 dark:text-white/70">2 min</p>
-                            </div>
-                            </a>
-                            <a aria-label="anchor" href="javascript:void(0);" class="header-remove-btn ltr:ml-auto rtl:mr-auto text-lg text-gray-500/20 dark:text-white/20 hover:text-gray-800 dark:hover:text-white">
-                            <i class="ri-close-circle-line"></i>
-                            </a>
-                        </div>
-                        <div class="ti-dropdown-item relative header-box">
-                            <a href="{{url('mail-inbox')}}" class="flex items-center space-x-3 rtl:space-x-reverse">
-                            <div class="ltr:mr-2 rtl:ml-2 avatar rounded-full ring-0">
-                                <img src="{{asset('build/assets/img/users/2.jpg')}}" alt="img" class="rounded-sm">
-                            </div>
-                            <div class="relative w-full">
-                                <h5 class="text-sm text-gray-800 dark:text-white font-semibold mb-1">Shakira Sen</h5>
-                                <p class="text-xs mb-1 max-w-[200px] truncate">I would like to discuss about that assets...</p>
-                                <p class="text-xs text-gray-400 dark:text-white/70">09:43</p>
-                            </div>
-                            </a>
-                            <a aria-label="anchor" href="javascript:void(0);" class="header-remove-btn ltr:ml-auto rtl:mr-auto text-lg text-gray-500/20 dark:text-white/20 hover:text-gray-800 dark:hover:text-white">
-                            <i class="ri-close-circle-line"></i>
-                            </a>
-                        </div>
-                        <div class="ti-dropdown-item relative header-box">
-                            <a href="{{url('mail-inbox')}}" class="flex items-center space-x-3 rtl:space-x-reverse">
-                            <div class="ltr:mr-2 rtl:ml-2 avatar rounded-full ring-0">
-                                <img src="{{asset('build/assets/img/users/21.jpg')}}" alt="img" class="rounded-sm">
-                            </div>
-                            <div class="relative w-full">
-                                <h5 class="text-sm text-gray-800 dark:text-white font-semibold mb-1">Sebastian</h5>
-                                <p class="text-xs mb-1 max-w-[200px] truncate">Shall we go to the cafe at downtown...</p>
-                                <p class="text-xs text-gray-400 dark:text-white/70">yesterday</p>
-                            </div>
-                            </a>
-                            <a aria-label="anchor" href="javascript:void(0);" class="header-remove-btn ltr:ml-auto rtl:mr-auto text-lg text-gray-500/20 dark:text-white/20 hover:text-gray-800 dark:hover:text-white">
-                            <i class="ri-close-circle-line"></i>
-                            </a>
-                        </div>
-                        <div class="ti-dropdown-item relative header-box">
-                            <a href="{{url('mail-inbox')}}" class="flex items-center space-x-3 rtl:space-x-reverse">
-                            <div class="ltr:mr-2 rtl:ml-2 avatar rounded-full ring-0">
-                                <img src="{{asset('build/assets/img/users/11.jpg')}}" alt="img" class="rounded-sm">
-                            </div>
-                            <div class="relative w-full">
-                                <h5 class="text-sm text-gray-800 dark:text-white font-semibold mb-1">Charlie Davieson</h5>
-                                <p class="text-xs mb-1 max-w-[200px] truncate">Lorem ipsum dolor sit amet, consectetur</p>
-                                <p class="text-xs text-gray-400 dark:text-white/70">yesterday</p>
-                            </div>
-                            </a>
-                            <a aria-label="anchor" href="javascript:void(0);" class="header-remove-btn ltr:ml-auto rtl:mr-auto text-lg text-gray-500/20 dark:text-white/20 hover:text-gray-800 dark:hover:text-white">
-                            <i class="ri-close-circle-line"></i>
-                            </a>
-                        </div>
-                        </div>
-                        <div class="py-2 first:pt-0 px-5">
-                        <a class="w-full ti-btn ti-btn-primary p-2" href="{{url('mail-inbox')}}">
-                            View All
-                        </a>
-                        </div>
-                    </div>-->
                 </div>
+                
+                
             </div>
 
             <div class="header-profile hs-dropdown ti-dropdown" data-hs-dropdown-placement="bottom-right">
@@ -247,12 +190,10 @@
 </header>
 
 <script>
-    document.getElementById('popup').addEventListener('click', function() {
-        var notificationContainer = document.getElementById('notification-container');
-        if (notificationContainer.style.display === 'none' || notificationContainer.style.display === '') {
-            notificationContainer.style.display = 'block';
-        } else {
-            notificationContainer.style.display = 'none';
-        }
+    document.getElementById('mark-all-read').addEventListener('click', function() {
+        var notificationTypes = document.querySelectorAll('.notification-type');
+        notificationTypes.forEach(function(type) {
+            type.style.color = '#ff6666'; 
+        });
     });
 </script>

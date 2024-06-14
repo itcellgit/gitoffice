@@ -12,32 +12,73 @@ use App\Http\Controllers\Controller;
 
 class PayscaleSalaryHeadController extends Controller
 {
+    // public function index()
+    // {
+    //     $salary_heads=salary_head::get();
+    //     $payscales=payscale::get();
+    //     $payscale_salary_head=payscale::with('salary_head')->get();
+    //     //dd($payscale_salary_head);
+    //     return view('ESTB.payscale.payscalesalaryheads.index',compact('salary_heads','payscales','payscale_salary_head','psh'));
+    // }
     public function index()
     {
-        $salary_heads=salary_head::get();
-        $payscales=payscale::get();
-        $payscale_salary_head=payscale::with('salary_head')->get();
-        //dd($payscale_salary_head);
-        return view('ESTB.payscale.payscalesalaryheads.index',compact('salary_heads','payscales','payscale_salary_head','psh'));
-    }
+
+         $salary_groups=salary_group::get();
+         $salary_heads_bg = salary_head::where('title','like','%basic%')->orWhere('title','like','%gross%')->orderby('title')->get(); 
+      //  dd($salary_heads_bg);
+         $salary_heads = Salary_head::with('salaryGroup')->with('salary_head_on')->get();     
+         //dd($salary_heads);
+         return view('ESTB.salaries.payscalesalaryheads.index',compact('salary_heads','salary_groups','salary_heads_bg'));
+      }
     public function create()
     {
         //
     }
+    // public function store(Storepayscale_salary_headRequest $request,payscale $payscale)
+    // {
+    
+    //     $insertedIds = [];
+    //     foreach ($request->salary_head_id as $sh) {     
+    //         $insert= $payscale->salary_head()->attach($sh,['start_date'=> $request->start_date,'end_date'=> $request->end_date,'status'=>'active']);
+    //     }
+    //     if ($insert) {
+    //         $status = 1;
+    //     } else {
+    //         $status = 0;
+    //     }
+    //     return redirect('/ESTB/payscale/'.$payscale->id.'/show')->with('status', $status);
+    // }
+
     public function store(Storepayscale_salary_headRequest $request,payscale $payscale)
     {
-    
-        $insertedIds = [];
-        foreach ($request->salary_head_id as $sh) {     
-            $insert= $payscale->salary_head()->attach($sh,['start_date'=> $request->start_date,'end_date'=> $request->end_date,'status'=>'active']);
+       //dd($request);
+        $salary_heads=new salary_head();
+        $salary_heads->title=$request->title;
+        $salary_heads->salary_group_id=$request->salary_group_id;
+        $salary_heads->salary_type=$request->salary_type;
+        if($request->salary_type=="percentage")
+        {
+            $salary_heads->pvalue=$request->percentage_value;
+            $salary_heads->ptype=$request->ptype;
         }
-        if ($insert) {
-            $status = 1;
-        } else {
-            $status = 0;
-        }
-        return redirect('/ESTB/payscale/'.$payscale->id.'/show')->with('status', $status);
+        $salary_heads->maximum=$request->maximum;
+        $salary_heads->created_at = Carbon::now();
+        $salary_heads->status='active';
+        $salary_heads->save();
+        $salary_headsinsertedId = $salary_heads->id;
+
+
+       //dd($insertedId);
+       if($salary_headsinsertedId > 0){
+           $status = 1;
+           return redirect('/ESTB/salaries/payscalesalaryheads')->with('status', $status);
+       }else{
+           $status = 0;
+           return redirect('/ESTB/salaries/payscalesalaryheads')->with('status', $status);
+       }
     }
+
+
     public function show(payscale_salary_head $payscale_salary_head)
     {
         //

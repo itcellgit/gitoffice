@@ -26,7 +26,8 @@ class UpdateallowancesRequest extends FormRequest
             'title'=>['required','string','max:255'],
             'value'=>['required','int'],
             'value_type'=>['required','string','max:255'],
-            'designations_id'=>['required',Rule::exists('designations', 'id')],
+            'employee_type'=>['required'],
+            'designations_id'=>['sometimes',Rule::exists('designations', 'id')],
             'wef'=>['required','date']
         ];
     }

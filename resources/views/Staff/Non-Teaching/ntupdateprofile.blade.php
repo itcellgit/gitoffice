@@ -37,7 +37,7 @@
                         <div class="grid grid-cols-12 gap-x-6">
                             <div class="col-span-6">
                                  <!-- For Checking whether status is set or no-->
-                                 @if(session('return_data'))
+                                @if(session('return_data'))
                                     @if (Session::get('return_data')['status'] == 1)
                                         <div class='bg-white dark:bg-bgdark border border-success alert text-success' role='alert'>
                                             <span class='font-bold'>Result: </span> Database transaction Successful
@@ -59,28 +59,21 @@
                                         header("refresh: 2");
                                     @endphp
                                 @endif
-
                             </div>
                         </div>
                         <!-- Start::row-1 -->
                         <div class="col-span-12 xl:col-span-9">
                             <div class="box">
-                                <div class="box-header">
-                                     <h4> </h4>
-                                </div>
-
                                 <div class="box-body pt-0">
                                     <div class="mt-3">
                                         <div id="profile-settings-1" role="tabpanel" aria-labelledby="profile-settings-item-1">
                                             <div class="box border-0 shadow-none mb-0">
                                                 <div class="box-header">
-                                                <h5 class="box-title leading-none flex"><i class="ri ri-shield-user-line ltr:mr-2 rtl:ml-2"></i> Personal Information</h5>
+                                                    <h5 class="box-title leading-none flex"><i class="ri ri-shield-user-line ltr:mr-2 rtl:ml-2"></i> Personal Information</h5>
                                                 </div>
                                                 <div class="box-body">
-
                                                     <div>
-                                                        <form action="{{route('Staff.Non-Teaching.update',$staff->id)}}" method="post">
-                                                            
+                                                        <form action="{{route('Staff.Non-Teaching.update',$staff->id)}}" method="post" enctype="multipart/form-data">
                                                             @csrf
                                                             @method('patch')
                                                             <div class="grid lg:grid-cols-3 gap-3 space-y-2 lg:space-y-0 pb-4">
@@ -124,10 +117,10 @@
                                                                     <select class="ti-form-select" name="religion_id" id="religion_id">
                                                                         <option>Choose a Religion</option>
                                                                         @foreach ($religions as $religion)
-                                                                        <option value="{{$religion->id}}" {{$staff->religion_id == $religion->id? 'selected':''}}>{{$religion->religion_name}}</option>
-                                                                    @endforeach
+                                                                            <option value="{{$religion->id}}" {{$staff->religion_id == $religion->id? 'selected':''}}>{{$religion->religion_name}}</option>
+                                                                        @endforeach
 
-                                                                        </select>
+                                                                    </select>
                                                                 </div>
                                                                 <div class="space-y-2">
                                                                     <label class="ti-form-label mb-0 font-bold">Caste Category</label>
@@ -139,83 +132,83 @@
                                                                     </select>
 
                                                                 </div>
-                                                                    <div class="space-y-2 pr-4">
-                                                                        <label class="ti-form-label mb-0">Gender</label>
-                                                                        <div class="flex gap-x-6">
-                                                                            <div class="flex">
-                                                                                <input type="radio" name="gender" value="female" {{$staff->gender == "female"?'checked':''}} class="ti-form-radio" id="hs-radio-group-1">
-                                                                                <label for="hs-radio-group-1" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Female</label>
-                                                                            </div>
+                                                                <div class="space-y-2 pr-4">
+                                                                    <label class="ti-form-label mb-0">Gender</label>
+                                                                    <div class="flex gap-x-6">
+                                                                        <div class="flex">
+                                                                            <input type="radio" name="gender" value="female" {{$staff->gender == "female"?'checked':''}} class="ti-form-radio" id="hs-radio-group-1">
+                                                                            <label for="hs-radio-group-1" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Female</label>
+                                                                        </div>
 
-                                                                            <div class="flex">
-                                                                                <input type="radio" name="gender" value="male" {{$staff->gender == "male"?'checked':''}} class="ti-form-radio" id="hs-radio-group-2">
-                                                                                <label for="hs-radio-group-2" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Male</label>
-                                                                            </div>
+                                                                        <div class="flex">
+                                                                            <input type="radio" name="gender" value="male" {{$staff->gender == "male"?'checked':''}} class="ti-form-radio" id="hs-radio-group-2">
+                                                                            <label for="hs-radio-group-2" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Male</label>
+                                                                        </div>
 
-                                                                            <div class="flex">
-                                                                                <input type="radio" name="gender" value="others" {{$staff->gender == "others"?'checked':''}} class="ti-form-radio" id="hs-radio-group-3">
-                                                                                <label for="hs-radio-group-3" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Others</label>
-                                                                            </div>
+                                                                        <div class="flex">
+                                                                            <input type="radio" name="gender" value="others" {{$staff->gender == "others"?'checked':''}} class="ti-form-radio" id="hs-radio-group-3">
+                                                                            <label for="hs-radio-group-3" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Others</label>
                                                                         </div>
                                                                     </div>
+                                                                </div>
 
-                                                                    <div class="space-y-2">
-                                                                        <label class="ti-form-label mb-0 font-bold">Date Of Birth</label>
-                                                                        <input type="text" name="dob" value="{{$staff->dob}}" class="ti-form-input flatpickr-input date" id="dob"
-                                                                            placeholder="Choose date" readonly>
-                                                                    </div>
-                                                                    <div class="space-y-2">
-                                                                        <label class="ti-form-label mb-0 font-bold">Date Of Joining</label>
-                                                                        <input type="text" name="doj" value="{{$staff->doj}}" class="ti-form-input flatpickr-input date" id="doj"
-                                                                            placeholder="Choose date" readonly>
-                                                                    </div>
+                                                                <div class="space-y-2">
+                                                                    <label class="ti-form-label mb-0 font-bold">Date Of Birth</label>
+                                                                    <input type="text" name="dob" value="{{$staff->dob}}" class="ti-form-input flatpickr-input date" id="dob"
+                                                                        placeholder="Choose date" readonly>
+                                                                </div>
+                                                                <div class="space-y-2">
+                                                                    <label class="ti-form-label mb-0 font-bold">Date Of Joining</label>
+                                                                    <input type="text" name="doj" value="{{$staff->doj}}" class="ti-form-input flatpickr-input date" id="doj"
+                                                                        placeholder="Choose date" readonly>
+                                                                </div>
 
-                                                                    <div class="space-y-2">
-                                                                        <label class="ti-form-label mb-0 font-bold">Date Of Superannution</label>
-                                                                        <input type="text" name="date_of_superanuation" class="ti-form-input flatpickr-input date" id="dos"
-                                                                        value="{{$staff->date_of_superanuation}}" placeholder="Choose date" disabled>
-                                                                    </div>
+                                                                <div class="space-y-2">
+                                                                    <label class="ti-form-label mb-0 font-bold">Date Of Superannution</label>
+                                                                    <input type="text" name="date_of_superanuation" class="ti-form-input flatpickr-input date" id="dos"
+                                                                    value="{{$staff->date_of_superanuation}}" placeholder="Choose date" disabled>
+                                                                </div>
 
-                                                                    <div class="space-y-2">
-                                                                        <label class="ti-form-label mb-0 font-bold">Date Of Confirmation</label>
+                                                                <div class="space-y-2">
+                                                                    <label class="ti-form-label mb-0 font-bold">Date Of Confirmation</label>
 
-                                                                         <input type="text" name="date_of_confirmation" class="ti-form-input flatpickr-input" value="{{($confirmationdate!=null ? $confirmationdate:"" )}}"
-                                                                            placeholder="Choose date" readonly>
-                                                                    </div>
-                                                                    <div class="space-y-2">
-                                                                        <label class="ti-form-label mb-0 font-bold">Date Of Increment</label>
-                                                                        <input type="text" name="date_of_increment" value="{{$staff->date_of_increment}}" class="ti-form-input flatpickr-input date" id=""
-                                                                            placeholder="Choose date" readonly>
-                                                                    </div>
-                                                                    <div class="space-y-2">
-                                                                        <label class="ti-form-label mb-0 font-bold">Blood Group</label>
-                                                                        <select class="ti-form-select" name="bloodgroup">
-                                                                            <option value="null">Choose a Blood Group</option>
-                                                                            <option value="A+" {{$staff->bloodgroup == "A+"?'selected':''}}>A + (Positive)</option>
-                                                                            <option value="A-" {{$staff->bloodgroup == "A-"?'selected':''}} >A - (Negetive)</option>
-                                                                            <option value="B+" {{$staff->bloodgroup == "B+"?'selected':''}}>B + (Positive)</option>
-                                                                            <option value="B-" {{$staff->bloodgroup == "B-"?'selected':''}}>B - (Negetive)</option>
-                                                                            <option value="AB+" {{$staff->bloodgroup == "AB+"?'selected':''}}>AB + (Positive)</option>
-                                                                            <option value="AB-" {{$staff->bloodgroup == "AB-"?'selected':''}}>AB - (Negetive)</option>
-                                                                            <option value="O+" {{$staff->bloodgroup == "O+"?'selected':''}}>O + (Positive)</option>
-                                                                            <option value="O-" {{$staff->bloodgroup == "O-"?'selected':''}}>O - (Negetive)</option>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="space-y-2">
-                                                                        <label class="ti-form-label mb-0 font-bold">PAN Card No:</label>
-                                                                        <input type="text" name="pan_card" class="my-auto ti-form-input"
-                                                                            placeholder="XXXXX XXXXX" value="{{$staff->pan_card}}">
-                                                                    </div>
-                                                                    <div class="space-y-2">
-                                                                        <label class="ti-form-label mb-0 font-bold">Adhar Card No:</label>
-                                                                        <input type="text" name="adhar_card" class="my-auto ti-form-input"
-                                                                            placeholder="XXXX-XXXX-XXXX-XXXX" value="{{$staff->adhar_card}}">
-                                                                    </div>
-                                                                    <div class="space-y-2">
-                                                                        <label class="ti-form-label mb-0 font-bold">Contact No:</label>
-                                                                        <input type="text" name="contactno" value="{{$staff->contactno}}" class="my-auto ti-form-input"
-                                                                            placeholder="XXXXX-XXXXX">
-                                                                    </div>
+                                                                        <input type="text" name="date_of_confirmation" class="ti-form-input flatpickr-input" value="{{($confirmationdate!=null ? $confirmationdate:"" )}}"
+                                                                        placeholder="Choose date" readonly>
+                                                                </div>
+                                                                <div class="space-y-2">
+                                                                    <label class="ti-form-label mb-0 font-bold">Date Of Increment</label>
+                                                                    <input type="text" name="date_of_increment" value="{{$staff->date_of_increment}}" class="ti-form-input flatpickr-input date" id=""
+                                                                        placeholder="Choose date" readonly>
+                                                                </div>
+                                                                <div class="space-y-2">
+                                                                    <label class="ti-form-label mb-0 font-bold">Blood Group</label>
+                                                                    <select class="ti-form-select" name="bloodgroup">
+                                                                        <option value="null">Choose a Blood Group</option>
+                                                                        <option value="A+" {{$staff->bloodgroup == "A+"?'selected':''}}>A + (Positive)</option>
+                                                                        <option value="A-" {{$staff->bloodgroup == "A-"?'selected':''}} >A - (Negetive)</option>
+                                                                        <option value="B+" {{$staff->bloodgroup == "B+"?'selected':''}}>B + (Positive)</option>
+                                                                        <option value="B-" {{$staff->bloodgroup == "B-"?'selected':''}}>B - (Negetive)</option>
+                                                                        <option value="AB+" {{$staff->bloodgroup == "AB+"?'selected':''}}>AB + (Positive)</option>
+                                                                        <option value="AB-" {{$staff->bloodgroup == "AB-"?'selected':''}}>AB - (Negetive)</option>
+                                                                        <option value="O+" {{$staff->bloodgroup == "O+"?'selected':''}}>O + (Positive)</option>
+                                                                        <option value="O-" {{$staff->bloodgroup == "O-"?'selected':''}}>O - (Negetive)</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="space-y-2">
+                                                                    <label class="ti-form-label mb-0 font-bold">PAN Card No:</label>
+                                                                    <input type="text" name="pan_card" class="my-auto ti-form-input"
+                                                                        placeholder="XXXXX XXXXX" value="{{$staff->pan_card}}">
+                                                                </div>
+                                                                <div class="space-y-2">
+                                                                    <label class="ti-form-label mb-0 font-bold">Adhar Card No:</label>
+                                                                    <input type="text" name="adhar_card" class="my-auto ti-form-input"
+                                                                        placeholder="XXXX-XXXX-XXXX-XXXX" value="{{$staff->adhar_card}}">
+                                                                </div>
+                                                                <div class="space-y-2">
+                                                                    <label class="ti-form-label mb-0 font-bold">Contact No:</label>
+                                                                    <input type="text" name="contactno" value="{{$staff->contactno}}" class="my-auto ti-form-input"
+                                                                        placeholder="XXXXX-XXXXX">
+                                                                </div>
                                                             </div>
                                                             <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pb-4">
                                                                 <div class="space-y-2" id="AICTE_id">
@@ -253,7 +246,7 @@
                                                                     <input type="text" name="permanent_address" class="my-auto ti-form-input" value="{{$staff->permanent_address}}" placeholder="Permenant Address">
                                                                 </div>
                                                             </div>
-                                                            <div class="grid lg:grid-cols-3 gap-3 space-y-2 lg:space-y-0">
+                                                            <div class="grid lg:grid-cols-3 gap-3">
                                                                 <div class="space-y-2">
                                                                     <label class="ti-form-label mb-0 font-bold">Emergency No</label>
                                                                     <input type="text" name="emergency_no" class="ti-form-input" value="{{$staff->emergency_no}}" placeholder="emergency no">
@@ -262,11 +255,23 @@
                                                                     <label class="ti-form-label mb-0 font-bold">Emergency Name</label>
                                                                     <input type="text" name="emergency_name" class="ti-form-input" value="{{$staff->emergency_name}}" placeholder="emergency name">
                                                                 </div>
-
-
+                                                                {{-- <div class="space-y-2">
+                                                                    <label for="" class="ti-form-label pt-4 font-bold">Document:<span class="text-red-500">* PDF files up to 500 KB in size are accepted.</span></label>
+                                                                    Current Document:<span class="text-red-500">{{$staff->document}} </span>
+                                                                    <input type="file" accept="application/pdf" name="document" id="conf_att_document" class="block w-full text-sm text-gray-500 dark:text-white/70 focus:outline-0
+                                                                    ltr:file:mr-4 rtl:file:ml-4 file:py-2 file:px-4
+                                                                    file:rounded-sm file:border-0
+                                                                    file:text-sm file:font-semibold
+                                                                    file:bg-primary file:text-white
+                                                                    hover:file:bg-primary focus-visible:outline-none doc" value="">
+                                                                    @if($errors->has('document'))
+                                                                        <div class="text-red-700">{{ $errors->first('document') }}</div>
+                                                                    @endif
+                                                                </div> --}}
+    
+                                                                
                                                             </div>
-
-                                                            <div class="pt-6 pl-48">
+                                                            <div class="pt-6">
                                                                 <button type="submit" class="ti-btn m-0 ti-btn-soft-primary text-right">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M5.46257 4.43262C7.21556 2.91688 9.5007 2 12 2C17.5228 2 22 6.47715 22 12C22 14.1361 21.3302 16.1158 20.1892 17.7406L17 12H20C20 7.58172 16.4183 4 12 4C9.84982 4 7.89777 4.84827 6.46023 6.22842L5.46257 4.43262ZM18.5374 19.5674C16.7844 21.0831 14.4993 22 12 22C6.47715 22 2 17.5228 2 12C2 9.86386 2.66979 7.88416 3.8108 6.25944L7 12H4C4 16.4183 7.58172 20 12 20C14.1502 20 16.1022 19.1517 17.5398 17.7716L18.5374 19.5674Z"></path></svg>
                                                                     Update
@@ -279,13 +284,11 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
                         </div>
-                             <!-- End::row-1 -->
+                        <!-- End::row-1 -->
                     </div>
                     <!-- End::main-content -->
 

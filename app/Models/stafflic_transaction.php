@@ -4,18 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class stafflic_transaction extends Model
 {
     use HasFactory;
-    protected $fillable=['stafflic_id','lic_id','month','dop'];
-    public function stafflics():HasMany
+    protected $fillable=['stafflic_id','month','years','dop','gst'];
+    public function staff(): BelongsToMany
     {
-       return $this->hasMany(stafflic::class);
+        return $this->belongsToMany(staff::class);
     }
-    public function lics():HasMany
+    public function stafflics():BelongsTo
     {
-       return $this->hasMany(lic::class);
+       return $this->belongsTo(stafflic::class);
     }
+    
 }

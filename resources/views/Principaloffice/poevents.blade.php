@@ -462,7 +462,7 @@
                                                                                                 @endif
                                                                                                
                                                                                             </div>
-                                                                                            {{-- <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0">
+                                                                                            <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0">
                                                                                                 <label class="ti-form-label mb-0 font-bold">Department List<span class="text-red-500">*</span></label>
                                                                                                 <div class="space-y-2" style="max-height: 100px; overflow-y: auto;">
                                                                                                     @php
@@ -482,28 +482,9 @@
                                                                                                     @endforeach
                                                                                                 </div>
                                                                                                 <!--Dropdown multiselect checkbox-->
-                                                                                            </div>  --}}
+                                                                                            </div> 
 
-                                                                                            <div class="grid lg:grid-cols-1 gap-1 space-y-2 lg:space-y-0">
-                                                                                                <label class="ti-form-label mb-0 font-bold">Department List<span class="text-red-500">*</span></label>
-                                                                                                <div class="space-y-2" style="max-height: 100px; overflow-y: auto;">
-                                                                                                    <div class="flex">
-                                                                                                        <input type="checkbox" class="ti-form-checkbox mt-0.5 select-all">
-                                                                                                        <label for="select-all" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70 font-bold">Select All</label>
-                                                                                                    </div>
-                                                                                                    @foreach ($departments as $department)
-                                                                                                        @php
-                                                                                                            $checked = in_array($department->id, $selectedDepartments) ? 'checked' : '';
-                                                                                                        @endphp
-                                                                                                        <div class="flex">
-                                                                                                            <input type="checkbox" required name="departments[]" value="{{ $department->id }}" {{ $checked }} class="ti-form-checkbox mt-0.5 hs-checkbox-group-{{ $department->id }}">
-                                                                                                            <label class="hs-checkbox-group-{{ $department->id }} text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">{{ $department->dept_name }}</label>
-                                                                                                        </div>
-                                                                                                    @endforeach
-                                                                                                </div>
-                                                                                                <!--Dropdown multiselect checkbox-->
-                                                                                            </div>
-                                                                                            
+                                                                                           
                                                                                         </div>
 
                                                                                         
@@ -644,17 +625,17 @@
                     if(po_eventname == ''){
                         $('#po_eventnameError').text('Event Name is missing');
                         flag = true;
-                    }else if (!/^[a-zA-Z\s]+$/.test(po_eventname.trim())){
-                        $('#po_eventnameError').text('Please fill the correct value');
-                        flag = true;
+                    }else if {
+                       
                     }
+
                     if(po_location == ''){
                         $('#po_locationError').text('Location is missing');
                         flag = true;
-                    }else if (!/^[a-zA-Z\s]+$/.test(po_location.trim())){
-                        $('#po_locationError').text('Please fill the correct value');
-                        flag = true;
+                    }else if {
+                       
                     }
+
                     if(po_startdate.trim() === ''){
                         $('#po_startdateError').text('Please Select a proper date');
                         flag = true;
@@ -663,13 +644,14 @@
                         $('#po_todateError').text('Please Select a proper date');
                         flag = true;
                     }
+                    
                     if(po_organizer == ''){
                         $('#po_organizerError').text('Organizer is missing');
                         flag = true;
-                    }else if (!/^[a-zA-Z\s]+$/.test(po_organizer.trim())){
-                        $('#po_organizerError').text('Please fill the correct value');
-                        flag = true;
+                    }else if {
+                      
                     }
+
                     if (po_weblink == '') {
                         $('#po_weblinkError').text('Web link is missing');
                         flag = true;

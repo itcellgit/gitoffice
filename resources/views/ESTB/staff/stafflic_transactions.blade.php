@@ -57,7 +57,8 @@
                                             <div class="flex">
                                                 <h5 class="box-title my-auto">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"><path d="M22 21H2V19H3V4C3 3.44772 3.44772 3 4 3H18C18.5523 3 19 3.44772 19 4V9H21V19H22V21ZM17 19H19V11H13V19H15V13H17V19ZM17 9V5H5V19H11V9H17ZM7 11H9V13H7V11ZM7 15H9V17H7V15ZM7 7H9V9H7V7Z"></path></svg> 
-                                                    LIC Details 
+                                                    LIC Details : Policy No
+                                                    <b style="color:red;font-size:18px">{{$stafflic->policy_no}}</b> 
                                                 </h5>
                                                 
                                                     
@@ -77,6 +78,7 @@
                                                             <th scope="col" class="dark:text-white/80">Premium</th>
                                                             <th scope="col" class="dark:text-white/80">GST</th>
                                                             <th scope="col" class="dark:text-white/80">Month</th>
+                                                            <th scope="col" class="dark:text-white/80">Years</th>
                                                             <th scope="col" class="dark:text-white/80">Date of Posting</th>
                                                             <th scope="col" class="dark:text-white/80">Status</th>
                                                             <th scope="col" class="dark:text-white/80">Actions</th>
@@ -87,27 +89,20 @@
                                                       
                                                     @php
                                                         $i = 1;
+                                                        $totalPremium = 0;
+                                                        $totalGST = 0;
                                                     @endphp
-                                                    {{-- @if($staff->stafflics!=null) --}}
-                                                    @forelse($stafflic_transaction as $lic)
-                                        
+                                                   @forelse($stafflic->stafflic_transactions as $lic)
                                                     <tr class="">
                                                          <td>{{ $i++ }}</td>
-                                                        {{--<td>
-                                                            @foreach($staff as $s)
-                                                            @if($lic->staff_id == $s->id)
-                                                                {{ $s->fname.' '.$s->mname.' '.$s->lname. ' ' }}
-                                                            @endif
-                                                            @endforeach
-                                                        </td> --}}
-                                                        {{-- <td>
-                                                            <span>{{ $lic->staff->fname }} {{ $lic->staff->mname }} {{ $lic->staff->lname }}</span>
-                                                        </td>  --}}
-                                                        <td><span>{{$lic->premium}}</span></td>
+                                                        <td><span>{{$stafflic->premium}}</span></td>
                                                         <td><span>{{$lic->gst}}</span></td>
                                                         <td><span>{{$lic->month}}</span></td>
+                                                        <td><span>{{$lic->years}}</span></td>
                                                         <td><span>{{$lic->dop}}</span></td>
-                                                        <td><span>{{$lic->status}}</span></td>
+                                                        <td><span>{{$stafflic->status}}</span></td> 
+                                                        
+
                                         
                                                         <td class="font-medium space-x-2 rtl:space-x-reverse">
                                                         
@@ -143,7 +138,7 @@
                                                                             </button>
                                                                            
                                                                         </div>
-                                                                        <form  action="{{route('ESTB.staff.stafflics.stafflic_transactions.update',[$staff->id,$lic->id])}}" method="post">
+                                                                        {{-- <form  action="{{route('ESTB.staff.stafflics.stafflic_transactions.update',$lic->id)}}" method="post">
                                                                             @csrf
                                                                             @method('patch')
                                                                             <div class="ti-modal-body">
@@ -158,7 +153,7 @@
                                                                                                             {{ $staffMember->fname . ' ' . $staffMember->mname . ' ' . $staffMember->lname }}
                                                                                                         </option>
                                                                                                     @endforeach
-                                                                                                </select> </div> --}}
+                                                                                                </select> </div> 
                                                                                 <div class="max-w-sm space-y-3">
                                                                                     <label for="with-corner-hint" class="ti-form-label">Premium:<span class="text-red-500">*</span> </label>
                                                                                     <input type="text" name="month" class="ti-form-input" required  value="{{$lic->premium}}">
@@ -184,7 +179,7 @@
                                                                                         <option value="transfered"  {{$lic->status=='transfered'? 'selected':''}}>Transfered</option> 
                                                                                     
                                                                                     </select>
-                                                                                   </div>
+                                                                                </div>
                                                                                 @if($lic->status == 'inactive')
                                                                                 <br/>
                                                                                     <div class="flex">
@@ -196,70 +191,61 @@
                                                                             </div>
                                                                             <div class="ti-modal-footer">
                                                                                 <button type="button"
-                                                                                class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
-                                                                                data-hs-overlay="#hs-medium-modal">
-                                                                                Close
-                                                                                </button>
+                                                                                    class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
+                                                                                    data-hs-overlay="#hs-medium-modal">
+                                                                                    Close
+                                                                                    </button>
                                                                                 
-                                                                                <input type="submit" class="ti-btn  bg-warning text-white hover:bg-warning  focus:ring-primary  dark:focus:ring-offset-white/10" value="Update"/>
-                                                                                
-                                                                                </div>
-                                                                            </form>  
+                                                                                    <input type="submit" class="ti-btn  bg-warning text-white hover:bg-warning  focus:ring-primary  dark:focus:ring-offset-white/10" value="Update"/>
+                                                                            </div>
+                                                                        </form>   --}}
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                         </div>
                                                         <div class="hs-tooltip ti-main-tooltip">
-                                                        <form action="{{ route('ESTB.staff.stafflics.stafflic_transactions.destroy',[$staff->id,$lic->id]) }}" method="post">
+                                                        {{-- <form action="{{ route('ESTB.staff.stafflics.stafflic_transactions.destroy',$lic->id) }}" method="post">
                                                         
-                                                        <button onclick="return confirm('Are you Sure')"
-                                                            class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>
-                                                            @method('delete')
-                                                            @csrf
-                                                            <span
+                                                            <button onclick="return confirm('Are you Sure')"
+                                                                class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>
+                                                                    @method('delete')
+                                                                     @csrf
+                                                                    <span
                                                                 class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700"
                                                                 role="tooltip">
                                                                 Delete
-                                                            </span>
+                                                                </span>
                                                             </button>
-                                                        </form>
+                                                        </form> --}}
                                                         </div>
                                                         </td>
                                                     </tr>
-                                                    @empty
-                                                        <p class="text-dark"><b>No Salarygroup Added.</b></p>
-                                                    @endforelse
                                                    
+                                                    @php
+                                                    $totalPremium += $stafflic->premium;
+                                                    $totalGST += $lic->gst;
+                                                    @endphp
+                                                                                        
+        
+                                                        @empty
+                                                        <p class="text-dark"><b>No LIC Present.</b></p>
+                                                    @endforelse
+    
+    
+
+                                                        <tr>
+                                                        <td ><strong>Total</strong></td>
+                                                        <td>{{$totalPremium}}</td>
+                                                        <td>{{$totalGST}}</td>
+                                                        <td colspan="4" class="text-right"><strong>Grand Total:</strong></td>
+                                                        <td>{{$totalPremium + $totalGST}}</td>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
-                                    </div>
-                                        <div class="box-footer">
-                                            <!-- Pagination-->
-                                            <div class="sm:flex items-center">
-                                                
-                                                <div class="ltr:ml-auto rtl:mr-auto">
-                                                    <nav class="flex justify-center items-center space-x-2 rtl:space-x-reverse">
-                                                        <a class="text-gray-500 hover:text-primary e py-1 px-2 leading-none inline-flex items-center gap-2 rounded-sm" href="javascript:void(0);">
-                                                            <span aria-hidden="true">Prev</span>
-                                                            <span class="sr-only">Previous</span>
-                                                        </a>
-                                                       
-                                                       
-                                                        <a class="bg-primary text-white py-1 px-2 leading-none inline-flex items-center text-sm font-medium rounded-sm" href="javascript:void(0);" aria-current="page">1</a>
-                                                        <a class="text-gray-500 hover:text-primary e py-1 px-2 leading-none inline-flex items-center text-sm font-medium rounded-sm" href="javascript:void(0);">2</a>
-                                                        <a class="text-gray-500 hover:text-primary e py-1 px-2 leading-none inline-flex items-center text-sm font-medium rounded-sm" href="javascript:void(0);">3</a>
-                                                        <a class="text-gray-500 hover:text-primary e py-1 px-2 leading-none inline-flex items-center gap-2 rounded-sm" href="javascript:void(0);">
-                                                        <span class="sr-only">Next</span>
-                                                        <span aria-hidden="true">Next</span>
-                                                    </a>
-                                                    </nav>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
+                                    </div>  
                                     </div>
                                 </div>
                             </div>

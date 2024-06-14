@@ -139,7 +139,11 @@
                                                     </tr>
                                                     <tr class="">
                                                         <th>Balance</th>
+                                                        @foreach ($staff_leave_entitlements as $staff_leave)
 
+                                                            <td>{{$staff_leave->entitled_curr_year+$staff_leave->accumulated-$staff_leave->consumed_curr_year}}</td>
+
+                                                        @endforeach
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -1281,7 +1285,9 @@
                                                                                         +'<button  data_val="'+value.Application_id+'"'
                                                                                                 +'class=" m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary edit_leave_applied">'
                                                                                                 +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M16.7574 2.99666L14.7574 4.99666H5V18.9967H19V9.2393L21 7.2393V19.9967C21 20.5489 20.5523 20.9967 20 20.9967H4C3.44772 20.9967 3 20.5489 3 19.9967V3.99666C3 3.44438 3.44772 2.99666 4 2.99666H16.7574ZM20.4853 2.09717L21.8995 3.51138L12.7071 12.7038L11.2954 12.7062L11.2929 11.2896L20.4853 2.09717Z"></path></svg>'
-                                                                                              
+                                                                                                +'<span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700" role="tooltip">'
+                                                                                                      +'Edit'
+                                                                                                +'</span>'
                                                                                         +'</button>'
                                                                                        
                                                                         +'</div>': '' )
@@ -1290,9 +1296,8 @@
                                                                                         +' class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger cancel_leave_btn">'
                                                                                             +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M11.9997 10.5865L16.9495 5.63672L18.3637 7.05093L13.4139 12.0007L18.3637 16.9504L16.9495 18.3646L11.9997 13.4149L7.04996 18.3646L5.63574 16.9504L10.5855 12.0007L5.63574 7.05093L7.04996 5.63672L11.9997 10.5865Z"></path></svg>'
                                                                                             
-                                                                                            +'<span'
-                                                                                                +'class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700"'
-                                                                                                +'role="tooltip">'
+                                                                                            +'<span class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700" role="tooltip">'
+                                                                                                +'Cancel'
                                                                                             +'</span>'
                                                                                     +'</button>'
                                                                                 +'</div>':'')

@@ -13,13 +13,16 @@ return new class extends Migration
     {
         Schema::create('spocs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('industry_id')->references('id')->on('industries')->onDelete('cascade');
+            $table->foreignId('industry_id')->constrained();
+            // $table->foreignId('industry_id')->references('id')->on('industries')->onDelete('cascade');
+
             $table->string('name');
             $table->bigInteger('phone');
             $table->string('email');
             $table->string('designation');
             $table->string('department');
             $table->timestamps();
+         
         });
     }
 

@@ -11,6 +11,9 @@
         
     <!-- FULLCALENDAR CSS -->
     <link rel="stylesheet" href="{{asset('build/assets/libs/fullcalendar/main.min.css')}}">
+
+      {{-- <!-- NOTIFICATION CSS -->
+      <link rel="stylesheet" href="{{asset('build/assets/libs/awesome-notifications/style.css')}}"> --}}
     <script>
         var base_url = "{{URL::to('/')}}";
     </script>
@@ -118,7 +121,8 @@
                                     <div class="box border-0 shadow-none mb-0">
                                        
                                         <div class="box-body">
-                                           
+                                            {{-- <button type="button" class="ti-btn ti-btn-primary" id="async-error">Async Notification</button>
+                                        <button type="button" class="ti-btn ti-btn-primary" id="async-success">Async Notification</button> --}}
 
                                             
                                             <div id="calendar2"></div>
@@ -231,7 +235,7 @@
                                             <!-- Calender for leaves ends here-->
                                            
                                         </div>
-
+                                       
                                     </div> 
                                 </div>
                             </div>
@@ -262,7 +266,9 @@
          <script src="{{asset('build/assets/libs/fullcalendar/main.min.js')}}"></script>
          @vite('resources/assets/js/fullcalendar.js')
 
-        
+        {{-- <script src="{{asset('build/assets/libs/awesome-notifications/index.var.js')}}"></script>
+        @vite('resources/assets/js/notifications.js') --}}
+
         <script
         src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
@@ -366,7 +372,7 @@
                                 },
                                 success: function(response) {
                                     // Handle the response from the server
-                                    console.log(response);
+                                    //console.log(response);
                                     $('#leave_appl_status_msg').html(response);
                                     setInterval(() => {
                                         location.reload();
@@ -399,7 +405,7 @@
                                 },
                                 success: function(response) {
                                     // Handle the response from the server
-                                    console.log(response);
+                                    //console.log(response);
                                     $('#leave_appl_status_msg').html(response);
                                     setInterval(() => {
                                         location.reload();
@@ -475,6 +481,19 @@
                     
                                             
                     ],
+                    eventContent: function (args, createElement)
+                        {
+                            if(args.event.extendedProps.pending_count>0){
+                                const text = args.event._def.title  +'<span class="flex absolute h-5 w-5 top-0 ltr:right-0 rtl:left-0 -mt-1 ltr:-mr-1 rtl:-ml-1">'
+                                                                    +'  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success/80 opacity-75"></span>'
+                                                                        +'<span'
+                                                                        +'class="relative inline-flex rounded-full h-5 w-5 bg-success text-white justify-center items-center" id="notify-data">'+args.event.extendedProps.pending_count+'</span>'
+                                                                    +'</span>';
+                                return {
+                                html: text
+                            };
+                         }
+                        },
                     eventDidMount: function (info) {
                         info.el.onclick = "disabled";
                        //console.log(info.event.extendedProps.type);
@@ -486,7 +505,7 @@
                        var dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
                                             .toISOString()
                                             .split("T")[0];
-                       console.log(date.getDate()+1);
+                       //console.log(date.getDate()+1);
                        //for styling the Holiday and RH events
                        if (info.event.extendedProps.type=="Holiday") {
                            info.el.style.background = "red";//info.event.extendedProps.background;
@@ -591,7 +610,7 @@
                                 // Handle errors
                                 console.error(xhr.responseText);
                             }
-                    });
+                        });
                     //ajax call for loading the leave events on calender
                         $.ajax({
                             
@@ -604,7 +623,7 @@
                             },
                             success: function(response) {
                                 // Handle the response from the server
-                                console.log(response);
+                               // console.log(response);
                                 $('#leave_application_list').empty();
                                 if(response.length !=0){
                                     $.each(response, function(key, value) {

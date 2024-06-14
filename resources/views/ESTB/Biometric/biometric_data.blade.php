@@ -59,7 +59,6 @@
                 <!-- Start::row-5 -->
                 <div class="grid grid-cols-12 gap-x-6">
                     <div class="col-span-12">
-                        
                         <div class="box">
                             <div class="relative p-6 bg-white shadow-lg rounded-lg">
                                 <div class="flex justify-between items-center">
@@ -67,7 +66,7 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" fill="currentColor" class="mr-2">
                                             <path d="M12 1C16.9706 1 21 5.02944 21 10V14C21 17.0383 19.4945 19.7249 17.1887 21.3546C17.7164 19.6635 18 17.8649 18 16L17.9996 13.999H15.9996L16 16L15.997 16.3149C15.9535 18.5643 15.4459 20.7 14.5657 22.6304C13.7516 22.8705 12.8909 23 12 23C11.6587 23 11.3218 22.981 10.9903 22.944C12.2637 20.9354 13 18.5537 13 16V9H11V16L10.9963 16.2884C10.9371 18.5891 10.1714 20.7142 8.90785 22.4547C7.9456 22.1028 7.05988 21.5909 6.28319 20.9515C7.35876 19.5892 8 17.8695 8 16V10L8.0049 9.80036C8.03767 9.1335 8.23376 8.50957 8.554 7.96773L7.10935 6.52332C6.41083 7.50417 6 8.70411 6 10V16L5.99586 16.2249C5.95095 17.4436 5.54259 18.5694 4.87532 19.4973C3.69863 17.9762 3 16.0697 3 14V10C3 5.02944 7.02944 1 12 1ZM12 4C10.7042 4 9.50434 4.41077 8.52353 5.10921L9.96848 6.55356C10.5639 6.20183 11.2584 6 12 6C14.2091 6 16 7.79086 16 10V12H18V10C18 6.68629 15.3137 4 12 4Z"></path>
                                         </svg>
-                                        Biometric Details
+                                        Daily Biometric Details
                                     </h4>
                                     <button id="publication_btn" data-hs-overlay="#add_publicaitons" class="flex items-center space-x-2 bg-red-500 text-white p-2 rounded-md hover:bg-red-600">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
@@ -79,7 +78,11 @@
 
                                 <div class="flex items-center justify-between mt-4">
                                     <!-- message display-->
-                                        <span id="display_date_message" class="text-lg"></span>
+                                    <span id="display_date_message" class="text-lg"></span>
+                                   
+                                    <p class="text-lg"><strong>Total In: {{ $entry_exit['oddCount'] }}</strong></p>
+                                    <p class="text-lg"><strong>Total Out: {{ $entry_exit['evenCount'] }}</strong></p> 
+                                        
                                   
                                     <form method="POST" action="{{ route('biometric_data') }}" class="flex items-center">
                                         @csrf
@@ -96,11 +99,29 @@
                                                 <div id="missing-biometric-modal" class="hs-overlay hidden ti-modal">
                                                     <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out lg:!max-w-4xl lg:w-full m-3 md:mx-auto">
                                                         <div class="ti-modal-content">
+                                                                            <div class="ti-modal-header">
+                                                                                <h3 class="ti-modal-title">
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+                                                                                        <path d="M16.7574 2.99666L14.7574 4.99666H5V18.9967H19V9.2393L21 7.2393V19.9967C21 20.5489 20.5523 20.9967 20 20.9967H4C3.44772 20.9967 3 20.5489 3 19.9967V3.99666C3 3.44438 3.44772 2.99666 4 2.99666H16.7574ZM20.4853 2.09717L21.8995 3.51138L12.7071 12.7038L11.2954 12.7062L11.2929 11.2896L20.4853 2.09717Z"></path>
+                                                                                    </svg>
+                                                                                    Missing biometric
+                                                                                </h3>
+                                                                                <button type="button" class="hs-dropdown-toggle ti-modal-close-btn"   data-hs-overlay="#missing-biometric-modal" >
+                                                                                    <span class="sr-only">Close</span>
+                                                                                    <svg class="w-3.5 h-3.5" width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                                        <path d="M0.258206 1.00652C0.351976 0.912791 0.479126 0.860131 0.611706 0.860131C0.744296 0.860131 0.871447 0.912791 0.965207 1.00652L3.61171 3.65302L6.25822 1.00652C6.30432 0.958771 6.35952 0.920671 6.42052 0.894471C6.48152 0.868271 6.54712 0.854471 6.61352 0.853901C6.67992 0.853321 6.74572 0.865971 6.80722 0.891111C6.86862 0.916251 6.92442 0.953381 6.97142 1.00032C7.01832 1.04727 7.05552 1.1031 7.08062 1.16454C7.10572 1.22599 7.11842 1.29183 7.11782 1.35822C7.11722 1.42461 7.10342 1.49022 7.07722 1.55122C7.05102 1.61222 7.01292 1.6674 6.96522 1.71352L4.31871 4.36002L6.96522 7.00648C7.05632 7.10078 7.10672 7.22708 7.10552 7.35818C7.10442 7.48928 7.05182 7.61468 6.95912 7.70738C6.86642 7.80018 6.74102 7.85268 6.60992 7.85388C6.47882 7.85498 6.35252 7.80458 6.25822 7.71348L3.61171 5.06702L0.965207 7.71348C0.870907 7.80458 0.744606 7.85498 0.613506 7.85388C0.482406 7.85268 0.357007 7.80018 0.264297 7.70738C0.171597 7.61468 0.119017 7.48928 0.117877 7.35818C0.116737 7.22708 0.167126 7.10078 0.258206 7.00648L2.90471 4.36002L0.258206 1.71352C0.164476 1.61976 0.111816 1.4926 0.111816 1.36002C0.111816 1.22744 0.164476 1.10028 0.258206 1.00652Z" fill="currentColor" />
+                                                                                    </svg>
+                                                                                </button>
+                                                                            </div>
                                                             <form method="get" enctype="multipart/form-data">
                                                                 @csrf
                                                                 <div class="ti-modal-body">
                                                                     <div class="table-responsive">
-                                                                        <p style="color: rgb(32, 195, 241);"><b>Biometric Entry not found / On leave</b></p>
+                                                                        
+                                                                        <div class="flex justify-between items-center mb-2">
+                                                                            <p style="color: rgb(32, 195, 241);"><b>Biometric Entry not found / On leave</b></p>
+                                                                            <button type="submit" id="sendEmailButton" class="bg-orange-500 text-white px-4 py-2 text-xs rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75">Send Email</button>
+                                                                        </div>
                                                                         
                                                                         <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
                                                                             <table  class="ti-custom-table ti-custom-table-head whitespace-nowrap">
@@ -205,7 +226,12 @@
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
                                                         @if ($hasEntryLog)
-                                                            <td>{{$data->EmployeeName}}</td>
+                                                           <td>{{ $data->EmployeeName }}</td>
+                                                                
+                                                                
+                                                       
+
+                                                            
                                                             
                                                             @if(isset($data->DepartmentName))
                                                                 <td>{{$data->DepartmentName}}</td>
@@ -227,7 +253,7 @@
 
                                                         @endif
                                                         
-                                                        <td>{{ $entry_exit['punchcounts'][$employeeCode] }}</td>
+                                                        <td>{{ $entry_exit['punchCounts'][$employeeCode] }}</td>
                                                         <td>{{ $entry_exit['durations'][$employeeCode] }}</td>
 
                                                         <td>
@@ -279,6 +305,7 @@
                                                                                         <tr>
                                                                                             <th scope="col" class="dark:text-white/80 font-bold">Log Time</th>
                                                                                             <th scope="col" class="dark:text-white/80 font-bold">Log Device</th>
+                                                                                          
                                                                                         </tr>
                                                                                     </thead>
                                                                                     <tbody>
@@ -286,6 +313,8 @@
                                                                                         <tr>
                                                                                             <td>{{ $emplogs->LogDate }}</td>
                                                                                             <td>{{ $emplogs->DeviceFName}}</td>
+                                                                                            {{-- <td>{{ $emplogs['total'][$employeeCode] }}</td> --}}
+
                                                                                         </tr>
                                                                                         @endforeach
                                                                                     </tbody>
@@ -374,7 +403,7 @@
             var date = $('#to_date').val(); // Get the date from the Blade variable
             //alert(date);
             $.ajax({
-                url: base_url+'/biometric/missing_logs',
+                url: base_url+'/ESTB/Biometric/missing_logs',
                 method: 'GET',
                 data: {
                     date: date
@@ -447,7 +476,7 @@
                 var year = today.getFullYear();
                 var month = ('0' + (today.getMonth() + 1)).slice(-2);
                 var day = ('0' + today.getDate()).slice(-2);
-                var formattedDate = year + '-' + month + '-' + day;
+                var formattedDate = day + '-' + month + '-' + year;
 
                 dateInput.value = formattedDate;
                 displayMessage.innerHTML = "    <strong>Biometric Data for the Date: " + formattedDate + "</strong>";
@@ -465,8 +494,46 @@
             });
         });
     </script>
+
+
+<!--missing biometric mail-->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const sendMissingPunchesEmailButton = document.getElementById('sendEmailButton');
+                
+                sendMissingPunchesEmailButton.addEventListener('click', async function (event) {
+                    event.preventDefault();
+
+                    try {
+                        const response = await fetch("{{ route('send.missing.punches.email') }}", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                            },
+                            body: JSON.stringify({
+                                // If you need to send additional data, add it here
+                            })
+                        });
+
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+
+                        const responseData = await response.json();
+                        // Handle success response if needed
+                        console.log(responseData);
+                    } catch (error) {
+                        // Handle error response if needed
+                        console.error(error);
+                    }
+                });
+            });
+
+        </script>
         
-        
+      
+
 
 
 

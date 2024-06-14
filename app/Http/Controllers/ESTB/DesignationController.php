@@ -39,7 +39,7 @@ class DesignationController extends Controller
     public function store(StoredesignationRequest $request)
     {
         //
-        //dd($request->design_name);
+       // dd($request);
         $designation=new designation();
         $designation->design_name=$request->design_name;
         $designation->isadditional=$request->isadditional;

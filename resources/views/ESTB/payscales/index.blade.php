@@ -266,28 +266,7 @@
                                         </table>
                                         </div>
                                     </div>
-                                    <div class="box-footer">
-                                        <div class="sm:flex items-center">
-                                            <div class="">
-                                                showing 5 Entries <i class="ri-arrow-right-line ml-2 font-semibold"></i>
-                                            </div>
-                                            <div class="ltr:ml-auto rtl:mr-auto">
-                                                <nav class="flex justify-center items-center space-x-2 rtl:space-x-reverse">
-                                                    <a class="text-gray-500 hover:text-primary e py-1 px-2 leading-none inline-flex items-center gap-2 rounded-sm" href="javascript:void(0);">
-                                                        <span aria-hidden="true">Prev</span>
-                                                        <span class="sr-only">Previous</span>
-                                                    </a>
-                                                    <a class="bg-primary text-white py-1 px-2 leading-none inline-flex items-center text-sm font-medium rounded-sm" href="javascript:void(0);" aria-current="page">1</a>
-                                                    <a class="text-gray-500 hover:text-primary e py-1 px-2 leading-none inline-flex items-center text-sm font-medium rounded-sm" href="javascript:void(0);">2</a>
-                                                    <a class="text-gray-500 hover:text-primary e py-1 px-2 leading-none inline-flex items-center text-sm font-medium rounded-sm" href="javascript:void(0);">3</a>
-                                                    <a class="text-gray-500 hover:text-primary e py-1 px-2 leading-none inline-flex items-center gap-2 rounded-sm" href="javascript:void(0);">
-                                                        <span class="sr-only">Next</span>
-                                                        <span aria-hidden="true">Next</span>
-                                                    </a>
-                                                </nav>
-                                            </div>
-                                        </div>
-                                    </div>
+                                 
                                     </div>
                                 </div>
                             </div>

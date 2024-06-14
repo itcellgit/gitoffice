@@ -37,8 +37,6 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12.1717 12.0005L9.34326 9.17203L10.7575 7.75781L15.0001 12.0005L10.7575 16.2431L9.34326 14.8289L12.1717 12.0005Z"></path></svg>
                     </a>
                     </li>
-
-
             </ol>
         </div>
         <!-- Page Header Close -->
@@ -104,7 +102,7 @@
                                                         fill="currentColor" />
                                                     </svg>
                                                 </button>
-                                                @if(($errors->has('fname'))||($errors->has('mname'))||($errors->has('lname'))||($errors->has('employee_type'))||($errors->has('email'))||($errors->has('departments_id')||($errors->has('association_id')))||($errors->has('designation_id'))||($errors->has('religion_id'))||($errors->has('castecategory_id'))||($errors->has('gender'))||($errors->has('dob'))||($errors->has('doj'))||($errors->has('date_of_superanuation'))||($errors->has('lname'))||($errors->has('bloodgroup'))||($errors->has('pan_card'))||($errors->has('adhar_card'))||($errors->has('contactno'))||($errors->has('local_address'))||($errors->has('permanent_address'))||($errors->has('emergency_no'))||($errors->has('emergency_name'))||($errors->has('gcr')))
+                                                @if(($errors->has('year'))||($errors->has('status'))||($errors->has('taxregime')))
                                                     <script>
                                                         // alert(1);
                                                         $(window).on('load', function() {
@@ -116,8 +114,8 @@
                                                         });
                                                     </script>
                                                 @endif
-                                            </div>
-                                            <form action="{{route('ESTB.staff.store')}}" method="post">
+                                            </div>                        
+                                            <form action="{{route('ESTB.TDS.StaffTaxRegime.store')}}" method="post">
                                                 @csrf
                                                 <div class="ti-modal-body">
                                                     <div class="grid lg:grid-cols-3 gap-3 space-y-2 lg:space-y-0 pb-4">
@@ -127,22 +125,24 @@
                                                             @if($errors->has('year'))
                                                                 <div class="text-red-700">{{ $errors->first('year')}}</div>
                                                             @endif
-                                                            <div id="stfNameError" class="error text-red-700"></div>
+                                                            <div id="yearError" class="error text-red-700"></div>
                                                         </div>
                                                         <div class="space-y-2">
                                                             <label class="ti-form-label mb-0 font-bold">status<span class="text-red-500">*</span></label>
                                                             <input type="text" id="status" name="status" class="my-auto ti-form-input stmname"  placeholder="status">
-                                                            @if($errors->has('mname'))
+                                                            @if($errors->has('status'))
                                                                 <div class="text-red-700">{{ $errors->first('status')}}</div>
                                                             @endif
-                                                            <div id="stmNameError" class="error text-red-700"></div>
+                                                            <div id="statusError" class="error text-red-700"></div>
                                                         </div>
                                                     </div>
                                                     <div class="grid lg:grid-cols-3 gap-3 space-y-2 lg:space-y-0 pb-4">
-                                                        <<div class="space-y-2">
+                                                        <div class="space-y-2">
                                                             <label class="ti-form-label mb-0 font-bold">Taxregime<span class="text-red-500">*</span></label>
                                                             <select id="taxregime" class="ti-form-select" name="taxregime">
                                                                 <option value="#">Choose a Taxregime</option>
+                                                                <option value="old">Old</option>
+                                                                <option value="new">New</option>
                                                                 {{-- @foreach ($departments as $department)
                                                                     <option value="{{$department->id}}">{{$department->dept_name}}</option>
                                                                 @endforeach --}}
@@ -150,281 +150,7 @@
                                                             @if($errors->has('taxregime'))
                                                                 <div class="text-red-700">{{ $errors->first('taxregime')}}</div>
                                                             @endif
-                                                            <div id="stdepartmentError" class="error text-red-700"></div>
-                                                        </div>
-                                                       
-                                                    <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pb-4">
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">Department<span class="text-red-500">*</span></label>
-                                                            <select id="stdepartment" class="ti-form-select" name="departments_id">
-                                                                <option value="#">Choose a Department</option>
-                                                                @foreach ($departments as $department)
-                                                                    <option value="{{$department->id}}">{{$department->dept_name}}</option>
-                                                                @endforeach
-                                                            </select>
-                                                            @if($errors->has('departments_id'))
-                                                                <div class="text-red-700">{{ $errors->first('departments_id')}}</div>
-                                                            @endif
-                                                            <div id="stdepartmentError" class="error text-red-700"></div>
-                                                        </div>
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">Association<span class="text-red-500">*</span></label>
-                                                            <select id="stassociation" class="ti-form-select" name="associations_id" id="associations_id" required>
-                                                                <option value="#">Choose a Association</option>
-                                                                @foreach ($associations as $association)
-                                                                    <option value="{{$association->id}}">{{$association->asso_name}}</option>
-                                                                @endforeach
-                                                            </select>
-                                                            @if($errors->has('associations_id'))
-                                                                <div class="text-red-700">{{ $errors->first('associations_id')}}</div>
-                                                            @endif
-                                                            <div id="stassociationError" class="error text-red-700"></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pb-4">
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">Designations<span class="text-red-500">*</span></label>
-                                                            <select class="ti-form-select stdesignation" name="designations_id" id="designation_id" >
-                                                                <option value="#">Choose a Designation</option>
-
-                                                            </select>
-                                                            @if($errors->has('designations_id'))
-                                                                <div class="text-red-700">{{ $errors->first('designations_id')}}</div>
-                                                            @endif
-                                                            <div id="stdesignationError" class="error text-red-700"></div>
-                                                        </div>
-                                                        <div class="space-y-2 pr-4">
-                                                            <label class="ti-form-label mb-0">Pay Type<span class="text-red-500">*</span></label>
-                                                            <div class="flex gap-x-6">
-                                                                <div class="flex hidden" id="Consolidated">
-                                                                    <input type="radio" name="pay_type" value="Consolidated"  class="ti-form-radio" id="hs-radio-group-1 pay_type">
-                                                                    <label for="hs-radio-group-1" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Consolidated</label>
-
-                                                                </div>
-
-                                                                <div class="flex">
-                                                                    <input type="radio" name="pay_type" value="Payscale"  id="Payscale" class="ti-form-radio" id="hs-radio-group-2 pay_type">
-                                                                    <label for="hs-radio-group-2" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Payscale</label>
-
-                                                                </div>
-
-                                                                <div class="flex">
-                                                                    <input type="radio" name="pay_type" value="Fixed" id="Fixed" class="ti-form-radio" id="hs-radio-group-2 pay_type">
-                                                                    <label for="hs-radio-group-2" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Fixed</label>
-
-                                                                </div>
-                                                                <div id="sttypeError" class="error text-red-700"></div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="space-y-2 hidden" id="fixed_pay_div">
-                                                            <label class="ti-form-label mb-0 font-bold ">Fixed Pay</label>
-                                                            <input type="text" name="fixed_pay" id="fixed_pay" class="my-auto ti-form-input" placeholder="fixed pay">
-                                                            @if($errors->has('fixed_pay'))
-                                                                <div class="text-red-700">{{ $errors->first('fixed_pay')}}</div>
-                                                            @endif
-                                                            <div id="stfixedError" class="error text-red-700"></div>
-                                                        </div>
-
-                                                        <div class="space-y-2 hidden" id="payscale_div">
-                                                            <label class="ti-form-label mb-0 font-bold">Payscale</label>
-                                                            <select class="ti-form-select" name="payscale_id" id="payscale_id">
-                                                                <option>Choose a payscale</option>
-                                                            </select>
-                                                            @if($errors->has('payscale_id'))
-                                                                    <div class="text-red-700">{{ $errors->first('payscale_id')}}</div>
-                                                            @endif
-                                                            <div id="stpayscaleError" class="error text-red-700"></div>
-                                                        </div>
-
-                                                        <!--<div class="space-y-2 hidden" id="payscalelevel">
-                                                            <label class="ti-form-label mb-0 font-bold">Increment Level</label>
-                                                            <select  class="ti-form-select" name="payscale_level">
-                                                                <option value="#">Choose the payscale level</option>
-                                                                <option value="1">Increment Level-1</option>
-                                                                <option value="2">Increment Level-2</option>
-                                                                <option value="3">Increment Level-3</option>
-                                                            </select>
-                                                        </div>-->
-
-                                                        <div class="space-y-2 hidden" id="duration_div">
-                                                            <label class="ti-form-label mb-0 font-bold ">Duration</label>
-                                                            <input type="text" name="duration" id="duration" class="my-auto ti-form-input" placeholder="Duration">
-                                                            @if($errors->has('duration'))
-                                                                    <div class="text-red-700">{{ $errors->first('duration')}}</div>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                    <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pb-4">
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">Religion<span class="text-red-500">*</span></label>
-                                                            <select class="ti-form-select streligion religion_id" name="religion_id" id="">
-                                                                <option value="#">Choose a Religion</option>
-                                                                @foreach ($religions as $religion)
-                                                                    <option value="{{$religion->id}}">{{$religion->religion_name}}</option>
-                                                                @endforeach
-
-                                                            </select>
-                                                            @if($errors->has('religion_id '))
-                                                                <div class="text-red-700">{{ $errors->first('religion_id ')}}</div>
-                                                            @endif
-                                                            <div id="streligionError" class="error text-red-700"></div>
-                                                        </div>
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">Caste Category<span class="text-red-500">*</span></label>
-                                                            <select class="ti-form-select stcastecategory castecategory_list" name="castecategory_id" id="">
-
-                                                            </select>
-                                                            <div id="stcastecategoryError" class="error text-red-700"></div>
-                                                            @if($errors->has('castecategory_id '))
-                                                                <div class="text-red-700">{{ $errors->first('castecategory_id ')}}</div>
-                                                            @endif
-
-                                                        </div>
-                                                        <div class="space-y-2 pr-4">
-                                                            <label class="ti-form-label mb-0">Gender<span class="text-red-500">*</span></label>
-                                                            <div class="flex gap-x-6">
-                                                                <div class="flex">
-                                                                    <input type="radio" name="gender" value="female" class="ti-form-radio" id="hs-radio-group-1" checked>
-                                                                    <label for="hs-radio-group-1" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Female</label>
-                                                                </div>
-
-                                                                <div class="flex">
-                                                                    <input type="radio" name="gender" value="male" class="ti-form-radio" id="hs-radio-group-2">
-                                                                    <label for="hs-radio-group-2" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Male</label>
-                                                                </div>
-
-                                                                <div class="flex">
-                                                                    <input type="radio" name="gender" value="others" class="ti-form-radio" id="hs-radio-group-3" >
-                                                                    <label for="hs-radio-group-3" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Others</label>
-                                                                </div>
-                                                                @if($errors->has('gender '))
-                                                                    <div class="text-red-700">{{ $errors->first('gender ')}}</div>
-                                                                @endif
-                                                                <div id="stgenderError" class="error text-red-700"></div>
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">Date Of Birth<span class="text-red-500">*</span></label>
-                                                            <input type="date" id="stdob" name="dob" class="ti-form-input flatpickr-input dob date"
-                                                                placeholder="Choose date">
-                                                            <div id="stdobError" class="error text-red-700"></div>
-                                                            @if($errors->has('dob '))
-                                                                <div class="text-red-700">{{ $errors->first('dob ')}}</div>
-                                                            @endif
-
-                                                        </div>
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">Date Of Joining<span class="text-red-500">*</span></label>
-                                                            <input type="date" id="stdoj" name="doj" class="ti-form-input flatpickr-input doj date"
-                                                                placeholder="Choose date">
-                                                            <div id="stdojError" class="error text-red-700"></div>
-                                                            @if($errors->has('doj '))
-                                                                <div class="text-red-700">{{ $errors->first('doj ')}}</div>
-                                                            @endif
-                                                        </div>
-
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">Date Of Superannution</label>
-                                                            <input type="date" id="stdos" name="date_of_superanuation" class="ti-form-input flatpickr-input dos date"
-                                                            placeholder="Choose date">
-                                                            <div id="stdosError" class="error text-red-700"></div>
-                                                            @if($errors->has('date_of_superanuation '))
-                                                                <div class="text-red-700">{{ $errors->first('date_of_superanuation ')}}</div>
-                                                            @endif
-
-                                                        </div>
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">Blood Group</label>
-                                                            <select id="stbloodgroup" class="ti-form-select" name="bloodgroup">
-                                                                <option value="null">Choose a Blood Group</option>
-                                                                <option value="A+">A + (Positive)</option>
-                                                                <option value="A-">A - (Negetive)</option>
-                                                                <option value="B+">B + (Positive)</option>
-                                                                <option value="B-">B - (Negetive)</option>
-                                                                <option value="AB+">AB + (Positive)</option>
-                                                                <option value="AB-">AB - (Negetive)</option>
-                                                                <option value="O+">O + (Positive)</option>
-                                                                <option value="O-">O - (Negetive)</option>
-                                                            </select>
-                                                            <div id="stbloodgroupError" class="error text-red-700"></div>
-                                                            @if($errors->has('bloodgroup '))
-                                                                <div class="text-red-700">{{ $errors->first('bloodgroup ')}}</div>
-                                                            @endif
-                                                        </div>
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">PAN Card No:</label>
-                                                            <input type="text" id="stpancard" name="pan_card" class="my-auto ti-form-input"
-                                                            placeholder="XXXXX XXXXX">
-                                                            <div id="stpancardError" class="error text-red-700"></div>
-                                                            @if($errors->has('pan_card '))
-                                                                <div class="text-red-700">{{ $errors->first('pan_card ')}}</div>
-                                                            @endif
-                                                        </div>
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">Adhar Card No:</label>
-                                                            <input type="text" id="stadharcard" name="adhar_card" class="my-auto ti-form-input"
-                                                                placeholder="XXXX-XXXX-XXXX-XXXX">
-                                                            <div id="stadharcardError" class="error text-red-700"></div>
-                                                            @if($errors->has('adhar_card '))
-                                                                <div class="text-red-700">{{ $errors->first('adhar_card ')}}</div>
-                                                            @endif
-                                                        </div>
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">Contact No:</label>
-                                                            <input type="text" id="stcontactno" name="contactno" class="my-auto ti-form-input"
-                                                                placeholder="XXXXX-XXXXX">
-                                                            <div id="stcontactnoError" class="error text-red-700"></div>
-                                                            @if($errors->has('contactno '))
-                                                                <div class="text-red-700">{{ $errors->first('contactno ')}}</div>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                    <div class="my-5">
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">Local Address<span class="text-red-500">*</span></label>
-                                                            <input type="text" id="stlocaladd" name="local_address" class="my-auto ti-form-input"  placeholder="Local Address">
-                                                        </div>
-                                                        <div id="stlocaladdError" class="error text-red-700"></div>
-                                                        @if($errors->has('local_address '))
-                                                            <div class="text-red-700">{{ $errors->first('local_address ')}}</div>
-                                                        @endif
-                                                    </div>
-                                                    <div class="my-5">
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">Permanant Address<span class="text-red-500">*</span></label>
-                                                            <input type="text" id="stpermentadd" name="permanent_address" class="my-auto ti-form-input" placeholder="Permenant Address">
-                                                            <div id="stpermentaddError" class="error text-red-700"></div>
-                                                            @if($errors->has('permanent_address '))
-                                                                <div class="text-red-700">{{ $errors->first('permanent_address ')}}</div>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                    <div class="grid lg:grid-cols-3 gap-3 space-y-2 lg:space-y-0">
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">Emergency No</label>
-                                                            <input type="text" id="stemergencyno" name="emergency_no" class="ti-form-input"   placeholder="emergency no">
-                                                            <div id="stemergencynoError" class="error text-red-700"></div>
-                                                            @if($errors->has('emergency_no '))
-                                                                <div class="text-red-700">{{ $errors->first('emergency_no ')}}</div>
-                                                            @endif
-                                                        </div>
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">Emergency Name</label>
-                                                            <input type="text" id="stemergencyname" name="emergency_name" class="ti-form-input"  placeholder="emergency name">
-                                                            <div id="stemergencynameError" class="error text-red-700"></div>
-                                                            @if($errors->has('emergency_name '))
-                                                                <div class="text-red-700">{{ $errors->first('emergency_name ')}}</div>
-                                                            @endif
-                                                        </div>
-                                                        <div class="space-y-2">
-                                                            <label class="ti-form-label mb-0 font-bold">GC Resolution No</label>
-                                                            <input type="text" id="stgcrno" name="gcr" class="ti-form-input"  placeholder="GC Resolution No:">
-                                                            <div id="stgcrnoError" class="error text-red-700"></div>
-                                                            @if($errors->has('gcr '))
-                                                                <div class="text-red-700">{{ $errors->first('gcr ')}}</div>
-                                                            @endif
+                                                            <div id="taxregimeError" class="error text-red-700"></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -436,7 +162,9 @@
                                                     </button>
                                                     <input type="submit" id="staffinformation_store_add_btn" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10 float-right" value="Add"/>
                                                 </div>
-                                            </form>
+                                        </form>
+                                   
+                        
                                             <!--newly added-->
                                         </div>
                                     </div>
@@ -444,6 +172,125 @@
                             </div>
                         </div>
                     </div>
+                    <div class="box-body">
+                        <div id="basic-table" class="ti-custom-table ti-striped-table ti-custom-table-hover table-bordered rounded-sm  overflow-auto">
+                            <table id="staff_table" class="ti-custom-table ti-custom-table-head  max-w-8 overflow-auto text-wrap relative">
+                                <thead class="bg-gray-50 dark:bg-black/20">
+                                    <tr class="">
+                                        <!--<th scope="col" class="dark:text-white/80">S.no</th>
+                                        <th scope="col" class="dark:text-white/80">Staff Name</th>
+                                        <th scope="col" class="dark:text-white/80">Employee Type</th>
+                                        <th scope="col" class="dark:text-white/80">Department</th>
+                                        <th scope="col" class="dark:text-white/80">Designation</th>
+                                        <th scope="col" class="dark:text-white/80">Associatation</th>
+                                        <th scope="col" class="dark:text-white/80">Actions</th>-->
+
+                                        <th scope="col" class="dark:text-white/80">S.no</th>
+                                        <th scope="col" class="dark:text-white/80">Staff Name</th>
+                                        <th scope="col" class="dark:text-white/80">Department Name</th>
+                                        <th scope="col" class="dark:text-white/80">Tax Regime</th>
+                                        <th scope="col" class="dark:text-white/80">year</th>
+                                        <th scope="col" class="dark:text-white/80">Status</th>
+                                        <th scope="col" class="dark:text-white/80">Actions</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody class="">
+
+                                    @php
+                                        $i = 1;
+                                        //print_r($staff->religions->religion_id);
+                                    @endphp
+                                    @forelse($staff_tax_regimes as $stafftax)
+
+                                    <tr class="bg-red-700">
+                                        <td>{{ $i++ }}</td>
+                                        <td>
+                                        <div class="flex space">
+                                            <div class="block w-full my-auto">
+                                            
+                                                 {{$stafftax->staff->fname.' '.$stafftax->staff->mname.' '.$stafftax->staff->lname}}  
+                                              
+                                                {{-- {{$st->fname.' '.$st->mname.' '.$st->lname}} --}}
+                                            </div>
+                                        </div>
+                                        </td>
+                                        
+                                        <td><span>
+                                            @foreach ($stafftax->$staff->departments as $dept)
+                                            @if($dept->pivot->status == 'active')
+                                            {{$dept->dept_shortname}} <br/>
+                                            @endif
+                                            @endforeach
+                                        </span></td>
+                                        <td ><span class="w-3/4">
+
+                                            {{ $stafftax->taxregime->name }}
+                                        </span></td>
+
+                                        <td><span>
+                                            {{-- @foreach ($st->associations as $st_asso)
+                                            @if($st_asso->pivot->status=='active')
+                                                {{$st_asso->asso_name}}
+                                            @endif
+                                            @endforeach --}}
+                                            {{ $stafftax->year}}
+                                        </span>
+                                    </td>
+                                        <td>{{ $stafftax->status}}</td>
+                                        <td class="font-medium space-x-2 rtl:space-x-reverse">
+                                            <div class="hs-tooltip ti-main-tooltip">
+                                                <button
+                                                    class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary">
+                                                    <a href="{{}}">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3ZM12.0003 19C16.2359 19 19.8603 16.052 20.7777 12C19.8603 7.94803 16.2359 5 12.0003 5C7.7646 5 4.14022 7.94803 3.22278 12C4.14022 16.052 7.7646 19 12.0003 19ZM12.0003 16.5C9.51498 16.5 7.50026 14.4853 7.50026 12C7.50026 9.51472 9.51498 7.5 12.0003 7.5C14.4855 7.5 16.5003 9.51472 16.5003 12C16.5003 14.4853 14.4855 16.5 12.0003 16.5ZM12.0003 14.5C13.381 14.5 14.5003 13.3807 14.5003 12C14.5003 10.6193 13.381 9.5 12.0003 9.5C10.6196 9.5 9.50026 10.6193 9.50026 12C9.50026 13.3807 10.6196 14.5 12.0003 14.5Z"></path></svg>
+                                                        <span
+                                                            class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700"
+                                                            role="tooltip">
+                                                            View & Edit
+                                                        </span>
+                                                    </a>
+                                                </button>
+
+                                                <div class="hs-tooltip ti-main-tooltip">
+                                                    <!--form action="#" method="post">
+
+                                                    <button onclick="return confirm('Are you Sure')"
+                                                        class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>
+
+                                                        <span
+                                                            class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700"
+                                                            role="tooltip">
+                                                            Delete
+                                                        </span>
+                                                        </button>
+                                                    </form-->
+                                                </div>
+                                            </div>
+                                        </td>
+                                       
+                                    </tr>
+                                    @empty
+                                        <p class="text-dark"><b>No Staff Added.</b></p>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End::row-5 -->
+        </div>
+        <!-- End::main-content -->
+    </div>
+</div>
+        
+        
+            
+        
+        
+        
 
 
 

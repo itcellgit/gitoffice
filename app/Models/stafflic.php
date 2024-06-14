@@ -15,9 +15,8 @@ class stafflic extends Model
     {
         return $this->belongsTo(staff::class);
     }
-    public function stafflic_transactions():BelongsTo
+    public function stafflic_transactions():HasMany
     {
-        return $this->belongsTo(stafflic_transaction::class);
+        return $this->hasMany(stafflic_transaction::class);
     }
-
 }

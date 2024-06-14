@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('batch');
             $table->timestamps();
+            $table->foreignId('department_staff_id')->constrained();
+            $table->foreignId('staff_id')->constrained();
         });
     }
 

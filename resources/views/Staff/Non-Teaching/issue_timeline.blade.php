@@ -42,14 +42,13 @@
                             <div class="box-header">
                                 <div class="flex">
                                     <h5 class="box-title my-auto">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32"
-                                            height="32">
-                                            <path
-                                                d="M22 21H2V19H3V4C3 3.44772 3.44772 3 4 3H18C18.5523 3 19 3.44772 19 4V9H21V19H22V21ZM17 19H19V11H13V19H15V13H17V19ZM17 9V5H5V19H11V9H17ZM7 11H9V13H7V11ZM7 15H9V17H7V15ZM7 7H9V9H7V7Z">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+                                            <path 
+                                                d="M6 4H4V2H20V4H18V6C18 7.61543 17.1838 8.91468 16.1561 9.97667C15.4532 10.703 14.598 11.372 13.7309 12C14.598 12.628 15.4532 13.297 16.1561 14.0233C17.1838 15.0853 18 16.3846 18 18V20H20V22H4V20H6V18C6 16.3846 6.81616 15.0853 7.8439 14.0233C8.54682 13.297 9.40202 12.628 10.2691 12C9.40202 11.372 8.54682 10.703 7.8439 9.97667C6.81616 8.91468 6 7.61543 6 6V4ZM8 4V6C8 6.68514 8.26026 7.33499 8.77131 8H15.2287C15.7397 7.33499 16 6.68514 16 6V4H8ZM12 13.2219C10.9548 13.9602 10.008 14.663 9.2811 15.4142C9.09008 15.6116 8.92007 15.8064 8.77131 16H15.2287C15.0799 15.8064 14.9099 15.6116 14.7189 15.4142C13.992 14.663 13.0452 13.9602 12 13.2219Z">
                                             </path>
                                         </svg>
-                                        Issue Interaction Details of - <b
-                                            style="color: red; font-size:18px">{{ $student_issue->usn }}</b>
+                                        Issue Interaction Details of - 
+                                        <b style="color: red; font-size:18px">{{ $student_issue->usn }}</b>
                                     </h5>
 
                                     <div class=" block ltr:ml-auto rtl:mr-auto my-auto">
@@ -76,7 +75,8 @@
                                                                     d="M4 3H20C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM5 5V19H19V5H5ZM11 11V7H13V11H17V13H13V17H11V13H7V11H11Z">
                                                                 </path>
                                                             </svg>
-
+                                                            Interaction of the student -
+                                                            <b style="color: red; font-size:16px">{{ $student_issue->usn }}</b>
                                                         </h3>
                                                         <button type="button" class="hs-dropdown-toggle ti-modal-close-btn"
                                                             data-hs-overlay="#hs-medium-modal">
@@ -92,7 +92,7 @@
                                                     </div>
 
                                                     <form
-                                                        action="{{ route('Staff.Non-Teaching.issue_timeline.store', $student_issue->id) }}"
+                                                        action="{{ route('Staff.Non-Teaching.issue_timeline.store', [$staff->id,$student_issue->id]) }}"
                                                         method="post">
                                                         @csrf
                                                         <div class="ti-modal-body">
@@ -302,7 +302,9 @@
                                                             </div>
                                                         </div>
                                                         <div class="bg-warning text-white timeline-icon">
-                                                            <i class="ri ri-briefcase-4-line text-lg leading-none"></i>
+                                                            <!-- <i class="ri ri-briefcase-4-line text-lg leading-none"></i> -->
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M14 14.252V22H4C4 17.5817 7.58172 14 12 14C12.6906 14 13.3608 14.0875 14 14.252ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM18.5858 17L16.7574 15.1716L18.1716 13.7574L22.4142 18L18.1716 22.2426L16.7574 20.8284L18.5858 19H15V17H18.5858Z"></path></svg>
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
@@ -371,18 +373,21 @@
                                                                 </div>
 
                                                                 <div class="bg-secondary text-white timeline-icon">
-                                                                    <i class="ri-mail-line text-lg leading-none"></i>
-                                                                    {{-- <div class="{{ $index % 2 == 0 ? 'bg-warning' : 'bg-secondary' }} text-white timeline-icon">
-                                                                        <i class="ri {{ $index % 2 == 0 ? 'ri-mail-line' : 'ri-briefcase-4-line' }} text-lg leading-none"></i>
-                                                                    </div> --}}
+                                                                    <!-- <i class="ri-mail-line text-lg leading-none"></i> -->
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M6.45455 19L2 22.5V4C2 3.44772 2.44772 3 3 3H21C21.5523 3 22 3.44772 22 4V18C22 18.5523 21.5523 19 21 19H6.45455ZM5.76282 17H20V5H4V18.3851L5.76282 17ZM8 10H16V12H8V10Z"></path></svg>
+                                                                    
                                                                 </div>
                                                             </div>
                                                         @endfor
                                                     @endif
                                                 </div>
                                             </div>
-
-                                            <div class="timeline-end"></div>
+                                            
+                                            <div class="timeline-end">
+                                                <!-- <div class="bg-green-500 text-white timeline-icon">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M11.602 13.7599L13.014 15.1719L21.4795 6.7063L22.8938 8.12051L13.014 18.0003L6.65 11.6363L8.06421 10.2221L10.189 12.3469L11.6025 13.7594L11.602 13.7599ZM11.6037 10.9322L16.5563 5.97949L17.9666 7.38977L13.014 12.3424L11.6037 10.9322ZM8.77698 16.5873L7.36396 18.0003L1 11.6363L2.41421 10.2221L3.82723 11.6352L3.82604 11.6363L8.77698 16.5873Z"></path></svg>
+                                                </div> -->
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

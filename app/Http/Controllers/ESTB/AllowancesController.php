@@ -18,8 +18,8 @@ class AllowancesController extends Controller
     public function index()
     {
         //
-        $allowances=allowance::with('designations')->where('status','active')->get();
-        $designations=designation::where('status','active')->get();
+        $allowances=allowance::with('designations')->where('status','active')->orderBy('title')->get();
+        $designations=designation::where('status','active')->orderBy('design_name')->get();
         return view('ESTB.payscales.allowances.index',compact(['allowances','designations']));
     }
 
@@ -36,11 +36,23 @@ class AllowancesController extends Controller
      */
     public function store(StoreallowancesRequest $request)
     {
+       
         $allowances=new allowance();
         $allowances->title=$request->title;
         $allowances->value=$request->value;
         $allowances->value_type=$request->value_type;
-        $allowances->designations_id=$request->designations_id;
+        $allowances->employee_type=$request->employeee_type;
+       if($request->designations_id=='#')
+       {
+        $allowances->designations_id=null;
+       }
+       else
+       {
+            $allowances->designations_id=$request->designations_id;
+       }
+        
+        
+        
         $allowances->wef=$request->wef;
         $result=$allowances->save();
         if($result){
@@ -76,6 +88,7 @@ class AllowancesController extends Controller
         $allowances->title=$request->title;
         $allowances->value=$request->value;
         $allowances->value_type=$request->value_type;
+        $allowances->employee_type=$request->employeee_type;
         $allowances->designations_id=$request->designations_id;
         $allowances->wef=$request->wef;
         $allowances->end_date=$request->end_date;
@@ -83,7 +96,15 @@ class AllowancesController extends Controller
             $staus="inactive";
         }
         $result=$allowances->update();
-
+        if($result)
+        {
+            $status=1;
+        }
+        else
+        {
+            $status=0;
+        }
+        return redirect('ESTB/payscales/allowances')->with('status',$status);
     }
 
     /**

@@ -57,12 +57,12 @@ class LeaveStaffApplicationsController extends Controller
         $staff_emp_type=staff::join('employee_types','employee_types.staff_id','=','staff.id')
                             ->where('staff_id',$staff_id_from_user->id)->first();
 
-        //fetch the staff members of the department teaching staff - teaching data and
+        //fetch the staff members of the department teaching staff - tea{{  }}}}}}}}g data and
         // non-teaching staff- non-teaching data for alternate arrangement
         $dept_staff=department::with(['staff'=>function($q) use ( $staff_id_from_user,$staff_emp_type){
             $q->where('staff.id','<>',$staff_id_from_user->id)
             ->where('department_staff.status','active')
-
+            ->distinct('department_staff.department_id')
             ->whereIn('staff.id',function($subquery)use($staff_emp_type){{{  }}
                 $subquery->select('staff_id')
                 ->from('employee_types')
@@ -119,7 +119,9 @@ class LeaveStaffApplicationsController extends Controller
         else
         {
             //dd($staff->latestassociation()->first()->asso_name=='Confirmed');
-            if($staff->latest_employee_type[0]->employee_type=="Teaching" && ($staff->latestassociation()->first()->asso_name=='Confirmed'||$staff->latestassociation()->first()->asso_name=='Promotional Probationary'))
+            if($staff->latest_employee_type[0]->employee_type=="Teaching" && 
+            ($staff->latestassociation()->first()->asso_name=='Confirmed'||
+            $staff->latestassociation()->first()->asso_name=='Promotional Probationary'))
             {
                 $leaves=DB::table('leaves')->join('leave_rules','leave_rules.leave_id','=','leaves.id')
                                            ->whereNull('leave_rules.max_time_allowed')
@@ -162,25 +164,51 @@ class LeaveStaffApplicationsController extends Controller
        // dd($request);
         $user = Auth::User();
         $staff=staff::where('user_id','=',$user->id)->first();
+        $check_additional_non_vacational=DB::table('designation_staff')->whereIn('designation_id',function($q){
+            $q->select('id')->from('designations')->where('isadditional',1)->where('isvacational','Non-Vacational');
+        })
+        ->where('staff_id','=',$staff->id)
+        ->where('status','active')
+        ->count();
+        $hod=null;
+        if($check_additional_non_vacational>0)
+        {
+            //dd();
+            $hod=user::select('id as user_id')
+                        ->where('Role','Principal')->first();
+        }
+        else
+        {
+           
             $hod = staff::select('user_id')
                         ->where('staff.id', function($query)use($staff) {
                         $query->select('staff_id')
                                 ->from('designation_staff')
-                                ->where('designation_id', 1)
+                                ->whereIn('designation_id', function($q){
+                                    $q->select('id')
+                                    ->from('designations')
+                                    ->whereIn('design_name',['HoD','REGISTRAR','Controller of examination','Dean MBA','PLACEMENT OFFICER']);
+                                })
                                 ->where('status', 'active')
                                 ->where('dept_id', function($q1)use($staff){
                                     $q1->select('department_id')
-                                    ->from('department_staff')
-                                    ->where('staff_id',$staff->id)
+                                    ->from('department_staff as ds')
+                                    ->where('ds.staff_id',$staff->id)
+                                    ->where('ds.status','active')
                                     ->whereNotExists(function($query)use($staff) {
-                                    $query->select('dept_id')
-                                        ->from('designation_staff')
-                                        ->where('staff_id', $staff->id)
-                                        ->whereNotNull('dept_id')
-                                        ->where('status', 'active');
+                                    $query->select(DB::raw(1))
+                                        ->from('designation_staff as dsg')
+                                        ->whereColumn('dsg.dept_id', 'ds.department_id')
+                                        ->where('dsg.staff_id', $staff->id)
+                                        ->whereNotNull('dsg.dept_id')
+                                        ->where('dsg.status', 'active');
+                                }) ->pluck('ds.department_id');;
                             });
-                            });
-                    })->first();  
+                    })->first();
+                   // dd($hod);
+        }
+              
+                    //dd($hod);
                     $dean_admin = user::where('role','=','Dean_admin')->select('id')->first();
                     $principal = user::where('role','=','Principal')->select('id')->first();  
                 //dd($dean_admin.'-'.$principal);
@@ -204,12 +232,19 @@ class LeaveStaffApplicationsController extends Controller
             $leave_application->end = $request->to_date;
             $leave_application->reason = $request->leave_reason;
             $leave_application->staff_id = $staff->id;
-            $leave_application->recommender = $hod->user_id; // Recommender is HoD of the staff whoi is applying the leave
-            if($request->no_of_days >= 5){
-                $leave_application->approver = $principal->id; // Approver is principal if it crosses 5 days.
+            if($check_additional_non_vacational>0 ||$request->no_of_days >= 5){
+                $leave_application->recommender = $hod->user_id;
+                $leave_application->approver = $hod->user_id;
             }else{
-                $leave_application->approver = $dean_admin->id; // approver is Dean , if its below 5 days.
+                $leave_application->recommender = $hod->user_id;
+                $leave_application->approver = $dean_admin->id;
             }
+            // Recommender is HoD of the staff whoi is applying the leave
+            // if(){
+            //     $leave_application->approver = $principal->id; // Approver is principal if it crosses 5 days.
+            // }else{
+            //      // approver is Dean , if its below 5 days.
+            // }
         
             $leave_application->no_of_days = $request->no_of_days;
 
@@ -262,6 +297,63 @@ class LeaveStaffApplicationsController extends Controller
                 //if present, then perform updated query else perform insert query
             }
 
+            //
+            $alternate_staff = staff::find($request->alternate);
+            //dd($alternate_staff);
+
+
+             //$user_notifications =[];
+             //$hod_notifications = [];
+             //$alternate_notifications = [];
+            
+            // // Check if the user is logged in
+            if(Auth::check()) {
+                // Send notification to the logged-in staff member
+                $user = Auth::user();
+                $user_notification = new notifications();
+                $user_notification->user_id = $user->id; 
+                $user_notification->notification_title = 'Leave Application';
+                $user_notification->notification_type = 'Leave';
+                $user_notification->date = now(); 
+                $user_notification->description = 'A leave application has been submitted successfully.';
+                $user_notification->save();
+
+                //$user_notifications[] = $user_notification;
+            }
+
+            if ($hod) {
+                // Send notification to HOD
+                $hod_notification = new notifications();
+                $hod_notification->user_id = $hod->user_id;
+                $hod_notification->notification_title = 'Leave Application';
+                $hod_notification->notification_type = 'Leave';
+                $hod_notification->date = now(); 
+                $hod_notification->description = 'A leave application has been submitted by ' . $staff->fname . ' ' . $staff->mname .''  . $staff->lname . ' for your approval.';
+                $hod_notification->save();
+
+                //$hod_notifications[] = $hod_notification;
+            }
+
+            if ($alternate_staff) {
+                $alternate_user_id = staff::where('id', $request->alternate)->value('user_id');
+                // Send notification to alternate staff
+                $alternate_notification = new notifications();
+                $alternate_notification->user_id = $alternate_user_id;
+                $alternate_notification->notification_title = 'Leave Assignment';
+                $alternate_notification->notification_type = 'leave';
+                $alternate_notification->date = now();
+                //$alternate_notification->description = 'You have been assigned as an alternate for a leave application submitted by ' . $staff->fname;
+                $alternate_notification->description = 'You have been assigned as an alternate for a leave application submitted by ' . $staff->fname . ' ' . $staff->mname .''  . $staff->lname;
+
+                $alternate_notification->save();
+
+                //$alternate_notifications[] = $alternate_notification;
+            }
+
+            // // Store notifications in session
+            //session()->put('user_notifications', $user_notifications);
+            //session()->put('hod_notifications', $hod_notifications);
+            //session()->put('alternate_notifications', $alternate_notifications);
 
         }
 
@@ -470,7 +562,7 @@ class LeaveStaffApplicationsController extends Controller
         {
             $holidaydates=[];
             $isFirstOrThirdSaturdayflag=false;
-            $holidays=holidayrh::where('start',$previous_date)->first();
+            $holidays=holidayrh::where('start',$previous_date)->where('title','not like','Republic Day')->whereOr('title','not like','Independence Day')->first();
             if($holidays!=null)
             {
                 $holidaydates[]=Carbon::parse($previous_date)->format('d-m-Y');
@@ -496,7 +588,9 @@ class LeaveStaffApplicationsController extends Controller
                 join('leaves','leaves.id','=','leave_staff_applications.leave_id')
                 ->where('leave_staff_applications.staff_id',$staff->id)
                 ->where('end',$previous_date)
+                ->where('leaves.shortname','Not like','%DL%')
                 ->select('leaves.shortname','leave_staff_applications.*')->first();
+                
                 //if there is a leave check if it is morning half day, if leave is morning half day then staff can avail any leave
                 //if the previous day leave is not morning half day and the current leave applicaiton is cl afternoon, then there is no issue.
                 //but if the previous day is not morning half day and current leave is not afternoon half day then, check if they can be combined or no.
@@ -555,7 +649,7 @@ class LeaveStaffApplicationsController extends Controller
         {
             $holidaydatespost=[];
             $isFirstOrThirdSaturdayflag=false;
-            $holidays=holidayrh::where('start',$next_date)->first();
+            $holidays=holidayrh::where('start',$next_date)->where('title','not like','Republic Day')->whereOr('title','not like','Independence Day')->first();
             if($holidays!=null)
             {
                 $holidaydatespost[]=Carbon::parse( $next_date)->format('d-m-Y');
@@ -579,6 +673,7 @@ class LeaveStaffApplicationsController extends Controller
             $staff_leave_after_end_date=leave_staff_applications::
                 join('leaves','leaves.id','=','leave_staff_applications.leave_id')
                 ->where('leave_staff_applications.staff_id',$staff->id)
+                ->where('leaves.shortname','Not like','%DL%')
                 ->where('start',$next_date)
                 ->select('leaves.shortname','leave_staff_applications.*')->first();
 
@@ -1149,26 +1244,52 @@ class LeaveStaffApplicationsController extends Controller
         $user = Auth::User();
         $staff = staff::where('user_id','=',$user->id)->first();
         $result = $this->validateleave($request,$staff);
-        $hod = staff::select('user_id')
-                    ->where('staff.id', function($query)use($staff) {
-                      $query->select('staff_id')
-                            ->from('designation_staff')
-                            ->where('designation_id', 1)
-                            ->where('status', 'active')
-                            ->where('dept_id', function($q1)use($staff){
-                                $q1->select('department_id')
-                                ->from('department_staff')
-                                ->where('staff_id',$staff->id)
-                                ->whereNotExists(function($query)use($staff) {
-                                $query->select('dept_id')
-                                      ->from('designation_staff')
-                                      ->where('staff_id', $staff->id)
-                                      ->whereNotNull('dept_id')
-                                      ->where('status', 'active');
-                           });
-                        });
-                  })->first();  
-                  $dean_admin = user::where('role','=','Dean_admin')->select('id')->first();
+        $check_additional_non_vacational=DB::table('designation_staff')->whereIn('designation_id',function($q){
+            $q->select('id')->from('designations')->where('isadditional',1)->where('isvacational','Non-Vacational');
+        })
+        ->where('staff_id','=',$staff->id)
+        ->where('status','active')
+        ->count();
+        $hod=null;
+        if($check_additional_non_vacational>0)
+        {
+            //dd();
+            $hod=user::select('id as user_id')
+                        ->where('Role','Principal')->first();
+        }
+        else
+        {
+           
+            $hod = staff::select('user_id')
+                        ->where('staff.id', function($query)use($staff) {
+                        $query->select('staff_id')
+                                ->from('designation_staff')
+                                ->whereIn('designation_id', function($q){
+                                    $q->select('id')
+                                    ->from('designations')
+                                    ->whereIn('design_name',['HoD','REGISTRAR','Controller of examination','Dean MBA','PLACEMENT OFFICER']);
+                                })
+                                ->where('status', 'active')
+                                ->where('dept_id', function($q1)use($staff){
+                                    $q1->select('department_id')
+                                    ->from('department_staff as ds')
+                                    ->where('ds.staff_id',$staff->id)
+                                    ->where('ds.status','active')
+                                    ->whereNotExists(function($query)use($staff) {
+                                        $query->select(DB::raw(1))
+                                        ->from('designation_staff as dsg')
+                                        ->whereColumn('dsg.dept_id', 'ds.department_id')
+                                        ->where('dsg.staff_id', $staff->id)
+                                        ->whereNotNull('dsg.dept_id')
+                                        ->where('dsg.status', 'active');
+                                }) ->pluck('ds.department_id');;
+                            });
+                    })->first();
+                   // dd($hod);
+        }
+
+
+                    $dean_admin = user::where('role','=','Dean_admin')->select('id')->first();
                     $principal = user::where('role','=','Principal')->select('id')->first(); 
         //  dd($hod);
         //calling the validate leave function to validate the leave
@@ -1187,13 +1308,15 @@ class LeaveStaffApplicationsController extends Controller
             $leave_application->end = $request->to_date;
             $leave_application->reason = $request->leave_reason;
             $leave_application->staff_id = $staff->id;
-            $leave_application->recommender = $hod->user_id; // HoD of the staff
-            
-            if($request->no_of_days >= 5){
-                $leave_application->approver = $principal->id; // Approver is principal if it crosses 5 days.
+
+            if($check_additional_non_vacational>0 ||$request->no_of_days >= 5){
+                $leave_application->recommender = $hod->user_id;
+                $leave_application->approver = $hod->user_id;
             }else{
-                $leave_application->approver = $dean_admin->id; // approver is Dean , if its below 5 days.
+                $leave_application->recommender = $hod->user_id;
+                $leave_application->approver = $dean_admin->id;
             }
+
             $leave_application->no_of_days = $request->no_of_days;
 
             if($request->additional_alternate!='#')
@@ -1238,59 +1361,59 @@ class LeaveStaffApplicationsController extends Controller
             //dd($alternate_staff);
             
             // Initialize an empty array in the session for HOD and alternate notifications
+           
 
-            $user_notifications =[];
-            $hod_notifications = [];
-            $alternate_notifications = [];
+
+            // $user_notifications =[];
+            // $hod_notifications = [];
+            // $alternate_notifications = [];
             
-            // Check if the user is logged in
-            if(Auth::check()) {
-                // Send notification to the logged-in staff member
+            // // Check if the user is logged in
+             if(Auth::check()) {
+                 // Send notification to the logged-in staff member
                 $user = Auth::user();
                 $user_notification = new notifications();
-                $user_notification->user_id = $user->id; 
-                $user_notification->notification_title = 'Leave Application';
-                $user_notification->notification_type = 'Leave';
-                $user_notification->date = now(); 
-                $user_notification->description = 'A leave application has been submitted successfully.';
-                $user_notification->save();
+                 $user_notification->user_id = $user->id; 
+                 $user_notification->notification_title = 'Leave Application';
+                 $user_notification->notification_type = 'Leave';
+                 $user_notification->date = now(); 
+                 $user_notification->description = 'A leave application has been submitted successfully.';
+                 $user_notification->save();
 
-                $user_notifications[] = $user_notification;
-            }
+                 //$user_notifications[] = $user_notification;
+             }
 
-            if ($hod) {
-                // Send notification to HOD
-                $hod_notification = new notifications();
-                $hod_notification->user_id = $hod->user_id;
-                $hod_notification->notification_title = 'Leave Application';
-                $hod_notification->notification_type = 'Leave';
-                $hod_notification->date = now(); 
-                $hod_notification->description = 'A leave application has been submitted by ' . $staff->fname . ' for your approval.';
-                $hod_notification->save();
+             if ($hod) {
+                 // Send notification to HOD
+                 $hod_notification = new notifications();
+                 $hod_notification->user_id = $hod->user_id;
+                 $hod_notification->notification_title = 'Leave Application';
+                 $hod_notification->notification_type = 'Leave';
+                 $hod_notification->date = now(); 
+                 $hod_notification->description = 'A leave application has been submitted by ' . $staff->fname . ' for your approval.';
+                 $hod_notification->save();
 
-                $hod_notifications[] = $hod_notification;
-            }
+                 //$hod_notifications[] = $hod_notification;
+             }
 
-            if ($alternate_staff) {
-                $alternate_user_id = staff::where('id', $request->alternate)->value('user_id');
+             if ($alternate_staff) {
+                 $alternate_user_id = staff::where('id', $request->alternate)->value('user_id');
                 // Send notification to alternate staff
-                $alternate_notification = new notifications();
-                $alternate_notification->user_id = $alternate_user_id;
-                $alternate_notification->notification_title = 'Leave Assignment';
-                $alternate_notification->notification_type = 'leave';
-                $alternate_notification->date = now();
-                $alternate_notification->description = 'You have been assigned as an alternate for a leave application submitted by ' . $staff->fname;
-                $alternate_notification->save();
+                 $alternate_notification = new notifications();
+                 $alternate_notification->user_id = $alternate_user_id;
+                 $alternate_notification->notification_title = 'Leave Assignment';
+                 $alternate_notification->notification_type = 'leave';
+                 $alternate_notification->date = now();
+                 $alternate_notification->description = 'You have been assigned as an alternate for a leave application submitted by ' . $staff->fname;
+                 $alternate_notification->save();
 
-                $alternate_notifications[] = $alternate_notification;
-            }
+                 //$alternate_notifications[] = $alternate_notification;
+             }
 
-            // Store notifications in session
-            session()->put('user_notifications', $user_notifications);
-            session()->put('hod_notifications', $hod_notifications);
-            session()->put('alternate_notifications', $alternate_notifications);
-
-
+            // // Store notifications in session
+            //session()->put('user_notifications', $user_notifications);
+            //session()->put('hod_notifications', $hod_notifications);
+            //session()->put('alternate_notifications', $alternate_notifications);
         }
 
         if($leave_appn_id && $daywise_leave_result && $result){
@@ -1310,11 +1433,7 @@ class LeaveStaffApplicationsController extends Controller
         return redirect('/Non-Teaching/ntleaves/')->with('return_data', $return_data);
     }
     
-    public function fetchNotifications()
-    {
-        $notifications = Notifications::where('user_id', auth()->id())->orderBy('created_at', 'desc')->get();
-        return response()->json($notifications);
-    }
+    
 
 
     //for updating the leave application in Non-Teaching (Editing)

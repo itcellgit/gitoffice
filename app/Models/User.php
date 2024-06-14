@@ -15,7 +15,7 @@ use App\Models\Ticketing\ticket;
 use App\Enums\UserRoles;
 use App\Http\Models\HOD\issue_timeline;
 use App\Http\Models\Non_Teaching\ntissue_timeline;
-use Impersonate;
+//use Impersonate;
 
 // use Lab404\Impersonate\Models\Impersonate;
 
@@ -28,15 +28,14 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    // protected $fillable = [
-    //     'name',
-    //     'email',
-    //     'password',
-    // ];
-    protected $fillable = [
-        'name', 'email', 'password', 'role', 'is_impersonating', 'impersonator_id'
-    ];
 
+
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
+   
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -49,14 +48,14 @@ class User extends Authenticatable
 
 
     protected $casts = [
-        'is_impersonating' => 'boolean',
+        //'is_impersonating' => 'boolean',
         'email_verified_at' => 'datetime',
     ];
 
-    public function isSuperAdmin()
-    {
-        return $this->role === UserRoles::SU->value;
-    }
+    // public function isSuperAdmin()
+    // {
+    //     return $this->role === UserRoles::SU->value;
+    // }
 
     /**
      * The attributes that should be cast.

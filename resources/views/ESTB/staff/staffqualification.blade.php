@@ -88,7 +88,7 @@
                 </div>
             </div>
             <div class="table-bordered rounded-sm ti-custom-table-head overflow-auto table-auto">
-                <table class="ti-custom-table ti-custom-table-head whitespace-nowrap mix-blend-overlay">
+                <table class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                     <thead class="bg-gray-50 dark:bg-black/20">
                         <tr class="">
                             <th scope="col" class="dark:text-white/80 font-bold ">S.no</th>

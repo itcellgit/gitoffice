@@ -1287,7 +1287,7 @@ class staffDesignationController extends Controller
        else
        {
           $sddesigresult=$staff->designations()->attach($request->designation_id,['start_date'=>$request->start_date,'gcr'=>$request->gcr,'dept_id'=>$request->dept_id]);
-           $sdept=$staff->departments()->attach($request->dept_id,['start_date'=>$request->start_date,'gcr'=>$request->gcr]);
+           $sdept=$staff->departments()->attach($request->dept_id,['start_date'=>$request->start_date,'gcr'=>$request->gcr,'reason'=>$request->reason]);
        }
 
        if($sddesigresult){
@@ -1450,6 +1450,8 @@ class staffDesignationController extends Controller
                    $design->pivot->end_date=$request->end_date;
                    //mark the additional designation status as inactive.
                    $design->pivot->status='inactive';
+
+                   //need to close the additional_designation_departmnet also
 
            }
 

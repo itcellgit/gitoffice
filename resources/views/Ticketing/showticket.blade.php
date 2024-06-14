@@ -12,14 +12,18 @@
         <!-- Page Header -->
             <div class="justify-between block page-header sm:flex">
                 <div>
-                    {{-- <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium"> Welcome <span class="text-primary">{{$staff->fname.' '.$staff->mname.' '.$staff->lname}}</span></h3> --}}
+                    <a class="flex  items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('ticket.dashboard')}}">
+                        Back
+                   </a>
 
                 </div>
                 <ol class="flex items-center min-w-0 whitespace-nowrap">
                     <li class="text-sm">
                         <a class="flex items-center font-semibold truncate text-primary hover:text-primary dark:text-primary"
-                            href="javascript:void(0);">
-                            My Dashboard-tickets
+                        href="{{route('ticket.dashboard')}}">
+                            {{-- href="javascript:void(0);"> --}}
+                            
+                            My Dashboard- View Tickets
                             <i class="flex-shrink-0 mx-3 overflow-visible text-gray-300 ti ti-chevrons-right dark:text-gray-300 rtl:rotate-180"></i>
                         </a>
                     </li>
@@ -32,7 +36,7 @@
                     <div class="box">
                         <div class="box-header flex justify-between items-center">
                             <h5 class="box-title">Ticket Status:&nbsp;&nbsp;
-                                <span style="@if($ticket->status =='Open') color: red; @elseif($ticket->status =='Pending') color: Orange; @elseif($ticket->status =='Resolved') color: green; @endif">{{$ticket->status}}</span>
+                                <span style="@if($ticket->status =='New') color: red; @elseif($ticket->status =='Pending') color: Orange; @elseif($ticket->status =='Resolved') color: green; @endif">{{$ticket->status}}</span>
                             </h5>
                             @if($ticket->status != 'Resolved')
                                 <button type="button" class="hs-dropdown-toggle ti-btn ti-btn-primary" data-hs-overlay="#hs-medium-modal">
@@ -42,13 +46,6 @@
                                     Reply
                                 </button>
                             @endif
-                            {{-- <button type="button" class="hs-dropdown-toggle ti-btn ti-btn-primary" data-hs-overlay="#hs-medium-modal">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                                    <path d="M11 20L1 12L11 4V9C16.5228 9 21 13.4772 21 19C21 19.2729 20.9891 19.5433 20.9676 19.8107C19.4605 16.9502 16.458 15 13 15H11V20Z"></path>
-                                </svg>
-                                Reply
-                            </button> --}}
-                        
                             <div id="hs-medium-modal" class="hs-overlay hidden ti-modal">
                                 <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out md:!max-w-2xl md:w-full m-3 md:mx-auto">
                                     <div class="ti-modal-content">
@@ -70,37 +67,43 @@
                                         </div>
                                         <form action="{{ route('ticket.reply.store', $ticket->id) }}" method="post" enctype="multipart/form-data">
                                             @csrf
-                                            <div class="ti-modal-body">
-                                                <div class="max-w-sm space-y-3 pb-6">
-                                                    <label for="with-corner-hint" class="ti-form-label">My Issue : </label>
-                                                    <input type="text" name="title" class="ti-form-input" required placeholder="title" id="myissue">
+                                            <div class="ti-modal-body space-y-6">
+                                                <div class="max-w-2xl space-y-3 pb-6">
+                                                    <label for="myissue" class="ti-form-label font-bold block">Issue Title:<span class="text-red-500">*</span></label>
+                                                    <input type="text" name="title" class="ti-form-input w-full border border-gray-300 rounded-md p-2" required placeholder="Write/copy your issue" id="myissue" value="{{ old('title') }}">
                                                     <div id="myissueError" class="error text-red-700"></div>
                                                 </div>
-                                                <div class="max-w-sm space-y-3 pb-6">
-                                                    <label for="" class="ti-form-label">Description:</label>
-                                                    <textarea name="description" class="ti-form-input" required placeholder="Please Describe the issue here..." style="width: 100%; height: 150px;" id="description"></textarea>
+                                                
+                                                <div class="max-w-2xl space-y-3 pb-6">
+                                                    <label for="description" class="ti-form-label font-bold block">Description:<span class="text-red-500">*</span></label>
+                                                    <textarea name="description" class="ti-form-input w-full border border-gray-300 rounded-md p-2" required placeholder="Please describe the issue here..." style="width: 100%; height: 150px;" id="description">{{ old('description') }}</textarea>
                                                     <div id="descriptionError" class="error text-red-700"></div>
                                                 </div>
-                                                {{-- <div class="max-w-sm space-y-3 pb-6">
+                                                 {{-- <div class="max-w-sm space-y-3 pb-6">
                                                     <label for="" class="ti-form-label">Attachment :</label>
                                                     <input type="file" name="attachment" class="ti-form-input"  placeholder="attachment" id="attachment">
                                                     <div id="attachmentError" class="error text-red-700"></div>
                                                 </div> --}}
-                                                <div class="max-w-sm space-y-3 pb-6">
+                                                {{-- <div class="max-w-sm space-y-3 pb-6">
                                                     <label for="postAttachment" class="ti-form-label">Attachment:</label>
                                                     <input type="file" name="post_attachment[]" id="post_attachment" class="ti-form-input" accept="image/*" multiple placeholder="Choose images">
                                                     <h3>Select multiple images</h3>
                                                     
+                                                </div> --}}
+                                                <div class="max-w-2xl space-y-3 pb-6">
+                                                    <label for="postAttachment" class="ti-form-label font-bold block">Attachment:</label>
+                                                    <input type="file" name="post_attachment[]" id="post_attachment" class="ti-form-input w-full border border-gray-300 rounded-md p-2" accept="image/*" multiple>
                                                 </div>
-                                            </div>
-                                            <div class="ti-modal-footer">
-                                                <button type="button"
-                                                    class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
-                                                    data-hs-overlay="#hs-medium-modal">
-                                                        Close
-                                                </button>
-                                                    <input type="submit" id="reply_store_add_btn" class="ti-btn  bg-primary text-white hover:bg-primary  focus:ring-primary  dark:focus:ring-offset-white/10" value="Save"/>
-                                            </div>
+                                            </div> 
+                                                <div class="ti-modal-footer flex justify-end space-x-3">
+                                                    <button type="button"
+                                                            class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10"
+                                                            data-hs-overlay="#hs-medium-modal">
+                                                            Close
+                                                        </button>
+
+                                                    <input type="submit" id="reply_store_add_btn" class="ti-btn bg-primary text-white hover:bg-primary focus:ring-primary dark:focus:ring-offset-white/10 px-4 py-2 rounded-md" value="Add">
+                                                </div>
                                         </form> 
                                     </div>
                                     {{-- </div> --}}
@@ -122,7 +125,7 @@
                                 <div class="flex w-full pb-8">
                                     <div class="ltr:ml-5 rtl:mr-5 rounded-sm ltr:mr-auto rtl:ml-auto my-auto w-full space-y-3">
                                         <div class="sm:flex">
-                                            <h3 class="my-auto text-gray-500 dark:text-white/70"><span class="text-dark dark:text-white">My Issue: {{$ticket->title}}</span></h3>
+                                            <h3 class="my-auto text-gray-500 dark:text-white/70"><span class="text-dark dark:text-white">Issue Title: {{$ticket->title}}</span></h3>
                                             <p class="my-auto ltr:ml-auto rtl:mr-auto text-gray-500 dark:text-white/70 text-xs">
                                                 {{$ticket->created_at}}
                                             </p>
@@ -140,7 +143,7 @@
                                                     @endforeach
                                                 </div>
                                                 @else
-                                                <p class="text-dark dark:text-white">No attachments available.</p>
+                                                <p class="text-dark dark:text-white">No Image</p>
                                             @endif
                                         </div>
                                     </div>
@@ -161,7 +164,7 @@
                                 <div class="flex w-full pb-8">
                                     <div class="ltr:ml-5 rtl:mr-5 rounded-sm ltr:mr-auto rtl:ml-auto my-auto w-full space-y-3">
                                         <div class="sm:flex">
-                                            <h3 class="my-auto text-gray-500 dark:text-white/70"><span class="text-dark dark:text-white">My Issue: {{$pt->title}}</span></h3>
+                                            <h3 class="my-auto text-gray-500 dark:text-white/70"><span class="text-dark dark:text-white">Issue Title: {{$pt->title}}</span></h3>
                                             <p class="my-auto ltr:ml-auto rtl:mr-auto text-gray-500 dark:text-white/70 text-xs">
                                                 {{$pt->created_at}}
                                             </p>
@@ -178,7 +181,7 @@
                                                     @endforeach
                                                 </div>
                                             @else
-                                                <p class="text-dark dark:text-white">No attachments available.</p>
+                                                <p class="text-dark dark:text-white">No Image</p>
                                             @endif
                                         </div>
                                     </div>
@@ -229,7 +232,7 @@
                     var flag = false;
 
                     if (myissue.trim() === '') {
-                        $('#myissueError').text('My Issue is missing');
+                        $('#myissueError').text('My Issue Title is missing');
                         flag = true;
                     } else {
                         $('#myissueError').text(''); 

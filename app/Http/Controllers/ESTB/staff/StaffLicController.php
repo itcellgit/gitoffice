@@ -12,13 +12,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use App\Http\Requests\StorestafflicRequest;
 use App\Http\Requests\UpdatestafflicRequest;
-use App\Http\Controllers\ESTB\LicController;
 
 class StaffLicController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
 
@@ -27,17 +23,11 @@ class StaffLicController extends Controller
         return view('/ESTB/staff',compact('staff','stafflic'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StorestafflicRequest $request,staff $staff)
     {
         $stafflic=new stafflic();
@@ -58,42 +48,33 @@ class StaffLicController extends Controller
             return redirect('/ESTB/staff/show/'.$staff->id)->with('status', $status);
         }
     }
+    // public function show(stafflic $stafflic)
+    // {
+    //     $stafflic_transaction=stafflic_transaction::get();
+    //     $stafflic=stafflic::with('stafflic_transactions')->where('id',$stafflic->id)->first();
+    //     return view('ESTB.staff.stafflic_transactions',compact('stafflic_transaction','stafflic'));   
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(stafflic $stafflic)
+    //     // $lic=stafflic_transaction::get();
+    //     // $stafflic_transaction=$stafflic->stafflic_transactions()->get();
+    //     // dd($stafflic_transaction);
+    //     // return view('ESTB.staff.stafflic_transactions',compact('stafflic_transaction','lic'));   
+    // }
+
+
+    public function show(staff $staff, stafflic $stafflic)
     {
-        //return view('ESTB.staff.showstafflic',compact('stafflic'));
-        $stafflic_transaction=stafflic_transaction::get();
-        //$stafflic=stafflic::get();
-        $stafflic=stafflic::with('stafflic_transactions')->where('id',$stafflic->id)->first();
-        return view('ESTB.staff.stafflic_transactions',compact('stafflic_transaction','stafflic'));
-
-        // $staff=staff::get();
-        // $stafflic = stafflic::get(); 
-        // if ($stafflic) {
-        //     $stafflic_transaction = stafflic_transaction::with('stafflics')->where('stafflic_id', $stafflic->id)->first();
-    
-        //     return view('ESTB.staff.stafflic_transactions', compact('stafflic', 'stafflic_transaction','staff'));
-        // } else {
-        // }
+        // $stafflic = stafflic::where('policy_no', $stafflic->policy_no)->first();
         
+        $stafflic_transaction =stafflic::with('stafflic_transactions')->where('id',$stafflic->id)->first();
+        //dd($stafflic_transaction);
+        return view('ESTB.staff.stafflic_transactions', compact('stafflic'));
     }
-  
 
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(stafflic $stafflic)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdatestafflicRequest $request,staff $staff,stafflic $stafflic)
     {
 

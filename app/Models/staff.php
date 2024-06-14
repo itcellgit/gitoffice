@@ -12,13 +12,15 @@ use App\Models\employee_type;
 use App\Models\annual_increment;
 use App\Models\HOD\exam_section_isuues;
 use App\Models\student_issue;
+use App\Models\ESTB\TaxHeads;
+
 
 
 class staff extends Model
 {
     use HasFactory;
     protected $fillable = ['fname', 'mname','lname','local_address','permanent_address','dob','doj','religion_id','castecategory_id','gender','date_of_increment','date_of_superanuation','date_of_confirmation','bloodgroup','pan_card','adhar_card'];
- //  public $sortable=['fname', 'mname','lname','employee_type'];
+    //  public $sortable=['fname', 'mname','lname','employee_type'];
     public function latest_employee_type():HasMany
     {
         return $this->hasMany(employee_type::class)->where('status','active')->take(1);
@@ -164,6 +166,10 @@ class staff extends Model
     {
         return $this->belongsToMany(qualification::class)->withPivot('id','qualification_id','board_university','grade','yop','status')->orderByPivot('yop','desc');
     }
+    // public function tickets()
+    // {
+    //     return $this->hasMany(ticket::class);
+    // }
 
 
 
@@ -290,7 +296,10 @@ class staff extends Model
 
      public function taxHeads()
      {
-         return $this->belongsToMany(TaxHead::class, 'staff_taxregime');
+        //  return $this->belongsToMany(TaxHeads::class, 'staff_taxregime');
+         return $this->belongsToMany(TaxHeads::class, 'staff_taxregime')
+         ->withPivot('year', 'status')
+         ->withTimestamps();
      }
 
      public function gradingStaffs()
@@ -334,8 +343,12 @@ class staff extends Model
         return $this->hasMany(stafflic::class);
      }
 
-     public function lic():HasMany
+     public function staffshares():HasMany
      {
-        return $this->hasMany(lic::class);
+        return $this->hasMany(staffshare::class);
+     }
+     public function staffloans():HasMany
+     {
+        return $this->hasMany(staffloan::class);
      }
 }

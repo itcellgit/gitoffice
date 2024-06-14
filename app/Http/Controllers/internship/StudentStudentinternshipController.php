@@ -23,7 +23,10 @@ class StudentStudentinternshipController extends Controller
         //$student_internships=student_studentinternship::with('student','studentinternship')->get();
         $student_internships=student::with('studentinternship')->get();
         
-        return view('internship.showinternship',compact('students','studentinternship','student_internships'));
+        $studentsWithoutInternship = student::whereDoesntHave('student_studentinternship')->get();
+        dd($studentsWithoutInternship);
+        
+        return view('internship.showinternship',compact('students','studentinternship','student_internships','studentsWithoutInternship'));
         //dd($student_internships);
 
     }
@@ -34,19 +37,25 @@ class StudentStudentinternshipController extends Controller
     public function create()
     {
         //dd($student_internships);
+        $studentsWithoutInternship = student::whereDoesntHave('student_studentinternship')->get();
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
 
-
      public function store(Storestudent_studentinternshipRequest $request, studentinternship $studentinternship)
     {
+        $studentsWithoutInternship = student::whereDoesntHave('student_studentinternship')->get();
+
         // Iterate over each student_id in the request
         foreach ($request->student_id as $studentId) {
+            $existingMapping = student_studentinternship::where('studentinternship_id', $studentinternship->id)
+            ->where('student_id', $studentId)
+            ->exists();
             // Check if the student is already associated with the internship
-            if (!$studentinternship->student->contains($studentId)) {
+            if (!$existingMapping)  {
                 // Create a new relationship record
                 $student_studentinternship = new student_studentinternship();
                 $student_studentinternship->studentinternship_id = $studentinternship->id;
@@ -58,39 +67,9 @@ class StudentStudentinternshipController extends Controller
         // Redirect after all students have been processed
         return redirect('/Teaching/internship/studentinternship/'.$studentinternship->id.'/show');
     }
-    
-    // public function store(Storestudent_studentinternshipRequest $request,studentinternship $studentinternship)
-    // {
-    //    // dd($studentinternship);
-    
-    //     foreach($request->student_id as $student)
-    //     {
-    //         $student=student::find($student);
-    //         $student_studentinternship=new student_studentinternship(); 
-    //         $student_studentinternship->studentinternship_id=$studentinternship->id;
-    //         $student_studentinternship->student_id=$student->id;
-    //         $student_studentinternship->save();
-    //          //dd($student);
-    //     //dd($studentinternship);
-    //        // $result=$studentinternship->student()->attach($student->id);
-    //         //dd($student_studentinternship);
-    //     }
 
-    //     //$students=Student::get();
+    
    
-    //     // $studentinternship->student()->attach($student_id);
-    //      //$student_internship= new Student_studentinternship();
-    //     // $student_internships->student_id=$request->student_id;
-    //      //$student_internship->studentinternship_id=$studentinternship_id;
-    //     // $student_studentinternship->save();
-    
- 
-    //     // $student_internships->save();
-    //     return redirect('/Teaching/internship/studentinternship/'.$studentinternship->id.'/show');
-
-
-    // }
-
     /**
      * Display the specified resource.
      */
@@ -102,20 +81,33 @@ class StudentStudentinternshipController extends Controller
 
         //dd($students);
         $interaction=$student_studentinternship->spoc()->get();
-        return view('internship.interaction',compact('interaction','students'));
-
-
-
-        
+        //return view('internship.interaction',compact('interaction','students'));
     
         return view('internship.showinternship',compact(['studentinternship','students','student_studentinternship']));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // public function editInternship($internshipId)
+    // {
+        
+    //     // Get the internship and its associated students
+    //     $studentinternship = studentinternship::with('student')->findOrFail($internshipId);
+    
+    //     // Get all student IDs already assigned to any internship
+    //     $assignedStudentIds = DB::table('student_studentinternship')->pluck('student_id')->toArray();
+    
+    //     // Fetch all students, excluding those already assigned to any internship
+    //     $students = student::whereNotIn('id', $assignedStudentIds)->get();
+    
+    //     // Pass the data to the view
+    //     return view('internship.showinternship', compact('studentinternship', 'students'));
+    // }
+    
+
+
+    
     public function edit(student_studentinternship $student_studentinternship)
     {
+        
         //return view('internship.edit',compact('student_studentinternship'));
     }
 
@@ -136,10 +128,6 @@ class StudentStudentinternshipController extends Controller
        // dd($student_studentinternship);
         $result=$student_studentinternship->delete();
         
-        return redirect('/Teaching/internship/studentinternship/'.$studentinternship->id.'/show');
-
-
-        
-        
+        return redirect('/Teaching/internship/studentinternship/'.$studentinternship->id.'/show');  
     }
 }

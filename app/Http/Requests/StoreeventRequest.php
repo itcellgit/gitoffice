@@ -26,11 +26,11 @@ class StoreeventRequest extends FormRequest
         return 
         [
            
-            'event_name' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
+            'event_name' => ['required',],
             'start_date'=>['required','date'],
             'to_date'=>['required','date'],
-            'location'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
-            'organizers'=>['required', 'regex:/^[a-zA-Z\s]+$/'], 
+            'location'=>['required',],
+            'organizers'=>['required',], 
             'event_website'=>['url'],
             'staff_type'=>['required',Rule::in(['Teaching','Non-Teaching','All'])],
         ];
@@ -38,14 +38,14 @@ class StoreeventRequest extends FormRequest
     public function messages():array
     {
         return[
-            'event_name.required'=>'Event name is required field',
-            'event_name.regex' => 'The Event Name field should contain only letters and spaces.',
+            // 'event_name.required'=>'Event name is required field',
+            // 'event_name.regex' => 'The Event Name field should contain only letters and spaces.',
             'start_date.required'=>'start date is required filed',
             'to_date.required'=>'To date is required field',
-            'location.required'=>'location is required field',
-            'location.regex' => 'The Location field should contain only letters and spaces.',
-            'organizers.required'=>'organizers is required field',
-            'organizers.regex' => 'The organizers field should contain only letters and spaces.',
+            // 'location.required'=>'location is required field',
+            // 'location.regex' => 'The Location field should contain only letters and spaces.',
+            // 'organizers.required'=>'organizers is required field',
+            // 'organizers.regex' => 'The organizers field should contain only letters and spaces.',
             'event_website'=>'Event website must be valid url',
             'staff_type.required'=>'staff type is required field',
             'staff_type.in'=>'Staff type must be either Teaching,Non-Teaching or All',

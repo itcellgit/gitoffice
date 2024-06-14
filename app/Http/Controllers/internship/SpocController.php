@@ -22,6 +22,7 @@ class SpocController extends Controller
        //dd($spocs);
        $industries = industry::select('id','name')->get();
        return view('internship.spoc', compact('spocCount','spocs','industries'));
+    
     }
 
     /**

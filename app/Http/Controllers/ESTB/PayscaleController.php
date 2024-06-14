@@ -71,7 +71,7 @@ class PayscaleController extends Controller
          $payscale=payscale::with('salary_head')->where('id',$payscale->id)->first();
          
         // dd($payscale);
-        return view('ESTB.salaries.payscalesalaryheads.index',compact('payscale','salary_heads',));
+        return view('ESTB.salaries.payscalesalaryheads.index',compact(['payscale','salary_heads']));
     }
    
     public function edit(payscales $payscales)

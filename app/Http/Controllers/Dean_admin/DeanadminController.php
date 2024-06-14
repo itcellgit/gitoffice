@@ -241,6 +241,8 @@ class DeanadminController extends Controller
         ->select(
             DB::raw("CONCAT(leaves.shortname, '-', COUNT(leaves.shortname))  AS title"),
                      'leaves.shortname as leave_name',
+         DB::raw('SUM(case when leave_staff_applications.appl_status="pending" then 1 else 0 end) as pending_count'),
+     
             'daywise.start as start',
             DB::raw('DATE_ADD(daywise.start, INTERVAL 1 DAY) AS end'),
             

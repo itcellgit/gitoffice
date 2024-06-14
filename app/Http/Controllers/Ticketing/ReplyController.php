@@ -20,6 +20,8 @@ class ReplyController extends Controller
     public function store(Storepost_ticketRequest $request,ticket $ticket)
     {
         //dd($ticket);
+        
+
         $user = Auth::user();
 
         if (!$ticket)

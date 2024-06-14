@@ -80,7 +80,7 @@
 
                                     <div class="max-w-sm space-y-3 pb-6">
                                         <label for="with-corner-hint" class="ti-form-label pt-4 pr-4">Increment Postponed By : </label>
-                                        <input type="text" name="additional_days" class="ti-form-input" placeholder="number of days" required>
+                                        <input type="text" name="additional_days" class="ti-form-input" placeholder="number of days"  value="{{$no_of_days_lwp->total_leave_days?$no_of_days_lwp->total_leave_days:''}}" required>
                                         <div class="flex">
                                             <input type="radio" name="additional_days_type" class="ti-form-radio" id="hs-radio-group-1" value="current_year">
                                             <label for="hs-radio-group-1" class="text-sm text-gray-500 ltr:ml-2 rtl:mr-2 dark:text-white/70">Cuuret Year</label>

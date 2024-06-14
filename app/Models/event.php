@@ -20,6 +20,5 @@ class event extends Model
         return $this->hasMany(user::class);
     }
   
- 
    
 }

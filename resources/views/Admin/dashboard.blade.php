@@ -18,9 +18,9 @@
                                 </div>
                                 <ol class="flex items-center whitespace-nowrap min-w-0">
                                     <li class="text-sm">
-                                        <a class="flex items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('Admin.users')}}">
+                                        {{-- <a class="flex items-center font-semibold text-primary hover:text-primary dark:text-primary truncate" href="{{route('Admin.users')}}">
                                             User Login
-                                        </a>
+                                        </a> --}}
                                     </li>
                             
                                 </ol>

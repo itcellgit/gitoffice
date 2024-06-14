@@ -5,8 +5,12 @@ namespace App\Models\internship;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Models\department;
+use App\Models\staff;
+
 
 
 
@@ -14,7 +18,7 @@ class student extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['usn', 'name', 'batch', 'department_id','staff_id'];
 
     public function studentinternship():BelongsToMany
     {
@@ -24,5 +28,20 @@ class student extends Model
     public function interaction():HasMany
     {
         return $this->hasMany(interaction::class);
+    }
+
+    public function student_studentinternship():HasMany
+    {
+        return $this->hasMany(student_studentinternship::class, 'student_id');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(department::class);
+    }
+
+    public function staff()
+    {
+        return $this->belongsTo(staff::class);
     }
 }

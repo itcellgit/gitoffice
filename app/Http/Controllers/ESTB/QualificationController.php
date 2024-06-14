@@ -19,7 +19,7 @@ class QualificationController extends Controller
         
         //  DB::statement('ALTER TABLE departments ADD mobile VARCHAR(13)' );
         $filter = '';
-        $qualification=qualification::sortable()->orderBy('qual_name')->paginate(15);
+        $qualification=qualification::sortable()->orderBy('qual_name')->get();
         return view('ESTB.qualifications.index',compact('qualification','filter'));
     }
 

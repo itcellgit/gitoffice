@@ -23,11 +23,11 @@ class UpdatedesignationRequest extends FormRequest
     {
         return [
             //
-            // 'edit_design_name' => ['required'],
-            // 'edit_isvactional' => ['required'],
-            // 'edit_isadditional' => ['required'],
-            // 'edit_emp_type' => ['required'],
-           // 'status' => ['sometime'],
+            'edit_design_name' => ['required'],
+            'edit_isvactional' => ['required'],
+            'edit_isadditional' => ['required'],
+            'edit_emp_type' => ['required'],
+           'status' => ['sometime'],
             
             
         ];
@@ -37,7 +37,7 @@ class UpdatedesignationRequest extends FormRequest
         return
         [
            'edit_design_name.required'=>'Designation Name is required field',
-           'edit_design_name.regex'=>'Designation Name should contain characters and letters  only',
+           //'edit_design_name.regex'=>'Designation Name should contain characters and letters  only',
            'edit_isvactional.required' => 'The isvactional field is required.',
            'edit_isadditional.required' => 'The isadditional field is required.',
            'edit_emp_type.required' => 'The employee type field is required.',

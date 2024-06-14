@@ -22,6 +22,7 @@ use App\Models\ntcpayscales;
 use App\Models\users;
 use App\Models\event;
 use App\Models\notice;
+use App\Models\notifications;
 use App\Http\Requests\UpdatestaffRequest;
 
 
@@ -42,6 +43,14 @@ class TeachingController extends Controller
     public function dashboard(Request $request,staff $staff)
     {
         $user = Auth::user();
+        //$notifications = notifications::where('user_id', $user->id)->get();
+        $notifications = notifications::where('user_id', $user->id)
+        ->orderBy('created_at', 'desc')
+        ->get();
+        Session::put('notifications', $notifications);
+        
+        //dd($notifications);
+        
         //count of Teaching and Professional Activity
         $staff=staff::with('professional_activity_attendee')->with('professional_activity_conducted')->with('activedepartments')->where('user_id','=',$user->id)->first();
         $dept_id=array();
@@ -96,7 +105,7 @@ class TeachingController extends Controller
      ->select('notices.*')->distinct()
      ->get();
 
-    return view('Staff.Teaching.dashboard',compact(['staff','departmentevent','departmentnotice','attendedActivitiesCount','conductedActivitiesCount','conferenceattendedcount','conferenceconductedcount','publicationcount','book_publicationcount','funded_projectcount','consultancycount','patentcount','copyrightcount','general_achievementscount','dept']));
+    return view('Staff.Teaching.dashboard',compact(['staff','departmentevent','departmentnotice','attendedActivitiesCount','conductedActivitiesCount','conferenceattendedcount','conferenceconductedcount','publicationcount','book_publicationcount','funded_projectcount','consultancycount','patentcount','copyrightcount','general_achievementscount','dept','notifications']));
 
 
 
@@ -104,32 +113,31 @@ class TeachingController extends Controller
 
     public function departments(Request $request){
         $user = Auth::user();
-
+        $notifications = notifications::where('user_id', $user->id)->get();
+       
         $staff=staff::with('departments')->where('user_id','=',$user->id)->get();
 
-        return view('Staff.Teaching.departments',compact('staff'));
+        return view('Staff.Teaching.departments',compact('staff','notifications'));
 
     }
 
     public function associations(Request $request){
 
         $user = Auth::user();
-
+        $notifications = notifications::where('user_id', $user->id)->get();
         $staff=staff::with('associations')->where('user_id','=',$user->id)->get();
 
-
-
-        return view('Staff.Teaching.associations',compact('staff'));
+        return view('Staff.Teaching.associations',compact('staff','notifications'));
 
     }
 
     public function designations(){
 
        $user = Auth::user();
-
+       $notifications = notifications::where('user_id', $user->id)->get();
        $staff=staff::with('designations')->with('teaching_payscale')->with('consolidated_teaching_pay')->with('fixed_nt_pay')->with('ntpayscale') ->with('ntcpayscale')->where('user_id','=',$user->id)->first();
 
-        return view('Staff.Teaching.designations',compact('staff'));
+        return view('Staff.Teaching.designations',compact('staff','notifications'));
 
     }
 
@@ -141,7 +149,7 @@ class TeachingController extends Controller
         //dd($staff);
         $user = Auth::user();
         $staff=staff::where('staff.id',$staff)->first();
-
+        $notifications = notifications::where('user_id', $user->id)->get();
         $religions =religion::where('status','active')->get();
         $castecategories=DB::table('castecategories')->where('status','active')->get();
 
@@ -153,7 +161,7 @@ class TeachingController extends Controller
         }
 
         //dd($staff);
-        return view('Staff.Teaching.updateprofile',compact(['staff','user','religions','castecategories','confirmationdate']));
+        return view('Staff.Teaching.updateprofile',compact(['staff','user','religions','castecategories','confirmationdate','notifications']));
 
 
     }
@@ -165,8 +173,8 @@ class TeachingController extends Controller
     {
 
         //dd($request);
-        //$user = Auth::user();
-        //$staff=staff::where('staff.id',$staff)->first();
+        $user = Auth::user();
+        $staff=staff::where('staff.id',$staff)->first();
 
         $staff->fname=$request->fname;
         $staff->mname=$request->mname;
@@ -191,6 +199,8 @@ class TeachingController extends Controller
         $staff->aicte_id=$request->aicte_id;
         $staff->date_of_confirmation=$request->date_of_confirmation;
 
+        
+
         $sresult=$staff->update();
         $staff->latest_employee_type()->first();
 
@@ -211,6 +221,88 @@ class TeachingController extends Controller
     }
 
 
+    //include file upload in teaching
+
+    // public function update(Request $request, $id)
+    // {
+    //     $staff = staff::find($id);
+
+    //     if ($staff) {
+
+    //         //dd($request);
+    //         $staff->fname = $request->fname;
+    //         $staff->mname = $request->mname;
+    //         $staff->lname = $request->lname;
+    //         //$staff->email = $request->email;
+    //         $staff->local_address = $request->local_address;
+    //         $staff->permanent_address = $request->permanent_address;
+    //         $staff->religion_id = $request->religion_id;
+    //         $staff->castecategory_id = $request->castecategory_id;
+    //         $staff->gender = $request->gender;
+    //         $staff->dob = $request->dob;
+    //         $staff->doj = $request->doj;
+    //         $staff->date_of_increment = $request->date_of_increment;
+    //         //$staff->date_of_superanuation = $request->date_of_superanuation;
+    //         $staff->bloodgroup = $request->bloodgroup;
+    //         $staff->pan_card = $request->pan_card;
+    //         $staff->adhar_card = $request->adhar_card;
+    //         $staff->contactno = $request->contactno;
+    //         $staff->emergency_no = $request->emergency_no;
+    //         $staff->emergency_name = $request->emergency_name;
+    //         $staff->vtu_id = $request->vtu_id;
+    //         $staff->aicte_id = $request->aicte_id;
+    //         $staff->date_of_confirmation = $request->date_of_confirmation;
+
+    //         $file = $request->file("document");
+    //         $file_size_status = 0; // define $file_size_status here
+    //         $file_upload_status = 0;
+            
+
+    //         if ($file) {
+    //             $file_size = $file->getSize();
+
+    //             if ($file_size <= 500000) {
+    //                 $file_size_status = 1;
+    //                 $filename = time() . '.' . $file->getClientOriginalExtension();
+    //                 $file->storeAs('public/uploads/', $filename);
+    //                 $staff->document = $filename;
+    //                 $file_upload_status = 1;
+    //             } else {
+    //                 //dd( "Failed to upload file due to size limit");
+    //                 $file_upload_status = 0;
+    //             }
+    //         } else {
+    //             //dd( "No file selected");
+    //             $file_upload_status = 0;
+    //         }
+
+    //         if ($file_upload_status && $file_size_status) {
+    //             $status = 1;
+    //         } else {
+    //             $status = 0;
+    //         }
+
+    //         $return_data = [
+    //             'status' => $status,
+    //             'file_size_status' => $file_size_status
+    //         ];
+
+    //         $sresult = $staff->update();
+    //         $staff->latest_employee_type()->first();
+
+    //         if ($sresult) {
+    //             $status = 1;
+    //         } else {
+    //             $status = 0;
+    //         }
+
+    //         //check if designation has changed
+    //         return redirect('/Staff/Teaching/updateprofile/' . $staff->id)->with('status', $status);
+    //     } else {
+    //         return redirect()->back()->with('error', 'Staff not found');
+    //     }
+    // }
+
 
     //staff qualification
     public function qualifications(){
@@ -218,11 +310,11 @@ class TeachingController extends Controller
         $user = Auth::user();
         //$qualifications =qualification::where('status','active')->get();
         $qualifications = qualification::where('status', 'active')->orderBy('qual_shortname')->get();
-
+        $notifications = notifications::where('user_id', $user->id)->get();
 
         $staff=staff::with('qualifications')->where('user_id','=',$user->id)->get();
 
-        return view('Staff.Teaching.qualifications',compact('staff','qualifications'));
+        return view('Staff.Teaching.qualifications',compact('staff','qualifications','notifications'));
 
     }
 

@@ -19,6 +19,7 @@ use App\Models\ntpayscales;
 use App\Models\ntcpayscales;
 use App\Models\users;
 use App\Models\qualification;
+use App\Models\notifications;
 use App\Models\professional_activity_attendee;
 use App\Models\professional_activity_conducted;
 use Hash;
@@ -32,7 +33,11 @@ class NonTeachingController extends Controller
 {
     //
     public function index()
-     {
+    {
+        $user = Auth::user();
+        //$notifications = notifications::where('user_id', $user->id)->get();
+        //dd($notifications);
+      
 
         return view('Staff.Non-Teaching.construction');
     }
@@ -44,6 +49,17 @@ class NonTeachingController extends Controller
         $staff=staff::with('professional_activity_attendee')->with('professional_activity_conducted')->with('activedepartments')->where('user_id','=',$user->id)->first();
         $dept_id=array();
 
+        //$notifications = notifications::where('user_id', $user->id)->get();
+        $notifications = notifications::where('user_id', $user->id)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+        Session::put('notifications', $notifications);
+
+      
+
+        //dd($notifications);
+      
         foreach($staff->activedepartments as $depts)
         {
             array_push( $dept_id,$depts->id);
@@ -80,7 +96,7 @@ class NonTeachingController extends Controller
         ->select('notices.*')->distinct()
         ->get();
 
-        return view('Staff.Non-Teaching.dashboard',compact(['staff','ntactivityattendedCount','ntactivityconductedCount','dept','departmentevent','departmentnotice']));
+        return view('Staff.Non-Teaching.dashboard',compact(['staff','ntactivityattendedCount','ntactivityconductedCount','dept','departmentevent','departmentnotice','notifications']));
     }
 
     public function departments(Request $request)
@@ -88,8 +104,9 @@ class NonTeachingController extends Controller
         $user = Auth::user();
 
         $staff=staff::with('departments')->where('user_id','=',$user->id)->get();
+        $notifications = notifications::where('user_id', $user->id)->get();
 
-        return view('Staff.Non-Teaching.departments',compact('staff'));
+        return view('Staff.Non-Teaching.departments',compact('staff','notifications'));
 
     }
     public function designations()
@@ -98,15 +115,17 @@ class NonTeachingController extends Controller
          $user = Auth::user();
 
         $staff=staff::with('designations')->with('teaching_payscale')->with('consolidated_teaching_pay')->with('fixed_nt_pay')->with('ntpayscale') ->with('ntcpayscale')->where('user_id','=',$user->id)->first();
-
-         return view('Staff.Non-Teaching.designations',compact('staff'));
+        $notifications = notifications::where('user_id', $user->id)->get();
+        return view('Staff.Non-Teaching.designations',compact('staff','notifications'));
 
      }
      public function associations(Request $request)
      {
         $user = Auth::user();
         $staff=staff::with('associations')->where('user_id','=',$user->id)->get();
-        return view('Staff.Non-Teaching.associations',compact('staff'));
+        $notifications = notifications::where('user_id', $user->id)->get();
+
+        return view('Staff.Non-Teaching.associations',compact('staff','notifications'));
 
     }
     public function professional_activity_attendee(Request $request)
@@ -114,7 +133,8 @@ class NonTeachingController extends Controller
         $user = Auth::user();
         $staff=staff::with('professional_activity_attendee')->with('professional_activity_conducted')->where('user_id','=',$user->id)->first();
 
-        return view('Staff.Non-Teaching.professional_activity',compact(['staff']));
+        $notifications = notifications::where('user_id', $user->id)->get();
+        return view('Staff.Non-Teaching.professional_activity',compact(['staff','notifications']));
     }
 
 
@@ -128,6 +148,7 @@ class NonTeachingController extends Controller
         $user = Auth::user();
         $staff=staff::where('staff.id',$staff)->first();
         $religions =religion::where('status','active')->get();
+        $notifications = notifications::where('user_id', $user->id)->get();
         $castecategories=DB::table('castecategories')->where('status','active')->get();
 
         $confirmation=$staff->confirmationAssociation()->first();
@@ -138,7 +159,7 @@ class NonTeachingController extends Controller
         }
 
         //dd($staff);
-        return view('Staff.Non-Teaching.ntupdateprofile',compact(['staff','user','religions','castecategories','confirmationdate']));
+        return view('Staff.Non-Teaching.ntupdateprofile',compact(['staff','user','religions','castecategories','confirmationdate','notifications']));
 
 
     }
@@ -172,6 +193,9 @@ class NonTeachingController extends Controller
         $staff->emergency_name=$request->emergency_name;
         $staff->vtu_id=$request->vtu_id;
         $staff->aicte_id=$request->aicte_id;
+        
+        $staff->esi_no=$request->esi_no;
+        $staff->un_no=$request->un_no;
         $staff->date_of_confirmation=$request->date_of_confirmation;
 
         $sresult=$staff->update();
@@ -192,6 +216,96 @@ class NonTeachingController extends Controller
 
     }
 
+
+
+
+
+    //file upload in non-teaching profile
+
+    // public function update(Request $request, $id)
+    // {
+
+    //     //dd($request);
+    //     $user = Auth::user();
+    //     //$staff= staff::where('user_id',$user->id)->first();
+    //     $staff = staff::find($id);
+    //     if ($staff) {
+    //         $staff->fname=$request->fname;
+    //         $staff->mname=$request->mname;
+    //         $staff->lname=$request->lname;
+    //         //$staff->email = $request->email;
+    //         $staff->local_address=$request->local_address;
+    //         $staff->permanent_address=$request->permanent_address;
+    //         $staff->religion_id=$request->religion_id;
+    //         $staff->castecategory_id=$request->castecategory_id;
+    //         $staff->gender=$request->gender;
+    //         $staff->dob=$request->dob;
+    //         $staff->doj=$request->doj;
+    //         $staff->date_of_increment=$request->date_of_increment;
+    //         //$staff->date_of_superanuation=$request->date_of_superanuation;
+    //         $staff->bloodgroup=$request->bloodgroup;
+    //         $staff->pan_card=$request->pan_card;
+    //         $staff->adhar_card=$request->adhar_card;
+    //         $staff->contactno=$request->contactno;
+    //         $staff->emergency_no=$request->emergency_no;
+    //         $staff->emergency_name=$request->emergency_name;
+    //         $staff->vtu_id=$request->vtu_id;
+    //         $staff->aicte_id=$request->aicte_id;
+            
+    //         $staff->esi_no=$request->esi_no;
+    //         $staff->un_no=$request->un_no;
+    //         $staff->date_of_confirmation=$request->date_of_confirmation;
+
+    //         $file = $request->file("document");
+    //         $file_size_status = 0; // define $file_size_status here
+    //         $file_upload_status = 0;
+        
+
+    //         if ($file) {
+    //             $file_size = $file->getSize();
+
+    //             if ($file_size <= 500000) {
+    //                 $file_size_status = 1;
+    //                 $filename = time() . '.' . $file->getClientOriginalExtension();
+    //                 $file->storeAs('public/uploads/', $filename);
+    //                 $staff->document = $filename;
+    //                 $file_upload_status = 1;
+    //             } else {
+    //                 //dd( "Failed to upload file due to size limit");
+    //                 $file_upload_status = 0;
+    //             }
+    //         } else {
+    //             //dd( "No file selected");
+    //             $file_upload_status = 0;
+    //         }
+
+    //         if ($file_upload_status && $file_size_status) {
+    //             $status = 1;
+    //         } else {
+    //             $status = 0;
+    //         }
+
+    //         $return_data = [
+    //             'status' => $status,
+    //             'file_size_status' => $file_size_status
+    //         ];
+
+    //         $sresult = $staff->update();
+    //         $staff->latest_employee_type()->first();
+
+    //         if ($sresult) {
+    //             $status = 1;
+    //         } else {
+    //             $status = 0;
+    //         }
+
+    //         //check if designation has changed
+    //         return redirect('/Staff/Non-Teaching/ntupdateprofile/' . $staff->id)->with('status', $status);
+    //     } else {
+    //         return redirect()->back()->with('error', 'Staff not found');
+    //     }
+    // }
+
     
 
 
@@ -203,8 +317,8 @@ class NonTeachingController extends Controller
         $qualifications =qualification::where('status','active')->get();
         
         $staff=staff::with('qualifications')->where('user_id','=',$user->id)->get();
-
-        return view('Staff.Non-Teaching.ntqualification',compact('staff','qualifications'));
+        $notifications = notifications::where('user_id', $user->id)->get();
+        return view('Staff.Non-Teaching.ntqualification',compact('staff','qualifications','notifications'));
 
     }
 
@@ -285,6 +399,13 @@ class NonTeachingController extends Controller
         return redirect('/Non-Teaching/ntqualification/')->with('status',$status);
     }
 
-
+    // public function fetch_Notifications($userId)
+    // {
+    //     $user = Auth::user();
+    //     $notifications = notifications::where('user_id', $user->id)->get();
+    //     dd($notifications);
+    //     return view('/layouts.components.staff.nt_teaching_staff_header', compact('notifications'));
+    // }
+   
 
 }

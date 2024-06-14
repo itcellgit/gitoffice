@@ -8,6 +8,7 @@ use App\Models\stafflic;
 use App\Http\Requests\StorelicRequest;
 use App\Http\Requests\UpdatelicRequest;
 use Illuminate\Support\Carbon;
+use Illuminate\Http\Request; 
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
@@ -51,40 +52,52 @@ class LicController extends Controller
     //     }
     
     // }
-    public function store(StorelicRequest $request)
-{   
-    // Retrieve month and year from the request
-    $month = $request->input('month');
-    $year = $request->input('year');
+    // public function store(StorelicRequest $request, stafflic $stafflic)
+    // {   
+    //    // dd($request);
+    //     $month = $request->input('month');
+    //     $year = $request->input('year');
+    //     $gst = $request->input('manual');
+    //     $stafflic = stafflic::whereYear('created_at', $year)
+    //                     ->whereMonth('created_at', $month)
+    //                     ->first();
+    //     if($stafflic) {
+    //         $lic = new lic();
+    //         $lic->stafflic_id = $stafflic->id;
+    //         $lic->policy_no = $stafflic->policy_no;
+    //         $lic->premium = $stafflic->premium;
+    //         $lic->status = $stafflic->status;
+    //         $lic->created_at = Carbon::now();
+    //         $lic->save();
+    //         if($lic->id) {
+    //             return redirect('/ESTB/salaries/lics')->with('status', 1);
+    //         } else {
+    //             return redirect('/ESTB/salaries/lics')->with('status', 0);
+    //         }
+    //     } else {
+    //         return redirect('/ESTB/salaries/lics')->with('status', 0);
+    //     }
+    // }
     
-    // Find the corresponding stafflic record based on month and year
-    $stafflic = stafflic::whereYear('created_at', $year)
-                        ->whereMonth('created_at', $month)
-                        ->first();
-    
-    // Check if stafflic record exists
-    if($stafflic) {
-        // Create new lic record
-        $lic = new lic();
-        $lic->stafflic_id = $stafflic->id;
-        // You can set other attributes of the lic record here
-        
-        // Save the lic record
-        $lic->save();
-        
-        // Check if lic record was successfully saved
-        if($lic->id) {
-            // Redirect with success status
-            return redirect('/ESTB/salaries/lics')->with('status', 1);
-        } else {
-            // Redirect with error status
-            return redirect('/ESTB/salaries/lics')->with('status', 0);
+    public function store(Request $request)
+    {   
+        $request->validate([
+            'month' => 'required',
+            'yearr' => 'required',
+        ]);
+        $month = $request->input('month');
+        $yearr = $request->input('yearr');
+        foreach ($request->input('manual', []) as $stafflic_id => $gst) {
+            $lic = new lic();
+            $lic->stafflic_id = $stafflic_id;
+            $lic->month = $month;
+            $lic->yearr = $yearr;
+            $lic->gst = $gst['gst'];
+            $lic->save();
         }
-    } else {
-        // Redirect with error status if stafflic record does not exist
-        return redirect('/ESTB/salaries/lics')->with('status', 0);
-    }
-}
+        return redirect('/ESTB/salaries/lics');
+    } 
+
 
     public function show(lic $lic)
     {
@@ -100,7 +113,6 @@ class LicController extends Controller
     public function update(UpdatelicRequest $request,staff $staff,stafflic $stafflic)
      {
         //dd($lic);
-        $lic->staff_id=$request->staff_id;
         $lic->stafflic_id=$stafflic_id;
         $lic->policy_no=$request->policy_no;
         $lic->premium=$request->premium;
@@ -117,6 +129,7 @@ class LicController extends Controller
         }
         return redirect('/ESTB/salaries/lics')->with('status', $status);
     }
+
     public function destroy(lic $lic)
     {
         $lic->status='inactive';

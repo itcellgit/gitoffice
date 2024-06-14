@@ -25,12 +25,7 @@ class SalaryHeadController extends Controller
          $salary_heads = Salary_head::with('salaryGroup')->with('salary_head_on')->get();     
          //dd($salary_heads);
          return view('ESTB.salaries.salaryheads.index',compact('salary_heads','salary_groups','salary_heads_bg'));
-
-        // $salaryHeads = SalaryHead::with('salaryGroup')->get();
-         // Now $salaryHeads will contain all salary heads with their corresponding salary group information
-         
-        // return view('your_view', compact('salaryHeads'));
-    }
+      }
 
   
     public function create()
@@ -48,7 +43,6 @@ class SalaryHeadController extends Controller
         $salary_heads->salary_type=$request->salary_type;
         if($request->salary_type=="percentage")
         {
-            $salary_heads->pvalue=$request->percentage_value;
             $salary_heads->ptype=$request->ptype;
         }
         $salary_heads->maximum=$request->maximum;
@@ -93,7 +87,6 @@ class SalaryHeadController extends Controller
         $salary_heads->salary_type=$request->edittype;
         if($request->edittype=="percentage")
         {
-            $salary_heads->pvalue=$request->edit_pvalue;
             $salary_heads->ptype=$request->edit_ptypee;
         }
         $salary_heads->maximum=$request->edit_maximum;

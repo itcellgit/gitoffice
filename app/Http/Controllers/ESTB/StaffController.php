@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ESTB;
 
 use App\Http\Controllers\Controller;
 use App\Models\staff;
+use App\Models\staff_form16;
 use App\Models\user;
 use App\Enums\UserRoles;
 use Hash;
@@ -294,60 +295,150 @@ class StaffController extends Controller
      * Update the specified resource in storage.
     */
 
+    // public function update(UpdatestaffRequest $request, staff $staff)
+    // {
+
+
+    //     dd($request);
+    //     $staff->fname=$request->fname;
+    //     $staff->mname=$request->mname;
+    //     $staff->lname=$request->lname;
+    //     //$staff->email = $request->email;
+    //     $staff->local_address=$request->local_address;
+    //     $staff->permanent_address=$request->permanent_address;
+    //     $staff->religion_id=$request->religion_id;
+    //     $staff->castecategory_id=$request->castecategory_id;
+    //     $staff->gender=$request->gender;
+    //     $staff->dob=$request->dob;
+    //     $staff->doj=$request->doj;
+    //     $staff->date_of_increment=$request->date_of_increment;
+    //     $staff->date_of_superanuation=$request->date_of_superanuation;
+    //     $staff->bloodgroup=$request->bloodgroup;
+    //     $staff->pan_card=$request->pan_card;{{  }}
+    //     $staff->adhar_card=$request->adhar_card;
+    //     $staff->contactno=$request->contactno;
+    //     $staff->emergency_no=$request->emergency_no;
+    //     $staff->emergency_name=$request->emergency_name;
+    //     $staff->vtu_id=$request->vtu_id;
+    //     $staff->aicte_id=$request->aicte_id;
+    //     $staff->date_of_confirmation=$request->date_of_confirmation;
+    //     $staff->EmployeeCode=$request->EmployeeCode;
+
+
+    //     $sresult=$staff->update();
+    //     $staff->latest_employee_type()->first();
+    //     $emp_type=$staff->latest_employee_type()->first();
+    //     if($emp_type->employee_type!=$request->employee_type)
+    //     {
+    //         //make the current employee_type inactive and add a new row in the employee type
+    //         $employee_type=$staff->latest_employee_type()->update([
+    //             'status'=>'inactive',
+    //         ]);
+    //         $new_fixed_nt_pay=$staff->latest_employee_type()->createMany(
+    //             [  //create many function takes an array of rows to be inserted in the sub table.
+    //                 [
+    //                     'staff_id'=>$staff->id,
+    //                     'employee_type'=>$request->employee_type,
+    //                 ]
+    //             ]
+    //         );
+    //     }
+
+    //     if($sresult){
+    //         $status = 1;
+    //     }else{
+    //         $status = 0;
+    //     }
+    //     //check if designation has changed
+    //   return redirect('/ESTB/staff/show/'.$staff->id)->with('status',$status);
+
+    // }
+
+
+
+    // working file upload
     public function update(UpdatestaffRequest $request, staff $staff)
     {
+        // dd($request);
+        $staff->fname = $request->fname;
+        $staff->mname = $request->mname;
+        $staff->lname = $request->lname;
+        $staff->local_address = $request->local_address;
+        $staff->permanent_address = $request->permanent_address;
+        $staff->religion_id = $request->religion_id;
+        $staff->castecategory_id = $request->castecategory_id;
+        $staff->gender = $request->gender;
+        $staff->dob = $request->dob;
+        $staff->doj = $request->doj;
+        $staff->date_of_increment = $request->date_of_increment;
+        $staff->date_of_superanuation = $request->date_of_superanuation;
+        $staff->bloodgroup = $request->bloodgroup;
+        $staff->pan_card = $request->pan_card;
+        $staff->adhar_card = $request->adhar_card;
+        $staff->contactno = $request->contactno;
+        $staff->emergency_no = $request->emergency_no;
+        $staff->emergency_name = $request->emergency_name;
+        $staff->vtu_id = $request->vtu_id;
+        $staff->aicte_id = $request->aicte_id;
+        $staff->date_of_confirmation = $request->date_of_confirmation;
+        $staff->EmployeeCode = $request->EmployeeCode;
+        //dd($request);
+        // Handle file upload
+        $file_upload_status=0;
+         // Check if the request has a file with the name 'document'
+         if ($request->hasFile('document')) {
+            //dd(390);
+            // Get the file from the request
+            $file = $request->file('document');
 
-        $staff->fname=$request->fname;
-        $staff->mname=$request->mname;
-        $staff->lname=$request->lname;
-        //$staff->email = $request->email;
-        $staff->local_address=$request->local_address;
-        $staff->permanent_address=$request->permanent_address;
-        $staff->religion_id=$request->religion_id;
-        $staff->castecategory_id=$request->castecategory_id;
-        $staff->gender=$request->gender;
-        $staff->dob=$request->dob;
-        $staff->doj=$request->doj;
-        $staff->date_of_increment=$request->date_of_increment;
-        $staff->date_of_superanuation=$request->date_of_superanuation;
-        $staff->bloodgroup=$request->bloodgroup;
-        $staff->pan_card=$request->pan_card;
-        $staff->adhar_card=$request->adhar_card;
-        $staff->contactno=$request->contactno;
-        $staff->emergency_no=$request->emergency_no;
-        $staff->emergency_name=$request->emergency_name;
-        $staff->vtu_id=$request->vtu_id;
-        $staff->aicte_id=$request->aicte_id;
-        $staff->date_of_confirmation=$request->date_of_confirmation;
-        $staff->EmployeeCode=$request->EmployeeCode;
-        $sresult=$staff->update();
-        $staff->latest_employee_type()->first();
-        $emp_type=$staff->latest_employee_type()->first();
-        if($emp_type->employee_type!=$request->employee_type)
-        {
-            //make the current employee_type inactive and add a new row in the employee type
-            $employee_type=$staff->latest_employee_type()->update([
-                'status'=>'inactive',
+            // Ensure the file was successfully retrieved
+            if ($file->isValid()) 
+            {
+                // Get the file size
+                // Create a new instance of the staff_form16 model
+                $form16 = new staff_form16();
+                // You can proceed with your logic here, e.g., saving the file or storing details in the database
+                $year=Carbon::now()->year;
+                // Example: Move the uploaded file to a directory
+                
+
+                $form16=new staff_form16();
+                
+                    $file->move(public_path('uploads/form16/'.$year.'/'), $file->getClientOriginalName());
+                    
+                    $file_size_status = 1;
+                    $form16->staff_id=$staff->id;
+                    $form16->document = $file->getClientOriginalName();
+                    $form16->year=$year;
+                    $form16->save();
+                    $file_upload_status = 1;
+               
+            } else {
+                // Handle no file selected
+                $file_upload_status = 0;
+            }
+        }
+        $status = ($file_upload_status && $file_size_status) ? 1 : 0;
+    
+        // Save staff record
+        $sresult = $staff->update();
+    
+        // Check employee type and update if changed
+        $emp_type = $staff->latest_employee_type()->first();
+        if ($emp_type && $emp_type->employee_type != $request->employee_type) {
+            $emp_type->update(['status' => 'inactive']);
+            $staff->latest_employee_type()->create([
+                'staff_id' => $staff->id,
+                'employee_type' => $request->employee_type,
             ]);
-            $new_fixed_nt_pay=$staff->latest_employee_type()->createMany(
-                [  //create many function takes an array of rows to be inserted in the sub table.
-                    [
-                        'staff_id'=>$staff->id,
-                        'employee_type'=>$request->employee_type,
-                    ]
-                ]
-            );
         }
-
-        if($sresult){
-            $status = 1;
-        }else{
-            $status = 0;
-        }
-        //check if designation has changed
-      return redirect('/ESTB/staff/show/'.$staff->id)->with('status',$status);
-
+    
+        $status = $sresult ? 1 : 0;
+    
+        return redirect('/ESTB/staff/show/' . $staff->id)->with('status', $status);
     }
+    
+
 
     /**
      * Remove the specified resource from storage.

@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\event;
 use App\Models\User;
 use App\Models\department;
+use App\Models\notifications;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,13 +26,10 @@ class EventController extends Controller
     public function index()
     {
         $deptevent = event::with('department')->get();
-        // dd($deptevent);
+        //dd($deptevent);
         $departments = DB::table('departments')->where('status','active')->get();
 
-        $selectedDepartments = range(1, 30);
-        //$selectedDepartments = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30];
-
-        return view('Principaloffice.poevents',compact('deptevent','departments','selectedDepartments'));
+        return view('Principaloffice.poevents',compact('deptevent','departments'));
 
     }
 
@@ -57,7 +55,7 @@ class EventController extends Controller
     //     $event->user_id = Auth::id();
     //     $event->event_name=$request->event_name;
     //     $event->start_date=$request->start_date;
-    //     $event->to_date=$request->to_date;
+    //     $event->to_date=$request->to_date;{{  }}
     //     $event->location=$request->location;
     //     $event->organizers=$request->organizers;
     //     $event->event_website=$request->event_website;
@@ -135,8 +133,6 @@ class EventController extends Controller
         }
     
         //Handle file upload
-
-
         if ($request->hasFile('attachment')) {
             $attachment = $request->file('attachment');
             $filename = Str::random(25) . '.' . $attachment->getClientOriginalExtension();
@@ -152,6 +148,45 @@ class EventController extends Controller
     
         // Save the event
         $event->save();
+
+        if(Auth::check())
+        {
+            $user = Auth::user();
+            $notifications = new notifications();
+            $notifications->user_id = $user->id; 
+            $notifications->notification_title = 'Event Notification';
+            $notifications->notification_type='Event';
+            $notifications->date = now(); 
+            $notifications->description = 'Event Notification has been Submitted Successfully.';
+            $notifications->save();
+
+        }
+
+        $departments = $request->departments;
+        // Notify staff members in the selected departments
+        foreach ($departments as $department_id) {
+            $departments = department::find($department_id);
+
+            //dd($departments);
+
+            $staff_members = $departments->staff()->get();
+            //dd($staff_members);
+            foreach ($staff_members as $staff) {
+                $staff_notification = new notifications();
+                $staff_notification->user_id = $staff->user_id;
+                $staff_notification->notification_title = 'Event Notification';
+                $staff_notification->notification_type = 'Event';
+                $staff_notification->date = now();
+                $staff_notification->description = 'Get ready for an exciting event that awaits you shortly.';
+                $staff_notification->save();
+
+                //dd($staff_notification);
+            }
+        }
+
+       
+
+       
     
         // Attach departments
         $departments = $request->departments;

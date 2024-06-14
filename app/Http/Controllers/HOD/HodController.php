@@ -15,6 +15,7 @@ use App\Models\department;
 use App\Models\religion;
 use App\Models\event;
 use App\Models\notice;
+use App\Models\notifications;
 
 use App\Models\castecategory;
 use App\Models\association;
@@ -34,7 +35,12 @@ class HodController extends Controller
 
        // return redirect()->intended('/HOD/dashboard');
 
+       $notifications = notifications::where('user_id', $user->id)->get();
 
+       //dd($notifications);
+       Session::put('notifications', $notifications);
+       
+       //dd(Session::get('notifications'));
 
         //to display number of employees in particular departmnet
         $department_id=Session ::get('deptid');
@@ -43,6 +49,7 @@ class HodController extends Controller
         ->join('department_staff','department_staff.staff_id','=','staff.id')
         ->join('departments','departments.id','=','department_staff.department_id')
         ->where('department_id','=',$department_id)
+        ->where('department_staff.status','active')
         //->select('staff.*','fname','staff.id','mname','lname','department_id')
         ->select(DB::raw('DISTINCT(staff.egov_id)'),'staff.*','fname','staff.id','mname','lname','department_id')
 
@@ -55,6 +62,8 @@ class HodController extends Controller
                 ->join('departments','departments.id','=','department_staff.department_id')
                 ->join('employee_types','employee_types.staff_id','=','staff.id')
                 ->where('employee_types.employee_type','=','Teaching')
+                ->where('employee_types.status','active')
+                ->where('department_staff.status','active')
                // ->where('staff.employee_type','=','Teaching')
                 ->where('department_id','=',$department_id)
                 // ->select('staff.*','fname','staff.id','mname','lname','employee_type','department_id')
@@ -68,6 +77,8 @@ class HodController extends Controller
                 ->join('departments','departments.id','=','department_staff.department_id')
                 ->join('employee_types','employee_types.staff_id','=','staff.id')
                 ->where('employee_types.employee_type','=','Non-Teaching')
+                ->where('department_staff.status','active')
+                ->where('employee_types.status','active')
                // ->where('staff.employee_type','=','Non-Teaching')
                 ->where('department_id','=',$department_id)
                 // ->select('staff.*','fname','staff.id','mname','lname','employee_type','department_id')
@@ -82,6 +93,8 @@ class HodController extends Controller
                                             ->join('department_staff','department_staff.staff_id','=','staff.id')
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
+                                            ->where('department_staff.status','active')
+                                            ->where('employee_types.status','active')
                                             ->where('employee_types.employee_type','=','Teaching')
                                             //->where('staff.employee_type','=','Teaching')
                                             ->where('department_id','=',$department_id)
@@ -101,6 +114,8 @@ class HodController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Teaching')
+                                            ->where('department_staff.status','active')
+                                            ->where('employee_types.status','active')
                                            // ->where('staff.employee_type','=','Teaching')
                                             ->where('department_id','=',$department_id)
                                             // ->select('professional_activity_conducteds.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','sponsoring_agency_name_address')
@@ -117,6 +132,8 @@ class HodController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Non-Teaching')
+                                            ->where('department_staff.status','active')
+                                            ->where('employee_types.status','active')
                                             //->where('staff.employee_type','=','Non-teaching')
                                             ->where('department_id','=',$department_id)
                                             // ->select('professional_activity_attendees.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','organizer','sponsored','sponsored_by')
@@ -132,6 +149,8 @@ class HodController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Non-Teaching')
+                                            ->where('department_staff.status','active')
+                                            ->where('employee_types.status','active')
                                            // ->where('staff.employee_type','=','Non-teaching')
                                             ->where('department_id','=',$department_id)
                                             // ->select('professional_activity_conducteds.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','sponsoring_agency_name_address')
@@ -147,6 +166,8 @@ class HodController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Teaching')
+                                            ->where('department_staff.status','active')
+                                            ->where('employee_types.status','active')
                                             //->where('staff.employee_type','=','Teaching')
                                             ->where('department_id','=',$department_id)
                                             // ->select('conferences_attendees.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -163,6 +184,8 @@ class HodController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Teaching')
+                                            ->where('department_staff.status','active')
+                                            ->where('employee_types.status','active')
                                            // ->where('staff.employee_type','=','Teaching')
                                             ->where('department_id','=',$department_id)
                                             // ->select('conferences_conducteds.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -176,6 +199,8 @@ class HodController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Teaching')
+                                            ->where('department_staff.status','active')
+                                            ->where('employee_types.status','active')
                                             //->where('staff.employee_type','=','Teaching')
                                             ->where('department_id','=',$department_id)
                                             // ->select('publications.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -190,6 +215,8 @@ class HodController extends Controller
                         ->join('departments','departments.id','=','department_staff.department_id')
                         ->join('employee_types','employee_types.staff_id','=','staff.id')
                         ->where('employee_types.employee_type','=','Teaching')
+                        ->where('department_staff.status','active')
+                        ->where('employee_types.status','active')
                         //->where('staff.employee_type','=','Teaching')
                         ->where('department_id','=',$department_id)
                         // ->select('funded_projects.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -204,6 +231,8 @@ class HodController extends Controller
                 ->join('departments','departments.id','=','department_staff.department_id')
                 ->join('employee_types','employee_types.staff_id','=','staff.id')
                 ->where('employee_types.employee_type','=','Teaching')
+                ->where('department_staff.status','active')
+                ->where('employee_types.status','active')
                 //->where('staff.employee_type','=','Teaching')
                 ->where('department_id','=',$department_id)
                 // ->select('patents.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -218,6 +247,8 @@ class HodController extends Controller
             ->join('departments','departments.id','=','department_staff.department_id')
             ->join('employee_types','employee_types.staff_id','=','staff.id')
             ->where('employee_types.employee_type','=','Teaching')
+            ->where('department_staff.status','active')
+            ->where('employee_types.status','active')
             //->where('staff.employee_type','=','Teaching')
             ->where('department_id','=',$department_id)
             // ->select('copyrights.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -232,6 +263,8 @@ class HodController extends Controller
         ->join('departments','departments.id','=','department_staff.department_id')
         ->join('employee_types','employee_types.staff_id','=','staff.id')
         ->where('employee_types.employee_type','=','Teaching')
+        ->where('department_staff.status','active')
+        ->where('employee_types.status','active')
         //->where('staff.employee_type','=','Teaching')
         ->where('department_id','=',$department_id)
         ->select('general_achievements.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname',)
@@ -246,6 +279,7 @@ class HodController extends Controller
         $deptevent = event::with('department')
             ->whereHas('department', function ($query) use ($department_id) {
                 $query->where('departments.id', $department_id);
+             
             })
             ->get();
 
@@ -257,19 +291,23 @@ class HodController extends Controller
 
         ->whereHas('department', function ($query) use ($department_id) {
             $query->where('departments.id', $department_id);
+            
         })
         ->get();
 
     $departments = DB::table('departments')->where('status', 'active')->get();
 
 
-    return view('HOD.dashboard',compact('totalemployee','department_id','teachingstaff','nonteachingstaff','professional_activity_attendee','professional_activity_conducteds','ntactivity_attendee','nt_activity_conducteds','conferences_attendees','conferences_conducted','publication','fundedproject','patents','copyrights','general_achievements','deptevent','departments','deptnotice'));
+    return view('HOD.dashboard',compact('totalemployee','department_id','teachingstaff','nonteachingstaff','professional_activity_attendee','professional_activity_conducteds','ntactivity_attendee','nt_activity_conducteds','conferences_attendees','conferences_conducted','publication','fundedproject','patents','copyrights','general_achievements','deptevent','departments','deptnotice','notifications'));
     }
 
 
     public function department_overview(Request $request)
     {
+
+
         $user = Auth::user();
+        $notifications = notifications::where('user_id', $user->id)->get();
         $department_id=Session ::get('deptid');
         $staff=staff::with('departments')->where('user_id','=',$user->id)->get();
 
@@ -279,7 +317,7 @@ class HodController extends Controller
                 ->where('designation_staff.dept_id',$department_id)
                 ->orderBy('designation_staff.start_date')->get();
         //dd($hods_list);
-        return view('HOD.departmentoverview',compact('staff','hods_list'));
+        return view('HOD.departmentoverview',compact('staff','hods_list','notifications'));
 
     }
 
@@ -297,7 +335,8 @@ class HodController extends Controller
          ->with('associations')
          ->with('departments')
         ->whereHas('departments',function($query) use($department_id) {
-            $query->where('departments.id', $department_id);
+            $query->where('departments.id', $department_id)
+            ->where('department_staff.status','active');
            })
         ->with('qualifications')
         ->with('teaching_payscale')
@@ -327,7 +366,8 @@ class HodController extends Controller
         $staff_view=staff::where('staff.id',$staff->id)
         ->with(
              ['departments' => function ($q){
-                 $q->latest();
+                 $q->wherePivot('status','active')
+                 ->latest();
              }]
              )
          ->with(
@@ -413,6 +453,7 @@ class HodController extends Controller
                                             ->join('staff', 'staff.id', '=', 'professional_activity_attendee_staff.staff_id')
                                             ->join('department_staff', 'department_staff.staff_id', '=', 'staff.id')
                                             ->join('departments', 'departments.id', '=', 'department_staff.department_id')
+                                            ->where('department_staff.status','active')
                                             ->join('employee_types', 'employee_types.staff_id', '=', 'staff.id')
                                             ->where('employee_types.employee_type', '=', 'Teaching')
                                             ->where('department_id', '=', $department_id)
@@ -469,6 +510,7 @@ class HodController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Teaching')
+                                            ->where('department_staff.status','active')
                                             //->where('staff.employee_type','=','Teaching')
                                             ->where('department_id','=',$department_id)
                                             // ->select('professional_activity_conducteds.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','sponsoring_agency_name_address')
@@ -518,6 +560,7 @@ class HodController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Non-Teaching')
+                                            ->where('department_staff.status','active')
                                             //->where('staff.employee_type','=','Non-teaching')
                                             ->where('department_id','=',$department_id)
                                             ->select('professional_activity_attendees.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','organizer','sponsored','sponsored_by')
@@ -555,6 +598,7 @@ class HodController extends Controller
                                             ->join('departments','departments.id','=','department_staff.department_id')
                                             ->join('employee_types','employee_types.staff_id','=','staff.id')
                                             ->where('employee_types.employee_type','=','Non-Teaching')
+                                            ->where('department_staff.status','active')
                                             //->where('staff.employee_type','=','Non-teaching')
                                             ->where('department_id','=',$department_id)
                                             // ->select('professional_activity_conducteds.*','fname','staff.id','mname','lname','employee_type','department_id','dept_shortname','sponsoring_agency_name_address')
@@ -571,6 +615,7 @@ class HodController extends Controller
                                         ->join('departments','departments.id','=','department_staff.department_id')
                                         ->join('employee_types','employee_types.staff_id','=','staff.id')
                                         ->where('department_staff.status','active')
+                                        
                                         ->where('employee_types.employee_type','=','Non-Teaching')
                                         ->where('department_id','=',$department_id)
                                         ->select(

@@ -54,6 +54,8 @@ class StudentinternshipController extends Controller
         $studentinternships->edate=$request->edate;
         $studentinternships-> industry_id=$request->industry_id;
         $studentinternships-> spoc_id=$request->spoc_id;
+        $studentinternships->stipend=$request->stipend;
+
  
         $studentinternships->save();
         return redirect('/Teaching/internship/studentinternship');
@@ -68,8 +70,10 @@ class StudentinternshipController extends Controller
         //dd($students);
         //$studentinternship=studentinternship::with('student')->where('id',$studentinternship->id)->get();
         $student_studentinternship=$studentinternship->student()->get();
+        $studentsWithoutInternship = student::whereDoesntHave('student_studentinternship')->get();
+        //dd($studentsWithoutInternship);
        // dd($studentinternship);
-        return view('internship.showinternship',compact(['studentinternship','students','student_studentinternship']));
+        return view('internship.showinternship',compact(['studentinternship','students','student_studentinternship','studentsWithoutInternship']));
     }
 
     /**
@@ -95,6 +99,8 @@ class StudentinternshipController extends Controller
         $studentinternship->edate=$request->edate;
         $studentinternship->industry_id=$request->industry_id;
         $studentinternship->spoc_id=$request->spoc_id;
+        $studentinternships->stipend=$request->stipend;
+
  
         $studentinternship->save();
         return redirect('/Teaching/internship/studentinternship');

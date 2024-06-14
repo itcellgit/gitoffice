@@ -18,8 +18,9 @@ return new class extends Migration
             $table->varchar('years');
             $table->string('sdate');
             $table->string('edate');
-            $table->foreignId('industry_id')->references('id')->on('industries')->onDelete('cascade');
-            $table->foreignId('spoc_id')->references('id')->on('spocs')->onDelete('cascade');
+            $table->foreignId('industry_id')->constrained();
+            $table->foreignId('spoc_id')->constrained();
+            $table->bigInteger('stipend');
             $table->timestamps();
         });
     }

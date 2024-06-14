@@ -14,4 +14,8 @@ class leave_staff_applications extends Model
     {
         return $this->belongsToMany(staff::class);
     }
+    public function staff()
+    {
+        return $this->belongsTo(Staff::class, 'staff_id');
+    }
 }
