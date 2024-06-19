@@ -44,10 +44,23 @@ class TeachingController extends Controller
     {
         $user = Auth::user();
         //$notifications = notifications::where('user_id', $user->id)->get();
+        // $notifications = notifications::where('user_id', $user->id)
+        // ->orderBy('created_at', 'desc')
+        // ->get();
+        // Session::put('notifications', $notifications);
+
         $notifications = notifications::where('user_id', $user->id)
-        ->orderBy('created_at', 'desc')
-        ->get();
+                        ->join('leave_staff_applications', 'notifications.id', '=', 'leave_staff_applications.id')
+                        ->orderBy('notifications.date', 'desc')
+                        ->select('notifications.*', 'leave_staff_applications.start', 'leave_staff_applications.end')
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+                //dd($notifications);
+        $notificationCount = $notifications->count();
+                    
+
         Session::put('notifications', $notifications);
+        Session::put('notification_count', $notificationCount);
         
         //dd($notifications);
         
@@ -105,7 +118,7 @@ class TeachingController extends Controller
      ->select('notices.*')->distinct()
      ->get();
 
-    return view('Staff.Teaching.dashboard',compact(['staff','departmentevent','departmentnotice','attendedActivitiesCount','conductedActivitiesCount','conferenceattendedcount','conferenceconductedcount','publicationcount','book_publicationcount','funded_projectcount','consultancycount','patentcount','copyrightcount','general_achievementscount','dept','notifications']));
+    return view('Staff.Teaching.dashboard',compact(['staff','departmentevent','departmentnotice','attendedActivitiesCount','conductedActivitiesCount','conferenceattendedcount','conferenceconductedcount','publicationcount','book_publicationcount','funded_projectcount','consultancycount','patentcount','copyrightcount','general_achievementscount','dept','notifications','notificationCount']));
 
 
 

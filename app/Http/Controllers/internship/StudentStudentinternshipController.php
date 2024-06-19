@@ -10,6 +10,11 @@ use App\Models\internship\studentinternship;
 use App\Http\Controllers\Controller;
 use DB;
 
+use App\Models\department;
+use App\Models\staff;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 class StudentStudentinternshipController extends Controller
 {
     /**
@@ -17,13 +22,20 @@ class StudentStudentinternshipController extends Controller
      */
     public function index()
     {
-        $students=student::get();
+        $user = Auth::user();
+        $staff_id = Auth::user()->id;
+        $staff = DB::table('staff')->where('user_id', $user->id)->first();
+            if ($staff==null) {
+                // Handle the case where the staff is not found
+                abort(404, 'Staff not found.');
+            }
+        $students=student::where('staff_id', $staff->id)->get();
         
-        $studentinternship=studentinternship::get();
+        $studentinternship=studentinternship::where('staff_id', $staff->id)->get();
         //$student_internships=student_studentinternship::with('student','studentinternship')->get();
-        $student_internships=student::with('studentinternship')->get();
+        $student_internships=student::where('staff_id', $staff->id)->with('studentinternship')->get();
         
-        $studentsWithoutInternship = student::whereDoesntHave('student_studentinternship')->get();
+        $studentsWithoutInternship = student::whereDoesntHave('student_studentinternship')->where('staff_id', $staff->id)->get();
         dd($studentsWithoutInternship);
         
         return view('internship.showinternship',compact('students','studentinternship','student_internships','studentsWithoutInternship'));
@@ -37,7 +49,7 @@ class StudentStudentinternshipController extends Controller
     public function create()
     {
         //dd($student_internships);
-        $studentsWithoutInternship = student::whereDoesntHave('student_studentinternship')->get();
+        $studentsWithoutInternship = student::whereDoesntHave('student_studentinternship')->where('staff_id', $staff->id)->get();
 
     }
 
@@ -47,6 +59,38 @@ class StudentStudentinternshipController extends Controller
 
      public function store(Storestudent_studentinternshipRequest $request, studentinternship $studentinternship)
     {
+        $user=Auth::user();
+        //dd($user);
+        $staff = DB::table('staff')
+                        ->join('department_staff','department_staff.staff_id','=','staff.id')
+                        ->where('department_staff.status','active')
+                        ->whereNotIn('department_staff.department_id',function($q){
+                            $q->select('department_id')
+                                ->from('department_staff as ds')
+                                ->where('ds.staff_id','staff.id')
+                                ->where('ds.status','active')
+                                ->whereNotExists(function($query) {
+                                $query->select(DB::raw(1))
+                                    ->from('designation_staff as dsg')
+                                    ->whereColumn('dsg.dept_id', 'ds.department_id')
+                                    ->where('dsg.staff_id', 'staff.id')
+                                    ->whereNotNull('dsg.dept_id')
+                                    ->where('dsg.status', 'active');
+                            }) ->pluck('ds.department_id');;
+                        })
+                        ->where('user_id', $user->id)
+                        ->select('staff.id as id','department_id')
+                        ->first();
+
+       // dd($staff);
+    
+        if ($staff==null || !isset($staff->department_id)) {
+            //dd(99);
+        // Handle the case where the staff or department_id is not found
+        abort(404, 'Staff or department not found.');
+        }
+
+
         $studentsWithoutInternship = student::whereDoesntHave('student_studentinternship')->get();
 
         // Iterate over each student_id in the request
@@ -60,6 +104,8 @@ class StudentStudentinternshipController extends Controller
                 $student_studentinternship = new student_studentinternship();
                 $student_studentinternship->studentinternship_id = $studentinternship->id;
                 $student_studentinternship->student_id = $studentId;
+                $student_studentinternship->department_id = $staff->department_id;
+                $student_studentinternship->staff_id = $staff->id; 
                 $student_studentinternship->save();
             }
         }
@@ -76,11 +122,11 @@ class StudentStudentinternshipController extends Controller
     public function show(student_studentinternship $student_studentinternship)
     {
         //dd($student_studentinternship);
-        $students=student::get();
-        $spocs=spoc::get();
+        $students=student::where('staff_id', $staff->id)->get();
+        $spocs=spoc::where('staff_id', $staff->id)->get();
 
         //dd($students);
-        $interaction=$student_studentinternship->spoc()->get();
+        $interaction=$student_studentinternship->spoc()->where('staff_id', $staff->id)->get();
         //return view('internship.interaction',compact('interaction','students'));
     
         return view('internship.showinternship',compact(['studentinternship','students','student_studentinternship']));

@@ -725,6 +725,8 @@
                     
                     }
                 });
+
+                
                 $(document).on('change','#type',function(){
                     if($("#type option:selected").text()=="CL")
                     {

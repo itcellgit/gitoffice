@@ -11,6 +11,12 @@ use App\Http\Requests\StoreinternshipRequest;
 use App\Http\Requests\UpdateinternshipRequest;
 use App\Http\Controllers\Controller;
 
+use App\Models\department;
+use App\Models\staff;
+use DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 class InternshipController extends Controller
 {
     /**
@@ -18,10 +24,18 @@ class InternshipController extends Controller
      */
     public function index()
     {
-        $studentCount = student::count();
-        $industryCount = industry::count();
-        $spocCount = spoc::count();
-        $studentinternshipCount = studentinternship::count();
+        $user = Auth::user();
+        $staff_id = Auth::user()->id;
+        $staff = DB::table('staff')->where('user_id', $user->id)->first();
+        if ($staff==null) {
+            // Handle the case where the staff is not found
+            abort(404, 'Staff not found.');
+        }
+            
+        $studentCount = student::where('staff_id', $staff->id)->count();
+        $industryCount = industry::where('staff_id', $staff->id)->count();
+        $spocCount = spoc::where('staff_id', $staff->id)->count();
+        $studentinternshipCount = studentinternship::where('staff_id', $staff->id)->count();
 
 
         // Pass the counts to the view

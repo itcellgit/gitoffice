@@ -27,6 +27,7 @@ use App\Models\users;
 use App\Models\fixed_nt_pay;
 use App\Models\event;
 use App\Models\notice;
+use App\Models\notifications;
 
 use Session;
 use Hash;
@@ -37,6 +38,7 @@ class DeanadminController extends Controller
     //
     public function dashboard()
     {
+        $user = Auth::user();
         //event
         $dean_admin_event = event::with('department')->get();
 
@@ -44,7 +46,15 @@ class DeanadminController extends Controller
          $dean_admin_notice = notice::with('department')->get();
 
 
-       return view('Dean_admin.dashboard',compact('dean_admin_event','dean_admin_notice'));
+         $notifications = notifications::where('user_id', $user->id)
+         ->orderBy('created_at', 'desc')
+         ->get();
+ 
+         Session::put('notifications', $notifications);
+         //dd($notifications);
+
+
+       return view('Dean_admin.dashboard',compact('dean_admin_event','dean_admin_notice','notifications'));
     }
 
     public function leaves_lest()
@@ -512,108 +522,242 @@ class DeanadminController extends Controller
     
 
 
-    public function approve_leave(Request $request){
+    // public function approve_leave(Request $request){
 
+    //     $application_id = $request->input('application_id');
+    //     //dd($application_id);
+
+    //     //for updating the leave enititlement
+    //     $staff_details_of_leave_application = DB::table('leave_staff_applications')
+    //                                     ->where('id','=',$application_id)
+    //                                     ->first();
+
+                
+    //     $staff_id = $staff_details_of_leave_application->staff_id;
+    //     $leave_id = $staff_details_of_leave_application->leave_id;
+    //     $today = Carbon::now();
+    //     $year = $today->year;
+    //     $no_of_days = $staff_details_of_leave_application->no_of_days;
+    //     $leave_staff_entitlement=leave_staff_entitlements::where('staff_id',$staff_id)->where('leave_id',$leave_id)->where('year', $year)->first();
+
+    //     if($staff_details_of_leave_application->appl_status == 'rejected'){
+    //         if($leave_staff_entitlement!=null)
+    //         {
+    //             $leave_staff_entitlement->consumed_curr_year= $leave_staff_entitlement->consumed_curr_year+$no_of_days;
+    //             //   dd($leave_staff_entitlement->consumed_curr_year);
+    //             $leave_staff_entitlement->update();
+    //         }
+    //     }
+
+
+
+    //     $result = DB::table('leave_staff_applications')
+    //         ->where('id', $application_id)
+    //         ->update(['appl_status' => "approved"]);
+    //         //$leave_staff_applications->appl_status = "recommended";
+
+    //     if($result){
+    //         $return_html = "<div class='bg-white border dark:bg-bgdark border-success alert text-success' role='alert'>
+    //                             <span class='font-bold'>Result</span> Leave Approved
+    //                         </div>";
+    //     }else{
+    //         $return_html = "<div class='bg-white border dark:bg-bgdark border-danger alert text-danger' role='alert'>
+
+    //                               <span class='font-bold'>Result</span> 
+    //     </div>
+
+    //                             <span class='font-bold'>Result</span> Unable to Approve
+    //                         </div>";
+
+    //     }
+    //     return $return_html;
+
+    // }
+
+
+    //for sending the notification for Staff when there leave get Approved 
+    public function approve_leave(Request $request)
+    {
         $application_id = $request->input('application_id');
         //dd($application_id);
 
-        //for updating the leave enititlement
+        // Get the details of the leave application
         $staff_details_of_leave_application = DB::table('leave_staff_applications')
-                                        ->where('id','=',$application_id)
+                                        ->where('id', '=', $application_id)
                                         ->first();
 
-                
+        if (!$staff_details_of_leave_application) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Leave application not found'
+            ]);
+        }
+
         $staff_id = $staff_details_of_leave_application->staff_id;
         $leave_id = $staff_details_of_leave_application->leave_id;
         $today = Carbon::now();
         $year = $today->year;
         $no_of_days = $staff_details_of_leave_application->no_of_days;
-        $leave_staff_entitlement=leave_staff_entitlements::where('staff_id',$staff_id)->where('leave_id',$leave_id)->where('year', $year)->first();
+        $leave_staff_entitlement = leave_staff_entitlements::where('staff_id', $staff_id)
+                                    ->where('leave_id', $leave_id)
+                                    ->where('year', $year)
+                                    ->first();
 
-        if($staff_details_of_leave_application->appl_status == 'rejected'){
-            if($leave_staff_entitlement!=null)
-            {
-                $leave_staff_entitlement->consumed_curr_year= $leave_staff_entitlement->consumed_curr_year+$no_of_days;
-                //   dd($leave_staff_entitlement->consumed_curr_year);
+        // Update leave entitlement if application was previously rejected
+        if ($staff_details_of_leave_application->appl_status == 'rejected') {
+            if ($leave_staff_entitlement != null) {
+                $leave_staff_entitlement->consumed_curr_year = $leave_staff_entitlement->consumed_curr_year + $no_of_days;
                 $leave_staff_entitlement->update();
             }
         }
 
-
-
+        // Update the leave application status to approved
         $result = DB::table('leave_staff_applications')
             ->where('id', $application_id)
-            ->update(['appl_status' => "approved"]);
-            //$leave_staff_applications->appl_status = "recommended";
+            ->update(['appl_status' => 'approved']);
 
-        if($result){
+        if ($result) {
+            // Get staff details
+            $staff = staff::find($staff_id);
+            if ($staff) {
+                // Send notification to the staff
+                $notification = new notifications();
+                $notification->user_id = $staff->user_id;
+                $notification->notification_title = 'Leave Application Approved';
+                $notification->notification_type = 'Leave';
+                $notification->date = now();
+                $notification->description = 'Your leave application has been approved successfully.';
+                $notification->save();
+            }
+
             $return_html = "<div class='bg-white border dark:bg-bgdark border-success alert text-success' role='alert'>
                                 <span class='font-bold'>Result</span> Leave Approved
                             </div>";
-        }else{
+        } else {
             $return_html = "<div class='bg-white border dark:bg-bgdark border-danger alert text-danger' role='alert'>
-
-                                  <span class='font-bold'>Result</span> 
-        </div>
-
                                 <span class='font-bold'>Result</span> Unable to Approve
                             </div>";
-
         }
-        return $return_html;
 
+        return response()->json([
+            'status' => $result,
+            'message' => $result ? 'Leave Approved' : 'Unable to Approve',
+            'html' => $return_html
+        ]);
     }
 
 
 
 
     //function for reject leaves
+    // public function reject_leave(Request $request){
+
+    //     $application_id = $request->input('application_id');
+    //     //dd($application_id);
+
+    //     //for updating the leave enititlement
+    //     $staff_details_of_leave_application = DB::table('leave_staff_applications')
+    //                                     ->where('id','=',$application_id)
+    //                                     ->first();
+
+                
+    //     $staff_id = $staff_details_of_leave_application->staff_id;
+    //     $leave_id = $staff_details_of_leave_application->leave_id;
+    //     $today = Carbon::now();
+    //     $year = $today->year;
+    //     $no_of_days = $staff_details_of_leave_application->no_of_days;
+    //     $leave_staff_entitlement=leave_staff_entitlements::where('staff_id',$staff_id)->where('leave_id',$leave_id)->where('year', $year)->first();
+
+    //     if($leave_staff_entitlement!=null)
+    //     {
+    //         $leave_staff_entitlement->consumed_curr_year= $leave_staff_entitlement->consumed_curr_year-$no_of_days;
+    //         //   dd($leave_staff_entitlement->consumed_curr_year);
+    //         $leave_staff_entitlement->update();
+    //     }
+    //    // dd($leave_staff_entitlement);                                
+
+    //     $result = DB::table('leave_staff_applications')
+    //         ->where('id', $application_id)
+    //         ->update(['appl_status' => "rejected"]);
+    //         //$leave_staff_applications->appl_status = "recommended";
+
+    //     //dd($result);
+    //     if($result && $leave_staff_entitlement){
+    //         $return_html = "<div class='bg-white border dark:bg-bgdark border-warning alert text-warning' role='alert'>
+    //                             <span class='font-bold'>Result</span> Leave Rejected
+    //                         </div>";
+    //     }else{
+    //         $return_html = "<div class='bg-white border dark:bg-bgdark border-danger alert text-danger' role='alert'>
+
+    //                               <span class='font-bold'>Result</span> {{ session('return_data')['result'] }}
+    //     </div>
+
+    //                             <span class='font-bold'>Result</span> Unable to reject
+    //                         </div>";
+
+    //     }
+    // }
+    
+
+    //for sending the notification for Staff when there leave get rejected
     public function reject_leave(Request $request){
 
         $application_id = $request->input('application_id');
-        //dd($application_id);
-
-        //for updating the leave enititlement
-        $staff_details_of_leave_application = DB::table('leave_staff_applications')
-                                        ->where('id','=',$application_id)
-                                        ->first();
-
-                
-        $staff_id = $staff_details_of_leave_application->staff_id;
-        $leave_id = $staff_details_of_leave_application->leave_id;
-        $today = Carbon::now();
-        $year = $today->year;
-        $no_of_days = $staff_details_of_leave_application->no_of_days;
-        $leave_staff_entitlement=leave_staff_entitlements::where('staff_id',$staff_id)->where('leave_id',$leave_id)->where('year', $year)->first();
-
-        if($leave_staff_entitlement!=null)
-        {
-            $leave_staff_entitlement->consumed_curr_year= $leave_staff_entitlement->consumed_curr_year-$no_of_days;
-            //   dd($leave_staff_entitlement->consumed_curr_year);
-            $leave_staff_entitlement->update();
-        }
-       // dd($leave_staff_entitlement);                                
-
+        
+        // Update leave status to 'rejected'
         $result = DB::table('leave_staff_applications')
-            ->where('id', $application_id)
-            ->update(['appl_status' => "rejected"]);
-            //$leave_staff_applications->appl_status = "recommended";
-
-        //dd($result);
-        if($result && $leave_staff_entitlement){
+                    ->where('id', $application_id)
+                    ->update(['appl_status' => "rejected"]);
+    
+        if($result) {
+            // Get details of the leave application
+            $staff_details_of_leave_application = DB::table('leave_staff_applications')
+                                                    ->where('id','=',$application_id)
+                                                    ->first();
+    
+            if ($staff_details_of_leave_application) {
+                $staff_id = $staff_details_of_leave_application->staff_id;
+    
+                // Update leave entitlement
+                $no_of_days = $staff_details_of_leave_application->no_of_days;
+                $today = Carbon::now();
+                $year = $today->year;
+                $leave_id = $staff_details_of_leave_application->leave_id;
+    
+                $leave_staff_entitlement = leave_staff_entitlements::where('staff_id',$staff_id)
+                                            ->where('leave_id',$leave_id)
+                                            ->where('year', $year)
+                                            ->first();
+    
+                if($leave_staff_entitlement) {
+                    $leave_staff_entitlement->consumed_curr_year -= $no_of_days;
+                    $leave_staff_entitlement->save();
+                }
+    
+                // Send notification to the staff
+                $staff = staff::find($staff_id);
+                if ($staff) {
+                    $notification = new notifications();
+                    $notification->user_id = $staff->user_id;
+                    $notification->notification_title = 'Leave Application rejected';
+                    $notification->notification_type = 'Leave';
+                    $notification->date = now();
+                    $notification->description = 'Your leave application has been rejected successfully.';
+                    $notification->save();
+                }
+            }
+    
             $return_html = "<div class='bg-white border dark:bg-bgdark border-warning alert text-warning' role='alert'>
                                 <span class='font-bold'>Result</span> Leave Rejected
                             </div>";
-        }else{
+        } else {
             $return_html = "<div class='bg-white border dark:bg-bgdark border-danger alert text-danger' role='alert'>
-
-                                  <span class='font-bold'>Result</span> {{ session('return_data')['result'] }}
-        </div>
-
                                 <span class='font-bold'>Result</span> Unable to reject
                             </div>";
-
         }
+    
+        // Return the HTML response or redirect as needed
+        return response()->json(['html' => $return_html]);
     }
     
 

@@ -258,17 +258,41 @@ Route::get('/biometric', function () {
 Route::get('/send-welcome-email', [EmailController::class, 'sendWelcomeEmail']);
 // Route::get('', [Controller::class, 'index']);
 
-Route::middleware(['cors','auth','role:'.UserRoles::SU->value,'middleware' => 'prevent-back-history'])->group(function(){
+Route::middleware(['cors','auth','role:'.(string) UserRoles::SU,'prevent-back-history'])->group(function(){
     Route::get('/Admin/dashboard',[AdminController::class,'dashboard'])->name('Admin.dashboard');
     Route::get('/Admin/users',[AdminController::class,'users'])->name('Admin.users');
 
     Route::get('/Admin/tickets/dashboard',[AdminTicketController::class,'dashboard'])->name('Admin.tickets.dashboard');
-});
+   
+
+  Route::get('/Admin/tickets/adminticket',[AdminTicketController::class,'index'])->name('Admin.tickets.adminticket');
+  Route::post('Admin/tickets/adminticket/create', [AdminTicketController::class, 'store'])->name('Admin.tickets.adminticket.store');
+  Route::get('Admin/tickets/adminshowticket/show/{ticket}', [AdminTicketController::class, 'show'])->name('Admin.tickets.adminshowticket.show');
+  // Route::patch('Admin/tickets/adminticket/update/{ticket}', [AdminTicketController::class, 'update'])->name('Admin.tickets.adminticket.update');
+  // Route::delete('Admin/tickets/adminticket/destroy/{ticket}',[AdminTicketController::class, 'destroy'])->name('Admin.tickets.adminticket.destroy');
+  // Route::patch('ticket/update/{postticket}', [ReplyController::class, 'update'])->name('ticket.reply.update');
+  //Route::patch('Admin/tickets/adminticket/update/{ticket}', [AdminTicketController::class, 'status_update'])->name('Admin.tickets.adminticket.update');
+
+
+  //super_admin events
+  Route::get('/Admin/adminevents',[AdminEventController::class,'index'])->name('Admin.adminevents.index');
+  Route::post('/Admin/adminevents/create',[AdminEventController::class,'store'])->name('Admin.adminevents.store');
+  Route::patch('/Admin/adminevents/update/{event}',[AdminEventController::class,'update'])->name('Admin.adminevents.update');
+  Route::delete('/Admin/adminevents/destory/{event}', [AdminEventController::class, 'destroy'])->name('Admin.adminevents.destroy');
+
+  //super_admin notice board
+  Route::get('/Admin/adminnotice',[AdminNoticeController::class,'index'])->name('Admin.adminnotice.index');
+  Route::post('/Admin/adminnotice/create',[AdminNoticeController::class,'store'])->name('Admin.adminnotice.store');
+  Route::patch('/Admin/adminnotice/update/{notice}',[AdminNoticeController::class,'update'])->name('Admin.adminnotice.update');
+  Route::delete('/Admin/adminnotice/destory/{notice}', [AdminNoticeController::class, 'destroy'])->name('Admin.adminnotice.destroy');
+
+
+  });
 
 
 
 //Teaching staff related routes (teaching staff Logins)
-Route::middleware(['cors','auth','role:'.UserRoles::TEACHING->value, 'prevent-back-history'])->group(function(){
+Route::middleware(['cors','auth','role:'.(string) UserRoles::TEACHING, 'prevent-back-history'])->group(function(){
 
 
 
@@ -421,6 +445,7 @@ Route::get('/Teaching/internship/student',[StudentController::class,'index'])->n
 Route::post('/Teaching/internship/student',[StudentController::class, 'filter'])->name('internship.student.filter');
 
 
+
 Route::post('/Teaching/internship/student/create', [StudentController::class, 'store'])->name('internship.student.store');
 //Route::post('/Teaching/internship/student/{student}/show', [StudentController::class, 'show'])->name('internship.student.show');
 Route::patch('/Teaching/internship/student/update/{student}', [StudentController::class, 'update'])->name('internship.student.update');
@@ -480,11 +505,14 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
 
 
   //Non-Teaching staff related routes (Non-teaching staff Logins)
-  Route::middleware(['cors','auth','role:'.UserRoles::NONTEACHING->value, 'prevent-back-history'])->group(function(){
+  Route::middleware(['cors','auth','role:'.(string) UserRoles::NONTEACHING, 'prevent-back-history'])->group(function(){
     Route::get('/Non-Teaching/dashboard',[NonTeachingController::class,'dashboard'])->name('Non-Teaching.dashboard');
     Route::get('/Non-Teaching/departments',[NonTeachingController::class,'departments'])->name('Non-Teaching.departments');
     Route::get('/Non-Teaching/designations',[NonTeachingController::class,'designations'])->name('Non-Teaching.designations');
     Route::get('/Non-Teaching/associations',[NonTeachingController::class,'associations'])->name('Non-Teaching.associations');
+
+    //Route::post('/mark-all-read',[NonTeachingController::class,'markAllRead'])->name('mark-all-read');
+
 
     //staff qualification routes
     Route::get('/Non-Teaching/ntqualification',[NonTeachingController::class,'qualifications'])->name('Non-Teaching.ntqualification');
@@ -503,7 +531,7 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
 
 
     //change password
-  // Route::get('/change_password', [NonTeachingController::class, 'changePassword'])->name('change_password');
+    // Route::get('/change_password', [NonTeachingController::class, 'changePassword'])->name('change_password');
     // Route::post('/change_password', [NonTeachingController::class, 'updatepassword'])->name('password.change');
     // Route::get('/checkcurrentpassword', [NonTeachingController::class, 'checkcurrentpassword'])->name('checkcurrentpassword');
 
@@ -528,6 +556,7 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
     Route::get('/Staff/Non-Teaching/viewstudentissues', [StaffStudentIssueController::class, 'index'])->name('Staff.Non-Teaching.view');
     Route::get('/Staff/Non-Teaching/{staff}/viewstudentissues/{student_issue}/show',[StaffStudentIssueController::class,'show'])->name('Staff.Non-Teaching.issue_timeline.show');
 
+   
 
 
     //Non-Teaching Leave  Routes
@@ -552,7 +581,6 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
     Route::patch('/Non-Teaching/{staff}/leave/application/update',[LeaveStaffApplicationsController::class,'nt_leave_update'])->name('Non-Teaching.leave_application.update');
     Route::post('/Non-Teaching/{staff}/validate_leave_appln',[LeaveStaffApplicationsController::class,'nt_leave_validateleave']);
 
-
     
     //Route::get('/Non-Teaching/notifications',[NotificationsController::class,'notification_index'])->name('Non-Teaching.notifications');
     //Route::post('/Non-Teaching/notifications/create',[NotificationsController::class,'store'])->name('Non-Teaching.notification.store');
@@ -564,7 +592,7 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
 
   });
 
-  Route::middleware(['cors','auth','role:'.UserRoles::ESTB->value, 'prevent-back-history'])->group(function(){
+  Route::middleware(['cors','auth','role:'.(string) UserRoles::ESTB, 'prevent-back-history'])->group(function(){
       Route::resource('religion',ReligionController::class);
       Route::resource('religion.castecategory', CastecategoryController::class);
       Route::get('/ESTB/dashboard',[ESTBController::class,'dashboard'])->name('ESTB.dashboard');
@@ -645,13 +673,14 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
       Route::post('/import-excel', [GenetareAnnualIncrementListController::class, 'importExcel'])->name('import.excel');
 
       // Generate annual increment list controller for teaching staff for Board
-      Route::get('/ESTB/salaries/GenerateAnnualIncrement/Board/Teaching', [TeachingstaffannualincrementforboardController::class, 'index'])->name('staff.index');
-
+      Route::get('/ESTB/salaries/GenerateAnnualIncrement/Board/Teaching', [TeachingstaffannualincrementforboardController::class, 'index'])->name('staff.board.index');
+      Route::post('/ESTB/salaries/GenerateAnnualIncrement/Board/Teaching/create',[TeachingstaffannualincrementforboardController::class,'create'])->name('ESTB.annualincrementboard.create');
      //Generate annual increment list controller for  Non Teaching staff for Gc
-      Route::get('/ESTB/salaries/GenerateAnnualIncrement/GC/Nonteaching', [NonTeachingannualincrementforGcController::class, 'index'])->name('staff.index');
+      Route::get('/ESTB/salaries/GenerateAnnualIncrement/GC/Nonteaching', [NonTeachingannualincrementforGcController::class, 'index'])->name('staff.nonteaching.index');
 
      //Generate annual increment list controller for  Non Teaching staff for Board
-      Route::get('/ESTB/salaries/GenerateAnnualIncrement/Board/Nonteaching',[NonteachingstaffannualincrementboardController::class, 'index'])->name('staff.index');
+      
+     Route::get('/ESTB/salaries/GenerateAnnualIncrement/Board/Nonteaching',[NonteachingstaffannualincrementboardController::class, 'index'])->name('staff.nonteachingboard.index');
      
     // Assocations Controllers
 
@@ -824,6 +853,11 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
       Route::post('/ESTB/leaves/create',[LeaveController::class,'store'])->name('ESTB.leaves.store');
       Route::patch('/ESTB/leaves/{leave}',[LeaveController::class,'update'])->name('ESTB.leaves.update');
       Route::delete('/ESTB/leaves/{leave}',[LeaveController::class,'destroy'])->name('ESTB.leaves.destroy');
+
+      
+      //for fetching the alternate staff
+      Route::get('/fetch-alternate-staff', [LeaveController::class, 'fetchAlternateStaff'])->name('fetch-alternate-staff');
+
       //Rules for each
       Route::get('/ESTB/leave/{leave}/leave_rules',[LeaveController::class,'show'])->name('ESTB.leave.leave_rules');
       Route::post('/ESTB/leave/{leave}/leave_rules/create',[LeaveRulesController::class,'store'])->name('ESTB.leave.leave_rules.store');
@@ -932,9 +966,9 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
       Route::delete('ESTB/TDS/TdsHeads/delete',[TdsheadsController::class,'destroy'])->name('ESTB.TDS.TdsHeads.delete');
 
       //investmentcategory related
-    Route::post('ESTB/TDS/InvestmentCategory/store',[InvestmentCategoryController::class,'store'])->name('ESTB.TDS.InvestmentCategory.store');
-    Route::patch('ESTB/TDS/InvestmentCategory/update/{tdsheads}',[InvestmentCategoryController::class,'update'])->name('ESTB.TDS.InvestmentCategory.update');
-    Route::delete('ESTB/TDS/InvestmentCategory/delete/{tdsheads}',[InvestmentCategoryController::class,'destroy'])->name('ESTB.TDS.InvestmentCategory.delete');
+     Route::post('ESTB/TDS/InvestmentCategory/store',[InvestmentCategoryController::class,'store'])->name('ESTB.TDS.InvestmentCategory.store');
+     Route::patch('ESTB/TDS/InvestmentCategory/update/{tdsheads}',[InvestmentCategoryController::class,'update'])->name('ESTB.TDS.InvestmentCategory.update');
+     Route::delete('ESTB/TDS/InvestmentCategory/delete/{tdsheads}',[InvestmentCategoryController::class,'destroy'])->name('ESTB.TDS.InvestmentCategory.delete');
 
                     //taxheads realted
       Route::get('ESTB/TDS/Taxheads/index',[TaxHeadsController::class,'index'])->name('ESTB.TDS.Taxheads.index');
@@ -962,7 +996,7 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
       });
 
       //Dean rnd related all routes
-      Route::middleware(['cors','auth','role:'.UserRoles::DEANRND->value])->group(function(){
+      Route::middleware(['cors','auth','role:'.(string) UserRoles::DEANRND])->group(function(){
 
         Route::get('/Deanrnd/dashboard',[DeanRndController::class,'dashboard'])->name('Deanrnd.dashboard');
 
@@ -992,7 +1026,7 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
       });
 
       //egov admin related all routes
-      Route::middleware(['cors','auth','role:'.UserRoles::EGOV_ADMIN->value])->group(function(){
+      Route::middleware(['cors','auth','role:'.(string) UserRoles::EGOV_ADMIN])->group(function(){
 
         Route::get('/egov/dashboard',[EgovAdminController::class,'dashboard'])->name('egov.dashboard');
 
@@ -1046,7 +1080,7 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
   });
 
     //Hod related
-  Route::middleware(['cors','auth','role:'.UserRoles::HOD->value])->group(function(){
+  Route::middleware(['cors','auth','role:'.(string) UserRoles::HOD])->group(function(){
 
     Route::get('/HOD/dashboard',[HodController::class,'dashboard'])->name('HOD.dashboard');
     Route::get('/HOD/department/overview',[HodController::class,'department_overview'])->name('HOD.department.overview');
@@ -1136,7 +1170,7 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
         //interaction table
     Route::post('/HOD/internship/student/{student}/interaction/create', [hod_InteractionController::class, 'store'])->name('HOD.internship.student.interaction.store');
     Route::patch('/HOD/internship/student/{student}/interaction/update/{interaction}', [hod_InteractionController::class, 'update'])->name('HOD.internship.student.interaction.update');
-    Route::get('HOD/internship/file/download/{file}', [hod_InteractionController::class, 'downloadFile'])->name('internship.file.download');
+    Route::get('HOD/internship/file/download/{file}', [hod_InteractionController::class, 'downloadFile'])->name('HOD.internship.file.download');
 
 
           //industry table
@@ -1164,7 +1198,7 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
     Route::get('/HOD/internship/studentinternship/{studentinternship}/show', [hod_StudentinternshipController::class, 'show'])->name('HOD.internship.showinternship.show');
     //Route::get('/Teaching/internship/studentinternship/show/{studentinternship}', [StudentinternshipController::class, 'show'])->name('internship.studentinternship.show');
 
-    Route::get('/HOD/internship/studentinternship/get-spocs/{industry_id}', [hod_StudentinternshipController::class, 'getSpocs'])->name('get.spocs');
+    Route::get('/HOD/internship/studentinternship/get-spocs/{industry_id}', [hod_StudentinternshipController::class, 'getSpocs'])->name('hod.get.spocs');
 
               //student_studentinternship table
     Route::post('/HOD/internship/{studentinternship}/student_studentinternship/create',[hod_StudentStudentinternshipController::class,'store'])->name('HOD.internship.studentinternship.student_studentinternship.store');
@@ -1173,7 +1207,7 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
 
   });
 
-  Route::middleware(['cors','auth','role:'.UserRoles::PRINCIPAL_OFFICE->value])->group(function()
+  Route::middleware(['cors','auth','role:'.(string) UserRoles::PRINCIPAL_OFFICE])->group(function()
   {
     //principle office
     Route::get('/Principaloffice/podashboard',[PrincipalOfficeController::class,'dashboard'])->name('Principaloffice.podashboard');
@@ -1192,7 +1226,7 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
   });
 
     //Dean_Admin All Routes Here
-    Route::middleware(['cors','auth','role:'.UserRoles::Dean_admin->value])->group(function(){
+    Route::middleware(['cors','auth','role:'.(string) UserRoles::DEAN_ADMIN])->group(function(){
       //Dean_Admin Leave Management Routes
       Route::get('/Dean_admin/dashboard',[DeanadminController::class,'dashboard'])->name('Dean_Admin.dashboard');
       Route::get('/Dean_admin/leaves_management/daleaves',[DeanadminController::class,'leaves_lest'])->name('Dean_Admin.leaves_management.leaves');
@@ -1270,7 +1304,7 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
 
 
     //Principal Login All Routes
-    Route::middleware(['cors','auth','role:'.UserRoles::PRINCIPAL->value])->group(function(){
+    Route::middleware(['cors','auth','role:'.(string) UserRoles::PRINCIPAL])->group(function(){
 
       Route::get('/PRINCIPAL/dashboard',[PrincipalController::class,'dashboard'])->name('PRINCIPAL.dashboard');
 
@@ -1326,7 +1360,7 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
 
 
   //Examoffice
-  // Route::middleware(['cors','auth','role:'.UserRoles::EXAM_SECTION->value, 'prevent-back-history'])->group(function(){
+  // Route::middleware(['cors','auth','role:'.(string) UserRoles::EXAM_SECTION, 'prevent-back-history'])->group(function(){
   //   Route::get('/Examoffice/dashboard',[ExamOfficeController::class,'dashboard'])->name('Examohoffice.dashboard');
   //   Route::get('/Examoffice/grievancecategory',[GrievienceCategoryController::class,'index'])->name('Examoffice.grievancecategory.index');
   //   Route::post('/Examoffice/grievancecategory/create',[GrievienceCategoryController::class,'store'])->name('Examoffice.grievancecategory.store');
@@ -1372,39 +1406,7 @@ Route::patch('ticket/{ticket}reply/update',[ReplyController::class,'update'])->n
 
 
 //Routes for admin ticketiing  system
-// Route::middleware(['cors','auth','role:'.UserRoles::SU->value])->group(function()
-Route::middleware(['cors','auth','role:' . UserRoles::SU->value, 'middleware' => 'prevent-back-history'])->group(function ()
-{
-  Route::get('/Admin/dashboard',[AdminController::class,'dashboard'])->name('Admin.dashboard');
-  //Route::get('/Admin/users', [AdminController::class, 'users'])->name('Admin.users');
-
-
-  Route::get('/Admin/tickets/adminticket',[AdminTicketController::class,'index'])->name('Admin.tickets.adminticket');
-  Route::post('Admin/tickets/adminticket/create', [AdminTicketController::class, 'store'])->name('Admin.tickets.adminticket.store');
-  Route::get('Admin/tickets/adminshowticket/show/{ticket}', [AdminTicketController::class, 'show'])->name('Admin.tickets.adminshowticket.show');
-  // Route::patch('Admin/tickets/adminticket/update/{ticket}', [AdminTicketController::class, 'update'])->name('Admin.tickets.adminticket.update');
-  // Route::delete('Admin/tickets/adminticket/destroy/{ticket}',[AdminTicketController::class, 'destroy'])->name('Admin.tickets.adminticket.destroy');
-  // Route::patch('ticket/update/{postticket}', [ReplyController::class, 'update'])->name('ticket.reply.update');
-  //Route::patch('Admin/tickets/adminticket/update/{ticket}', [AdminTicketController::class, 'status_update'])->name('Admin.tickets.adminticket.update');
-
-
-  //super_admin events
-  Route::get('/Admin/adminevents',[AdminEventController::class,'index'])->name('Admin.adminevents.index');
-  Route::post('/Admin/adminevents/create',[AdminEventController::class,'store'])->name('Admin.adminevents.store');
-  Route::patch('/Admin/adminevents/update/{event}',[AdminEventController::class,'update'])->name('Admin.adminevents.update');
-  Route::delete('/Admin/adminevents/destory/{event}', [AdminEventController::class, 'destroy'])->name('Admin.adminevents.destroy');
-
-  //super_admin notice board
-  Route::get('/Admin/adminnotice',[AdminNoticeController::class,'index'])->name('Admin.adminnotice.index');
-  Route::post('/Admin/adminnotice/create',[AdminNoticeController::class,'store'])->name('Admin.adminnotice.store');
-  Route::patch('/Admin/adminnotice/update/{notice}',[AdminNoticeController::class,'update'])->name('Admin.adminnotice.update');
-  Route::delete('/Admin/adminnotice/destory/{notice}', [AdminNoticeController::class, 'destroy'])->name('Admin.adminnotice.destroy');
-
-  // Route for starting impersonation
-  //Route::get('admin/impersonate/{user}', [AdminController::class, 'startImpersonation'])->name('admin.start_impersonation');
-  //Route::get('admin/stop-impersonation', [AdminController::class, 'stopImpersonation'])->name('admin.stop_impersonation');
-
-});
+// Route::middleware(['cors','auth','role:'.(string) UserRoles::SU])->group(function()
 
 Route::get('/student-issues', [StudentIssueController::class,'index'])->name('student-issues.index');
 Route::post('/student-issues', [StudentIssueController::class,'store'])->name('student-issues.store');

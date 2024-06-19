@@ -367,7 +367,7 @@
                                                                                                         <input type="file" name="file" id="file" class="ti-form-input">
                                                                                                                 @if ($timeline->file)
                                                                                                                     <a
-                                                                                                                         href="{{ route('internship.file.download', $timeline->file) }}">Current
+                                                                                                                         href="{{ route('HOD.internship.file.download', $timeline->file) }}">Current
                                                                                                                         File-</a>
                                                                                                                  @endif
                                                                                                                 <!-- Display the name of the currently selected file -->

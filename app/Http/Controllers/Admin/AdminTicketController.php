@@ -22,7 +22,7 @@ class AdminTicketController extends Controller
     {
         $user=auth()->user();
          $tickets=ticket::with('user')->orderBy('status')->get();
-        // $tickets = ticket::with(['user', 'staff'])->orderBy('status')->get();
+       
         $admin_tickets_count = DB::table('tickets')
         ->select(
             DB::raw('COUNT(CASE WHEN status = "New" THEN 1 END) as new_count'),
@@ -31,21 +31,25 @@ class AdminTicketController extends Controller
         )
         
         ->first();
-
-        // $staffticket = ticket::join('staff', 'tickets.staff_id', '=', 'staff.id')
-        // ->with('user') // Assuming there's a relationship with users
-        
-        // ->first(['tickets.*','fname','staff.id as staff_id','mname','lname',]);
-
-    //     $staffticket = ticket::join('staff', 'tickets.staff_id', '=', 'staff.id')
-    // ->join('users', 'staff.user_id', '=', 'users.id')
-    // ->with('user')
-    // ->select('tickets.*', 'staff.fname', 'staff.mname', 'staff.lname',  'users.role')
-    // ->first();
-
-        return view('Admin.tickets.adminticket',compact('tickets','admin_tickets_count'));
+         return view('Admin.tickets.adminticket',compact('tickets','admin_tickets_count'));
     }
-
+    // public function index()
+    // {
+    //     $user = auth()->user();
+    //     $tickets = ticket::with('staff', 'user')
+    //         ->orderBy('status')
+    //         ->get();
+    
+    //     $admin_tickets_count = DB::table('tickets')
+    //         ->select(
+    //             DB::raw('COUNT(CASE WHEN status = "New" THEN 1 END) as new_count'),
+    //             DB::raw('COUNT(CASE WHEN status = "Pending" THEN 1 END) as pending_count'),
+    //             DB::raw('COUNT(CASE WHEN status = "Resolved" THEN 1 END) as resolved_count')
+    //         )
+    //         ->first();
+    
+    //     return view('Admin.tickets.adminticket', compact('tickets', 'admin_tickets_count'));
+    // }
     /**
      * Show the form for creating a new resource.
      */

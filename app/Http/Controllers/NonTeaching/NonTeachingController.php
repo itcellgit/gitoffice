@@ -50,14 +50,33 @@ class NonTeachingController extends Controller
         $dept_id=array();
 
         //$notifications = notifications::where('user_id', $user->id)->get();
-        $notifications = notifications::where('user_id', $user->id)
-        ->orderBy('created_at', 'desc')
-        ->get();
 
+
+        $notifications = notifications::where('user_id', $user->id)
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+
+        $notificationCount = $notifications->count();
+        //dd($notifications);
         Session::put('notifications', $notifications);
+        Session::put('notification_count', $notificationCount);
+
+
+
+        // $notifications = notifications::where('user_id', $user->id)
+        //             ->join('leave_staff_applications', 'notifications.id', '=', 'leave_staff_applications.id')
+        //             ->orderBy('notifications.date', 'desc')
+        //             ->select('notifications.*', 'leave_staff_applications.start', 'leave_staff_applications.end')
+        //             ->orderBy('created_at', 'desc')
+        //             ->get();
+        //             //dd($notifications);
+        //             $notificationCount = $notifications->count();
+
+
+        // Session::put('notifications', $notifications);
+        // Session::put('notification_count', $notificationCount);
 
       
-
         //dd($notifications);
       
         foreach($staff->activedepartments as $depts)
@@ -96,8 +115,10 @@ class NonTeachingController extends Controller
         ->select('notices.*')->distinct()
         ->get();
 
-        return view('Staff.Non-Teaching.dashboard',compact(['staff','ntactivityattendedCount','ntactivityconductedCount','dept','departmentevent','departmentnotice','notifications']));
+        return view('Staff.Non-Teaching.dashboard',compact(['staff','ntactivityattendedCount','ntactivityconductedCount','dept','departmentevent','departmentnotice','notifications','notificationCount']));
     }
+
+  
 
     public function departments(Request $request)
     {
@@ -139,7 +160,7 @@ class NonTeachingController extends Controller
 
 
 
-
+    
 
     public function update_staff_information(  $staff)
     {
@@ -212,7 +233,7 @@ class NonTeachingController extends Controller
         //check if designation has changed
         // return redirect('/Staff/Non-Teaching/ntupdateprofile/'.$staff->id)->with('status',$status);
 
-        return redirect('/Staff/Non-Teaching/ntupdateprofile')->with('status',$status);
+        return redirect('/Staff/Non-Teaching/ntupdateprofile/'.$staff->id)->with('status',$status);
 
     }
 

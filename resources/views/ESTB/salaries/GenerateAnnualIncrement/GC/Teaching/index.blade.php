@@ -289,24 +289,16 @@
                                                             <td  class="border border-gray-300 px-4 py-2"><span>{{'₹'.number_format($data[$st->id]['total'])}}</span></td>
                                                             <td  class="border border-gray-300 px-4 py-2"><span>{{'₹'.number_format($data[$st->id]['incremente_value'])}}</span></td>
                                                             <td  class="border border-gray-300 px-4 py-2"><span>
-                                                            @foreach($st->annualIncrement as $st_ai)
-                                                            {{\Carbon\Carbon::parse($st_ai->wef)->format('d-M-Y')}}
-                                                             @endforeach
-                                                            
+                                                                @foreach($st->annualIncrement as $st_ai)
+                                                                {{\Carbon\Carbon::parse($st_ai->wef)->format('d-M-Y')}}
+                                                                @endforeach
+                                                                
                                                             </span></td>
 
-                                                            {{-- <tr class="{{ ($data[$st->id]['wef'])($st->date_of_increment) ? 'background-color: red;' : '' }}">
-
-                                                                 <td>
-                                                                    <span>{{ $data[$st->id]['wef']->format('d-M-Y') }}</span>
-                                                                </td>
-                                                            </tr> --}}
-
-                                                            {{-- <tr style="{{ ($data[$st->id]['wef'] !=$st->date_of_increment)? 'background-color: red;' : '' }}"> --}}
                                                                 <td class="border border-gray-300 px-4 py-2">
                                                                     <span>{{ Carbon\Carbon::parse($data[$st->id]['wef'])->format('d-M-Y') }}</span>
                                                                 </td>
-                                                            {{-- </tr> --}}
+                                                            
 
                                                             
                                                             {{-- <td><span>{{ Carbon\Carbon::parse($data[$st->id]['wef'])->format('d-M-Y') }}</span></td> --}}

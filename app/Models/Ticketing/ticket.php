@@ -29,8 +29,11 @@ class ticket extends Model
         return $this->hasmany(post_ticket::class, 'ticket_id','id');
 
     }
-    // public function staff()
-    // {
-    //     return $this->belongsTo(staff::class);
-    // }
+    public function staff()
+
+{
+
+    return $this->belongsTo(Staff::class, 'staff_id');
+
+}
 }

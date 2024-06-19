@@ -313,6 +313,7 @@
                                                     </td>
                                                     <td>{{$ticket->status}}</td> 
                                                    <td><span>{{$ticket->user->email . ' ' . $ticket->user->fname . ' ' . $ticket->user->mname . ' ' . $ticket->user->lname }}</span></td>
+                                                   {{-- <td><span>{{ optional($ticket->staff)->fname . ' ' . optional($ticket->staff)->mname . ' ' . optional($ticket->staff)->lname }}</span></td> --}}
                                                    {{-- <td><span>{{$staffticket->fname . ' ' . $staffticket->mname . ' ' . $staffticket->lname }}</span></td> --}}
                                                   
 

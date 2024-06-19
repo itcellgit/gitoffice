@@ -39,8 +39,10 @@ class HodController extends Controller
 
        //dd($notifications);
        Session::put('notifications', $notifications);
+
+    
        
-       //dd(Session::get('notifications'));
+    
 
         //to display number of employees in particular departmnet
         $department_id=Session ::get('deptid');

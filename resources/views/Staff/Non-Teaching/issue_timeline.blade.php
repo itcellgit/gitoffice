@@ -91,9 +91,7 @@
                                                         </button>
                                                     </div>
 
-                                                    <form
-                                                        action="{{ route('Staff.Non-Teaching.issue_timeline.store', [$staff->id,$student_issue->id]) }}"
-                                                        method="post">
+                                                    <form action="{{ route('Staff.Non-Teaching.issue_timeline.store', ['staff' => $staff->id, 'student_issue' => $student_issue->id]) }}" method="post">
                                                         @csrf
                                                         <div class="ti-modal-body">
                                                             <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">

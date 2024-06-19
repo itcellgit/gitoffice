@@ -690,5 +690,8 @@
                 })
                 calendar.render()
             });
+
+            
+
         </script>
 @endsection

@@ -46,23 +46,9 @@ class TdsheadsController extends Controller
         $tdshead->category = $request['category'];
         $tdshead->description = $request['description'];
         $tdshead->status = $request['status'];
-        $tdshead->save();
+        $tdshead->update();
         return redirect()->route('ESTB.TDS.TdsHeads.index');  
     }
-    
-    public function store2(StoreInvestmentCategoryRequest $request)
-    {   
-        // $request->validate([
-        // "investment_type"=> "required"
-        // ]);
-        // $invest_category = new InvestmentCategory();
-        // $tdsheads = new tdshead1();
-        // $invest_category->investment_type = $request['investment_type'];
-        // $invest_category->tds_id= $request['tds_id'];
-        // $invest_category->save();
-        // return redirect()->route('ESTB.TDS.TdsHeads.show', ['tdsheads' => $tdsheads->id]);
-    }
-
     /**
      * Display the specified resource.
      */
@@ -85,45 +71,36 @@ class TdsheadsController extends Controller
         return view('ESTB.TDS.TdsHeads.update',compact('tdshead'));
     }
 
-
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdatetdsheadsRequest $request, tdshead1 $tdsheads)
     {
-        $tdshead= Tdshead1::find($tdsheads->id);
+        // $tdshead= tdshead1::find($tdsheads->id);
         // $tdshead = new tdsheads();
-        $tdshead->category = $request['category'];
-        $tdshead->description = $request['description'];
-        $tdshead->status = $request['status'];
-        $tdshead->save();
+        // $tdshead->category = $request['category'];
+        // $tdshead->description = $request['description'];
+        // $tdshead->status = $request['status'];
+        // $tdshead->save();
+        $tdsheads->update([
+            'category' => $request->category,
+            'description' => $request->description,
+            'status' => $request->status,
+        ]);
         return redirect()->route('ESTB.TDS.TdsHeads.index');
     }
-
-    public function update2(UpdateInvestmentCategoryRequest $request, InvestmentCategory $investmentCategory)
-    {
-        $invest_category = InvestmentCategory::find($investmentCategory->id);
-        $invest_category = new InvestmentCategory();
-        $invest_category->investmenttype =  $request['investment_type'];
-        $invest_category->tdssection = $request['tds_id'];
-        $invest_category->save();
-    }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(tdshead1 $tdsheads)
     {
-        // dd($tdsheads);
         // $tdshead = tdshead1::find( $tdsheads->id);
         // $tdshead->delete();
         // dd($tdsheads); // Debug incoming request
-    
         $tdshead = tdshead1::find($tdsheads->id);
         if (!$tdshead) {
             return redirect()->route('ESTB.TDS.TdsHeads.index')->with('error', 'Record not found.');
         }
-
         $tdshead->delete();
         return redirect()->route('ESTB.TDS.TdsHeads.index')->with('success', 'Record deleted successfully.');
     }

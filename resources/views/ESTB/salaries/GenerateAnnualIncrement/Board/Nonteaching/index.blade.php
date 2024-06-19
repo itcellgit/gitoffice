@@ -91,7 +91,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="ti-modal-body">
-                                                    <form id="annualincrementStaffFormforBoard" action="/ESTB/salaries/GenerateAnnualIncrement/Board/Nonteaching/create" method="post">
+                                                    {{-- <form id="annualincrementStaffFormforBoard" action="/ESTB/salaries/GenerateAnnualIncrement/Board/Nonteaching/create" method="post"> --}}
                                                         @csrf
                                                         <div class="flex justify-center space-x-4 text-center">
                                                         <h1 class="font-bold">Generate Annual Increment For</h1>

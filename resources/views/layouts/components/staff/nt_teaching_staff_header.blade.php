@@ -56,78 +56,115 @@
                 data-hs-dropdown-placement="bottom-right">
                 <button id="dropdown-notification" type="button"
                     class="hs-dropdown-toggle ti-dropdown-toggle p-0 border-0 flex-shrink-0 h-[2.375rem] w-[2.375rem] rounded-full shadow-none focus:ring-gray-400 text-xs dark:focus:ring-white/10">
-                        {{-- notification logo --}}
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M20 17H22V19H2V17H4V10C4 5.58172 7.58172 2 12 2C16.4183 2 20 5.58172 20 10V17ZM9 21H15V23H9V21Z"></path></svg>
                     <span class="flex absolute h-5 w-5 top-0 ltr:right-0 rtl:left-0 -mt-1 ltr:-mr-1 rtl:-ml-1">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success/80 opacity-75"></span>
-                        <span
-                        class="relative inline-flex rounded-full h-5 w-5 bg-success text-white justify-center items-center" id="notify-data"></span>
+                        <span class="relative inline-flex rounded-full h-5 w-5 bg-success text-white justify-center items-center" id="notify-data">
+                            {{ Session::get('notification_count', 0) }}
+                        </span>
                     </span>
                 </button>
-                <div class="hs-dropdown-menu ti-dropdown-menu w-[20rem] border-0" aria-labelledby="dropdown-notification">
+                <div class="hs-dropdown-menu ti-dropdown-menu w-[20rem] border-0" aria-labelledby="dropdown-notification" >
                     <div class="ti-dropdown-header !bg-primary border-b dark:border-white/10 flex justify-between items-center">
                         <p class="ti-dropdown-header-title !text-white font-semibold">Notifications</p>
                         <a href="javascript:void(0)" id="mark-all-read" class="badge bg-black/20 text-white rounded-sm">Mark All Read</a>
                     </div>
                   
-                    @if(session()->has('notifications'))
-                        @foreach(session('notifications') as $notification)
-                            <div class="ti-dropdown-item relative header-box">
-                                <a class="flex space-x-3 rtl:space-x-reverse">
-                                    <div class="ltr:mr-2 rtl:ml-2 avatar rounded-full ring-0">
-                                        <img src="{{asset('build/assets/img/users/avtar.jpeg')}}" alt="img" class="rounded-sm">
+                    <div class="ti-dropdown-divider divide-y divide-gray-200 dark:divide-white/10">
+                        <div class="py-2 first:pt-0 last:pb-0" id="allNotifyContainer" style="max-height: 300px; overflow-y: auto;">
+                            @if(session()->has('notifications'))
+                                @foreach(session('notifications') as $notification)
+                                    <div class="ti-dropdown-item relative header-box">
+                                        <a class="flex space-x-3 rtl:space-x-reverse">
+                                            <div class="ltr:mr-2 rtl:ml-2 avatar rounded-full ring-0">
+                                                <img src="{{asset('build/assets/img/users/avtar.jpeg')}}" alt="img" class="rounded-sm">
+                                            </div>
+                                            <div class="relative w-full">
+                                                <h5 class="text-sm text-gray-800 dark:text-white font-semibold mb-1 notification-item">{{ $notification['notification_type'] }}</h5>
+                                                <p class="text-xs mb-1 text-black-400 font-bold">{{ $notification['description'] }}</p>
+                                                <p class="text-xs text-black">{{ $notification['date'] }}</p>
+                                                {{-- <p>
+                                                    <span>{{\Carbon\Carbon::parse($notification->start)->format('d-M-Y') }}</span>
+                                                    <span>To</span>
+                                                    <span>{{\Carbon\Carbon::parse($notification->end)->format('d-M-Y') }}</span>
+                                                </p> --}}
+                                            </div>
+                                        </a>
+                                        <a aria-label="anchor" href="javascript:void(0);" class="header-remove-btn ltr:ml-auto rtl:mr-auto text-lg text-gray-500/20 dark:text-white/20 hover:text-gray-800 dark:hover:text-white">
+                                            <i class="ri-close-circle-line"></i>
+                                        </a>
                                     </div>
-                                    <div class="relative w-full">
-                                        <h5 class="text-sm text-gray-800 dark:text-white font-semibold mb-1 notification-item">{{ $notification['notification_type'] }}</h5>
-                                        <p class="text-xs mb-1 text-black-400 font-bold">{{ $notification['description'] }}</p>
-                                        <p class="text-xs text-black">{{ $notification['date'] }}</p>
-                                    </div>
-                                </a>
-                                <a aria-label="anchor" href="javascript:void(0);" class="header-remove-btn ltr:ml-auto rtl:mr-auto text-lg text-gray-500/20 dark:text-white/20 hover:text-gray-800 dark:hover:text-white">
-                                    <i class="ri-close-circle-line"></i>
-                                </a>
-                            </div>
-                        @endforeach
-                    @else
-                        <div class="ti-dropdown-item relative header-box">
-                            <p class="text-sm text-gray-800 dark:text-white">No notifications available.</p>
-                        </div>
-                    @endif
+                                @endforeach
+                            @else
+                                <div class="ti-dropdown-item relative header-box">
+                                    <p class="text-sm text-gray-800 dark:text-white">No notifications available.</p>
+                                </div>
+                            @endif
 
-                    @if(session('latest_issue'))
-                        @php $latest_issue = session('latest_issue'); @endphp
-                        <ul class="notification-list">
-                            <li class="notification-item">
-                                <!-- Add necessary elements for the new notification -->
-                                <a href="http://10.10.2.115:8000/Staff/Non-Teaching/viewstudentissues" class="flex space-x-3 rtl:space-x-reverse">
-                                    <div class="ltr:mr-2 rtl:ml-2 avatar rounded-full ring-0">
-                                        <img src="{{ asset('build/assets/img/users/avtar.jpeg') }}" alt="img" class="rounded-sm">
-                                    </div>
-                                    <div class="relative w-full">
-                                        <p class="text-xs mb-1 max-w-[200px] truncate">New Student Issue Received</p>
-                                        <p class="text-xs text-black">{{ $latest_issue->created_at->format('Y-m-d H:i:s') }}</p>
-                                        <!-- <p class="text-xs text-black">{{ $latest_issue->description }}</p> -->
-                                    </div>
-                                </a>
-                                <a aria-label="anchor" href="javascript:void(0);" class="header-remove-btn ltr:ml-auto rtl:mr-auto text-lg text-gray-500/20 dark:text-white/20 hover:text-gray-800 dark:hover:text-white">
-                                    <i class="ri-close-circle-line"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    @else
-                        <li>No notifications found</li>
-                    @endif
-                
+                            @if(session('latest_issue'))
+                                @php $latest_issue = session('latest_issue'); @endphp
+                                <ul class="notification-list">
+                                    <li class="notification-item">
+                                        <!-- Add necessary elements for the new notification -->
+                                        <a href="http://10.10.2.115:8000/Staff/Non-Teaching/viewstudentissues" class="flex space-x-3 rtl:space-x-reverse">
+                                            <div class="ltr:mr-2 rtl:ml-2 avatar rounded-full ring-0">
+                                                <img src="{{ asset('build/assets/img/users/avtar.jpeg') }}" alt="img" class="rounded-sm">
+                                            </div>
+                                            <div class="relative w-full">
+                                                <p class="text-xs mb-1 max-w-[200px] truncate">New Student Issue Received</p>
+                                                <p class="text-xs text-black">{{ $latest_issue->created_at->format('Y-m-d H:i:s') }}</p>
+                                                <!-- <p class="text-xs text-black">{{ $latest_issue->description }}</p> -->
+                                            </div>
+                                        </a>
+                                        <a aria-label="anchor" href="javascript:void(0);" class="header-remove-btn ltr:ml-auto rtl:mr-auto text-lg text-gray-500/20 dark:text-white/20 hover:text-gray-800 dark:hover:text-white">
+                                            <i class="ri-close-circle-line"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            @else
+                                <li>No notifications found</li>
+                            @endif
+                        </div>
+                    </div>
 
             
                     <script>
                         document.getElementById('mark-all-read').addEventListener('click', function() {
                             var notificationItems = document.querySelectorAll('.notification-item');
                             notificationItems.forEach(function(item) {
-                                item.style.color = '#ff0000'; // red text color
+                                item.style.color = '#ff0000'; 
                             });
+
+                            var notifyData = document.getElementById('notify-data');
+                            notifyData.textContent = '0';
+                            
                         });
                     </script>
+
+                    {{-- <script>
+                        document.getElementById('mark-all-read').addEventListener('click', function() {
+                            var notificationItems = document.querySelectorAll('.notification-item');
+                            notificationItems.forEach(function(item) {
+                                item.style.color = '#ff0000'; 
+                            });
+
+                            var notifyData = document.getElementById('notify-data');
+                            notifyData.textContent = '0';
+
+                            // Store notification count in sessionStorage
+                            sessionStorage.setItem('notification_count', '0');
+                        });
+
+                        // Retrieve count from sessionStorage on page load
+                        window.addEventListener('load', function() {
+                            var storedCount = sessionStorage.getItem('notification_count');
+                            if (storedCount !== null) {
+                                var notifyData = document.getElementById('notify-data');
+                                notifyData.textContent = storedCount;
+                            }
+                        });
+
+                    </script> --}}
                 
                 </div>
             </div>

@@ -170,7 +170,18 @@
                                                                 @csrf  
                                                                 
                                                                 <div class="leave_form_div" id="leave_form" >
-                                                                     
+                                                                    <div class="grid lg:grid-cols-1 gap-2 space-y-2 lg:space-y-0 pt-6 pb-6">
+                                                                        
+                                                                        <div class="max-w-sm space-y-2 pb-6 ">
+                                                                        <label for="" class="ti-form-label font-bold">Apply Leave for :( staff )<span class="text-red-500">*</span></label>
+                                                                        <select class="ti-form-select" name="type" id="type" required>
+                                                                            <option value="#">Choose a staff</option>
+                                                                            @foreach ($staff as $st)
+                                                                                <option value="{{$st->id}}">{{$st->fname}} {{$st->mname}} {{$st->lname}}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0 pt-6 pb-6">
                                                                         
                                                                         <div class="max-w-sm space-y-2 pb-6 ">
@@ -178,10 +189,10 @@
                                                                             <select class="ti-form-select" name="type" id="type" required>
                                                                                 <option value="#">Choose Leave Type</option>
                                                                                 
-                                                                                {{-- @foreach ($leaves as $l)
-                                                                                    <option value="{{$l->leave_id}}">{{$l->shortname}}</option>
+                                                                                @foreach ($leaves as $l)
+                                                                                    <option value="{{$l->leave_id}}">{{$l->longname}}: ({{$l->vacation_type}})</option>
                                                                                 @endforeach
-                                                                                 --}}
+                                                                                
                                                                             </select>
                                                                         </div>
                                                                         <div id="cl_type_block">
@@ -245,16 +256,13 @@
                                                                     <div class="grid lg:grid-cols-2 gap-2 space-y-2 lg:space-y-0">
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="" class="ti-form-label font-bold">Alternate:</label>
-                                                                            <select class="ti-form-select" name="alternate" id="alternate" required>
+                                                                            <select class="ti-form-select" name="alternate" id="alternate-staff-select" required>
                                                                                 <option value="#">Choose Alternate</option>
                                                                                 
-                                                                                {{-- @foreach ($dept_staff as $depts)
-                                                                                <optgroup label="{{$depts->dept_name}}">
-                                                                                    @foreach ($depts->staff as $dstaff)
-                                                                                            <option value="{{$dstaff->id}}">{{$dstaff->fname.' '.$dstaff->mname.' '.$dstaff->lname}}</option>
-                                                                                    @endforeach
-                                                                                </optgroup>
+                                                                                {{-- @foreach ($alternate_staff as $st)
+                                                                                    <option value="{{$st->id}}">{{$st->fname}} {{$st->mname}} {{$st->lname}}</option>
                                                                                 @endforeach --}}
+
                                                                             </select>
                                                                         </div>
                                                                         <div class="max-w-sm space-y-3 pb-6">
@@ -440,6 +448,35 @@
         src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#staff-select').change(function() {
+                    var selectedStaffId = $(this).val();
+                    alert('123');
+                    $.ajax({
+                        url: '{{ route("fetch-alternate-staff") }}',
+                        method: 'GET',
+                        data: { selected_staff_id: selectedStaffId },
+
+                        //dd($selectedStaffId);
+                        success: function(response) {
+                            if (response.alternate_staff) {
+                                var alternateStaffHtml = '';
+                                response.alternate_staff.forEach(function(staff) {
+                                    alternateStaffHtml += '<option value="' + staff.id + '">' + staff.fname + ' ' + staff.lname + '</option>';
+                                });
+                                $('#alternate-staff-select').html(alternateStaffHtml);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error loading alternate staff:', error);
+                        }
+                    });
+                });
+            });
+        </script>
 
         <script type="text/javascript">
             $.ajaxSetup({

@@ -71,7 +71,7 @@ class TaxSlabController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTaxSlabRequest $request, $regime_id, TaxSlab $taxSlab)
+    public function update(UpdateTaxSlabRequest $request,$regime_id,TaxSlab $taxSlab)
 {
     $taxSlab->lower_limit = $request->e_lower_limit;
     $taxSlab->regime_id = $request->e_regime_id; // Assuming regime_id comes from the request

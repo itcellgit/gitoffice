@@ -942,17 +942,17 @@
                 var url=base_url+'/ESTB/staff/'+staff+'/qualifications';
                 //alert(url);
                         $.ajax({
-                                    url:url,
-                                    method:'GET',
-                                    data:{'staff':staff},
-                                    success:function(data) {
-                                    // console.log(data);
-                                        $('#qualification-tab').html(data).addClass('active');
-                                    },
-                                    error: function (error) {
-                                        console.log(error);
-                                    }
-                                });
+                            url:url,
+                            method:'GET',
+                            data:{'staff':staff},
+                            success:function(data) {
+                            // console.log(data);
+                                $('#qualification-tab').html(data).addClass('active');
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        });
                 });
 
 

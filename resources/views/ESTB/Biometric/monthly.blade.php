@@ -145,6 +145,7 @@
                                             <th class="border border-gray-300 px-4 py-2">Entry Device</th>
                                             <th class="border border-gray-300 px-4 py-2">Exit Log</th>
                                             <th class="border border-gray-300 px-4 py-2">Exit Device</th>
+                                            <th class="border border-gray-300 px-4 py-2">Duration</th>
                                             {{-- <th class="border border-gray-300 px-4 py-2">Action</th> --}}
 
                                         </tr>
@@ -173,10 +174,25 @@
                                                         {{ $log['exitDevice'] }}
                                                     @endif
                                                 </td>
+                                                <td class="border border-gray-300 px-4 py-2">
+                                                    @if ($log['duration'])
+                                                        {{ $log['duration'] }}
+                                                    @endif
+                                                </td>
                                                 
                                             </tr>
                                         @endforeach
                                     </tbody>
+                                    <tfoot>
+    <tr><strong>
+        <td class="border border-gray-300 px-4 py-2" colspan="6"><b>Average work duration Duration of the month is :
+        
+            @if ($averageDurations[$selectedEmployee->EmployeeCode] ?? null)
+                {{ $averageDurations[$selectedEmployee->EmployeeCode] }}
+            @endif
+        </b></td>
+    </tr>
+</tfoot>
                                 </table>
                                         @endforeach
                                     </div>  

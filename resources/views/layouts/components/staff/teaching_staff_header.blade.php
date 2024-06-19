@@ -58,8 +58,9 @@
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M20 17H22V19H2V17H4V10C4 5.58172 7.58172 2 12 2C16.4183 2 20 5.58172 20 10V17ZM9 21H15V23H9V21Z"></path></svg>
                     <span class="flex absolute h-5 w-5 top-0 ltr:right-0 rtl:left-0 -mt-1 ltr:-mr-1 rtl:-ml-1">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success/80 opacity-75"></span>
-                        <span
-                        class="relative inline-flex rounded-full h-5 w-5 bg-success text-white justify-center items-center" id="notify-data"></span>
+                        <span class="relative inline-flex rounded-full h-5 w-5 bg-success text-white justify-center items-center" id="notify-data">
+                          
+                        </span>
                     </span>
                 </button>
                 <div class="hs-dropdown-menu ti-dropdown-menu w-[20rem] border-0" aria-labelledby="dropdown-notification">
@@ -80,7 +81,12 @@
                                                 <h5 class="text-sm text-gray-800 dark:text-white font-semibold mb-1 notification-type">{{ $notification['notification_type'] }}</h5>
                                                 <p class="text-xs mb-1 text-black-400 font-bold">{{ $notification['description'] }}</p>
                                                 <p class="text-xs text-black">{{ $notification['date'] }}</p>
-                                                
+                                                {{-- <p>
+                                                    <span>{{\Carbon\Carbon::parse($notification->start)->format('d-M-Y') }}</span>
+                                                    <span>To</span>
+                                                    <span>{{\Carbon\Carbon::parse($notification->end)->format('d-M-Y') }}</span>
+
+                                                </p> --}}
                                             </div>
                                         </a>
                                         <a aria-label="anchor" href="javascript:void(0);" class="header-remove-btn ltr:ml-auto rtl:mr-auto text-lg text-gray-500/20 dark:text-white/20 hover:text-gray-800 dark:hover:text-white">

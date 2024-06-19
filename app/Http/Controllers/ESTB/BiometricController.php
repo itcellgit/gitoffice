@@ -586,84 +586,205 @@ class BiometricController extends Controller
         return response()->json(['message' => 'Emails sent successfully', 'staff_data' => $missingData]);
     }
 
-    public function filterEmployeeMonthlyLogs(Request $request)
-    {
-        $empcode = $request->input('employee');
-        $currentMonth = $request->input('month') ?? date('n');
-        $currentYear = $request->input('year') ?? date('Y');
+    // public function filterEmployeeMonthlyLogs(Request $request)
+    // {
+    //     $empcode = $request->input('employee');
+    //     $currentMonth = $request->input('month') ?? date('n');
+    //     $currentYear = $request->input('year') ?? date('Y');
     
-        // Generate table name based on current month and year
-        $tableName = "DeviceLogs_" . $currentMonth . "_" . $currentYear;
+    //     // Generate table name based on current month and year
+    //     $tableName = "DeviceLogs_" . $currentMonth . "_" . $currentYear;
     
-        // Calculate the first and last date of the month
-        $firstDayOfMonth = date("Y-m-01", strtotime("$currentYear-$currentMonth-01"));
-        $lastDayOfMonth = date("Y-m-t", strtotime("$currentYear-$currentMonth-01"));
+    //     // Calculate the first and last date of the month
+    //     $firstDayOfMonth = date("Y-m-01", strtotime("$currentYear-$currentMonth-01"));
+    //     $lastDayOfMonth = date("Y-m-t", strtotime("$currentYear-$currentMonth-01"));
     
-        // Retrieve log entries from the database for the entire month
-        $logs = DB::connection('mysql2')
-            ->table($tableName)
-            ->join('devices', "$tableName.DeviceId", '=', 'devices.DeviceId')
-            ->join('employees', "$tableName.EmployeeCode", '=', 'employees.EmployeeCode')
-            ->whereBetween('LogDate_Date', [$firstDayOfMonth, $lastDayOfMonth])
-            ->where("$tableName.EmployeeCode", $empcode)
-            ->orderBy("$tableName.LogDate", 'asc')
-            ->get();
+    //     // Retrieve log entries from the database for the entire month
+    //     $logs = DB::connection('mysql2')
+    //         ->table($tableName)
+    //         ->join('devices', "$tableName.DeviceId", '=', 'devices.DeviceId')
+    //         ->join('employees', "$tableName.EmployeeCode", '=', 'employees.EmployeeCode')
+    //         ->whereBetween('LogDate_Date', [$firstDayOfMonth, $lastDayOfMonth])
+    //         ->where("$tableName.EmployeeCode", $empcode)
+    //         ->orderBy("$tableName.LogDate", 'asc')
+    //         ->get();
             
     
-        // Group logs by employee code
-        $logsByEmployee = $logs->groupBy('EmployeeCode');
-        $employeeLogs = [];
+    //     // Group logs by employee code
+    //     $logsByEmployee = $logs->groupBy('EmployeeCode');
+    //     $employeeLogs = [];
     
-        // Iterate through each employee's logs
-        foreach ($logsByEmployee as $employeeCode => $logs) {
-            // Group logs by date
-            $logsByDate = $logs->groupBy(function($log) {
-                return date('Y-m-d', strtotime($log->LogDate));
-            });
+    //     // Iterate through each employee's logs
+    //     foreach ($logsByEmployee as $employeeCode => $logs) {
+    //         // Group logs by date
+    //         $logsByDate = $logs->groupBy(function($log) {
+    //             return date('Y-m-d', strtotime($log->LogDate));
+    //         });
     
-            foreach ($logsByDate as $date => $dailyLogs) {
-                // Get the first log entry of the day (entry log)
-                $entryLog = $dailyLogs->first();
-                // Get the last log entry of the day, or null if there's only one log (exit log)
-                $exitLog = $dailyLogs->count() > 1 ? $dailyLogs->last() : null;
+    //         foreach ($logsByDate as $date => $dailyLogs) {
+    //             // Get the first log entry of the day (entry log)
+    //             $entryLog = $dailyLogs->first();
+    //             // Get the last log entry of the day, or null if there's only one log (exit log)
+    //             $exitLog = $dailyLogs->count() > 1 ? $dailyLogs->last() : null;
     
-                // Store the entry and exit logs for the employee on that date
-                $employeeLogs[$employeeCode][$date] = [
-                    'entryLog' => $entryLog,
-                    'exitLog' => $exitLog,
-                    'entryDevice' => $entryLog ? $entryLog->DeviceFName : null,
-                    'exitDevice' => $exitLog ? $exitLog->DeviceFName : null,
-                ];
+    //             // Store the entry and exit logs for the employee on that date
+    //             $employeeLogs[$employeeCode][$date] = [
+    //                 'entryLog' => $entryLog,
+    //                 'exitLog' => $exitLog,
+    //                 'entryDevice' => $entryLog ? $entryLog->DeviceFName : null,
+    //                 'exitDevice' => $exitLog ? $exitLog->DeviceFName : null,
+    //             ];
+    //         }
+    //     }
+    
+    //     // Retrieve all active employees
+    //     $employees = Staff::with('activedepartments')
+    //         ->whereIn('id', function($q) {
+    //             $q->select('staff_id')
+    //                 ->from('association_staff')
+    //                 ->where('status', 'active')
+    //                 ->whereIn('association_id', function($q1) {
+    //                     $q1->select('id')
+    //                         ->from('associations')
+    //                         ->whereIn('asso_name', [
+    //                             'Confirmed',
+    //                             'Probationary',
+    //                             'Contractual',
+    //                             'Promotional Probationary',
+    //                             'Temporary (non teaching)'
+    //                         ]);
+    //                 });
+    //         })
+    //         ->get();
+    
+    //     // Get the selected employee's details
+    //     $selectedEmployee = $employees->firstWhere('EmployeeCode', $empcode);
+    
+    //     // Pass data to the Blade view
+    //     return view('ESTB.Biometric.monthly', compact(['employeeLogs', 'employees', 'currentMonth', 'currentYear', 'selectedEmployee']));
+    // }
+    public function filterEmployeeMonthlyLogs(Request $request)
+{
+    $empcode = $request->input('employee');
+    $currentMonth = $request->input('month') ?? date('n');
+    $currentYear = $request->input('year') ?? date('Y');
+
+    // Generate table name based on current month and year
+    $tableName = "DeviceLogs_" . $currentMonth . "_" . $currentYear;
+
+    // Calculate the first and last date of the month
+    $firstDayOfMonth = date("Y-m-01", strtotime("$currentYear-$currentMonth-01"));
+    $lastDayOfMonth = date("Y-m-t", strtotime("$currentYear-$currentMonth-01"));
+
+    // Retrieve log entries from the database for the entire month
+    $logs = DB::connection('mysql2')
+        ->table($tableName)
+        ->join('devices', "$tableName.DeviceId", '=', 'devices.DeviceId')
+        ->join('employees', "$tableName.EmployeeCode", '=', 'employees.EmployeeCode')
+        ->whereBetween('LogDate_Date', [$firstDayOfMonth, $lastDayOfMonth])
+        ->where("$tableName.EmployeeCode", $empcode)
+        ->orderBy("$tableName.LogDate", 'asc')
+        ->get();
+
+    // Group logs by employee code
+    $logsByEmployee = $logs->groupBy('EmployeeCode');
+    $employeeLogs = [];
+    $employeeTotalDurations = [];
+    $employeeWorkDays = [];
+
+    foreach ($logsByEmployee as $employeeCode => $logs) {
+        // Group logs by date
+        $logsByDate = $logs->groupBy(function($log) {
+            return date('Y-m-d', strtotime($log->LogDate));
+        });
+
+        foreach ($logsByDate as $date => $dailyLogs) {
+            // Sort logs by LogDate
+            $dailyLogs = $dailyLogs->sortBy('LogDate')->values();
+
+            $entryLog = null;
+            $exitLog = null;
+            $dailyDurationSeconds = 0;
+
+            foreach ($dailyLogs as $key => $log) {
+                if ($key % 2 == 0) {
+                    $entryLog = $log;
+                } else {
+                    $exitLog = $log;
+                    if ($entryLog && $exitLog) {
+                        $entryTime = strtotime($entryLog->LogDate);
+                        $exitTime = strtotime($exitLog->LogDate);
+                        $dailyDurationSeconds += ($exitTime - $entryTime);
+                    }
+                }
             }
+
+            // Format the total duration for the day
+            $duration = null;
+            if ($dailyDurationSeconds > 0) {
+                $duration = gmdate('H:i:s', $dailyDurationSeconds);
+
+                // Update total duration and workdays count
+                if (!isset($employeeTotalDurations[$employeeCode])) {
+                    $employeeTotalDurations[$employeeCode] = 0;
+                }
+                if (!isset($employeeWorkDays[$employeeCode])) {
+                    $employeeWorkDays[$employeeCode] = 0;
+                }
+                $employeeTotalDurations[$employeeCode] += $dailyDurationSeconds;
+                $employeeWorkDays[$employeeCode]++;
+            }
+
+            // Store the entry and exit logs for the employee on that date
+            $employeeLogs[$employeeCode][$date] = [
+                'entryLog' => $dailyLogs->first(),
+                'exitLog' => $dailyLogs->count() > 1 ? $dailyLogs->last() : null,
+                'entryDevice' => $dailyLogs->first() ? $dailyLogs->first()->DeviceFName : null,
+                'exitDevice' => $dailyLogs->count() > 1 ? $dailyLogs->last()->DeviceFName : null,
+                'duration' => $duration,
+            ];
         }
-    
-        // Retrieve all active employees
-        $employees = Staff::with('activedepartments')
-            ->whereIn('id', function($q) {
-                $q->select('staff_id')
-                    ->from('association_staff')
-                    ->where('status', 'active')
-                    ->whereIn('association_id', function($q1) {
-                        $q1->select('id')
-                            ->from('associations')
-                            ->whereIn('asso_name', [
-                                'Confirmed',
-                                'Probationary',
-                                'Contractual',
-                                'Promotional Probationary',
-                                'Temporary (non teaching)'
-                            ]);
-                    });
-            })
-            ->get();
-    
-        // Get the selected employee's details
-        $selectedEmployee = $employees->firstWhere('EmployeeCode', $empcode);
-    
-        // Pass data to the Blade view
-        return view('ESTB.Biometric.monthly', compact(['employeeLogs', 'employees', 'currentMonth', 'currentYear', 'selectedEmployee']));
     }
-    
+
+    // Calculate average work duration for each employee
+    $averageDurations = [];
+    foreach ($employeeTotalDurations as $employeeCode => $totalDurationSeconds) {
+        $workDays = $employeeWorkDays[$employeeCode];
+        if ($workDays > 0) {
+            $averageDurationSeconds = $totalDurationSeconds / $workDays;
+            $averageDurations[$employeeCode] = gmdate('H:i:s', $averageDurationSeconds);
+        } else {
+            $averageDurations[$employeeCode] = null;
+        }
+    }
+
+    // Retrieve all active employees
+    $employees = Staff::with('activedepartments')
+        ->whereIn('id', function($q) {
+            $q->select('staff_id')
+                ->from('association_staff')
+                ->where('status', 'active')
+                ->whereIn('association_id', function($q1) {
+                    $q1->select('id')
+                        ->from('associations')
+                        ->whereIn('asso_name', [
+                            'Confirmed',
+                            'Probationary',
+                            'Contractual',
+                            'Promotional Probationary',
+                            'Temporary (non teaching)'
+                        ]);
+                });
+        })
+        ->get();
+
+    // Get the selected employee's details
+    $selectedEmployee = $employees->firstWhere('EmployeeCode', $empcode);
+
+    // Pass data to the Blade view
+    return view('ESTB.Biometric.monthly', compact(['employeeLogs', 'employees', 'currentMonth', 'currentYear', 'selectedEmployee', 'averageDurations']));
+}
+
 
     
    

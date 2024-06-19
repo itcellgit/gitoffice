@@ -280,7 +280,9 @@ class StaffController extends Controller
        }
 
         $qualifications =DB::table('qualifications')->where('status','active')->get();
-        return view('/ESTB/staff/view', compact(['staff','user','payscales','castecategories','religions','associations','qualifications','departments','designations','add_designations','confirmationdate']));
+        $stafftax =staff::get();
+        $stafftaxregime =DB::table('staff_taxregime')->where('status','active')->get(); 
+        return view('/ESTB/staff/view', compact(['staff','user','payscales','castecategories','religions','associations','qualifications','departments','designations','add_designations','confirmationdate','stafftaxregime','stafftax']));
     }
 
     /**

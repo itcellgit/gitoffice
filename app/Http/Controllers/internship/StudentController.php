@@ -19,8 +19,6 @@ use Illuminate\Http\Request;
 class StudentController extends Controller
 {
 
-    
-
     public function filter(Request $request)
     {
         $user = Auth::user();
@@ -33,13 +31,14 @@ class StudentController extends Controller
             ->get();
        // dd($batch);
 
-        
-            return response()->json(['students' => $students]);
+        return response()->json(['students' => $students]);
+           
 
-            return redirect('/Teaching/internship/student');
-    
-       // return view('internship.index', compact('students', 'batch','staff_id'));
+          // return redirect('/Teaching/internship/student');
     }
+
+
+   
 
 
 
@@ -72,14 +71,14 @@ class StudentController extends Controller
      {
         $user = Auth::user();
         $staff_id = Auth::user()->id;
-            $staff = DB::table('staff')->where('user_id', $user->id)->first();
+        $staff = DB::table('staff')->where('user_id', $user->id)->first();
             if ($staff==null) {
                 // Handle the case where the staff is not found
                 abort(404, 'Staff not found.');
             }
             
             $students = student::where('staff_id', $staff->id)->with('interaction')->with('department')->get();
-            $studentCount = $students->count();
+            $studentCount = $students->where('staff_id', $staff->id)->count();
             $spocs = spoc::get();
             return view('internship.index', compact('studentCount', 'students', 'spocs', 'staff_id'));
        

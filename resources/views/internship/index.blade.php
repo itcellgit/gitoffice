@@ -139,7 +139,8 @@
                                                     
 
                                                         <div class="ti-modal-footer">
-                                                            <button type="button" class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10" data-hs-overlay="#hs-medium-modal1">
+                                                            <button type="button" class="hs-dropdown-toggle ti-btn ti-border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:ring-offset-white focus:ring-primary dark:bg-bgdark dark:hover:bg-black/20 dark:border-white/10 dark:text-white/70 dark:hover:text-white dark:focus:ring-offset-white/10" 
+                                                            data-hs-overlay="#hs-medium-modal1">
                                                                 Close
                                                             </button>
                                                             <button type="submit" class="ti-btn bg-primary text-white hover:bg-primary focus:ring-primary dark:focus:ring-offset-white/10">
@@ -269,6 +270,7 @@
                                             <th scope="col" class="dark:text-white/80">@sortablelink('name', 'name')</th>
                                             <th scope="col" class="dark:text-white/80">@sortablelink('batch', 'batch')</th>
                                             <th scope="col" class="dark:text-white/80">@sortablelink('id', 'department name')</th>
+                                            <th scope="col" class="dark:text-white/80">@sortablelink('action', 'action')</th>
 
 
 
@@ -487,6 +489,32 @@
                                         @endif
                                     </tbody>
                                 </table>
+
+                                {{-- <div class="table-responsive">
+                                    <table id="student_table" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>S.no</th>
+                                                <th>USN</th>
+                                                <th>Name</th>
+                                                <th>Batch</th>
+                                                <th>Department</th>
+                                                <!-- Add other columns as needed -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Students will be dynamically loaded here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> --}}
+
+
+
+
+
+
+
                             </div>
                         </div>
                     </div>
@@ -549,7 +577,7 @@ $(document).ready(function() {
     // Handle batch form submission
     $('#batchForm').on('submit', function(event) {
         event.preventDefault();
-        var batch = $('#batch').val();
+        var batch = $('select[name="batch"]').val();
         var staff_id = $('#staff_id').val();
        // var staff_id = {{ Auth::user()->id }};
 
@@ -557,8 +585,12 @@ $(document).ready(function() {
         $.ajax({
             url: "{{ route('internship.student.filter') }}",
             method: "POST",
-            data: { batch: batch, staff_id: staff_id },
+            data: {
+                _token: '{{ csrf_token() }}',
+                batch: batch,
+                staff_id: staff_id },
             success: function(response) {
+               // console.log(response);
                 var students = response.students;
                 var tableContent = '';
 
@@ -580,7 +612,7 @@ $(document).ready(function() {
                         <tr>
                             <td colspan="5" class="text-center">No Students Found for the Selected Batch.</td>
                         </tr>
-                    `;
+                   ` ;
                 }
 
             // Update the table body with new data

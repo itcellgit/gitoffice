@@ -20,6 +20,7 @@
                             {{-- <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium"> Welcome <span class="text-primary">{{$staff->fname.' '.$staff->mname.' '.$staff->lname}}</span></h3> --}}
                             <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium">
                                 <span class="text-primary">
+                                    
                                     @if(session('deptid') == 8)
                                         Welcome HOD Civil Engineering
                                     @elseif(session('deptid') == 5)
@@ -48,21 +49,98 @@
                                         Welcome HOD Chemistry
                                     @elseif(isset($staff))
                                         Welcome {{$staff->fname.' '.$staff->mname.' '.$staff->lname}}
-                                        @elseif(isset($egov_admin))
-                                        @if(isset($egov_admin_dept))
-                                            Welcome {{$egov_admin}} ({{$egov_admin_dept}})
-                                        @else
-                                            Welcome {{$egov_admin}} egov_admin
-                                        @endif
-                                        @else
-                                        Welcome DeanRnd
-                                    @endif 
+                                     @else
+                                        Welcome 
+                                    @endif
 
                                 </span>
-                            </h3>
+                            </h3> 
                             
-                           
-                          </div> 
+                             {{-- <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium">
+                                <span class="text-primary">
+                                    @if(isset($staff))
+                                        Welcome {{$staff->fname.' '.$staff->mname.' '.$staff->lname}}
+                                    @elseif(session('deptid')==8)
+                                        Welcome E-Governance Admin, Civil Engineering
+                                    @elseif(session('deptid')==5)
+                                        Welcome E-Governance Admin, Computer Science and Engineering
+                                    @elseif(session('deptid')==17)
+                                        Welcome E-Governance Admin, Architecture
+                                    @elseif(session('deptid')==9)
+                                        Welcome E-Governance Admin, Aeronautical Engineering
+                                    @elseif(session('deptid')==2)
+                                        Welcome E-Governance Admin, Electronics and Communication Engineering
+                                    @elseif(session('deptid')==7)
+                                        Welcome E-Governance Admin, Electrtical and Electronics Engineering
+                                    @elseif(session('deptid')==6)
+                                        Welcome E-Governance Admin, Information Science & Engineering
+                                    @elseif(session('deptid')==1)
+                                        Welcome E-Governance Admin, Mechanical Engineering
+                                    @elseif(session('deptid')==24)
+                                        Welcome E-Governance Admin, Master of Business Administration
+                                    @elseif(session('deptid')==3)
+                                        Welcome E-Governance Admin, Master of Computer Applications
+                                    @elseif(session('deptid')==13)
+                                        Welcome E-Governance Admin, Physics
+                                    @elseif(session('deptid')==12)
+                                        Welcome E-Governance Admin, Mathematics
+                                    @elseif(session('deptid')==14)
+                                        Welcome E-Governance Admin, Chemistry
+                                    @elseif(session('deptid')==8)
+                                        Welcome HOD, Civil Engineering
+                                    @elseif(session('deptid')==5)
+                                        Welcome HOD, Computer Science and Engineering
+                                    @elseif(session('deptid')==17)
+                                        Welcome HOD, Architecture
+                                    @elseif(session('deptid')==9)
+                                        Welcome HOD, Aeronautical Engineering
+                                    @elseif(session('deptid')==2)
+                                        Welcome HOD, Electronics and Communication Engineering
+                                    @elseif(session('deptid')==7)
+                                        Welcome HOD, Electrtical and Electronics Engineering
+                                    @elseif(session('deptid')==6)
+                                        Welcome HOD, Information Science & Engineering
+                                    @elseif(session('deptid')==1)
+                                        Welcome HOD, Mechanical Engineering
+                                    @elseif(session('deptid')==24)
+                                        Welcome HOD, Master of Business Administration
+                                    @elseif(session('deptid')==3)
+                                        Welcome HOD, Master of Computer Applications
+                                    @elseif(session('deptid')==13)
+                                        Welcome HOD, Physics
+                                    @elseif(session('deptid')==12)
+                                        Welcome HOD, Mathematics
+                                    @elseif(session('deptid')==14)
+                                        Welcome HOD, Chemistry
+                                    @else
+                                        Welcome
+                                    @endif
+                                    @if(session('deptid')==1 || session('deptid')==2 || session('deptid')==3 || session('deptid')==5 || session('deptid')==6 || session('deptid')==7 || session('deptid')==8 || session('deptid')==9 || session('deptid')==12 || session('deptid')==13 || session('deptid')==14 || session('deptid')==17 || session('deptid')==24)
+                                        WELCOME DEANRND
+                                    @endif
+                                </span>
+                            </h3>
+                              --}}
+                              {{-- <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium">
+                                <span class="text-primary">
+                                    
+                                @if(session('deptid') == 8)
+                                    Welcome {{ session('role') == 'Head of Department' ? 'Head of Department' : 'egov_admin' }}, Civil Engineering
+                                @elseif(session('deptid') == 5)
+                                    Welcome {{ session('role') == 'Head of Department' ? 'Head of Department' : 'egov_admin' }}, Computer Science and Engineering
+                                @elseif(session('deptid') == 3)
+                                    Welcome {{ session('role') == 'Head of Department' ? 'Head of Department' : 'egov_admin' }}, MCA
+                                @elseif(isset($staff))
+                                        Welcome {{$staff->fname.' '.$staff->mname.' '.$staff->lname}}
+                                     @else
+                                        Welcome 
+                                    @endif
+
+                                </span>
+                            </h3> 
+                            --}}
+                            
+                            </div> 
                         <div>
                             <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium"><span class="text-primary"></span></h3>
                         </div>

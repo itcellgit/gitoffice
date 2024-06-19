@@ -680,7 +680,7 @@
             var industryId = $(this).val();
             if (industryId) {
                 $.ajax({
-                    url: '/Teaching/internship/studentinternship/get-spocs/' + industryId,
+                    url: '/HOD/internship/studentinternship/get-spocs/' + industryId,
                     type: 'GET',
                     dataType: 'json',
                     success: function(data) {

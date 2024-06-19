@@ -234,41 +234,8 @@ class GenetareAnnualIncrementListController extends Controller
         return view('ESTB.salaries.GenerateAnnualIncrement.GC.Teaching.index',compact(['staff','data']));
     }
 
-//     public function importExcel(Request $request)
-//     {
-//         // Validate the uploaded file
-//         $request->validate([
-//             'excel_file' => 'required|file|mimes:xlsx,xls'
-//         ]);
-    
-//         // Process the uploaded file
-//         $file = $request->file('excel_file');
-//         $spreadsheet = IOFactory::load($file);
-//         $sheet = $spreadsheet->getActiveSheet();
-    
-//         // Get the highest row number
-//         $highestRow = $sheet->getHighestRow();
-    
-//         // Iterate through each row to read and store grade data
-       
-                
-//                     // // Create a new record
-//                     // Annualincrement::create([
-//                     //     'staff_id' => $staffId,
-                        
-//                     //     'date_of_disbursement' => $date_of_disbursement,
-//                     //     'amount' => $amount
-//                     // ]);
-             
-            
-        
-    
-//                 return redirect()->back()->with('success', 'Excel file imported successfully');
-//   }   
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
     // $year = request('year');

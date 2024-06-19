@@ -301,11 +301,6 @@ class LeaveStaffApplicationsController extends Controller
             $alternate_staff = staff::find($request->alternate);
             //dd($alternate_staff);
 
-
-             //$user_notifications =[];
-             //$hod_notifications = [];
-             //$alternate_notifications = [];
-            
             // // Check if the user is logged in
             if(Auth::check()) {
                 // Send notification to the logged-in staff member
@@ -318,7 +313,6 @@ class LeaveStaffApplicationsController extends Controller
                 $user_notification->description = 'A leave application has been submitted successfully.';
                 $user_notification->save();
 
-                //$user_notifications[] = $user_notification;
             }
 
             if ($hod) {
@@ -328,10 +322,9 @@ class LeaveStaffApplicationsController extends Controller
                 $hod_notification->notification_title = 'Leave Application';
                 $hod_notification->notification_type = 'Leave';
                 $hod_notification->date = now(); 
-                $hod_notification->description = 'A leave application has been submitted by ' . $staff->fname . ' ' . $staff->mname .''  . $staff->lname . ' for your approval.';
+                $hod_notification->description = 'A leave application has been submitted by ' . $staff->fname . ' ' . $staff->mname .''  . $staff->lname . ' for your Recommendation.';
                 $hod_notification->save();
 
-                //$hod_notifications[] = $hod_notification;
             }
 
             if ($alternate_staff) {
@@ -349,11 +342,6 @@ class LeaveStaffApplicationsController extends Controller
 
                 //$alternate_notifications[] = $alternate_notification;
             }
-
-            // // Store notifications in session
-            //session()->put('user_notifications', $user_notifications);
-            //session()->put('hod_notifications', $hod_notifications);
-            //session()->put('alternate_notifications', $alternate_notifications);
 
         }
 
@@ -1360,14 +1348,6 @@ class LeaveStaffApplicationsController extends Controller
             $alternate_staff = staff::find($request->alternate);
             //dd($alternate_staff);
             
-            // Initialize an empty array in the session for HOD and alternate notifications
-           
-
-
-            // $user_notifications =[];
-            // $hod_notifications = [];
-            // $alternate_notifications = [];
-            
             // // Check if the user is logged in
              if(Auth::check()) {
                  // Send notification to the logged-in staff member
@@ -1380,7 +1360,6 @@ class LeaveStaffApplicationsController extends Controller
                  $user_notification->description = 'A leave application has been submitted successfully.';
                  $user_notification->save();
 
-                 //$user_notifications[] = $user_notification;
              }
 
              if ($hod) {
@@ -1390,10 +1369,9 @@ class LeaveStaffApplicationsController extends Controller
                  $hod_notification->notification_title = 'Leave Application';
                  $hod_notification->notification_type = 'Leave';
                  $hod_notification->date = now(); 
-                 $hod_notification->description = 'A leave application has been submitted by ' . $staff->fname . ' for your approval.';
+                 $hod_notification->description = 'A leave application has been submitted by ' . $staff->fname . ' ' . $staff->mname . ' ' . $staff->lname. ' for your Recommendation.';
                  $hod_notification->save();
 
-                 //$hod_notifications[] = $hod_notification;
              }
 
              if ($alternate_staff) {
@@ -1404,16 +1382,28 @@ class LeaveStaffApplicationsController extends Controller
                  $alternate_notification->notification_title = 'Leave Assignment';
                  $alternate_notification->notification_type = 'leave';
                  $alternate_notification->date = now();
-                 $alternate_notification->description = 'You have been assigned as an alternate for a leave application submitted by ' . $staff->fname;
+                 $alternate_notification->description = 'You have been assigned as an alternate for a leave application submitted by ' . $staff->fname . ' ' . $staff->mname . ' ' . $staff->lname;
+
+                 //$alternate_notification->description = 'You have been assigned as an alternate for a leave application submitted by ' . $staff->fname;
                  $alternate_notification->save();
 
-                 //$alternate_notifications[] = $alternate_notification;
              }
 
-            // // Store notifications in session
-            //session()->put('user_notifications', $user_notifications);
-            //session()->put('hod_notifications', $hod_notifications);
-            //session()->put('alternate_notifications', $alternate_notifications);
+
+            if ($dean_admin) {
+                // Send notification to HOD
+                $dean_notification = new notifications();
+                $dean_notification->user_id = $dean_admin->id;
+                $dean_notification->notification_title = 'Leave Application';
+                $dean_notification->notification_type = 'Leave';
+                $dean_notification->date = now(); 
+                $dean_notification->description = 'A leave application has been submitted by ' . $staff->fname . ' ' . $staff->mname . ' ' . $staff->lname . ' for your approval.';
+
+                //$dean_notification->description = 'A leave application has been submitted by ' . $staff->fname . ' for your Approval.';
+                $dean_notification->save();
+
+            }
+
         }
 
         if($leave_appn_id && $daywise_leave_result && $result){
@@ -1433,8 +1423,7 @@ class LeaveStaffApplicationsController extends Controller
         return redirect('/Non-Teaching/ntleaves/')->with('return_data', $return_data);
     }
     
-    
-
+   
 
     //for updating the leave application in Non-Teaching (Editing)
     public function nt_leave_update(Updateleave_staff_applicationsRequest $request)

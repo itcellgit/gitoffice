@@ -199,7 +199,6 @@
                                                         @endphp
                                                         @forelse($staff as $st)
                                                        
-                                                        {{-- <tr class="bg-red-700"> --}}
                                                             <tr @if($data[$st->id]['wef'] != Carbon\Carbon::parse($st->date_of_increment)->format('d-M-Y'))  style="background-color:#F18B7B; !important" @endif>
                                                             <td >{{ $i++ }} </td>
                                                             <td>
@@ -208,20 +207,11 @@
 
                                                                                 {{$st->fname.' '.$st->mname.' '.$st->lname}}
                                                                                 @foreach ($st->departments as $dept)
-                                                                                @if($dept->pivot->status == 'active')
-                                                                                    {{','.$dept->dept_shortname}} 
-                                                                                @endif
-                                                                            @endforeach
+                                                                                    @if($dept->pivot->status == 'active')
+                                                                                        {{','.$dept->dept_shortname}} 
+                                                                                    @endif
+                                                                                @endforeach
                                                                             </div>
-                                                                        </div>
-                                                                    </li>
-                                                                
-                                                                {{-- <tr>
-                                                                    <td>
-                                                                        <span>{{$st->latest_employee_type()->first()->employee_type}}</span>
-                                                                    </td>
-                                                                </tr> --}}
-                                                              
                                                                 
                                                                     <li >
                                                                         <span class="w-3/4">
@@ -245,29 +235,30 @@
                                                                         @endforeach
                                                                         </span>
                                                                     </li>
+                                                                </ul>
                                                             </td>
                                                             {{-- <td  class="border border-gray-300 px-4 py-2"><span>{{ $st->dob }}</span></td> --}}
                                                             <td><span>{{\Carbon\Carbon::parse($st->dob)->format('d-M-Y') }}</span></td>
                                                             <td><span>{{\Carbon\Carbon::parse( $st->doj)->format('d-M-Y') }}</span></td>
                                                             {{-- <td  class="border border-gray-300 px-4 py-2"><span>{{ $st->doj }}</span></td> --}}
                                                             <td class="">
-                                                            <ul>
-                                                            <li>
-                                                            <span>
-                                                            @foreach($st->associations as $st_asso)
-                                                            {{$st_asso->asso_name}}
-                                                            @endforeach
-                                                            </span>
-                                                            </li>
-                                                             <li>
-                                                            <span>
-                                                            @foreach($st->associations as $st_asso)
-                                                            {{$st_asso->pivot->gcr}}
-                                                            @endforeach
-                                                            </span>
-                                                            </li>
-                                                            </ul>
-                                                    
+                                                                <ul>
+                                                                    <li>
+                                                                        <span>
+                                                                            @foreach($st->associations as $st_asso)
+                                                                                {{$st_asso->asso_name}}
+                                                                            @endforeach
+                                                                        </span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <span>
+                                                                            @foreach($st->associations as $st_asso)
+                                                                                {{$st_asso->pivot->gcr}}
+                                                                            @endforeach
+                                                                        </span>
+                                                                    </li>
+                                                                </ul>
+                                                        
                                                             </td>
 
                                                             <td  class="border border-gray-300 px-4 py-2"><span>{{($data[$st->id]['payband'])}}</span></td>
@@ -279,41 +270,31 @@
 
                                                                  
                                                             <td>  
+                                                                @foreach($st->ntpayscale as $nt)
                                                                         @php
                                                                             $level1_payscales =  explode("-",$nt->payband)
                                                                         @endphp 
                                                                         @if ($nt->pivot->level == 1)
                                                                             
-                                                                            {{$level1_payscales[0].'-'.$level1_payscales[1].'-'.$level1_payscales[2]}}
+                                                                            {{$level1_payscales[1]}}
                                                                         
                                                                         @elseif ($nt->pivot->level == 2)
                                                                         
-                                                                            {{$level1_payscales[2].'-'.$level1_payscales[3].'-'.$level1_payscales[4]}}
+                                                                            {{$level1_payscales[3]}}
                                                                             
                                                                         @else
                                                                                 
-                                                                            {{$level1_payscales[4].'-'.$level1_payscales[5].'-'.$level1_payscales[6]}}
+                                                                            {{$level1_payscales[5]}}
                                                                         
                                                                         @endif
+                                                                 @endforeach
                                                              </td>
                                                             
+                                                             <td class="border border-gray-300 px-4 py-2">
+                                                                    <span>{{ Carbon\Carbon::parse($data[$st->id]['wef'])->format('d-M-Y') }}</span>
+                                                            </td>
+                                                            <td class="border border-gray-300 px-4 py-2"><span>{{($data[$st->id]['total'])}}</span></td>
 
-                                                            
-                                                            {{-- <td><span>{{ Carbon\Carbon::parse($data[$st->id]['wef'])->format('d-M-Y') }}</span></td> --}}
-                                                            
-                                                             {{-- <td  class="border border-gray-300 px-4 py-2"><span>{{$st->date_of_increment}}</span></td> --}}
-                                                            {{-- <td  class="border border-gray-300 px-4 py-2"><span>{{'₹'.$data[$st->id]['basic']."+".'₹'.$data[$st->id]['incremente_value']."+ ".'₹'.$data[$st->id]['agp'].'='.'₹'.$data[$st->id]['basic_agp_incremented_value']}}</span></td> --}}
-                                                    
->
-                                                            {{-- <td  class="border border-gray-300 px-4 py-2"><span>
-                                                            @foreach($st->allowance as $st_ai)
-                                                            {{'₹'.number_format($st_ai->value)}}
-                                                             @endforeach
-                                                            
-                                                            </span></td> --}}
-                                                           
-                                                            {{-- <td  class="border border-gray-300 px-4 py-2"><span>{{$data[$st->id]['value']}}</span></td>
-                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{'₹'.number_format($data[$st->id]['gross_value'])}}</span></td> --}}
                                                             
                                                             <td  class="font-medium space-x-2 rtl:space-x-reverse">
                                                                 <div class="hs-tooltip ti-main-tooltip">

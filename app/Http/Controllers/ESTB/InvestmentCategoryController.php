@@ -22,7 +22,6 @@ class InvestmentCategoryController extends Controller
         //
     }
 
-
     public function store(StoreInvestmentCategoryRequest $request)
     {
         $request->validate([
@@ -33,8 +32,7 @@ class InvestmentCategoryController extends Controller
             $invest_category->investment_type = $request['investment_type'];
             $invest_category->tds_id= $request['tds_id'];
             $invest_category->save();
-            return redirect()->route('ESTB.TDS.TdsHeads.show', ['tdsheads' => $invest_category->tds_id]);
-         
+            return redirect()->route('ESTB.TDS.TdsHeads.show', ['tdsheads' => $invest_category->tds_id]);  
     }
 
     public function show(InvestmentCategory $investmentCategory)
@@ -47,29 +45,31 @@ class InvestmentCategoryController extends Controller
      */
     public function edit(InvestmentCategory $investmentCategory)
     {
-        //
-    }
 
+    }
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateInvestmentCategoryRequest $request,InvestmentCategory $investmentCategory)
+    public function update(UpdateInvestmentCategoryRequest $request,$tds_id,InvestmentCategory $investmentCategory)
     {
-        // dd($investmentCategory);
-    // $invest_category = InvestmentCategory::find($investmentCategory->id);
+    // dd($tds_id);
+    $investmentCategory = InvestmentCategory::find($investmentCategory->id);
     $investmentCategory->investment_type =  $request['edit_category_name'];
     $investmentCategory->tds_id = $request['edit_section_name'];
     $investmentCategory->save();
+    // dd($investmentCategory);
     return redirect()->route('ESTB.TDS.TdsHeads.show', ['tdsheads' => $investmentCategory->tds_id])->with('success', 'Tax slab updated successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(tdshead1 $tdsheads,InvestmentCategory $investmentCategory)
-    {
-        $investmentCategory->delete();
-        dd($investmentCategory->tds_id);
-        return redirect()->route('ESTB.TDS.TdsHeads.show', ['tdsheads' => $investmentCategory->tds_id]);
+    public function destroy(tdshead1 $tdsheads ,InvestmentCategory $investmentCategory)
+    {  
+            $investmentCategory->delete();
+            // dd( $investmentCategory);
+            return redirect()->route('ESTB.TDS.TdsHeads.show', ['tdsheads' =>$investmentCategory->tds_id])
+                             ->with('success', 'Tax slab deleted successfully');
+        } 
+    
+
     }
-}
+
+

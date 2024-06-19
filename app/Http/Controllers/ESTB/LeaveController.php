@@ -23,7 +23,7 @@ class LeaveController extends Controller
     public function index()
     {
         $leaves=leave::with('combine_leave')->with('leave_rules')->orderby('vacation_type')->orderBy('longname')->get();
-
+        //dd($leaves);
         return view('ESTB.leaves.index',compact('leaves'));
     }
 
@@ -166,15 +166,32 @@ class LeaveController extends Controller
 
     }
 
-    public function calender_view(){
+    public function calender_view()
+    {
 
         // $user = Auth::user();
         // $staff_id_from_user = staff::where('user_id','=',$user->id)->first();
         $year=Carbon::now()->year;
         $holidayrh=holidayrh::orderBy('start')->get();
 
-        $staff=staff::with('latest_employee_type')->with('latestassociation')->with('latest_additional_designation')->get();
+        $staff=staff::with('latest_employee_type')->with('latestassociation')->with('latest_additional_designation')->orderby('fname')->get();
 
+        $leaves=leave::with('combine_leave')->with('leave_rules')->orderby('vacation_type')->orderBy('longname')->get();
+       
+        
+        //to fetch the alternate staff 
+        // $alternate_staff = staff::with('latest_employee_type')->with('latestassociation')->with('latest_additional_designation')->orderBy('fname')->get();
+        // $selectedStaffId = request()->input('selected_staff_id');
+        // //dd($selectedStaffId);
+
+        // $alternate_staff = staff::with('latest_employee_type')->with('latestassociation')->with('latest_additional_designation')
+        //                 ->where('id', '!=', $selectedStaffId)
+        //                 ->orderBy('fname')
+        //                 ->get();
+
+        //dd($alternate_staff);
+        
+        //dd($leaves);
         //dd($staff->latest_employee_type);
 
         // if(count($staff->latest_additional_designation)>0)
@@ -228,8 +245,45 @@ class LeaveController extends Controller
         // }
 
 
-        return view ('ESTB.leaves.leave_calender.index');
+        return view ('ESTB.leaves.leave_calender.index',compact(['leaves','staff']));
     }
+
+
+
+    //to fetch the alternate_staff and additional alternate staff
+    public function fetchAlternateStaff(Request $request)
+    {
+        $selectedStaffId = $request->input('selected_staff_id');
+    
+        $staffEmpType = $request->input('staff_emp_type');
+    
+        if (is_null($selectedStaffId)) {
+            return response()->json(['error' => 'selected_staff_id parameter is missing in the request.'], 404);
+        }
+    
+        $alternate_staff = staff::with('latest_employee_type')
+                                    ->with('latestassociation')
+                                    ->with('latest_additional_designation')
+                                    ->where('id', '!=', $selectedStaffId)
+                                    ->orderBy('fname')
+                                    ->get();
+    
+        $additional_alternate_staff = Staff::where('staff.id', '<>', $selectedStaffId) 
+                                    ->whereHas('departments', function($q) {
+                                        $q->where('department_staff.status', 'active');
+                                    })
+                                    ->whereIn('staff.id', function($subquery) use ($staffEmpType) {
+                                        $subquery->select('staff_id')
+                                                 ->from('employee_types')
+                                                 ->where('employee_types.employee_type', $staffEmpType->employee_type);
+                                    })
+                                    ->select('staff.id', 'staff.fname', 'staff.mname', 'staff.lname')
+                                    ->orderBy('fname')
+                                    ->get();
+    
+        return response()->json(['alternate_staff' => $alternate_staff, 'additional_alternate_staff' => $additional_alternate_staff]);
+    }
+
 
     public function hollidayrh_events(){
 

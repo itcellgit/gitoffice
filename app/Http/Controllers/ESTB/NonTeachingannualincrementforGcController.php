@@ -272,7 +272,7 @@ class NonTeachingannualincrementforGcController extends Controller
             $q1->select('id')
             ->from('associations')
             ->where('asso_name','Confirmed');
-        })->where('employee_type','Teaching');
+        })->where('employee_type','Non-Teaching');
    })->get();
 
    
@@ -329,86 +329,22 @@ foreach($st->annualIncrement as $increment) {
         }
 }
 
-$data[$staffId]['cca'] = 0;
-
-foreach($st->teaching_payscale as $payscale) {
-   // dd($payscale);
-  // Ensure the pay scale entry belongs to the current staff member
-        $data[$staffId]['agp'] = $payscale->agp;
-        
-       
-        $data[$staffId]['cca'] = $payscale->cca;
-        // Calculate the total amount by adding basic and agp
-        $data[$staffId]['total'] = $increment->basic + $payscale->agp;
-        // $incremented_total = $total + ($total * 0.03);
-        //dd($staffId." ".$data[$staffId]['total'].' '.$data[$staffId]['total']*0.03);
-    
-        $data[$staffId]['incremente_value'] = ($data[$staffId]['total']* 0.03);
-        $data[$staffId]['incremented_total'] = $data[$staffId]['basic'] +
-        $data[$staffId]['incremente_value'];
-//   dd($staffId." ".$data[$staffId]['incremented_total_after'].' '.$data[$staffId]['basic']+
-//$data[$staffId]['incremented_total']);
-$data[$staffId]['basic_agp_incremented_value']= $data[$staffId]['basic']+ $data[$staffId]['incremente_value']+  $data[$staffId]['agp'];
-//   dd($staffId." ".$data[$staffId]['incremented_total_after_increment'].' '.$data[$staffId]['incremented_total_after']+
-//   $data[$staffId]['agp']); 
-
-
-
-}
 $data[$staffId]['value']=0;
 
-
-if(count($st->designations)==1)
-{
-    foreach($st->allowance as $al) {
-        $data[$staffId] ['value']=$al->value;
-    }
-}
-else
-{
-    $data[$staffId]['value']=0;
-   
-    foreach($st->designations as $design )
-    {
-      
+foreach($st->allowances as $payscale) {
+  
+        $data[$staffId]['value '] = $payscale->value ;
         
-        //dd($design->isadditional===1 && $design->isvacational=='Non-Vacational');
-        if($design->isadditional===1 && $design->isvacational=='Non-Vacational' && $design->pivot->allowance_status==1)
-        {
-            
-            $additional_design_allowance=allowance::where('designations_id',$design->id)->first();
-          
-           
-            // dd($fetchallowance->value_type=="flat");
-          //$loop[$st->id][$design->id][]=$additional_design_allowance;
-          
-            if( $additional_design_allowance->value_type=='flat')
-            {
-               
-                $data[$staffId]['value']= $data[$staffId]['value']+$additional_design_allowance->value;
-        
-            }
-            else
-            {
-                $data[$staffId]['value']= $data[$staffId]['value']+$data[$staffId]['total']*$additional_design_allowance/100;
-            }
-            
-        }
-        else
-        {
-            if($data[$staffId]['value']!=0){
+       
+        $data[$staffId]['total'] = $increment->basic + $payscale->value ;
+       
 
-                foreach($st->allowance as $al) {
-                    $data[$staffId] ['value']=$al->value;
-                }
-            }
-        }
 
-    }
-    //dd($loop);
+
 }
 
-$data[$staffId]['gross_value']=ceil(($data[$st->id]['basic_agp_incremented_value']*195/100)+$data[$staffId]['cca']+$data[$staffId] ['value']);
+
+// $data[$staffId]['gross_value']=ceil(($data[$st->id]['basic_agp_incremented_value']*195/100)+$data[$staffId]['cca']+$data[$staffId] ['value']);
 
 }
 
