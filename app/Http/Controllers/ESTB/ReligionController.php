@@ -25,6 +25,7 @@ class ReligionController extends Controller
     
     public function store(StorereligionRequest $request)
     {
+        //dd($request);
         $religion = new Religion();
         $religion->religion_name = $request->religion_name;
         $religion->created_at=Carbon::now();

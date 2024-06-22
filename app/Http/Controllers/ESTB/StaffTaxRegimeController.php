@@ -47,14 +47,6 @@ class StaffTaxRegimeController extends Controller
        // fetching staff and taxheads
         $staff = Staff::findOrFail($staffId);
         $taxHeads = TaxHeads::findOrFail($request->tax_heads_id);
-        //deleting previous value
-        // StaffTaxRegimes::where('staff_id', $staff->id)
-        // ->where('tax_heads_id', $request->tax_heads_id)
-        // ->delete();
-        // StaffTaxRegimes::where('staff_id', $staff->id)
-        // ->where('tax_heads_id', $request->tax_heads_id)
-        // ->where('status', 'active')
-        // ->update(['status' => 'inactive']);
         StaffTaxRegimes::where('staff_id', $staff->id)
         ->where('status', 'active')
         ->update(['status' => 'inactive']);

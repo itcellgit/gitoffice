@@ -42,6 +42,7 @@ class AnnualIncrementController extends Controller
         $annualIncrement->reason=$request->reason;
         $annualIncrement->basic=$request->basic;
         $annualIncrement->additional_days_type=$request->additional_days_type;
+        $annualIncrement->created_at=Carbon::now()->format('Y-m-d');
         //dd($staff->date_of_increment);
         if($annualIncrement->additional_days_type=="Permanent")
         {

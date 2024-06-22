@@ -124,10 +124,10 @@
                                                                     </select>                               
                                                                </div>
 
-                                                             
+                                                               
 
                                                                <div class="max-w-sm space-y-3 pb-6 hidden" id="ptype">
-                                                                <label for="type" class="ti-form-label font-bold ">Calculate On:<span class="text-red-500">*</span></label>
+                                                                <label for="type" class="ti-form-label font-bold ">CalculationON:<span class="text-red-500">*</span></label>
                                                                 <select name="ptype" id="ptype" class="form-control">
                                                                     <option value="-1">Select </option>
                                                                     @foreach($salary_heads_bg as $gnn)
@@ -172,7 +172,7 @@
                                                         <th scope="col" class="dark:text-white/80">Title</th>
                                                         <th scope="col" class="dark:text-white/80">Group Name</th>
                                                         <th scope="col" class="dark:text-white/80">Type</th>
-                                                        <th scope="col" class="dark:text-white/80">Calculate On</th>
+                                                        <th scope="col" class="dark:text-white/80">Calculation On</th>
                                                         <th scope="col" class="dark:text-white/80">Maximum</th>
                                                         <th scope="col" class="dark:text-white/80">Status</th>
                                                         <th scope="col" class="dark:text-white/80">Actions</th>
@@ -188,22 +188,37 @@
                                     
                                                     <tr class="">
                                                         <td>{{ $i++ }}</td>
-                                                        <td> {{$sh->title}}</td>
-                                                        <td>                                                            
+                                                        <td>
+                                                        <div class="flex space-x-3 rtl:space-x-reverse w-full min-w-[200px]">
+                                                            <div class="block w-full my-auto">
+                                                                {{$sh->title}}
+                                                            </div>
+                                                        </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="flex space-x-3 rtl:space-x-reverse w-full min-w-[200px]">
+                                                                <div class="block w-full my-auto">
                                                                     @foreach($salary_groups as $gn)
                                                                     @if($sh->salary_group_id==$gn->id)
-                                                                        {{$gn->group_name}}
+                                                                    {{$gn->group_name}}
                                                                     @endif
-                                                                    @endforeach                                                             
+                                                                    @endforeach
+
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                        
                                                         <td>
-                                                             {{$sh->salary_type}}
-                                                               
+                                                            <div class="flex space-x-3 rtl:space-x-reverse w-full min-w-[200px]">
+                                                                <div class="block w-full my-auto">
+                                                                    {{$sh->salary_type}}
+                                                                </div>
+                                                            </div>
                                                         </td>
-                                                       
+                                                        
                                                         <td>
-                                                           
+                                                            <div class="flex space-x-3 rtl:space-x-reverse w-full min-w-[200px]">
+                                                                <div class="block w-full my-auto">
                                                                     @if($sh->salary_head_on!=null)
                                                                     {{$sh->salary_head_on->title}}
                                                                     @endif
@@ -212,9 +227,17 @@
                                                                         {{$gnn}}                                                                   
                                                                         @endforeach
                                                                         @endif --}}
+
+                                                                </div>
+                                                            </div>
                                                         </td>
+                                                        
                                                         <td>
+                                                            <div class="flex space-x-3 rtl:space-x-reverse w-full min-w-[200px]">
+                                                                <div class="block w-full my-auto">
                                                                     {{$sh->maximum}}
+                                                                </div>
+                                                            </div>
                                                             </td>
                                                   
                                                         <td><span>{{$sh->status}}</span></td>
@@ -289,7 +312,7 @@
                                                                                     
 
                                                                                     <div class="max-w-sm space-y-3 pb-6  ptypee">
-                                                                                        <label for="edittype" class="ti-form-label font-bold ">Calculate On:</label>
+                                                                                        <label for="edittype" class="ti-form-label font-bold ">CalculationON:</label>
                                                                                         <select name="edit_ptypee"  class="form-control ptypee ">
                                                                                             <option value="-1">Select </option>
                                                                                                 @foreach($salary_heads_bg as $gnn) 
@@ -356,7 +379,9 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                        </div>   
+                                        </div>
+                                    
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -366,7 +391,32 @@
                         <!-- End::main-content --> 
                     </div>
     
-                   
+                    <script>
+                        $(function() {
+                            $(".salary_type").change(function() {
+                                var salarytype = $(this).val();
+                                if (salarytype === "percentage") {
+                                    //$("#percentage_value").removeClass('hidden');
+                                    $("#ptype").removeClass('hidden');
+                                } else {
+                                    //$("#percentage_value").addClass('hidden');
+                                    $("#ptype").addClass('hidden');
+                                }
+                            });
+                    
+                            // Assuming .edittype is another select dropdown for editing
+                            $(".edittype").change(function() {
+                                var editvalue = $(this).val();
+                                if (editvalue === "percentage") {
+                                    //$(".pvalue").removeClass('hidden');
+                                    $(".ptypee").removeClass('hidden');
+                                } else {
+                                    //$(".pvalue").addClass('hidden');
+                                    $(".ptypee").addClass('hidden');
+                                }
+                            });
+                        });
+                    </script>      
                     
 @endsection
 
@@ -375,7 +425,7 @@
 
         <!-- APEX CHARTS JS -->
         <script src="{{asset('build/assets/libs/apexcharts/apexcharts.min.js')}}"></script>
-        
+
         <!-- FLATPICKR JS -->
         <script src="{{asset('build/assets/libs/flatpickr/flatpickr.min.js')}}"></script>
         @vite('resources/assets/js/flatpickr.js')
@@ -383,38 +433,6 @@
 
         <!-- INDEX JS -->
         @vite('resources/assets/js/index-8.js')
-        <script src="https://cdn.datatables.net/1.13.6/js/dataTables.tailwindcss.min.js"></script>
-        <script>
-            $(document).ready(function(){
-                
-                new DataTable('#salaryhead_table');
-
-                $(function() {
-                    $(".salary_type").change(function() {
-                        var salarytype = $(this).val();
-                        if (salarytype === "percentage") {
-                            $("#percentage_value").removeClass('hidden');
-                            $("#ptype").removeClass('hidden');
-                        } else {
-                            $("#percentage_value").addClass('hidden');
-                            $("#ptype").addClass('hidden');
-                        }
-                    });
-            
-                    // Assuming .edittype is another select dropdown for editing
-                    $(".edittype").change(function() {
-                        var editvalue = $(this).val();
-                        if (editvalue === "percentage") {
-                            $(".pvalue").removeClass('hidden');
-                            $(".ptypee").removeClass('hidden');
-                        } else {
-                            $(".pvalue").addClass('hidden');
-                            $(".ptypee").addClass('hidden');
-                        }
-                    });
-                });
-            });
-      </script>     
         
 
 @endsection

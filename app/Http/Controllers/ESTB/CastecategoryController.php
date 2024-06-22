@@ -83,7 +83,7 @@ class CastecategoryController extends Controller
      */
     public function update(UpdatecastecategoryRequest $request, $religion_id, castecategory  $castecategory)
     {
-   
+         //dd($request);
         //dd($request->caste_name);
         $castecategory->caste_name=$request->e_caste_name;
         $castecategory->religion_id=$request->e_religion_id;

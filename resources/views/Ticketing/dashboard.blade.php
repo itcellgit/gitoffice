@@ -17,11 +17,12 @@
                     <!-- Page Header -->
                     <div class="block justify-between page-header sm:flex">
                         <div>
+                            {{-- {{ dd(session()->all()) }} --}}
                             {{-- <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium"> Welcome <span class="text-primary">{{$staff->fname.' '.$staff->mname.' '.$staff->lname}}</span></h3> --}}
-                            <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium">
+                            {{-- <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium">
                                 <span class="text-primary">
                                     
-                                    @if(session('deptid') == 8)
+                                     @if(session('deptid') == 8)
                                         Welcome HOD Civil Engineering
                                     @elseif(session('deptid') == 5)
                                         Welcome HOD Computer Science and Engineering
@@ -47,6 +48,8 @@
                                         Welcome HOD Mathematics
                                     @elseif(session('deptid') == 14)
                                         Welcome HOD Chemistry
+                                     @elseif(session('user_id') == 517)
+                                         Welcome DeanRnd 
                                     @elseif(isset($staff))
                                         Welcome {{$staff->fname.' '.$staff->mname.' '.$staff->lname}}
                                      @else
@@ -54,93 +57,72 @@
                                     @endif
 
                                 </span>
-                            </h3> 
-                            
-                             {{-- <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium">
+                            </h3>  --}}
+                            <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium">
                                 <span class="text-primary">
-                                    @if(isset($staff))
-                                        Welcome {{$staff->fname.' '.$staff->mname.' '.$staff->lname}}
-                                    @elseif(session('deptid')==8)
-                                        Welcome E-Governance Admin, Civil Engineering
-                                    @elseif(session('deptid')==5)
-                                        Welcome E-Governance Admin, Computer Science and Engineering
-                                    @elseif(session('deptid')==17)
-                                        Welcome E-Governance Admin, Architecture
-                                    @elseif(session('deptid')==9)
+                                    @if(session('user_id') == 517)
+                                        Welcome DeanRnd
+                                    @elseif(session('user_id') == 531)
+                                        Welcome HOD Civil Engineering
+                                    @elseif(session('user_id') == 532)
+                                        Welcome HOD Computer Science and Engineering
+                                    @elseif(session('user_id') == 533)
+                                        Welcome HOD Architecture
+                                    @elseif(session('user_id') == 534)
+                                        Welcome HOD Aeronautical Engineering
+                                    @elseif(session('user_id') == 535)
+                                        Welcome HOD Electronics and Communication Engineering
+                                    @elseif(session('user_id') == 536)
+                                        Welcome HOD Electrical and Electronics Engineering
+                                    @elseif(session('user_id') == 537)
+                                        Welcome HOD Information Science & Engineering
+                                    @elseif(session('user_id') == 538)
+                                        Welcome HOD Mechanical Engineering
+                                    @elseif(session('user_id') == 539)
+                                        Welcome HOD Master of Business Administration
+                                    @elseif(session('user_id') == 540)
+                                        Welcome HOD Master of Computer Applications
+                                    @elseif(session('user_id') == 541)
+                                        Welcome HOD Physics
+                                    @elseif(session('user_id') == 542)
+                                        Welcome HOD Mathematics
+                                    @elseif(session('user_id') == 543)
+                                        Welcome HOD Chemistry
+                                    @elseif(session('user_id')==518)
+                                        Weclome E-Governance Admin,Civil Engineering
+                                    @elseif(session('user_id')==519)
+                                        Welcome E-Governance Admin,Computer Science and Engineering
+                                    @elseif(session('user_id')==520)
+                                        Welcome E-Governance Admin,Architecture
+                                    @elseif(session('user_id')==521)
                                         Welcome E-Governance Admin, Aeronautical Engineering
-                                    @elseif(session('deptid')==2)
+                                    @elseif(session('user_id')==522)
                                         Welcome E-Governance Admin, Electronics and Communication Engineering
-                                    @elseif(session('deptid')==7)
-                                        Welcome E-Governance Admin, Electrtical and Electronics Engineering
-                                    @elseif(session('deptid')==6)
+                                    @elseif(session('user_id')==523)
+                                        Welcome E-Governance Admin,Electrtical and Electronics Engineering
+                                    @elseif(session('user_id')==524)
                                         Welcome E-Governance Admin, Information Science & Engineering
-                                    @elseif(session('deptid')==1)
+                                    @elseif(session('user_id')==525)
                                         Welcome E-Governance Admin, Mechanical Engineering
-                                    @elseif(session('deptid')==24)
-                                        Welcome E-Governance Admin, Master of Business Administration
-                                    @elseif(session('deptid')==3)
-                                        Welcome E-Governance Admin, Master of Computer Applications
-                                    @elseif(session('deptid')==13)
+                                    @elseif(session('user_id')==526)
+                                        Welcome E-Governance Admin,Master of Business Administration
+                                    @elseif(session('user_id')==527)
+                                        Welcome E-Governance Admin Master of Computer Applications
+                                    @elseif(session('user_id')==528)
                                         Welcome E-Governance Admin, Physics
-                                    @elseif(session('deptid')==12)
+                                    @elseif(session('user_id')==529)
                                         Welcome E-Governance Admin, Mathematics
-                                    @elseif(session('deptid')==14)
+                                    @elseif(session('user_id')==530)
                                         Welcome E-Governance Admin, Chemistry
-                                    @elseif(session('deptid')==8)
-                                        Welcome HOD, Civil Engineering
-                                    @elseif(session('deptid')==5)
-                                        Welcome HOD, Computer Science and Engineering
-                                    @elseif(session('deptid')==17)
-                                        Welcome HOD, Architecture
-                                    @elseif(session('deptid')==9)
-                                        Welcome HOD, Aeronautical Engineering
-                                    @elseif(session('deptid')==2)
-                                        Welcome HOD, Electronics and Communication Engineering
-                                    @elseif(session('deptid')==7)
-                                        Welcome HOD, Electrtical and Electronics Engineering
-                                    @elseif(session('deptid')==6)
-                                        Welcome HOD, Information Science & Engineering
-                                    @elseif(session('deptid')==1)
-                                        Welcome HOD, Mechanical Engineering
-                                    @elseif(session('deptid')==24)
-                                        Welcome HOD, Master of Business Administration
-                                    @elseif(session('deptid')==3)
-                                        Welcome HOD, Master of Computer Applications
-                                    @elseif(session('deptid')==13)
-                                        Welcome HOD, Physics
-                                    @elseif(session('deptid')==12)
-                                        Welcome HOD, Mathematics
-                                    @elseif(session('deptid')==14)
-                                        Welcome HOD, Chemistry
+                                    @elseif(isset($staff))
+                                        Welcome {{$staff->fname.' '.$staff->mname.' '.$staff->lname}}
                                     @else
                                         Welcome
                                     @endif
-                                    @if(session('deptid')==1 || session('deptid')==2 || session('deptid')==3 || session('deptid')==5 || session('deptid')==6 || session('deptid')==7 || session('deptid')==8 || session('deptid')==9 || session('deptid')==12 || session('deptid')==13 || session('deptid')==14 || session('deptid')==17 || session('deptid')==24)
-                                        WELCOME DEANRND
-                                    @endif
                                 </span>
                             </h3>
-                              --}}
-                              {{-- <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium">
-                                <span class="text-primary">
-                                    
-                                @if(session('deptid') == 8)
-                                    Welcome {{ session('role') == 'Head of Department' ? 'Head of Department' : 'egov_admin' }}, Civil Engineering
-                                @elseif(session('deptid') == 5)
-                                    Welcome {{ session('role') == 'Head of Department' ? 'Head of Department' : 'egov_admin' }}, Computer Science and Engineering
-                                @elseif(session('deptid') == 3)
-                                    Welcome {{ session('role') == 'Head of Department' ? 'Head of Department' : 'egov_admin' }}, MCA
-                                @elseif(isset($staff))
-                                        Welcome {{$staff->fname.' '.$staff->mname.' '.$staff->lname}}
-                                     @else
-                                        Welcome 
-                                    @endif
-
-                                </span>
-                            </h3> 
-                            --}}
                             
-                            </div> 
+                        </div> 
                         <div>
                             <h3 class="text-gray-700 hover:text-gray-900 dark:text-white dark:hover:text-white text-2xl font-medium"><span class="text-primary"></span></h3>
                         </div>

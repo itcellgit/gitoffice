@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class staffshare extends Model
 {
     use HasFactory;
-    protected $fillable=['staff_id','shares_id','amount','start_date','end_date','status'];
+    protected $fillable=['staff_id','member_id','shares_id','amount','start_date','end_date','status'];
      public function staff():BelongsTo
     {
         return $this->belongsTo(staff::class);

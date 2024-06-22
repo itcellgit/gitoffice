@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('shares', function (Blueprint $table) {
             $table->id();
             $table->foreignId('staff_id')->constrained();
-            $table->string('share_id');
+            $table->string('member_id');
+            $table->string('shares_id');
             $table->float('amount');
             $table->date('start_date');
             $table->date('end_date');

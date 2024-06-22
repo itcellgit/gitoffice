@@ -22,8 +22,10 @@ class UpdatereligionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'edit_religion_name' => ['required','regex:/^[a-zA-Z\s]+$/'],
-            'status' => ['required'],
+          
+            'edit_religion_name' => ['regex:/^[a-zA-Z\s]+$/'],
+
+            'status' => ['sometimes'],
            
           
         ];
@@ -34,7 +36,7 @@ class UpdatereligionRequest extends FormRequest
         [
             'edit_religion_name.required'=>'Religion Name is required field',
             'edit_religion_name.regex'=>'Religion Name should be characters and spaces only',
-            'status.required'=>'status is required field',
+            // 'status.required'=>'status is required field',
             
         ];
     }

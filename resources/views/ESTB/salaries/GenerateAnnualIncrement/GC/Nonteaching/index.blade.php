@@ -91,7 +91,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="ti-modal-body">
-                                                    <form id="annualincrementStaffForm" action="/ESTB/salaries/GenerateAnnualIncrement/GC/Nonteaching/create" method="post">
+                                                    <form id="annualincrementnonteachingStaffFormgc" action="/ESTB/salaries/GenerateAnnualIncrement/GC/Nonteaching/create" method="post">
                                                         @csrf
                                                         <div class="flex justify-center space-x-4 text-center">
                                                         <h1 class="font-bold">Generate Annual Increment For</h1>
@@ -125,24 +125,13 @@
                 
                                     <div class="box-body">
                                             <div class="flex justify-end space-x-4 items-center">
-                                                {{-- <form action="{{ route('import.excel') }}" method="POST" enctype="multipart/form-data" class="flex items-center space-x-2">
-                                                    @csrf
-                                                    <div class="space-y-8 font-[sans-serif] max-w-md mx-auto">
-                                                        <input type="file" class="w-full text-gray-500 font-medium text-sm bg-blue-100 cursor-pointer py-2 px-4 mr-4 hover:bg-blue-500 hover:text-white rounded-lg rounded-md border-blue-300" name="excel_file"/>
-                                                    </div>
-                                                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 text-xs rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 whitespace-nowrap">Upload Excel</button>
-                                                </form> --}}
                                                 <button id="exportToExcel" class="bg-green-500 text-white px-4 py-2 text-xs rounded-md focus:outline-none hover:bg-green-600 focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 whitespace-nowrap">Export to Excel</button>
                                             </div>
                                         </div>
                                      </div>
 
                                      <div class="avatar-container flex py-4">
-                                {{-- <div class="avatar-wrapper flex items-center">
-                                    <div class="avatar rounded-sm p-1 bg-green-500 border-gray-900 border-2 w-6 h-6">
-                                    </div>
-                                    <div class="avatar-text font-bold ml-2 ">Resolved</div>
-                                </div> --}}
+                        
 
                                 <div class="avatar-wrapper flex items-center mx-2">
                                     <div class="avatar rounded-sm p-1 bg-red-300 border-gray-900 border-2 w-6 h-6">
@@ -150,26 +139,13 @@
                                     <div class="avatar-text font-bold ml-2">Increment Postponed Due To LWP</div>
                                 </div>
 
-                                <!-- <div class="avatar-wrapper flex items-center mx-2">
-                                <div class="avatar rounded-sm p-1 bg-yellow-400 border-gray-900 border-2 w-6 h-6"></div>
-                                <div class="avatar-text font-bold ml-2">Recommended</div>
-                            </div> -->
-
-                                {{-- <div class="avatar-wrapper flex items-center">
-                                    <div class="avatar rounded-sm p-1 border-gray-900 border-2 w-6 h-6"></div>
-                                    <div class="avatar-text font-semibold ml-2">Follow Up</div>
-                                </div> --}}
-
                             </div>
 
-                          
-                    {{-- <form id="generateannualincrementForm" method="POST" action="{{ route('generateannualincrement.staff.update') }}">
-                         @csrf --}}
                         <div class="flex justify-end my-4">
                         
                         <div id="basic-table" class="ti-custom-table ti-striped-table  ti-custom-table-hover table-bordered rounded-sm overflow-auto">
                         
-                            <table id="annualincrement_template_table" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
+                            <table id="annualincrement_nonteaching_template_table" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
                                 <thead class="bg-gray-50 dark:bg-black/20">
                                     <tr>
                                         <th scope="col" class="dark:text-white/80">S.no</th>
@@ -183,155 +159,114 @@
                                         <th scope="col" class="dark:text-white/80">Rate of Increment</th>
                                         <th scope="col" class="dark:text-white/80">Annual Increment due on</th>
                                         <th scope="col" class="dark:text-white/80">Basic+AGP after Increment</th>
-                                        <th scope="col" class="dark:text-white/80">HOD Remark</th>
-                                        <th scope="col" class="dark:text-white/80">Principal's Recommen-dation</th>
-    
-                                        {{-- <th scope="col" class="dark:text-white/80">Actions</th> --}}
 
                                     </tr>
                                 </thead>
 
-                                                <tbody class="">
+                                <tbody class="">
+                                    @php
+                                        $i = 1;
+                                        //print_r($staff->religions->religion_id);
+                                    @endphp
+                                    @forelse($staff as $st)
+                                    
+                                        <tr @if($data[$st->id]['wef'] != Carbon\Carbon::parse($st->date_of_increment)->format('d-M-Y'))  style="background-color:#F18B7B; !important" @endif>
+                                        <td >{{ $i++ }} </td>
+                                        <td>
+                                            <ul>
+                                                <div class="block w-full my-auto">
 
-                                                        @php
-                                                            $i = 1;
-                                                            //print_r($staff->religions->religion_id);
-                                                        @endphp
-                                                        @forelse($staff as $st)
-                                                       
-                                                            <tr @if($data[$st->id]['wef'] != Carbon\Carbon::parse($st->date_of_increment)->format('d-M-Y'))  style="background-color:#F18B7B; !important" @endif>
-                                                            <td >{{ $i++ }} </td>
-                                                            <td>
-                                                                <ul>
-                                                                            <div class="block w-full my-auto">
+                                                    {{$st->fname.' '.$st->mname.' '.$st->lname}}
+                                                    @foreach ($st->departments as $dept)
+                                                        @if($dept->pivot->status == 'active')
+                                                            {{','.$dept->dept_shortname}} 
+                                                        @endif
+                                                    @endforeach
+                                                </div>
+                                            
+                                                <li >
+                                                    <span class="w-3/4">
 
-                                                                                {{$st->fname.' '.$st->mname.' '.$st->lname}}
-                                                                                @foreach ($st->departments as $dept)
-                                                                                    @if($dept->pivot->status == 'active')
-                                                                                        {{','.$dept->dept_shortname}} 
-                                                                                    @endif
-                                                                                @endforeach
-                                                                            </div>
-                                                                
-                                                                    <li >
-                                                                        <span class="w-3/4">
+                                                        @foreach ($st->designations as $design)
+                                                            @if( $design->pivot->status == 'active')
+                                                                {{$design->design_name}} <br/>
+                                                            @endif
+                                                        @endforeach
 
-                                                                            @foreach ($st->designations as $design)
-                                                                                @if( $design->pivot->status == 'active')
-                                                                                    {{$design->design_name}} <br/>
-                                                                                @endif
-                                                                            @endforeach
+                                                    </span>
+                                                </li>
+                                                <li><span>
+                                                    @foreach ($st->qualifications as $st_quli)
+                                                        @if($st_quli->pivot->status=='active')
+                                                            {{$st_quli->qual_shortname}}
+                                                        @endif
+                                                    @endforeach
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        {{-- <td  class="border border-gray-300 px-4 py-2"><span>{{ $st->dob }}</span></td> --}}
+                                        <td><span>{{\Carbon\Carbon::parse($st->dob)->format('d-M-Y') }}</span></td>
+                                        <td><span>{{\Carbon\Carbon::parse( $st->doj)->format('d-M-Y') }}</span></td>
+                                        {{-- <td  class="border border-gray-300 px-4 py-2"><span>{{ $st->doj }}</span></td> --}}
+                                        <td class="">
+                                            <ul>
+                                                <li>
+                                                    <span>
+                                                        @foreach($st->associations as $st_asso)
+                                                            {{$st_asso->asso_name}}
+                                                        @endforeach
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span>
+                                                        @foreach($st->associations as $st_asso)
+                                                            {{$st_asso->pivot->gcr}}
+                                                        @endforeach
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                    
+                                        </td>
 
-                                                                        </span>
-                                                                    </li>
-                                                            
-                                                                
-                                                            
-                                                                    <li><span>
-                                                                        @foreach ($st->qualifications as $st_quli)
-                                                                            @if($st_quli->pivot->status=='active')
-                                                                                {{$st_quli->qual_shortname}}
-                                                                            @endif
-                                                                        @endforeach
-                                                                        </span>
-                                                                    </li>
-                                                                </ul>
-                                                            </td>
-                                                            {{-- <td  class="border border-gray-300 px-4 py-2"><span>{{ $st->dob }}</span></td> --}}
-                                                            <td><span>{{\Carbon\Carbon::parse($st->dob)->format('d-M-Y') }}</span></td>
-                                                            <td><span>{{\Carbon\Carbon::parse( $st->doj)->format('d-M-Y') }}</span></td>
-                                                            {{-- <td  class="border border-gray-300 px-4 py-2"><span>{{ $st->doj }}</span></td> --}}
-                                                            <td class="">
-                                                                <ul>
-                                                                    <li>
-                                                                        <span>
-                                                                            @foreach($st->associations as $st_asso)
-                                                                                {{$st_asso->asso_name}}
-                                                                            @endforeach
-                                                                        </span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>
-                                                                            @foreach($st->associations as $st_asso)
-                                                                                {{$st_asso->pivot->gcr}}
-                                                                            @endforeach
-                                                                        </span>
-                                                                    </li>
-                                                                </ul>
+                                        <td  class="border border-gray-300 px-4 py-2"><span>{{($data[$st->id]['payband'])}}</span></td>
+
+                                        <td  class="border border-gray-300 px-4 py-2"><span>{{($data[$st->id]['wef'])}}</span></td>
+                                    
+                                        
+                                        <td  class="border border-gray-300 px-4 py-2"><span>{{($data[$st->id]['basic'])}}</span></td>
+
+                                                
+                                        <td>  
+                                            @foreach($st->ntpayscale as $nt)
+                                                    @php
+                                                        $level1_payscales =  explode("-",$nt->payband)
+                                                    @endphp 
+                                                    @if ($nt->pivot->level == 1)
                                                         
-                                                            </td>
-
-                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{($data[$st->id]['payband'])}}</span></td>
-
-                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{($data[$st->id]['wef'])}}</span></td>
-                                                      
+                                                        {{$level1_payscales[1]}}
+                                                    
+                                                    @elseif ($nt->pivot->level == 2)
+                                                    
+                                                        {{$level1_payscales[3]}}
+                                                        
+                                                    @else
                                                             
-                                                            <td  class="border border-gray-300 px-4 py-2"><span>{{($data[$st->id]['basic'])}}</span></td>
-
-                                                                 
-                                                            <td>  
-                                                                @foreach($st->ntpayscale as $nt)
-                                                                        @php
-                                                                            $level1_payscales =  explode("-",$nt->payband)
-                                                                        @endphp 
-                                                                        @if ($nt->pivot->level == 1)
-                                                                            
-                                                                            {{$level1_payscales[1]}}
-                                                                        
-                                                                        @elseif ($nt->pivot->level == 2)
-                                                                        
-                                                                            {{$level1_payscales[3]}}
-                                                                            
-                                                                        @else
-                                                                                
-                                                                            {{$level1_payscales[5]}}
-                                                                        
-                                                                        @endif
-                                                                 @endforeach
-                                                             </td>
-                                                            
-                                                             <td class="border border-gray-300 px-4 py-2">
-                                                                    <span>{{ Carbon\Carbon::parse($data[$st->id]['wef'])->format('d-M-Y') }}</span>
-                                                            </td>
-                                                            <td class="border border-gray-300 px-4 py-2"><span>{{($data[$st->id]['total'])}}</span></td>
-
-                                                            
-                                                            <td  class="font-medium space-x-2 rtl:space-x-reverse">
-                                                                <div class="hs-tooltip ti-main-tooltip">
-                                                                    {{-- <button
-                                                                        class="hs-dropdown-toggle  m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-secondary">
-                                                                        <a href="{{route('PRINCIPAL.staff.staffview',$st->id)}}">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3ZM12.0003 19C16.2359 19 19.8603 16.052 20.7777 12C19.8603 7.94803 16.2359 5 12.0003 5C7.7646 5 4.14022 7.94803 3.22278 12C4.14022 16.052 7.7646 19 12.0003 19ZM12.0003 16.5C9.51498 16.5 7.50026 14.4853 7.50026 12C7.50026 9.51472 9.51498 7.5 12.0003 7.5C14.4855 7.5 16.5003 9.51472 16.5003 12C16.5003 14.4853 14.4855 16.5 12.0003 16.5ZM12.0003 14.5C13.381 14.5 14.5003 13.3807 14.5003 12C14.5003 10.6193 13.381 9.5 12.0003 9.5C10.6196 9.5 9.50026 10.6193 9.50026 12C9.50026 13.3807 10.6196 14.5 12.0003 14.5Z"></path></svg>
-                                                                            <span
-                                                                                class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700"
-                                                                                role="tooltip">
-                                                                                View Staff
-                                                                            </span>
-                                                                        </a>
-                                                                    </button> --}}
-
-                                                                    <div class="hs-tooltip ti-main-tooltip">
-                                                                        <!--form action="#" method="post">
-
-                                                                        <button onclick="return confirm('Are you Sure')"
-                                                                            class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M7 4V2H17V4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7ZM6 6V20H18V6H6ZM9 9H11V17H9V9ZM13 9H15V17H13V9Z"></path></svg>
-
-                                                                            <span
-                                                                                class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700"
-                                                                                role="tooltip">
-                                                                                Delete
-                                                                            </span>
-                                                                            </button>
-                                                                        </form-->
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        @empty
-                                                            <p class="text-dark"><b>No Staff Added.</b></p>
-                                                        @endforelse
-                                                    </tbody>
+                                                        {{$level1_payscales[5]}}
+                                                    
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                        
+                                            <td class="border border-gray-300 px-4 py-2">
+                                                <span>{{ Carbon\Carbon::parse($data[$st->id]['wef'])->format('d-M-Y') }}</span>
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-2"><span>{{($data[$st->id]['total'])}}</span></td>
+                                    </tr>
+                                    @empty
+                                        <p class="text-dark"><b>No Staff Added.</b></p>
+                                    @endforelse
+                                </tbody>
                             </table>
                             <button id="submit" class="ti-btn bg-primary text-white px-4 py-2 rounded-md hover:bg-primary focus:ring-primary dark:focus:ring-offset-white/10">Submit</button>
                         </div>
@@ -376,10 +311,10 @@
             $(document).ready(function(){
                //alert('Hello from jquery');
 
-               new DataTable('#annualincrement_template_table');
+               new DataTable('#annualincrement_nonteaching_template_table');
            
                $('#exportToExcel').on('click', function () {
-                    var table = $('#annualincrement_template_table').clone();
+                    var table = $('#annualincrement_nonteaching_template_table').clone();
                     //table.find('th:nth-child(1),th:nth-child(4)').remove();
                     //table.find('td:nth-child(1),td:nth-child(4)').remove();
                     // Ensure each cell has proper formatting
@@ -396,17 +331,17 @@
 
                     // Check for Internet Explorer and Edge
                     if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                        window.navigator.msSaveOrOpenBlob(blob, 'annualincrement_staff.xls');
+                        window.navigator.msSaveOrOpenBlob(blob, 'annualincrement_ Nonteachingstaff.xls');
                     } else {
                         var link = $('<a>', {
                             href: URL.createObjectURL(blob),
-                            download: 'annualincrement_staff.xls'
+                            download: 'annualincrement_Nonteachingstaff.xls'
                         });
                         // Trigger the click to download
                         link[0].click();
                     }
                     setTimeout(function() {
-                        window.location.href="{{url('/ESTB/salaries/GenerateAnnualIncrement/GC/Teaching')}}"; // Update this URL to your actual route
+                        window.location.href="{{url('/ESTB/salaries/GenerateAnnualIncrement/GC/Nonteaching')}}"; // Update this URL to your actual route
                     }, 1000);
                 });
             });

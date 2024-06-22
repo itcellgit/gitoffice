@@ -286,6 +286,8 @@
                                                     <th scope="col" class="dark:text-white/80">@sortablelink('name', 'name')</th>
                                                     <th scope="col" class="dark:text-white/80">@sortablelink('location', 'location')</th>
                                                     <th scope="col" class="dark:text-white/80">@sortablelink('domain', 'domain')</th>
+                                                    <th scope="col" class="dark:text-white/80">@sortablelink('action', 'action')</th>
+
                                                 </tr>
                                             </thead>
 
@@ -583,7 +585,7 @@
             $(document).ready(function() {
                 //alert('Hello from jquery');
 
-                new DataTable('#ticket_table');
+                new DataTable('#industry_table');
             });
         </script>
 

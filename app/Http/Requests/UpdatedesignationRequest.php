@@ -23,11 +23,11 @@ class UpdatedesignationRequest extends FormRequest
     {
         return [
             //
-            'edit_design_name' => ['required'],
-            'edit_isvactional' => ['required'],
-            'edit_isadditional' => ['required'],
-            'edit_emp_type' => ['required'],
-           'status' => ['sometime'],
+            'edit_design_name' => [],
+            'edit_isvactional' => [],
+            'edit_isadditional' => [],
+            'edit_emp_type' => [],
+           'status' => ['sometimes'],
             
             
         ];

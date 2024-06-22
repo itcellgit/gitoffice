@@ -192,7 +192,9 @@
                                 </div>
                             </div>
                             <!-- End Modal -->
-                        
+                            <div style="width: 1800px; height: 400px;">
+                                <canvas id="biometricChart"></canvas>
+                            </div>
                             <!--main body start-->
                             <div class="box-body">
                                 <div class="table-bordered table-auto rounded-sm ti-striped-table ti-custom-table-head overflow-auto">
@@ -347,6 +349,10 @@
                                     </table>           
                                 </div>
                             </div>
+                            
+                           
+
+
                             <div class="box-footer">
                                 <!-- Pagination-->
                             </div>
@@ -496,7 +502,7 @@
     </script>
 
 
-<!--missing biometric mail-->
+    <!--missing biometric mail-->
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const sendMissingPunchesEmailButton = document.getElementById('sendEmailButton');
@@ -531,6 +537,83 @@
             });
 
         </script>
+
+       <!-- Include jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+   <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('biometricChart').getContext('2d');
+            
+            var entryLogsByDept = @json($entryLogsByDept);
+            var leaveLogsByDept = @json($leaveLogsByDept);
+            var missingLogsByDept = @json($missingLogsByDept);
+
+            var allDepartments = Object.keys(entryLogsByDept);
+            var entryData = Object.values(entryLogsByDept);
+            var leaveData = Object.values(leaveLogsByDept);
+            var missingData = Object.values(missingLogsByDept);
+
+            const biometricChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: allDepartments,
+                    datasets: [
+                        {
+                            label: 'Punched data',
+                            data: entryData,
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Leaves',
+                            data: leaveData,
+                            backgroundColor: 'rgba(255, 206, 86, 0.6)',
+                            borderColor: 'rgba(255, 206, 86, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Missing Punch',
+                            data: missingData,
+                            backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            stacked: true
+                        },
+                        y: {
+                            stacked: true,
+                            ticks: {
+                                beginAtZero: true,
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+
+
+        
+   
+
+
         
       
 

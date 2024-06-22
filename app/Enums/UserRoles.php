@@ -1,7 +1,7 @@
 <?php
 namespace App\Enums;
 
-enum UserRoles: string
+enum UserRoles:string
 {
     case TEACHING = 'teaching';
     case NONTEACHING = 'non-teaching';

@@ -294,7 +294,7 @@
                 labels: @json($staffIssuesData['labels']),
                 datasets: [
                     {
-                        label: 'Regular Issues',
+                        label: 'New Issues',
                         data: @json($staffIssuesData['regular']),
                         backgroundColor: 'rgba(54, 162, 235, 0.5)',
                         borderColor: 'rgba(54, 162, 235, 1)',
@@ -380,7 +380,7 @@
                     labels: @json($staffIssuesData['labels']),
                     datasets: [
                         {
-                            label: 'Regular Issues',
+                            label: 'New Issues',
                             data: @json($staffIssuesData['regular']),
                             backgroundColor: 'rgba(54, 162, 235, 0.5)',
                             borderColor: 'rgba(54, 162, 235, 1)',

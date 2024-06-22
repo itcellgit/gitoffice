@@ -32,6 +32,7 @@ class StaffShareController extends Controller
     {
         $staffshare=new staffshare();
         $staffshare->staff_id=$staff->id;
+        $staffshare->member_id=$request->member_id;
         $staffshare->shares_id=$request->shares_id;
         $staffshare->amount=$request->amount;
         $staffshare->start_date=$request->start_date;
@@ -64,6 +65,7 @@ class StaffShareController extends Controller
     public function update(UpdatestaffshareRequest $request,staff $staff,staffshare $staffshare)
     {
         $staffshare->staff_id=$staff->id;
+        $staffshare->member_id=$request->member_id;
         $staffshare->shares_id=$request->shares_id;
         $staffshare->amount=$request->amount;
         $staffshare->start_date=$request->start_date;

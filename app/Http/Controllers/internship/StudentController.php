@@ -23,21 +23,19 @@ class StudentController extends Controller
     {
         $user = Auth::user();
         $staff = staff::where('user_id',$user->id)->first();
-        //dd($request);
+       // dd($staff);
         $batch = $request->input('batch');
         $students = student::where('batch', $batch)
             ->where('staff_id', $staff->id)
-            ->with('department')
+            ->with('department')                  
             ->get();
-       // dd($batch);
+       //dd($students);
 
-        return response()->json(['students' => $students]);
-           
-
-          // return redirect('/Teaching/internship/student');
+        return response()->json($students);
     }
 
 
+   
    
 
 

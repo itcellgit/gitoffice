@@ -11,6 +11,7 @@ class employee_type extends Model
 {
     use HasFactory;
     protected $fillable=['staff_id','employee_type','status'];
+    
     public function staff():BelongsTo
     {
         return $this->belongsTo(staff::class);

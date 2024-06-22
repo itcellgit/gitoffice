@@ -23,11 +23,11 @@ class StorecastecategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'caste_name'=>['required','regex:/^[a-zA-Z\s]+$/'],
+            'caste_name'=>['required','regex:/^[a-zA-Z0-9\s\W]+$/'],
             'religion_id' => ['required', Rule::exists('religions', 'id')],
-            'subcastes_name'=>['required','regex:/^[a-zA-Z\s]+$/'],
-            'category'=>['required','regex:/^[a-zA-Z\s]+$/'],
-            'category_no'=>['required'],
+            'subcastes_name'=>['required','regex:/^[a-zA-Z0-9\s\W]+$/'],
+            'category'=>['required','regex:/^[a-zA-Z0-9\s\W]+$/'],
+            'category_no'=>['required','regex:/^[a-zA-Z0-9\s\W]+$/'],
            
         ];
     }
@@ -40,7 +40,7 @@ class StorecastecategoryRequest extends FormRequest
             'subcaste_name.regex'=>'SubCaste Name can be letters and spaces only',
             'category.required'=>'Category Name is required',
             'category.regex'=>'Category Name can be letters and spaces only',
-            'category_no'=>'Category number is required fied',
+            'category_no'=>'Category number can be  letters numbers and spaces',
             
         ];
     }

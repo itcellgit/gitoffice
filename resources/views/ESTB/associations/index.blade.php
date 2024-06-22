@@ -350,22 +350,4 @@
 
             });
         </script>
-        <script>
-            function validateForm() {
-                var assoName = document.forms["association_form"]["asso_name"].value;
-                document.getElementById("assoNameError").innerHTML = "";
-
-
-                if (assoName.trim() === "") {
-                    document.getElementById("assoNameError").innerHTML = "Association Name is required";
-                    return false;
-                }else if (!/^[a-zA-Z ]*$/.test(assoName.trim())) {
-                document.getElementById("assoNameError").innerHTML = "Association Name should contain only alphabetic characters";
-                return false;
-                }
-                return true;
-            }
-        </script>
-
-
-@endsection
+    @endsection
