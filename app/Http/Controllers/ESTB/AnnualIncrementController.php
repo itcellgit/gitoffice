@@ -33,7 +33,7 @@ class AnnualIncrementController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Storeannual_incrementRequest $request ,staff $staff)
-    { 
+    {
         $annualIncrement=new annual_increment();
         $annualIncrement->staff_id=$staff->id;
         $annualIncrement->wef=$request->wef;
@@ -53,7 +53,9 @@ class AnnualIncrementController extends Controller
         }
         //dd($date_of_next_increment);
         $staff->date_of_increment = $date_of_next_increment;
-        $staff->update(); 
+       // $staff->update();
+        $annualIncrement->created_at=carbon::now()->format('Y-m-d');
+        dd($annualIncrement->created_at);
         $annualIncrement->save();
         return redirect('/ESTB/staff/show/'.$staff->id);
 
@@ -62,11 +64,11 @@ class AnnualIncrementController extends Controller
 /**
      * Display the specified resource.
      */
-    public function show(string $id) 
+    public function show(string $id)
     {
-       
+
     }
- 
+
     public function edit(annual_increment $annual_increment)
     {
         //
@@ -99,7 +101,7 @@ class AnnualIncrementController extends Controller
     $result=$annualIncrement->delete();
     // $festivaladvance->staff()->detach($staff_id);
   //dd($result);
-  
+
   if($result)
  {
      $status=1;
@@ -111,10 +113,7 @@ class AnnualIncrementController extends Controller
      // Redirect to the staff show page
      return redirect('/ESTB/staff/show/'.$staff->id)->with('status',$status);
  }
- 
- 
- 
- }
- 
-    
 
+
+
+ }

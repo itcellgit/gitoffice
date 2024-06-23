@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('studentinternships', function (Blueprint $table) {
             $table->id();
-          
+
             $table->string('title');
-            $table->varchar('years');
+            $table->integer('years');
             $table->string('sdate');
             $table->string('edate');
             $table->foreignId('industry_id')->constrained();

@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -263,7 +262,7 @@ Route::middleware(['cors','auth','role:'.(string) UserRoles::SU,'prevent-back-hi
     Route::get('/Admin/users',[AdminController::class,'users'])->name('Admin.users');
 
     Route::get('/Admin/tickets/dashboard',[AdminTicketController::class,'dashboard'])->name('Admin.tickets.dashboard');
-   
+
 
   Route::get('/Admin/tickets/adminticket',[AdminTicketController::class,'index'])->name('Admin.tickets.adminticket');
   Route::post('Admin/tickets/adminticket/create', [AdminTicketController::class, 'store'])->name('Admin.tickets.adminticket.store');
@@ -556,7 +555,7 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
     Route::get('/Staff/Non-Teaching/viewstudentissues', [StaffStudentIssueController::class, 'index'])->name('Staff.Non-Teaching.view');
     Route::get('/Staff/Non-Teaching/{staff}/viewstudentissues/{student_issue}/show',[StaffStudentIssueController::class,'show'])->name('Staff.Non-Teaching.issue_timeline.show');
 
-   
+
 
 
     //Non-Teaching Leave  Routes
@@ -566,22 +565,22 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
     Route::get('/Non-Teaching/nt_leave_checkhasleaveEvent',[LeaveStaffApplicationsController::class,'nt_leave_checkhasleaveEvent']);
     Route::get('/Non-Teaching/nt_leave_checkanydeptpersononleave',[LeaveStaffApplicationsController::class,'nt_leave_checkanydeptpersononleave']);
     Route::get('/Non-Teaching/nt_leave_checkhasRH',[LeaveStaffApplicationsController::class,'nt_leave_checkhasRH']);
-    
-    
+
+
     //for fetching events of specific date (clicked) using AJAX
     Route::get('/Non-Teaching/nt_leave_fetchholidayrhevents',[LeaveStaffApplicationsController::class,'nt_leave_fetchholidayrhevents']);
     Route::get('/Non-Teaching/nt_leave_fetchmyleaveevents',[LeaveStaffApplicationsController::class,'nt_leave_fetchmyleaveevents']);
-    
+
     Route::get('/Non-Teaching/nt_leave_cancel_myleave',[LeaveStaffApplicationsController::class,'nt_leave_cancel_myleave']);
     Route::get('/Non-Teaching/nt_leave_edit_myleave',[LeaveStaffApplicationsController::class,'nt_leave_edit_myleave'])->name('Non-Teaching.leaves.edit');
     // Route::delete('/ESTB/leaves/leaves_rules/{leave_rules}',[LeaveRulesController::class,'destroy'])->name('ESTB.leaves.leave_rules.destroy');
-    
+
     //Leave Application Management routes
     Route::post('/Non-Teaching/{staff}/leave/create',[LeaveStaffApplicationsController::class,'nt_leave_store'])->name('Non-Teaching.leaves.apply');
     Route::patch('/Non-Teaching/{staff}/leave/application/update',[LeaveStaffApplicationsController::class,'nt_leave_update'])->name('Non-Teaching.leave_application.update');
     Route::post('/Non-Teaching/{staff}/validate_leave_appln',[LeaveStaffApplicationsController::class,'nt_leave_validateleave']);
 
-    
+
     //Route::get('/Non-Teaching/notifications',[NotificationsController::class,'notification_index'])->name('Non-Teaching.notifications');
     //Route::post('/Non-Teaching/notifications/create',[NotificationsController::class,'store'])->name('Non-Teaching.notification.store');
     // Route::patch('/Non-Teaching/notifications/update/{notification}',[NotificationsController::class,'update'])->name('Non-Teaching.notification.update');
@@ -604,7 +603,7 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
       Route::get('/ESTB/Biometric/missing_logs', [BiometricController::class, 'missingLogEntries'])->name('biometric.missing_logs');
       Route::post('/send-missing-punches-email', [BiometricController::class, 'sendMissingPunchesEmail'])->name('send.missing.punches.email');
       Route::get('/ESTB/Biometric/monthly', [BiometricController::class, 'filterEmployeeMonthlyLogs'])->name('biometric.monthly');
-     
+
 
       //departments controller
       Route::get('/ESTB/departments',[DepartmentController::class,'index'])->name('ESTB.departments.index');
@@ -634,7 +633,7 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
 
 
 
-      //search sort and filter routes for department{{  }}
+      //search sort and filter routes for department{{}}
       Route::get('/ESTB/departments/indexfiltering', [DepartmentFilteringController::class,'indexFiltering'])->name('ESTB.departments.indexfiltering');
 
       //Religion Controllers
@@ -666,7 +665,7 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
       Route::post('/ESTB/autonomous_allowance',[AllowanceStaffController::class,'create'])->name('ESTB.autonomous_allowance.create');
       Route::post('/ESTB/autonomous_allowance/create', [AllowanceStaffController::class, 'store'])->name('ESTB.autonomous_allowance.import');
       Route::patch('/ESTB/autonomous_allowance/{autonomous_allowance}/update',[AllowanceStaffController::class,'update'])->name('grading.staff.update');
-      
+
       // Generate annual increment list controller for teaching staff for GC
       Route::get('/ESTB/salaries/GenerateAnnualIncrement/GC/Teaching', [GenetareAnnualIncrementListController::class, 'index'])->name('aanualincrement.staff.index');
       Route::post('/ESTB/salaries/GenerateAnnualIncrement/GC/Teaching/create',[GenetareAnnualIncrementListController::class,'create'])->name('ESTB.annualincrement.create');
@@ -679,9 +678,9 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
       Route::get('/ESTB/salaries/GenerateAnnualIncrement/GC/Nonteaching', [NonTeachingannualincrementforGcController::class, 'index'])->name('staff.nonteaching.index');
 
      //Generate annual increment list controller for  Non Teaching staff for Board
-      
+
      Route::get('/ESTB/salaries/GenerateAnnualIncrement/Board/Nonteaching',[NonteachingstaffannualincrementboardController::class, 'index'])->name('staff.nonteachingboard.index');
-     
+
     // Assocations Controllers
 
       Route::get('/ESTB/associations',[AssociationController::class,'index'])->name('ESTB.associations');
@@ -758,7 +757,7 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
       //ESTB Staff Leave entilement
       Route::get('/ESTB/staff/{staff}/leave_entitlement',[urlcontroller::class,'leave_entitlement'])->name('ESTB.staff.staff_leave');
       //Route::get('/ESTB/staff/{staff}/fetch_leave_history',[urlcontroller::class,'fetch_leave_history'])->name('ESTB.staff.staffleave');
-      
+
       Route::get('/ESTB/staff/{staff}/associations',[urlcontroller::class,'assocaitons'])->name('ESTB.staff.associations');
       Route::get('/ESTB/staff/{staff}/departments',[urlcontroller::class,'departments'])->name('ESTB.staff.departments');
       Route::get('/ESTB/staff/{staff}/designationpayscales',[urlcontroller::class,'designationpayscales'])->name('ESTB.staff.designationpayscales');
@@ -769,7 +768,7 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
       Route::get('/ESTB/staff/{staff}/staffshares',[urlcontroller::class,'staffshares'])->name('ESTB.staff.staffshares');
       Route::get('/ESTB/staff/{staff}/staffloans',[urlcontroller::class,'staffloans'])->name('ESTB.staff.staffloans');
       Route::get('/ESTB/staff/{staff}/stafftaxregime',[urlcontroller::class,'stafftaxregime'])->name('ESTB.staff.stafftaxregime');
-    
+
 
       /****************** */
 
@@ -827,26 +826,26 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
       Route::get('/ESTB/staff/{staff}/stafflics/{stafflic}/show',[StaffLicController::class,'show'])->name('ESTB.stafflic_transactions.show');
       Route::patch('/ESTB/staff/{staff}/stafflics/{stafflic}/update',[StaffLicController::class,'update'])->name('ESTB.staff.stafflics.update');
       Route::delete('/ESTB/staff/{staff}/stafflics/{stafflic}/destroy',[StaffLicController::class,'destroy'])->name('ESTB.staff.stafflics.destroy');
-    
+
       //staff LIC Controller
       //Route::get('ESTB/staff/{staff}/stafflic_transactions',[StafflicTransactionController::class,'index'])->name('ESTB.Staff.Stafflics.stafflic_transactions');
       Route::post('/ESTB/staff/stafflics/stafflic_transactions/create',[StafflicTransactionController::class,'store'])->name('ESTB.staff.stafflics.stafflic_transactions.store');
       //Route::patch('/ESTB/staff/{staff}/stafflics/{stafflic}/stafflic_transactions/update',[StafflicTransactionController::class,'update'])->name('ESTB.staff.stafflics.stafflic_transactions.update');
       //Route::delete('/ESTB/staff/{staff}/stafflics/{stafflic}/stafflic_transactions/destroy',[StafflicTransactionController::class,'destroy'])->name('ESTB.staff.stafflics.stafflic_transactions.destroy');
-    
+
       //staff share controller
       Route::post('/ESTB/staff/{staff}/staffshares/create',[StaffShareController::class,'store'])->name('ESTB.staff.staffshares.store');
       Route::get('/ESTB/staff/{staff}/staffshares/{staffshare}/show',[StaffShareController::class,'show'])->name('ESTB.staffshares.show');
       Route::patch('/ESTB/staff/{staff}/staffshares/{staffshare}/update',[StaffShareController::class,'update'])->name('ESTB.staff.staffshares.update');
       Route::delete('/ESTB/staff/{staff}/staffshares/{staffshare}/destroy',[StaffShareController::class,'destroy'])->name('ESTB.staff.staffshares.destroy');
-    
+
       //staff loancontroller
       Route::post('/ESTB/staff/{staff}/staffloans/create',[StaffLoanController::class,'store'])->name('ESTB.staff.staffloans.store');
       Route::get('/ESTB/staff/{staff}/staffloans/{staffloan}/show',[StaffLoanController::class,'show'])->name('ESTB.staffloans.show');
       Route::patch('/ESTB/staff/{staff}/staffloans/{staffloan}/update',[StaffLoanController::class,'update'])->name('ESTB.staff.staffloans.update');
       Route::delete('/ESTB/staff/{staff}/staffloans/{staffloan}/destroy',[StaffLoanController::class,'destroy'])->name('ESTB.staff.staffloans.destroy');
-    
-      
+
+
       //leave routs
       //<1!-- Leave rules routes-->
       Route::get('/ESTB/leaves',[LeaveController::class,'index'])->name('ESTB.leaves.index');
@@ -854,7 +853,7 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
       Route::patch('/ESTB/leaves/{leave}',[LeaveController::class,'update'])->name('ESTB.leaves.update');
       Route::delete('/ESTB/leaves/{leave}',[LeaveController::class,'destroy'])->name('ESTB.leaves.destroy');
 
-      
+
       //for fetching the alternate staff
       Route::get('/fetch-alternate-staff', [LeaveController::class, 'fetchAlternateStaff'])->name('fetch-alternate-staff');
 
@@ -866,10 +865,10 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
       //leave entitlement
       Route::get('/ESTB/leaves/leave_entitlement',[LeaveStaffEntitlementController::class,'index'])->name('ESTB.leaves.leave_entitlement.index');
       Route::get('/ESTB/leaves/leave_entitlement/create',[LeaveStaffEntitlementController::class,'store'])->name('ESTB.leaves.leave_entitlement.store');
-      
-      
-      
-      
+
+
+
+
       //holiday and RH
       Route::get('/ESTB/leaves/holiday_rhlist',[HolidayrhController::class,'index'])->name('ESTB.leaves.holiday_rhlist.index');
       Route::post('/ESTB/leaves/holiday_rhlist/create',[HolidayrhController::class,'store'])->name('ESTB.leaves.holiday_rhlist.store');
@@ -902,37 +901,37 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
     Route::get('/ESTB/payscale/{payscale}/show',[PayscaleController::class,'show'])->name('ESTB.payscale.payscalesalaryheads.show');
     Route::patch('/ESTB/payscale/{payscales}/update',[PayscaleController::class,'update'])->name('ESTB.payscales.update');
     Route::delete('/ESTB/payscale/{payscales}/destroy', [PayscaleController::class, 'destroy'])->name('ESTB.payscales.destroy');
-    
+
     //Salarygroup controller
     Route::get('/ESTB/salaries/salarygroups',[SalaryGroupController::class,'index'])->name('ESTB.salaries.salarygroups');
     Route::post('/ESTB/salaries/salarygroups/create',[SalaryGroupController::class,'store'])->name('ESTB.salaries.salarygroups.store');
     Route::patch('/ESTB/salaries/salarygroups/{salary_groups}/update',[SalaryGroupController::class,'update'])->name('ESTB.salaries.salarygroups.update');
     Route::delete('/ESTB/salaries/salarygroups/{salary_groups}/destroy', [SalaryGroupController::class, 'destroy'])->name('ESTB.salaries.salarygroups.destroy');
 
-    
+
     //Salaryheads controller
     Route::get('/ESTB/salaries/salaryheads',[SalaryHeadController::class,'index'])->name('ESTB.salaries.salaryheads');
     Route::post('/ESTB/salaries/salaryheads/create',[SalaryHeadController::class,'store'])->name('ESTB.salaries.salaryheads.store');
     Route::patch('/ESTB/salaries/salaryheads/{salary_heads}/update',[SalaryHeadController::class,'update'])->name('ESTB.salaries.salaryheads.update');
     Route::delete('/ESTB/salaries/salaryheads/{salary_heads}/destroy', [SalaryHeadController::class, 'destroy'])->name('ESTB.salaries.salaryheads.destroy');
-    
+
     //Mapping of Salaryheads controller
     Route::post('/ESTB/payscale/{payscale}/payscalesalaryheads/create',[PayscaleSalaryHeadController::class,'store'])->name('ESTB.payscale.payscalesalaryheads.store');
     Route::patch('/ESTB/payscale/{payscale}/payscalesalaryheads/update',[PayscaleSalaryHeadController::class,'update'])->name('ESTB.payscale.payscalesalaryheads.update');
-    Route::delete('/ESTB/payscale/{payscale}/payscalesalaryheads/destroy',[PayscaleSalaryHeadController::class,'destroy'])->name('ESTB.payscale.payscalesalaryheads.destroy'); 
+    Route::delete('/ESTB/payscale/{payscale}/payscalesalaryheads/destroy',[PayscaleSalaryHeadController::class,'destroy'])->name('ESTB.payscale.payscalesalaryheads.destroy');
 
     //LIC Controller
     Route::get('/ESTB/salaries/stafflic_transactions',[StafflicTransactionController::class,'index'])->name('ESTB.salaries.stafflic_transactions.lics');
     Route::post('/ESTB/salaries/stafflic_transactions/create',[StafflicTransactionController::class,'store'])->name('ESTB.salaries.stafflic_transactions.store');
     //Route::patch('/ESTB/salaries/stafflic_transactions/{stafflic_transaction}/update',[StafflicTransactionController::class,'update'])->name('ESTB.salaries.stafflic_transactions.update');
     //Route::delete('/ESTB/salaries/stafflic_transactions/{stafflic_transaction}/destroy',[StafflicTransactionController::class,'destroy'])->name('ESTB.salaries.stafflic_transactions.destroy');
-    
+
     //Shares Controller
     // Route::get('/ESTB/shares',[ShareController::class,'index'])->name('ESTB.shares');
     // Route::post('/ESTB/shares/create',[ShareController::class,'store'])->name('ESTB.shares.store');
     // Route::patch('/ESTB/shares/{share}/update',[ShareController::class,'update'])->name('ESTB.shares.update');
     // Route::delete('/ESTB/shares/{share}/destroy',[ShareController::class,'destroy'])->name('ESTB.shares.destroy');
-    
+
 
       Route::get('/ESTB/salaryheads',[SalaryHeadsController::class,'index'])->name('ESTB.salaryheads');
       Route::post('/ESTB/salaryheads/create',[SalaryHeadsController::class,'store'])->name('ESTB.salaryheads.store');
@@ -983,7 +982,7 @@ Route::delete('/Teaching/internship/{studentinternship}/student_studentinternshi
       Route::post('ESTB/TDS/Taxheads{taxHeads}/taxslab/store',[TaxSlabController::class,'store'])->name('ESTB.TDS.Taxheads.Taxslabs.store');
       Route::patch('ESTB/TDS/Taxheads/{taxHeads}/taxslab/update/{taxSlab}',[TaxSlabController::class,'update'])->name('ESTB.TDS.Taxheads.Taxslabs.update');
       Route::delete('ESTB/TDS/Taxheads/{taxHeads}/taxslab/destroy/{taxSlab}',[TaxSlabController::class,'destroy'])->name('ESTB.TDS.Taxheads.Taxslabs.destroy');
-        
+
       //stafftaxregime related
       Route::get('ESTB/TDS/StaffTaxRegime/index/{stafftaxregime}',[StaffTaxRegimeController::class,'index'])->name('ESTB.TDS.StaffTaxRegime.index');
       Route::post('ESTB/TDS/StaffTaxRegime/store{stafftaxregime}',[StaffTaxRegimeController::class,'store'])->name('ESTB.TDS.StaffTaxRegime.store');

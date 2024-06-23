@@ -30,44 +30,44 @@ class StaffsalaryController extends Controller
             DB::raw('IFNULL(laptoploans.amount, 0.0) as laptop_loan_amount'),
             DB::raw('(annual_increments.basic + teaching_payscales.agp) as basic'),
             DB::raw('(annual_increments.basic + teaching_payscales.agp) as rate'),
-            DB::raw('((annual_increments.basic + teaching_payscales.agp) * 0.20) as special_incen'),
-            DB::raw('((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.da / 100) as da'),
-            DB::raw('((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.hra / 100) as hra'),
-            DB::raw('(annual_increments.basic + teaching_payscales.agp + 
-                      ((annual_increments.basic + teaching_payscales.agp) * 0.20) + 
-                      ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.da/100) + 
-                      ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.hra/100) + 
-                      teaching_payscales.cca + allowances.value) as gross_salary'),
-            DB::raw('(CASE WHEN annual_increments.basic > 15000 THEN 1800 ELSE 
+            // DB::raw('((annual_increments.basic + teaching_payscales.agp) * 0.20) as special_incen'),
+            // DB::raw('((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.da / 100) as da'),
+            // DB::raw('((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.hra / 100) as hra'),
+            // DB::raw('(annual_increments.basic + teaching_payscales.agp +
+            //           ((annual_increments.basic + teaching_payscales.agp) * 0.20) +
+            //           ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.da/100) +
+            //           ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.hra/100) +
+            //           teaching_payscales.cca + allowances.value) as gross_salary'),
+            DB::raw('(CASE WHEN annual_increments.basic > 15000 THEN 1800 ELSE
                       (annual_increments.basic + teaching_payscales.agp) * 0.05 END) as pf_deduction'),
-            DB::raw('CASE WHEN (annual_increments.basic + teaching_payscales.agp + 
-                      ((annual_increments.basic + teaching_payscales.agp) * 0.20) + 
-                      ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.da / 100) + 
-                      ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.hra / 100) + 
+            DB::raw('CASE WHEN (annual_increments.basic + teaching_payscales.agp +
+                      ((annual_increments.basic + teaching_payscales.agp) * 0.20) +
+                      ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.da / 100) +
+                      ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.hra / 100) +
                       teaching_payscales.cca + allowances.value) > 25000 THEN 200 ELSE 0 END as prof_tax'),
             DB::raw('25 as vidyaganapati'),
             DB::raw('300 as GSLI'),
-            DB::raw('(CASE WHEN annual_increments.basic > 15000 THEN 1800 ELSE 
-                      (annual_increments.basic + teaching_payscales.agp) * 0.05 END + 
-                      25 + 300 + IFNULL(laptoploans.amount, 0.0) + 
-                      CASE WHEN (annual_increments.basic + teaching_payscales.agp + 
-                      ((annual_increments.basic + teaching_payscales.agp) * 0.20) + 
-                      ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.da / 100) + 
-                      ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.hra / 100) + 
-                      teaching_payscales.cca + allowances.value) > 25000 THEN 200 ELSE 0 END) as total_deductions'),
-            DB::raw('((annual_increments.basic + teaching_payscales.agp + 
-                      ((annual_increments.basic + teaching_payscales.agp) * 0.20) + 
-                      ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.da / 100) + 
-                      ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.hra / 100) + 
-                      teaching_payscales.cca + allowances.value) - 
-                      CASE WHEN annual_increments.basic > 15000 THEN 1800 ELSE 
-                      (annual_increments.basic + teaching_payscales.agp) * 0.05 END - 
-                      25 - 300 - IFNULL(laptoploans.amount, 0.0) - 
-                      CASE WHEN (annual_increments.basic + teaching_payscales.agp + 
-                      ((annual_increments.basic + teaching_payscales.agp) * 0.20) + 
-                      ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.da / 100) + 
-                      ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.hra / 100) + 
-                      teaching_payscales.cca + allowances.value) > 25000 THEN 200 ELSE 0 END) as net_salary')
+            // DB::raw('(CASE WHEN annual_increments.basic > 15000 THEN 1800 ELSE
+            //           (annual_increments.basic + teaching_payscales.agp) * 0.05 END +
+            //           25 + 300 + IFNULL(laptoploans.amount, 0.0) +
+            //           CASE WHEN (annual_increments.basic + teaching_payscales.agp +
+            //           ((annual_increments.basic + teaching_payscales.agp) * 0.20) +
+            //           ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.da / 100) +
+            //           ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.hra / 100) +
+            //           teaching_payscales.cca + allowances.value) > 25000 THEN 200 ELSE 0 END) as total_deductions'),
+            // DB::raw('((annual_increments.basic + teaching_payscales.agp +
+            //           ((annual_increments.basic + teaching_payscales.agp) * 0.20) +
+            //           ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.da / 100) +
+            //           ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.hra / 100) +
+            //           teaching_payscales.cca + allowances.value) -
+            //           CASE WHEN annual_increments.basic > 15000 THEN 1800 ELSE
+            //           (annual_increments.basic + teaching_payscales.agp) * 0.05 END -
+            //           25 - 300 - IFNULL(laptoploans.amount, 0.0) -
+            //           CASE WHEN (annual_increments.basic + teaching_payscales.agp +
+            //           ((annual_increments.basic + teaching_payscales.agp) * 0.20) +
+            //           ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.da / 100) +
+            //           ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.hra / 100) +
+            //           teaching_payscales.cca + allowances.value) > 25000 THEN 200 ELSE 0 END) as net_salary')
             )
             ->join('staff_teaching_payscale', 'staff.id', '=', 'staff_teaching_payscale.staff_id')
             ->join('teaching_payscales', 'staff_teaching_payscale.teaching_payscale_id', '=', 'teaching_payscales.id')
@@ -96,17 +96,19 @@ class StaffsalaryController extends Controller
                 ->groupBy('leave_id')
                 ->get();
 
-            $no_of_days_lwp = $leaveData->sum('total_leave_days');
+             $no_of_days_lwp = $leaveData->sum('total_leave_days');
             if ($no_of_days_lwp > 0) {
                 $daily_basic_rate = $staff->basic / 30;
                 $staff->basic -= $daily_basic_rate * $no_of_days_lwp;
             }
             $staff->leave_days = $no_of_days_lwp;
+
+
         }
 
         return view('ESTB.salaries.staffpayscale.index', compact('staffWithPayscaleAndAllowances'));
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -162,7 +164,7 @@ class StaffsalaryController extends Controller
     return redirect()->back()->with('success', 'Staff payscale data stored successfully.');
 
     }
-    
+
 
     /**
      * Display the specified resource.
