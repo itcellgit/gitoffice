@@ -175,7 +175,7 @@ class staff extends Model
     public function department()
     {
         return $this->belongsToMany(department::class, 'department_staff', 'staff_id', 'department_id')
-                    ->withPivot('status'); 
+                    ->withPivot('status');
     }
 
     public function employee_types()
@@ -268,7 +268,7 @@ class staff extends Model
     {
         return $this->belongsToMany(Leave::class, 'leave_staff_applications')
                     ->select('staff_id', 'leave_id', \DB::raw('SUM(no_of_days) as total_days'))
-                    ->groupBy('year','staff_id', 'leave_id')->get(); 
+                    ->groupBy('year','staff_id', 'leave_id')->get();
     }
      public function leaves():BelongsToMany
      {
@@ -366,7 +366,10 @@ class staff extends Model
      {
         return $this->belongsToMany(tdshead::class, 'staff_tdsheads')
         ->withPivot('amount', 'document', 'status');
-       
-     }
 
+     }
+     public function annaul_increment():HasMany
+     {
+        return $this->hasMany(annual_increment::class);
+     }
 }

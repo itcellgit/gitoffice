@@ -56,7 +56,7 @@ class AnnualIncrementController extends Controller
         $staff->date_of_increment = $date_of_next_increment;
        // $staff->update();
         $annualIncrement->created_at=carbon::now()->format('Y-m-d');
-        dd($annualIncrement->created_at);
+       // dd($annualIncrement->created_at);
         $annualIncrement->save();
         return redirect('/ESTB/staff/show/'.$staff->id);
 
