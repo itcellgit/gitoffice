@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\student_issue;
 use App\Models\User;
 
-class ntissue_timeline extends Model
+class issue_timeline extends Model
 {
     use HasFactory;
     protected $fillable=['date_of_interaction','interaction','status'];

@@ -3,8 +3,10 @@
 
 @section('styles')
 
-    @endsectionfhgh
-
+@endsection
+<script>
+    var base_url = "{{URL::to('/')}}";
+</script>
 @section('content')
 
     <div class="content">
@@ -77,18 +79,22 @@
                                        
                                         Student Details
                                     </h5>
-
-
-
-
-                                    <div class=" block ltr:ml-auto rtl:mr-auto my-auto">
-
-                                        <button type="button" class="hs-dropdown-toggle ti-btn ti-btn-primary"
-                                            data-hs-overlay="#hs-medium-modal1">
-                                            
-                                            Select Batch
+                                    <div class="block ltr:ml-auto rtl:mr-auto my-auto">
+                                        <div class="max-w-sm space-y-3 pb-6">
+                                                        
+                                            <label for="batch" class="ti-form-label">Batch:</label>
+                                            <select name="batch" id="batchselect" class="ti-form-input" required>
+                                                <option value="" disabled selected>Select Batch</option>
+                                                <option value="2022-2023">2022-2023</option>
+                                                <option value="2023-2024">2023-2024</option>
+                                                <option value="2024-2025">2024-2025</option>
+                                            </select>
+                                        </div>
+                                        <button type="button" class="hs-dropdown-toggle ti-btn ti-btn-primary"  id="batch_filter_btn">
+                                             Batch-Filter
                                         </button>
-                                        <div id="hs-medium-modal1" class="hs-overlay hidden ti-modal">
+                                    
+                                        {{-- <div id="hs-medium-modal1" class="hs-overlay hidden ti-modal">
                                             <div
                                                 class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out md:!max-w-2xl md:w-full m-3 md:mx-auto">
                                                 <div class="ti-modal-content">
@@ -116,15 +122,15 @@
                                                     </div>
 
                                                   
-                                                    <form id="batchForm" action="{{ route('internship.student.filter') }}" method="post">
-                                                    @csrf
+                                                    {{-- <form id="batchForm" action="{{ route('internship.student.filter') }}" method="post"> --}}
+                                                    {{-- @csrf --}}
 
-                                                        <div class="ti-modal-body">
+                                                        {{-- <div class="ti-modal-body">
                                                         
                                                             <div class="max-w-sm space-y-3 pb-6">
                                                         
                                                                 <label for="batch" class="ti-form-label">Batch:</label>
-                                                                <select name="batch" class="ti-form-input" required>
+                                                                <select name="batch" id="batchselect" class="ti-form-input" required>
                                                                     <option value="" disabled selected>Select Year</option>
                                                                     <option value="2022-2023">2022-2023</option>
                                                                     <option value="2023-2024">2023-2024</option>
@@ -133,8 +139,7 @@
                                                             </div>
                                                             <div class="max-w-sm space-y-3 pb-6">
 
-                                                                <input type="hidden" id="staff_id" value="{{ Auth::user()->id }}">
-                                                            </div>
+                                                               </div>
                                                         </div>
                                                     
 
@@ -143,19 +148,18 @@
                                                             data-hs-overlay="#hs-medium-modal1">
                                                                 Close
                                                             </button>
-                                                            <button type="submit" class="ti-btn bg-primary text-white hover:bg-primary focus:ring-primary dark:focus:ring-offset-white/10">
+                                                            <button class="ti-btn bg-primary text-white hover:bg-primary focus:ring-primary dark:focus:ring-offset-white/10" >
                                                                 Filter
                                                             </button>
-                                                        </div>
-                                                    </form>
-                                                </div>
+                                                        </div> --}}
+                                                    {{-- </form> --}}
+                                                {{-- </div>
                                             </div>
-                                        </div>
-                                    </div>
-
-
-
-
+                                        </div> --}}
+                                    
+                                   
+                                  
+                
                                     <button type="button" class="hs-dropdown-toggle ti-btn ti-btn-primary"
                                         data-hs-overlay="#hs-medium-modal">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16"
@@ -277,7 +281,7 @@
                                         </tr>
                                     </thead>
 
-                                    <tbody class="">
+                                    <tbody class="" id="filtered_data">
 
                                         @php
                                             $i = 1;
@@ -560,104 +564,60 @@
     $(document).ready(function() {
         //alert('Hello from jquery');
 
-        new DataTable('#ticket_table');
+        new DataTable('#student_table');
     });
 </script>
 
-@endsection
-
-
-
-@section('scripts')
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
 $(document).ready(function() {
-    // Handle batch form submission
-    $('#batchForm').on('submit', function(event) {
-        event.preventDefault();
+    $(document).on('click','#batch_filter_btn', function() {
         var batch = $('select[name="batch"]').val();
-        var staff_id = $('#staff_id').val();
-       // var staff_id = {{ Auth::user()->id }};
-
-        // AJAX request to fetch students based on selected batch
         $.ajax({
-            url: "{{ route('internship.student.filter') }}",
-            method: "POST",
+            url: base_url+'/Teaching/internship/student/filter',
+            method: "GET",
             data: {
                 _token: '{{ csrf_token() }}',
-                batch: batch,
-                staff_id: staff_id },
+                batch: batch
+                },
             success: function(response) {
-               // console.log(response);
-                var students = response.students;
+               console.log(response);
                 var tableContent = '';
-
-                if (students.length > 0) {
-                    students.forEach(function(student, index) {
-                        tableContent += `
-                            <tr>
-                                <td>${index + 1}</td>
-                                <td>${student.usn}</td>
-                                <td>${student.name}</td>
-                                <td>${student.batch}</td>
-                                <td>${student.department ? student.department.dept_name : ''}</td>
-                                <!-- Add other columns as needed -->
-                            </tr>
-                        `;
+                var i=1;
+                if (response.length > 0) {
+                    $.each(response, function(key, value) {
+                        tableContent += '<tr>'
+                            + '<td>' + i++ + '</td>'
+                            + '<td>' + value['usn'] + '</td>'
+                            + '<td>' + value['name'] + '</td>'
+                            + '<td>' + value['batch'] + '</td>'
+                            + '<td>' + (value['department'] ? value['department']['dept_name'] : '') + '</td>'
+                            + '<td></td>'
+                            + '</tr>';
                     });
                 } else {
-                    tableContent = `
-                        <tr>
-                            <td colspan="5" class="text-center">No Students Found for the Selected Batch.</td>
-                        </tr>
-                   ` ;
+                   tableContent = '<tr>'
+                        + '<td colspan="5" class="text-center">No Students Found for the Selected Batch.</td>'
+                        + '</tr>';
                 }
 
-            // Update the table body with new data
-            $('#student_table tbody').html(tableContent);
+            $('#filtered_data').html(tableContent);
             },
             error: function(xhr, status, error) {
                 console.error("AJAX Error: " + status + error);
-                // Handle error message display if needed
             }
         });
     });
 });
 </script>
-@endsection
 
 
-
-
-
-
-
-{{-- </div>
-</div>
-</div>
-
-
-
-<!-- End::row-2 -->
-
-
-</div>
-
-<!-- End::main-content -->
-
-</div> --}}
-
-@endsection
-
-@section('scripts')
 
 <!-- APEX CHARTS JS -->
 <script src="{{ asset('build/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 
 <!-- INDEX JS -->
 @vite('resources/assets/js/index-8.js')
-
-
 @endsection

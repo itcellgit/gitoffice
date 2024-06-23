@@ -5,8 +5,9 @@ namespace App\Models\ESTB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\ESTB\InvestmentCategory;
+use App\Models\staff;
 
-class tdshead1 extends Model
+class tdshead extends Model
 {
     use HasFactory;
     protected $table = 'tdsheads';
@@ -15,5 +16,11 @@ class tdshead1 extends Model
     public function InvestmentCategory()
     {
         return $this->hasMany(InvestmentCategory::class,"tds_id","id");
+    }
+
+    public function staff()
+    {
+        return $this->belongsToMany(staff::class, 'staff_tdsheads')
+                    ->withPivot('amount', 'document', 'status');
     }
 }

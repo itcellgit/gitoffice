@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use App\Models\Staff;
+use App\Models\payscale;
 use Illuminate\Http\Request;
 use App\Models\staffsalary;
 use App\Http\Requests\StorestaffsalaryRequest;
@@ -18,15 +19,16 @@ class StaffsalaryController extends Controller
     public function index()
     {
         $maxCreatedAt = DB::table('staffsalaries')->max('created_at');
-        $previousMonthDate = Carbon::parse($maxCreatedAt)->subMonth();
+        $previousMonthDate = Carbon::parse($maxCreatedAt)->format('Y-m-d');
         $currentDate = Carbon::now();
 
         $staffWithPayscaleAndAllowances = Staff::select(
-            'staff.id', 'staff.fname', 'staff.mname', 'staff.lname', 'staff.doj', 'staff.un_no', 'staff.PF',
-            'designations.design_name', 'teaching_payscales.payscale_title',
+            'staff.id',DB::raw("concat(staff.fname,' ', staff.mname,' ', staff.lname) as name"), 'staff.doj', 'staff.un_no', 'staff.PF',
+            'designations.design_name', 'teaching_payscales.payscale_title','teaching_payscales.id as payid',
             'staff_teaching_payscale.start_date', 'staff_teaching_payscale.end_date',
-            'allowances.title as allowance_title', 'allowances.value as allowance_value',
+
             'annual_increments.basic as payband', 'teaching_payscales.cca', 'teaching_payscales.agp',
+            'annual_increments.reason', 'annual_increments.created_at as ai_created_at','annual_increments.wef as ai_wef',
             DB::raw('IFNULL(laptoploans.amount, 0.0) as laptop_loan_amount'),
             DB::raw('(annual_increments.basic + teaching_payscales.agp) as basic'),
             DB::raw('(annual_increments.basic + teaching_payscales.agp) as rate'),
@@ -45,6 +47,8 @@ class StaffsalaryController extends Controller
                       ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.da / 100) +
                       ((annual_increments.basic + teaching_payscales.agp) * teaching_payscales.hra / 100) +
                       teaching_payscales.cca + allowances.value) > 25000 THEN 200 ELSE 0 END as prof_tax'),
+            DB::raw('(CASE WHEN annual_increments.basic > 15000 THEN 1800 ELSE
+                    (annual_increments.basic + teaching_payscales.agp) * 0.05 END) as pf_deduction'),
             DB::raw('25 as vidyaganapati'),
             DB::raw('300 as GSLI'),
             // DB::raw('(CASE WHEN annual_increments.basic > 15000 THEN 1800 ELSE
@@ -73,18 +77,41 @@ class StaffsalaryController extends Controller
             ->join('teaching_payscales', 'staff_teaching_payscale.teaching_payscale_id', '=', 'teaching_payscales.id')
             ->join('designations', 'teaching_payscales.designations_id', '=', 'designations.id')
             ->join('annual_increments', 'staff.id', '=', 'annual_increments.staff_id')
-            ->join('allowance_staff', 'staff.id', '=', 'allowance_staff.staff_id')
-            ->join('allowances', 'allowance_staff.allowance_id', '=', 'allowances.id')
+
             ->leftJoin('laptoploans', 'staff.id', '=', 'laptoploans.staff_id')
             ->whereIn('teaching_payscales.payscale_title', ['5th payscale', '6th payscale'])
             ->whereNull('staff_teaching_payscale.end_date')
             ->where('staff_teaching_payscale.status', 'active')
-            ->where('allowance_staff.status', 'active')
+
             ->distinct()
             ->orderBy('staff.id')
             ->get();
 
+            $staffdata=[];
+        //   dd(count($staffWithPayscaleAndAllowances ));
+           $i=1;
         foreach ($staffWithPayscaleAndAllowances as $staff) {
+            $id=$staff->id;
+            $staffdata[$id]=[];
+            $previousmonthsalary=staffsalary::where('staff_id',$staff->id)->latest()->first();
+
+            if($previousmonthsalary!=null)
+            {
+
+                if($previousmonthsalary->rate!=$staff->basic)
+                {
+                    $staffdata[$id]['remarks']=$staff->reason;
+                    $ai_created_month=Carbon::parse($staff->ai_created_at)->month;
+                    $ai_wef_month=Carbon::parse($staff->ai_wef)->month;
+                    //the annual_increment is given post month of increment month => compute salary arrears
+                    if($ai_created_month>$ai_wef_month)
+                    {
+
+                    }
+
+                }
+            }
+
             $leaveData = DB::table('leave_staff_applications')
                 ->select('leave_id', DB::raw('SUM(no_of_days) AS total_leave_days'))
                 ->where('start', '>=', $previousMonthDate)
@@ -158,6 +185,7 @@ class StaffsalaryController extends Controller
            $staffpayscale->laptop_computer=$data['laptop_computer'];
            $staffpayscale->total_deductions=$data['total_deductions'];
            $staffpayscale->net_salary=$data['net_salary'];
+           $staffpayscale->created_at=Carbon::now()->format('Y-m-d');
            $staffpayscale->save();
         //    dd($staffpayscale);
         }

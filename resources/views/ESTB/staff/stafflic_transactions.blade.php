@@ -81,7 +81,6 @@
                                                             <th scope="col" class="dark:text-white/80">Years</th>
                                                             <th scope="col" class="dark:text-white/80">Date of Posting</th>
                                                             <th scope="col" class="dark:text-white/80">Status</th>
-                                                            <th scope="col" class="dark:text-white/80">Actions</th>
                                                     </tr>
                                                  </thead>
                                         
@@ -102,7 +101,7 @@
                                                         <td><span>{{$lic->dop}}</span></td>
                                                         <td><span>{{$stafflic->status}}</span></td> 
                                                         
-
+{{-- 
                                         
                                                         <td class="font-medium space-x-2 rtl:space-x-reverse">
                                                         
@@ -138,12 +137,12 @@
                                                                             </button>
                                                                            
                                                                         </div>
-                                                                        {{-- <form  action="{{route('ESTB.staff.stafflics.stafflic_transactions.update',$lic->id)}}" method="post">
+                                                                        <form  action="{{route('ESTB.staff.stafflics.stafflic_transactions.update',$lic->id)}}" method="post">
                                                                             @csrf
                                                                             @method('patch')
                                                                             <div class="ti-modal-body">
                                                                                 <input type='hidden' name='modal_no' class='modal_no' value={{old('modal_no')}}/>
-                                                                                {{-- <div class="max-w-sm space-y-3 pb-6">
+                                                                                <div class="max-w-sm space-y-3 pb-6">
                                                                                     <label for="with-corner-hint" class="ti-form-label font-bold"> Staff Name:</label>
                                                                                     <label for="" class="ti-form-label font-bold">Staff Name :<span class="text-red-500">*</span></label>
                                                                                                 <select class="ti-form-select" name="staff_id">
@@ -198,13 +197,13 @@
                                                                                 
                                                                                     <input type="submit" class="ti-btn  bg-warning text-white hover:bg-warning  focus:ring-primary  dark:focus:ring-offset-white/10" value="Update"/>
                                                                             </div>
-                                                                        </form>   --}}
+                                                                        </form>  
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                         </div>
                                                         <div class="hs-tooltip ti-main-tooltip">
-                                                        {{-- <form action="{{ route('ESTB.staff.stafflics.stafflic_transactions.destroy',$lic->id) }}" method="post">
+                                                        <form action="{{ route('ESTB.staff.stafflics.stafflic_transactions.destroy',$lic->id) }}" method="post">
                                                         
                                                             <button onclick="return confirm('Are you Sure')"
                                                                 class="m-0 hs-tooltip-toggle relative w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none ti-btn-soft-danger">
@@ -217,9 +216,9 @@
                                                                 Delete
                                                                 </span>
                                                             </button>
-                                                        </form> --}}
+                                                        </form> 
                                                         </div>
-                                                        </td>
+                                                        </td> --}}
                                                     </tr>
                                                    
                                                     @php
@@ -238,7 +237,7 @@
                                                         <td ><strong>Total</strong></td>
                                                         <td>{{$totalPremium}}</td>
                                                         <td>{{$totalGST}}</td>
-                                                        <td colspan="4" class="text-right"><strong>Grand Total:</strong></td>
+                                                        <td colspan="3" class="text-right"><strong>Grand Total:</strong></td>
                                                         <td>{{$totalPremium + $totalGST}}</td>
                                                         </tr>
                                                     </tbody>

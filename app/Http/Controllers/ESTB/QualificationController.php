@@ -80,6 +80,7 @@ class QualificationController extends Controller
      */
     public function update(UpdatequalificationRequest $request, qualification $qualification)
     {
+        //dd($request);
         $qualification->qual_name=$request->edit_qual_name;
         $qualification->qual_shortname=$request->edit_qual_shortname;
       

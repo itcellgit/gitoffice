@@ -51,11 +51,7 @@
                                 </ol>
                             </div>
                             <!-- Page Header Close -->
-
-            
-                          
-
-                            <!-- Start::row-5 -->
+                             <!-- Start::row-5 -->
                             <div class="grid grid-cols-12 gap-x-6">
                                 <div class="col-span-12">
                                     @if(session('status'))
@@ -85,15 +81,13 @@
                                                 <path d="M10 5l4 0" />
                                                 <path d="M12 3l0 5" />
                                                 <path d="M6 21v-7m-2 2l8 -8l8 8m-2 -2v7" />
-                                              </svg>
+                                            </svg>
                                               Caste & Category List for the religion  <b style="color:red;font-size:18px">{{$religion->religion_name}}</b></h5>
-                                        <div class=" block ltr:ml-auto rtl:mr-auto my-auto">
+                                            <div class=" block ltr:ml-auto rtl:mr-auto my-auto">
                                                 <button type="button" id="add_caste_category_btn" class="hs-dropdown-toggle ti-btn ti-btn-primary" data-hs-overlay="#add_caste_category">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M4 3H20C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM5 5V19H19V5H5ZM11 11V7H13V11H17V13H13V17H11V13H7V11H11Z" fill="rgba(255,255,255,1)"></path></svg>
-                                                    
-                                                    Add a Caste & Cateogry
+                                                   Add a Caste & Cateogry
                                                 </button>
-            
                                                 <div id="add_caste_category" class="hs-overlay hidden ti-modal">
                                                     <div class="hs-overlay-open:mt-7 ti-modal-box mt-0 ease-out md:!max-w-2xl md:w-full m-3 md:mx-auto">
                                                         <div class="ti-modal-content">
@@ -292,7 +286,7 @@
                                                                     @csrf
                                                                     @method('patch')
                                                                     <div class="ti-modal-body pb-6">
-                                                                        <input type='hidden' name='modal_no' id='modal_no' value={{old('modal_no')}}/>
+                                                                        <input type="hidden" name="modal_no" id="modal_no" value="{{old('modal_no')}}"/>
                                                                         <input type="hidden" name="religion_id" value="{{$religion->id}}">
                                                                         <div class="max-w-sm space-y-3 pb-6">
                                                                             <label for="with-corner-hint" class="ti-form-label font-bold">Caste Name : </label>
@@ -474,6 +468,52 @@
                     }
 
                 });
+//     $(document).on('click', '#caste_category_store_add_btn', function (e) {
+//     var castename = $('#castename').val();
+//     var subcastename = $('#subcastename').val();
+//     var categoryname = $('#categoryname').val();
+//     var categoryno = $('#categoryno').val();
+
+//     var flag = false;
+
+//     if (castename === '') {
+//         $('#casteNameError').text('Caste Name is missing');
+//         flag = true;
+//     } else if (!/^[a-zA-Z\s]+$/.test(castename.trim())) {
+//         $('#casteNameError').text('Please fill the correct value');
+//         flag = true;
+//     }
+
+//     if (subcastename === '') {
+//         $('#subcasteNameError').text('Subcaste Name is missing');
+//         flag = true;
+//     } else if (!/^[a-zA-Z\s]+$/.test(subcastename.trim())) {
+//         $('#subcasteNameError').text('Please fill the correct value');
+//         flag = true;
+//     }
+
+//     if (categoryname === '') {
+//         $('#categoryNameError').text('Category Name is missing');
+//         flag = true;
+//     } else if (!/^[a-zA-Z\s]+$/.test(categoryname.trim())) {
+//         $('#categoryNameError').text('Please fill the correct value');
+//         flag = true;
+//     }
+
+//     if (categoryno === '') {
+//         $('#categoryNoError').text('Category Number is missing');
+//         flag = true;
+//     } else if (!/^\d+$/.test(categoryno.trim())) {
+//         $('#categoryNoError').text('Please enter a valid number');
+//         flag = true;
+//     }
+
+//     if (flag === true) {
+//         e.preventDefault();
+//     }
+// });
+
+   
         
             });
 

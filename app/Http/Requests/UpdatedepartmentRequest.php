@@ -22,10 +22,10 @@ class UpdatedepartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'edit_dept_name'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
+            'edit_dept_name'=>['required', 'regex:/^[a-zA-Z0-9\s\W]+$/'],
             'edit_dept_shortname'=>['required'],
             'edit_yoe'=>['required','date'],
-            'edit_status'=>['required'],
+            'edit_status'=>['sometimes'],
           
         ];
     }
@@ -37,7 +37,8 @@ class UpdatedepartmentRequest extends FormRequest
             'edit_dept_name.regex'=>'Dept Name should be contain characters and letters only',
             'edit_dept_shortname.required'=>'Dept Shortname is required filed',
             'edit_yoe.required'=>'Year of Establishment is required field',
-            'status.required'=>'status is required field',
+            'edit_yoe.date'=>'Year of Establishment should be in date format',
+            // 'status.required'=>'status is required field',
           
         ];
     }

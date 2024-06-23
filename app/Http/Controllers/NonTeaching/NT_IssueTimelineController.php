@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\NonTeaching;
 
-use App\Models\Non_Teaching\ntissue_timeline;
-// use App\Models\HOD\issue_timeline;
+use App\Models\Non_Teaching\issue_timeline;
 use App\Http\Requests\Storeissue_timelineRequest;
 use App\Http\Requests\Updateissue_timelineRequest;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\staff;
 use App\Models\student_issue;
 use App\Models\Non_Teaching\exam_section_issue;
 use Auth;
@@ -43,13 +43,13 @@ class NT_IssueTimelineController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Storeissue_timelineRequest $request,student_issue $student_issue)
+    public function store(Storeissue_timelineRequest $request, staff $staff,student_issue $student_issue)
     {
-
+        
         $user = Auth::user();
        // dd($user->id);
 
-        $issue_timeline = new ntissue_timeline();
+        $issue_timeline = new issue_timeline();
             $issue_timeline->date_of_interaction = $request->date_of_interaction;
             $issue_timeline->interaction = $request->interaction;
             $issue_timeline->followup_date = $request->followup_date;
@@ -60,14 +60,15 @@ class NT_IssueTimelineController extends Controller
 
             $issue_timeline->save();
         
-        return redirect('/Staff/Non-Teaching/viewstudentissues/'.$student_issue->id.'/show');
+        return redirect('/Staff/Non-Teaching/'.$staff->id.'/viewstudentissues/'.$student_issue->id.'/show');
+        
     }
 
     /**
      * Display the specified resource.
      */
     
-    public function show(ntissue_timeline $issue_timeline,$student_issue)
+    public function show(issue_timeline $issue_timeline,$student_issue)
     {
         
         $student_issue = student_issue::with(['issue_timeline'=>function($q){
@@ -80,7 +81,7 @@ class NT_IssueTimelineController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ntissue_timeline $issue_timeline)
+    public function edit(issue_timeline $issue_timeline)
     {
         //
     }
@@ -88,7 +89,7 @@ class NT_IssueTimelineController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Updateissue_timelineRequest $request, ntissue_timeline $issue_timeline)
+    public function update(Updateissue_timelineRequest $request, issue_timeline $issue_timeline)
     {
         //
     }
@@ -96,7 +97,7 @@ class NT_IssueTimelineController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ntissue_timeline $issue_timeline)
+    public function destroy(issue_timeline $issue_timeline)
     {
         //
     }

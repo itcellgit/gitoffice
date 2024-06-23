@@ -80,7 +80,7 @@ class AssociationController extends Controller
     public function update(UpdateassociationRequest $request, association $association)
     {
         //
-        
+        // dd($request);
         $association->asso_name=$request->edit_asso_name;
         $association->updated_at = Carbon::now();
         if($request->status=='active'){

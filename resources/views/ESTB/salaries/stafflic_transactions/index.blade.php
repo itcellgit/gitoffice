@@ -131,7 +131,7 @@
                                                     <th scope="col" class="dark:text-white/80">Premium</th>
                                                     <th scope="col" class="dark:text-white/80">GST</th>
                                                     <th scope="col" class="dark:text-white/80">Status</th>
-                                                    <th scope="col" class="dark:text-white/80">Actions</th>
+                                                    <th scope="col" class="dark:text-white/80"></th>
 
                                                 </tr>
                                             </thead>
@@ -153,12 +153,12 @@
                                                         <td>
                                                             ₹<input type="number" name="manual[{{ $lic->id }}][gst]"
                                                                 value="{{ old('manual.' . $lic->id . '.gst', 0) }}"
-                                                                class="totalGST border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24"
-                                                                value="0">
+                                                                class="totalGST border border-gray-300 rounded-md px-1 py-1 focus:outline-none focus:border-blue-500 w-24 gst_value"
+                                                            >
                                                         </td>
 
                                                         <td><span>{{ $lic->status }}</span></td>
-                                                        <td class="font-medium space-x-2 rtl:space-x-reverse">
+                                                        {{-- <td class="font-medium space-x-2 rtl:space-x-reverse">
                                                             <div class="hs-tooltip ti-main-tooltip">
                                                                 <button
                                                                     data-hs-overlay="#qual_edit_modal{{ $i }}"
@@ -209,7 +209,7 @@
                                                                                 </button>
 
                                                                             </div>
-                                                                            {{-- <form
+                                                                            <form
                                                                                 action="{{ route('ESTB.salaries.lics.update', [$lic->id]) }}"
                                                                                 method="post">
                                                                                 @csrf
@@ -246,13 +246,13 @@
                                                                                         value="Update" />
 
                                                                                 </div>
-                                                                            </form> --}}
+                                                                            </form>
                                                                         </div>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="hs-tooltip ti-main-tooltip">
-                                                                    {{-- <form
+                                                                    <form
                                                                         action="{{ route('ESTB.salaries.lics.destroy', [$lic->id]) }}"
                                                                         method="post">
 
@@ -273,25 +273,12 @@
                                                                                 Delete
                                                                             </span>
                                                                         </button>
-                                                                    </form> --}}
+                                                                    </form>
                                                                 </div>
                                                             </div>
-                                                        </td>
+                                                        </td> --}}
                                                     </tr>
-                                                    {{-- @php
-                                                    $totalPremium += $lic->premium;
-                                                    $totalGST += $lic->gst;
-                                                    @endphp
-                                                @empty
-                                                    <p class="text-dark"><b>No Lic's Added.</b></p>
-                                                @endforelse
-                                                <tr>
-                                                    <td colspan="3" class="text-right" ><strong>Total</strong></td>
-                                                    <td>{{$totalPremium}}</td>
-                                                    <td>{{$totalGST}}</td>
-                                                    <td><strong>Grand Total:</strong></td>
-                                                    <td>{{$totalPremium + $totalGST}}</td>
-                                                </tr> --}}
+                                                    
                                                 @php
                                                 $totalPremium += $lic->premium;
                                                 @endphp
@@ -299,7 +286,7 @@
                                         
                                         <tr>
                                             <td colspan="3" class="text-right"><strong>Total</strong></td>
-                                            <td>{{ $totalPremium }}</td>
+                                            <td id="totalPremium">{{ $totalPremium }}</td>
                                             <td id="totalGST">{{ $totalGST }}</td>
                                             <td><strong>Grand Total:</strong></td>
                                             <td id="grandTotal">{{ $totalPremium + $totalGST }}</td>
@@ -333,36 +320,18 @@
     <script src="{{ asset('build/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
     @vite('resources/assets/js/flatpickr.js')
 
-
-    <!-- INDEX JS -->
-    @vite('resources/assets/js/index-8.js')
-@endsection
-@section('scripts')
-    <!-- APEX CHARTS JS -->
-    <script src="{{ asset('build/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
-
-    <!-- FLATPICKR JS -->
-    <script src="{{ asset('build/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-    @vite('resources/assets/js/flatpickr.js')
-
     <!-- INDEX JS -->
     @vite('resources/assets/js/index-8.js')
 
+
+
+    
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
-
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.tailwindcss.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script href="https://cdn.tailwindcss.com/3.3.5"></script>
-    <script href="https://cdn.tailwindcss.com/3.3.5"></script>
     <script>
         $(document).ready(function() {
-            new DataTable('#lic_table');
+            //alert('loaded');
+            // new DataTable('#lic_table');
 
             $('#exportToExcel').on('click', function() {
                 var table = $('#lic_table').clone();
@@ -388,62 +357,55 @@
                     link[0].click();
                 }
             });
+
+            $(document).on('blur','.gst_value',function(){
+                
+                var this_value = $('.gst_value').val();
+                
+                var total = 0.0;
+                $('.gst_value').each(function(){
+                    total += parseFloat($(this).val());
+                });
+                $('#totalGST').html(total);
+
+                var grand_total = parseFloat($('#totalPremium').text()) + parseFloat($('#totalGST').text());
+
+                $('#grandTotal').html(grand_total);
+            });
+
+
+            
+
+            $('#transactionForm').on('submit', function(event) {
+                event.preventDefault(); // Prevent form from submitting
+
+                let month = $('#month').val();
+                let years = $('#years').val();
+                let dop = $('#dop').val();
+                let duplicateError = $('#duplicate_error');
+
+                $.ajax({
+                    url: '{{ route("ESTB.staff.stafflics.stafflic_transactions.check_duplicate") }}', // You need to create this route
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        month: month,
+                        years: years,
+                        dop: dop
+                    },
+                    success: function(response) {
+                        if (response.exists) {
+                            duplicateError.text('The combination of month, year, and date of posting already exists.');
+                        } else {
+                            $('#transactionForm')[0].submit(); // Submit the form if validation passes
+                        }
+                    }
+                });
+            });
+
         });
     </script>
 
 
-{{-- <script>
-    $(document).ready(function() {
-        function updateGrandTotal() {
-            var totalGST = 0;
-            $('input[name^="manual["]').each(function() {
-                var gst = parseInt($(this).val()) || 0; 
-                totalGST += gst;
-            });
-            $('#totalGST').text(totalGST);
-            var totalPremium = parseInt('{{ $totalPremium }}') || 0; 
-            var grandTotal = totalPremium + totalGST; 
-            $('#grandTotal').text(grandTotal); 
-        }
-        $('input[name^="manual["]').on('input', updateGrandTotal);
-        updateGrandTotal();
-    });
-</script> --}}
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function() {
-        // Function to calculate totalGST
-        function calculateTotalGST() {
-            var totalGST = 0;
-            // Loop through each input field with the name attribute starting with 'manual[' and ending with '[gst]'
-            $('input[name^="manual["][name$="[gst]"]').each(function() {
-                // Parse the value as an integer
-                var gst = parseInt($(this).val()) || 0;
-                // Add to totalGST
-                totalGST += gst;
-            });
-            return totalGST;
-        }
-        
-        // Function to update totalGST display
-        function updateTotalGSTDisplay() {
-            // Get the totalGST element by its ID
-            var totalGSTDisplay = $('#totalGST');
-            // Calculate totalGST
-            var totalGST = calculateTotalGST();
-            // Update the display
-            totalGSTDisplay.text(totalGST);
-        }
-        
-        // Trigger updateTotalGSTDisplay function when any input field with the name attribute starting with 'manual[' and ending with '[gst]' changes
-        $(document).on('change', 'input[name^="manual["][name$="[gst]"]', updateTotalGSTDisplay);
-        
-        // Initial update of totalGST display
-        updateTotalGSTDisplay();
-    });
-</script>
-
-
-    
 @endsection

@@ -186,8 +186,16 @@
                                                                    
                                         </ul>
                                     </li>
-                                   
-                                    <li class="slide"><a href="{{url('ESTB/salaries/staffpayscale')}}" class="side-menu__item">Salary</a></li>
+                                    <ul class="slide has-sub">
+                                        <a href="#" class="side-menu__item">
+                                            <span class="side-menu__label">Salary</span>
+                                        </a>
+                                        <ul class="slide-menu child1">
+                                        <li class="slide"><a href="{{url('ESTB/salaries/staffpayscale')}}" class="side-menu__item">6th & 5th pay</a></li>
+                                        <li class="slide"><a href="{{url('ESTB/salaries/staffpayscale/cts')}}" class="side-menu__item">CTS Pay</a></li>
+                                        <li class="slide"><a href="#" class="side-menu__item">CNT pay</a></li>
+                                    </ul>
+                                    </ul>
                                 </ul>
                             </li>
                             <li class="slide">

@@ -103,6 +103,9 @@
                                 </form>
                             </div>
                         </div>
+                        <div style="width: 1800px; height: 400px;">
+                            <canvas id="employeeMonthlyLogsChart" ></canvas>
+                        </div>
                         <div class="box-body">
                             <div class="table-bordered table-auto rounded-sm ti-striped-table ti-custom-table-head overflow-auto">
                                 <!-- Display employee logs -->
@@ -113,88 +116,65 @@
                                             <h4 class="text-lg font-bold">Employee Name: {{ $selectedEmployee->fname }} {{ $selectedEmployee->mname ? $selectedEmployee->mname . ' ' : '' }}{{ $selectedEmployee->lname }}</h4>
                                         </div>
                                         @foreach($employeeLogs as $employeeCode => $logs)
-                                            <h5 class="text-lg font-bold">Employee Code: {{ $employeeCode }}</h5>
-                                            {{-- <table id="monthly_table" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
+                                            <div class="flex items-center justify-between">
+                                                <h5 class="text-lg font-bold">Employee Code: {{ $employeeCode }}</h5>
+                                                <h5 class="text-lg font-bold">Average work Duration  : 
+                                                    @if ($averageDurations[$selectedEmployee->EmployeeCode] ?? null)
+                                                        {{ $averageDurations[$selectedEmployee->EmployeeCode] }}
+                                                    @endif
+                                                </h5>
+                                            </div>
+
+                                            <table id="monthly_table" class="ti-custom-table ti-custom-table-head whitespace-nowrap mt-2">
                                                 <thead class="bg-gray-50 dark:bg-black/20">
-                                                    <tr class="">
-                                                        
+                                                    <tr>
                                                         <th class="border border-gray-300 px-4 py-2">Date</th>
-                                                        <th class="border border-gray-300 px-4 py-2">Entry log</th>
-                                                         <th class="border border-gray-300 px-4 py-2">Entry log</th>
-                                                        <th class="border border-gray-300 px-4 py-2">Exit log</th>
-                                                        <th class="border border-gray-300 px-4 py-2">Device</th>
+                                                        <th class="border border-gray-300 px-4 py-2">Entry Log</th>
+                                                        <th class="border border-gray-300 px-4 py-2">Entry Device</th>
+                                                        <th class="border border-gray-300 px-4 py-2">Exit Log</th>
+                                                        <th class="border border-gray-300 px-4 py-2">Exit Device</th>
+                                                        <th class="border border-gray-300 px-4 py-2">Duration</th>
+                                                        {{-- <th class="border border-gray-300 px-4 py-2">Action</th> --}}
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach($logs as $log)
+                                                    @foreach($logs as $date => $log)
                                                         <tr>
-                                                            <td class="border border-gray-300 px-4 py-2">{{ date('Y-m-d', strtotime($log->LogDate)) }}</td>
-                                                            <td class="border border-gray-300 px-4 py-2">{{ date('H:i:s', strtotime($log['entryLog']->LogDate)) }}</td>
-                                                            <td class="border border-gray-300 px-4 py-2">{{ date('H:i:s', strtotime($log['entryLog']->DeviceId)) }}</td>
-                                                            <td class="border border-gray-300 px-4 py-2">{{ date('H:i:s', strtotime($log['exitLog']->LogDate)) }}</td>
-                                                            <td class="border border-gray-300 px-4 py-2">{{ date('H:i:s', strtotime($log['exitLog']->DeviceId)) }}</td>
+                                                            <td class="border border-gray-300 px-4 py-2">{{ $date }}</td>
+                                                            <td class="border border-gray-300 px-4 py-2">
+                                                                @if ($log['entryLog'])
+                                                                    {{ date('H:i:s', strtotime($log['entryLog']->LogDate)) }}
+                                                                @endif
+                                                            </td>
+                                                            <td class="border border-gray-300 px-4 py-2">
+                                                                @if ($log['entryDevice'])
+                                                                    {{ $log['entryDevice'] }}
+                                                                @endif
+                                                            </td>
+                                                            <td class="border border-gray-300 px-4 py-2">
+                                                                @if ($log['exitLog'])
+                                                                    {{ date('H:i:s', strtotime($log['exitLog']->LogDate)) }}
+                                                                @endif
+                                                            </td>
+                                                            <td class="border border-gray-300 px-4 py-2">
+                                                                @if ($log['exitDevice'])
+                                                                    {{ $log['exitDevice'] }}
+                                                                @endif
+                                                            </td>
+                                                            <td class="border border-gray-300 px-4 py-2">
+                                                                @if ($log['duration'])
+                                                                    {{ $log['duration'] }}
+                                                                @endif
+                                                            </td>
+                                                            
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
-                                            </table> --}}
-                                            <table id="monthly_table" class="ti-custom-table ti-custom-table-head whitespace-nowrap mt-2">
-                                    <thead class="bg-gray-50 dark:bg-black/20">
-                                        <tr>
-                                            <th class="border border-gray-300 px-4 py-2">Date</th>
-                                            <th class="border border-gray-300 px-4 py-2">Entry Log</th>
-                                            <th class="border border-gray-300 px-4 py-2">Entry Device</th>
-                                            <th class="border border-gray-300 px-4 py-2">Exit Log</th>
-                                            <th class="border border-gray-300 px-4 py-2">Exit Device</th>
-                                            <th class="border border-gray-300 px-4 py-2">Duration</th>
-                                            {{-- <th class="border border-gray-300 px-4 py-2">Action</th> --}}
+                                            </table>
+                                        @endforeach
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($logs as $date => $log)
-                                            <tr>
-                                                <td class="border border-gray-300 px-4 py-2">{{ $date }}</td>
-                                                <td class="border border-gray-300 px-4 py-2">
-                                                    @if ($log['entryLog'])
-                                                        {{ date('H:i:s', strtotime($log['entryLog']->LogDate)) }}
-                                                    @endif
-                                                </td>
-                                                <td class="border border-gray-300 px-4 py-2">
-                                                    @if ($log['entryDevice'])
-                                                        {{ $log['entryDevice'] }}
-                                                    @endif
-                                                </td>
-                                                <td class="border border-gray-300 px-4 py-2">
-                                                    @if ($log['exitLog'])
-                                                        {{ date('H:i:s', strtotime($log['exitLog']->LogDate)) }}
-                                                    @endif
-                                                </td>
-                                                <td class="border border-gray-300 px-4 py-2">
-                                                    @if ($log['exitDevice'])
-                                                        {{ $log['exitDevice'] }}
-                                                    @endif
-                                                </td>
-                                                <td class="border border-gray-300 px-4 py-2">
-                                                    @if ($log['duration'])
-                                                        {{ $log['duration'] }}
-                                                    @endif
-                                                </td>
-                                                
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                    <tfoot>
-    <tr><strong>
-        <td class="border border-gray-300 px-4 py-2" colspan="6"><b>Average work duration Duration of the month is :
-        
-            @if ($averageDurations[$selectedEmployee->EmployeeCode] ?? null)
-                {{ $averageDurations[$selectedEmployee->EmployeeCode] }}
-            @endif
-        </b></td>
-    </tr>
-</tfoot>
-                                </table>
-                                        @endforeach
+                                         
                                     </div>  
                                 @endif
                             </div>
@@ -294,5 +274,59 @@
             });
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('employeeMonthlyLogsChart').getContext('2d');
+            
+            const employeeLogs = @json($employeeLogs);
+            const selectedEmployee = @json($selectedEmployee);
+            
+            const labels = [];
+            const durations = [];
+            
+            if (employeeLogs[selectedEmployee.EmployeeCode]) {
+                for (const [date, logs] of Object.entries(employeeLogs[selectedEmployee.EmployeeCode])) {
+                    labels.push(date);
+                    durations.push(logs.duration ? convertTimeToSeconds(logs.duration) / 3600 : 0);
+                }
+            }
 
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Daily Work Duration (Hours)',
+                        data: durations,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Work Duration (Hours)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            }
+                        }
+                    }
+                }
+            });
+
+            function convertTimeToSeconds(time) {
+                const [hours, minutes, seconds] = time.split(':').map(Number);
+                return hours * 3600 + minutes * 60 + seconds;
+            }
+        });
+    </script>
 @endsection

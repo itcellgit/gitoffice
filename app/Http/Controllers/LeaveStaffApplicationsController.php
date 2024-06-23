@@ -28,7 +28,6 @@ class LeaveStaffApplicationsController extends Controller
     public function index()
     {
         //
-        
         $user = Auth::user();
         $staff_id_from_user = staff::where('user_id','=',$user->id)->first();
         $year=Carbon::now()->year;
@@ -54,6 +53,7 @@ class LeaveStaffApplicationsController extends Controller
         {
             array_push( $dept_ids,$depts->id);
         }
+        
         $staff_emp_type=staff::join('employee_types','employee_types.staff_id','=','staff.id')
                             ->where('staff_id',$staff_id_from_user->id)->first();
 
@@ -187,7 +187,7 @@ class LeaveStaffApplicationsController extends Controller
                                 ->whereIn('designation_id', function($q){
                                     $q->select('id')
                                     ->from('designations')
-                                    ->whereIn('design_name',['HoD','REGISTRAR','Controller of examination','Dean MBA','PLACEMENT OFFICER']);
+                                    ->whereIn('design_name',['HoD','REGISTRAR','Controller of examination','Dean MBA','PLACEMENT OFFICER','Vehicle Maintenance In charge','IT CELL INCHARGE']);
                                 })
                                 ->where('status', 'active')
                                 ->where('dept_id', function($q1)use($staff){
@@ -457,6 +457,7 @@ class LeaveStaffApplicationsController extends Controller
         return redirect('/Teaching/leaves/')->with('return_data', $return_data);
 
     }
+    
     //method to validate the leaves as per the leave rules and leave combination allowed
     public function validateleave(request $request, staff $staff)
     {
@@ -982,7 +983,7 @@ class LeaveStaffApplicationsController extends Controller
             ->where('leave_staff_applications.id', $application_id)
             ->get();
             //$leave_staff_applications->appl_status = "recommended";
-         //dd($result);
+        //dd($result);
         return $result;
     }
 
@@ -1255,7 +1256,7 @@ class LeaveStaffApplicationsController extends Controller
                                 ->whereIn('designation_id', function($q){
                                     $q->select('id')
                                     ->from('designations')
-                                    ->whereIn('design_name',['HoD','REGISTRAR','Controller of examination','Dean MBA','PLACEMENT OFFICER']);
+                                    ->whereIn('design_name',['HoD','REGISTRAR','Controller of examination','Dean MBA','PLACEMENT OFFICER','Vehicle Maintenance In charge','IT CELL INCHARGE',]);
                                 })
                                 ->where('status', 'active')
                                 ->where('dept_id', function($q1)use($staff){
@@ -1270,8 +1271,8 @@ class LeaveStaffApplicationsController extends Controller
                                         ->where('dsg.staff_id', $staff->id)
                                         ->whereNotNull('dsg.dept_id')
                                         ->where('dsg.status', 'active');
-                                }) ->pluck('ds.department_id');;
-                            });
+                                }) ->pluck('ds.department_id');
+                            })->take(1)->get();
                     })->first();
                    // dd($hod);
         }

@@ -226,6 +226,8 @@
                                     <th scope="col" class="dark:text-white/80">@sortablelink('usn', 'usn')</th>
                                     <th scope="col" class="dark:text-white/80">@sortablelink('batch', 'batch')</th>
                                     <th scope="col" class="dark:text-white/80">@sortablelink('id', 'internship name')</th>
+                                    <th scope="col" class="dark:text-white/80">@sortablelink('action', 'action')</th>
+
                                 </tr>
                             </thead>
                             <tbody class="">
@@ -298,4 +300,11 @@
     @vite('resources/assets/js/profile-settings.js')
 
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+     <script>
+            $(document).ready(function() {
+                //alert('Hello from jquery');
+
+                new DataTable('#student_studentinternship_table');
+            });
+        </script>
 @endsection

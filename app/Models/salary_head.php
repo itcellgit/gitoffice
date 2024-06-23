@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class salary_head extends Model
 {
     use HasFactory;
-    protected $fillable=['title','salary_group_id','salary_type','pvalue','ptype','maximum','status'];
+    protected $fillable=['title','salary_group_id','salary_type','ptype','maximum','status'];
   
     public function salaryGroup():BelongsTo
     {

@@ -13,6 +13,7 @@ use App\Models\annual_increment;
 use App\Models\HOD\exam_section_isuues;
 use App\Models\student_issue;
 use App\Models\ESTB\TaxHeads;
+use App\Models\ESTB\tdshead;
 
 
 
@@ -171,7 +172,16 @@ class staff extends Model
     //     return $this->hasMany(ticket::class);
     // }
 
+    public function department()
+    {
+        return $this->belongsToMany(department::class, 'department_staff', 'staff_id', 'department_id')
+                    ->withPivot('status'); 
+    }
 
+    public function employee_types()
+    {
+        return $this->belongsToMany(EmployeeType::class, 'employee_types', 'staff_id', 'employee_type_id');
+    }
 
 
 
@@ -351,4 +361,12 @@ class staff extends Model
      {
         return $this->hasMany(staffloan::class);
      }
+
+     public function tdsheads()
+     {
+        return $this->belongsToMany(tdshead::class, 'staff_tdsheads')
+        ->withPivot('amount', 'document', 'status');
+       
+     }
+
 }

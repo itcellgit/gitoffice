@@ -234,7 +234,7 @@
                                      <div class="box-body">
                                     <div class="table-bordered rounded-sm ti-striped-table ti-custom-table-head overflow-auto">
                                         <table id="table" class="ti-custom-table ti-custom-table-head whitespace-nowrap">
-                                            <thead class="bg-gray-50 dark:bg-black/20">
+                                             <thead class="bg-gray-50 dark:bg-black/20">
                                                 <tr class="">
                                                     <th scope="col" class="dark:text-white/80">SL.no</th>
                                                     <th scope="col" class="dark:text-white/80">@sortablelink('Issue Title','Issue Title')</th>
@@ -242,17 +242,17 @@
                                                     <th scope="col" class="dark:text-white/80">Status</th>
                                                     <th scope="col" class="dark:text-white/80">@sortablelink('user','user')</th>
                                                     {{-- <th scope="col" class="dark:text-white/80">@sortablelink('description','description')</th> --}}
-                                                    <th scope="col" class="dark:text-white/80">Action</th>
+                                                     <th scope="col" class="dark:text-white/80">Action</th>
                                                 </tr>
-                                            </thead>
-                                            <tbody class="">
+                                            </thead>  
+                                             <tbody class="">
                                             @php
                                                 $i = 1;
                                             @endphp
                                             @if($tickets!=null)
-                                                @forelse($tickets as $ticket)
+                                                @forelse($tickets as $ticket) 
                                                         {{-- <tr class=""> --}}
-                                                    <tr style="@if($ticket->status =='New') background-color: #ffcccc; @elseif($ticket->status =='Pending') background-color: #fff2cc; @elseif($ticket->status =='Resolved') background-color: #ccffcc; @endif">
+                                                     <tr style="@if($ticket->status =='New') background-color: #ffcccc; @elseif($ticket->status =='Pending') background-color: #fff2cc; @elseif($ticket->status =='Resolved') background-color: #ccffcc; @endif">
 
                                                     <td>{{ $i++ }}</td>
                                                     <td>
@@ -312,20 +312,43 @@
                                                         </div>
                                                     </td>
                                                     <td>{{$ticket->status}}</td> 
-                                                   <td><span>{{$ticket->user->email . ' ' . $ticket->user->fname . ' ' . $ticket->user->mname . ' ' . $ticket->user->lname }}</span></td>
-                                                   {{-- <td><span>{{ optional($ticket->staff)->fname . ' ' . optional($ticket->staff)->mname . ' ' . optional($ticket->staff)->lname }}</span></td> --}}
-                                                   {{-- <td><span>{{$staffticket->fname . ' ' . $staffticket->mname . ' ' . $staffticket->lname }}</span></td> --}}
-                                                  
-
-                                                   {{-- <td><span>{{ $ticket->staff->fname . ' ' . $ticket->staff->mname . ' ' . $ticket->staff->lname }}</span></td> --}}
-
+                                                    {{-- <td><span>{{$ticket->user->email }}</span></td>  --}}
+                                                    {{-- <td><span>{{ $ticket->user->role }}</span></td> --}}
                                                     {{-- <td>
-                                                        <span>{{ $ticket->user->fname . ' ' . $ticket->user->mname . ' ' . $ticket->user->lname }}</span>
+                                                        @if ($ticket->user->role === 'teaching' || $ticket->user->role === 'non-teaching')
+                                                            {{ $ticket->user->email }}
+                                                        @else
+                                                            {{ $ticket->user->role }}
+                                                        @endif
                                                     </td> --}}
-                                                    {{-- <td><span>{{$ticket->fname.' '.$ticket->mname.' '.$ticket->lname}}</span></td> --}}
-                                                   
+                                                    <td><span>
+                                                        @if ($ticket->user->role === 'teaching' || $ticket->user->role === 'non-teaching')
+                                                            {{-- {{ $ticket->staff_fname }} {{ $ticket->staff_mname }} {{ $ticket->staff_lname }} --}}
+                                                            {{ $ticket->user->email }}
+                                                        @else
+                                                            {{ $ticket->user->role }}
+                                                        @endif
+                                                        </span></td>
                                                     
-                                                    {{-- <td>{{$ticket->status}}</td>  --}}
+                                                    
+                                                    {{-- <td>
+                                                        <span>
+                                                            @php
+                                                                $role = $ticket->user->roles->pluck('name')->first();
+                                                            @endphp
+                                                            @if($role == 'deanrnd')
+                                                                Dean R&D
+                                                            @elseif($role == 'hod')
+                                                                HOD
+                                                            @elseif($role == 'egov_admin')
+                                                                EGOV Admin
+                                                            @elseif($role == 'teaching' || $role == 'non_teaching')
+                                                                {{ $ticket->user->fname . ' ' . $ticket->user->mname . ' ' . $ticket->user->lname }}
+                                                            @else
+                                                                {{ $ticket->user->email }}
+                                                            @endif
+                                                        </span>
+                                                    </td> --}}
                                                     <td class="font-medium space-x-2 rtl:space-x-reverse">
                                                         <div class="hs-tooltip ti-main-tooltip">
                                                             <a href="{{route('Admin.tickets.adminshowticket.show',$ticket->id)}}"
@@ -345,7 +368,9 @@
                                                 @endforelse
                                             @endif
                                              </tbody>
-                                        </table>
+                                        </table> 
+                                      
+                                        
                                     </div> 
                                 </div>
                                     

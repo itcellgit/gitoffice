@@ -641,93 +641,136 @@
                    
 
            
-            //for changing the things for 1/2 CL related stuff.
-            $("input[name='cl_type']").change(function(e){
-                if($(this).val() == 'Morning' || $(this).val()=='Afternoon') {
-                    //alert($('#from_date').val());
-                    //leave application
-                    $('#to_date').val($('#from_date').val());
-                    $('#no_of_days_count').val(0.5);
-                    //leave application edit.
-                    $('#to_date_edit').val($('#from_date_edit').val());
-                    $('#no_of_days_count_edit').val(0.5);
+                //for changing the things for 1/2 CL related stuff.
+                $("input[name='cl_type']").change(function(e){
+                    if($(this).val() == 'Morning' || $(this).val()=='Afternoon') {
+                        //alert($('#from_date').val());
+                        //leave application
+                        $('#to_date').val($('#from_date').val());
+                        $('#no_of_days_count').val(0.5);
+                        //leave application edit.
+                        $('#to_date_edit').val($('#from_date_edit').val());
+                        $('#no_of_days_count_edit').val(0.5);
+                        
+                        flatpickr('#to_date', {
+                                "minDate": new Date($('#from_date').val()),
+                                "maxDate": new Date($('#from_date').val())
+                            });
+                    }else{
+                        //leave application
+                        $('#to_date').val('');
+                        $('#no_of_days_count').val(''); 
+
+                        //leave application edit.
+                        $('#to_date_edit').val('');
+                        $('#no_of_days_count_edit ').val('');
+                        flatpickr('#to_date', {
+                                "minDate": new Date($('#from_date').val()),
+                                "maxDate": new Date($('#from_date').val()).fp_incr(30)
+                            });
                     
-                    flatpickr('#to_date', {
-                            "minDate": new Date($('#from_date').val()),
-                            "maxDate": new Date($('#from_date').val())
-                        });
-                }else{
-                    //leave application
-                    $('#to_date').val('');
-                    $('#no_of_days_count').val(''); 
+                    }
+                });
 
-                    //leave application edit.
-                    $('#to_date_edit').val('');
-                    $('#no_of_days_count_edit ').val('');
-                    flatpickr('#to_date', {
-                            "minDate": new Date($('#from_date').val()),
-                            "maxDate": new Date($('#from_date').val()).fp_incr(30)
-                        });
                 
-                }
-            });
-            $(document).on('change','#type',function(){
-                if($("#type option:selected").text()=="CL")
-                {
-                    $('#cl_type_block').show();
-                }
-                else
-                {
-                    $('#cl_type_block').hide();
-                }
+                $(document).on('change','#type',function(){
+                    if($("#type option:selected").text()=="CL")
+                    {
+                        $('#cl_type_block').show();
+                    }
+                    else
+                    {
+                        $('#cl_type_block').hide();
+                    }
 
-                if($("#type option:selected").text()=="RH"){
-                    flatpickr('#to_date', {
-                            "minDate": new Date($('#from_date').val()),
-                            "maxDate": new Date($('#from_date').val())
-                    });
-                }
+                    if($("#type option:selected").text()=="RH"){
+                        flatpickr('#to_date', {
+                                "minDate": new Date($('#from_date').val()),
+                                "maxDate": new Date($('#from_date').val())
+                        });
+                    }
 
-            });
+                });
 
-            
-            //setting of cl types on changing it to CL.
-            $(document).on('change','#type_edit',function(){
-                if($("#type_edit option:selected").text()=="CL")
-                {
-                    $('#cl_type_block_edit').show();
-                }
-                else
-                {
-                    $('#cl_type_block_edit').hide();
-                }
-                if($("#type_edit option:selected").text()=="RH"){
-                    flatpickr('#to_date_edit', {
-                            "minDate": new Date($('#from_date_edit').val()),
-                            "maxDate": new Date($('#from_date_edit').val())
-                    });
-                }
-            });
-            
-            
+                
+                //setting of cl types on changing it to CL.
+                $(document).on('change','#type_edit',function(){
+                    if($("#type_edit option:selected").text()=="CL")
+                    {
+                        $('#cl_type_block_edit').show();
+                    }
+                    else
+                    {
+                        $('#cl_type_block_edit').hide();
+                    }
+                    if($("#type_edit option:selected").text()=="RH"){
+                        flatpickr('#to_date_edit', {
+                                "minDate": new Date($('#from_date_edit').val()),
+                                "maxDate": new Date($('#from_date_edit').val())
+                        });
+                    }
+                });
+                
+                
 
-                //for generating the no of days between the leave dates. (While applying).
-            $(document).on('change', '#to_date',function(){
+                    //for generating the no of days between the leave dates. (While applying).
+                $(document).on('change', '#to_date',function(){
 
-                 var from_date = $('#from_date').val();
-                 var to_date = $('#to_date').val();
-                   // alert(from_date+'-'+to_date);
+                    var from_date = $('#from_date').val();
+                    var to_date = $('#to_date').val();
+                    // alert(from_date+'-'+to_date);
+                        if(from_date != ""){
+
+                            if(from_date == to_date){
+                                //$('.no_of_days_count').removeClass('border border-red-500 focus:border-blue-500');
+
+                                $('#no_of_days_count').val(1);
+                            }else if(from_date > to_date){
+                                $('#no_of_days_count').val(0);
+                                //$('.no_of_days_count').addClass('border border-red-500 focus:border-blue-500');
+                                $('#to_date').val();
+                                $('#to_date').focus();
+                            }else{
+                                //$('.no_of_days_count').removeClass('border border-red-500 focus:border-blue-500');
+
+                                var startDay = new Date(from_date);
+                                var endDay = new Date(to_date);
+
+                                //alert(startDay+'-'+endDay);
+
+                                // Determine the time difference between two dates
+                                var millisBetween = endDay.getTime() - startDay.getTime();
+
+                                // Determine the number of days between two dates
+                                var days = millisBetween / (1000 * 3600 * 24);
+                                days=days+1;
+                                $('#no_of_days_count').val(days);
+                            }
+
+                        }else{
+                            $('#from_date').focus();
+                            alert('Please fill the from date');
+                        }
+
+                });
+                
+                //for calculating the no of days between two dates while editing the leave application
+                $(document).on('change', '#to_date_edit',function(){
+
+                    var from_date = $('#from_date_edit').val();
+                    var to_date = $('#to_date_edit').val();
+                    // alert(from_date+'-'+to_date);
                     if(from_date != ""){
 
                         if(from_date == to_date){
                             //$('.no_of_days_count').removeClass('border border-red-500 focus:border-blue-500');
 
-                            $('#no_of_days_count').val(1);
+                            $('#no_of_days_count_edit').val(1);
                         }else if(from_date > to_date){
-                            $('#no_of_days_count').val(0);
+                            $('#no_of_days_count_edit').val(0);
                             //$('.no_of_days_count').addClass('border border-red-500 focus:border-blue-500');
-                            $('#to_date').val();
-                            $('#to_date').focus();
+                            $('#to_date_edit').val();
+                            $('#to_date_edit').focus();
                         }else{
                             //$('.no_of_days_count').removeClass('border border-red-500 focus:border-blue-500');
 
@@ -742,7 +785,7 @@
                             // Determine the number of days between two dates
                             var days = millisBetween / (1000 * 3600 * 24);
                             days=days+1;
-                            $('#no_of_days_count').val(days);
+                            $('#no_of_days_count_edit').val(days);
                         }
 
                     }else{
@@ -750,144 +793,104 @@
                         alert('Please fill the from date');
                     }
 
-            });
-            //for calculating the no of days between two dates while editing the leave application
-            $(document).on('change', '#to_date_edit',function(){
-
-                var from_date = $('#from_date_edit').val();
-                var to_date = $('#to_date_edit').val();
-                // alert(from_date+'-'+to_date);
-                if(from_date != ""){
-
-                    if(from_date == to_date){
-                        //$('.no_of_days_count').removeClass('border border-red-500 focus:border-blue-500');
-
-                        $('#no_of_days_count_edit').val(1);
-                    }else if(from_date > to_date){
-                        $('#no_of_days_count_edit').val(0);
-                        //$('.no_of_days_count').addClass('border border-red-500 focus:border-blue-500');
-                        $('#to_date_edit').val();
-                        $('#to_date_edit').focus();
-                    }else{
-                        //$('.no_of_days_count').removeClass('border border-red-500 focus:border-blue-500');
-
-                        var startDay = new Date(from_date);
-                        var endDay = new Date(to_date);
-
-                        //alert(startDay+'-'+endDay);
-
-                        // Determine the time difference between two dates
-                        var millisBetween = endDay.getTime() - startDay.getTime();
-
-                        // Determine the number of days between two dates
-                        var days = millisBetween / (1000 * 3600 * 24);
-                        days=days+1;
-                        $('#no_of_days_count_edit').val(days);
-                    }
-
-                }else{
-                    $('#from_date').focus();
-                    alert('Please fill the from date');
-                }
-
                 });
 
-            //for cancellation of leave 
-            $(document).on('click','.cancel_leave_btn',function(){
-                var application_id = $(this).attr("data_val");
-                var no_of_days = $(this).attr("data_no_of_days");
+                //for cancellation of leave 
+                $(document).on('click','.cancel_leave_btn',function(){
+                    var application_id = $(this).attr("data_val");
+                    var no_of_days = $(this).attr("data_no_of_days");
 
-                var comfirmation_status =  confirm("Are you sure ? Want to cancel your leave.? (Application ID = "+application_id+")");
-                if(comfirmation_status){
+                    var comfirmation_status =  confirm("Are you sure ? Want to cancel your leave.? (Application ID = "+application_id+")");
+                    if(comfirmation_status){
+                        $.ajax({
+                                    url: base_url+'/Teaching/cancel_myleave',
+                                        method: 'GET',
+                                        data: {
+                                            application_id : application_id,
+                                            no_of_days: no_of_days,
+                                            _token : '{{csrf_token()}}' // Pass the clicked date to the server
+                                        },
+                                        success: function(response) {
+                                            // Handle the response from the server
+                                            console.log(response);
+                                            $('#leave_list_div').html(response);
+                                            setInterval(() => {
+                                                location.reload();
+                                            }, 2000);
+                                        },
+                                        error: function(xhr, status, error) {
+                                            // Handle errors
+                                            console.error(xhr.responseText);
+                                        }    
+
+                            });
+                    }else{
+                        console.log('Cancelled');
+                    }
+                });
+
+                //foir editing the applied leave
+                $(document).on('click','.edit_leave_applied',function(){
+                    var application_id = $(this).attr("data_val");
+                    //alert(application_id);
+                    $('#edit_applied_leave_div').show();
+                    $('#leave_edit_btn').show();
+
                     $.ajax({
-                                url: base_url+'/Teaching/cancel_myleave',
-                                    method: 'GET',
-                                    data: {
-                                        application_id : application_id,
-                                        no_of_days: no_of_days,
-                                        _token : '{{csrf_token()}}' // Pass the clicked date to the server
-                                    },
-                                    success: function(response) {
-                                        // Handle the response from the server
-                                        console.log(response);
-                                        $('#leave_list_div').html(response);
-                                        setInterval(() => {
-                                            location.reload();
-                                        }, 2000);
-                                    },
-                                    error: function(xhr, status, error) {
-                                        // Handle errors
-                                        console.error(xhr.responseText);
-                                    }    
+                        url: base_url+'/Teaching/edit_myleave',
+                            method: 'GET',
+                            data: {
+                                application_id : application_id,
+                                
+                                _token : '{{csrf_token()}}' // Pass the clicked date to the server
+                            },
+                            success: function(response) {
+                                // Handle the response from the server
+                                
+                                console.log(response[0].id);
+                                $('.leave_staff_application_id').val(application_id);
+                                $('#type_edit option[value='+response[0].leave_id+']').attr('selected', 'selected');
+                                //for checking whether its CL or no
+                                if(response[0].shortname == 'CL'){
+                                    //alert(response[0].shortname);
+                                    $('#cl_type_block_edit').show();
+                                }else{
+                                    $('#cl_type_block_edit').hide();
+                                }
+                                    
+                                //for setting the cl_type from the DB.
+                                if(response[0].cl_type == "Morning"){
+                                    $('#cl_morning_edit').attr('checked',true);
+                                }else if(response[0].cl_type == "Afternoon"){
+                                    $('#cl_afternoon_edit').attr('checked',true);
+                                }else{
+                                    $('#cl_edit').attr('checked',true);
+                                }
 
-                        });
-                }else{
-                    console.log('Cancelled');
-                }
+                                //for setting the from date
+                                $('#from_date_edit').val(response[0].start);
+                                $('#to_date_edit').val(response[0].end);
+                                $('#no_of_days_count_edit').val(response[0].no_of_days);
+                                $('#leave_reason_edit').val(response[0].reason);
+                                $('#alternate_edit option[value='+response[0].alternate+']').attr('selected', 'selected');
+                                
+
+                                if(response[0].additional_alternate !=null){
+                                    $('#add_alternate_edit option[value='+response[0].additional_alternate+']').attr('selected', 'selected');
+                                }
+                                $('#to_date_edit').focus();
+                            },
+                            error: function(xhr, status, error) {
+                                // Handle errors
+                                console.error(xhr.responseText);
+                            }    
+
+                    });
+                });
+
             });
-
-            //foir editing the applied leave
-            $(document).on('click','.edit_leave_applied',function(){
-                var application_id = $(this).attr("data_val");
-                //alert(application_id);
-                $('#edit_applied_leave_div').show();
-                $('#leave_edit_btn').show();
-
-                $.ajax({
-                                url: base_url+'/Teaching/edit_myleave',
-                                    method: 'GET',
-                                    data: {
-                                        application_id : application_id,
-                                        
-                                        _token : '{{csrf_token()}}' // Pass the clicked date to the server
-                                    },
-                                    success: function(response) {
-                                        // Handle the response from the server
-                                        
-                                        console.log(response[0].id);
-                                        $('.leave_staff_application_id').val(application_id);
-                                        $('#type_edit option[value='+response[0].leave_id+']').attr('selected', 'selected');
-                                        //for checking whether its CL or no
-                                        if(response[0].shortname == 'CL'){
-                                            //alert(response[0].shortname);
-                                            $('#cl_type_block_edit').show();
-                                        }else{
-                                            $('#cl_type_block_edit').hide();
-                                        }
-                                            
-                                        //for setting the cl_type from the DB.
-                                        if(response[0].cl_type == "Morning"){
-                                            $('#cl_morning_edit').attr('checked',true);
-                                        }else if(response[0].cl_type == "Afternoon"){
-                                            $('#cl_afternoon_edit').attr('checked',true);
-                                        }else{
-                                            $('#cl_edit').attr('checked',true);
-                                        }
-
-                                        //for setting the from date
-                                        $('#from_date_edit').val(response[0].start);
-                                        $('#to_date_edit').val(response[0].end);
-                                        $('#no_of_days_count_edit').val(response[0].no_of_days);
-                                        $('#leave_reason_edit').val(response[0].reason);
-                                        $('#alternate_edit option[value='+response[0].alternate+']').attr('selected', 'selected');
-                                        
-
-                                        if(response[0].additional_alternate !=null){
-                                            $('#add_alternate_edit option[value='+response[0].additional_alternate+']').attr('selected', 'selected');
-                                        }
-                                        $('#to_date_edit').focus();
-                                    },
-                                    error: function(xhr, status, error) {
-                                        // Handle errors
-                                        console.error(xhr.responseText);
-                                    }    
-
-                        });
-            });
-
-        });
           
-             //Calender javscript Starts here.
+            //Calender javscript Starts here.
 
             document.addEventListener('DOMContentLoaded', function() {
                 var TileColor = '';
@@ -1222,6 +1225,7 @@
 
 
                     },
+
                     eventClick: function(info) {
                         //alert('Event: ' + info.event.start);
                         Clickeddate = info.event.start;
@@ -1264,13 +1268,8 @@
                                             bg_color_setting = "bg-red-200";
                                         }
                                         //console.log(bg_color_setting);
-                                       // $('#holiday_rh_div').hide();
-                                    //    if(value.leave_name == "CL"){
-                                    //     alert(value.leave_name);
-                                    //     $('#cl_type_block_edit').removeClass('hidden');
-                                    //     }else{
-                                    //         $('#cl_type_block_edit').addClass('hidden');
-                                    //     }
+                                        // $('#holiday_rh_div').hide();
+                                   
 
                                         $('#leave_application_list').append('<tr class="'+ bg_color_setting +'">'
                                                                     +'<td >'+value.Application_id+ '</td>'
@@ -1324,10 +1323,10 @@
                     }
 
 
-                //
-                //         selectAllow: function(selectInfo) {
-                //             return moment().diff(selectInfo.start) <= 0
-                //     }
+                    //
+                    //         selectAllow: function(selectInfo) {
+                    //             return moment().diff(selectInfo.start) <= 0
+                    //     }
 
                 })
                 calendar.render()

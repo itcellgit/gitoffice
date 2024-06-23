@@ -300,3 +300,22 @@
         
 
 @endsection
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+    const form = document.querySelector('form');
+    const startDateInput = document.querySelector('input[name="start_date"]');
+    const endDateInput = document.querySelector('input[name="end_date"]');
+
+    form.addEventListener('submit', (event) => {
+        const startDate = new Date(startDateInput.value);
+        const endDate = new Date(endDateInput.value);
+        const today = new Date();
+
+        if (startDate > endDate) {
+            alert('End date cannot be earlier than start date.');
+            event.preventDefault();
+        } 
+       
+    });
+});
+    </script>

@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\staff;
+use App\Models\ESTB\tdshead;
+use DB;
+
 
 class ResearchController extends Controller
 {
@@ -82,6 +85,16 @@ class ResearchController extends Controller
 
         return view('Staff.Teaching.research.revieweditor', compact('staff'));
     }
+
+    public function staff_tdsheads()
+    {
+        $user = Auth::user();
+        $staff = Staff::with('tdsheads')->where('user_id', '=', $user->id)->first();
+        $tdsheads = tdshead::all();
+        $stafftdshead =DB::table('staff_tdsheads')->where('status','active')->get();
+        return view('/staff/Teaching/staff_investments/staffinvestment', compact('staff','tdsheads','stafftdshead'));
+    }
+
 
 }
 

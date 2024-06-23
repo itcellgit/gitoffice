@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\NonTeaching;
 
-use App\Models\Non_Teaching\ntissue_timeline;
+use App\Models\Non_Teaching\issue_timeline;
 use App\Http\Requests\Storeissue_timelineRequest;
 use App\Http\Requests\Updateissue_timelineRequest;
 use App\Http\Controllers\Controller;
@@ -64,10 +64,10 @@ class StaffStudentIssueController extends Controller
 
         // Data preparation
         $issues = student_issue::with('exam_section_issue')->get();
-        $issue_timeline=ntissue_timeline::all();
+        $issue_timeline=issue_timeline::all();
 
         $staffIssuesData = $this->prepareChartData($issues, $staff,$issue_timeline);
-        $weeklyTotalData = $this->prepareWeeklyTotalData($issues);
+        $weeklyTotalData = $this->prepareWeeklyTotalData($issues,$issue_timeline);
         $monthlyTotalData = $this->prepareMonthlyTotalData($issues);
         $issueRelatedData = $this->prepareIssueRelatedData($issues);
 
@@ -81,10 +81,11 @@ class StaffStudentIssueController extends Controller
 
     
 
-    private function prepareChartData($issues, $staff,$issue_timeline)
+    private function prepareChartData($student_issues, $staff,$issue_timeline)
 {
     $weekData = [];
-    foreach ($issues as $issue) {
+    $data=[];
+    foreach ($student_issues as $issue) {
         if ($issue->exam_section_issue && $issue->exam_section_issue->staff_id == $staff->id) {
             $startOfWeek = Carbon::parse($issue->created_at)->startOfWeek();
             $endOfWeek = Carbon::parse($issue->created_at)->endOfWeek();
@@ -103,21 +104,24 @@ class StaffStudentIssueController extends Controller
                 ];
             }
             
-            // Increment the count for the issue category
             $weekData[$week][$category]++;
-            
-            // Add logic to count follow-up statuses
-            $issueStatus = $issue->issue_timeline->pluck('status')->first() ?? 'unknown';
+           
+            $issueStatus = issue_timeline::where('student_issue_id',$issue->id)->latest()->take(1)->pluck('status')->first() ?? 'unknown';
+            $data[$issue->id]=issue_timeline::where('student_issue_id',$issue->id)->latest()->first();
             if ($issueStatus === 'resolved') {
                 $resolvedKey = 'resolved_' . $category;
                 $weekData[$week][$resolvedKey]++;
-            } elseif ($issueStatus === 'follow-up') {
+                $weekData[$week][$category]--;
+            } elseif ($issueStatus === 'followup') {
                 $followUpKey = 'followup_' . $category;
                 $weekData[$week][$followUpKey]++;
+                $weekData[$week][$category]--;
+              //  dd($weekData[$week][$followUpKey]);
             }
+            
         }
     }
-
+  //  dd($data);
     ksort($weekData);
 
     return [
@@ -133,7 +137,7 @@ class StaffStudentIssueController extends Controller
 
 
 
-private function prepareWeeklyTotalData($issues)
+private function prepareWeeklyTotalData($issues,$issue_timeline)
 {
     $weekData = [];
     foreach ($issues as $issue) {
@@ -156,13 +160,17 @@ private function prepareWeeklyTotalData($issues)
         $weekData[$week][$category]++;
         
         // Add logic to count follow-up statuses
+        $issueStatus = issue_timeline::where('student_issue_id',$issue->id)->latest()->take(1)->pluck('status')->first() ?? 'unknown';
+        $data[$issue->id]=issue_timeline::where('student_issue_id',$issue->id)->latest()->first();
         $issueStatus = $issue->issue_timeline->pluck('status')->first() ?? 'unknown';
         if ($issueStatus === 'resolved') {
             $resolvedKey = 'resolved_' . $category;
             $weekData[$week][$resolvedKey]++;
+            $weekData[$week][$category]--;
         } elseif ($issueStatus === 'follow-up') {
             $followUpKey = 'followup_' . $category;
             $weekData[$week][$followUpKey]++;
+            $weekData[$week][$category]--;
         }
     }
 
@@ -205,7 +213,7 @@ private function prepareMonthlyTotalData($issues)
         if ($issueStatus === 'resolved') {
             $resolvedKey = 'resolved_' . $category;
             $monthData[$month][$resolvedKey]++;
-        } elseif ($issueStatus === 'follow-up') {
+        } elseif ($issueStatus === 'followup') {
             $followUpKey = 'followup_' . $category;
             $monthData[$month][$followUpKey]++;
         }

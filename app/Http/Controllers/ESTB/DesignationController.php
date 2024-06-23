@@ -83,7 +83,7 @@ class DesignationController extends Controller
     public function update(UpdatedesignationRequest $request, designation $designation)
     {
         //
-      
+        // dd($request);
         $designation->design_name =$request->edit_design_name;
         $designation->isadditional=$request->edit_isadditional;
         $designation->emp_type=$request->edit_emp_type;

@@ -530,6 +530,34 @@
                                                 <i class="ti ti-vocabulary text-lg"></i>
                                                 </span>
                                             </div>
+                                             <div class="flex-1 font-semibold">
+                                                <div class="flex justify-between items-center mb-2">
+                                                <p class="mb-0 text-gray-800 dark:text-white">Festival Advance</p>
+                                                <span>110/200</span>
+                                                </div>
+                                                <div class="ti-main-progress bg-gray-200 dark:bg-black/20 mb-2">
+                                                <div class="ti-main-progress-bar bg-danger text-xs text-white text-center" style="width: 75%" role="progressbar" 
+                                                    aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <a href="javascript:void(0);" class="text-gray-500 dark:text-white/70 text-xs flex">Full
+                                                Details<i class="ri-arrow-right-s-line ltr:ml-2 rtl:mr-2 rtl:rotate-180"></i></a>
+                                            </div>
+                                            </div>
+                                        </div>
+                                         <div class="flex-1 font-semibold">
+                                                <div class="flex justify-between items-center mb-2">
+                                                <p class="mb-0 text-gray-800 dark:text-white">Laptop Loan</p>
+                                                <span>110/200</span>
+                                                </div>
+                                                <div class="ti-main-progress bg-gray-200 dark:bg-black/20 mb-2">
+                                                <div class="ti-main-progress-bar bg-danger text-xs text-white text-center" style="width: 75%" role="progressbar" 
+                                                    aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <a href="javascript:void(0);" class="text-gray-500 dark:text-white/70 text-xs flex">Full
+                                                Details<i class="ri-arrow-right-s-line ltr:ml-2 rtl:mr-2 rtl:rotate-180"></i></a>
+                                            </div>
+                                            </div>
+                                        </div>
                                             <div class="flex-1 font-semibold">
                                                 <div class="flex justify-between items-center mb-2">
                                                 <p class="mb-0 text-gray-800 dark:text-white">Tasks</p>
@@ -543,6 +571,7 @@
                                                 Details<i class="ri-arrow-right-s-line ltr:ml-2 rtl:mr-2 rtl:rotate-180"></i></a>
                                             </div>
                                             </div>
+
                                         </div>
                                         </div>
                                     </div>

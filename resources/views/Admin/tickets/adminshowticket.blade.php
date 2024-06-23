@@ -203,7 +203,7 @@
                                     <div class="ltr:ml-5 rtl:mr-5 rounded-sm ltr:mr-auto rtl:ml-auto my-auto w-full space-y-3">
                                         <div class="sm:flex">
                                             <h3 class="my-auto text-gray-500 dark:text-white/70">
-                                                <span class="text-dark dark:text-white">My Issue: {{$ticket->title}}</span>
+                                                <span class="text-dark dark:text-white">Issue Title: {{$ticket->title}}</span>
                                             </h3>
                                             <p class="my-auto ltr:ml-auto rtl:mr-auto text-gray-500 dark:text-white/70 text-xs">
                                                 {{$ticket->created_at}}
@@ -222,7 +222,7 @@
                                                     @endforeach
                                                 </div>
                                             @else
-                                                <p class="text-dark dark:text-white">No attachments available.</p>
+                                                <p class="text-dark dark:text-white">No Image.</p>
                                             @endif
                                         </div>
                                     </div>
@@ -242,7 +242,7 @@
                                  <div class="flex w-full pb-8">
                                      <div class="ltr:ml-5 rtl:mr-5 rounded-sm ltr:mr-auto rtl:ml-auto my-auto w-full space-y-3">
                                          <div class="sm:flex">
-                                             <h3 class="my-auto text-gray-500 dark:text-white/70"><span class="text-dark dark:text-white">My Issue: {{$pt->title}}</span></h3>
+                                             <h3 class="my-auto text-gray-500 dark:text-white/70"><span class="text-dark dark:text-white">Issue title: {{$pt->title}}</span></h3>
                                              <p class="my-auto ltr:ml-auto rtl:mr-auto text-gray-500 dark:text-white/70 text-xs">
                                                  {{$pt->created_at}}
                                              </p>

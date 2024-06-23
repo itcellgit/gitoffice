@@ -22,9 +22,10 @@ class TicketController extends Controller
     {
         $user=auth()->user();
         $user_id = $user->id;
+        $deptid = DB::table('departments')->value('id');
          $tickets=$user->isAdmin?ticket::latest()->get():$user->tickets;
          $staff = $user->staff;
-
+          session(['user_id' => $user_id, 'deptid' => $deptid]);
         $tickets_count = DB::table('tickets')
         ->select(
             DB::raw('COUNT(CASE WHEN status = "New" THEN 1 END) as new_count'),
@@ -84,6 +85,7 @@ class TicketController extends Controller
             'title'=>$request->title,
             'description'=>$request->description,
             'user_id'=>auth()->id(),
+            
         ]);
         $ticket->save();
         //dd($request);

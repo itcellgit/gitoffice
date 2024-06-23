@@ -23,6 +23,8 @@ class AdminTicketController extends Controller
         $user=auth()->user();
          $tickets=ticket::with('user')->orderBy('status')->get();
        
+        
+       
         $admin_tickets_count = DB::table('tickets')
         ->select(
             DB::raw('COUNT(CASE WHEN status = "New" THEN 1 END) as new_count'),
@@ -33,6 +35,38 @@ class AdminTicketController extends Controller
         ->first();
          return view('Admin.tickets.adminticket',compact('tickets','admin_tickets_count'));
     }
+
+ 
+
+
+
+//     public function index()
+// {
+//     $user = auth()->user();
+//     $tickets = ticket::with('user') // Eager load user
+//     ->where(function ($query) {
+//         $query->where('user_id', 'Head of Department')
+//               ->orWhere('user_id', 'Deanrnd')
+//               ->orWhere('user_id', 'egov_admin')
+//               ->orWhere('user_id', 'teaching')
+//               ->orWhere('user_id', 'non_teaching');
+//     })
+//     ->orderBy('status')
+//     ->get();
+//     $admin_tickets_count = DB::table('tickets')
+//         ->select(
+//             DB::raw('COUNT(CASE WHEN status = "New" THEN 1 END) as new_count'),
+//             DB::raw('COUNT(CASE WHEN status = "Pending" THEN 1 END) as pending_count'),
+//             DB::raw('COUNT(CASE WHEN status = "Resolved" THEN 1 END) as resolved_count')
+//         )
+//         ->first();
+
+//     return view('Admin.tickets.adminticket', compact('tickets', 'admin_tickets_count'));
+// }
+
+
+
+    
     // public function index()
     // {
     //     $user = auth()->user();

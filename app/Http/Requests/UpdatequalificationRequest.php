@@ -23,9 +23,9 @@ class UpdatequalificationRequest extends FormRequest
     {
         return [
             
-            'qual_name'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
-            'qual_shortname'=>['required'],
-            'status'=>['required'],
+            'edit_qual_name'=>['required', 'regex:/^[a-zA-Z0-9\s\W]+$/'],
+            'edit_qual_shortname'=>['required'],
+            'status'=>['sometimes'],
             
         ];
  
@@ -37,7 +37,7 @@ class UpdatequalificationRequest extends FormRequest
             'edit_qual_name.required'=>'Qualification Name is required field',
             'edit_qual_name.regex'=>'Qualification Name should be letters and spaces only',
             'edit_qual_shortname.required'=>'Qualification Shortname is required filed',
-            'status.required'=>'status is required field',
+            // 'status.required'=>'status is required field',
            
         ];
     }

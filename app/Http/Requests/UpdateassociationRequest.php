@@ -23,8 +23,8 @@ class UpdateassociationRequest extends FormRequest
     {
         return [
             //
-            'edit_asso_name'=>['required', 'regex:/^[a-zA-Z\s]+$/'],
-            'edit_status'=>['required'],
+            'edit_asso_name' => ['required', 'regex:/^[a-zA-Z0-9\s\W]+$/'],
+            'edit_status'=>['sometimes'],
         
         ];
     }
@@ -34,7 +34,7 @@ class UpdateassociationRequest extends FormRequest
         [
             'edit_asso_name.required'=>'Association Name is required field',
             'edit_asso_name.regex'=>'Association Name should be characters only',
-            'edit_status.required'=>'status is required field',
+            //'edit_status'=>'status is required field',
             
         ];
     }

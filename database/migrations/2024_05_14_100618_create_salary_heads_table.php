@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('title');
             $table->foreignId('salary_group_id')->constrained();
             $table->enum('salary_type',['info','percentage','varied','flat']);
-            $table->integer('pvalue')->nullable();
             $table->unsignedBigInteger('ptype')->nullable();
             $table->foreign('ptype')->references('id')->on('salary_heads');
             $table->integer('maximum')->nullable();

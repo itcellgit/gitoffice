@@ -312,6 +312,8 @@
                                     <th scope="col" class="dark:text-white/80">@sortablelink('id', 'industry name')</th>
                                     <th scope="col" class="dark:text-white/80">@sortablelink('id', 'industry-advisor name')</th>
                                     <th scope="col" class="dark:text-white/80">@sortablelink('stipend', 'Stipend')</th>
+                                    <th scope="col" class="dark:text-white/80">@sortablelink('action', 'action')</th>
+
 
                                 </tr>
                             </thead>
@@ -631,7 +633,7 @@
         $(document).ready(function() {
             //alert('Hello from jquery');
 
-            new DataTable('#ticket_table');
+            new DataTable('#studentinternship_table');
         });
     </script>
 
